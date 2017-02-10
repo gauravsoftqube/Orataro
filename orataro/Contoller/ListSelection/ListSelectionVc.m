@@ -1,0 +1,83 @@
+//
+//  ListSelectionVc.m
+//  orataro
+//
+//  Created by Softqube Mac IOS on 31/01/17.
+//  Copyright © 2017 Softqube. All rights reserved.
+//
+
+#import "ListSelectionVc.h"
+#import "ListCell.h"
+
+
+@interface ListSelectionVc ()
+
+@end
+
+@implementation ListSelectionVc
+@synthesize aListTableView;
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    [aListTableView registerNib:[UINib nibWithNibName:@"ListCell" bundle:nil] forCellReuseIdentifier:@"ListCell"];
+    
+    aListTableView.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
+    aListTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    // Do any additional setup after loading the view.
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - tabelview delegate
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 5;
+}
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ListCell *cell = (ListCell *)[tableView dequeueReusableCellWithIdentifier:@"ListCell"];
+    
+    if (indexPath.row % 2 ==0)
+    {
+        cell.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0];
+    }
+    else
+    {
+         cell.backgroundColor = [UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0];
+    }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    return cell;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 52;
+}
+
+
+#pragma mark - button action
+
+- (IBAction)BackBtnClicked:(id)sender
+{
+}
+
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+
+@end
