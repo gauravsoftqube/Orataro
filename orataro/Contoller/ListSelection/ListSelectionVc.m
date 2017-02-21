@@ -8,6 +8,7 @@
 
 #import "ListSelectionVc.h"
 #import "ListCell.h"
+#import "SWRevealViewController.h"
 
 
 @interface ListSelectionVc ()
@@ -66,6 +67,11 @@
 
 - (IBAction)BackBtnClicked:(id)sender
 {
+}
+
+- (IBAction)MenuBtnClicked:(id)sender
+{
+    [self.revealViewController rightRevealToggle:nil];
 }
 
 

@@ -14,5 +14,8 @@
 @property (weak, nonatomic) IBOutlet UITableView *AttendanceTableView;
 @property (weak, nonatomic) IBOutlet UITableView *aClasstableView;
 @property (weak, nonatomic) IBOutlet UIView *aClassMAinView;
+- (IBAction)MenuBtnClicked:(id)sender;
+- (IBAction)isWorkingClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *workBtn;
 
 @end

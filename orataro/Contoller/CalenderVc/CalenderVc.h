@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CalenderVc : UIViewController
+@interface CalenderVc : UIViewController 
+@property (weak, nonatomic) IBOutlet UIView *calenderView;
 
 @end

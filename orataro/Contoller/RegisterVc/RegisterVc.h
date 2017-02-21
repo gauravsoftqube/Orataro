@@ -12,5 +12,6 @@
 
 @property (weak, nonatomic) IBOutlet UIView *aPhonenumOuterView;
 @property (weak, nonatomic) IBOutlet UITextField *aMobTextField;
+- (IBAction)VerifyBtnClicked:(id)sender;
 
 @end

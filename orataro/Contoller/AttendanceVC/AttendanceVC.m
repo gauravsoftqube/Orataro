@@ -9,6 +9,7 @@
 #import "AttendanceVC.h"
 #import "AttendanceTableViewCell.h"
 #import "ClassVcCell.h"
+#import "SWRevealViewController.h"
 
 @interface AttendanceVC ()
 {
@@ -17,13 +18,14 @@
 @end
 
 @implementation AttendanceVC
-@synthesize AttendanceTableView,aClasstableView,aClassMAinView;
-
+@synthesize AttendanceTableView,aClasstableView,aClassMAinView,workBtn;
+int com =0 ;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     self.automaticallyAdjustsScrollViewInsets = NO;
+    
     
     classTableDataAry = [[NSMutableArray alloc]initWithObjects:@"Class A",@"Class B",@"Class C",@"Class D",@"Class E", nil];
     
@@ -32,8 +34,6 @@
     
     [aClasstableView registerNib:[UINib nibWithNibName:@"ClassVcCell" bundle:nil] forCellReuseIdentifier:@"ClassCell"];
     aClasstableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-
-    
     aClassMAinView.hidden = YES;
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(TaptoHideView:)];
@@ -135,6 +135,26 @@
 {
     aClassMAinView.hidden = NO;
     [self.view bringSubviewToFront:aClassMAinView];
+}
+- (IBAction)MenuBtnClicked:(id)sender
+{
+    [self.revealViewController rightRevealToggle:nil];
+}
+
+- (IBAction)isWorkingClicked:(id)sender
+{
+    //checkboxunselected
+    //checkboxblue
+    if (com == 0)
+    {
+        [workBtn setBackgroundImage:[UIImage imageNamed:@"checkboxblue"] forState:UIControlStateNormal];
+        com =1;
+    }
+    else
+    {
+        [workBtn setBackgroundImage:[UIImage imageNamed:@"checkboxunselected"] forState:UIControlStateNormal];
+        com =0;
+    }
 }
 
 /*

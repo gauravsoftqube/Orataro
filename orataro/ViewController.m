@@ -36,9 +36,13 @@
 
 - (IBAction)EngBtnClicked:(id)sender
 {
-    WallVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
+    RegisterVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"RegisterVc"];
     
     [self.navigationController pushViewController:wc animated:YES];
+    
+    //WallVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
+    
+    //[self.navigationController pushViewController:wc animated:YES];
     
 }
 #pragma mark - APICall

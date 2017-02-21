@@ -12,5 +12,6 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *aListTableView;
 - (IBAction)BackBtnClicked:(id)sender;
+- (IBAction)MenuBtnClicked:(id)sender;
 
 @end

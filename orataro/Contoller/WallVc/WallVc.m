@@ -50,7 +50,6 @@
 {
     WallCustomeCell *cell = (WallCustomeCell *)[tableView dequeueReusableCellWithIdentifier:@"WallCustomeCell"];
     
-    
     [cell.aLikeViewWidth setConstant:self.view.frame.size.width/4];
     [cell.aCommentViewWidth setConstant:self.view.frame.size.width/4];
     [cell.aShareViewWidth setConstant:self.view.frame.size.width/4];

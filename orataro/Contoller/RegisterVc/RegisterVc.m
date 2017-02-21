@@ -7,6 +7,8 @@
 //
 
 #import "RegisterVc.h"
+#import "AppDelegate.h"
+#import "Global.h"
 
 @interface RegisterVc ()
 
@@ -27,10 +29,31 @@
 // Do any additional setup after loading the view.
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+//    if ([[AppDelegate maindelegate]CheckInternetRechability])
+//    {
+//        
+//    }
+//    else
+//    {
+//        [self GetMyOrder];
+//    }
+
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - button action
+
+- (IBAction)VerifyBtnClicked:(id)sender
+{
+    RegisterOtpVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"RegisterOtpVc"];
+    [self.navigationController pushViewController:wc animated:YES];
 }
 
 /*
@@ -42,5 +65,6 @@
     // Pass the selected object to the new view controller.
 }
 */
+
 
 @end

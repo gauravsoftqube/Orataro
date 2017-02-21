@@ -7,18 +7,47 @@
 //
 
 #import "AppDelegate.h"
+#import "Reachability.h"
+#import "Global.h"
 
 @interface AppDelegate ()
-
+{
+   // NSThread *th;
+}
 @end
 
 @implementation AppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    
     // Override point for customization after application launch.
     return YES;
 }
+
+#pragma mark check rechability
+
+-(BOOL)CheckInternetRechability
+{
+    Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
+    
+    if (networkStatus == NotReachable)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return YES;
+    }
+    else
+    {
+        NSLog(@"There IS internet connection");
+        return NO;
+    }
+    
+    return NO;
+}
+
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {
