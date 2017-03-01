@@ -12,5 +12,7 @@
 @property (weak, nonatomic) IBOutlet UIView *aCalenderView;
 - (IBAction)MenuBtnClicked:(UIButton *)sender;
 @property (weak, nonatomic) IBOutlet UIView *aView1;
+@property (weak, nonatomic) IBOutlet UITableView *tblClassworkList;
+- (IBAction)btnAddClicked:(id)sender;
 
 @end

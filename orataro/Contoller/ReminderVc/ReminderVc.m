@@ -91,7 +91,13 @@
     
     return YES;
 }
+- (IBAction)BackBtnClicked:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
+- (IBAction)SaveBtnClicked:(id)sender {
+}
 
 /*
 #pragma mark - Navigation
@@ -102,5 +108,6 @@
     // Pass the selected object to the new view controller.
 }
 */
+
 
 @end

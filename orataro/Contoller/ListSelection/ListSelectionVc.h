@@ -13,5 +13,9 @@
 @property (weak, nonatomic) IBOutlet UITableView *aListTableView;
 - (IBAction)BackBtnClicked:(id)sender;
 - (IBAction)MenuBtnClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *HomeBtn;
+- (IBAction)HomeBtnClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *NavigationTitle;
+@property (weak, nonatomic) IBOutlet UIButton *aMenuBtn;
 
 @end

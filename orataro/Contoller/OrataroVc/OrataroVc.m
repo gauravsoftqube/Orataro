@@ -8,12 +8,15 @@
 
 #import "OrataroVc.h"
 #import "OrataroCell.h"
+#import "ViewController.h"
+#import "AppDelegate.h"
 
 @interface OrataroVc ()<UIScrollViewDelegate>
 {
     UICollectionView *coll;
     NSMutableArray *ary;
     NSMutableArray *aimageary;
+    AppDelegate *ap;
 }
 @end
 
@@ -24,6 +27,7 @@
 {
     [super viewDidLoad];
     
+    ap = (AppDelegate *)[UIApplication sharedApplication].delegate;
     
    // String[] colorlist = { "#2D2079", "#582388", "#741A87", "#DC55A1",
       //  "#2D288A", "#2D68A0", "#6E649E", "#B089A9", "#E487A5", "#40AD9F",
@@ -35,7 +39,7 @@
      ary = [[NSMutableArray alloc]initWithObjects:@"Profile",@"Circular",@"Wall",@"Homework",@"ClassWork",@"Attendance",@"PT Communication",@"School Timing",@"Time Table",@"Notes",@"Holiday",@"Calender",@"Poll",@"Notification",@"Reminder",@"About Orataro",@"Settings",@"FAQ", nil];
     
     
-    self.headerImageViewHeight.constant = 250;
+    self.headerImageViewHeight.constant = 100;
     [self adjustContentViewHeight];
     
     NSLog(@"data=%lu",(unsigned long)ary.count);
@@ -269,6 +273,26 @@
     return UIStatusBarStyleLightContent;
 }
 
+- (IBAction)backtoLanguageBtnClicked:(id)sender
+{
+  //  ProfileSubjectVc *p7 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfileSubjectVc"];
+  //  [self.navigationController pushViewController:f animated:YES];
+    
+    
+    //NSLog(@"array=%@",[self.navigationController viewControllers]ob);
+    
+    ap.checkhomeLang = 1;
+     ViewController *p7 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ViewController"];
+    [self.navigationController pushViewController:p7 animated:YES];
+
+    
+    if ([[self.navigationController viewControllers]containsObject:p7])
+    {
+               NSLog(@"ssdsdsd");
+    }
+   // [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 /*
 #pragma mark - Navigation
@@ -279,5 +303,6 @@
     // Pass the selected object to the new view controller.
 }
 */
+
 
 @end

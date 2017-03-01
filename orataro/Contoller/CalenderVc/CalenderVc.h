@@ -9,6 +9,24 @@
 #import <UIKit/UIKit.h>
 
 @interface CalenderVc : UIViewController 
-@property (weak, nonatomic) IBOutlet UIView *calenderView;
+//@property (strong, nonatomic) IBOutlet UIView *calenderView;
+- (IBAction)MenuBtnClicked:(id)sender;
+//@property (strong, nonatomic) IBOutlet UIView *aNavigationView;
+
+@property (weak, nonatomic) IBOutlet UIButton *btnMonthPre;
+- (IBAction)btnMonthPre:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *lblMonth;
+@property (weak, nonatomic) IBOutlet UIButton *btnMonthNext;
+- (IBAction)btnMonthNext:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *btnYearPre;
+- (IBAction)btnYearPre:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *lblYear;
+@property (weak, nonatomic) IBOutlet UIButton *btnYearNext;
+- (IBAction)btnYearNext:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UILabel *lblEventCount;
+@property (weak, nonatomic) IBOutlet UIButton *btnEventDetailLIst;
+- (IBAction)btnEventDetailLIst:(id)sender;
+
 
 @end

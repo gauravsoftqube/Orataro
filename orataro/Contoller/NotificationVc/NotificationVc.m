@@ -7,6 +7,7 @@
 //
 
 #import "NotificationVc.h"
+#import "SWRevealViewController.h"
 
 @interface NotificationVc ()
 
@@ -51,9 +52,13 @@
         
     }
 
-
+    UIImageView *img1 = (UIImageView *)[cell.contentView viewWithTag:2];
+    img1.image = [UIImage imageNamed:@"fb_like_gray"];
+    img1.image = [img1.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [img1 setTintColor:[UIColor colorWithRed:40.0/255.0 green:49.0/255.0 blue:90.0/255.0 alpha:1.0]];
+    
     //3,4,5
-    //UILabel *lb = (UILabel *)[cell.contentView viewWithTag:3];
+    //UILabel *lb = (UILabel *)[cell.contentView viewWithTag:1];
     
     return cell;
 }
@@ -69,6 +74,15 @@
     
     return 58;
 }
+#pragma mark - button action
+
+- (IBAction)MenuBtnClicked:(id)sender
+{
+    [self.revealViewController rightRevealToggle:nil];
+}
+
+
+
 /*
 #pragma mark - Navigation
 

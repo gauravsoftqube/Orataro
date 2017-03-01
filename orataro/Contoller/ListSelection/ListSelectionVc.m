@@ -9,18 +9,27 @@
 #import "ListSelectionVc.h"
 #import "ListCell.h"
 #import "SWRevealViewController.h"
-
+#import "StudentListViewController.h"
+#import "AppDelegate.h"
+#import "ProfileHappyGramListdetailListVc.h"
+#import "AddClassWorkVc.h"
+#import "AddHomeworkVc.h"
 
 @interface ListSelectionVc ()
-
+{
+    AppDelegate *ad;
+}
 @end
 
 @implementation ListSelectionVc
-@synthesize aListTableView;
+@synthesize aListTableView,HomeBtn,NavigationTitle,aMenuBtn;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
+    ad = (AppDelegate *)[UIApplication sharedApplication].delegate;
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     
@@ -37,6 +46,45 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    //[[NSUserDefaults standardUserDefaults]setObject:@"FromHomeWork" forKey:@"Homework"];
+    
+    NSLog(@"ad=%d",ad.checkListelection);
+    
+    //home work - 2
+    
+    //pt communication 1
+    
+    //happy gram 3
+    
+    
+    if (ad.checkListelection == 1)
+    {
+        [HomeBtn setBackgroundImage:[UIImage imageNamed:@"dash_home"] forState:UIControlStateNormal];
+        aMenuBtn.hidden = NO;
+        [NavigationTitle setText:@"List Selection (Name)"];
+    }
+    if (ad.checkListelection == 2)
+    {
+        [HomeBtn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+        aMenuBtn.hidden = YES;
+        [NavigationTitle setText:@"List Selection (name)"];
+
+    }
+    if (ad.checkListelection == 3)
+    {
+        [HomeBtn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+        aMenuBtn.hidden = YES;
+        [NavigationTitle setText:@"List Selection (name)"];
+    }
+    if (ad.checkListelection == 4)
+    {
+        [HomeBtn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+        aMenuBtn.hidden = YES;
+        [NavigationTitle setText:@"List Selection (name)"];
+    }
+}
 #pragma mark - tabelview delegate
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -61,17 +109,88 @@
 {
     return 52;
 }
-
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //home work - 2
+    
+    //pt communication 1
+    
+    //happy gram 3
+    
+    if (ad.checkListelection == 1)
+    {
+        StudentListViewController *s = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"StudentListViewController"];
+        [self.navigationController pushViewController:s animated:YES];
+    }
+    if (ad.checkListelection == 2)
+    {
+        AddHomeworkVc *s = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddHomeworkVc"];
+        [self.navigationController pushViewController:s animated:YES];
+    }
+    if (ad.checkListelection == 3)
+    {
+        ProfileHappyGramListdetailListVc  *vc1 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfileHappyGramListdetailListVc"];
+        [self.navigationController pushViewController:vc1 animated:YES];
+    }
+    if (ad.checkListelection == 4)
+    {
+        AddClassWorkVc  *vc1 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddClassWorkVc"];
+        [self.navigationController pushViewController:vc1 animated:YES];
+    }
+   
+}
 
 #pragma mark - button action
 
 - (IBAction)BackBtnClicked:(id)sender
 {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)MenuBtnClicked:(id)sender
 {
     [self.revealViewController rightRevealToggle:nil];
+}
+- (IBAction)HomeBtnClicked:(id)sender
+{
+    if (ad.checkListelection == 1)
+    {
+        //        [HomeBtn setBackgroundImage:[UIImage imageNamed:@"dash_home"] forState:UIControlStateNormal];
+//        aMenuBtn.hidden = NO;
+//        [NavigationTitle setText:@"Homework (Name)"];
+    }
+    if (ad.checkListelection == 2)
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+
+        
+//        [HomeBtn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+//        aMenuBtn.hidden = YES;
+//        [NavigationTitle setText:@"List Selection (name)"];
+        
+    }
+    if (ad.checkListelection == 3)
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+//        [HomeBtn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+//        aMenuBtn.hidden = YES;
+//        [NavigationTitle setText:@"List Selection (name)"];
+    }
+    if (ad.checkListelection == 4)
+    {
+         [self.navigationController popViewControllerAnimated:YES];
+    }
+//    UIImage* checkImage = [UIImage imageNamed:@"back"];
+//    NSData *checkImageData = UIImagePNGRepresentation(checkImage);
+//    NSData *propertyImageData = UIImagePNGRepresentation([HomeBtn currentBackgroundImage]);
+//    if ([checkImageData isEqualToData:propertyImageData])
+//    {
+//        [self.navigationController popViewControllerAnimated:YES];
+//    }
+//    else
+//    {
+//        
+//    }
 }
 
 
@@ -84,6 +203,7 @@
     // Pass the selected object to the new view controller.
 }
 */
+
 
 
 @end

@@ -11,5 +11,6 @@
 @interface PageVc : UIViewController<UITableViewDelegate,UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *aPageTableview;
+- (IBAction)BAckBtnClicked:(UIButton *)sender;
 
 @end

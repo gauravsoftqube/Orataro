@@ -39,12 +39,16 @@
 #import "HomeWrokVc.h"
 #import "ClassworkVC.h"
 #import "TimeTableVc.h"
+#import "NoteVc.h"
+#import "CalenderVc.h"
+#import "CreateReminderVc.h"
+#import "AppDelegate.h"
 
 @interface RightVc ()
 {
     NSMutableArray *menu,*imgary;
     NSMutableArray *amenuary,*aimgary;
-    
+    AppDelegate *ag ;
 }
 @end
 
@@ -54,6 +58,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    ag = (AppDelegate *)[UIApplication sharedApplication].delegate;
     
     self.automaticallyAdjustsScrollViewInsets = NO;
 
@@ -151,7 +157,37 @@
     
     // nine
     
-         TimeTableVc *vc8 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"TimeTableVc"];
+            TimeTableVc *vc8 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"TimeTableVc"];
+    
+    // ten
+    
+            NoteVc *vc9 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NoteVc"];
+
+    // eleven
+    
+            HolidayVc *vc10 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"HolidayVc"];
+    // twelwe
+    
+            CalenderVc *vc11 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"CalenderVc"];
+    
+    // thirteen
+    
+            PollVc *vc12 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"PollVc"];
+    // forteen
+    
+            NotificationVc *vc13 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NotificationVc"];
+    //fifteen
+    
+            CreateReminderVc *vc14 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"CreateReminderVc"];
+    //sixteen
+    
+            AboutOrataroVc *vc15 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AboutOrataroVc"];
+    //seventy
+    
+            SettingVcViewController *vc16 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SettingVcViewController"];
+    //eighty
+    
+            FAQvc *vc17 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"FAQvc"];
     
     //AddCircularVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddCircularVc"];
 
@@ -168,30 +204,30 @@
     
    // AddNoteVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddNoteVc"];
     
-   // HolidayVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"HolidayVc"];
+   
     //AddPollVc
     
     //AddPollVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddPollVc"];
     
     //ResultVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ResultVc"];
     
-    //PollVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"PollVc"];
+    //
     
-    //NotificationVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NotificationVc"];
+    //
     
     //OrataroVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"OrataroVc"];
     
     //ReminderVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ReminderVc"];
 
-    //AboutOrataroVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AboutOrataroVc"];
+    //
     
    // HelpDeskVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"HelpDeskVc"];
     
    // AboutUsVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AboutUsVc"];
 
-  //  SettingVcViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SettingVcViewController"];
+  //
     
-    // FAQvc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"FAQvc"];
+    //
     //MyProfileVc
     
   //
@@ -245,6 +281,9 @@
             
         case 6:
             
+           // [[NSUserDefaults standardUserDefaults]setObject:@"PTCommunication" forKey:@"Homework"];
+          //  [[NSUserDefaults standardUserDefaults]synchronize];
+            ag.checkListelection = 1;
             [self.revealViewController pushFrontViewController:vc6 animated:YES];
             
             break;
@@ -260,47 +299,47 @@
             break;
         case 9:
             
-            [self.revealViewController pushFrontViewController:vc animated:YES];
+            [self.revealViewController pushFrontViewController:vc9 animated:YES];
             
             break;
         case 10:
             
-            [self.revealViewController pushFrontViewController:vc animated:YES];
+            [self.revealViewController pushFrontViewController:vc10 animated:YES];
             
             break;
         case 11:
             
-            [self.revealViewController pushFrontViewController:vc animated:YES];
+            [self.revealViewController pushFrontViewController:vc11 animated:YES];
             
             break;
         case 12:
             
-            [self.revealViewController pushFrontViewController:vc animated:YES];
+            [self.revealViewController pushFrontViewController:vc12 animated:YES];
             
             break;
         case 13:
             
-            [self.revealViewController pushFrontViewController:vc animated:YES];
+            [self.revealViewController pushFrontViewController:vc13 animated:YES];
             
             break;
         case 14:
             
-            [self.revealViewController pushFrontViewController:vc animated:YES];
+            [self.revealViewController pushFrontViewController:vc14 animated:YES];
             
             break;
         case 15:
             
-            [self.revealViewController pushFrontViewController:vc animated:YES];
+            [self.revealViewController pushFrontViewController:vc15 animated:YES];
             
             break;
         case 16:
             
-            [self.revealViewController pushFrontViewController:vc animated:YES];
+            [self.revealViewController pushFrontViewController:vc16 animated:YES];
             
             break;
         case 17:
             
-            [self.revealViewController pushFrontViewController:vc animated:YES];
+            [self.revealViewController pushFrontViewController:vc17 animated:YES];
             
             break;
         default:

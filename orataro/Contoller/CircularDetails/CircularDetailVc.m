@@ -31,6 +31,13 @@
 {
     
 }
+- (IBAction)BackBtnClicked:(id)sender {
+}
+
+- (IBAction)BackClicked:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 /*
 #pragma mark - Navigation
@@ -41,6 +48,7 @@
     // Pass the selected object to the new view controller.
 }
 */
+
 
 
 @end

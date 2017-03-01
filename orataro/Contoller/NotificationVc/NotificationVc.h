@@ -11,5 +11,6 @@
 @interface NotificationVc : UIViewController<UITableViewDataSource,UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *aTableview;
+- (IBAction)MenuBtnClicked:(id)sender;
 
 @end

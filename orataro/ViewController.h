@@ -11,6 +11,8 @@
 @interface ViewController : UIViewController
 - (IBAction)EngBtnClicked:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UIView *aNAvigationView;
+- (IBAction)BAckBtnClicked:(id)sender;
 
 @end
 

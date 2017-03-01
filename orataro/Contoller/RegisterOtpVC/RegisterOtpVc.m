@@ -8,15 +8,23 @@
 
 #import "RegisterOtpVc.h"
 #import "Global.h"
+#import "WallVc.h"
 
 @interface RegisterOtpVc ()
 
 @end
 
 @implementation RegisterOtpVc
+@synthesize hideShowBtn,aOtpTextfield,aPasswordTextField,BackBtn;
+int show =0;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    BackBtn.transform=CGAffineTransformMakeRotation(M_PI / -4);
+    
+    //show_pass
+    
     // Do any additional setup after loading the view.
 }
 
@@ -33,10 +41,30 @@
    // WallVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
    // [self.navigationController pushViewController:wc animated:YES];
     
-   // WallVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
+    WallVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
    // [self.revealViewController pushFrontViewController:vc animated:YES];
     
+    vc.checkscreen = @"FromLogin";
+    
     [self performSegueWithIdentifier:@"ShowWall" sender:self];
+}
+
+- (IBAction)hidePaswordBtnclicked:(id)sender
+{
+    if (show == 0)
+    {
+        [hideShowBtn setBackgroundImage:[UIImage imageNamed:@"show_pass"] forState:UIControlStateNormal];
+        aPasswordTextField.secureTextEntry = NO;
+        show =1;
+    }
+    else
+    {
+         [hideShowBtn setBackgroundImage:[UIImage imageNamed:@"hide_pass"] forState:UIControlStateNormal];
+        aPasswordTextField.secureTextEntry = YES;
+        show =0;
+    }
+}
+- (IBAction)BackbtnClicked:(id)sender {
 }
 
 /*
@@ -48,6 +76,7 @@
     // Pass the selected object to the new view controller.
 }
 */
+
 
 
 @end

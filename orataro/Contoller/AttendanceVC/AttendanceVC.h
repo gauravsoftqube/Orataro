@@ -8,13 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AttendanceVC : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface AttendanceVC : UIViewController<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 
 - (IBAction)ClassBtnClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UITableView *AttendanceTableView;
+@property (weak, nonatomic) IBOutlet UITextField *aTextfield3;
+- (IBAction)DateSelectClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UITextField *aTextField2;
 @property (weak, nonatomic) IBOutlet UITableView *aClasstableView;
 @property (weak, nonatomic) IBOutlet UIView *aClassMAinView;
 - (IBAction)MenuBtnClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *NormalBtn;
+@property (weak, nonatomic) IBOutlet UITextField *aTextfield1;
+- (IBAction)NormalBtnClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *DateBtnClicked;
 - (IBAction)isWorkingClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *workBtn;
 

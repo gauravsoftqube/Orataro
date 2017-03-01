@@ -13,5 +13,6 @@
 
 @property (strong, nonatomic) IBOutlet UICollectionView *aCollectionView;
 @property (strong, nonatomic) IBOutlet UIView *aHeaderView;
+- (IBAction)backtoLanguageBtnClicked:(id)sender;
 
 @end

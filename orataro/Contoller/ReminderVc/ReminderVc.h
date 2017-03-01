@@ -15,5 +15,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *aCancelTextField;
 @property (weak, nonatomic) IBOutlet UITextField *aSatrtDateTextField;
 @property (weak, nonatomic) IBOutlet UITextField *aEnddateTextfield;
+- (IBAction)BackBtnClicked:(id)sender;
+- (IBAction)SaveBtnClicked:(id)sender;
 
 @end

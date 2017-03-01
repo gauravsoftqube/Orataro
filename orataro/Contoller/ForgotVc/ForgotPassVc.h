@@ -10,5 +10,7 @@
 
 @interface ForgotPassVc : UIViewController
 @property (weak, nonatomic) IBOutlet UIView *aMobOuterView;
+- (IBAction)BackBtnClicked:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UIButton *BackBtn;
 
 @end

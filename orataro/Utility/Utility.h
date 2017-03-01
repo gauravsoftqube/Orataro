@@ -38,7 +38,7 @@
 +(void)setLetfAndRightViewOfTextField:(UITextField *)txtField leftImageName:(NSString *)leftImageName rightImageName:(NSString *)rightImageName;
 +(void)setLetfViewOfTextField:(UITextField *)txtField leftImageName:(NSString *)leftImageName;
 +(void)setRightViewOfTextField:(UITextField *)txtField rightImageName:(NSString *)rightImageName;
-
+//+(void)setLeftRightBottomLine:(UITextField *)txtField
 
 +(void)settxtBorderWithColor:(UITextField *)txtName borderWidth:(float)borderwidth borderColor:(UIColor *)borderColor cornerRadius:(float)cornerRadius;
 +(void)settxtBorderWithColor:(UITextField *)txtName borderWidth:(float)borderwidth borderColor:(UIColor *)borderColor cornerRadius:(float)cornerRadius imageName:(NSString *)imge;

@@ -12,5 +12,6 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *aTabelView;
 @property (weak, nonatomic) IBOutlet UIImageView *aImageView;
+- (IBAction)MenuBtnClicked:(id)sender;
 
 @end

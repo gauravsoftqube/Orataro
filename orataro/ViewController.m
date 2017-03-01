@@ -14,15 +14,26 @@
 
 #import "AFHTTPSessionManager.h"
 #import "AFHTTPRequestOperationManager.h"
+#import "AppDelegate.h"
+#import "OrataroVc.h"
 
 @interface ViewController ()
-
+{
+    AppDelegate *app;
+}
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+//    _commonvar = 0;
+//    _checkhomeLang = 0;
+    
+    app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    
+   
     // Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -31,19 +42,45 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+-(void)viewWillAppear:(BOOL)animated
+{
+     if(app.checkhomeLang == 0)
+     {
+         _aNAvigationView.hidden = YES;
+     }
+    else
+    {
+        _aNAvigationView.hidden = NO;
+    }
+}
 #pragma mark - button action
 
 - (IBAction)EngBtnClicked:(id)sender
 {
-    RegisterVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"RegisterVc"];
-    
-    [self.navigationController pushViewController:wc animated:YES];
+    if(app.checkhomeLang == 0)
+    {
+        RegisterVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"RegisterVc"];
+        
+        [self.navigationController pushViewController:wc animated:YES];
+    }
+    else
+    {
+        OrataroVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"OrataroVc"];
+        
+        [self.navigationController pushViewController:wc animated:YES];
+    }
     
     //WallVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
     
     //[self.navigationController pushViewController:wc animated:YES];
     
+}
+
+- (IBAction)BAckBtnClicked:(id)sender
+{
+    OrataroVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"OrataroVc"];
+    
+    [self.navigationController pushViewController:wc animated:YES];
 }
 #pragma mark - APICall
 -(void)postmethod

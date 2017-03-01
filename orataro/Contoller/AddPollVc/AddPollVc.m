@@ -30,6 +30,26 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    if ([_strPoll isEqualToString:@"Add"])
+    {
+        _lbHeaderText.text = @"Add Poll (name)";
+    }
+    else
+    {
+         _lbHeaderText.text = @"Edit Poll (name)";
+    }
+}
+
+#pragma mark - button action
+
+- (IBAction)BackBtnClicked:(UIButton *)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
 /*
 #pragma mark - Navigation
 
@@ -39,5 +59,6 @@
     // Pass the selected object to the new view controller.
 }
 */
+
 
 @end

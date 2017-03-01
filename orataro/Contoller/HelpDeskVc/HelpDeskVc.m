@@ -24,6 +24,13 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - button action
+
+- (IBAction)BackBtnClicked:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 /*
 #pragma mark - Navigation
 
@@ -33,5 +40,6 @@
     // Pass the selected object to the new view controller.
 }
 */
+
 
 @end

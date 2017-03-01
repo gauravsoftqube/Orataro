@@ -7,6 +7,7 @@
 //
 
 #import "BlogVc.h"
+#import "DisplayTitleVc.h"
 
 @interface BlogVc ()
 {
@@ -86,6 +87,19 @@
 
         return size.height+35;
 }
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+        DisplayTitleVc *b = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"DisplayTitleVc"];
+        [self.navigationController pushViewController:b animated:YES];
+}
+
+#pragma mark - button action
+
+- (IBAction)BackBtnClicked:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 /*
 #pragma mark - Navigation

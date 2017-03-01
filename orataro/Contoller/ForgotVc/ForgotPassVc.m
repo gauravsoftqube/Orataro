@@ -13,7 +13,7 @@
 @end
 
 @implementation ForgotPassVc
-@synthesize aMobOuterView;
+@synthesize aMobOuterView,BackBtn;
 
 - (void)viewDidLoad
 {
@@ -24,12 +24,19 @@
     aMobOuterView.layer.borderWidth = 2.0;
     aMobOuterView.layer.borderColor =([UIColor colorWithRed:128.0/255.0 green:163.0/255.0 blue:81.0/255.0 alpha:1.0]).CGColor;
     
+    BackBtn.transform=CGAffineTransformMakeRotation(M_PI / -4);
+    
     // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - button action
+
+- (IBAction)BackBtnClicked:(UIButton *)sender {
 }
 
 /*
@@ -41,5 +48,6 @@
     // Pass the selected object to the new view controller.
 }
 */
+
 
 @end

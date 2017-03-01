@@ -8,11 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PTCommuniVc : UIViewController<UITextFieldDelegate>
+@interface PTCommuniVc : UIViewController<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource>
 
+@property (weak, nonatomic) IBOutlet UIView *aPopupMainView;
+- (IBAction)CloseBtnClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIView *aAddBtnouterView;
+@property (weak, nonatomic) IBOutlet UIView *aSaveOuterView;
+@property (weak, nonatomic) IBOutlet UITextField *aTextField;
+@property (weak, nonatomic) IBOutlet UIView *aSaveInnerView;
+@property (weak, nonatomic) IBOutlet UIImageView *ACloseImageView;
 
 @property (weak, nonatomic) IBOutlet UILabel *noPtCommunLb;
-- (IBAction)BackBntClicked:(id)sender;
+- (IBAction)AddBtnClicked:(id)sender;
+- (IBAction)BackBtnClicked:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UITableView *aTableView;
 @property (weak, nonatomic) IBOutlet UITextField *aSearchTextField;
 @end

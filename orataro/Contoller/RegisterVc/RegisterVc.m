@@ -15,11 +15,13 @@
 @end
 
 @implementation RegisterVc
-@synthesize aPhonenumOuterView,aMobTextField;
+@synthesize aPhonenumOuterView,aMobTextField,BAckBtn;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    BAckBtn.transform=CGAffineTransformMakeRotation(M_PI / -4);
     
     aPhonenumOuterView.layer.cornerRadius = 1.0;
     aPhonenumOuterView.layer.masksToBounds =  YES;
@@ -54,6 +56,11 @@
 {
     RegisterOtpVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"RegisterOtpVc"];
     [self.navigationController pushViewController:wc animated:YES];
+}
+
+- (IBAction)BackBtnClicked:(id)sender
+{
+    
 }
 
 /*

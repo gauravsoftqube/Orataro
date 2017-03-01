@@ -9,5 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface SettingVcViewController : UIViewController
+- (IBAction)MenuBtnClicked:(id)sender;
+- (IBAction)aSoundCheckClicked:(UIButton *)sender;
+- (IBAction)aVibrateClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *aViratBtn;
+@property (weak, nonatomic) IBOutlet UIButton *aSoundBtn;
 
 @end

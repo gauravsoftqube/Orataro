@@ -9,12 +9,28 @@
 #import "MyProfileVc.h"
 #import "GlobalVc.h"
 #import "SWRevealViewController.h"
-
+#import "PageVc.h"
+#import "BlogVc.h"
+#import "FriendVc.h"
+#import "ChangePasswordVc.h"
+#import "ScoolGroupVc.h"
+#import "ProjectVc.h"
+#import "PhotoVc.h"
+#import "PhotoAlbumVc.h"
+#import "ProfileVideoVc.h"
+#import "ProfileSubjectVc.h"
+#import "ProfileStandardVc.h"
+#import "ProfileDivisionVc.h"
+#import "ListSelectionVc.h"
+#import "AppDelegate.h"
+#import "SchoolVc.h"
+#import "WallVc.h"
+#import "ProfileLeaveListSelectVc.h"
 @interface MyProfileVc ()
 {
     GlobalVc *vc;
     NSMutableArray *imgary,*textary;
-    
+    AppDelegate *aj;
 
 }
 @end
@@ -26,6 +42,8 @@
 {
     [super viewDidLoad];
 
+    aj = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    
     vc = [[GlobalVc alloc]init];
     
     
@@ -105,7 +123,132 @@
     // as per content
     return 60;
 }
-
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    PageVc *p = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"PageVc"];
+    
+    BlogVc *b = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"BlogVc"];
+    
+    FriendVc *f = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"FriendVc"];
+    
+    ChangePasswordVc *c = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ChangePasswordVc"];
+    
+    ScoolGroupVc *s = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ScoolGroupVc"];
+    
+    ProjectVc *p1 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProjectVc"];
+    
+     PhotoVc *p2 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"PhotoVc"];
+    
+    PhotoAlbumVc *p3 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"PhotoAlbumVc"];
+    
+    ProfileVideoVc *p4 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfileVideoVc"];
+    
+     ProfileStandardVc *p5 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfileStandardVc"];
+    
+    ProfileDivisionVc *p6 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfileDivisionVc"];
+    
+    ProfileSubjectVc *p7 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfileSubjectVc"];
+    
+    ListSelectionVc *vc6 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
+    
+    SchoolVc  *vc9 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SchoolVc"];
+    
+    WallVc  *vc10 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
+    
+    ProfileLeaveListSelectVc *vc12 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfileLeaveListSelectVc"];
+    
+    switch (indexPath.row)
+    {
+        case 0:
+            
+            [self.navigationController pushViewController:p animated:YES];
+            break;
+            
+        case 1:
+            
+            [self.navigationController pushViewController:b animated:YES];
+            break;
+            
+        case 2:
+            
+            [self.navigationController pushViewController:f animated:YES];
+            break;
+        
+        case 3:
+            
+            [self.navigationController pushViewController:p2 animated:YES];
+            break;
+           
+        case 4:
+            
+           [self.navigationController pushViewController:p4 animated:YES];
+            break;
+            
+        case 5:
+            
+             [self.navigationController pushViewController:p3 animated:YES];
+            break;
+            
+        case 6:
+            
+            [self.navigationController pushViewController:s animated:YES];
+            break;
+        
+        case 7:
+            
+            aj.checkListelection = 3;
+            [self.navigationController pushViewController:vc6 animated:YES];
+            
+            break;
+            
+        case 8:
+            //SchoolVc
+            [self.navigationController pushViewController:vc9 animated:YES];
+            //webview vc
+            break;
+        case 9:
+            
+            // wall vc
+            vc10.checkscreen = @"Institute";
+             [self.navigationController pushViewController:vc10 animated:YES];
+            
+            break;
+        case 10:
+            
+            [self.navigationController pushViewController:p5 animated:YES];
+            break;
+        case 11:
+            
+            [self.navigationController pushViewController:p6 animated:YES];
+            break;
+            
+        case 12:
+            
+            [self.navigationController pushViewController:p7 animated:YES];
+            break;
+            
+        case 13:
+            
+            
+           [self.navigationController pushViewController:p1 animated:YES];
+            break;
+            
+        case 14:
+            
+            [self.navigationController pushViewController:vc12 animated:YES];
+            break;
+        case 15:
+            
+            [self.navigationController pushViewController:c animated:YES];
+            
+            break;
+            
+        default:
+            
+            break;
+    }
+}
 #pragma mark - button action
 
 - (IBAction)MenuBtnClicked:(id)sender

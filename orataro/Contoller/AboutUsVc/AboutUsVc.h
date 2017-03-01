@@ -14,5 +14,6 @@
 @property (weak, nonatomic) IBOutlet UITableView *aTableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *aTextviewHeight;
 @property (weak, nonatomic) IBOutlet UIView *aVideoView;
+- (IBAction)BackBtnClicked:(id)sender;
 
 @end

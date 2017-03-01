@@ -1,0 +1,30 @@
+//
+//  ProfileVideoDetailVc.h
+//  orataro
+//
+//  Created by Softqube on 23/02/17.
+//  Copyright © 2017 Softqube. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface ProfileVideoDetailVc : UIViewController
+
+@property (weak, nonatomic) IBOutlet UIButton *btnBackHeader;
+- (IBAction)btnBackHeader:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UIButton *btnMenuHeader;
+- (IBAction)btnMenuHeader:(id)sender;
+
+//popup
+@property (weak, nonatomic) IBOutlet UIButton *btnPopuBack;
+- (IBAction)btnPopuBack:(id)sender;
+@property (weak, nonatomic) IBOutlet UIView *viewPopup;
+
+@property (weak, nonatomic) IBOutlet UIView *viewPopupBorder;
+
+
+@property (weak, nonatomic) IBOutlet UIButton *btnSaveMenu;
+- (IBAction)btnSaveMenu:(id)sender;
+
+@end

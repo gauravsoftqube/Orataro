@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface HelpDeskVc : UIViewController
+- (IBAction)BackBtnClicked:(id)sender;
 
 @end

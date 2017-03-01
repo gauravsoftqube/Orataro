@@ -12,5 +12,6 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *aStudentTable;
 - (IBAction)BackBtnClicked:(id)sender;
+- (IBAction)BackClicked:(id)sender;
 
 @end

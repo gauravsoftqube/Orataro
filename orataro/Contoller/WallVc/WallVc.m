@@ -10,6 +10,7 @@
 #import "WallCustomeCell.h"
 #import "SWRevealViewController.h"
 #import "AddpostVc.h"
+#import "OrataroVc.h"
 
 @interface WallVc ()
 
@@ -20,6 +21,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+   
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     
@@ -38,7 +41,44 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+   // downarrow
+    
+    NSLog(@"check scrree=%@",_checkscreen);
+    
+    if ([_checkscreen isEqualToString:@"Institute"])
+    {
+        [_MenuBtn setBackgroundImage:[UIImage imageNamed:@"downarrow"] forState:UIControlStateNormal];
+        [_HomeBtn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+        _DisplayPopupView.hidden =YES;
+    }
+    else if([_checkscreen isEqualToString:@"Standard"])
+    {
+        [_MenuBtn setBackgroundImage:[UIImage imageNamed:@"downarrow"] forState:UIControlStateNormal];
+        [_HomeBtn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+        _DisplayPopupView.hidden =YES;
+    }
+    else if ([_checkscreen isEqualToString:@"Division"])
+    {
+        [_MenuBtn setBackgroundImage:[UIImage imageNamed:@"downarrow"] forState:UIControlStateNormal];
+        [_HomeBtn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+        _DisplayPopupView.hidden =YES;
+    }
+    else if ([_checkscreen isEqualToString:@"Subject"])
+    {
+        [_MenuBtn setBackgroundImage:[UIImage imageNamed:@"downarrow"] forState:UIControlStateNormal];
+        [_HomeBtn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+        _DisplayPopupView.hidden =YES;
+    }
+    else
+    {
+        [_MenuBtn setBackgroundImage:[UIImage imageNamed:@"ic_sort_white"] forState:UIControlStateNormal];
+        [_HomeBtn setBackgroundImage:[UIImage imageNamed:@"dash_home"] forState:UIControlStateNormal];
+        _DisplayPopupView.hidden =NO;
 
+    }
+}
 #pragma mark - tableview delegate
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -96,13 +136,60 @@
 
 - (IBAction)WhatsyourmindBtnClicked:(id)sender
 {
-    AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
-    
-    //[self.navigationController pushViewController:wc animated:YES];
-    
-    //[self performSegueWithIdentifier:@"Showaddpost" sender:self];
-    [self.revealViewController pushFrontViewController:wc animated:YES];
+    if ([_checkscreen isEqualToString:@"Institute"])
+    {
+
+    }
+    else if([_checkscreen isEqualToString:@"Standard"])
+    {
+       
+    }
+    else if ([_checkscreen isEqualToString:@"Division"])
+    {
+    }
+    else if ([_checkscreen isEqualToString:@"Subject"])
+    {
+    }
+    else
+    {
+        AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
+        
+        //[self.navigationController pushViewController:wc animated:YES];
+        
+        //[self performSegueWithIdentifier:@"Showaddpost" sender:self];
+        [self.revealViewController pushFrontViewController:wc animated:YES];
+    }
+  
 }
+- (IBAction)HomeBtnClicked:(id)sender
+{
+    if ([_checkscreen isEqualToString:@"Institute"])
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else if([_checkscreen isEqualToString:@"Standard"])
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else if ([_checkscreen isEqualToString:@"Division"])
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else if ([_checkscreen isEqualToString:@"Subject"])
+    {
+         [self.navigationController popViewControllerAnimated:YES];
+    }
+    else
+    {
+        OrataroVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"OrataroVc"];
+        
+        [self.navigationController pushViewController:wc animated:YES];
+    }
+    //[self performSegueWithIdentifier:@"Showaddpost" sender:self];
+   // [self.revealViewController pushFrontViewController:wc animated:YES];
+
+}
+
 /*
 #pragma mark - Navigation
 
@@ -112,6 +199,7 @@
     // Pass the selected object to the new view controller.
 }
 */
+
 
 
 @end

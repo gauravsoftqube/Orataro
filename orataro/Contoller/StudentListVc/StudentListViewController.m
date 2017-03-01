@@ -10,6 +10,8 @@
 #import "SWRevealViewController.h"
 #import "WallVc.h"
 #import "RightVc.h"
+#import "PTCommuniVc.h"
+
 
 @interface StudentListViewController ()
 {
@@ -69,7 +71,14 @@
 {
     return 60;
 }
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    PTCommuniVc *s = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"PTCommuniVc"];
+    [self.navigationController pushViewController:s animated:YES];
+}
+
 #pragma mark - button action
+
 - (IBAction)BackBtnClicked:(id)sender
 {
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -81,6 +90,12 @@
     [self.navigationController popToViewController:self.revealViewController animated:YES];
     
 }
+
+- (IBAction)BackClicked:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 /*
 #pragma mark - Navigation

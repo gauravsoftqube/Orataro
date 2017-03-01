@@ -14,5 +14,10 @@
 @property (strong, nonatomic) IBOutlet UIView *aTableHeaderView;
 
 @property (weak, nonatomic) IBOutlet UITableView *aWallTableView;
+- (IBAction)HomeBtnClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *HomeBtn;
+@property (weak, nonatomic) IBOutlet UIButton *DisplayPopupView;
+@property(strong,nonatomic)NSString *checkscreen;
+@property (weak, nonatomic) IBOutlet UIButton *MenuBtn;
 
 @end

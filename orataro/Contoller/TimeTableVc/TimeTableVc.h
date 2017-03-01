@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TimeTableVc : UIViewController
+@interface TimeTableVc : UIViewController<UITableViewDataSource,UITableViewDelegate>
+
 @property (weak, nonatomic) IBOutlet UIButton *PreBtn;
 - (IBAction)PreBtnClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *NextBtn;
@@ -16,5 +17,7 @@
 - (IBAction)MenuBtnClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIImageView *PreImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *NextimageView;
+@property (strong, nonatomic) IBOutlet UIView *aTableHeaderView;
+@property (weak, nonatomic) IBOutlet UITableView *aTableView;
 
 @end

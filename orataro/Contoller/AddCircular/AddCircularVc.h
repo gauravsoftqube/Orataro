@@ -11,12 +11,13 @@
 
 @interface AddCircularVc : UIViewController<UIScrollViewDelegate,UITextViewDelegate,UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *PhotoBtn;
+- (IBAction)BackBtnClicked:(id)sender;
 - (IBAction)addPhotoBtnClicked:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *aScrollview;
 @property (weak, nonatomic) IBOutlet UITextField *endDateTextfield;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *aViewHeight;
-- (IBAction)BackBtnClicked:(id)sender;
+- (IBAction)BackBtnClicked1:(id)sender;
 @property (weak, nonatomic) IBOutlet UITextView *aDescTextView;
 @property (weak, nonatomic) IBOutlet UITextField *standardTextfield;
 @property (weak, nonatomic) IBOutlet UILabel *aDescLb;

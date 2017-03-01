@@ -7,10 +7,14 @@
 //
 
 #import "AboutOrataroVc.h"
+#import "SWRevealViewController.h"
+#import "AboutUsVc.h"
+#import "HelpDeskVc.h"
+#import "ContactUsVc.h"
 
 @interface AboutOrataroVc ()
 {
-    NSArray *dispary;
+    NSArray *dispary,*imgary;
 }
 @end
 
@@ -22,8 +26,10 @@
     [super viewDidLoad];
     
     self.automaticallyAdjustsScrollViewInsets = NO;
-    
+
     dispary = [[NSMutableArray alloc]initWithObjects:@"Share App",@"Rate App",@"Our other Free Apps",@"Facebook",@"Twitter",@"Linkin",@"Google+",@"About Us",@"Contact US",@"Help Desk", nil];
+    
+    imgary = [[NSMutableArray alloc]initWithObjects:@"share",@"star",@"more23",@"facebook",@"twitter",@"linkdin",@"googleplus",@"user",@"phone",@"customersupport", nil];
     
     AboutTableView.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
     
@@ -63,8 +69,15 @@
     {
         cell.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0];
     }
-    //UIImageView *img = [cell.contentView viewWithTag:1];
-   // img.image
+    
+    UIImageView *img1 = (UIImageView *)[cell.contentView viewWithTag:1];
+    
+    img1.image = [UIImage imageNamed:[imgary objectAtIndex:indexPath.row]];
+    
+    img1.image = [img1.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [img1 setTintColor:[UIColor colorWithRed:40.0/255.0 green:49.0/255.0 blue:90.0/255.0 alpha:1.0]];
+    
+    img1.contentMode = UIViewContentModeScaleAspectFit;
     
     return cell;
 }
@@ -77,6 +90,76 @@
 {
     return 63;
 }
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+     AboutUsVc *a = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AboutUsVc"];
+    
+     ContactUsVc *c = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ContactUsVc"];
+    
+    HelpDeskVc *h = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"HelpDeskVc"];
+    
+    switch (indexPath.row)
+    {
+        case 0:
+            
+            break;
+            
+        case 1:
+            
+            break;
+            
+        case 2:
+            
+            break;
+            
+        case 3:
+            
+            break;
+            
+        case 4:
+            
+            break;
+            
+        case 5:
+            
+            break;
+            
+        case 6:
+            
+            break;
+            
+        case 7:
+            
+           
+            [self.navigationController pushViewController:a animated:YES];
+            
+            break;
+            
+        case 8:
+            
+            [self.navigationController pushViewController:c animated:YES];
+            
+            break;
+            
+        case 9:
+            
+            [self.navigationController pushViewController:h animated:YES];
+            
+            break;
+            
+            
+        default:
+            break;
+    }
+}
+#pragma mark - button action
+
+- (IBAction)MenuBtnClicked:(id)sender
+{
+    [self.revealViewController rightRevealToggle:nil];
+}
+
+
 /*
 #pragma mark - Navigation
 

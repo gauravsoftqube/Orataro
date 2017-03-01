@@ -98,6 +98,10 @@
 
 #pragma mark - button action
 
+- (IBAction)BackBtnClicked:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 - (IBAction)SelectPhotoBtnClicked:(id)sender
 {
     UIActionSheet *action = [[UIActionSheet alloc] initWithTitle:@"Add Photo!" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Take Photo",@"Choose from Liabrary", nil];
@@ -164,6 +168,5 @@
 */
 
 
-- (IBAction)BackBtnClicked:(id)sender {
-}
+
 @end

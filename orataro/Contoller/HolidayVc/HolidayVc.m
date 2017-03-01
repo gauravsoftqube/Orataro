@@ -8,6 +8,7 @@
 
 #import "HolidayVc.h"
 #import "HolidayVcCell.h"
+#import "SWRevealViewController.h"
 
 @interface HolidayVc ()
 {
@@ -101,6 +102,14 @@
 {
     return DispData.count;
 }
+
+#pragma mark - button action
+
+- (IBAction)MenuBtnClicked:(id)sender
+{
+    [self.revealViewController rightRevealToggle:nil];
+}
+
 /*
 #pragma mark - Navigation
 
@@ -110,5 +119,6 @@
     // Pass the selected object to the new view controller.
 }
 */
+
 
 @end

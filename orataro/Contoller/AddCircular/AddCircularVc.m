@@ -100,6 +100,12 @@
 
 #pragma mark - button action
 
+- (IBAction)BackBtnClicked1:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
 - (IBAction)BackBtnClicked:(id)sender
 {
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -110,6 +116,7 @@
     [self.revealViewController setRightViewController:vc1 animated:YES];
     [self.navigationController popToViewController:self.revealViewController animated:YES];
 }
+
 - (IBAction)addPhotoBtnClicked:(id)sender
 {
     UIActionSheet *action = [[UIActionSheet alloc] initWithTitle:@"Add Photo!" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Take Photo",@"Choose from Liabrary", nil];

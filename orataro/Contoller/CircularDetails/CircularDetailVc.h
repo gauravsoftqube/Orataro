@@ -13,5 +13,8 @@
 @property (weak, nonatomic) IBOutlet UITextView *aDetailTextview;
 @property (weak, nonatomic) IBOutlet UIImageView *aImagView;
 @property (weak, nonatomic) IBOutlet UILabel *aNameLb;
+- (IBAction)BackBtnClicked:(id)sender;
+- (IBAction)BackClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *BackBtn1Clicked;
 
 @end

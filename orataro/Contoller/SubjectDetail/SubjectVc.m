@@ -16,12 +16,30 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
     // Do any additional setup after loading the view.
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    if ([_passVal isEqualToString:@"Homework"])
+    {
+        
+    }
+    if ([_passVal isEqualToString:@"Classwork"])
+    {
+        
+    }
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)BackBtn1Clicked:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 /*
@@ -33,5 +51,6 @@
     // Pass the selected object to the new view controller.
 }
 */
+
 
 @end

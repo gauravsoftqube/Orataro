@@ -10,6 +10,8 @@
 #import "Reachability.h"
 #import "Global.h"
 
+#define APPDELEGATE (AppDelegate *)[[UIApplication sharedApplication] delegate]
+
 @interface AppDelegate ()
 {
    // NSThread *th;
@@ -21,6 +23,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    _commonvar = 0;
+    _checkhomeLang = 0;
+    _scoolgroup = 0;
+    _checkListelection = 0;
     
     // Override point for customization after application launch.
     return YES;

@@ -7,6 +7,7 @@
 //
 
 #import "PageVc.h"
+#import "DisplayTitleVc.h"
 
 @interface PageVc ()
 {
@@ -78,8 +79,21 @@
     
     return 65;
 }
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    DisplayTitleVc *b = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"DisplayTitleVc"];
+    [self.navigationController pushViewController:b animated:YES];
 
- 
+}
+
+#pragma mark - button action
+
+- (IBAction)BAckBtnClicked:(UIButton *)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
 /*
 #pragma mark - Navigation
 
@@ -89,5 +103,6 @@
     // Pass the selected object to the new view controller.
 }
 */
+
 
 @end

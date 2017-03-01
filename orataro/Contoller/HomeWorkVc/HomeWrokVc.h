@@ -8,9 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HomeWrokVc : UIViewController
+@interface HomeWrokVc : UIViewController<UITableViewDataSource,UITableViewDelegate>
+
 - (IBAction)MenuBtnClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIView *aView1;
 @property (weak, nonatomic) IBOutlet UIView *aCalenderView;
+@property (weak, nonatomic) IBOutlet UIButton *CellClicked;
+@property (weak, nonatomic) IBOutlet UIButton *AddBtnClicked;
+- (IBAction)CellBtnClicked:(id)sender;
+- (IBAction)AddBtn1Clicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UITableView *HomeworkTableView;
 
 @end

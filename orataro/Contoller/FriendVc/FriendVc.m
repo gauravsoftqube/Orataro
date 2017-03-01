@@ -7,6 +7,8 @@
 //
 
 #import "FriendVc.h"
+#import "ProfileFriendRequestVc.h"
+#import "profileSearchFriend.h"
 
 @interface FriendVc ()
 {
@@ -15,18 +17,20 @@
 @end
 
 @implementation FriendVc
-@synthesize aNoFriendLabel,friendTableView,aPopupAddFriendImg,aPopupFriendRequestImg,aAddFriendView,aFriendRequestView;
+@synthesize aNoFriendLabel,friendTableView,aPopupAddFriendImg,aPopupFriendRequestImg,aAddFriendView,aFriendRequestView,aPopupView,aFirstBtn,aSecondBtn;
+int s =0 ;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    nameary = [[NSMutableArray alloc]initWithObjects:@"sdddfjdjf dfbefbef dnfndfdf dnfndfbdnbff fjefjf dfejendn f ejfdfdf fjfef",@"sdddfjdjf dfbefbef dnfndfdf dnfndfbdnbff sdddfjdjf dfbefbef dnfndfdf sdddfjdjf dfbefbef dnfndfdf dnfndfbdnbff fjefjf dfejendn f ejfdfdf fjfef sdddfjdjf dfbefbef dnfndfdf dnfndfbdnbff fjefjf dfejendn f ejfdfdf fjfef diya",@"sdddfjdjf dfbefbef dnfndfdf sdddfjdjf dfbefbef dnfndfdf dnfndfbdnbff fjefjf dfejendn f ejfdfdf fjfef sdddfjdjf dfbefbef dnfndfdf dnfndfbdnbff fjefjf dfejendn f ejfdfdf fjfef nilam" ,nil];
+    nameary = [[NSMutableArray alloc]initWithObjects:@"sdddfjdjf ",@"Patel Diya",@"sdddfjd dfbefbef dnfndfdf dnfndfbdnbff fjefjf dfejend nilam" ,nil];
     friendTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     aAddFriendView.layer.cornerRadius = 17.5;
     aFriendRequestView.layer.cornerRadius = 17.5;
+    aPopupView.alpha = 0.0;
     
-    //FriendCell
+   // aPopupView.hidden = YES;
     
     // Do any additional setup after loading the view.
 }
@@ -92,47 +96,6 @@
     img1.image = [img1.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [img1 setTintColor:[UIColor colorWithRed:65.0/255.0 green:68.0/255.0 blue:69.0/255.0 alpha:1.0]];
     
-    
-    //////////////////////////////////////////////////////////
-    
-    //FriendRequestCell
-    
-    
-    //tag 1
-    // UIImageView *img = (UILabel *)[cell.contentView viewWithTag:1];
-    //  lb.text = [getdata objectAtIndex:indexPath.row];
-    
-    //tag 2
-   // UILabel *lb = (UILabel *)[cell.contentView viewWithTag:2];
-   // lb.text = [nameary objectAtIndex:indexPath.row];
-    
-    //tag 3
-    //UILabel *lb = (UILabel *)[cell.contentView viewWithTag:3];
-    // lb.text = [getdata objectAtIndex:indexPath.row];
-    
-    //tag 4
-    //UILabel *lb = (UILabel *)[cell.contentView viewWithTag:4];
-    //lb.text = [getdata objectAtIndex:indexPath.row];
-    
-    //tag 5
-    //UILabel *lb = (UILabel *)[cell.contentView viewWithTag:5];
-    //lb.text = [getdata objectAtIndex:indexPath.row];
-
-    //tag 6
-//    UIView *view1 = (UIView *)[cell.contentView viewWithTag:5];
-//    view1.layer.cornerRadius =3.0;
-//    
-//    view1.layer.borderColor = [UIColor colorWithRed:65.0/255.0 green:68.0/255.0 blue:69.0/255.0 alpha:1.0].CGColor;
-//    view1.layer.borderWidth = 1.0;
-    
-    //tag 10
-    
-//    UIImageView *img1 = (UIImageView *)[cell.contentView viewWithTag:10];
-//    img1.image = [UIImage imageNamed:@"fb_req_frnd_white"];
-//    img1.image = [img1.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-//    [img1 setTintColor:[UIColor colorWithRed:65.0/255.0 green:68.0/255.0 blue:69.0/255.0 alpha:1.0]];
-
-    
     return cell;
 }
 
@@ -146,9 +109,9 @@
     // as per content
     
     NSString *str = [NSString stringWithFormat:@"%@",[nameary objectAtIndex:indexPath.row]];
-    CGSize size = [str sizeWithFont:[UIFont fontWithName:@"HelveticaNeueLTStd-Roman" size:25] constrainedToSize:CGSizeMake([[UIScreen mainScreen]bounds].size.width-252, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize size = [str sizeWithFont:[UIFont fontWithName:@"HelveticaNeueLTStd-Roman" size:20] constrainedToSize:CGSizeMake([[UIScreen mainScreen]bounds].size.width-252, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
     
-    return size.height+105;
+    return size.height+90;
     
     //FriendRequestCell
     
@@ -160,6 +123,60 @@
     
 }
 
+#pragma mark - button action
+
+- (IBAction)BackBtnClicked:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)FriendRequestBtnClicked:(id)sender
+{
+    aPopupView.alpha = 0.0;
+    s =0 ;
+    ProfileFriendRequestVc *p7 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfileFriendRequestVc"];
+    [self.navigationController pushViewController:p7 animated:YES];
+}
+
+- (IBAction)AddFrinedBtnClicked:(id)sender
+{
+    aPopupView.alpha = 0.0;
+    s=0;
+    profileSearchFriend *p8 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"profileSearchFriend"];
+    [self.navigationController pushViewController:p8 animated:YES];
+}
+- (IBAction)AddFriendBtnClicked:(id)sender
+{
+  //  aPopupView.alpha = 0.0;
+    
+    if (s == 0)
+    {
+        [UIView transitionWithView:aPopupView
+                          duration:0.5
+                           options:UIViewAnimationOptionShowHideTransitionViews
+                        animations:^{
+                            //aPopupView.hidden = NO;
+                            aPopupView.alpha = 1.0;
+                         //   [self.view bringSubviewToFront:aPopupView];
+                            s =1;
+                        }
+                        completion:NULL];
+    }
+    else
+    {
+        //aPopupView.hidden = YES;
+        [UIView transitionWithView:aPopupView
+                          duration:0.5
+                           options:UIViewAnimationOptionShowHideTransitionViews
+                        animations:^{
+                            //aPopupView.hidden = NO;
+                            aPopupView.alpha = 0.0;
+                            s=0;
+
+                        }
+                        completion:NULL];
+    }
+}
 
 /*
 #pragma mark - Navigation
@@ -170,5 +187,7 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+
 
 @end

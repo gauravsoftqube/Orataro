@@ -11,5 +11,6 @@
 @interface BlogVc : UIViewController<UITableViewDelegate,UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *aBlogTable;
+- (IBAction)BackBtnClicked:(id)sender;
 
 @end

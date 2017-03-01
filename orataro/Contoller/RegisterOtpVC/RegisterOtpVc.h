@@ -10,5 +10,11 @@
 
 @interface RegisterOtpVc : UIViewController
 - (IBAction)LoginBtnClicked:(id)sender;
+- (IBAction)hidePaswordBtnclicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *hideShowBtn;
+@property (weak, nonatomic) IBOutlet UITextField *aPasswordTextField;
+@property (weak, nonatomic) IBOutlet UITextField *aOtpTextfield;
+- (IBAction)BackbtnClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *BackBtn;
 
 @end
