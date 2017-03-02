@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		072A85AD1E67FADC00F54A30 /* DEMOHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 072A85A61E67FADC00F54A30 /* DEMOHomeViewController.m */; };
 		072A85AE1E67FADC00F54A30 /* DEMOMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 072A85A81E67FADC00F54A30 /* DEMOMenuViewController.m */; };
 		072A85AF1E67FADC00F54A30 /* DEMONavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 072A85AA1E67FADC00F54A30 /* DEMONavigationController.m */; };
 		072A85B01E67FADC00F54A30 /* DEMORootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 072A85AC1E67FADC00F54A30 /* DEMORootViewController.m */; };
@@ -130,10 +131,6 @@
 		C36BDAF51E66FFC900779C5B /* UIImage+REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C36BDAED1E66FFC900779C5B /* UIImage+REFrostedViewController.m */; };
 		C36BDAF61E66FFC900779C5B /* UIView+REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C36BDAEF1E66FFC900779C5B /* UIView+REFrostedViewController.m */; };
 		C36BDAF71E66FFC900779C5B /* UIViewController+REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C36BDAF11E66FFC900779C5B /* UIViewController+REFrostedViewController.m */; };
-		C36BDB011E67012400779C5B /* DEMOHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C36BDAFA1E67012400779C5B /* DEMOHomeViewController.m */; };
-		C36BDB021E67012400779C5B /* DEMOMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C36BDAFC1E67012400779C5B /* DEMOMenuViewController.m */; };
-		C36BDB031E67012400779C5B /* DEMONavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C36BDAFE1E67012400779C5B /* DEMONavigationController.m */; };
-		C36BDB041E67012400779C5B /* DEMORootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C36BDB001E67012400779C5B /* DEMORootViewController.m */; };
 		C36D394B1E558C42001A445E /* PageVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C36D394A1E558C42001A445E /* PageVc.m */; };
 		C36D39571E55D52B001A445E /* MessageVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C36D39561E55D52B001A445E /* MessageVc.m */; };
 		C36DD1801E405D930011221E /* SAMTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = C36DD17F1E405D930011221E /* SAMTextView.m */; };
