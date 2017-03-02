@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Mqy-0z-Qga">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="9MD-2d-uWG">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -533,7 +533,7 @@
                         <outlet property="aOtpTextfield" destination="qB2-Ka-eWR" id="Xpu-yC-5di"/>
                         <outlet property="aPasswordTextField" destination="ZMq-25-PDO" id="jwm-30-DRN"/>
                         <outlet property="hideShowBtn" destination="QP8-MZ-Unz" id="XH5-9n-y9d"/>
-                        <segue destination="9MD-2d-uWG" kind="show" identifier="ShowWall" id="w7d-Mn-vxL"/>
+                        <segue destination="1Sq-VF-urq" kind="show" identifier="ShowWall" id="n5B-gv-81t"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PjE-cj-l3C" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -853,25 +853,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uYt-aJ-wAI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1706" y="324"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="8Hd-Lp-tqW">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="Mqy-0z-Qga" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <nil key="simulatedTopBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="w7F-J7-7XK">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="J2q-mi-pKP"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="MFn-99-IKr" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-386" y="-324"/>
         </scene>
         <!--Forgot Pass Vc-->
         <scene sceneID="aFR-Tu-QFc">
@@ -14478,12 +14459,14 @@ tesing of add circular notification</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Whm-hG-Tqy" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2462" y="-324"/>
+            <point key="canvasLocation" x="2475" y="-339"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="kLa-p5-x3g">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7cQ-OR-D37" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="contentController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" navigationBarHidden="YES" id="MIz-IO-Kgw" customClass="DEMONavigationController" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <toolbarItems/>
                     <nil key="simulatedTopBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="pdI-Qy-zpU">
@@ -14492,10 +14475,9 @@ tesing of add circular notification</string>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="1Sq-VF-urq" kind="relationship" relationship="rootViewController" id="S8T-R8-nny"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="Zra-nb-3oM"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7cQ-OR-D37" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2461" y="347"/>
         </scene>
@@ -14522,6 +14504,7 @@ tesing of add circular notification</string>
                             <outlet property="delegate" destination="exs-g7-EwH" id="F5h-Kn-L2A"/>
                         </connections>
                     </tableView>
+                    <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="tblMenuTable" destination="ZBu-hD-Z4J" id="fZy-cz-fFh"/>
                     </connections>

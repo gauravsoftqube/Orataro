@@ -33,7 +33,7 @@
     GlobalVc *vc;
     NSMutableArray *imgary,*textary;
     AppDelegate *aj;
-int c2;
+    int c2;
 }
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
 @end
@@ -70,13 +70,8 @@ int c2;
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (void)viewWillAppear:(BOOL)animated {
-   
-     self.frostedViewController.contentViewController.navigationController.navigationBarHidden = YES;
-
-    
-    //[self.navigationController setNavigationBarHidden:YES animated:animated];
-   // [super viewWillAppear:animated];
+- (void)viewWillAppear:(BOOL)animated
+{
 }
 
 

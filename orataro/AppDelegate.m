@@ -28,6 +28,10 @@
     _scoolgroup = 0;
     _checkListelection = 0;
     _c2 = 0;
+    _checkview = 0;
+
+   
+    
     // Override point for customization after application launch.
     return YES;
 }

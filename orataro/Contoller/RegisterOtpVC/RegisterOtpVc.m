@@ -9,9 +9,12 @@
 #import "RegisterOtpVc.h"
 #import "Global.h"
 #import "WallVc.h"
+#import "AppDelegate.h"
 
 @interface RegisterOtpVc ()
-
+{
+    AppDelegate *app;
+}
 @end
 
 @implementation RegisterOtpVc
@@ -20,6 +23,8 @@ int show =0;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     
     BackBtn.transform=CGAffineTransformMakeRotation(M_PI / -4);
     
@@ -45,7 +50,7 @@ int show =0;
    // [self.revealViewController pushFrontViewController:vc animated:YES];
     
     vc.checkscreen = @"FromLogin";
-    
+    app.checkview = 0;
     [self performSegueWithIdentifier:@"ShowWall" sender:self];
 }
 
