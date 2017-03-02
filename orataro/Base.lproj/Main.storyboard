@@ -860,7 +860,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="Mqy-0z-Qga" sceneMemberID="viewController">
                     <toolbarItems/>
                     <nil key="simulatedTopBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="w7F-J7-7XK">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="w7F-J7-7XK">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -14486,7 +14486,7 @@ tesing of add circular notification</string>
                 <navigationController storyboardIdentifier="contentController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" navigationBarHidden="YES" id="MIz-IO-Kgw" customClass="DEMONavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <nil key="simulatedTopBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="pdI-Qy-zpU">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="pdI-Qy-zpU">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
