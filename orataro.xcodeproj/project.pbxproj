@@ -102,7 +102,6 @@
 		C36B58571E5EC56B00DE7464 /* ChangePasswordVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C36B58561E5EC56B00DE7464 /* ChangePasswordVc.m */; };
 		C36B585C1E5ED98E00DE7464 /* ScoolGroupVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C36B585B1E5ED98E00DE7464 /* ScoolGroupVc.m */; };
 		C36B585F1E5ED99C00DE7464 /* CreateScoolGroupVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C36B585E1E5ED99C00DE7464 /* CreateScoolGroupVc.m */; };
-		C36B58661E5EE72D00DE7464 /* CreateProjectCell in Resources */ = {isa = PBXBuildFile; fileRef = C36B58631E5EE72D00DE7464 /* CreateProjectCell */; };
 		C36B58671E5EE72D00DE7464 /* CreateProjectVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C36B58651E5EE72D00DE7464 /* CreateProjectVc.m */; };
 		C36B586A1E5EE75400DE7464 /* ProjectVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C36B58691E5EE75400DE7464 /* ProjectVc.m */; };
 		C36B587A1E5EE82B00DE7464 /* ORGArticleCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C36B586D1E5EE82B00DE7464 /* ORGArticleCollectionViewCell.m */; };
@@ -364,7 +363,6 @@
 		C36B585B1E5ED98E00DE7464 /* ScoolGroupVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoolGroupVc.m; sourceTree = "<group>"; };
 		C36B585D1E5ED99C00DE7464 /* CreateScoolGroupVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateScoolGroupVc.h; sourceTree = "<group>"; };
 		C36B585E1E5ED99C00DE7464 /* CreateScoolGroupVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateScoolGroupVc.m; sourceTree = "<group>"; };
-		C36B58631E5EE72D00DE7464 /* CreateProjectCell */ = {isa = PBXFileReference; lastKnownFileType = folder; path = CreateProjectCell; sourceTree = "<group>"; };
 		C36B58641E5EE72D00DE7464 /* CreateProjectVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateProjectVc.h; sourceTree = "<group>"; };
 		C36B58651E5EE72D00DE7464 /* CreateProjectVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateProjectVc.m; sourceTree = "<group>"; };
 		C36B58681E5EE75400DE7464 /* ProjectVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectVc.h; sourceTree = "<group>"; };
@@ -1211,7 +1209,6 @@
 		C36B58621E5EE6CA00DE7464 /* CreateProjectVc */ = {
 			isa = PBXGroup;
 			children = (
-				C36B58631E5EE72D00DE7464 /* CreateProjectCell */,
 				C36B58641E5EE72D00DE7464 /* CreateProjectVc.h */,
 				C36B58651E5EE72D00DE7464 /* CreateProjectVc.m */,
 			);
@@ -1806,7 +1803,6 @@
 				0977D6031E3B1F6300ACB7A5 /* WallCustomeCell.xib in Resources */,
 				C36724731E54374E007E9326 /* FAQCustomeCell.xib in Resources */,
 				C36B58821E5EE82B00DE7464 /* ORGMasterViewController.xib in Resources */,
-				C36B58661E5EE72D00DE7464 /* CreateProjectCell in Resources */,
 				09F428C41E38BC0B00A80F0D /* LICENSE in Resources */,
 				C36DD1B11E4086210011221E /* IQKeyboardManager.bundle in Resources */,
 				C38F8C791E3F36A300A67FBE /* RightCell.xib in Resources */,
