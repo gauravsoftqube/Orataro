@@ -8,21 +8,25 @@
 
 #import "WallVc.h"
 #import "WallCustomeCell.h"
-#import "SWRevealViewController.h"
 #import "AddpostVc.h"
 #import "OrataroVc.h"
+#import "AppDelegate.h"
 
 @interface WallVc ()
-
+{
+    AppDelegate *app;
+}
 @end
 
 @implementation WallVc
 @synthesize aWallTableView,aTableHeaderView;
+int c2= 0;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-   
+    app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     
@@ -130,8 +134,22 @@
 
 - (IBAction)MenuBtnClicked:(id)sender
 {
-    self.revealViewController.shouldUseFrontViewOverlay = YES;
-    [self.revealViewController rightRevealToggle:nil];
+    self.frostedViewController.direction = REFrostedViewControllerDirectionRight;
+    
+    NSLog(@"app=%d",app.c2);
+    
+    if (app.c2 == 0)
+    {
+        [self.frostedViewController presentMenuViewController];
+        app.c2 = 1;
+
+    }
+    else
+    {
+        [self.frostedViewController hideMenuViewController];
+       app.c2 = 0;
+    }
+    
 }
 
 - (IBAction)WhatsyourmindBtnClicked:(id)sender
@@ -152,12 +170,12 @@
     }
     else
     {
-        AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
-        
-        //[self.navigationController pushViewController:wc animated:YES];
-        
-        //[self performSegueWithIdentifier:@"Showaddpost" sender:self];
-        [self.revealViewController pushFrontViewController:wc animated:YES];
+//        AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
+//        
+//        //[self.navigationController pushViewController:wc animated:YES];
+//        
+//        //[self performSegueWithIdentifier:@"Showaddpost" sender:self];
+//        [self.revealViewController pushFrontViewController:wc animated:YES];
     }
   
 }

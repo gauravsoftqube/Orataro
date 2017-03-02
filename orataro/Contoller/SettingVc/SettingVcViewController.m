@@ -7,17 +7,18 @@
 //
 
 #import "SettingVcViewController.h"
-#import "SWRevealViewController.h"
+#import "REFrostedViewController.h"
 
 @interface SettingVcViewController ()
-
+{
+int c2;
+}
 @end
 
 @implementation SettingVcViewController
 @synthesize aSoundBtn,aViratBtn;
 int ct =0;
 int ct1 =0;
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     //uncheck
@@ -34,7 +35,19 @@ int ct1 =0;
 
 - (IBAction)MenuBtnClicked:(id)sender
 {
-    [self.revealViewController rightRevealToggle:nil];
+     if (c2==0)
+    {
+        self.frostedViewController.direction = REFrostedViewControllerDirectionRight;
+        self.frostedViewController.panGestureEnabled = NO;
+        [self.frostedViewController presentMenuViewController];
+        c2=1;
+    }
+    else
+    {
+        [self.frostedViewController hideMenuViewController];
+        self.frostedViewController.panGestureEnabled = NO;
+        c2 =0;
+    }
 }
 
 - (IBAction)aSoundCheckClicked:(UIButton *)sender

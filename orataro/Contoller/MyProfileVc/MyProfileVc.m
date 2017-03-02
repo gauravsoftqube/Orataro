@@ -8,7 +8,7 @@
 
 #import "MyProfileVc.h"
 #import "GlobalVc.h"
-#import "SWRevealViewController.h"
+#import "REFrostedViewController.h"
 #import "PageVc.h"
 #import "BlogVc.h"
 #import "FriendVc.h"
@@ -26,22 +26,26 @@
 #import "SchoolVc.h"
 #import "WallVc.h"
 #import "ProfileLeaveListSelectVc.h"
-@interface MyProfileVc ()
+#import "DEMONavigationController.h"
+
+@interface MyProfileVc ()<UIGestureRecognizerDelegate>
 {
     GlobalVc *vc;
     NSMutableArray *imgary,*textary;
     AppDelegate *aj;
-
+int c2;
 }
+@property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
 @end
 
 @implementation MyProfileVc
 @synthesize aProfileTable,aHeaderView,aProfileNameLb,aProfileimageview;
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
+    self.navigationController.navigationBar.hidden = YES;
+    
     aj = (AppDelegate *)[UIApplication sharedApplication].delegate;
     
     vc = [[GlobalVc alloc]init];
@@ -66,6 +70,15 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (void)viewWillAppear:(BOOL)animated {
+   
+     self.frostedViewController.contentViewController.navigationController.navigationBarHidden = YES;
+
+    
+    //[self.navigationController setNavigationBarHidden:YES animated:animated];
+   // [super viewWillAppear:animated];
+}
+
 
 #pragma mark - tableview delegate
 
@@ -253,7 +266,20 @@
 
 - (IBAction)MenuBtnClicked:(id)sender
 {
-    [self.revealViewController rightRevealToggle:nil];
+     if (c2==0)
+    {
+        self.frostedViewController.direction = REFrostedViewControllerDirectionRight;
+        self.frostedViewController.panGestureEnabled = NO;
+        [self.frostedViewController presentMenuViewController];
+        c2=1;
+    }
+    else
+    {
+        [self.frostedViewController hideMenuViewController];
+        self.frostedViewController.panGestureEnabled = NO;
+        c2 =0;
+    }
+    
 }
 
 /*

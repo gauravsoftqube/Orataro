@@ -7,15 +7,16 @@
 //
 
 #import "NotificationVc.h"
-#import "SWRevealViewController.h"
+#import "REFrostedViewController.h"
 
 @interface NotificationVc ()
-
+{
+    int c2;
+}
 @end
 
 @implementation NotificationVc
 @synthesize aTableview;
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -78,7 +79,19 @@
 
 - (IBAction)MenuBtnClicked:(id)sender
 {
-    [self.revealViewController rightRevealToggle:nil];
+     if (c2==0)
+    {
+        self.frostedViewController.direction = REFrostedViewControllerDirectionRight;
+        self.frostedViewController.panGestureEnabled = NO;
+        [self.frostedViewController presentMenuViewController];
+        c2=1;
+    }
+    else
+    {
+        [self.frostedViewController hideMenuViewController];
+        self.frostedViewController.panGestureEnabled = NO;
+        c2 =0;
+    }
 }
 
 

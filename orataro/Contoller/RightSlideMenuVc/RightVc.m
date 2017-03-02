@@ -9,7 +9,7 @@
 #import "RightVc.h"
 #import "RightCell.h"
 #import "AddpostVc.h"
-#import "SWRevealViewController.h"
+#import "REFrostedViewController.h"
 #import "AddCircularVc.h"
 #import "ListSelectionVc.h"
 #import "AddClassWorkVc.h"
@@ -251,32 +251,32 @@
     {
         case 0:
             
-            [self.revealViewController pushFrontViewController:vc animated:YES];
+        //    [self.revealViewController pushFrontViewController:vc animated:YES];
             break;
             
         case 1:
             
-             [self.revealViewController pushFrontViewController:vc2 animated:YES];
+          //   [self.revealViewController pushFrontViewController:vc2 animated:YES];
             break;
             
         case 2:
             
-            [self.revealViewController pushFrontViewController:vc1 animated:YES];
+           // [self.revealViewController pushFrontViewController:vc1 animated:YES];
             break;
             
         case 3:
             
-            [self.revealViewController pushFrontViewController:vc3 animated:YES];
+           // [self.revealViewController pushFrontViewController:vc3 animated:YES];
             break;
             
         case 4:
             
-            [self.revealViewController pushFrontViewController:vc4 animated:YES];
+           // [self.revealViewController pushFrontViewController:vc4 animated:YES];
             break;
             
         case 5:
             
-            [self.revealViewController pushFrontViewController:vc5 animated:YES];
+            //[self.revealViewController pushFrontViewController:vc5 animated:YES];
             break;
             
         case 6:
@@ -284,62 +284,62 @@
            // [[NSUserDefaults standardUserDefaults]setObject:@"PTCommunication" forKey:@"Homework"];
           //  [[NSUserDefaults standardUserDefaults]synchronize];
             ag.checkListelection = 1;
-            [self.revealViewController pushFrontViewController:vc6 animated:YES];
+            //[self.revealViewController pushFrontViewController:vc6 animated:YES];
             
             break;
         case 7:
             
-            [self.revealViewController pushFrontViewController:vc7 animated:YES];
+            //[self.revealViewController pushFrontViewController:vc7 animated:YES];
             
             break;
         case 8:
             
-            [self.revealViewController pushFrontViewController:vc8 animated:YES];
+            //[self.revealViewController pushFrontViewController:vc8 animated:YES];
             
             break;
         case 9:
             
-            [self.revealViewController pushFrontViewController:vc9 animated:YES];
+            //[self.revealViewController pushFrontViewController:vc9 animated:YES];
             
             break;
         case 10:
             
-            [self.revealViewController pushFrontViewController:vc10 animated:YES];
+           // [self.revealViewController pushFrontViewController:vc10 animated:YES];
             
             break;
         case 11:
             
-            [self.revealViewController pushFrontViewController:vc11 animated:YES];
+           // [self.revealViewController pushFrontViewController:vc11 animated:YES];
             
             break;
         case 12:
             
-            [self.revealViewController pushFrontViewController:vc12 animated:YES];
+           // [self.revealViewController pushFrontViewController:vc12 animated:YES];
             
             break;
         case 13:
             
-            [self.revealViewController pushFrontViewController:vc13 animated:YES];
+            //[self.revealViewController pushFrontViewController:vc13 animated:YES];
             
             break;
         case 14:
             
-            [self.revealViewController pushFrontViewController:vc14 animated:YES];
+            //[self.revealViewController pushFrontViewController:vc14 animated:YES];
             
             break;
         case 15:
             
-            [self.revealViewController pushFrontViewController:vc15 animated:YES];
+          //  [self.revealViewController pushFrontViewController:vc15 animated:YES];
             
             break;
         case 16:
             
-            [self.revealViewController pushFrontViewController:vc16 animated:YES];
+           // [self.revealViewController pushFrontViewController:vc16 animated:YES];
             
             break;
         case 17:
             
-            [self.revealViewController pushFrontViewController:vc17 animated:YES];
+           // [self.revealViewController pushFrontViewController:vc17 animated:YES];
             
             break;
         default:

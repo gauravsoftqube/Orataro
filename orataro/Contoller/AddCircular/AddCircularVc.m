@@ -8,7 +8,7 @@
 
 #import "AddCircularVc.h"
 #import "RightVc.h"
-#import "SWRevealViewController.h"
+#import "REFrostedViewController.h"
 #import "SAMTextView.h"
 
 @interface AddCircularVc ()
@@ -108,13 +108,13 @@
 
 - (IBAction)BackBtnClicked:(id)sender
 {
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+   // UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     // here you need to create storyboard ID of perticular view where you need to navigate your app
-    UIViewController *vc = [mainStoryboard instantiateViewControllerWithIdentifier:@"WallVc"];
-    UIViewController *vc1 = [mainStoryboard instantiateViewControllerWithIdentifier:@"RightVc"];
-    [self.revealViewController setFrontViewController:vc animated:YES];
-    [self.revealViewController setRightViewController:vc1 animated:YES];
-    [self.navigationController popToViewController:self.revealViewController animated:YES];
+//    UIViewController *vc = [mainStoryboard instantiateViewControllerWithIdentifier:@"WallVc"];
+//    UIViewController *vc1 = [mainStoryboard instantiateViewControllerWithIdentifier:@"RightVc"];
+//    [self.revealViewController setFrontViewController:vc animated:YES];
+//    [self.revealViewController setRightViewController:vc1 animated:YES];
+//    [self.navigationController popToViewController:self.revealViewController animated:YES];
 }
 
 - (IBAction)addPhotoBtnClicked:(id)sender

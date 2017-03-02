@@ -7,16 +7,17 @@
 //
 
 #import "PollVc.h"
-#import "SWRevealViewController.h"
+#import "REFrostedViewController.h"
 #import "AddPollVc.h"
 
 @interface PollVc ()
-
+{
+int c2;
+}
 @end
 
 @implementation PollVc
 @synthesize aFirstImage,aBottomView1,aBottomView2,aSecondImage;
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -141,7 +142,19 @@
 
 - (IBAction)MenuBtnClicked:(id)sender
 {
-    [self.revealViewController rightRevealToggle:nil];
+     if (c2==0)
+    {
+        self.frostedViewController.direction = REFrostedViewControllerDirectionRight;
+        self.frostedViewController.panGestureEnabled = NO;
+        [self.frostedViewController presentMenuViewController];
+        c2=1;
+    }
+    else
+    {
+        [self.frostedViewController hideMenuViewController];
+        self.frostedViewController.panGestureEnabled = NO;
+        c2 =0;
+    }
 }
 
 

@@ -8,14 +8,14 @@
 
 #import "CalenderVc.h"
 #import "FSCalendar.h"
-#import "SWRevealViewController.h"
+#import "REFrostedViewController.h"
 
 @interface CalenderVc ()<FSCalendarDataSource,FSCalendarDelegate>
 {
     FSCalendar *calendar1;
     UILabel *lblMonth;
     UILabel *lblYear;
-
+    int c2;
 }
 @property (weak, nonatomic) IBOutlet FSCalendar *calendar;
 
@@ -161,7 +161,19 @@
 }
 - (IBAction)MenuBtnClicked:(id)sender
 {
-    [self.revealViewController rightRevealToggle:nil];
+     if (c2==0)
+    {
+        self.frostedViewController.direction = REFrostedViewControllerDirectionRight;
+        self.frostedViewController.panGestureEnabled = NO;
+        [self.frostedViewController presentMenuViewController];
+        c2=1;
+    }
+    else
+    {
+        [self.frostedViewController hideMenuViewController];
+        self.frostedViewController.panGestureEnabled = NO;
+        c2 =0;
+    }
 }
 
 

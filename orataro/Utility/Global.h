@@ -47,7 +47,6 @@
 #import "RightVc.h"
 #import "RightCell.h"
 #import "AddpostVc.h"
-#import "SWRevealViewController.h"
 #import "AddCircularVc.h"
 #import "ListSelectionVc.h"
 #import "AddClassWorkVc.h"
@@ -76,6 +75,7 @@
 #import "RegisterVc.h"
 #import "RegisterOtpVc.h"
 #import "WallVc.h"
+
 
 //#import "CreateProjectVc.h"
 

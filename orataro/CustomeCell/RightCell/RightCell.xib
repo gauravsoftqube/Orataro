@@ -24,14 +24,14 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dash_fb_wall" translatesAutoresizingMaskIntoConstraints="NO" id="wPP-RK-3rf">
-                        <rect key="frame" x="30" y="15" width="30" height="30"/>
+                        <rect key="frame" x="15" y="15" width="30" height="30"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="30" id="3nW-sc-Kxz"/>
                             <constraint firstAttribute="height" constant="30" id="xP0-HT-fYp"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Profile" textAlignment="justified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uXI-fy-DlC">
-                        <rect key="frame" x="80" y="0.0" width="225" height="57"/>
+                        <rect key="frame" x="60" y="0.0" width="245" height="57"/>
                         <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="15"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
@@ -40,11 +40,11 @@
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="uXI-fy-DlC" secondAttribute="trailing" id="3YW-bi-Cty"/>
-                    <constraint firstItem="wPP-RK-3rf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="30" id="JBw-cu-D0q"/>
+                    <constraint firstItem="wPP-RK-3rf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="JBw-cu-D0q"/>
                     <constraint firstItem="wPP-RK-3rf" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="MNK-gB-wOx"/>
                     <constraint firstItem="uXI-fy-DlC" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="QcE-VO-jjH"/>
                     <constraint firstAttribute="bottom" secondItem="uXI-fy-DlC" secondAttribute="bottom" id="b4I-n2-rCG"/>
-                    <constraint firstItem="uXI-fy-DlC" firstAttribute="leading" secondItem="wPP-RK-3rf" secondAttribute="trailing" constant="20" id="vmf-bb-gSt"/>
+                    <constraint firstItem="uXI-fy-DlC" firstAttribute="leading" secondItem="wPP-RK-3rf" secondAttribute="trailing" constant="15" id="vmf-bb-gSt"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
