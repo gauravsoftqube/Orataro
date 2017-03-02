@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		072A85AD1E67FADC00F54A30 /* DEMOHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 072A85A61E67FADC00F54A30 /* DEMOHomeViewController.m */; };
+		072A85AE1E67FADC00F54A30 /* DEMOMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 072A85A81E67FADC00F54A30 /* DEMOMenuViewController.m */; };
+		072A85AF1E67FADC00F54A30 /* DEMONavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 072A85AA1E67FADC00F54A30 /* DEMONavigationController.m */; };
+		072A85B01E67FADC00F54A30 /* DEMORootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 072A85AC1E67FADC00F54A30 /* DEMORootViewController.m */; };
 		0932277B1E38750D00138A2B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0932277A1E38750D00138A2B /* main.m */; };
 		0932277E1E38750D00138A2B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0932277D1E38750D00138A2B /* AppDelegate.m */; };
 		093227811E38750D00138A2B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 093227801E38750D00138A2B /* ViewController.m */; };
@@ -127,10 +131,6 @@
 		C36BDAF51E66FFC900779C5B /* UIImage+REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C36BDAED1E66FFC900779C5B /* UIImage+REFrostedViewController.m */; };
 		C36BDAF61E66FFC900779C5B /* UIView+REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C36BDAEF1E66FFC900779C5B /* UIView+REFrostedViewController.m */; };
 		C36BDAF71E66FFC900779C5B /* UIViewController+REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C36BDAF11E66FFC900779C5B /* UIViewController+REFrostedViewController.m */; };
-		C36BDB011E67012400779C5B /* DEMOHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C36BDAFA1E67012400779C5B /* DEMOHomeViewController.m */; };
-		C36BDB021E67012400779C5B /* DEMOMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C36BDAFC1E67012400779C5B /* DEMOMenuViewController.m */; };
-		C36BDB031E67012400779C5B /* DEMONavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C36BDAFE1E67012400779C5B /* DEMONavigationController.m */; };
-		C36BDB041E67012400779C5B /* DEMORootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C36BDB001E67012400779C5B /* DEMORootViewController.m */; };
 		C36D394B1E558C42001A445E /* PageVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C36D394A1E558C42001A445E /* PageVc.m */; };
 		C36D39571E55D52B001A445E /* MessageVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C36D39561E55D52B001A445E /* MessageVc.m */; };
 		C36DD1801E405D930011221E /* SAMTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = C36DD17F1E405D930011221E /* SAMTextView.m */; };
@@ -192,6 +192,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		072A85A51E67FADC00F54A30 /* DEMOHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DEMOHomeViewController.h; sourceTree = "<group>"; };
+		072A85A61E67FADC00F54A30 /* DEMOHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DEMOHomeViewController.m; sourceTree = "<group>"; };
+		072A85A71E67FADC00F54A30 /* DEMOMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DEMOMenuViewController.h; sourceTree = "<group>"; };
+		072A85A81E67FADC00F54A30 /* DEMOMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DEMOMenuViewController.m; sourceTree = "<group>"; };
+		072A85A91E67FADC00F54A30 /* DEMONavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DEMONavigationController.h; sourceTree = "<group>"; };
+		072A85AA1E67FADC00F54A30 /* DEMONavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DEMONavigationController.m; sourceTree = "<group>"; };
+		072A85AB1E67FADC00F54A30 /* DEMORootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DEMORootViewController.h; sourceTree = "<group>"; };
+		072A85AC1E67FADC00F54A30 /* DEMORootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DEMORootViewController.m; sourceTree = "<group>"; };
 		093227761E38750D00138A2B /* orataro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = orataro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0932277A1E38750D00138A2B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0932277C1E38750D00138A2B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -414,14 +422,6 @@
 		C36BDAEF1E66FFC900779C5B /* UIView+REFrostedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+REFrostedViewController.m"; path = "REFrostedViewController/UIView+REFrostedViewController.m"; sourceTree = "<group>"; };
 		C36BDAF01E66FFC900779C5B /* UIViewController+REFrostedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+REFrostedViewController.h"; path = "REFrostedViewController/UIViewController+REFrostedViewController.h"; sourceTree = "<group>"; };
 		C36BDAF11E66FFC900779C5B /* UIViewController+REFrostedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+REFrostedViewController.m"; path = "REFrostedViewController/UIViewController+REFrostedViewController.m"; sourceTree = "<group>"; };
-		C36BDAF91E67012400779C5B /* DEMOHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DEMOHomeViewController.h; sourceTree = "<group>"; };
-		C36BDAFA1E67012400779C5B /* DEMOHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DEMOHomeViewController.m; sourceTree = "<group>"; };
-		C36BDAFB1E67012400779C5B /* DEMOMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DEMOMenuViewController.h; sourceTree = "<group>"; };
-		C36BDAFC1E67012400779C5B /* DEMOMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DEMOMenuViewController.m; sourceTree = "<group>"; };
-		C36BDAFD1E67012400779C5B /* DEMONavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DEMONavigationController.h; sourceTree = "<group>"; };
-		C36BDAFE1E67012400779C5B /* DEMONavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DEMONavigationController.m; sourceTree = "<group>"; };
-		C36BDAFF1E67012400779C5B /* DEMORootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DEMORootViewController.h; sourceTree = "<group>"; };
-		C36BDB001E67012400779C5B /* DEMORootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DEMORootViewController.m; sourceTree = "<group>"; };
 		C36D39491E558C42001A445E /* PageVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageVc.h; sourceTree = "<group>"; };
 		C36D394A1E558C42001A445E /* PageVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageVc.m; sourceTree = "<group>"; };
 		C36D39551E55D52B001A445E /* MessageVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageVc.h; sourceTree = "<group>"; };
@@ -1325,14 +1325,14 @@
 		C36BDAF81E67005900779C5B /* MenuController */ = {
 			isa = PBXGroup;
 			children = (
-				C36BDAF91E67012400779C5B /* DEMOHomeViewController.h */,
-				C36BDAFA1E67012400779C5B /* DEMOHomeViewController.m */,
-				C36BDAFB1E67012400779C5B /* DEMOMenuViewController.h */,
-				C36BDAFC1E67012400779C5B /* DEMOMenuViewController.m */,
-				C36BDAFD1E67012400779C5B /* DEMONavigationController.h */,
-				C36BDAFE1E67012400779C5B /* DEMONavigationController.m */,
-				C36BDAFF1E67012400779C5B /* DEMORootViewController.h */,
-				C36BDB001E67012400779C5B /* DEMORootViewController.m */,
+				072A85A51E67FADC00F54A30 /* DEMOHomeViewController.h */,
+				072A85A61E67FADC00F54A30 /* DEMOHomeViewController.m */,
+				072A85A71E67FADC00F54A30 /* DEMOMenuViewController.h */,
+				072A85A81E67FADC00F54A30 /* DEMOMenuViewController.m */,
+				072A85A91E67FADC00F54A30 /* DEMONavigationController.h */,
+				072A85AA1E67FADC00F54A30 /* DEMONavigationController.m */,
+				072A85AB1E67FADC00F54A30 /* DEMORootViewController.h */,
+				072A85AC1E67FADC00F54A30 /* DEMORootViewController.m */,
 			);
 			path = MenuController;
 			sourceTree = "<group>";
@@ -1891,7 +1891,6 @@
 				C3A2D72A1E64212200B91B54 /* PNTUtility.m in Sources */,
 				C3741FDC1E4CA29400BFFA23 /* AboutOrataroVc.m in Sources */,
 				C36B58871E5EEF4400DE7464 /* PhototableCell.m in Sources */,
-				C36BDB021E67012400779C5B /* DEMOMenuViewController.m in Sources */,
 				09F428BF1E38BC0B00A80F0D /* AFSecurityPolicy.m in Sources */,
 				C36BDAF31E66FFC900779C5B /* REFrostedContainerViewController.m in Sources */,
 				C36DD1B01E4086210011221E /* IQBarButtonItem.m in Sources */,
@@ -1930,7 +1929,7 @@
 				09F428BB1E38BC0B00A80F0D /* AFHTTPRequestOperation.m in Sources */,
 				C36DD1801E405D930011221E /* SAMTextView.m in Sources */,
 				C36724721E54374E007E9326 /* FAQCustomeCell.m in Sources */,
-				C36BDB041E67012400779C5B /* DEMORootViewController.m in Sources */,
+				072A85AD1E67FADC00F54A30 /* DEMOHomeViewController.m in Sources */,
 				C36B585F1E5ED99C00DE7464 /* CreateScoolGroupVc.m in Sources */,
 				09F428CC1E38BC0B00A80F0D /* UIRefreshControl+AFNetworking.m in Sources */,
 				0932277E1E38750D00138A2B /* AppDelegate.m in Sources */,
@@ -1978,7 +1977,6 @@
 				C3A2D7271E64211900B91B54 /* UIImage+ColorAtPixel.m in Sources */,
 				C38ABFB81E48B31200689426 /* TimeTableVc.m in Sources */,
 				09F428BE1E38BC0B00A80F0D /* AFNetworkReachabilityManager.m in Sources */,
-				C36BDB011E67012400779C5B /* DEMOHomeViewController.m in Sources */,
 				C36DD1C61E409C120011221E /* ListSelectionVc.m in Sources */,
 				C36DD1B41E4086210011221E /* IQNSArray+Sort.m in Sources */,
 				C36724771E546CFB007E9326 /* MyProfileVc.m in Sources */,
@@ -1990,6 +1988,8 @@
 				C369E6DC1E5AF2A40048D601 /* Reachability.m in Sources */,
 				C38F8C781E3F36A300A67FBE /* RightCell.m in Sources */,
 				0977D6021E3B1F6300ACB7A5 /* WallCustomeCell.m in Sources */,
+				072A85AF1E67FADC00F54A30 /* DEMONavigationController.m in Sources */,
+				072A85AE1E67FADC00F54A30 /* DEMOMenuViewController.m in Sources */,
 				09F428CD1E38BC0B00A80F0D /* UIWebView+AFNetworking.m in Sources */,
 				C3A2D7311E64244000B91B54 /* OtpPasswordVc.m in Sources */,
 				C3645AE01E5BFE980012F4CF /* FSCalendar+Deprecated.m in Sources */,
@@ -2016,13 +2016,13 @@
 				C38ABFB41E48A78600689426 /* SchooltimeVc.m in Sources */,
 				C36BDAF41E66FFC900779C5B /* REFrostedViewController.m in Sources */,
 				C36DD1B71E4086210011221E /* IQToolbar.m in Sources */,
-				C36BDB031E67012400779C5B /* DEMONavigationController.m in Sources */,
 				C3645AE11E5BFE980012F4CF /* FSCalendarAppearance.m in Sources */,
 				09F428D11E38E76400A80F0D /* LoginVC.m in Sources */,
 				C36B58501E5EC04800DE7464 /* CalenderEventDetailVc.m in Sources */,
 				C3645AEE1E5BFE980012F4CF /* FSCalendarWeekdayView.m in Sources */,
 				C36BDAF71E66FFC900779C5B /* UIViewController+REFrostedViewController.m in Sources */,
 				C36B588C1E5EF43E00DE7464 /* PhotoVc.m in Sources */,
+				072A85B01E67FADC00F54A30 /* DEMORootViewController.m in Sources */,
 				09F428C61E38BC0B00A80F0D /* AFNetworkActivityIndicatorManager.m in Sources */,
 				C38ABFAC1E48936100689426 /* PTCommuniVc.m in Sources */,
 				C36DD1BB1E4086210011221E /* IQUIView+IQKeyboardToolbar.m in Sources */,

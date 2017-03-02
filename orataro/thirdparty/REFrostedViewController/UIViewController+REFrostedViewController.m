@@ -32,7 +32,16 @@
 - (void)re_displayController:(UIViewController *)controller frame:(CGRect)frame
 {
     [self addChildViewController:controller];
-    controller.view.frame = frame;
+    long y=frame.origin.y;
+    if(y == 64)
+    {
+        controller.view.frame = frame;
+       
+    }
+    else
+    {
+         controller.view.frame = self.view.frame;
+    }
     [self.view addSubview:controller.view];
     [controller didMoveToParentViewController:self];
 }
@@ -41,9 +50,11 @@
 {
      AppDelegate *apdVar = (AppDelegate *)[UIApplication sharedApplication].delegate;
       apdVar.c2 =0;
+
     [controller willMoveToParentViewController:nil];
     [controller.view removeFromSuperview];
     [controller removeFromParentViewController];
+    
 }
 
 - (REFrostedViewController *)frostedViewController
