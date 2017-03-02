@@ -106,7 +106,6 @@
 {
     [super viewDidLoad];
     [self re_displayController:self.contentViewController frame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    
 }
 
 - (UIViewController *)childViewControllerForStatusBarStyle
@@ -185,11 +184,8 @@
 
 - (void)hideMenuViewController
 {
-    
     [self re_displayController:self.contentViewController frame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    
-       [self hideMenuViewControllerWithCompletionHandler:nil];
- 
+    [self hideMenuViewControllerWithCompletionHandler:nil];
 }
 
 - (void)presentMenuViewControllerWithAnimatedApperance:(BOOL)animateApperance
@@ -210,8 +206,9 @@
         if (self.direction == REFrostedViewControllerDirectionTop || self.direction == REFrostedViewControllerDirectionBottom)
             self.calculatedMenuViewSize = CGSizeMake(self.contentViewController.view.frame.size.width, self.contentViewController.view.frame.size.height - 50.0f);
         
-        [self re_displayController:self.contentViewController frame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height)];
-        
+
+        [self re_displayController:self.containerViewController frame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height)];
+
     } else {
         self.calculatedMenuViewSize = CGSizeMake(_menuViewSize.width > 0 ? _menuViewSize.width : self.contentViewController.view.frame.size.width,
                                                  _menuViewSize.height > 0 ? _menuViewSize.height : self.contentViewController.view.frame.size.height);
@@ -234,8 +231,10 @@
         self.containerViewController.screenshotImage = [[self.contentViewController.view re_screenshot] re_applyBlurWithRadius:self.blurRadius tintColor:self.blurTintColor saturationDeltaFactor:self.blurSaturationDeltaFactor maskImage:nil];
         [self.containerViewController refreshBackgroundImage];
     }
+   
     
     [self.containerViewController hideWithCompletionHandler:completionHandler];
+    
 }
 
 - (void)resizeMenuViewControllerToSize:(CGSize)size

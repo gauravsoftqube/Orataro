@@ -37,13 +37,12 @@
     if(y == 64)
     {
         controller.view.frame = frame;
-        
+       
     }
     else
     {
-        controller.view.frame = self.view.frame;
+         controller.view.frame = self.view.frame;
     }
-    
     [self.view addSubview:controller.view];
     [controller didMoveToParentViewController:self];
 }
@@ -53,9 +52,11 @@
    
      AppDelegate *apdVar = (AppDelegate *)[UIApplication sharedApplication].delegate;
       apdVar.c2 =0;
+
     [controller willMoveToParentViewController:nil];
     [controller.view removeFromSuperview];
     [controller removeFromParentViewController];
+    
 }
 
 - (REFrostedViewController *)frostedViewController

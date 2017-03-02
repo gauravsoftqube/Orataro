@@ -129,138 +129,70 @@
     
     // first
     
-    MyProfileVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"MyProfileVc"];
+  //  MyProfileVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"MyProfileVc"];
     
     //second
     
-    CircularVc *vc2 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"CircularVc"];
+  //  CircularVc *vc2 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"CircularVc"];
     //third
     
-    WallVc *vc1 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
+   // WallVc *vc1 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
     
     //forth
     
-    HomeWrokVc *vc3 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"HomeWrokVc"];
+  //  HomeWrokVc *vc3 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"HomeWrokVc"];
     //fifth
     
-    ClassworkVC *vc4 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ClassworkVC"];
+   // ClassworkVC *vc4 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ClassworkVC"];
     
     //six
     
-    AttendanceVC *vc5 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AttendanceVC"];
+   // AttendanceVC *vc5 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AttendanceVC"];
     //seven
     
-    ListSelectionVc *vc6 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
+   // ListSelectionVc *vc6 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
     // eight
     
-    MessageVc *vc7 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"MessageVc"];
+   // MessageVc *vc7 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"MessageVc"];
     
     // nine
     
-    TimeTableVc *vc8 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"TimeTableVc"];
+   // TimeTableVc *vc8 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"TimeTableVc"];
     
     // ten
     
-    NoteVc *vc9 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NoteVc"];
+   // NoteVc *vc9 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NoteVc"];
     
     // eleven
     
-    HolidayVc *vc10 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"HolidayVc"];
+    //HolidayVc *vc10 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"HolidayVc"];
     // twelwe
     
-    CalenderVc *vc11 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"CalenderVc"];
+    //CalenderVc *vc11 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"CalenderVc"];
     
     // thirteen
     
-    PollVc *vc12 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"PollVc"];
+   // PollVc *vc12 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"PollVc"];
     // forteen
     
-    NotificationVc *vc13 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NotificationVc"];
+  //  NotificationVc *vc13 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NotificationVc"];
     //fifteen
     
-    CreateReminderVc *vc14 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"CreateReminderVc"];
+    //CreateReminderVc *vc14 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"CreateReminderVc"];
     //sixteen
     
-    AboutOrataroVc *vc15 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AboutOrataroVc"];
+   // AboutOrataroVc *vc15 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AboutOrataroVc"];
     //seventy
     
-    SettingVcViewController *vc16 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SettingVcViewController"];
+   // SettingVcViewController *vc16 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SettingVcViewController"];
     //eighty
     
-    FAQvc *vc17 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"FAQvc"];
+   // FAQvc *vc17 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"FAQvc"];
     
-    //AddCircularVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddCircularVc"];
-    
-    //
-    
-    //AddClassWorkVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddClassWorkVc"];
-    
-    
-    //StudentListViewController
-    
-    // StudentListViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"StudentListViewController"];
-    
-    // PTCommuniVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"PTCommuniVc"];
-    
-    // AddNoteVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddNoteVc"];
-    
-    
-    //AddPollVc
-    
-    //AddPollVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddPollVc"];
-    
-    //ResultVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ResultVc"];
-    
-    //
-    
-    //
-    
-    //OrataroVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"OrataroVc"];
-    
-    //ReminderVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ReminderVc"];
-    
-    //
-    
-    // HelpDeskVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"HelpDeskVc"];
-    
-    // AboutUsVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AboutUsVc"];
-    
-    //
-    
-    //
-    //MyProfileVc
-    
-    //
-    
-    //  PageVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"PageVc"];
-    
-    //MessageVc
-    
-    
-    //BlogVc
-    
-    //  BlogVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"BlogVc"];
-    
-    //FriendVc
-    
-    // FriendVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"FriendVc"];
-    
-    
-    
-    //MyProfileVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"MyProfileVc"];
-    
-    
-    //DEMONavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"contentController"];
-    // navigationController.navigationBar.hidden = YES;
-    
-    //UIViewController *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MyProfileVc"];
-   
-    //navigationController.viewControllers = @[homeViewController];
+
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     DEMONavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"contentController"];
-    
-    
     switch (indexPath.row)
     {
         case 0:
@@ -270,93 +202,124 @@
             break;
         }
         case 1:
-            
-            //   [self.revealViewController pushFrontViewController:vc2 animated:YES];
+        {
+            CircularVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CircularVc"];
+            navigationController.viewControllers = @[homeViewController];
             break;
-            
+        }
         case 2:
-            
-            // [self.revealViewController pushFrontViewController:vc1 animated:YES];
+        {
+            WallVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"WallVc"];
+            navigationController.viewControllers = @[homeViewController];
             break;
-            
+        }
         case 3:
-            
-            // [self.revealViewController pushFrontViewController:vc3 animated:YES];
+        {
+            HomeWrokVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"HomeWrokVc"];
+            navigationController.viewControllers = @[homeViewController];
             break;
-            
+        }
         case 4:
-            
-            // [self.revealViewController pushFrontViewController:vc4 animated:YES];
+        {
+            ClassworkVC  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ClassworkVC"];
+            navigationController.viewControllers = @[homeViewController];
             break;
-            
+        }
         case 5:
             
-            //[self.revealViewController pushFrontViewController:vc5 animated:YES];
+        {
+            AttendanceVC  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AttendanceVC"];
+            navigationController.viewControllers = @[homeViewController];
             break;
-            
+        }
         case 6:
             
-            // [[NSUserDefaults standardUserDefaults]setObject:@"PTCommunication" forKey:@"Homework"];
-            //  [[NSUserDefaults standardUserDefaults]synchronize];
-            ag.checkListelection = 1;
-            //[self.revealViewController pushFrontViewController:vc6 animated:YES];
-            
+        {
+            ListSelectionVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
+            navigationController.viewControllers = @[homeViewController];
             break;
+        }
         case 7:
             
-            //[self.revealViewController pushFrontViewController:vc7 animated:YES];
-            
+        {
+            MessageVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MessageVc"];
+            navigationController.viewControllers = @[homeViewController];
             break;
+        }
         case 8:
             
-            //[self.revealViewController pushFrontViewController:vc8 animated:YES];
-            
+        {
+            TimeTableVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"TimeTableVc"];
+            navigationController.viewControllers = @[homeViewController];
             break;
+        }
         case 9:
             
-            //[self.revealViewController pushFrontViewController:vc9 animated:YES];
-            
+        {
+            NoteVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NoteVc"];
+            navigationController.viewControllers = @[homeViewController];
             break;
+        }
         case 10:
             
-            // [self.revealViewController pushFrontViewController:vc10 animated:YES];
-            
+        {
+            HolidayVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"HolidayVc"];
+            navigationController.viewControllers = @[homeViewController];
             break;
+        }
+            
         case 11:
             
-            // [self.revealViewController pushFrontViewController:vc11 animated:YES];
-            
+        {
+            CalenderVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CalenderVc"];
+            navigationController.viewControllers = @[homeViewController];
             break;
+        }
         case 12:
             
-            // [self.revealViewController pushFrontViewController:vc12 animated:YES];
-            
+        {
+            PollVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PollVc"];
+            navigationController.viewControllers = @[homeViewController];
             break;
+        }
         case 13:
             
-            //[self.revealViewController pushFrontViewController:vc13 animated:YES];
-            
+        {
+            NotificationVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NotificationVc"];
+            navigationController.viewControllers = @[homeViewController];
             break;
+        }
         case 14:
             
-            //[self.revealViewController pushFrontViewController:vc14 animated:YES];
-            
+        {
+            CreateReminderVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CreateReminderVc"];
+            navigationController.viewControllers = @[homeViewController];
             break;
+        }
+            
         case 15:
             
-            //  [self.revealViewController pushFrontViewController:vc15 animated:YES];
-            
+        {
+            AboutOrataroVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AboutOrataroVc"];
+            navigationController.viewControllers = @[homeViewController];
             break;
+        }
+            
         case 16:
             
-            // [self.revealViewController pushFrontViewController:vc16 animated:YES];
-            
+        {
+            SettingVcViewController  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SettingVcViewController"];
+            navigationController.viewControllers = @[homeViewController];
             break;
+        }
         case 17:
             
-            // [self.revealViewController pushFrontViewController:vc17 animated:YES];
-            
+        {
+            FAQvc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"FAQvc"];
+            navigationController.viewControllers = @[homeViewController];
             break;
+        }
+            
         default:
             break;
     }
@@ -371,14 +334,14 @@
 //{
 //    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 //    DEMONavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"contentController"];
-//    
+//
 //    if (indexPath.section == 0 && indexPath.row == 0) {
 //        DEMOHomeViewController *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"homeController"];
 //        navigationController.viewControllers = @[homeViewController];
 //    } else {
-//        
+//
 //    }
-//    
+//
 //    self.frostedViewController.contentViewController = navigationController;
 //    [self.frostedViewController hideMenuViewController];
 //}
@@ -403,14 +366,14 @@
 //- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 //{
 //    static NSString *cellIdentifier = @"Cell";
-//    
+//
 //    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-//    
+//
 //    if (cell == nil) {
 //        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
 //    }
 //    cell.textLabel.text = [menu objectAtIndex:indexPath.row];
-//    
+//
 //    return cell;
 //}
 

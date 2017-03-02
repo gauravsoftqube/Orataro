@@ -18,9 +18,6 @@
 {
     [super viewDidLoad];
     [self.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognized:)]];
-    
-   // self.frostedViewController.navigationController.navigationBar.hidden = YES;
-   // self.navigationBar.hidden = YES;
 }
 
 #pragma mark -

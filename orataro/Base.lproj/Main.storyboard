@@ -533,7 +533,7 @@
                         <outlet property="aOtpTextfield" destination="qB2-Ka-eWR" id="Xpu-yC-5di"/>
                         <outlet property="aPasswordTextField" destination="ZMq-25-PDO" id="jwm-30-DRN"/>
                         <outlet property="hideShowBtn" destination="QP8-MZ-Unz" id="XH5-9n-y9d"/>
-                        <segue destination="1Sq-VF-urq" kind="show" identifier="ShowWall" id="n5B-gv-81t"/>
+                        <segue destination="1Sq-VF-urq" kind="show" identifier="ShowWall" id="ChZ-Q8-izf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PjE-cj-l3C" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -853,6 +853,21 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uYt-aJ-wAI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1706" y="324"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="8Hd-Lp-tqW">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="Mqy-0z-Qga" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="w7F-J7-7XK">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MFn-99-IKr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-386" y="-324"/>
         </scene>
         <!--Forgot Pass Vc-->
         <scene sceneID="aFR-Tu-QFc">
@@ -14459,32 +14474,32 @@ tesing of add circular notification</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Whm-hG-Tqy" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2475" y="-339"/>
+            <point key="canvasLocation" x="2461" y="-337"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="kLa-p5-x3g">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7cQ-OR-D37" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="contentController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" navigationBarHidden="YES" id="MIz-IO-Kgw" customClass="DEMONavigationController" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <toolbarItems/>
                     <nil key="simulatedTopBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="pdI-Qy-zpU">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="pdI-Qy-zpU">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="Zra-nb-3oM"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="Fje-oM-aSy"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7cQ-OR-D37" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2461" y="347"/>
+            <point key="canvasLocation" x="2461" y="324"/>
         </scene>
-        <!--Menu View Controller-->
+        <!--Table View Controller-->
         <scene sceneID="g0C-ze-K4J">
             <objects>
-                <tableViewController restorationIdentifier="menuController" storyboardIdentifier="menuController" id="exs-g7-EwH" customClass="DEMOMenuViewController" sceneMemberID="viewController">
+                <tableViewController id="exs-g7-EwH" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="ZBu-hD-Z4J">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -14511,7 +14526,54 @@ tesing of add circular notification</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Igd-nh-iCf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2461" y="993"/>
+            <point key="canvasLocation" x="2109" y="1013"/>
+        </scene>
+        <!--Menu View Controller-->
+        <scene sceneID="HkP-mV-hgP">
+            <objects>
+                <viewController restorationIdentifier="menuController" storyboardIdentifier="menuController" id="PeE-Qb-upc" customClass="DEMOMenuViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="08l-hI-9t6"/>
+                        <viewControllerLayoutGuide type="bottom" id="C1v-wJ-eci"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Thx-5O-azZ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="XQa-aF-pdw">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="5wG-96-xud">
+                                        <rect key="frame" x="0.0" y="22" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5wG-96-xud" id="ppv-kZ-raJ">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="PeE-Qb-upc" id="08X-n9-6Et"/>
+                                    <outlet property="delegate" destination="PeE-Qb-upc" id="puf-8Y-00R"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="XQa-aF-pdw" secondAttribute="trailing" id="T2F-Fa-TMc"/>
+                            <constraint firstItem="C1v-wJ-eci" firstAttribute="top" secondItem="XQa-aF-pdw" secondAttribute="bottom" id="bTp-aD-eY8"/>
+                            <constraint firstItem="XQa-aF-pdw" firstAttribute="top" secondItem="Thx-5O-azZ" secondAttribute="top" id="jU7-ka-gM9"/>
+                            <constraint firstItem="XQa-aF-pdw" firstAttribute="leading" secondItem="Thx-5O-azZ" secondAttribute="leading" id="nnj-Xr-1Ks"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tblMenuTable" destination="XQa-aF-pdw" id="kan-G2-p6k"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NWs-Pd-qOz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2775" y="1008"/>
         </scene>
     </scenes>
     <resources>
