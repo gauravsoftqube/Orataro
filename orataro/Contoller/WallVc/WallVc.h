@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "REFrostedViewController.h"
 
 @interface WallVc : UIViewController<UITableViewDelegate,UITableViewDataSource>
 - (IBAction)MenuBtnClicked:(id)sender;

@@ -15,5 +15,6 @@
 @property (assign,nonatomic)int checkhomeLang;
 @property (assign,nonatomic)int scoolgroup;
 @property (assign,nonatomic)int checkListelection ;
+@property (assign,nonatomic)int c2;
 @end
 
