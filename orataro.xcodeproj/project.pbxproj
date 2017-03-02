@@ -13,7 +13,6 @@
 		093227861E38750D00138A2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 093227851E38750D00138A2B /* Assets.xcassets */; };
 		093227891E38750D00138A2B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 093227871E38750D00138A2B /* LaunchScreen.storyboard */; };
 		093227971E3882ED00138A2B /* HelveticaNeueLTStd-Roman.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 093227961E3882ED00138A2B /* HelveticaNeueLTStd-Roman.ttf */; };
-		0949E9441E3B783600723301 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0949E9431E3B783600723301 /* SWRevealViewController.m */; };
 		0949E9481E3B820400723301 /* RightVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 0949E9471E3B820400723301 /* RightVc.m */; };
 		0977D5FD1E3B144E00ACB7A5 /* WallVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 0977D5FC1E3B144E00ACB7A5 /* WallVc.m */; };
 		0977D6021E3B1F6300ACB7A5 /* WallCustomeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0977D6001E3B1F6300ACB7A5 /* WallCustomeCell.m */; };
@@ -122,6 +121,16 @@
 		C36B589B1E5F163200DE7464 /* AlbumPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C36B58991E5F163200DE7464 /* AlbumPhotoCell.m */; };
 		C36B589C1E5F163200DE7464 /* AlbumPhotoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C36B589A1E5F163200DE7464 /* AlbumPhotoCell.xib */; };
 		C36BDA7D1E668E3D00779C5B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C36BDA7B1E668E3D00779C5B /* Main.storyboard */; };
+		C36BDAF21E66FFC900779C5B /* RECommonFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = C36BDAE71E66FFC900779C5B /* RECommonFunctions.m */; };
+		C36BDAF31E66FFC900779C5B /* REFrostedContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C36BDAE91E66FFC900779C5B /* REFrostedContainerViewController.m */; };
+		C36BDAF41E66FFC900779C5B /* REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C36BDAEB1E66FFC900779C5B /* REFrostedViewController.m */; };
+		C36BDAF51E66FFC900779C5B /* UIImage+REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C36BDAED1E66FFC900779C5B /* UIImage+REFrostedViewController.m */; };
+		C36BDAF61E66FFC900779C5B /* UIView+REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C36BDAEF1E66FFC900779C5B /* UIView+REFrostedViewController.m */; };
+		C36BDAF71E66FFC900779C5B /* UIViewController+REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C36BDAF11E66FFC900779C5B /* UIViewController+REFrostedViewController.m */; };
+		C36BDB011E67012400779C5B /* DEMOHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C36BDAFA1E67012400779C5B /* DEMOHomeViewController.m */; };
+		C36BDB021E67012400779C5B /* DEMOMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C36BDAFC1E67012400779C5B /* DEMOMenuViewController.m */; };
+		C36BDB031E67012400779C5B /* DEMONavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C36BDAFE1E67012400779C5B /* DEMONavigationController.m */; };
+		C36BDB041E67012400779C5B /* DEMORootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C36BDB001E67012400779C5B /* DEMORootViewController.m */; };
 		C36D394B1E558C42001A445E /* PageVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C36D394A1E558C42001A445E /* PageVc.m */; };
 		C36D39571E55D52B001A445E /* MessageVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C36D39561E55D52B001A445E /* MessageVc.m */; };
 		C36DD1801E405D930011221E /* SAMTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = C36DD17F1E405D930011221E /* SAMTextView.m */; };
@@ -193,8 +202,6 @@
 		093227881E38750D00138A2B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0932278A1E38750D00138A2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		093227961E3882ED00138A2B /* HelveticaNeueLTStd-Roman.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "HelveticaNeueLTStd-Roman.ttf"; sourceTree = "<group>"; };
-		0949E9421E3B783600723301 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
-		0949E9431E3B783600723301 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		0949E9461E3B820400723301 /* RightVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RightVc.h; sourceTree = "<group>"; };
 		0949E9471E3B820400723301 /* RightVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RightVc.m; sourceTree = "<group>"; };
 		0977D5FB1E3B144E00ACB7A5 /* WallVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WallVc.h; sourceTree = "<group>"; };
@@ -395,6 +402,26 @@
 		C36B58991E5F163200DE7464 /* AlbumPhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumPhotoCell.m; sourceTree = "<group>"; };
 		C36B589A1E5F163200DE7464 /* AlbumPhotoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlbumPhotoCell.xib; sourceTree = "<group>"; };
 		C36BDA7C1E668E3D00779C5B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C36BDAE61E66FFC900779C5B /* RECommonFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RECommonFunctions.h; path = REFrostedViewController/RECommonFunctions.h; sourceTree = "<group>"; };
+		C36BDAE71E66FFC900779C5B /* RECommonFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RECommonFunctions.m; path = REFrostedViewController/RECommonFunctions.m; sourceTree = "<group>"; };
+		C36BDAE81E66FFC900779C5B /* REFrostedContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = REFrostedContainerViewController.h; path = REFrostedViewController/REFrostedContainerViewController.h; sourceTree = "<group>"; };
+		C36BDAE91E66FFC900779C5B /* REFrostedContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = REFrostedContainerViewController.m; path = REFrostedViewController/REFrostedContainerViewController.m; sourceTree = "<group>"; };
+		C36BDAEA1E66FFC900779C5B /* REFrostedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = REFrostedViewController.h; path = REFrostedViewController/REFrostedViewController.h; sourceTree = "<group>"; };
+		C36BDAEB1E66FFC900779C5B /* REFrostedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = REFrostedViewController.m; path = REFrostedViewController/REFrostedViewController.m; sourceTree = "<group>"; };
+		C36BDAEC1E66FFC900779C5B /* UIImage+REFrostedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+REFrostedViewController.h"; path = "REFrostedViewController/UIImage+REFrostedViewController.h"; sourceTree = "<group>"; };
+		C36BDAED1E66FFC900779C5B /* UIImage+REFrostedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+REFrostedViewController.m"; path = "REFrostedViewController/UIImage+REFrostedViewController.m"; sourceTree = "<group>"; };
+		C36BDAEE1E66FFC900779C5B /* UIView+REFrostedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+REFrostedViewController.h"; path = "REFrostedViewController/UIView+REFrostedViewController.h"; sourceTree = "<group>"; };
+		C36BDAEF1E66FFC900779C5B /* UIView+REFrostedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+REFrostedViewController.m"; path = "REFrostedViewController/UIView+REFrostedViewController.m"; sourceTree = "<group>"; };
+		C36BDAF01E66FFC900779C5B /* UIViewController+REFrostedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+REFrostedViewController.h"; path = "REFrostedViewController/UIViewController+REFrostedViewController.h"; sourceTree = "<group>"; };
+		C36BDAF11E66FFC900779C5B /* UIViewController+REFrostedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+REFrostedViewController.m"; path = "REFrostedViewController/UIViewController+REFrostedViewController.m"; sourceTree = "<group>"; };
+		C36BDAF91E67012400779C5B /* DEMOHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DEMOHomeViewController.h; sourceTree = "<group>"; };
+		C36BDAFA1E67012400779C5B /* DEMOHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DEMOHomeViewController.m; sourceTree = "<group>"; };
+		C36BDAFB1E67012400779C5B /* DEMOMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DEMOMenuViewController.h; sourceTree = "<group>"; };
+		C36BDAFC1E67012400779C5B /* DEMOMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DEMOMenuViewController.m; sourceTree = "<group>"; };
+		C36BDAFD1E67012400779C5B /* DEMONavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DEMONavigationController.h; sourceTree = "<group>"; };
+		C36BDAFE1E67012400779C5B /* DEMONavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DEMONavigationController.m; sourceTree = "<group>"; };
+		C36BDAFF1E67012400779C5B /* DEMORootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DEMORootViewController.h; sourceTree = "<group>"; };
+		C36BDB001E67012400779C5B /* DEMORootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DEMORootViewController.m; sourceTree = "<group>"; };
 		C36D39491E558C42001A445E /* PageVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageVc.h; sourceTree = "<group>"; };
 		C36D394A1E558C42001A445E /* PageVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageVc.m; sourceTree = "<group>"; };
 		C36D39551E55D52B001A445E /* MessageVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageVc.h; sourceTree = "<group>"; };
@@ -578,6 +605,7 @@
 		093227901E38794800138A2B /* Contoller */ = {
 			isa = PBXGroup;
 			children = (
+				C36BDAF81E67005900779C5B /* MenuController */,
 				C375B6381E65B63C00E8D63D /* AddHomeworkVc */,
 				C375B6331E6550B800E8D63D /* SchoolgroupVc */,
 				C375B62B1E65458000E8D63D /* ProfileHappyGramListdetailListVc */,
@@ -672,6 +700,7 @@
 		0949E9401E3B783600723301 /* thirdparty */ = {
 			isa = PBXGroup;
 			children = (
+				C36BDAE51E66FF8900779C5B /* REFrostedViewController */,
 				C3A2D7151E641FD800B91B54 /* TriangularButton */,
 				C36B586B1E5EE7DB00DE7464 /* ORGDetailViewController */,
 				C3645ABD1E5BFE5B0012F4CF /* FSCalendar */,
@@ -679,18 +708,8 @@
 				C360CD2F1E4B28ED00761ABE /* ParallaxViewcontroller */,
 				C36DD1821E4073BC0011221E /* IQkeyboard */,
 				C36DD17D1E405D270011221E /* SAMTextview */,
-				0949E9411E3B783600723301 /* SWRevealViewController */,
 			);
 			path = thirdparty;
-			sourceTree = "<group>";
-		};
-		0949E9411E3B783600723301 /* SWRevealViewController */ = {
-			isa = PBXGroup;
-			children = (
-				0949E9421E3B783600723301 /* SWRevealViewController.h */,
-				0949E9431E3B783600723301 /* SWRevealViewController.m */,
-			);
-			path = SWRevealViewController;
 			sourceTree = "<group>";
 		};
 		0949E9451E3B81E200723301 /* RightSlideMenuVc */ = {
@@ -1284,6 +1303,40 @@
 			path = AlbumPhotoCell;
 			sourceTree = "<group>";
 		};
+		C36BDAE51E66FF8900779C5B /* REFrostedViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C36BDAE61E66FFC900779C5B /* RECommonFunctions.h */,
+				C36BDAE71E66FFC900779C5B /* RECommonFunctions.m */,
+				C36BDAE81E66FFC900779C5B /* REFrostedContainerViewController.h */,
+				C36BDAE91E66FFC900779C5B /* REFrostedContainerViewController.m */,
+				C36BDAEA1E66FFC900779C5B /* REFrostedViewController.h */,
+				C36BDAEB1E66FFC900779C5B /* REFrostedViewController.m */,
+				C36BDAEC1E66FFC900779C5B /* UIImage+REFrostedViewController.h */,
+				C36BDAED1E66FFC900779C5B /* UIImage+REFrostedViewController.m */,
+				C36BDAEE1E66FFC900779C5B /* UIView+REFrostedViewController.h */,
+				C36BDAEF1E66FFC900779C5B /* UIView+REFrostedViewController.m */,
+				C36BDAF01E66FFC900779C5B /* UIViewController+REFrostedViewController.h */,
+				C36BDAF11E66FFC900779C5B /* UIViewController+REFrostedViewController.m */,
+			);
+			name = REFrostedViewController;
+			sourceTree = "<group>";
+		};
+		C36BDAF81E67005900779C5B /* MenuController */ = {
+			isa = PBXGroup;
+			children = (
+				C36BDAF91E67012400779C5B /* DEMOHomeViewController.h */,
+				C36BDAFA1E67012400779C5B /* DEMOHomeViewController.m */,
+				C36BDAFB1E67012400779C5B /* DEMOMenuViewController.h */,
+				C36BDAFC1E67012400779C5B /* DEMOMenuViewController.m */,
+				C36BDAFD1E67012400779C5B /* DEMONavigationController.h */,
+				C36BDAFE1E67012400779C5B /* DEMONavigationController.m */,
+				C36BDAFF1E67012400779C5B /* DEMORootViewController.h */,
+				C36BDB001E67012400779C5B /* DEMORootViewController.m */,
+			);
+			path = MenuController;
+			sourceTree = "<group>";
+		};
 		C36D39481E558C12001A445E /* PagesVc */ = {
 			isa = PBXGroup;
 			children = (
@@ -1838,13 +1891,16 @@
 				C3A2D72A1E64212200B91B54 /* PNTUtility.m in Sources */,
 				C3741FDC1E4CA29400BFFA23 /* AboutOrataroVc.m in Sources */,
 				C36B58871E5EEF4400DE7464 /* PhototableCell.m in Sources */,
+				C36BDB021E67012400779C5B /* DEMOMenuViewController.m in Sources */,
 				09F428BF1E38BC0B00A80F0D /* AFSecurityPolicy.m in Sources */,
+				C36BDAF31E66FFC900779C5B /* REFrostedContainerViewController.m in Sources */,
 				C36DD1B01E4086210011221E /* IQBarButtonItem.m in Sources */,
 				C35C07421E486C15004C55EB /* AttendanceTableViewCell.m in Sources */,
 				C3A2D7241E64210D00B91B54 /* PNTButton.m in Sources */,
 				C35FB2E11E4C64F800466CA6 /* ParallaxViewController.m in Sources */,
 				09F428C91E38BC0B00A80F0D /* UIButton+AFNetworking.m in Sources */,
 				C365CCCA1E4A0D3F00A4ABAA /* AddPollVc.m in Sources */,
+				C36BDAF61E66FFC900779C5B /* UIView+REFrostedViewController.m in Sources */,
 				C38AF1151E60424A00E4F40B /* ProfileLeaveDetailListVc.m in Sources */,
 				C36B58531E5EC05000DE7464 /* CalenderEventVc.m in Sources */,
 				09F428901E38AE7F00A80F0D /* RegisterVc.m in Sources */,
@@ -1852,9 +1908,9 @@
 				C3645AE21E5BFE980012F4CF /* FSCalendarCalculator.m in Sources */,
 				C38AF1041E603B6E00E4F40B /* ProfileLeaveListSelectVc.m in Sources */,
 				C36B585C1E5ED98E00DE7464 /* ScoolGroupVc.m in Sources */,
+				C36BDAF21E66FFC900779C5B /* RECommonFunctions.m in Sources */,
 				09F428CB1E38BC0B00A80F0D /* UIProgressView+AFNetworking.m in Sources */,
 				C3645A891E5BF44B0012F4CF /* HomeWrokVc.m in Sources */,
-				0949E9441E3B783600723301 /* SWRevealViewController.m in Sources */,
 				09F428BC1E38BC0B00A80F0D /* AFHTTPRequestOperationManager.m in Sources */,
 				C391E4EF1E40C261007BE2EA /* SubjectVc.m in Sources */,
 				C36B587D1E5EE82B00DE7464 /* ORGContainerCellView.m in Sources */,
@@ -1874,6 +1930,7 @@
 				09F428BB1E38BC0B00A80F0D /* AFHTTPRequestOperation.m in Sources */,
 				C36DD1801E405D930011221E /* SAMTextView.m in Sources */,
 				C36724721E54374E007E9326 /* FAQCustomeCell.m in Sources */,
+				C36BDB041E67012400779C5B /* DEMORootViewController.m in Sources */,
 				C36B585F1E5ED99C00DE7464 /* CreateScoolGroupVc.m in Sources */,
 				09F428CC1E38BC0B00A80F0D /* UIRefreshControl+AFNetworking.m in Sources */,
 				0932277E1E38750D00138A2B /* AppDelegate.m in Sources */,
@@ -1921,11 +1978,13 @@
 				C3A2D7271E64211900B91B54 /* UIImage+ColorAtPixel.m in Sources */,
 				C38ABFB81E48B31200689426 /* TimeTableVc.m in Sources */,
 				09F428BE1E38BC0B00A80F0D /* AFNetworkReachabilityManager.m in Sources */,
+				C36BDB011E67012400779C5B /* DEMOHomeViewController.m in Sources */,
 				C36DD1C61E409C120011221E /* ListSelectionVc.m in Sources */,
 				C36DD1B41E4086210011221E /* IQNSArray+Sort.m in Sources */,
 				C36724771E546CFB007E9326 /* MyProfileVc.m in Sources */,
 				C36B589B1E5F163200DE7464 /* AlbumPhotoCell.m in Sources */,
 				C365CCCD1E4A0DF700A4ABAA /* ResultVc.m in Sources */,
+				C36BDAF51E66FFC900779C5B /* UIImage+REFrostedViewController.m in Sources */,
 				C3645AF31E5C05EA0012F4CF /* ClassworkVC.m in Sources */,
 				C36D394B1E558C42001A445E /* PageVc.m in Sources */,
 				C369E6DC1E5AF2A40048D601 /* Reachability.m in Sources */,
@@ -1955,11 +2014,14 @@
 				C3645AFB1E5C6BC80012F4CF /* NoteVc.m in Sources */,
 				C360CD231E4AF6C600761ABE /* NotificationVc.m in Sources */,
 				C38ABFB41E48A78600689426 /* SchooltimeVc.m in Sources */,
+				C36BDAF41E66FFC900779C5B /* REFrostedViewController.m in Sources */,
 				C36DD1B71E4086210011221E /* IQToolbar.m in Sources */,
+				C36BDB031E67012400779C5B /* DEMONavigationController.m in Sources */,
 				C3645AE11E5BFE980012F4CF /* FSCalendarAppearance.m in Sources */,
 				09F428D11E38E76400A80F0D /* LoginVC.m in Sources */,
 				C36B58501E5EC04800DE7464 /* CalenderEventDetailVc.m in Sources */,
 				C3645AEE1E5BFE980012F4CF /* FSCalendarWeekdayView.m in Sources */,
+				C36BDAF71E66FFC900779C5B /* UIViewController+REFrostedViewController.m in Sources */,
 				C36B588C1E5EF43E00DE7464 /* PhotoVc.m in Sources */,
 				09F428C61E38BC0B00A80F0D /* AFNetworkActivityIndicatorManager.m in Sources */,
 				C38ABFAC1E48936100689426 /* PTCommuniVc.m in Sources */,
