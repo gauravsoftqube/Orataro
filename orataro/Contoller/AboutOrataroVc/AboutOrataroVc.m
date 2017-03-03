@@ -11,11 +11,13 @@
 #import "HelpDeskVc.h"
 #import "ContactUsVc.h"
 #import "REFrostedViewController.h"
+#import "AppDelegate.h"
 
 @interface AboutOrataroVc ()
 {
     NSArray *dispary,*imgary;
     int c2;
+    AppDelegate *app;
 }
 @end
 
@@ -25,6 +27,9 @@
 {
     [super viewDidLoad];
     
+
+    
+    app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     self.automaticallyAdjustsScrollViewInsets = NO;
 
     dispary = [[NSMutableArray alloc]initWithObjects:@"Share App",@"Rate App",@"Our other Free Apps",@"Facebook",@"Twitter",@"Linkin",@"Google+",@"About Us",@"Contact US",@"Help Desk", nil];
@@ -157,19 +162,27 @@
 
 - (IBAction)MenuBtnClicked:(id)sender
 {
-     if (c2==0)
+    self.frostedViewController.direction = REFrostedViewControllerDirectionRight;
+    
+    if (app.checkview == 0)
     {
-        self.frostedViewController.direction = REFrostedViewControllerDirectionRight;
-        self.frostedViewController.panGestureEnabled = NO;
         [self.frostedViewController presentMenuViewController];
-        c2=1;
+        app.checkview = 1;
+        
     }
     else
     {
         [self.frostedViewController hideMenuViewController];
-        self.frostedViewController.panGestureEnabled = NO;
-        c2 =0;
+        app.checkview = 0;
     }
+}
+- (IBAction)btnHomeClicked:(id)sender
+{
+     [self.frostedViewController hideMenuViewController];
+    
+    UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"OrataroVc"];
+    
+    [self.navigationController pushViewController:wc animated:NO];
 }
 
 

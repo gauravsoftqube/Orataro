@@ -9,11 +9,13 @@
 #import "HolidayVc.h"
 #import "HolidayVcCell.h"
 #import "REFrostedViewController.h"
+#import "AppDelegate.h"
 
 @interface HolidayVc ()
 {
     NSMutableArray *DispData;
     int c2;
+    AppDelegate *app;
 }
 @end
 
@@ -23,13 +25,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+
+   
+    app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    
     DispData = [[NSMutableArray alloc]init];
     
     NSMutableDictionary *dic  = [[NSMutableDictionary alloc]initWithObjectsAndKeys:@"23/05/2016",@"date",@"Tue",@"day",@"Ganesh Chaturthi",@"festival", nil];
     
     NSMutableDictionary *dic1  = [[NSMutableDictionary alloc]initWithObjectsAndKeys:@"24/05/2016",@"date",@"Mon",@"day",@"Makarsankrati",@"festival", nil];
     
-     NSMutableDictionary *dic2  = [[NSMutableDictionary alloc]initWithObjectsAndKeys:@"26/05/2016",@"date",@"Wed",@"day",@"Raksha Bandhan ddsdsd dfdfdfdf trtrtrt sewew wewew wewwe rtrtr wewe wrere erere  rtrt rtrt uiui",@"festival", nil];
+     NSMutableDictionary *dic2  = [[NSMutableDictionary alloc]initWithObjectsAndKeys:@"26/05/2016",@"date",@"Wed",@"day",@"Raksha Bandhan",@"festival", nil];
     
     [DispData addObject:dic];
     [DispData addObject:dic1];
@@ -93,7 +99,7 @@
     static HolidayVcCell *cell = nil;
     NSString *yourText = [[DispData objectAtIndex:indexPath.row]objectForKey:@"festival"];
     
-    CGSize size = [yourText sizeWithFont:[UIFont fontWithName:@"HelveticaNeueLTStd-Roman" size:17] constrainedToSize:CGSizeMake([[UIScreen mainScreen]bounds].size.width-193, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize size = [yourText sizeWithFont:[UIFont fontWithName:@"HelveticaNeueLTStd-Roman" size:12] constrainedToSize:CGSizeMake([[UIScreen mainScreen]bounds].size.width-193, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
     
     return size.height+40;
     
@@ -108,19 +114,26 @@
 
 - (IBAction)MenuBtnClicked:(id)sender
 {
-     if (c2==0)
+    self.frostedViewController.direction = REFrostedViewControllerDirectionRight;
+    
+    if (app.checkview == 0)
     {
-        self.frostedViewController.direction = REFrostedViewControllerDirectionRight;
-        self.frostedViewController.panGestureEnabled = NO;
         [self.frostedViewController presentMenuViewController];
-        c2=1;
+        app.checkview = 1;
+        
     }
     else
     {
         [self.frostedViewController hideMenuViewController];
-        self.frostedViewController.panGestureEnabled = NO;
-        c2 =0;
+        app.checkview = 0;
     }
+}
+- (IBAction)btnHomeClicked:(id)sender
+{
+     [self.frostedViewController hideMenuViewController];
+    UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"OrataroVc"];
+    
+    [self.navigationController pushViewController:wc animated:NO];
 }
 
 /*

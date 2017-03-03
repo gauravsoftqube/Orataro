@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "Reachability.h"
 #import "Global.h"
+#import "REFrostedViewController.h"
 
 #define APPDELEGATE (AppDelegate *)[[UIApplication sharedApplication] delegate]
 
@@ -23,6 +24,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    REFrostedViewController *rf = [[REFrostedViewController alloc]init];
+    
+    rf.panGestureEnabled = NO;
+    
+    
     _commonvar = 0;
     _checkhomeLang = 0;
     _scoolgroup = 0;
@@ -30,7 +36,6 @@
     _c2 = 0;
     _checkview = 0;
 
-   
     
     // Override point for customization after application launch.
     return YES;

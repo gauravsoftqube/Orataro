@@ -19,7 +19,7 @@
 {
     [super viewDidLoad];
     
-    [aViewHeight setConstant:750];
+    [aViewHeight setConstant:600];
     [aViewWidth setConstant:self.view.frame.size.width];
     
     UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
@@ -42,7 +42,7 @@
     aReferenceLinkTextField.leftView = paddingView4;
     aReferenceLinkTextField.leftViewMode = UITextFieldViewModeAlways;
     
-    aDescriptionTextView.textContainerInset = UIEdgeInsetsMake(10, 18, 0, 0);
+    aDescriptionTextView.textContainerInset = UIEdgeInsetsMake(10, 16, 0, 0);
     
     // Do any additional setup after loading the view.
 }

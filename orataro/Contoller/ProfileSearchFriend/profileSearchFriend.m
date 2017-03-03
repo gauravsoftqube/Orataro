@@ -9,7 +9,9 @@
 #import "profileSearchFriend.h"
 
 @interface profileSearchFriend ()
-
+{
+    NSMutableArray *nameary;
+}
 @end
 
 @implementation profileSearchFriend
@@ -20,6 +22,7 @@
     
     //
     
+     nameary = [[NSMutableArray alloc]initWithObjects:@"mangroliya dhara",@"Patel Diya",@"patel nilam" ,@"patel ridhhi",nil];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     aTableView.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
@@ -91,8 +94,8 @@
     //  lb.text = [getdata objectAtIndex:indexPath.row];
     
     //tag 2
-   // UILabel *lb = (UILabel *)[cell.contentView viewWithTag:2];
-    //lb.text = [nameary objectAtIndex:indexPath.row];
+    UILabel *lb = (UILabel *)[cell.contentView viewWithTag:2];
+    lb.text = [nameary objectAtIndex:indexPath.row];
     
     //tag 3
     //UILabel *lb = (UILabel *)[cell.contentView viewWithTag:3];
@@ -127,13 +130,16 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return nameary.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // as per content
-    return 124;
+    NSString *str = [NSString stringWithFormat:@"%@",[nameary objectAtIndex:indexPath.row]];
+    CGSize size = [str sizeWithFont:[UIFont fontWithName:@"HelveticaNeueLTStd-Roman" size:14] constrainedToSize:CGSizeMake([[UIScreen mainScreen]bounds].size.width-252, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
+    
+    return size.height+76;
 }
 
 

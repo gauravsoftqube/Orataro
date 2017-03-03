@@ -31,15 +31,15 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="29" id="Ucl-h4-LJb"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dash_profile" translatesAutoresizingMaskIntoConstraints="NO" id="Skc-9x-HuH">
-                                <rect key="frame" x="41" y="24" width="50" height="51"/>
+                                <rect key="frame" x="46" y="35" width="40" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="fAs-w1-y7y"/>
-                                    <constraint firstAttribute="height" constant="51" id="vrc-sw-yXj"/>
+                                    <constraint firstAttribute="width" constant="40" id="fAs-w1-y7y"/>
+                                    <constraint firstAttribute="height" constant="40" id="vrc-sw-yXj"/>
                                 </constraints>
                             </imageView>
                         </subviews>

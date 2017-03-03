@@ -137,18 +137,18 @@ int c2= 0;
 {
     self.frostedViewController.direction = REFrostedViewControllerDirectionRight;
     
-    NSLog(@"app=%d",app.c2);
+    NSLog(@"app=%d",app.checkview);
     
-    if (app.c2 == 0)
+    if (app.checkview == 0)
     {
         [self.frostedViewController presentMenuViewController];
-        app.c2 = 1;
+        app.checkview = 1;
 
     }
     else
     {
         [self.frostedViewController hideMenuViewController];
-       app.c2 = 0;
+       app.checkview = 0;
     }
     
 }
@@ -171,10 +171,10 @@ int c2= 0;
     }
     else
     {
-//        AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
-//        
-//        //[self.navigationController pushViewController:wc animated:YES];
-//        
+        AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
+        
+       [self.navigationController pushViewController:wc animated:YES];
+//
 //        //[self performSegueWithIdentifier:@"Showaddpost" sender:self];
 //        [self.revealViewController pushFrontViewController:wc animated:YES];
     }
@@ -182,6 +182,8 @@ int c2= 0;
 }
 - (IBAction)HomeBtnClicked:(id)sender
 {
+    NSLog(@"check=%@",_checkscreen);
+    
     if ([_checkscreen isEqualToString:@"Institute"])
     {
         [self.navigationController popViewControllerAnimated:YES];
@@ -200,9 +202,11 @@ int c2= 0;
     }
     else
     {
+         [self.frostedViewController hideMenuViewController];
+        
         OrataroVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"OrataroVc"];
         
-        [self.navigationController pushViewController:wc animated:YES];
+        [self.navigationController pushViewController:wc animated:NO];
     }
     //[self performSegueWithIdentifier:@"Showaddpost" sender:self];
    // [self.revealViewController pushFrontViewController:wc animated:YES];

@@ -9,10 +9,13 @@
 #import "CreateReminderVc.h"
 #import "REFrostedViewController.h"
 #import "ReminderVc.h"
-
+#import "AppDelegate.h"
 @interface CreateReminderVc ()
 {
 int c2;
+
+    AppDelegate *app;
+   
 }
 @end
 
@@ -20,6 +23,9 @@ int c2;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+
     
     _aCalenderView.layer.cornerRadius = 50.0;
     _aCalenderView.layer.borderColor = [UIColor lightGrayColor].CGColor;
@@ -40,18 +46,19 @@ int c2;
 
 - (IBAction)MenuBtnClicked:(id)sender
 {
-     if (c2==0)
+    self.frostedViewController.direction = REFrostedViewControllerDirectionRight;
+                                                                                                           
+    
+    if (app.checkview == 0)
     {
-        self.frostedViewController.direction = REFrostedViewControllerDirectionRight;
-        self.frostedViewController.panGestureEnabled = NO;
         [self.frostedViewController presentMenuViewController];
-        c2=1;
+        app.checkview = 1;
+        
     }
     else
     {
         [self.frostedViewController hideMenuViewController];
-        self.frostedViewController.panGestureEnabled = NO;
-        c2 =0;
+        app.checkview = 0;
     }
 }
 - (IBAction)AddBtnClicked:(UIButton *)sender
@@ -59,6 +66,15 @@ int c2;
     ReminderVc *r = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ReminderVc"];
     [self.navigationController pushViewController:r animated:YES];
 }
+
+- (IBAction)btnHomeClicked:(id)sender
+{
+     [self.frostedViewController hideMenuViewController];
+    UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"OrataroVc"];
+    
+    [self.navigationController pushViewController:wc animated:NO];
+}
+
 /*
 #pragma mark - Navigation
 

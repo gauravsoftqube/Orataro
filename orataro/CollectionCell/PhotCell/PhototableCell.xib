@@ -31,7 +31,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="wOp-bv-eK9"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="15"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="14"/>
                                 <color key="textColor" red="0.15294117647058825" green="0.18823529411764706" blue="0.35686274509803922" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -48,7 +48,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="qdU-1w-nPG"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="15"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="14"/>
                                 <color key="textColor" red="0.15294117647058825" green="0.18823529411764706" blue="0.35686274509803922" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>

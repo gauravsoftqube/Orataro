@@ -17,6 +17,8 @@
 #import "AppDelegate.h"
 #import "OrataroVc.h"
 
+#import "REFrostedViewController.h"
+
 @interface ViewController ()
 {
     AppDelegate *app;
@@ -30,6 +32,8 @@
     
 //    _commonvar = 0;
 //    _checkhomeLang = 0;
+    
+    self.frostedViewController.panGestureEnabled = NO;
     
     app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     

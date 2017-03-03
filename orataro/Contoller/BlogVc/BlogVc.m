@@ -25,7 +25,7 @@
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    getdata = [[NSMutableArray alloc]initWithObjects:@"cdsfdfdsfdsfsdfsdfdfdfdsf cdsfdfdsfdsfsdfsdfdfdfdsf cdsfdfdsfdsfsdfsdfdfdfdsf",@"Prayer Of The Winter fgfffdgfdgfg",@"gfgfgfg Message cdsfdfdsfdsfsdfsdfdfdfdsf cdsfdfdsfdsfsdfsdfdfdfdsf cdsfdfdsfdsfsdfsdfdfdfdsf cdsfdfdsfdsfsdfsdfdfdfdsf",@"fgfdfg School Photo",@"fgfg Welcome Message", nil];
+    getdata = [[NSMutableArray alloc]initWithObjects:@"Prayer Of The Winter Prayer Of The Winter",@"Prayer Of The Winter Prayer Of The Winter Prayer Of The Winter Prayer Of The Winter",@"Prayer Of The Winter",@"School Photo",@"Welcome Message", nil];
     aBlogTable.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
     aBlogTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     
@@ -83,7 +83,7 @@
     // as per content
     
     NSString *str = [NSString stringWithFormat:@"%@",[getdata objectAtIndex:indexPath.row]];
-        CGSize size = [str sizeWithFont:[UIFont fontWithName:@"HelveticaNeueLTStd-Roman" size:20] constrainedToSize:CGSizeMake([[UIScreen mainScreen]bounds].size.width-48, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
+        CGSize size = [str sizeWithFont:[UIFont fontWithName:@"HelveticaNeueLTStd-Roman" size:13] constrainedToSize:CGSizeMake([[UIScreen mainScreen]bounds].size.width-35, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
 
         return size.height+35;
 }
