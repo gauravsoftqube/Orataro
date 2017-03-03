@@ -124,7 +124,6 @@
 		C36B58961E5F15E700DE7464 /* PhotoalbumCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C36B58941E5F15E700DE7464 /* PhotoalbumCell.xib */; };
 		C36B589B1E5F163200DE7464 /* AlbumPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C36B58991E5F163200DE7464 /* AlbumPhotoCell.m */; };
 		C36B589C1E5F163200DE7464 /* AlbumPhotoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C36B589A1E5F163200DE7464 /* AlbumPhotoCell.xib */; };
-		C36BDA7D1E668E3D00779C5B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C36BDA7B1E668E3D00779C5B /* Main.storyboard */; };
 		C36BDAF21E66FFC900779C5B /* RECommonFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = C36BDAE71E66FFC900779C5B /* RECommonFunctions.m */; };
 		C36BDAF31E66FFC900779C5B /* REFrostedContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C36BDAE91E66FFC900779C5B /* REFrostedContainerViewController.m */; };
 		C36BDAF41E66FFC900779C5B /* REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C36BDAEB1E66FFC900779C5B /* REFrostedViewController.m */; };
@@ -159,6 +158,7 @@
 		C375B6321E65464B00E8D63D /* ProfileAddUpdateListDetailListVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C375B6311E65464B00E8D63D /* ProfileAddUpdateListDetailListVc.m */; };
 		C375B6361E65513A00E8D63D /* SchoolVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C375B6351E65513A00E8D63D /* SchoolVc.m */; };
 		C375B63B1E65B67700E8D63D /* AddHomeworkVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C375B63A1E65B67700E8D63D /* AddHomeworkVc.m */; };
+		C37EED0A1E6949A1004ACCCC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C37EED081E6949A1004ACCCC /* Main.storyboard */; };
 		C381726B1E517DCD004AB189 /* SettingVcViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C381726A1E517DCD004AB189 /* SettingVcViewController.m */; };
 		C381726F1E518756004AB189 /* FAQvc.m in Sources */ = {isa = PBXBuildFile; fileRef = C381726E1E518756004AB189 /* FAQvc.m */; };
 		C38ABFA81E487DF900689426 /* StudentListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C38ABFA71E487DF900689426 /* StudentListViewController.m */; };
@@ -409,7 +409,6 @@
 		C36B58981E5F163200DE7464 /* AlbumPhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumPhotoCell.h; sourceTree = "<group>"; };
 		C36B58991E5F163200DE7464 /* AlbumPhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumPhotoCell.m; sourceTree = "<group>"; };
 		C36B589A1E5F163200DE7464 /* AlbumPhotoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlbumPhotoCell.xib; sourceTree = "<group>"; };
-		C36BDA7C1E668E3D00779C5B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C36BDAE61E66FFC900779C5B /* RECommonFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RECommonFunctions.h; path = REFrostedViewController/RECommonFunctions.h; sourceTree = "<group>"; };
 		C36BDAE71E66FFC900779C5B /* RECommonFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RECommonFunctions.m; path = REFrostedViewController/RECommonFunctions.m; sourceTree = "<group>"; };
 		C36BDAE81E66FFC900779C5B /* REFrostedContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = REFrostedContainerViewController.h; path = REFrostedViewController/REFrostedContainerViewController.h; sourceTree = "<group>"; };
@@ -478,6 +477,7 @@
 		C375B6351E65513A00E8D63D /* SchoolVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SchoolVc.m; sourceTree = "<group>"; };
 		C375B6391E65B67700E8D63D /* AddHomeworkVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddHomeworkVc.h; sourceTree = "<group>"; };
 		C375B63A1E65B67700E8D63D /* AddHomeworkVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddHomeworkVc.m; sourceTree = "<group>"; };
+		C37EED091E6949A1004ACCCC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C38172691E517DCD004AB189 /* SettingVcViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingVcViewController.h; sourceTree = "<group>"; };
 		C381726A1E517DCD004AB189 /* SettingVcViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingVcViewController.m; sourceTree = "<group>"; };
 		C381726D1E518756004AB189 /* FAQvc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FAQvc.h; sourceTree = "<group>"; };
@@ -586,8 +586,8 @@
 				093227901E38794800138A2B /* Contoller */,
 				093227951E3882ED00138A2B /* Font */,
 				093227851E38750D00138A2B /* Assets.xcassets */,
+				C37EED081E6949A1004ACCCC /* Main.storyboard */,
 				093227871E38750D00138A2B /* LaunchScreen.storyboard */,
-				C36BDA7B1E668E3D00779C5B /* Main.storyboard */,
 				0932278A1E38750D00138A2B /* Info.plist */,
 				093227791E38750D00138A2B /* Supporting Files */,
 			);
@@ -1841,7 +1841,6 @@
 				C3645AEF1E5BFE980012F4CF /* Info.plist in Resources */,
 				093227891E38750D00138A2B /* LaunchScreen.storyboard in Resources */,
 				C365CCBE1E49AB7000A4ABAA /* HolidayVcCell.xib in Resources */,
-				C36BDA7D1E668E3D00779C5B /* Main.storyboard in Resources */,
 				C36DD1CC1E409CB30011221E /* ListCell.xib in Resources */,
 				C35C07381E485346004C55EB /* ClassVcCell.xib in Resources */,
 				093227861E38750D00138A2B /* Assets.xcassets in Resources */,
@@ -1851,6 +1850,7 @@
 				C36B587E1E5EE82B00DE7464 /* ORGContainerCellView.xib in Resources */,
 				C35FB2E31E4C651800466CA6 /* ParallaxViewController.xib in Resources */,
 				C36B58961E5F15E700DE7464 /* PhotoalbumCell.xib in Resources */,
+				C37EED0A1E6949A1004ACCCC /* Main.storyboard in Resources */,
 				093227971E3882ED00138A2B /* HelveticaNeueLTStd-Roman.ttf in Resources */,
 				C35C07431E486C15004C55EB /* AttendanceTableViewCell.xib in Resources */,
 				0977D6031E3B1F6300ACB7A5 /* WallCustomeCell.xib in Resources */,
@@ -2041,10 +2041,10 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
-		C36BDA7B1E668E3D00779C5B /* Main.storyboard */ = {
+		C37EED081E6949A1004ACCCC /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				C36BDA7C1E668E3D00779C5B /* Base */,
+				C37EED091E6949A1004ACCCC /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -2144,6 +2144,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-3";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = M4946NB5UK;
@@ -2159,6 +2160,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-3";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = M4946NB5UK;
