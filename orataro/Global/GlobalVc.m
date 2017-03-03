@@ -7,6 +7,7 @@
 //
 
 #import "GlobalVc.h"
+#import "REFrostedViewController.h"
 
 @interface GlobalVc ()
 
@@ -14,8 +15,11 @@
 
 @implementation GlobalVc
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
+    
+    
     // Do any additional setup after loading the view.
 }
 

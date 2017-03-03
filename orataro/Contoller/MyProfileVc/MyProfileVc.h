@@ -15,5 +15,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *aProfileNameLb;
 @property (weak, nonatomic) IBOutlet UIImageView *aProfileimageview;
 - (IBAction)MenuBtnClicked:(id)sender;
+- (IBAction)btnHomeClicked:(id)sender;
 
 @end

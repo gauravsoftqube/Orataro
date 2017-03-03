@@ -99,6 +99,22 @@
 - (IBAction)SaveBtnClicked:(id)sender {
 }
 
+
+//self.frostedViewController.direction = REFrostedViewControllerDirectionRight;
+//
+//if (app.checkview == 0)
+//{
+//    [self.frostedViewController presentMenuViewController];
+//    app.checkview = 1;
+//    
+//}
+//else
+//{
+//    [self.frostedViewController hideMenuViewController];
+//    app.checkview = 0;
+//}
+
+
 /*
 #pragma mark - Navigation
 

@@ -10,12 +10,15 @@
 #import "OrataroCell.h"
 #import "ViewController.h"
 #import "AppDelegate.h"
+#import "REFrostedViewController.h"
+#import "DEMONavigationController.h"
+#import "Global.h"
 
 @interface OrataroVc ()<UIScrollViewDelegate>
 {
     UICollectionView *coll;
     NSMutableArray *ary;
-    NSMutableArray *aimageary;
+    NSMutableArray *aimageary,*imgary;
     AppDelegate *ap;
 }
 @end
@@ -36,8 +39,10 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     
-     ary = [[NSMutableArray alloc]initWithObjects:@"Profile",@"Circular",@"Wall",@"Homework",@"ClassWork",@"Attendance",@"PT Communication",@"School Timing",@"Time Table",@"Notes",@"Holiday",@"Calender",@"Poll",@"Notification",@"Reminder",@"About Orataro",@"Settings",@"FAQ", nil];
+     ary = [[NSMutableArray alloc]initWithObjects:@"Profile",@"Circular",@"Wall",@"Homework",@"Classwork",@"Attendance",@"PT Communication",@"Exam Timing",@"Time Table",@"Notes",@"Holiday",@"Calendar",@"Poll",@"Notification",@"Reminder",@"About Orataro",@"Settings",@"FAQ", nil];
     
+    
+     imgary = [[NSMutableArray alloc]initWithObjects:@"dash_profile",@"dash_circular",@"dash_fb_wall",@"dash_homework",@"classimg",@"attendance",@"dash_pt_communication",@"dash_school_timing",@"dash_timetable",@"dash_notice",@"dash_holidays",@"dash_calendar",@"dash_fb_poll",@"speech",@"todo",@"user",@"settings",@"faq", nil];
     
     self.headerImageViewHeight.constant = 100;
     [self adjustContentViewHeight];
@@ -112,6 +117,8 @@
     OrataroCell *cell = (OrataroCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"OrataroCell" forIndexPath:indexPath];
     
     cell.aLable.text = [ary objectAtIndex:indexPath.row];
+    cell.aImageView.image = [UIImage imageNamed:[imgary objectAtIndex:indexPath.row]];
+
     
     switch (indexPath.row)
     {
@@ -245,9 +252,8 @@
     }
     //OrataroCell
     
-    // UIImageView *recipeImageView = (UIImageView *)[cell viewWithTag:100];
-    //recipeImageView.image = [UIImage imageNamed:[recipeImages objectAtIndex:indexPath.row]];
-    
+     //UIImageView *recipeImageView = (UIImageView *)[cell viewWithTag:100];
+    //recipeImageView.image =
     return cell;
 }
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -292,7 +298,139 @@
     }
    // [self.navigationController popViewControllerAnimated:YES];
 }
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    switch (indexPath.row)
+    {
+        case 0:
+        {
+            UIViewController  *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MyProfileVc"];
+            [self.navigationController pushViewController:vc animated:YES];
+            
+            break;
+        }
+        case 1:
+        {
+            UIViewController  *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"CircularVc"];
+            [self.navigationController pushViewController:vc animated:YES];            break;
+        }
+        case 2:
+        {
+            UIViewController  *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"WallVc"];
+             [self.navigationController pushViewController:vc animated:YES];
+            break;
+        }
+        case 3:
+        {
+            UIViewController  *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"HomeWrokVc"];
+            [self.navigationController pushViewController:vc animated:YES];
+            break;
+        }
+        case 4:
+        {
+            UIViewController  *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"ClassworkVC"];
+            [self.navigationController pushViewController:vc animated:YES];
+            break;
+        }
+        case 5:
+            
+        {
+            UIViewController  *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AttendanceVC"];
+            [self.navigationController pushViewController:vc animated:YES];            break;
+        }
+        case 6:
+            
+        {
+            UIViewController  *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
+            [self.navigationController pushViewController:vc animated:YES];            break;
+        }
+        case 7:
+            
+        {
+            UIViewController  *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MessageVc"];
+            [self.navigationController pushViewController:vc animated:YES];
+            break;
+        }
+        case 8:
+            
+        {
+            UIViewController  *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"TimeTableVc"];
+             [self.navigationController pushViewController:vc animated:YES];
+            break;
+        }
+        case 9:
+            
+        {
+            UIViewController  *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"NoteVc"];
+             [self.navigationController pushViewController:vc animated:YES];
+            break;
+        }
+        case 10:
+            
+        {
+            UIViewController  *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"HolidayVc"];
+             [self.navigationController pushViewController:vc animated:YES];
+            break;
+        }
+            
+        case 11:
+            
+        {
+            UIViewController  *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"CalenderVc"];
+             [self.navigationController pushViewController:vc animated:YES];
+            break;
+        }
+        case 12:
+            
+        {
+            UIViewController  *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"PollVc"];
+            [self.navigationController pushViewController:vc animated:YES];
+            break;
+        }
+        case 13:
+            
+        {
+            UIViewController  *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"NotificationVc"];
+           [self.navigationController pushViewController:vc animated:YES];            break;
+        }
+        case 14:
+            
+        {
+            UIViewController  *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"CreateReminderVc"];
+            [self.navigationController pushViewController:vc animated:YES];
+            break;
+        }
+            
+        case 15:
+            
+        {
+            UIViewController  *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AboutOrataroVc"];
+            [self.navigationController pushViewController:vc animated:YES];
+            break;
+        }
+            
+        case 16:
+            
+        {
+            UIViewController  *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SettingVcViewController"];
+             [self.navigationController pushViewController:vc animated:YES];            break;
+        }
+        case 17:
+            
+        {
+            UIViewController  *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"FAQvc"];
+           [self.navigationController pushViewController:vc animated:YES];
+            break;
+        }
+            
+        default:
+            break;
+    }
+   // self.frostedViewController.contentViewController = navigationController;
+   // [self.frostedViewController hideMenuViewController];
+    
 
+}
 
 /*
 #pragma mark - Navigation

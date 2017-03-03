@@ -185,6 +185,7 @@
 - (void)hideMenuViewController
 {
     [self re_displayController:self.contentViewController frame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    
     [self hideMenuViewControllerWithCompletionHandler:nil];
 }
 
@@ -201,7 +202,7 @@
 
             NSLog(@"content=%@",_contentViewController);
         
-            self.calculatedMenuViewSize = CGSizeMake(self.contentViewController.view.frame.size.width - 150.0f, self.contentViewController.view.frame.size.height);
+            self.calculatedMenuViewSize = CGSizeMake(self.contentViewController.view.frame.size.width - 120.0f, self.contentViewController.view.frame.size.height);
         
         if (self.direction == REFrostedViewControllerDirectionTop || self.direction == REFrostedViewControllerDirectionBottom)
             self.calculatedMenuViewSize = CGSizeMake(self.contentViewController.view.frame.size.width, self.contentViewController.view.frame.size.height - 50.0f);

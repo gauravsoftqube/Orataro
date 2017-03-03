@@ -9,6 +9,7 @@
 #import "CalenderVc.h"
 #import "FSCalendar.h"
 #import "REFrostedViewController.h"
+#import "AppDelegate.h"
 
 @interface CalenderVc ()<FSCalendarDataSource,FSCalendarDelegate>
 {
@@ -16,6 +17,7 @@
     UILabel *lblMonth;
     UILabel *lblYear;
     int c2;
+    AppDelegate *app;
 }
 @property (weak, nonatomic) IBOutlet FSCalendar *calendar;
 
@@ -35,6 +37,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+
+    
+    app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+
     
     self.gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     
@@ -161,19 +168,26 @@
 }
 - (IBAction)MenuBtnClicked:(id)sender
 {
-     if (c2==0)
+    self.frostedViewController.direction = REFrostedViewControllerDirectionRight;
+    
+    if (app.checkview == 0)
     {
-        self.frostedViewController.direction = REFrostedViewControllerDirectionRight;
-        self.frostedViewController.panGestureEnabled = NO;
         [self.frostedViewController presentMenuViewController];
-        c2=1;
+        app.checkview = 1;
+        
     }
     else
     {
         [self.frostedViewController hideMenuViewController];
-        self.frostedViewController.panGestureEnabled = NO;
-        c2 =0;
+        app.checkview = 0;
     }
+}
+- (IBAction)btnHomeClicked:(id)sender
+{
+     [self.frostedViewController hideMenuViewController];
+    UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"OrataroVc"];
+    
+    [self.navigationController pushViewController:wc animated:NO];
 }
 
 

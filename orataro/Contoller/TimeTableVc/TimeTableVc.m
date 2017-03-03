@@ -8,10 +8,12 @@
 
 #import "TimeTableVc.h"
 #import "REFrostedViewController.h"
+#import "AppDelegate.h"
 
 @interface TimeTableVc ()
 {
 int c2;
+    AppDelegate *app;
 }
 @end
 
@@ -22,6 +24,11 @@ int c2;
     [super viewDidLoad];
     
     //TimetableCell
+    
+
+   
+    app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+
     
     NextimageView.image = [NextimageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
      [NextimageView setTintColor:[UIColor colorWithRed:40.0/255.0 green:49.0/255.0 blue:90.0/255.0 alpha:1.0]];
@@ -84,18 +91,19 @@ int c2;
 
 - (IBAction)MenuBtnClicked:(id)sender
 {
-     if (c2==0)
+    self.frostedViewController.direction = REFrostedViewControllerDirectionRight;
+    
+    
+    if (app.checkview == 0)
     {
-        self.frostedViewController.direction = REFrostedViewControllerDirectionRight;
-        self.frostedViewController.panGestureEnabled = NO;
         [self.frostedViewController presentMenuViewController];
-        c2=1;
+        app.checkview = 1;
+        
     }
     else
     {
         [self.frostedViewController hideMenuViewController];
-        self.frostedViewController.panGestureEnabled = NO;
-        c2 =0;
+        app.checkview = 0;
     }
 }
 
@@ -104,6 +112,14 @@ int c2;
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)btnHomeClicked:(id)sender
+{
+     [self.frostedViewController hideMenuViewController];
+    
+    UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"OrataroVc"];
+    
+    [self.navigationController pushViewController:wc animated:NO];
+}
 
 
 

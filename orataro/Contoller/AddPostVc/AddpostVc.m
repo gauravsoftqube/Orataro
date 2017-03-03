@@ -38,6 +38,8 @@
 
 - (IBAction)BackBtnClicked:(id)sender
 {
+    [self.navigationController popViewControllerAnimated:YES];
+    
 //    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
 //    // here you need to create storyboard ID of perticular view where you need to navigate your app
 //    UIViewController *vc = [mainStoryboard instantiateViewControllerWithIdentifier:@"WallVc"];

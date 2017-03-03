@@ -23,7 +23,7 @@ int s =0 ;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    nameary = [[NSMutableArray alloc]initWithObjects:@"sdddfjdjf ",@"Patel Diya",@"sdddfjd dfbefbef dnfndfdf dnfndfbdnbff fjefjf dfejend nilam" ,nil];
+    nameary = [[NSMutableArray alloc]initWithObjects:@"mangroliya dhara",@"Patel Diya",@"patel nilam" ,@"patel ridhhi",nil];
     friendTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     aAddFriendView.layer.cornerRadius = 17.5;
@@ -109,9 +109,9 @@ int s =0 ;
     // as per content
     
     NSString *str = [NSString stringWithFormat:@"%@",[nameary objectAtIndex:indexPath.row]];
-    CGSize size = [str sizeWithFont:[UIFont fontWithName:@"HelveticaNeueLTStd-Roman" size:20] constrainedToSize:CGSizeMake([[UIScreen mainScreen]bounds].size.width-252, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize size = [str sizeWithFont:[UIFont fontWithName:@"HelveticaNeueLTStd-Roman" size:14] constrainedToSize:CGSizeMake([[UIScreen mainScreen]bounds].size.width-252, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
     
-    return size.height+90;
+    return size.height+100;
     
     //FriendRequestCell
     

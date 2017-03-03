@@ -76,7 +76,7 @@
     img1.contentMode = UIViewContentModeScaleAspectFit;
 
     UIImageView *img2 = (UIImageView *)[cell.contentView viewWithTag:5];
-    img2.layer.cornerRadius = 40.0;
+    img2.layer.cornerRadius = 30.0;
     img2.layer.masksToBounds = YES;
     
     //11

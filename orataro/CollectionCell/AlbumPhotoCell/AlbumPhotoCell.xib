@@ -37,7 +37,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="mtG-m3-aJU"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="13"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="14"/>
                                         <color key="textColor" white="1" alpha="0.5408015839041096" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -46,7 +46,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="Jvb-5a-pyH"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="13"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="14"/>
                                         <color key="textColor" white="1" alpha="0.53539704623287676" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>

@@ -29,7 +29,7 @@
                             <constraint firstAttribute="height" constant="40" id="R0g-ww-pKW"/>
                             <constraint firstAttribute="width" constant="40" id="zxK-d7-uNX"/>
                         </constraints>
-                        <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="17"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="14"/>
                         <inset key="titleEdgeInsets" minX="-35" minY="8" maxX="0.0" maxY="0.0"/>
                         <inset key="imageEdgeInsets" minX="27" minY="11" maxX="36" maxY="6"/>
                         <state key="normal" title="P" image="radiop">
@@ -42,7 +42,7 @@
                             <constraint firstAttribute="height" constant="40" id="BIk-4U-l2b"/>
                             <constraint firstAttribute="width" constant="40" id="Nwc-nT-GzA"/>
                         </constraints>
-                        <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="17"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="14"/>
                         <inset key="titleEdgeInsets" minX="-35" minY="8" maxX="0.0" maxY="0.0"/>
                         <inset key="imageEdgeInsets" minX="27" minY="11" maxX="36" maxY="6"/>
                         <state key="normal" title="A" image="radioa">
@@ -55,7 +55,7 @@
                             <constraint firstAttribute="height" constant="40" id="RoE-zq-6S8"/>
                             <constraint firstAttribute="width" constant="40" id="pZM-1k-mqV"/>
                         </constraints>
-                        <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="17"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="14"/>
                         <inset key="titleEdgeInsets" minX="-35" minY="8" maxX="0.0" maxY="0.0"/>
                         <inset key="imageEdgeInsets" minX="27" minY="11" maxX="36" maxY="6"/>
                         <state key="normal" title="S" image="radios">
@@ -68,7 +68,7 @@
                             <constraint firstAttribute="width" constant="80" id="cmX-ae-T6K"/>
                             <constraint firstAttribute="height" constant="59" id="z0F-iX-eWJ"/>
                         </constraints>
-                        <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="17"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -78,7 +78,7 @@
                             <constraint firstAttribute="height" constant="40" id="HQ0-gK-4Wi"/>
                             <constraint firstAttribute="width" constant="40" id="X7s-tu-3XK"/>
                         </constraints>
-                        <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="17"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="14"/>
                         <inset key="titleEdgeInsets" minX="-35" minY="8" maxX="0.0" maxY="0.0"/>
                         <inset key="imageEdgeInsets" minX="27" minY="11" maxX="36" maxY="6"/>
                         <state key="normal" title="L" image="radiol">

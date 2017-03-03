@@ -10,10 +10,13 @@
 #import "REFrostedViewController.h"
 #import "AddCircularVc.h"
 #import "CircularDetailVc.h"
+#import "AppDelegate.h"
+#import "OrataroVc.h"
 
 @interface CircularVc ()
 {
     int c2;
+    AppDelegate *app;
 }
 @end
 
@@ -23,6 +26,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    
     aView1.layer.cornerRadius =50.;
     aView1.layer.borderWidth = 2.0;
     aView1.layer.borderColor = [UIColor lightGrayColor].CGColor;
@@ -109,18 +114,19 @@
 
 - (IBAction)MenuBtnClicked:(id)sender
 {
-     if (c2==0)
+    self.frostedViewController.direction = REFrostedViewControllerDirectionRight;
+
+    
+    if (app.checkview == 0)
     {
-        self.frostedViewController.direction = REFrostedViewControllerDirectionRight;
-        self.frostedViewController.panGestureEnabled = NO;
         [self.frostedViewController presentMenuViewController];
-        c2=1;
+        app.checkview = 1;
+        
     }
     else
     {
         [self.frostedViewController hideMenuViewController];
-        self.frostedViewController.panGestureEnabled = NO;
-        c2 =0;
+        app.checkview = 0;
     }
 }
 - (IBAction)AddBtnClicked:(UIButton *)sender
@@ -134,7 +140,15 @@
     
     [self.navigationController pushViewController:c animated:YES];
 }
-
+- (IBAction)btnHomeClicked:(id)sender
+{
+     [self.frostedViewController hideMenuViewController];
+    
+    UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"OrataroVc"];
+//    
+   [self.navigationController pushViewController:wc animated:NO];
+    
+}
 
 /*
 #pragma mark - Navigation

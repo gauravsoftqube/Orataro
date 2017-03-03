@@ -11,6 +11,7 @@
 #import "ClassVcCell.h"
 #import "REFrostedViewController.h"
 #import "StudentListViewController.h"
+#import "AppDelegate.h"
 
 @interface AttendanceVC ()
 {
@@ -18,6 +19,7 @@
     UIDatePicker *datePicker;
     UIAlertView *alert;
     int c2;
+    AppDelegate *app;
 }
 @end
 
@@ -32,6 +34,7 @@ int cn =0;
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     
+    app =(AppDelegate *)[UIApplication sharedApplication].delegate;
     
     classTableDataAry = [[NSMutableArray alloc]initWithObjects:@"Class A",@"Class B",@"Class C",@"Class D",@"Class E", nil];
     
@@ -164,7 +167,7 @@ int cn =0;
     
     if (tableView == aClasstableView)
     {
-        return 64;
+        return 50;
     }
 
     return 0;
@@ -188,18 +191,19 @@ int cn =0;
 }
 - (IBAction)MenuBtnClicked:(id)sender
 {
-     if (c2==0)
+    self.frostedViewController.direction = REFrostedViewControllerDirectionRight;
+    
+    
+    if (app.checkview == 0)
     {
-        self.frostedViewController.direction = REFrostedViewControllerDirectionRight;
-        self.frostedViewController.panGestureEnabled = NO;
         [self.frostedViewController presentMenuViewController];
-        c2=1;
+        app.checkview = 1;
+        
     }
     else
     {
         [self.frostedViewController hideMenuViewController];
-        self.frostedViewController.panGestureEnabled = NO;
-        c2 =0;
+        app.checkview = 0;
     }
 }
 - (IBAction)isWorkingClicked:(id)sender
@@ -263,6 +267,14 @@ int cn =0;
     }
 }
 
+- (IBAction)btnHomeClicked:(id)sender
+{
+     [self.frostedViewController hideMenuViewController];
+    
+    UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"OrataroVc"];
+    
+    [self.navigationController pushViewController:wc animated:NO];
+}
 
 /*
 #pragma mark - Navigation

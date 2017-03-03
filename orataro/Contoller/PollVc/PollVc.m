@@ -9,10 +9,12 @@
 #import "PollVc.h"
 #import "REFrostedViewController.h"
 #import "AddPollVc.h"
+#import "AppDelegate.h"
 
 @interface PollVc ()
 {
 int c2;
+    AppDelegate *app;
 }
 @end
 
@@ -28,6 +30,10 @@ int c2;
     //pollico_shiw
     
    
+
+   
+    app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    
     _lbNopoll.hidden =YES;
     
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -142,19 +148,27 @@ int c2;
 
 - (IBAction)MenuBtnClicked:(id)sender
 {
-     if (c2==0)
+    self.frostedViewController.direction = REFrostedViewControllerDirectionRight;
+    
+    if (app.checkview == 0)
     {
-        self.frostedViewController.direction = REFrostedViewControllerDirectionRight;
-        self.frostedViewController.panGestureEnabled = NO;
         [self.frostedViewController presentMenuViewController];
-        c2=1;
+        app.checkview = 1;
+        
     }
     else
     {
         [self.frostedViewController hideMenuViewController];
-        self.frostedViewController.panGestureEnabled = NO;
-        c2 =0;
+        app.checkview = 0;
     }
+}
+- (IBAction)btnHomeClicked:(id)sender
+{
+     [self.frostedViewController hideMenuViewController];
+    
+    UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"OrataroVc"];
+    
+    [self.navigationController pushViewController:wc animated:NO];
 }
 
 

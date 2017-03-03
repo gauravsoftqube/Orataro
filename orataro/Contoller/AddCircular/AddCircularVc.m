@@ -25,7 +25,7 @@
     [super viewDidLoad];
     
    // [aScrollview setContentSize:CGSizeMake(self.view.frame.size.width, 2000)];
-    [aViewHeight setConstant:750];
+    [aViewHeight setConstant:600];
     [aViewwidth setConstant:self.view.frame.size.width];
     
     UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];

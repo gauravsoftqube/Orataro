@@ -149,18 +149,19 @@
 
 - (IBAction)MenuBtnClicked:(id)sender
 {
-     if (c2==0)
+    self.frostedViewController.direction = REFrostedViewControllerDirectionRight;
+    
+    
+    if (ad.checkview == 0)
     {
-        self.frostedViewController.direction = REFrostedViewControllerDirectionRight;
-        self.frostedViewController.panGestureEnabled = NO;
         [self.frostedViewController presentMenuViewController];
-        c2=1;
+        ad.checkview = 1;
+        
     }
     else
     {
         [self.frostedViewController hideMenuViewController];
-        self.frostedViewController.panGestureEnabled = NO;
-        c2 =0;
+        ad.checkview = 0;
     }
 }
 - (IBAction)HomeBtnClicked:(id)sender
@@ -205,6 +206,13 @@
 //    }
 }
 
+- (IBAction)btnHomeClicked:(id)sender
+{
+    [self.frostedViewController hideMenuViewController];
+    UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"OrataroVc"];
+    
+    [self.navigationController pushViewController:wc animated:NO];
+}
 
 /*
 #pragma mark - Navigation
