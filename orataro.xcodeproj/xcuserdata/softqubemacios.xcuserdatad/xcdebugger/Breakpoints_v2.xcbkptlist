@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "orataro/thirdparty/REFrostedViewController/REFrostedViewController.m"
-            timestampString = "510128197.81635"
+            timestampString = "510139940.227746"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "94"
-            endingLineNumber = "94"
+            startingLineNumber = "95"
+            endingLineNumber = "95"
             landmarkName = "-initWithContentViewController:menuViewController:"
             landmarkType = "7">
          </BreakpointContent>
@@ -25,13 +25,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "orataro/thirdparty/REFrostedViewController/REFrostedViewController.m"
-            timestampString = "510128197.81635"
+            filePath = "orataro/Contoller/MyProfileVc/MyProfileVc.m"
+            timestampString = "510234979.3017"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "166"
-            endingLineNumber = "166"
-            landmarkName = "-setMenuViewSize:"
+            startingLineNumber = "283"
+            endingLineNumber = "283"
+            landmarkName = "-btnHomeClicked:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

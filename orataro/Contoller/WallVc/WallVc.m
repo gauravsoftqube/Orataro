@@ -49,6 +49,7 @@ int c2= 0;
 {
    // downarrow
     
+
     NSLog(@"check scrree=%@",_checkscreen);
     
     if ([_checkscreen isEqualToString:@"Institute"])

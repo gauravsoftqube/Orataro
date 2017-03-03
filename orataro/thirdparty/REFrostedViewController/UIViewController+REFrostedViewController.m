@@ -32,6 +32,7 @@
 - (void)re_displayController:(UIViewController *)controller frame:(CGRect)frame
 {
     [self addChildViewController:controller];
+
     long y=frame.origin.y;
     if(y == 64)
     {
@@ -48,6 +49,7 @@
 
 - (void)re_hideController:(UIViewController *)controller
 {
+   
      AppDelegate *apdVar = (AppDelegate *)[UIApplication sharedApplication].delegate;
       apdVar.c2 =0;
 

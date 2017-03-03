@@ -29,11 +29,11 @@
 #import "UIView+REFrostedViewController.h"
 #import "UIViewController+REFrostedViewController.h"
 #import "RECommonFunctions.h"
-
+#import "AppDelegate.h"
 
 @interface REFrostedViewController ()
 {
-   
+    AppDelegate *app;
 }
 @property (assign, readwrite, nonatomic) CGFloat imageViewWidth;
 @property (strong, readwrite, nonatomic) UIImage *image;
@@ -85,7 +85,8 @@
     _liveBlur = REUIKitIsFlatMode();
     _panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:_containerViewController action:@selector(panGestureRecognized:)];
     _automaticSize = YES;
-    
+    app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+
    
     
 
@@ -132,7 +133,11 @@
     
     if (contentViewController) {
         [self addChildViewController:contentViewController];
-        contentViewController.view.frame = self.containerViewController.view.frame;
+        
+       contentViewController.view.frame = self.containerViewController.view.frame;
+        
+        // contentViewController.view.frame =
+        
         [self.view insertSubview:contentViewController.view atIndex:0];
         [contentViewController didMoveToParentViewController:self];
     }
@@ -173,16 +178,14 @@
 
 - (void)presentMenuViewController
 {
-
+     
     [self presentMenuViewControllerWithAnimatedApperance:YES];
 }
 
 - (void)hideMenuViewController
 {
     [self re_displayController:self.contentViewController frame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-
     [self hideMenuViewControllerWithCompletionHandler:nil];
- 
 }
 
 - (void)presentMenuViewControllerWithAnimatedApperance:(BOOL)animateApperance
@@ -203,6 +206,7 @@
         if (self.direction == REFrostedViewControllerDirectionTop || self.direction == REFrostedViewControllerDirectionBottom)
             self.calculatedMenuViewSize = CGSizeMake(self.contentViewController.view.frame.size.width, self.contentViewController.view.frame.size.height - 50.0f);
         
+
         [self re_displayController:self.containerViewController frame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height)];
 
     } else {

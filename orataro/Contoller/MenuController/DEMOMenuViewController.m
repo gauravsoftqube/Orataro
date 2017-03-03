@@ -62,6 +62,8 @@
 {
     [super viewDidLoad];
     
+    //self.view.frame = CGRectMake(50, 64, self.view.frame.size.width-50, self.view.frame.size.height);
+    
     ag = (AppDelegate *)[UIApplication sharedApplication].delegate;
     
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -70,10 +72,11 @@
     
     imgary = [[NSMutableArray alloc]initWithObjects:@"dash_profile",@"dash_circular",@"dash_fb_wall",@"dash_homework",@"classimg",@"attendance",@"dash_pt_communication",@"dash_school_timing",@"dash_timetable",@"dash_notice",@"dash_holidays",@"dash_calendar",@"dash_fb_poll",@"speech",@"todo",@"user",@"settings",@"faq",@"dash_switch", nil];
     
+    //_tblMenuTable.frame = CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64);
     [_tblMenuTable registerNib:[UINib nibWithNibName:@"RightCell" bundle:nil] forCellReuseIdentifier:@"RightCell"];
-    
     _tblMenuTable.backgroundColor= [UIColor clearColor];
-    _tblMenuTable.separatorStyle = UITableViewCellSeparatorStyleNone;}
+    _tblMenuTable.separatorStyle = UITableViewCellSeparatorStyleNone;
+}
 
 
 #pragma mark UITableView Delegate
@@ -196,7 +199,6 @@
         {
             MyProfileVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MyProfileVc"];
             navigationController.viewControllers = @[homeViewController];
-            
             break;
         }
         case 1:

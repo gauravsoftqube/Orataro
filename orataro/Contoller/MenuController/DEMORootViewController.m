@@ -17,7 +17,10 @@
 - (void)awakeFromNib
 {
     self.contentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"contentController"];
+  //  self.navigationController.navigationBarHidden = YES;
+    
     self.menuViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"menuController"];
+    //self.menuViewController.navigationController.navigationBarHidden = YES;
 }
 
 @end

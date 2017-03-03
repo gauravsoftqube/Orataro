@@ -859,7 +859,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="Mqy-0z-Qga" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="w7F-J7-7XK">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="w7F-J7-7XK">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -14480,9 +14480,10 @@ tesing of add circular notification</string>
         <scene sceneID="kLa-p5-x3g">
             <objects>
                 <navigationController storyboardIdentifier="contentController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" navigationBarHidden="YES" id="MIz-IO-Kgw" customClass="DEMONavigationController" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <toolbarItems/>
                     <nil key="simulatedTopBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="pdI-Qy-zpU">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="pdI-Qy-zpU">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -14518,6 +14519,7 @@ tesing of add circular notification</string>
                             <outlet property="delegate" destination="exs-g7-EwH" id="F5h-Kn-L2A"/>
                         </connections>
                     </tableView>
+                    <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="tblMenuTable" destination="ZBu-hD-Z4J" id="fZy-cz-fFh"/>
                     </connections>
