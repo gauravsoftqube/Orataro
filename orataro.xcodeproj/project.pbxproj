@@ -159,6 +159,7 @@
 		C375B6321E65464B00E8D63D /* ProfileAddUpdateListDetailListVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C375B6311E65464B00E8D63D /* ProfileAddUpdateListDetailListVc.m */; };
 		C375B6361E65513A00E8D63D /* SchoolVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C375B6351E65513A00E8D63D /* SchoolVc.m */; };
 		C375B63B1E65B67700E8D63D /* AddHomeworkVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C375B63A1E65B67700E8D63D /* AddHomeworkVc.m */; };
+		C37A9A371E6EEB7200F1EAE0 /* SwitchAcoountVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C37A9A361E6EEB7200F1EAE0 /* SwitchAcoountVC.m */; };
 		C37EED0A1E6949A1004ACCCC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C37EED081E6949A1004ACCCC /* Main.storyboard */; };
 		C381726B1E517DCD004AB189 /* SettingVcViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C381726A1E517DCD004AB189 /* SettingVcViewController.m */; };
 		C381726F1E518756004AB189 /* FAQvc.m in Sources */ = {isa = PBXBuildFile; fileRef = C381726E1E518756004AB189 /* FAQvc.m */; };
@@ -480,6 +481,8 @@
 		C375B6351E65513A00E8D63D /* SchoolVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SchoolVc.m; sourceTree = "<group>"; };
 		C375B6391E65B67700E8D63D /* AddHomeworkVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddHomeworkVc.h; sourceTree = "<group>"; };
 		C375B63A1E65B67700E8D63D /* AddHomeworkVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddHomeworkVc.m; sourceTree = "<group>"; };
+		C37A9A351E6EEB7200F1EAE0 /* SwitchAcoountVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchAcoountVC.h; sourceTree = "<group>"; };
+		C37A9A361E6EEB7200F1EAE0 /* SwitchAcoountVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchAcoountVC.m; sourceTree = "<group>"; };
 		C37EED091E6949A1004ACCCC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C38172691E517DCD004AB189 /* SettingVcViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingVcViewController.h; sourceTree = "<group>"; };
 		C381726A1E517DCD004AB189 /* SettingVcViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingVcViewController.m; sourceTree = "<group>"; };
@@ -617,6 +620,7 @@
 		093227901E38794800138A2B /* Contoller */ = {
 			isa = PBXGroup;
 			children = (
+				C37A9A341E6EEB2200F1EAE0 /* SwitchAccountVC */,
 				C36BDAF81E67005900779C5B /* MenuController */,
 				C375B6381E65B63C00E8D63D /* AddHomeworkVc */,
 				C375B6331E6550B800E8D63D /* SchoolgroupVc */,
@@ -1505,6 +1509,15 @@
 			path = AddHomeworkVc;
 			sourceTree = "<group>";
 		};
+		C37A9A341E6EEB2200F1EAE0 /* SwitchAccountVC */ = {
+			isa = PBXGroup;
+			children = (
+				C37A9A351E6EEB7200F1EAE0 /* SwitchAcoountVC.h */,
+				C37A9A361E6EEB7200F1EAE0 /* SwitchAcoountVC.m */,
+			);
+			path = SwitchAccountVC;
+			sourceTree = "<group>";
+		};
 		C38172681E517D5B004AB189 /* SettingVc */ = {
 			isa = PBXGroup;
 			children = (
@@ -2040,6 +2053,7 @@
 				09F428C61E38BC0B00A80F0D /* AFNetworkActivityIndicatorManager.m in Sources */,
 				C38ABFAC1E48936100689426 /* PTCommuniVc.m in Sources */,
 				C36DD1BB1E4086210011221E /* IQUIView+IQKeyboardToolbar.m in Sources */,
+				C37A9A371E6EEB7200F1EAE0 /* SwitchAcoountVC.m in Sources */,
 				0977D5FD1E3B144E00ACB7A5 /* WallVc.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
