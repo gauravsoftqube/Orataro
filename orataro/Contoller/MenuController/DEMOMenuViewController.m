@@ -76,6 +76,16 @@
     [_tblMenuTable registerNib:[UINib nibWithNibName:@"RightCell" bundle:nil] forCellReuseIdentifier:@"RightCell"];
     _tblMenuTable.backgroundColor= [UIColor clearColor];
     _tblMenuTable.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    //Put this code where you want to reload your table view
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        [UIView transitionWithView:_tblMenuTable                          duration:0.1f
+//                           options:UIViewAnimationOptionCurveLinear
+//                        animations:^(void) {
+//                            [_tblMenuTable reloadData];
+//                        } completion:NULL];
+//    });
+    
 }
 
 
