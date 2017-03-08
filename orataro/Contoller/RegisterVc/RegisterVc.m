@@ -60,11 +60,13 @@
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_registration,apk_CheckUserMobileNumberForRegistration_action];
 
     NSString *currentDeviceId=[[NSUserDefaults standardUserDefaults]objectForKey:@"currentDeviceId"];
-    
+   
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
     [param setValue:[NSString stringWithFormat:@"%@",self.aMobTextField.text] forKey:@"MobileNumber"];
     [param setValue:@"4C1D3BF4-4B71-4A1D-B76A123456789" forKey:@"DivisRegID"];
+     [ProgressHUB showHUDAddedTo:self.view];
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error) {
+        [ProgressHUB hideenHUDAddedTo:self.view];
         if(!error)
         {
             NSString *strArrd=[dicResponce objectForKey:@"d"];
@@ -74,11 +76,15 @@
             if([arrResponce count] != 0)
             {
                 NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
-                NSString *strStatus=[dic objectForKey:@"success"];
-                if([strStatus integerValue] == 0 && strStatus != nil)
+                NSString *strStatus=[dic objectForKey:@"message"];
+                if([strStatus isEqualToString:@"OTP Send On Your Mobile Number...!!!"])
                 {
                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                     [alrt show];
+                    
+                    RegisterOtpVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"RegisterOtpVc"];
+                    [self.navigationController pushViewController:wc animated:YES];
+
 
                 }
                 else
@@ -86,9 +92,6 @@
                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                     [alrt show];
                   
-                    RegisterOtpVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"RegisterOtpVc"];
-                        [self.navigationController pushViewController:wc animated:YES];
-                    
                 }
             }
             else
@@ -110,15 +113,14 @@
 
 - (IBAction)VerifyBtnClicked:(id)sender
 {
-    
     if ([Utility validatePhoneLength:self.aMobTextField.text]) {
         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:PHONE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alrt show];
         return;
     }
 
+    [self.view endEditing:YES];
     [self apiCallForRegister];
-
 }
 
 - (IBAction)BackBtnClicked:(id)sender
