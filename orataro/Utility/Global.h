@@ -11,6 +11,8 @@
 
 #define AppDel ((LoginVC *)[[UIApplication sharedApplication] delegate])
 
+/*
+ 
 #define COMMING @"Comming soon...!"
 #define USERNM @"Please Enter UserName"
 #define PASSWORD @"Please Enter Password"
@@ -18,7 +20,7 @@
 #define BIRTH @"Please Enter Date of Birth"
 #define ADDRESS @"Please Enter Address"
 #define CONTACT @"Please Enter Contact No"
-#define PHONE @"Contact Numeber Must Be 10 Digit"
+
 #define ZIPCODE @"Please Enter ZipCode"
 #define NAME @"Please Enter Name"
 #define SURNAME @"Please Enter SurName"
@@ -38,11 +40,24 @@
 #define OLDPASS @"Please Enter Old Password"
 #define NEWPASS @"Please Enter New Password"
 #define PASSVALIDATION @"Password should contain minimum six character"
-#define INTERNETVALIDATION @"No internet connection.."
 
+ 
+ */
+
+#pragma mark - Alert Message
+
+#define PHONE @"Contact Numeber Must Be 10 Digit"
+#define INTERNETVALIDATION @"No internet connection.."
+#define Api_Not_Response @"Please try again!"
+
+
+
+
+#pragma mark - IMPORT UIViewController
 
 
 #import "Utility.h"
+#import "ProgressHUB.h"
 #import "Reachability.h"
 #import "RightVc.h"
 #import "RightCell.h"
@@ -78,7 +93,16 @@
 #import "REFrostedViewController.h"
 
 
-//#import "CreateProjectVc.h"
+#pragma mark - Api Url And Name List
+
+#define URL_Api  @"http://orataro.com/Services/"
+
+#define apk_registration  @"apk_registration.asmx"
+#define apk_CheckUserMobileNumberForRegistration_action @"CheckUserMobileNumberForRegistration"
+
+
+
+
 
 
 #endif /* Global_h */

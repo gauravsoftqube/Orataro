@@ -76,7 +76,7 @@
 +(NSString *)imageToNSString:(UIImage *)image;
 
 #pragma mark - Api Function
-+(void)PostApiCall_New:(NSString *)apiName params:(NSMutableDictionary *)param block:(void (^)(NSMutableDictionary *,NSError *))block;
++(void)PostApiCall:(NSString *)apiUrl params:(NSMutableDictionary *)param block:(void (^)(NSMutableDictionary *,NSError *))block;
 
 /*+(void)POSTapiCall:(NSString *)apiName parms:(NSMutableDictionary *)parms block:(void (^)(NSMutableDictionary *,NSError *))block;
 //+(void)APIPhoto:(NSString *)apiName parms:(NSMutableDictionary*)parms block:(void (^)(NSDictionary *, NSError *))block;

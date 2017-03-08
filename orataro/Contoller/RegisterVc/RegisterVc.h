@@ -15,5 +15,6 @@
 - (IBAction)VerifyBtnClicked:(id)sender;
 - (IBAction)BackBtnClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *BAckBtn;
++(BOOL)CheckInternetRechability;
 
 @end

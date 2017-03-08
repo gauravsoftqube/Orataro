@@ -28,19 +28,6 @@
     aPhonenumOuterView.layer.borderWidth = 2.0;
     aPhonenumOuterView.layer.borderColor =([UIColor colorWithRed:128.0/255.0 green:163.0/255.0 blue:81.0/255.0 alpha:1.0]).CGColor;
     
-// Do any additional setup after loading the view.
-}
-
--(void)viewWillAppear:(BOOL)animated
-{
-//    if ([[AppDelegate maindelegate]CheckInternetRechability])
-//    {
-//        
-//    }
-//    else
-//    {
-//        [self GetMyOrder];
-//    }
 
 }
 
@@ -50,28 +37,93 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    
+}
+
+-(void)commonData
+{
+    
+}
+
+#pragma mark - ApiCall 
+
+-(void)apiCallForRegister
+{
+    if ([Utility isInterNetConnectionIsActive] == false) {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_registration,apk_CheckUserMobileNumberForRegistration_action];
+
+    NSString *currentDeviceId=[[NSUserDefaults standardUserDefaults]objectForKey:@"currentDeviceId"];
+    
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    [param setValue:[NSString stringWithFormat:@"%@",self.aMobTextField.text] forKey:@"MobileNumber"];
+    [param setValue:@"4C1D3BF4-4B71-4A1D-B76A123456789" forKey:@"DivisRegID"];
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error) {
+        if(!error)
+        {
+            NSString *strArrd=[dicResponce objectForKey:@"d"];
+            NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+            NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            NSLog(@"%@",arrResponce);
+            if([arrResponce count] != 0)
+            {
+                NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                NSString *strStatus=[dic objectForKey:@"success"];
+                if([strStatus integerValue] == 0 && strStatus != nil)
+                {
+                    UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alrt show];
+
+                }
+                else
+                {
+                    UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alrt show];
+                  
+                    RegisterOtpVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"RegisterOtpVc"];
+                        [self.navigationController pushViewController:wc animated:YES];
+                    
+                }
+            }
+            else
+            {
+                UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alrt show];
+            }
+        }
+        else
+        {
+            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alrt show];
+        }
+    }];
+}
+
+
 #pragma mark - button action
 
 - (IBAction)VerifyBtnClicked:(id)sender
 {
-    RegisterOtpVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"RegisterOtpVc"];
-    [self.navigationController pushViewController:wc animated:YES];
+    
+    if ([Utility validatePhoneLength:self.aMobTextField.text]) {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:PHONE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+
+    [self apiCallForRegister];
+
 }
 
 - (IBAction)BackBtnClicked:(id)sender
 {
     
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 
 @end

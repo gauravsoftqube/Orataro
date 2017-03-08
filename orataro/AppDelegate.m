@@ -37,13 +37,17 @@
     _checkview = 0;
 
     
+    UIDevice *device = [UIDevice currentDevice];
+    NSString  *currentDeviceId = [[device identifierForVendor]UUIDString];
+    [[NSUserDefaults standardUserDefaults]setValue:currentDeviceId forKey:@"currentDeviceId"];
+    
     // Override point for customization after application launch.
     return YES;
 }
 
 #pragma mark check rechability
 
--(BOOL)CheckInternetRechability
++(BOOL)CheckInternetRechability
 {
     Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];

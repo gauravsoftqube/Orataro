@@ -11,6 +11,7 @@
 		072A85AE1E67FADC00F54A30 /* DEMOMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 072A85A81E67FADC00F54A30 /* DEMOMenuViewController.m */; };
 		072A85AF1E67FADC00F54A30 /* DEMONavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 072A85AA1E67FADC00F54A30 /* DEMONavigationController.m */; };
 		072A85B01E67FADC00F54A30 /* DEMORootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 072A85AC1E67FADC00F54A30 /* DEMORootViewController.m */; };
+		073E55CA1E6FDAE3008BF93B /* ProgressHUB.m in Sources */ = {isa = PBXBuildFile; fileRef = 073E55C91E6FDAE3008BF93B /* ProgressHUB.m */; };
 		0932277B1E38750D00138A2B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0932277A1E38750D00138A2B /* main.m */; };
 		0932277E1E38750D00138A2B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0932277D1E38750D00138A2B /* AppDelegate.m */; };
 		093227811E38750D00138A2B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 093227801E38750D00138A2B /* ViewController.m */; };
@@ -200,6 +201,8 @@
 		072A85AA1E67FADC00F54A30 /* DEMONavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DEMONavigationController.m; sourceTree = "<group>"; };
 		072A85AB1E67FADC00F54A30 /* DEMORootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DEMORootViewController.h; sourceTree = "<group>"; };
 		072A85AC1E67FADC00F54A30 /* DEMORootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DEMORootViewController.m; sourceTree = "<group>"; };
+		073E55C81E6FDAE3008BF93B /* ProgressHUB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressHUB.h; sourceTree = "<group>"; };
+		073E55C91E6FDAE3008BF93B /* ProgressHUB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressHUB.m; sourceTree = "<group>"; };
 		093227761E38750D00138A2B /* orataro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = orataro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0932277A1E38750D00138A2B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0932277C1E38750D00138A2B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -553,6 +556,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		073E55C71E6FDAA7008BF93B /* ProgressHUB */ = {
+			isa = PBXGroup;
+			children = (
+				073E55C81E6FDAE3008BF93B /* ProgressHUB.h */,
+				073E55C91E6FDAE3008BF93B /* ProgressHUB.m */,
+			);
+			path = ProgressHUB;
+			sourceTree = "<group>";
+		};
 		0932276D1E38750D00138A2B = {
 			isa = PBXGroup;
 			children = (
@@ -700,6 +712,7 @@
 		0949E9401E3B783600723301 /* thirdparty */ = {
 			isa = PBXGroup;
 			children = (
+				073E55C71E6FDAA7008BF93B /* ProgressHUB */,
 				C36BDAE51E66FF8900779C5B /* REFrostedViewController */,
 				C3A2D7151E641FD800B91B54 /* TriangularButton */,
 				C36B586B1E5EE7DB00DE7464 /* ORGDetailViewController */,
@@ -1878,6 +1891,7 @@
 				C36DD1CB1E409CB30011221E /* ListCell.m in Sources */,
 				C36DD1B81E4086210011221E /* IQUIScrollView+Additions.m in Sources */,
 				C38AF0EE1E60348D00E4F40B /* ProfileVideoDetailVc.m in Sources */,
+				073E55CA1E6FDAE3008BF93B /* ProgressHUB.m in Sources */,
 				C369E6E01E5AF2AB0048D601 /* Utility.m in Sources */,
 				C38ABFBC1E48B77300689426 /* AddNoteVc.m in Sources */,
 				C35C66551E5D97D7007EAF7D /* ChatVc.m in Sources */,

@@ -41,27 +41,27 @@
 #pragma mark - Set Font
 //set Labe Fount
 /*+(void)setFontOfLable:(UILabel *)tempLable {
-    int fontSize = tempLable.font.pointSize;
-    tempLable.font = [UIFont fontWithName:AppFontNameRegular size:fontSize];
-}
-
-
-+(void)setFontOfLableBold:(UILabel *)tempLable {
-    int fontSize = tempLable.font.pointSize;
-    tempLable.font = [UIFont fontWithName:AppFontNameBold size:fontSize];
-}
-
-//set Button Fount
-+(void)setFontOfButton:(UIButton *)tempBtn{
-    int fontSize = tempBtn.titleLabel.font.pointSize;
-    tempBtn.titleLabel.font = [UIFont fontWithName:AppFontNameRegular size:fontSize];
-}
-
-//set TextField Fount
-+(void)setFontOfTextField:(UITextField *)temptxt{
-    int fontSize = temptxt.font.pointSize;
-    temptxt.font = [UIFont fontWithName:AppFontNameRegular size:fontSize];
-}*/
+ int fontSize = tempLable.font.pointSize;
+ tempLable.font = [UIFont fontWithName:AppFontNameRegular size:fontSize];
+ }
+ 
+ 
+ +(void)setFontOfLableBold:(UILabel *)tempLable {
+ int fontSize = tempLable.font.pointSize;
+ tempLable.font = [UIFont fontWithName:AppFontNameBold size:fontSize];
+ }
+ 
+ //set Button Fount
+ +(void)setFontOfButton:(UIButton *)tempBtn{
+ int fontSize = tempBtn.titleLabel.font.pointSize;
+ tempBtn.titleLabel.font = [UIFont fontWithName:AppFontNameRegular size:fontSize];
+ }
+ 
+ //set TextField Fount
+ +(void)setFontOfTextField:(UITextField *)temptxt{
+ int fontSize = temptxt.font.pointSize;
+ temptxt.font = [UIFont fontWithName:AppFontNameRegular size:fontSize];
+ }*/
 
 
 + (UIImage *)imageWithColor:(UIColor *)color size:(CGSize)size
@@ -86,7 +86,7 @@
 #pragma mark - Button Design
 //set Button Design
 //+(void)setRoundButton:(UIButton *)tempBtn{
-//    
+//
 //    [self setFontOfButton:tempBtn];
 //    tempBtn.layer.cornerRadius = tempBtn.frame.size.height / 2.0f ;
 //    tempBtn.layer.masksToBounds = YES;
@@ -94,27 +94,27 @@
 //
 //    tempBtn.titleLabel.textColor = [Utility colorFromHexString:AppButtonTextColor];
 //    tempBtn.titleLabel.textColor = [UIColor whiteColor];
-//    
+//
 //    [tempBtn addTarget:self action:@selector(buttonHighlight:) forControlEvents:UIControlEventTouchDown];
 //    [tempBtn addTarget:self action:@selector(buttonDragExit:) forControlEvents:UIControlEventTouchDragOutside];
-    
+
 //    [tempBtn setBackgroundImage:[Utility imageWithColor:[UIColor blackColor]] forState:UIControlStateNormal];
 ////    [tempBtn setBackgroundImage:[Utility imageWithColor:[UIColor blueColor]] forState:UIControlStateHighlighted];
-//    
+//
 ////    [tempBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
 //    [tempBtn setBackgroundImage:[UIImage imageNamed:@"blue_button"] forState:UIControlStateHighlighted];
-    
+
 //    [tempBtn setBackgroundImage:[UIImage imageNamed:@"black_button"] forState:UIControlStateNormal];
 //    UIView *superView = [tempBtn superview];
 //    UIView *viewBackOfButton = [[UIView alloc] initWithFrame:tempBtn.frame];
 //    viewBackOfButton.backgroundColor = [UIColor blackColor];
 //    viewBackOfButton.layer.cornerRadius = tempBtn.frame.size.height / 2.0f ;
 //    viewBackOfButton.layer.masksToBounds = YES;
-//    
+//
 //    [superView addSubview:viewBackOfButton];
 //
 //    [superView bringSubviewToFront:tempBtn];
-    
+
 //}
 
 //+(void)buttonHighlight:(UIButton *)sender{
@@ -131,7 +131,7 @@
 #pragma mark - TextField Design
 //set Button Design
 //+(void)setRoundUITextField:(UITextField *)temptxt{
-//    
+//
 //    [self setFontOfTextField:temptxt];
 //    temptxt.layer.cornerRadius = temptxt.frame.size.height / 2.0f ;
 //    temptxt.layer.borderColor = [[Utility colorFromHexString:APPTextBoxBorderColorNormal] CGColor];
@@ -141,7 +141,7 @@
 //}
 //
 //+(void)setRoundUITextFieldWithoutBorder:(UITextField *)temptxt{
-//    
+//
 //    [self setFontOfTextField:temptxt];
 //    temptxt.layer.cornerRadius = temptxt.frame.size.height / 2.0f ;
 //    temptxt.backgroundColor = [UIColor clearColor];
@@ -159,13 +159,13 @@
     temptxt.leftViewMode = UITextFieldViewModeAlways;
     
     //[self setFontOfTextField:temptxt];
-
-//    temptxt.leftViewMode = UITextFieldViewModeAlways;
     
-//    [temptxt.layer setBorderWidth:1];
-//    [temptxt.layer setBorderColor:[UIColor lightGrayColor].CGColor];
-//    [temptxt.layer setBorderColor:[UIColor colorWithRed:18/255.0f green:113/255.0f blue:219/255.0f alpha:1.0f].CGColor];
-//    [temptxt.layer setCornerRadius:4];
+    //    temptxt.leftViewMode = UITextFieldViewModeAlways;
+    
+    //    [temptxt.layer setBorderWidth:1];
+    //    [temptxt.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+    //    [temptxt.layer setBorderColor:[UIColor colorWithRed:18/255.0f green:113/255.0f blue:219/255.0f alpha:1.0f].CGColor];
+    //    [temptxt.layer setCornerRadius:4];
     
 }
 
@@ -182,15 +182,15 @@
 }
 
 //+(void)setRoundUITextFieldwithLeftSpace:(UITextField *)temptxt lettSpace:(float)leftSpace{
-//    
+//
 //    [self setFontOfTextField:temptxt];
 //    temptxt.layer.cornerRadius = temptxt.frame.size.height / 2.0f ;
 //    temptxt.layer.borderColor = [[Utility colorFromHexString:APPTextBoxBorderColorNormal] CGColor];
 //    temptxt.layer.borderWidth = 1.0f;
 //    temptxt.backgroundColor = [UIColor clearColor];
 //    temptxt.textColor = [Utility colorFromHexString:AppButtonTextBoxTextColor];
-//    
-//    
+//
+//
 //    UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, leftSpace, temptxt.frame.size.height)];
 //    temptxt.leftView = paddingView;
 //    temptxt.leftViewMode = UITextFieldViewModeAlways;
@@ -214,9 +214,9 @@
 
 +(void)setLetfAndRightViewOfTextField:(UITextField *)txtField leftImageName:(NSString *)leftImageName rightImageName:(NSString *)rightImageName{
     
-   // UIView *rightView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, txtField.frame.size.height, txtField.frame.size.height)];
-   UIView *rightView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 33, 33)];
-  
+    // UIView *rightView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, txtField.frame.size.height, txtField.frame.size.height)];
+    UIView *rightView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 33, 33)];
+    
     // UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, txtField.frame.size.height - 10, txtField.frame.size.height - 10)];
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, 23, 23)];
     imageView.image = [UIImage imageNamed:rightImageName];
@@ -230,7 +230,7 @@
 
 +(void)setLetfViewOfTextField:(UITextField *)txtField leftImageName:(NSString *)leftImageName{
     
-   // UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, txtField.frame.size.height + 5, txtField.frame.size.height)];
+    // UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, txtField.frame.size.height + 5, txtField.frame.size.height)];
     UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 38, 33)];
     
     //UIView *line = [[UIView alloc] initWithFrame:CGRectMake(leftView.frame.size.width - 5, 5, 1, leftView.frame.size.height - 10)];
@@ -243,7 +243,7 @@
     //UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 8, leftView.frame.size.width - 5, txtField.frame.size.height - 15)];
     
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 8, 28, 18)];
-  
+    
     imageView.image = [UIImage imageNamed:leftImageName];
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     
@@ -255,10 +255,10 @@
 }
 
 +(void)setRightViewOfTextField:(UITextField *)txtField rightImageName:(NSString *)rightImageName{
-
-  //  UIView *rightView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, txtField.frame.size.height, txtField.frame.size.height)];
     
-  //  UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, txtField.frame.size.height - 10, txtField.frame.size.height - 10)];
+    //  UIView *rightView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, txtField.frame.size.height, txtField.frame.size.height)];
+    
+    //  UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, txtField.frame.size.height - 10, txtField.frame.size.height - 10)];
     
     UIView *rightView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
     
@@ -327,10 +327,10 @@
     NSString *value = [string stringByTrimmingCharactersInSet:[NSCharacterSet  whitespaceCharacterSet]];
     
     if([value length]  == 10) {
-        return YES;
+        return NO;
     }
     
-    return NO;
+    return YES;
 }
 
 +(BOOL)validatePassword:(NSString *)string{
@@ -370,8 +370,8 @@
 
 +(BOOL)validatePassword:(NSString *)string  validateRetypePassword:(NSString *)strRetypePassword{
     
-     NSString *value = [string stringByTrimmingCharactersInSet:[NSCharacterSet  whitespaceCharacterSet]];
-     NSString *value1 = [strRetypePassword stringByTrimmingCharactersInSet:[NSCharacterSet  whitespaceCharacterSet]];
+    NSString *value = [string stringByTrimmingCharactersInSet:[NSCharacterSet  whitespaceCharacterSet]];
+    NSString *value1 = [strRetypePassword stringByTrimmingCharactersInSet:[NSCharacterSet  whitespaceCharacterSet]];
     if ([value isEqualToString:value1]) {
         return YES;
     }
@@ -449,7 +449,7 @@
     //@"yyyy-MM-dd hh:mm:ss"
     [dateFormatter setDateFormat:strOldDateFtm];
     NSDate *date = [dateFormatter dateFromString:strUpdated_date];
-   // @"MMM dd,yyyy hh:mm a"
+    // @"MMM dd,yyyy hh:mm a"
     [dateFormatter setDateFormat:strNewDateFtm];
     NSString *strnew_updated_date = [dateFormatter stringFromDate:date];
     
@@ -549,244 +549,41 @@
 
 #pragma mark - Api Function
 
-
-//+(void)POSTapiCall:(NSString *)apiName parms:(NSMutableDictionary *)parms block:(void (^)(NSMutableDictionary *,NSError *))block{
++(void)PostApiCall:(NSString *)apiUrl params:(NSMutableDictionary *)param block:(void (^)(NSMutableDictionary *,NSError *))block{
     
-    /*[[APIFunction sharedClient]POST:apiName parameters:parms success:^(AFHTTPRequestOperation *operation, id responseObject)
-     {
-         
-         if (block) {
-             block(responseObject,nil);
-             //            block([responseObject valueForKey:@"data"],nil);
-         }
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-         //    NSLog(@"failure = %@",operation.responseString);
-         
-         
-         //        NSMutableDictionary* json = [NSJSONSerialization JSONObjectWithData:operation.responseData
-         //                                                             options:kNilOptions
-         //                                                               error:&error];
-         
-         block(nil,error);
-         //        block(nil,error);
-     }];*/
+    NSURL *urlLoginAuthentication= [NSURL URLWithString:apiUrl];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:urlLoginAuthentication];
+    [request setHTTPMethod:@"POST"];
     
-//}
-
-//+(void)POSTapiCall_New:(NSString *)apiName parms:(NSMutableDictionary *)parms block:(void (^)(NSMutableDictionary *,NSError *))block{
-//    
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-//    [manager.requestSerializer setValue:@"text/plain;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-//    [manager POST:[NSString stringWithFormat:@"%@",apiName] parameters:parms
-//          success:^(AFHTTPRequestOperation *operation, id responseObject)
-//     {
-//         // NSLog(@"POSTapiCall_New Response : %@", responseObject);
-//         if (block) {
-//             block(responseObject,nil);
-//         }
-//     }
-//          failure:
-//     ^(AFHTTPRequestOperation *operation, NSError *error) {
-//         block(nil,error);
-//         NSLog(@"Error: %@", error);
-//     }];
-//}
-
-
-/*+(void)GETapiCall_New:(NSString *)apiName block:(void (^)(NSMutableDictionary *,NSError *))block{
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:param options:kNilOptions error:nil];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setValue:@"application/json; charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
     
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:apiName]];
-    [request setHTTPMethod:@"GET"];
+    [request setValue:@"json" forHTTPHeaderField:@"dataType"];
+    [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[jsonData length]] forHTTPHeaderField:@"Content-Length"];
+    [request setHTTPBody: jsonData];
+    
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             
             if(!error)
             {
-                NSMutableDictionary * jsonData  = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                NSMutableDictionary * jsonData  = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
                 if (block) {
                     block(jsonData,nil);
                 }
             }
-        });
-    }] resume];
-}
-
-
-+(void)PostApiCall_New:(NSString *)apiName params:(NSMutableDictionary *)param block:(void (^)(NSMutableDictionary *,NSError *))block{
-    
-    NSError *error = nil;
-    NSData *postdata = [NSJSONSerialization dataWithJSONObject:param
-                                                       options:kNilOptions
-                                                         error:&error];
-
-    
-    //NSData *postdata= [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-    NSString *postLength=[NSString stringWithFormat:@"%lu",(unsigned long)[postdata length]];
-    NSMutableURLRequest *request= [[NSMutableURLRequest alloc]init];
-    
-    
-    NSString *str=[NSString stringWithFormat:@"%@%@",URL,apiName];
-    [request setURL:[NSURL URLWithString:str]];
-    
-    [request setHTTPMethod:@"Login"];
-    
-    [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
-    
-    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-   
-    [request setValue:@"text/plain;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    
-    [request setValue:@"http://symphonyirms.softcube.in/Services" forHTTPHeaderField:@"SOAPAction"];
-    
-    [request setHTTPBody:postdata];
-   
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-    [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            if(!error)
+            else
             {
                 NSMutableDictionary * jsonData  = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                
                 if (block) {
-                    block(jsonData,nil);
+                    block(jsonData,error);
                 }
             }
         });
     }] resume];
-    
 }
-
-+(void)APIWithImage:(NSString *)apiName parms:(NSMutableDictionary*)parms block:(void (^)(NSDictionary *, NSError *))block{
-    
-    NSMutableDictionary *dictTemp = [NSMutableDictionary dictionaryWithDictionary:parms];
-    [dictTemp removeObjectForKey:@"profile_avatar"];
-    [[APIFunction sharedClient] POST:apiName parameters:dictTemp constructingBodyWithBlock:^(id formData) {
-        
-        [formData appendPartWithFileData:[parms valueForKey:@"profile_avatar"]?[parms valueForKey:@"profile_avatar"]:@"profile_avatar"
-                                    name:@"profile_avatar"
-                                fileName:@"profile_avatar.jpg"
-                                mimeType:@"image/jpg"];
-        
-    }success:
-     ^(AFHTTPRequestOperation * operation,id Json){
-         if (block) {
-             block(Json, nil);
-         }
-     } failure:^(AFHTTPRequestOperation * operation, NSError *error) {
-         if (block) {
-             block(nil, error);
-         }
-     }];
- 
-}
-+(void)apicallforuploadimage:(NSString *)apiName image:(UIImage *)selectedimage parms:(NSMutableDictionary *)parms block:(void (^)(NSMutableDictionary *,NSError *))block{
-    
-    NSData *imgdata=UIImageJPEGRepresentation(selectedimage, 0.5);
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:apiName parameters:parms constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-        [formData appendPartWithFileData:imgdata
-                                    name:@"js_picture"
-                                fileName:@"public.jpg" mimeType:@"jpg"];
-        
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
-        if (block) {
-            block(responseObject, nil);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if (block) {
-            block(nil, error);
-        }
-    }];
-    
-}
-
-+(void)APIWithPicImage:(NSString *)apiName parms:(NSMutableDictionary*)parms block:(void (^)(NSDictionary *, NSError *))block{
-    
-    NSMutableDictionary *dictTemp = [NSMutableDictionary dictionaryWithDictionary:parms];
-    [dictTemp removeObjectForKey:@"cms_image"];
-    [[APIFunction sharedClient] POST:apiName parameters:dictTemp constructingBodyWithBlock:^(id formData) {
-        
-        [formData appendPartWithFileData:[parms valueForKey:@"cms_image"]?[parms valueForKey:@"cms_image"]:@"cms_image"
-                                    name:@"cms_image"
-                                fileName:@"cms_image.jpg"
-                                mimeType:@"image/jpg"];
-        
-    }success:
-     ^(AFHTTPRequestOperation * operation,id Json){
-         if (block) {
-             block(Json, nil);
-         }
-     } failure:^(AFHTTPRequestOperation * operation, NSError *error) {
-         if (block) {
-             block(nil, error);
-         }
-     }];
-}
-
-
-+(void)apiCallForUploadResume:(NSString *)apiName fileData:(NSData *)fileData parms:(NSMutableDictionary *)parms block:(void (^)(NSMutableDictionary *,NSError *))block{
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:apiName parameters:parms constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-        [formData appendPartWithFileData:fileData
-                                    name:@"resume"
-                                fileName:@"resume1112.pdf" mimeType:@"application/pdf"];
-        
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
-        if (block) {
-            block(responseObject, nil);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if (block) {
-            block(nil, error);
-        }
-    }];
-}
-
-+(void)apiCallForUploadCoverletter:(NSString *)apiName fileData:(NSData *)fileData parms:(NSMutableDictionary *)parms block:(void (^)(NSMutableDictionary *,NSError *))block{
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:apiName parameters:parms constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-        [formData appendPartWithFileData:fileData
-                                    name:@"cover_letter_type"
-                                fileName:@"resume1112.pdf" mimeType:@"application/pdf"];
-        
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
-        if (block) {
-            block(responseObject, nil);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if (block) {
-            block(nil, error);
-        }
-    }];
-}
-
-+(void)downloadresume:(NSString *)apiName fileData:(NSData *)fileData block:(void (^)(NSMutableDictionary *,NSError *))block
-{
-    
-}*/
-
-//+(void)apiCall_soap:(SOAPEngine *)soap url:(NSString *)url action:(NSString *)actionurl block:(void (^)(NSDictionary *,NSError *))block{
-//   
-//    soap.actionNamespaceSlash = YES;
-//    [soap requestURL:url
-//          soapAction:actionurl
-//            complete:^(NSInteger statusCode, NSString *stringXML) {
-//                
-//                NSLog(@"Result: %f", [soap floatValue]);
-//                if (block) {
-//                    block([soap dictionaryValue], nil);
-//                }
-//            } failWithError:^(NSError *error) {
-//                if (block) {
-//                    block(nil, error);
-//                }
-//
-//                NSLog(@"%@", error);
-//            }];
-//
-//}
 
 @end
