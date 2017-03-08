@@ -97,7 +97,6 @@
         [self.frostedViewController hideMenuViewController];
         app.checkview = 0;
     }
-
 }
 - (IBAction)btnHomeClicked:(id)sender
 {
