@@ -11,6 +11,7 @@
 		072A85AE1E67FADC00F54A30 /* DEMOMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 072A85A81E67FADC00F54A30 /* DEMOMenuViewController.m */; };
 		072A85AF1E67FADC00F54A30 /* DEMONavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 072A85AA1E67FADC00F54A30 /* DEMONavigationController.m */; };
 		072A85B01E67FADC00F54A30 /* DEMORootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 072A85AC1E67FADC00F54A30 /* DEMORootViewController.m */; };
+		0739EC521E713AE20099658F /* ForgotNewPwdVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 0739EC511E713AE20099658F /* ForgotNewPwdVc.m */; };
 		073E55CA1E6FDAE3008BF93B /* ProgressHUB.m in Sources */ = {isa = PBXBuildFile; fileRef = 073E55C91E6FDAE3008BF93B /* ProgressHUB.m */; };
 		073E55CD1E703D04008BF93B /* OrataroLoacal_DB.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 073E55CC1E703D04008BF93B /* OrataroLoacal_DB.sqlite */; };
 		0932277B1E38750D00138A2B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0932277A1E38750D00138A2B /* main.m */; };
@@ -203,6 +204,8 @@
 		072A85AA1E67FADC00F54A30 /* DEMONavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DEMONavigationController.m; sourceTree = "<group>"; };
 		072A85AB1E67FADC00F54A30 /* DEMORootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DEMORootViewController.h; sourceTree = "<group>"; };
 		072A85AC1E67FADC00F54A30 /* DEMORootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DEMORootViewController.m; sourceTree = "<group>"; };
+		0739EC501E713AE20099658F /* ForgotNewPwdVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgotNewPwdVc.h; sourceTree = "<group>"; };
+		0739EC511E713AE20099658F /* ForgotNewPwdVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgotNewPwdVc.m; sourceTree = "<group>"; };
 		073E55C81E6FDAE3008BF93B /* ProgressHUB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressHUB.h; sourceTree = "<group>"; };
 		073E55C91E6FDAE3008BF93B /* ProgressHUB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressHUB.m; sourceTree = "<group>"; };
 		073E55CC1E703D04008BF93B /* OrataroLoacal_DB.sqlite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OrataroLoacal_DB.sqlite; sourceTree = "<group>"; };
@@ -561,6 +564,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0739EC4F1E7137920099658F /* ForgotNewPwdVc */ = {
+			isa = PBXGroup;
+			children = (
+				0739EC501E713AE20099658F /* ForgotNewPwdVc.h */,
+				0739EC511E713AE20099658F /* ForgotNewPwdVc.m */,
+			);
+			path = ForgotNewPwdVc;
+			sourceTree = "<group>";
+		};
 		073E55C71E6FDAA7008BF93B /* ProgressHUB */ = {
 			isa = PBXGroup;
 			children = (
@@ -637,7 +649,6 @@
 				C375B6331E6550B800E8D63D /* SchoolgroupVc */,
 				C375B62B1E65458000E8D63D /* ProfileHappyGramListdetailListVc */,
 				C3A2D7321E64496F00B91B54 /* ProfilePhotoShowVC */,
-				C3A2D72E1E6423FD00B91B54 /* OtpPasswordVc */,
 				C3A2D7111E63F20000B91B54 /* ProfileSearchFriend */,
 				C38AF11A1E605C7900E4F40B /* ProfileFriendRequestVc */,
 				C38AF0FD1E603AE000E4F40B /* ProfileLeaveListSelectVc */,
@@ -773,6 +784,8 @@
 			children = (
 				097C98E41E39DB7D008B52EC /* ForgotPassVc.h */,
 				097C98E51E39DB7D008B52EC /* ForgotPassVc.m */,
+				C3A2D72E1E6423FD00B91B54 /* OtpPasswordVc */,
+				0739EC4F1E7137920099658F /* ForgotNewPwdVc */,
 			);
 			path = ForgotVc;
 			sourceTree = "<group>";
@@ -1804,7 +1817,8 @@
 				C3A2D72F1E64244000B91B54 /* OtpPasswordVc.h */,
 				C3A2D7301E64244000B91B54 /* OtpPasswordVc.m */,
 			);
-			path = OtpPasswordVc;
+			name = OtpPasswordVc;
+			path = ../OtpPasswordVc;
 			sourceTree = "<group>";
 		};
 		C3A2D7321E64496F00B91B54 /* ProfilePhotoShowVC */ = {
@@ -1910,6 +1924,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C38AF1191E6043A500E4F40B /* LeaveVc.m in Sources */,
+				0739EC521E713AE20099658F /* ForgotNewPwdVc.m in Sources */,
 				C38ABFB01E48A65900689426 /* PostChatVc.m in Sources */,
 				C36DD1B21E4086210011221E /* IQKeyboardManager.m in Sources */,
 				C3645ADF1E5BFE980012F4CF /* FSCalendar.m in Sources */,

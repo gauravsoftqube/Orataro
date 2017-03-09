@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface OtpPasswordVc : UIViewController
+@property (strong, nonatomic) NSString *strMobileNumber;
+
 @property (weak, nonatomic) IBOutlet UIImageView *imgUser;
 @property (weak, nonatomic) IBOutlet UITextField *txtOtp;
 @property (weak, nonatomic) IBOutlet UIButton *btnACTIVATION;
