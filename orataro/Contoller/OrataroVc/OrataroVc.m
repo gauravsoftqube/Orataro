@@ -432,6 +432,12 @@
 
 }
 
+- (IBAction)LogoutBtnClicked:(UIButton *)sender
+{
+    UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"LoginVC"];
+    [self.navigationController pushViewController:wc animated:YES];
+}
+
 /*
 #pragma mark - Navigation
 
@@ -441,6 +447,7 @@
     // Pass the selected object to the new view controller.
 }
 */
+
 
 
 @end

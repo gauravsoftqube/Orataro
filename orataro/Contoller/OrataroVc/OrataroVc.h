@@ -10,6 +10,7 @@
 #import "ParallaxViewController.h"
 
 @interface OrataroVc : ParallaxViewController<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
+- (IBAction)LogoutBtnClicked:(UIButton *)sender;
 
 @property (strong, nonatomic) IBOutlet UICollectionView *aCollectionView;
 @property (strong, nonatomic) IBOutlet UIView *aHeaderView;

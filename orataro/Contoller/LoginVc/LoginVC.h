@@ -10,6 +10,7 @@
 
 @interface LoginVC : UIViewController
 
+- (IBAction)btnRegisterClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UITextField *aPasswordTextField;
 - (IBAction)hideShowBtnClicked:(UIButton *)sender;
 - (IBAction)btnLoginClicked:(UIButton *)sender;

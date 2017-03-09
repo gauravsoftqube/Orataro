@@ -9,6 +9,7 @@
 #import "LoginVC.h"
 #import "Utility.h"
 #import "AppDelegate.h"
+#import "Global.h"
 
 @interface LoginVC ()
 {
@@ -47,6 +48,20 @@ int cnt1 = 0;
     // Dispose of any resources that can be recreated.
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    
+    NSString *getPhoneNumber = [[NSUserDefaults standardUserDefaults]valueForKey:@"MobileNumber"];
+    NSString *getPassword = [[NSUserDefaults standardUserDefaults]valueForKey:@"Password"];
+    
+    if (getPhoneNumber.length != 0 && getPassword.length != 0)
+    {
+        _aPhonenumberTextField.text = getPhoneNumber;
+        _aPasswordTextField.text = getPassword;
+    }
+   
+    
+}
 #pragma mark - button action
 
 - (IBAction)hideShowBtnClicked:(UIButton *)sender
@@ -89,12 +104,12 @@ int cnt1 = 0;
 {
     if (cnt == 0)
     {
-        [aCheckBtn setBackgroundImage:[UIImage imageNamed:@"tick_mark"] forState:UIControlStateNormal];
+        [aCheckBtn setBackgroundImage:[UIImage imageNamed:@"uncheck"] forState:UIControlStateNormal];
         cnt = 1;
     }
     else
     {
-        [aCheckBtn setBackgroundImage:[UIImage imageNamed:@"uncheck"] forState:UIControlStateNormal];
+        [aCheckBtn setBackgroundImage:[UIImage imageNamed:@"tick_mark"] forState:UIControlStateNormal];
         cnt = 0;
     }
 
@@ -138,19 +153,32 @@ int cnt1 = 0;
              {
                  NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
                  NSString *strStatus=[dic objectForKey:@"message"];
-                 if([strStatus isEqualToString:@"OTP Send On Your Mobile Number...!!!"])
+                 if([strStatus isEqualToString:@"No Data Found"])
                  {
                      UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
-                     
                  }
                  else
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     [alrt show];
+                     for (NSMutableDictionary *dic in arrResponce)
+                     {
+                        //NSString *strGetmob = _aPhonenumberTextField.text;
+                         
+                         NSLog(@"Dic=%@",dic);
+                         
+                         NSString *getjsonstr = [Utility Convertjsontostring:dic];
+                         [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Login (dic_json_string) VALUES ('%@')",getjsonstr]];
+                     }
+
+                     [[NSUserDefaults standardUserDefaults]setObject:[NSString stringWithFormat:@"%d",cnt] forKey:@"RememberMe"];
+                     [[NSUserDefaults standardUserDefaults]synchronize];
+                     
+                
+                     UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SwitchAcoountVC"];
+                     [self.navigationController pushViewController:wc animated:YES];
                      
                  }
-             }
+            }
              else
              {
                  UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -163,6 +191,11 @@ int cnt1 = 0;
              [alrt show];
          }
      }];
+}
+- (IBAction)btnRegisterClicked:(id)sender
+{
+    UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"RegisterVc"];
+    [self.navigationController pushViewController:wc animated:YES];
 }
 
 
@@ -177,6 +210,7 @@ int cnt1 = 0;
     // Pass the selected object to the new view controller.
 }
 */
+
 
 
 @end

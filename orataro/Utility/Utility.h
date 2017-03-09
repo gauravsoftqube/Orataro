@@ -78,7 +78,14 @@
 +(NSString *)imageToNSString:(UIImage *)image;
 
 #pragma mark - Api Function
+
 +(void)PostApiCall:(NSString *)apiUrl params:(NSMutableDictionary *)param block:(void (^)(NSMutableDictionary *,NSError *))block;
+
+
+#pragma mark - convert json
+
++(NSString *)Convertjsontostring:(NSMutableDictionary *)dictonary;
+
 
 /*+(void)POSTapiCall:(NSString *)apiName parms:(NSMutableDictionary *)parms block:(void (^)(NSMutableDictionary *,NSError *))block;
 //+(void)APIPhoto:(NSString *)apiName parms:(NSMutableDictionary*)parms block:(void (^)(NSDictionary *, NSError *))block;
