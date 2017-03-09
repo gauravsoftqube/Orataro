@@ -18,6 +18,7 @@
 #import "OrataroVc.h"
 
 #import "REFrostedViewController.h"
+#import "Global.h"
 
 @interface ViewController ()
 {
@@ -37,7 +38,24 @@
     
     app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     
-   
+    
+     NSLog(@"Check Status =%@",[[NSUserDefaults standardUserDefaults]valueForKey:@"CheckUser"]);
+    
+    if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"RememberMe"] isEqualToString:@"1"])
+    {
+        
+    }
+    
+    
+    if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"CheckUser"] isEqualToString:@"Login"])
+    {
+        UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"LoginVC"];
+        [self.navigationController pushViewController:wc animated:NO];
+    }
+   else
+   {
+       
+   }
     // Do any additional setup after loading the view, typically from a nib.
 }
 

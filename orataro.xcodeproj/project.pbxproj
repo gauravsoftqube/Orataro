@@ -133,6 +133,8 @@
 		C36BDAF51E66FFC900779C5B /* UIImage+REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C36BDAED1E66FFC900779C5B /* UIImage+REFrostedViewController.m */; };
 		C36BDAF61E66FFC900779C5B /* UIView+REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C36BDAEF1E66FFC900779C5B /* UIView+REFrostedViewController.m */; };
 		C36BDAF71E66FFC900779C5B /* UIViewController+REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C36BDAF11E66FFC900779C5B /* UIViewController+REFrostedViewController.m */; };
+		C36CE4EE1E711AF000DC3DC9 /* DBOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C36CE4ED1E711AF000DC3DC9 /* DBOperation.m */; };
+		C36CE4F01E71203F00DC3DC9 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C36CE4EF1E71203F00DC3DC9 /* libsqlite3.tbd */; };
 		C36D394B1E558C42001A445E /* PageVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C36D394A1E558C42001A445E /* PageVc.m */; };
 		C36D39571E55D52B001A445E /* MessageVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C36D39561E55D52B001A445E /* MessageVc.m */; };
 		C36DD1801E405D930011221E /* SAMTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = C36DD17F1E405D930011221E /* SAMTextView.m */; };
@@ -430,6 +432,9 @@
 		C36BDAEF1E66FFC900779C5B /* UIView+REFrostedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+REFrostedViewController.m"; path = "REFrostedViewController/UIView+REFrostedViewController.m"; sourceTree = "<group>"; };
 		C36BDAF01E66FFC900779C5B /* UIViewController+REFrostedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+REFrostedViewController.h"; path = "REFrostedViewController/UIViewController+REFrostedViewController.h"; sourceTree = "<group>"; };
 		C36BDAF11E66FFC900779C5B /* UIViewController+REFrostedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+REFrostedViewController.m"; path = "REFrostedViewController/UIViewController+REFrostedViewController.m"; sourceTree = "<group>"; };
+		C36CE4EC1E711AF000DC3DC9 /* DBOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DBOperation.h; path = DBOperation/DBOperation.h; sourceTree = "<group>"; };
+		C36CE4ED1E711AF000DC3DC9 /* DBOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DBOperation.m; path = DBOperation/DBOperation.m; sourceTree = "<group>"; };
+		C36CE4EF1E71203F00DC3DC9 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		C36D39491E558C42001A445E /* PageVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageVc.h; sourceTree = "<group>"; };
 		C36D394A1E558C42001A445E /* PageVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageVc.m; sourceTree = "<group>"; };
 		C36D39551E55D52B001A445E /* MessageVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageVc.h; sourceTree = "<group>"; };
@@ -555,6 +560,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C36CE4F01E71203F00DC3DC9 /* libsqlite3.tbd in Frameworks */,
 				C360CD3E1E4B480C00761ABE /* CoreGraphics.framework in Frameworks */,
 				C360CD3C1E4B480500761ABE /* Foundation.framework in Frameworks */,
 				C360CD3A1E4B47FE00761ABE /* UIKit.framework in Frameworks */,
@@ -614,6 +620,7 @@
 				0932277D1E38750D00138A2B /* AppDelegate.m */,
 				0932277F1E38750D00138A2B /* ViewController.h */,
 				093227801E38750D00138A2B /* ViewController.m */,
+				C36CE4EB1E711ACA00DC3DC9 /* DBOperation */,
 				073E55CB1E70368B008BF93B /* LocalDataBase_SQL */,
 				C369E6D91E5AF1F50048D601 /* Utility */,
 				C369E6D81E5AF1DF0048D601 /* Rechability */,
@@ -989,6 +996,7 @@
 		C360CD381E4B47FD00761ABE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C36CE4EF1E71203F00DC3DC9 /* libsqlite3.tbd */,
 				C360CD3D1E4B480C00761ABE /* CoreGraphics.framework */,
 				C360CD3B1E4B480500761ABE /* Foundation.framework */,
 				C360CD391E4B47FE00761ABE /* UIKit.framework */,
@@ -1376,6 +1384,15 @@
 				072A85AC1E67FADC00F54A30 /* DEMORootViewController.m */,
 			);
 			path = MenuController;
+			sourceTree = "<group>";
+		};
+		C36CE4EB1E711ACA00DC3DC9 /* DBOperation */ = {
+			isa = PBXGroup;
+			children = (
+				C36CE4EC1E711AF000DC3DC9 /* DBOperation.h */,
+				C36CE4ED1E711AF000DC3DC9 /* DBOperation.m */,
+			);
+			name = DBOperation;
 			sourceTree = "<group>";
 		};
 		C36D39481E558C12001A445E /* PagesVc */ = {
@@ -2003,6 +2020,7 @@
 				C365CCBD1E49AB7000A4ABAA /* HolidayVcCell.m in Sources */,
 				097C98E61E39DB7D008B52EC /* ForgotPassVc.m in Sources */,
 				09F428C11E38BC0B00A80F0D /* AFURLRequestSerialization.m in Sources */,
+				C36CE4EE1E711AF000DC3DC9 /* DBOperation.m in Sources */,
 				C364D91A1E56D54600CE72DC /* BlogDetailVc.m in Sources */,
 				C36D39571E55D52B001A445E /* MessageVc.m in Sources */,
 				C36B58571E5EC56B00DE7464 /* ChangePasswordVc.m in Sources */,

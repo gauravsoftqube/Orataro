@@ -64,6 +64,10 @@ int c2= 0;
     
     aWallTableView.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
     
+    //ShowWall
+    
+    //RememberMe
+    
     // Do any additional setup after loading the view.
 }
 

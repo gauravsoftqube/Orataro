@@ -598,4 +598,20 @@
     }] resume];
 }
 
++(NSString *)Convertjsontostring:(NSMutableDictionary *)dictonary;
+
+{
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictonary options:0 error:&error];
+    
+    if (! jsonData)
+    {
+        NSLog(@"bv_jsonStringWithPrettyPrint: error: %@", error.localizedDescription);
+        return @"[]";
+    } else {
+        return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    }
+}
+
+
 @end

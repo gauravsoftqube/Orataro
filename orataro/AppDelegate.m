@@ -22,8 +22,9 @@
 @implementation AppDelegate
 
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    [DBOperation checkCreateDB];
     REFrostedViewController *rf = [[REFrostedViewController alloc]init];
     
     rf.panGestureEnabled = NO;
@@ -41,6 +42,11 @@
     NSString  *currentDeviceId = [[device identifierForVendor]UUIDString];
     [[NSUserDefaults standardUserDefaults]setValue:currentDeviceId forKey:@"currentDeviceId"];
     
+
+    // [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
+    
+    
+    NSLog(@"Check Status =%@",[[NSUserDefaults standardUserDefaults]valueForKey:@"CheckUser"]);
     // Override point for customization after application launch.
     return YES;
 }
@@ -101,8 +107,24 @@
 }
 
 
-- (void)applicationWillTerminate:(UIApplication *)application {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+- (void)applicationWillTerminate:(UIApplication *)application
+{
+//    [[NSUserDefaults standardUserDefaults]setObject:[NSString stringWithFormat:@"%d",cnt] forKey:@"RememberMe"];
+//    
+//    [[NSUserDefaults standardUserDefaults]setObject:_aPhonenumberTextField.text forKey:@"PhoneNumber"];
+//    [[NSUserDefaults standardUserDefaults]setObject:_aPasswordTextField.text forKey:@"Password"];
+    
+    if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"RememberMe"] isEqualToString:@"1"])
+    {
+        
+    }
+    else
+    {
+        
+    }
+
+    
+        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
 

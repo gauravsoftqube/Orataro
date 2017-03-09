@@ -83,13 +83,13 @@
                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                     [alrt show];
                     
-                    
                     RegisterOtpVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"RegisterOtpVc"];
                     wc.Strmobnumber = self.aMobTextField.text;
                     
+                    [[NSUserDefaults standardUserDefaults]setObject:aMobTextField.text forKey:@"MobileNumber"];
+                    [[NSUserDefaults standardUserDefaults]synchronize];
+                    
                     [self.navigationController pushViewController:wc animated:YES];
-
-
                 }
                 else
                 {

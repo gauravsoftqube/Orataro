@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SwitchAcoountVC : UIViewController
+@interface SwitchAcoountVC : UIViewController<UITableViewDelegate,UITableViewDataSource>
+
+@property (weak, nonatomic) IBOutlet UITableView *tblSwitchAccount;
+- (IBAction)HomeBtnClicked:(id)sender;
+- (IBAction)btnMenuClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UIView *viewForNotSelection;
+@property (weak, nonatomic) IBOutlet UIButton *btnMenu;
+@property (weak, nonatomic) IBOutlet UIButton *btnHome;
 
 @end

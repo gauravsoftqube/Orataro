@@ -98,8 +98,11 @@
 #import "RegisterOtpVc.h"
 #import "WallVc.h"
 #import "REFrostedViewController.h"
+#import "DBOperation.h"
+#import "SwitchAcoountVC.h"
 #import "ForgotNewPwdVc.h"
 #import "OtpPasswordVc.h"
+
 
 #pragma mark - Api Url And Name List
 
