@@ -63,9 +63,10 @@
    
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
     [param setValue:[NSString stringWithFormat:@"%@",self.aMobTextField.text] forKey:@"MobileNumber"];
-    [param setValue:@"4C1D3BF4-4B71-4A1D-B76A123456789" forKey:@"DivisRegID"];
+    [param setValue:[NSString stringWithFormat:@"%@",currentDeviceId] forKey:@"DivisRegID"];
      [ProgressHUB showHUDAddedTo:self.view];
-    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error) {
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+    {
         [ProgressHUB hideenHUDAddedTo:self.view];
         if(!error)
         {
@@ -82,7 +83,10 @@
                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                     [alrt show];
                     
+                    
                     RegisterOtpVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"RegisterOtpVc"];
+                    wc.Strmobnumber = self.aMobTextField.text;
+                    
                     [self.navigationController pushViewController:wc animated:YES];
 
 
@@ -113,7 +117,8 @@
 
 - (IBAction)VerifyBtnClicked:(id)sender
 {
-    if ([Utility validatePhoneLength:self.aMobTextField.text]) {
+    if ([Utility validatePhoneLength:self.aMobTextField.text])
+    {
         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:PHONE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alrt show];
         return;
@@ -125,7 +130,9 @@
 
 - (IBAction)BackBtnClicked:(id)sender
 {
+    UIViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"LoginVC"];
     
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end

@@ -316,10 +316,10 @@
     NSString *value = [string stringByTrimmingCharactersInSet:[NSCharacterSet  whitespaceCharacterSet]];
     
     if([value length]  > 0) {
-        return YES;
+        return NO;
     }
     
-    return NO;
+    return YES;
 }
 
 +(BOOL)validatePhoneLength:(NSString *)string {
@@ -338,6 +338,18 @@
     NSString *value = [string stringByTrimmingCharactersInSet:[NSCharacterSet  whitespaceCharacterSet]];
     
     if([value length] >= 6 && [value length] <= 30) {
+        return YES;
+    }
+    
+    return NO;
+}
+
++(BOOL)validatePassword1:(NSString *)string
+{
+    NSString *value = [string stringByTrimmingCharactersInSet:[NSCharacterSet  whitespaceCharacterSet]];
+    
+    if( [value length] <= 5)
+    {
         return YES;
     }
     

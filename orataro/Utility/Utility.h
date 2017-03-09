@@ -54,6 +54,8 @@
 ///+(BOOL)validateURL: (NSString *) strURL;
 +(BOOL)validatePassword:(NSString *)string;
 +(BOOL)validatePassword:(NSString *)string  validateRetypePassword:(NSString *)strRetypePassword;
++(BOOL)validatePassword1:(NSString *)string;
+
 +(BOOL)validateTermsAndCondition:(UIButton *)button;
 +(BOOL)validateTextfieldLength:(NSString*)string;
 

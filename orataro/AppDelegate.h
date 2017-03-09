@@ -18,5 +18,7 @@
 @property (assign,nonatomic)int c2;
 @property (assign,nonatomic)int checkview;
 @property(strong,nonatomic)UINavigationController *nav;
+@property(strong,nonatomic)NSString *strToken;
+
 @end
 

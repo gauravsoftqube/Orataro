@@ -30,6 +30,11 @@ int show =0;
     
     //show_pass
     
+    //UserMobileNumberRegistration
+    
+   
+    
+    
     // Do any additional setup after loading the view.
 }
 
@@ -42,16 +47,26 @@ int show =0;
 
 - (IBAction)LoginBtnClicked:(id)sender
 {
-    //WallVc
-   // WallVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
-   // [self.navigationController pushViewController:wc animated:YES];
+    if ([Utility validateBlankField:aOtpTextfield.text])
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:OTPCODE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    if ([Utility validateBlankField:aPasswordTextField.text])
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:PASSWORD_EMPTY delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    if ([Utility validatePassword1:aPasswordTextField.text])
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:PASSWORD delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    [self apiCallForLogin];
     
-    WallVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
-   // [self.revealViewController pushFrontViewController:vc animated:YES];
-    
-    vc.checkscreen = @"FromLogin";
-    app.checkview = 0;
-    [self performSegueWithIdentifier:@"ShowWall" sender:self];
 }
 
 - (IBAction)hidePaswordBtnclicked:(id)sender
@@ -69,8 +84,80 @@ int show =0;
         show =0;
     }
 }
-- (IBAction)BackbtnClicked:(id)sender {
+- (IBAction)BackbtnClicked:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
+
+#pragma mark - ApiCall
+
+-(void)apiCallForLogin
+{
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_registration,apk_CheckOTPForRegistration_action];
+    
+    NSString *currentDeviceId=[[NSUserDefaults standardUserDefaults]objectForKey:@"currentDeviceId"];
+    
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",_Strmobnumber] forKey:@"MobileNumber"];
+    [param setValue:[NSString stringWithFormat:@"%@",self.aOtpTextfield.text] forKey:@"OTPNumber"];
+    [param setValue:currentDeviceId forKey:@"DivisRegID"];
+    [param setValue:[NSString stringWithFormat:@"%@",self.aPasswordTextField.text] forKey:@"Password"];
+    [param setValue:[NSString stringWithFormat:@"ios"] forKey:@"DiviType"];
+
+    
+    [ProgressHUB showHUDAddedTo:self.view];
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error) {
+        [ProgressHUB hideenHUDAddedTo:self.view];
+        if(!error)
+        {
+            NSString *strArrd=[dicResponce objectForKey:@"d"];
+            NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+            NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            NSLog(@"%@",arrResponce);
+            if([arrResponce count] != 0)
+            {
+                NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                NSString *strStatus=[dic objectForKey:@"message"];
+                if([strStatus isEqualToString:@"User Activated Successfully...!!!"])
+                {
+                    UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alrt show];
+                    
+                    WallVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
+                    vc.checkscreen = @"FromLogin";
+                    app.checkview = 0;
+                    [self performSegueWithIdentifier:@"ShowWall" sender:self];
+                    
+                }
+                else
+                {
+                    UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alrt show];
+                    
+                }
+            }
+            else
+            {
+                UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alrt show];
+            }
+        }
+        else
+        {
+            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alrt show];
+        }
+    }];
+}
+
 
 /*
 #pragma mark - Navigation
