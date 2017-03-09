@@ -16,5 +16,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *aOtpTextfield;
 - (IBAction)BackbtnClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *BackBtn;
+@property (strong,nonatomic)NSString *Strmobnumber;
 
 @end

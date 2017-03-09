@@ -15,7 +15,7 @@
  
 #define COMMING @"Comming soon...!"
 #define USERNM @"Please Enter UserName"
-#define PASSWORD @"Please Enter Password"
+
 #define EMAIL @"Please Enter Email"
 #define BIRTH @"Please Enter Date of Birth"
 #define ADDRESS @"Please Enter Address"
@@ -47,11 +47,13 @@
 #pragma mark - Alert Message
 
 #define PHONE @"Contact Numeber Must Be 10 Digit"
+#define PHONE_EMPTY @"Please Enter PhoneNumber"
+
 #define INTERNETVALIDATION @"No internet connection.."
 #define Api_Not_Response @"Please try again!"
-
-
-
+#define PASSWORD_EMPTY @"Please Enter Password"
+#define PASSWORD @"Password Must be greater than 5 Digit"
+#define OTPCODE @"Please Enter OTP"
 
 #pragma mark - IMPORT UIViewController
 
@@ -97,13 +99,20 @@
 
 #define URL_Api  @"http://orataro.com/Services/"
 
+#pragma mark - Register
+
 #define apk_registration  @"apk_registration.asmx"
+
 #define apk_CheckUserMobileNumberForRegistration_action @"CheckUserMobileNumberForRegistration"
+#define apk_CheckOTPForRegistration_action @"UserMobileNumberRegistration"
 
 
+#pragma mark - Login
+
+#define apk_login  @"apk_login.asmx"
 
 
-
+#define apk_LoginWithGCM_action  @"LoginWithGCM"
 
 #endif /* Global_h */
 

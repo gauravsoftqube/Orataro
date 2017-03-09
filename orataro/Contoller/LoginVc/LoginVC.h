@@ -12,6 +12,7 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *aPasswordTextField;
 - (IBAction)hideShowBtnClicked:(UIButton *)sender;
+- (IBAction)btnLoginClicked:(UIButton *)sender;
 @property (weak, nonatomic) IBOutlet UITextField *aPhonenumberTextField;
 - (IBAction)RememberClicked:(UIButton *)sender;
 @property (weak, nonatomic) IBOutlet UIView *aMobOuterView;

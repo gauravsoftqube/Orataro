@@ -7,9 +7,13 @@
 //
 
 #import "LoginVC.h"
+#import "Utility.h"
+#import "AppDelegate.h"
 
 @interface LoginVC ()
+{
 
+}
 @end
 
 @implementation LoginVC
@@ -33,6 +37,7 @@ int cnt1 = 0;
     
     OrLb.layer.cornerRadius = 15.0;
     OrLb.layer.masksToBounds = YES;
+    
     
     // Do any additional setup after loading the view.
 }
@@ -60,6 +65,26 @@ int cnt1 = 0;
     }
 }
 
+- (IBAction)btnLoginClicked:(UIButton *)sender
+{
+    NSLog(@"Remember Values=%d",cnt);
+   
+    if ([Utility validateBlankField:_aPhonenumberTextField.text])
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:PHONE_EMPTY delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    if ([Utility validateBlankField:_aPasswordTextField.text])
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:PASSWORD_EMPTY delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    [self apiCallLogin];
+    
+}
+
 - (IBAction)RememberClicked:(UIButton *)sender
 {
     if (cnt == 0)
@@ -74,6 +99,74 @@ int cnt1 = 0;
     }
 
 }
+
+#pragma mark - ApiCall
+
+-(void)apiCallLogin
+{
+    if ([Utility isInterNetConnectionIsActive] == false) {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_login,apk_LoginWithGCM_action];
+    
+    NSString *currentDeviceId=[[NSUserDefaults standardUserDefaults]objectForKey:@"currentDeviceId"];
+    
+    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"DeviceToken"];
+    
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",self.aPhonenumberTextField.text] forKey:@"UserName"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",self.aPasswordTextField.text] forKey:@"Password"];
+    [param setValue:[NSString stringWithFormat:@"%@",token] forKey:@"GCMID"];
+    [param setValue:[NSString stringWithFormat:@"%@",currentDeviceId] forKey:@"DivRegistID"];
+    
+    [ProgressHUB showHUDAddedTo:self.view];
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         [ProgressHUB hideenHUDAddedTo:self.view];
+         if(!error)
+         {
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             NSLog(@"%@",arrResponce);
+             if([arrResponce count] != 0)
+             {
+                 NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                 NSString *strStatus=[dic objectForKey:@"message"];
+                 if([strStatus isEqualToString:@"OTP Send On Your Mobile Number...!!!"])
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                     
+                 }
+                 else
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                     
+                 }
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
+}
+
+
+
 
 /*
 #pragma mark - Navigation

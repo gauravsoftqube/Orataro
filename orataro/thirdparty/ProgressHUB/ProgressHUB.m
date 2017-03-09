@@ -73,8 +73,6 @@
         animationImageView.animationImages = images;
         animationImageView.animationDuration = 2.0;
         
-        //animationImageView.backgroundColor=[UIColor whiteColor];
-        //animationImageView.layer.cornerRadius=8;
         
         UIView *view2=[[UIView alloc]initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width/2 - 55, [UIScreen mainScreen].bounds.size.height/2 - 45, 110, 90)];
         
