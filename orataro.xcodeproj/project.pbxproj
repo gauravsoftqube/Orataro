@@ -12,6 +12,7 @@
 		072A85AF1E67FADC00F54A30 /* DEMONavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 072A85AA1E67FADC00F54A30 /* DEMONavigationController.m */; };
 		072A85B01E67FADC00F54A30 /* DEMORootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 072A85AC1E67FADC00F54A30 /* DEMORootViewController.m */; };
 		073E55CA1E6FDAE3008BF93B /* ProgressHUB.m in Sources */ = {isa = PBXBuildFile; fileRef = 073E55C91E6FDAE3008BF93B /* ProgressHUB.m */; };
+		073E55CD1E703D04008BF93B /* OrataroLoacal_DB.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 073E55CC1E703D04008BF93B /* OrataroLoacal_DB.sqlite */; };
 		0932277B1E38750D00138A2B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0932277A1E38750D00138A2B /* main.m */; };
 		0932277E1E38750D00138A2B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0932277D1E38750D00138A2B /* AppDelegate.m */; };
 		093227811E38750D00138A2B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 093227801E38750D00138A2B /* ViewController.m */; };
@@ -204,6 +205,7 @@
 		072A85AC1E67FADC00F54A30 /* DEMORootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DEMORootViewController.m; sourceTree = "<group>"; };
 		073E55C81E6FDAE3008BF93B /* ProgressHUB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressHUB.h; sourceTree = "<group>"; };
 		073E55C91E6FDAE3008BF93B /* ProgressHUB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressHUB.m; sourceTree = "<group>"; };
+		073E55CC1E703D04008BF93B /* OrataroLoacal_DB.sqlite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OrataroLoacal_DB.sqlite; sourceTree = "<group>"; };
 		093227761E38750D00138A2B /* orataro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = orataro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0932277A1E38750D00138A2B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0932277C1E38750D00138A2B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -568,6 +570,14 @@
 			path = ProgressHUB;
 			sourceTree = "<group>";
 		};
+		073E55CB1E70368B008BF93B /* LocalDataBase_SQL */ = {
+			isa = PBXGroup;
+			children = (
+				073E55CC1E703D04008BF93B /* OrataroLoacal_DB.sqlite */,
+			);
+			path = LocalDataBase_SQL;
+			sourceTree = "<group>";
+		};
 		0932276D1E38750D00138A2B = {
 			isa = PBXGroup;
 			children = (
@@ -592,6 +602,7 @@
 				0932277D1E38750D00138A2B /* AppDelegate.m */,
 				0932277F1E38750D00138A2B /* ViewController.h */,
 				093227801E38750D00138A2B /* ViewController.m */,
+				073E55CB1E70368B008BF93B /* LocalDataBase_SQL */,
 				C369E6D91E5AF1F50048D601 /* Utility */,
 				C369E6D81E5AF1DF0048D601 /* Rechability */,
 				C36724781E548074007E9326 /* Global */,
@@ -1864,6 +1875,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				073E55CD1E703D04008BF93B /* OrataroLoacal_DB.sqlite in Resources */,
 				C3645AEF1E5BFE980012F4CF /* Info.plist in Resources */,
 				093227891E38750D00138A2B /* LaunchScreen.storyboard in Resources */,
 				C365CCBE1E49AB7000A4ABAA /* HolidayVcCell.xib in Resources */,
