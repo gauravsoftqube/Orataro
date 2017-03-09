@@ -51,8 +51,13 @@
 
 #define INTERNETVALIDATION @"No internet connection.."
 #define Api_Not_Response @"Please try again!"
+
 #define PASSWORD_EMPTY @"Please Enter Password"
 #define PASSWORD @"Password Must be greater than 5 Digit"
+#define Password_Conf_Empty @"Please Enter Confirm Password"
+#define Password_Conf_Not_Match @"Confirm Password not match"
+
+
 #define OTPCODE @"Please Enter OTP"
 
 #pragma mark - IMPORT UIViewController
@@ -95,6 +100,8 @@
 #import "REFrostedViewController.h"
 #import "DBOperation.h"
 #import "SwitchAcoountVC.h"
+#import "ForgotNewPwdVc.h"
+#import "OtpPasswordVc.h"
 
 
 #pragma mark - Api Url And Name List
@@ -113,8 +120,12 @@
 
 #define apk_login  @"apk_login.asmx"
 
-
 #define apk_LoginWithGCM_action  @"LoginWithGCM"
+#define apk_NewFogotPasswordCheckUserData_action  @"NewFogotPasswordCheckUserData"
+#define apk_CheckSentOTPData_action  @"CheckSentOTPData"
+#define apk_UpdateUserPassword_action  @"UpdateUserPassword"
+
+
 
 #endif /* Global_h */
 

@@ -22,5 +22,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *PasswordBtn;
 @property (weak, nonatomic) IBOutlet UILabel *OrLb;
 
+@property (weak, nonatomic) IBOutlet UIButton *btnForgotPassword;
+- (IBAction)btnForgotPassword:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *btnRegister;
+- (IBAction)btnRegister:(id)sender;
 
 @end

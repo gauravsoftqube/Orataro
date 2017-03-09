@@ -55,6 +55,7 @@
     UIView *viewAddSubView = [view viewWithTag:1010];
     if(viewAddSubView == nil)
     {
+        [view endEditing:YES];
         NSArray *imageNames = @[@"loader_01.png", @"loader_02.png", @"loader_03.png", @"loader_04.png",@"loader_05.png", @"loader_06.png", @"loader_07.png", @"loader_08.png",@"loader_09.png", @"loader_10.png", @"loader_11.png", @"loader_12.png"];
         
         NSMutableArray *images = [[NSMutableArray alloc] init];

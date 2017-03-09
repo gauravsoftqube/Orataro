@@ -115,6 +115,15 @@ int cnt1 = 0;
 
 }
 
+- (IBAction)btnForgotPassword:(id)sender {
+    UIViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ForgotPassVc"];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+- (IBAction)btnRegister:(id)sender {
+    UIViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"RegisterVc"];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 #pragma mark - ApiCall
 
 -(void)apiCallLogin
