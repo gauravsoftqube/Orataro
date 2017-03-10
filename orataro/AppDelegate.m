@@ -39,10 +39,10 @@
 
     
     UIDevice *device = [UIDevice currentDevice];
-    NSString  *currentDeviceId = [[device identifierForVendor]UUIDString];
-    [[NSUserDefaults standardUserDefaults]setValue:currentDeviceId forKey:@"currentDeviceId"];
+   // NSString  *currentDeviceId = [[device identifierForVendor]UUIDString];
+    [[NSUserDefaults standardUserDefaults]setValue:@"DE8A7953-4839-4662-96A8-1204ADFF5FB1" forKey:@"currentDeviceId"];
     
-    NSLog(@"device=%@",currentDeviceId);
+  //  NSLog(@"device=%@",currentDeviceId);
     
     NSLog(@"Check Status =%@",[[NSUserDefaults standardUserDefaults]valueForKey:@"CheckUser"]);
     // Override point for customization after application launch.
