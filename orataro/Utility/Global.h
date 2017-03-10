@@ -127,5 +127,11 @@
 
 
 
+#pragma mark - Circular
+
+#define apk_circular  @"apk_circular.asmx"
+
+#define apk_GetCircularList_action  @"GetCircularList"
+
 #endif /* Global_h */
 

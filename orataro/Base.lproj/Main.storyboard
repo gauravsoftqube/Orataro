@@ -736,9 +736,8 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7gp-e5-Sf8">
                                         <rect key="frame" x="209" y="0.0" width="205" height="65"/>
                                         <connections>
-
-                                        <action selector="btnRegister:" destination="huE-pa-cES" eventType="touchUpInside" id="LZJ-Gm-HaT"/>
-                    </connections>
+                                            <action selector="btnRegister:" destination="huE-pa-cES" eventType="touchUpInside" id="LZJ-Gm-HaT"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Or" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P3h-gn-VVb">
                                         <rect key="frame" x="192" y="15" width="30" height="30"/>
@@ -1766,6 +1765,7 @@
                     <connections>
                         <outlet property="AddBtn" destination="d3c-j8-55J" id="gbW-mQ-8Oe"/>
                         <outlet property="CircularTableView" destination="g1T-VK-hap" id="vKL-Dp-jV0"/>
+                        <outlet property="lblCircularHeaderTitle" destination="eHn-9R-1NS" id="v2b-GS-9ct"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1pP-32-noJ" userLabel="First Responder" sceneMemberID="firstResponder"/>

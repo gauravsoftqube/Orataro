@@ -10,6 +10,8 @@
 
 @interface CircularVc : UIViewController<UITableViewDelegate,UITableViewDataSource>
 
+@property (weak, nonatomic) IBOutlet UILabel *lblCircularHeaderTitle;
+
 @property (weak, nonatomic) IBOutlet UIView *aView1;
 - (IBAction)MenuBtnClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIView *AddBtn;
