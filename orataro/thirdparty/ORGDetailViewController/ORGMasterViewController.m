@@ -12,7 +12,7 @@
 #import "ORGContainerCellView.h"
 
 @interface ORGMasterViewController ()
-@property (weak, nonatomic) UITableView *tableView;
+@property (weak, nonatomic) UITableView *awtableView;
 @property (strong, nonatomic) NSArray *sampleData;
 @end
 
