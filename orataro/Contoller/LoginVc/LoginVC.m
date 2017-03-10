@@ -13,7 +13,9 @@
 
 @interface LoginVC ()
 {
-
+    BOOL isValid;
+    AppDelegate *app;
+    NSString *currentDeviceId;
 }
 @end
 
@@ -21,10 +23,12 @@
 @synthesize aCheckBtn,aMobOuterView,aPasswordOuterView,PasswordBtn,OrLb;
 int cnt = 0;
 int cnt1 = 0;
-
+int multipleUser = 0;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    app =  (AppDelegate *)[UIApplication sharedApplication].delegate;
     
     aMobOuterView.layer.cornerRadius = 1.0;
     aMobOuterView.layer.masksToBounds =  YES;
@@ -59,7 +63,7 @@ int cnt1 = 0;
         _aPhonenumberTextField.text = getPhoneNumber;
         _aPasswordTextField.text = getPassword;
     }
-   
+    
     
 }
 #pragma mark - button action
@@ -70,7 +74,7 @@ int cnt1 = 0;
     {
         [PasswordBtn setBackgroundImage:[UIImage imageNamed:@"show_pass"] forState:UIControlStateNormal];
         _aPasswordTextField.secureTextEntry = NO;
-         cnt1=1;
+        cnt1=1;
     }
     else
     {
@@ -83,7 +87,7 @@ int cnt1 = 0;
 - (IBAction)btnLoginClicked:(UIButton *)sender
 {
     NSLog(@"Remember Values=%d",cnt);
-   
+    
     if ([Utility validateBlankField:_aPhonenumberTextField.text])
     {
         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:PHONE_EMPTY delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -112,7 +116,7 @@ int cnt1 = 0;
         [aCheckBtn setBackgroundImage:[UIImage imageNamed:@"tick_mark"] forState:UIControlStateNormal];
         cnt = 0;
     }
-
+    
 }
 
 - (IBAction)btnForgotPassword:(id)sender {
@@ -128,7 +132,8 @@ int cnt1 = 0;
 
 -(void)apiCallLogin
 {
-    if ([Utility isInterNetConnectionIsActive] == false) {
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alrt show];
         return;
@@ -136,7 +141,7 @@ int cnt1 = 0;
     
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_login,apk_LoginWithGCM_action];
     
-    NSString *currentDeviceId=[[NSUserDefaults standardUserDefaults]objectForKey:@"currentDeviceId"];
+    currentDeviceId =[[NSUserDefaults standardUserDefaults]objectForKey:@"currentDeviceId"];
     
     NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"DeviceToken"];
     
@@ -161,6 +166,7 @@ int cnt1 = 0;
              if([arrResponce count] != 0)
              {
                  NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                 
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
@@ -169,25 +175,59 @@ int cnt1 = 0;
                  }
                  else
                  {
-                     for (NSMutableDictionary *dic in arrResponce)
+                     [DBOperation executeSQL:[NSString stringWithFormat:@"delete from Login"]];
+                     
+                     if (arrResponce.count ==1)
                      {
-                        //NSString *strGetmob = _aPhonenumberTextField.text;
-                         
-                         NSLog(@"Dic=%@",dic);
-                         
-                         NSString *getjsonstr = [Utility Convertjsontostring:dic];
-                         [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Login (dic_json_string) VALUES ('%@')",getjsonstr]];
+                         [self checkMultipleUser:arrResponce];
                      }
+                     else
+                     {
+                         for (NSMutableDictionary *dic in arrResponce)
+                         {
+                             if ([[dic objectForKey:@"DeviceIdentity"] isEqualToString:currentDeviceId])
+                             {
+                                 multipleUser++;
+                             }
+                             else
+                             {
+                                 
+                             }
+                         }
+                         if (multipleUser == 0)
+                         {
+                             [WToast showWithText:@"User not found"];
+                         }
+                         else if (multipleUser == 1)
+                         {
+                             [self checkMultipleUser:arrResponce];
+                             
+                         }
+                         else
+                         {
+                             for (NSMutableDictionary *dic in arrResponce)
+                             {
+                                 if ([[dic objectForKey:@"DeviceIdentity"] isEqualToString:currentDeviceId])
+                                 {
+                                     NSString *getjsonstr = [Utility Convertjsontostring:dic];
+                                     
+                                     [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Login (dic_json_string,RememberMe) VALUES ('%@','0')",getjsonstr]];
+                                 }
+                                 
+                             }
 
+                             [[NSUserDefaults standardUserDefaults]setObject:_aPhonenumberTextField.text forKey:@"MobileNumber"];
+                              [[NSUserDefaults standardUserDefaults]setObject:_aPasswordTextField.text forKey:@"Password"];
+                             [[NSUserDefaults standardUserDefaults]synchronize];
+                             
+                             UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SwitchAcoountVC"];
+                             [self.navigationController pushViewController:wc animated:YES];
+                         }
+                     }
                      [[NSUserDefaults standardUserDefaults]setObject:[NSString stringWithFormat:@"%d",cnt] forKey:@"RememberMe"];
                      [[NSUserDefaults standardUserDefaults]synchronize];
-                     
-                
-                     UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SwitchAcoountVC"];
-                     [self.navigationController pushViewController:wc animated:YES];
-                     
                  }
-            }
+             }
              else
              {
                  UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -207,18 +247,44 @@ int cnt1 = 0;
     [self.navigationController pushViewController:wc animated:YES];
 }
 
-
+-(void)checkMultipleUser : (NSMutableArray *)ary
+{
+    NSMutableDictionary *getDic = [ary objectAtIndex:0];
+    
+    if ([[getDic objectForKey:@"DeviceIdentity"] isEqualToString:currentDeviceId])
+    {
+        for (NSMutableDictionary *dic in ary)
+        {
+            NSString *getjsonstr = [Utility Convertjsontostring:dic];
+            [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Login (dic_json_string,RememberMe) VALUES ('%@','0')",getjsonstr]];
+        }
+        
+        [[NSUserDefaults standardUserDefaults]setObject:_aPhonenumberTextField.text forKey:@"MobileNumber"];
+        [[NSUserDefaults standardUserDefaults]setObject:_aPasswordTextField.text forKey:@"Password"];
+        [[NSUserDefaults standardUserDefaults]synchronize];
+        
+        WallVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
+        vc.checkscreen = @"FromLogin";
+        app.checkview = 0;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    else
+    {
+        // show toast
+        [WToast showWithText:@"User not found"];
+    }
+}
 
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 
 

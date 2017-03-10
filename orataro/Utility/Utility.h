@@ -85,7 +85,7 @@
 #pragma mark - convert json
 
 +(NSString *)Convertjsontostring:(NSMutableDictionary *)dictonary;
-
++(NSMutableDictionary *)ConvertStringtoJSON:(NSString *)jsonStr;
 
 /*+(void)POSTapiCall:(NSString *)apiName parms:(NSMutableDictionary *)parms block:(void (^)(NSMutableDictionary *,NSError *))block;
 //+(void)APIPhoto:(NSString *)apiName parms:(NSMutableDictionary*)parms block:(void (^)(NSDictionary *, NSError *))block;

@@ -102,7 +102,9 @@
 #import "SwitchAcoountVC.h"
 #import "ForgotNewPwdVc.h"
 #import "OtpPasswordVc.h"
-
+#import "SDImageCache.h"
+#import "UIImageView+WebCache.h"
+#import "WToast.h"
 
 #pragma mark - Api Url And Name List
 
@@ -126,6 +128,9 @@
 #define apk_UpdateUserPassword_action  @"UpdateUserPassword"
 
 
+#pragma mark - Image Url
+
+#define apk_ImageUrl @"http://orataro.com/DataFiles"
 
 #pragma mark - Circular
 

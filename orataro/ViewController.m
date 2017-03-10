@@ -41,11 +41,7 @@
     
      NSLog(@"Check Status =%@",[[NSUserDefaults standardUserDefaults]valueForKey:@"CheckUser"]);
     
-    if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"RememberMe"] isEqualToString:@"1"])
-    {
-        
-    }
-    
+   
     
     if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"CheckUser"] isEqualToString:@"Login"])
     {
@@ -56,6 +52,13 @@
    {
        
    }
+    
+    if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"RememberMe"] isEqualToString:@"1"])
+    {
+        
+    }
+    
+    
     // Do any additional setup after loading the view, typically from a nib.
 }
 

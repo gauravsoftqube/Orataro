@@ -19,4 +19,6 @@
 //+(int) getLastInsertId;
 +(BOOL) executeSQL:(NSString *)sqlTmp;
 +(NSMutableArray*) selectData:(NSString *)sql;
+
+
 @end

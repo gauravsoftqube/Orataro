@@ -110,7 +110,7 @@ static int conn;
                         }
                         
                     }
-                    [obj removeAllObjects];
+                    //[obj removeAllObjects];
                     [obj addObject:tmpObj];
                     
                 }

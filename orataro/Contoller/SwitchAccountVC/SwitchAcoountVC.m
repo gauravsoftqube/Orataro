@@ -22,6 +22,8 @@
     
     self.automaticallyAdjustsScrollViewInsets = NO;
 
+    fetchDataAry = [[NSMutableArray alloc]init];
+    
     _tblSwitchAccount.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self fetchDataofUser];
 
@@ -54,37 +56,74 @@
     view1.layer.borderWidth = 1.0;
     view1.layer.borderColor = [UIColor lightGrayColor].CGColor;
     
+    //InstitutionWallImage
+    
     //tag 2
-    //UIImageView *img = (UIImageView *)[cell.contentView viewWithTag:2];
+    UIImageView *img = (UIImageView *)[cell.contentView viewWithTag:2];
+    //blank-user
+    
+    [img sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",apk_ImageUrl,[[fetchDataAry objectAtIndex:indexPath.row]objectForKey:@"ProfilePicture"]]] placeholderImage:[UIImage imageNamed:@"blank-user"]];
+    
+   // img.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@"]];
+    
+   // [NSString stringWithFormat:@"%@",apk_ImageUrl];
     
     //tag 3
-    //UILabel *lb1 = (UILabel *)[cell.contentView viewWithTag:3];
+    UILabel *lb1 = (UILabel *)[cell.contentView viewWithTag:3];
+    lb1.text = [[fetchDataAry objectAtIndex:indexPath.row]objectForKey:@"FullName"];
     
     //tag 4
-    //UILabel *lb2 = (UILabel *)[cell.contentView viewWithTag:4];
+    UILabel *lb2 = (UILabel *)[cell.contentView viewWithTag:4];
+    lb2.text = [[fetchDataAry objectAtIndex:indexPath.row]objectForKey:@"InstituteName"];
     
     //tag 5
-    //UILabel *lb3 = (UILabel *)[cell.contentView viewWithTag:5];
+    UILabel *lb3 = (UILabel *)[cell.contentView viewWithTag:5];
+    
+    NSString *strGrade = [NSString stringWithFormat:@"%@",[[fetchDataAry objectAtIndex:indexPath.row]objectForKey:@"GradeName"]];
+    
+    if ([strGrade isEqualToString:@"<null>"])
+    {
+        lb3.text = @" ";
+    }
+    else
+    {
+        lb3.text = strGrade;
+    }
     
     //tag 6
-    //UILabel *lb4 = (UILabel *)[cell.contentView viewWithTag:6];
+    UILabel *lb4 = (UILabel *)[cell.contentView viewWithTag:6];
+    
+    NSString *strDiv = [NSString stringWithFormat:@"%@",[[fetchDataAry objectAtIndex:indexPath.row]objectForKey:@"DivisionName"]];
+    
+    NSLog(@"data=%@",strDiv);
+    
+    //if (strDiv == (id)[NSNull null] || strDiv.length == 0 || strDiv == nil || [strDiv isKindOfClass:[NSNull class]])
+    
+    if ([strDiv isEqualToString:@"<null>"])
+    {
+        lb4.text = @"";
+    }
+    else
+    {
+        lb4.text = strDiv;
+    }
     
     //tag 7
     
-    //UIButton *btn = (UIButton *)[cell.contentView viewWithTag:7];
+    UIButton *btn = (UIButton *)[cell.contentView viewWithTag:7];
+   
+    [btn setTitle:[NSString stringWithFormat:@"%@",[[fetchDataAry objectAtIndex:indexPath.row]objectForKey:@"RoleName"]] forState:UIControlStateNormal];
+
     
     UIView *view2 = (UIView *)[cell.contentView viewWithTag:8];
-   // view2.frame = CGRectMake(view2.frame.origin.x, view2.frame.origin.y,(view2.frame.size.width)-5/3, view2.frame.size.height);
     view2.layer.borderWidth = 1.0;
     view2.layer.borderColor = [UIColor lightGrayColor].CGColor;
     
     UIView *view3 = (UIView *)[cell.contentView viewWithTag:9];
-   // view3.frame = CGRectMake(view3.frame.origin.x-5, view3.frame.origin.y,(view3.frame.size.width)/3, view3.frame.size.height);
     view3.layer.borderWidth = 1.0;
     view3.layer.borderColor = [UIColor lightGrayColor].CGColor;
     
     UIView *view4 = (UIView *)[cell.contentView viewWithTag:10];
-    //view4.frame = CGRectMake(view4.frame.origin.x, view4.frame.origin.y,(view4.frame.size.width)-5/3, view4.frame.size.height);
     view4.layer.borderWidth = 1.0;
     view4.layer.borderColor = [UIColor lightGrayColor].CGColor;
     
@@ -106,7 +145,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return fetchDataAry.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -130,11 +169,21 @@
 
 -(void)fetchDataofUser
 {
-    //[fetchDataAry removeAllObjects];
-    
-    fetchDataAry =  [DBOperation selectData:[NSString stringWithFormat:@"select * from Login"]];
-    
-    NSLog(@"data=%@",fetchDataAry);
+    NSMutableArray *fetchdata =  [DBOperation selectData:[NSString stringWithFormat:@"select * from Login"]];
+    if (fetchdata.count != 0)
+    {
+        for (NSMutableDictionary *dicFetch in fetchdata)
+        {
+            NSString *strJson = [dicFetch objectForKey:@"dic_json_string"];
+            
+            NSMutableDictionary *dic1 = [Utility ConvertStringtoJSON:strJson];
+            [fetchDataAry addObject:dic1];
+        }
+    }
+     NSLog(@"fetch data=%@",fetchDataAry);
+    [_tblSwitchAccount reloadData];
+   
+
 }
 
 

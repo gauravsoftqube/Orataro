@@ -126,8 +126,6 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-       
     switch (indexPath.row)   
     {
         case 0:

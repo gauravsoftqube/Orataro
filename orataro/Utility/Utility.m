@@ -599,7 +599,6 @@
 }
 
 +(NSString *)Convertjsontostring:(NSMutableDictionary *)dictonary;
-
 {
     NSError *error;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictonary options:0 error:&error];
@@ -613,5 +612,12 @@
     }
 }
 
++(NSMutableDictionary *)ConvertStringtoJSON:(NSString *)jsonStr;
+{
+    NSData *data = [jsonStr dataUsingEncoding:NSUTF8StringEncoding];
+    id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+    
+    return json;
+}
 
 @end

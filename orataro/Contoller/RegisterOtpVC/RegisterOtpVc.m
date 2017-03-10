@@ -132,9 +132,9 @@ int show =0;
                     [alrt show];
                     
                     
-                    WallVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
-                    vc.checkscreen = @"FromLogin";
-                    app.checkview = 0;
+//                    WallVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
+//                    vc.checkscreen = @"FromLogin";
+//                    app.checkview = 0;
                     
                     [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
                      [[NSUserDefaults standardUserDefaults]setObject:aPasswordTextField.text forKey:@"Password"];
