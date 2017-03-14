@@ -37,14 +37,14 @@
     _c2 = 0;
     _checkview = 0;
 
-    
-    UIDevice *device = [UIDevice currentDevice];
-   // NSString  *currentDeviceId = [[device identifierForVendor]UUIDString];
-    [[NSUserDefaults standardUserDefaults]setValue:@"DE8A7953-4839-4662-96A8-1204ADFF5FB1" forKey:@"currentDeviceId"];
+   // UIDevice *device = [UIDevice currentDevice];
+  //  NSString  *currentDeviceId = [[device identifierForVendor]UUIDString];
+    [[NSUserDefaults standardUserDefaults]setValue:@"8BC8323E-0F34-460B-83EA-77043737F29C" forKey:@"currentDeviceId"];
     
   //  NSLog(@"device=%@",currentDeviceId);
     
     NSLog(@"Check Status =%@",[[NSUserDefaults standardUserDefaults]valueForKey:@"CheckUser"]);
+    
     // Override point for customization after application launch.
     return YES;
 }

@@ -108,7 +108,6 @@
         lb4.text = strDiv;
     }
     
-    //tag 7
     
     UIButton *btn = (UIButton *)[cell.contentView viewWithTag:7];
    
@@ -127,6 +126,11 @@
     view4.layer.borderWidth = 1.0;
     view4.layer.borderColor = [UIColor lightGrayColor].CGColor;
     
+    //20
+    UIImageView *img4 = (UIImageView *)[cell.contentView viewWithTag:20];
+    img4.layer.borderWidth = 0.5;
+    img4.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    
     
     UIImageView *img1 = (UIImageView *)[cell.contentView viewWithTag:11];
     img1.image = [img1.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -139,6 +143,8 @@
     UIImageView *img3 = (UIImageView *)[cell.contentView viewWithTag:13];
     img3.image = [img3.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [img3 setTintColor:[UIColor colorWithRed:40.0/255.0 green:49.0/255.0 blue:90.0/255.0 alpha:1.0]];
+    
+    
     
     return cell;
 }
@@ -180,10 +186,7 @@
             [fetchDataAry addObject:dic1];
         }
     }
-     NSLog(@"fetch data=%@",fetchDataAry);
     [_tblSwitchAccount reloadData];
-   
-
 }
 
 

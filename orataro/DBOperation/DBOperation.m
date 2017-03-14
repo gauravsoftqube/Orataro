@@ -130,8 +130,9 @@ static int conn;
     @try {
         if(conn == SQLITE_OK)
         {
-            
             const char *sqlStmt = [sqlTmp cStringUsingEncoding:NSUTF8StringEncoding];
+            
+        
             sqlite3_stmt *cmp_sqlStmt1;
             int returnValue = sqlite3_prepare_v2(database, sqlStmt, -1, &cmp_sqlStmt1, NULL);
             

@@ -211,7 +211,7 @@ int multipleUser = 0;
                                  {
                                      NSString *getjsonstr = [Utility Convertjsontostring:dic];
                                      
-                                     [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Login (dic_json_string,RememberMe) VALUES ('%@','0')",getjsonstr]];
+                                     [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Login (dic_json_string,ActiveUser) VALUES ('%@','%@')",getjsonstr,@"0"]];
                                  }
                                  
                              }
@@ -251,12 +251,15 @@ int multipleUser = 0;
 {
     NSMutableDictionary *getDic = [ary objectAtIndex:0];
     
+    NSLog(@"Device identity=%@",[getDic objectForKey:@"DeviceIdentity"]);
+    
     if ([[getDic objectForKey:@"DeviceIdentity"] isEqualToString:currentDeviceId])
     {
         for (NSMutableDictionary *dic in ary)
         {
+            
             NSString *getjsonstr = [Utility Convertjsontostring:dic];
-            [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Login (dic_json_string,RememberMe) VALUES ('%@','0')",getjsonstr]];
+            [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Login (dic_json_string,ActiveUser) VALUES ('%@','%@')",getjsonstr,@"0"]];
         }
         
         [[NSUserDefaults standardUserDefaults]setObject:_aPhonenumberTextField.text forKey:@"MobileNumber"];

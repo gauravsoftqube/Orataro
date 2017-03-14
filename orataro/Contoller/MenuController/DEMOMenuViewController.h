@@ -12,5 +12,6 @@
 @interface DEMOMenuViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 
 @property (strong, nonatomic) IBOutlet UITableView *tblMenuTable;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tblHeight;
 
 @end

@@ -2553,15 +2553,24 @@ Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed 
                                                         <imageView userInteractionEnabled="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="no_img" translatesAutoresizingMaskIntoConstraints="NO" id="OUn-ue-Wge">
                                                             <rect key="frame" x="5" y="5" width="90" height="80"/>
                                                         </imageView>
+                                                        <imageView userInteractionEnabled="NO" tag="20" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="swichusertick" translatesAutoresizingMaskIntoConstraints="NO" id="ckO-Sr-b2D">
+                                                            <rect key="frame" x="85" y="0.0" width="15" height="15"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="15" id="Gav-95-JXQ"/>
+                                                                <constraint firstAttribute="height" constant="15" id="vxn-Be-bkm"/>
+                                                            </constraints>
+                                                        </imageView>
                                                     </subviews>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="100" id="Gu0-Lm-brx"/>
                                                         <constraint firstAttribute="bottom" secondItem="OUn-ue-Wge" secondAttribute="bottom" constant="5" id="J6a-ro-xfm"/>
                                                         <constraint firstItem="OUn-ue-Wge" firstAttribute="top" secondItem="PUk-vF-ehQ" secondAttribute="top" constant="5" id="X0Z-KZ-BJe"/>
                                                         <constraint firstAttribute="trailing" secondItem="OUn-ue-Wge" secondAttribute="trailing" constant="5" id="ZNi-sN-Dqb"/>
                                                         <constraint firstAttribute="height" constant="90" id="lj0-bc-fNS"/>
+                                                        <constraint firstItem="ckO-Sr-b2D" firstAttribute="top" secondItem="PUk-vF-ehQ" secondAttribute="top" id="mEP-ok-X4C"/>
                                                         <constraint firstItem="OUn-ue-Wge" firstAttribute="leading" secondItem="PUk-vF-ehQ" secondAttribute="leading" constant="5" id="mWt-YV-YYq"/>
+                                                        <constraint firstAttribute="trailing" secondItem="ckO-Sr-b2D" secondAttribute="trailing" id="pWV-wc-Fdz"/>
                                                     </constraints>
                                                 </view>
                                                 <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4o4-Iw-RvT">
@@ -9196,7 +9205,7 @@ tesing of add circular notification</string>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Calender(Gaurav)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VBQ-Lg-uw3">
-                                        <rect key="frame" x="38" y="32" width="338" height="20"/>
+                                        <rect key="frame" x="38" y="35" width="338" height="17"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="17"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -14866,38 +14875,6 @@ tesing of add circular notification</string>
             </objects>
             <point key="canvasLocation" x="2461" y="324"/>
         </scene>
-        <!--Table View Controller-->
-        <scene sceneID="g0C-ze-K4J">
-            <objects>
-                <tableViewController id="exs-g7-EwH" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="ZBu-hD-Z4J">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Hnd-HZ-QOF">
-                                <rect key="frame" x="0.0" y="22" width="414" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Hnd-HZ-QOF" id="Plv-5s-rd8">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="exs-g7-EwH" id="o8i-wn-ADu"/>
-                            <outlet property="delegate" destination="exs-g7-EwH" id="F5h-Kn-L2A"/>
-                        </connections>
-                    </tableView>
-                    <nil key="simulatedTopBarMetrics"/>
-                    <connections>
-                        <outlet property="tblMenuTable" destination="ZBu-hD-Z4J" id="fZy-cz-fFh"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Igd-nh-iCf" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2109" y="1013"/>
-        </scene>
         <!--Menu View Controller-->
         <scene sceneID="HkP-mV-hgP">
             <objects>
@@ -14910,15 +14887,15 @@ tesing of add circular notification</string>
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="XQa-aF-pdw">
+                            <tableView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="XQa-aF-pdw">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="5wG-96-xud">
-                                        <rect key="frame" x="0.0" y="22" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="22" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5wG-96-xud" id="ppv-kZ-raJ">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="59"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -15286,6 +15263,7 @@ tesing of add circular notification</string>
         <image name="save" width="512" height="512"/>
         <image name="search" width="512" height="512"/>
         <image name="share" width="512" height="512"/>
+        <image name="swichusertick" width="64" height="64"/>
         <image name="tick" width="64" height="64"/>
         <image name="tick_mark" width="512" height="512"/>
         <image name="tick_sky_blue" width="64" height="64"/>
