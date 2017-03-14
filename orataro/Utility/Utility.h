@@ -77,6 +77,8 @@
 
 +(NSString *)imageToNSString:(UIImage *)image;
 
++(NSString *)convertMiliSecondtoDate:(NSString *)dateFormate date:(NSString *)strDate;
+
 #pragma mark - Api Function
 
 +(void)PostApiCall:(NSString *)apiUrl params:(NSMutableDictionary *)param block:(void (^)(NSMutableDictionary *,NSError *))block;
