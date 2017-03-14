@@ -18,6 +18,8 @@
 {
     int c2;
     AppDelegate *app;
+    
+    NSMutableArray *arrCircularList,*arrCircularList_Section;
 }
 @end
 
@@ -50,6 +52,10 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     _CircularTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    
+    arrCircularList=[[NSMutableArray alloc]init];
+    arrCircularList_Section=[[NSMutableArray alloc]init];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -68,17 +74,17 @@
     }
     
     
-    
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_circular,apk_GetCircularList_action];
-    
-    NSString *currentDeviceId=[[NSUserDefaults standardUserDefaults]objectForKey:@"currentDeviceId"];
-    
-    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"DeviceToken"];
     
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
     
-    [param setValue:[NSString stringWithFormat:@"%@",token] forKey:@"GCMID"];
-    [param setValue:[NSString stringWithFormat:@"%@",currentDeviceId] forKey:@"DivRegistID"];
+    [param setValue:[NSString stringWithFormat:@"f1a6d89d-37dc-499a-9476-cb83f0aba0f2"] forKey:@"MemberID"];
+    [param setValue:[NSString stringWithFormat:@"30032284-31d1-4ba6-8ef4-54edb8e223aa"] forKey:@"UserID"];
+    [param setValue:[NSString stringWithFormat:@"d79901a7-f9f7-4d47-8e3b-198ede7c9f58"] forKey:@"ClientID"];
+    [param setValue:[NSString stringWithFormat:@"4f4bbf0e-858a-46fa-a0a7-bf116f537653"] forKey:@"InstituteID"];
+    [param setValue:[NSString stringWithFormat:@""] forKey:@"DivisionID"];
+    [param setValue:[NSString stringWithFormat:@""] forKey:@"GradeID"];
+    [param setValue:[NSString stringWithFormat:@""] forKey:@"BeachID"];
     
     [ProgressHUB showHUDAddedTo:self.view];
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
@@ -89,7 +95,7 @@
              NSString *strArrd=[dicResponce objectForKey:@"d"];
              NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
              NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-             NSLog(@"%@",arrResponce);
+             
              if([arrResponce count] != 0)
              {
                  NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
@@ -101,9 +107,7 @@
                  }
                  else
                  {
-                     
-//                     UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SwitchAcoountVC"];
-//                     [self.navigationController pushViewController:wc animated:YES];
+                     [self ManageCircularList:arrResponce];
                      
                  }
              }
@@ -121,7 +125,22 @@
      }];
 }
 
-
+-(void)ManageCircularList:(NSMutableArray *)arrResponce
+{
+    NSLog(@"%@",arrResponce);
+    for (NSMutableDictionary *dicResponce in arrResponce) {
+        NSString *DateOfCircular=[Utility convertMiliSecondtoDate:@"dd/MM/yyyy" date:[NSString stringWithFormat:@"%@",[dicResponce objectForKey:@"DateOfCircular"]]];
+        if(![arrCircularList_Section containsObject:DateOfCircular])
+        {
+            [arrCircularList_Section addObject:DateOfCircular];
+        }
+    }
+    
+    
+    
+    
+    
+}
 
 
 #pragma mark - UITableView

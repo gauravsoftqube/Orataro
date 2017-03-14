@@ -558,6 +558,17 @@
     return [data base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
 }
 
+#pragma mark - dateFormate
+
++(NSString *)convertMiliSecondtoDate:(NSString *)dateFormate date:(NSString *)strDate
+{
+    NSDate *date = [NSDate dateWithTimeIntervalSinceNow:([strDate integerValue] / 1000.0)];
+    NSDateFormatter *df = [[NSDateFormatter alloc] init] ;
+    [df setDateFormat:dateFormate];
+    NSString *dateString =[df stringFromDate:date];
+    return dateString;
+}
+
 
 #pragma mark - Api Function
 

@@ -37,8 +37,10 @@
     _c2 = 0;
     _checkview = 0;
 
-   // UIDevice *device = [UIDevice currentDevice];
-  //  NSString  *currentDeviceId = [[device identifierForVendor]UUIDString];
+    
+  //  UIDevice *device = [UIDevice currentDevice];
+   // NSString  *currentDeviceId = [[device identifierForVendor]UUIDString];
+
     [[NSUserDefaults standardUserDefaults]setValue:@"8BC8323E-0F34-460B-83EA-77043737F29C" forKey:@"currentDeviceId"];
     
   //  NSLog(@"device=%@",currentDeviceId);
