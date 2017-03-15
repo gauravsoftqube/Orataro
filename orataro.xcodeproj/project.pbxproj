@@ -591,6 +591,7 @@
 		C38AF1181E6043A500E4F40B /* LeaveVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaveVc.m; sourceTree = "<group>"; };
 		C38AF11B1E605C9300E4F40B /* ProfileFriendRequestVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileFriendRequestVc.h; sourceTree = "<group>"; };
 		C38AF11C1E605C9300E4F40B /* ProfileFriendRequestVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileFriendRequestVc.m; sourceTree = "<group>"; };
+		C38EFFB11E79180100D45C51 /* orataro.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = orataro.entitlements; sourceTree = "<group>"; };
 		C38F8C751E3F36A300A67FBE /* RightCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RightCell.h; sourceTree = "<group>"; };
 		C38F8C761E3F36A300A67FBE /* RightCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RightCell.m; sourceTree = "<group>"; };
 		C38F8C771E3F36A300A67FBE /* RightCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RightCell.xib; sourceTree = "<group>"; };
@@ -679,6 +680,7 @@
 		093227781E38750D00138A2B /* orataro */ = {
 			isa = PBXGroup;
 			children = (
+				C38EFFB11E79180100D45C51 /* orataro.entitlements */,
 				0932277C1E38750D00138A2B /* AppDelegate.h */,
 				0932277D1E38750D00138A2B /* AppDelegate.m */,
 				0932277F1E38750D00138A2B /* ViewController.h */,
@@ -2001,6 +2003,11 @@
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = M4946NB5UK;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -2360,13 +2367,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-3";
+				CODE_SIGN_ENTITLEMENTS = orataro/orataro.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = M4946NB5UK;
 				INFOPLIST_FILE = orataro/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = SDK.orataro;
+				PRODUCT_BUNDLE_IDENTIFIER = com.orataro.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -2376,13 +2384,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-3";
+				CODE_SIGN_ENTITLEMENTS = orataro/orataro.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = M4946NB5UK;
 				INFOPLIST_FILE = orataro/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = SDK.orataro;
+				PRODUCT_BUNDLE_IDENTIFIER = com.orataro.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
