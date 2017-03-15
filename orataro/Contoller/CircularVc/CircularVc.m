@@ -108,7 +108,6 @@
                  else
                  {
                      [self ManageCircularList:arrResponce];
-                     
                  }
              }
              else
@@ -135,11 +134,6 @@
             [arrCircularList_Section addObject:DateOfCircular];
         }
     }
-    
-    
-    
-    
-    
 }
 
 
