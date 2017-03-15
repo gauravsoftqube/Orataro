@@ -1495,7 +1495,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FfL-fN-4lV">
-                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="140.66666666666666"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="140"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uh6-qd-8Ob">
                                                             <rect key="frame" x="206" y="4" width="2" height="15"/>
@@ -1542,14 +1542,14 @@
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Jx-lO-XlL">
-                                                            <rect key="frame" x="206" y="118.99999999999999" width="2" height="21.666666666666643"/>
+                                                            <rect key="frame" x="206" y="119" width="2" height="21"/>
                                                             <color key="backgroundColor" red="0.79607843140000001" green="0.79607843140000001" blue="0.79607843140000001" alpha="1" colorSpace="calibratedRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="2" id="6j3-PY-HD3"/>
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eLq-is-sR2">
-                                                            <rect key="frame" x="132" y="138.66666666666666" width="150" height="2"/>
+                                                            <rect key="frame" x="132" y="138" width="150" height="2"/>
                                                             <color key="backgroundColor" red="0.79607843140000001" green="0.79607843140000001" blue="0.79607843140000001" alpha="1" colorSpace="calibratedRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="150" id="Zy3-1y-3Qa"/>
@@ -1557,7 +1557,7 @@
                                                             </constraints>
                                                         </view>
                                                     </subviews>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="bottom" secondItem="eLq-is-sR2" secondAttribute="bottom" id="2qj-2j-mVk"/>
                                                         <constraint firstItem="bNh-OS-gCC" firstAttribute="top" secondItem="Uh6-qd-8Ob" secondAttribute="bottom" id="GDA-p9-fOX"/>
@@ -1626,7 +1626,7 @@
                                                             <color key="textColor" red="0.1333333333" green="0.19215686269999999" blue="0.34901960780000002" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" tag="5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="46D-Ai-3Gu">
+                                                        <imageView userInteractionEnabled="NO" tag="5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="down-arrow-1" translatesAutoresizingMaskIntoConstraints="NO" id="46D-Ai-3Gu">
                                                             <rect key="frame" x="381" y="8" width="25" height="25"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="25" id="EMu-aE-x8a"/>
@@ -5855,14 +5855,38 @@ M:9428296497 </string>
                                     <outlet property="delegate" destination="0DA-QR-GLS" id="E9I-S8-qz1"/>
                                 </connections>
                             </scrollView>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fv5-pI-JqK">
+                                <rect key="frame" x="0.0" y="72" width="414" height="663"/>
+                                <subviews>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="sVB-6N-P9b">
+                                        <rect key="frame" x="25" y="25" width="364" height="622"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="xBc-eK-rhh" id="7G8-S3-E8R"/>
+                                            <outlet property="delegate" destination="xBc-eK-rhh" id="753-ip-Onq"/>
+                                        </connections>
+                                    </tableView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.45820847599999998" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="sVB-6N-P9b" firstAttribute="leading" secondItem="fv5-pI-JqK" secondAttribute="leading" constant="25" id="F1n-DB-UO7"/>
+                                    <constraint firstAttribute="bottom" secondItem="sVB-6N-P9b" secondAttribute="bottom" constant="25" id="I7z-5D-2U6"/>
+                                    <constraint firstItem="sVB-6N-P9b" firstAttribute="top" secondItem="fv5-pI-JqK" secondAttribute="top" constant="25" id="e0T-au-PvJ"/>
+                                    <constraint firstAttribute="trailing" secondItem="sVB-6N-P9b" secondAttribute="trailing" constant="25" id="hCQ-U6-hET"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.15294117647058825" green="0.18823529411764706" blue="0.35686274509803922" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="fv5-pI-JqK" secondAttribute="trailing" id="4Jw-IL-zjN"/>
+                            <constraint firstItem="J7t-0R-4px" firstAttribute="top" secondItem="fv5-pI-JqK" secondAttribute="bottom" id="9ap-Kw-Eb3"/>
                             <constraint firstAttribute="trailing" secondItem="y2Z-eb-Xpq" secondAttribute="trailing" id="A0R-6e-rP5"/>
                             <constraint firstItem="CTm-8a-nLE" firstAttribute="leading" secondItem="Ta2-Fg-RWC" secondAttribute="leading" id="DWb-v9-P1d"/>
                             <constraint firstItem="y2Z-eb-Xpq" firstAttribute="leading" secondItem="Ta2-Fg-RWC" secondAttribute="leading" id="IEP-Fa-qJ0"/>
                             <constraint firstItem="y2Z-eb-Xpq" firstAttribute="top" secondItem="Ta2-Fg-RWC" secondAttribute="top" id="ZJJ-Ze-AtY"/>
+                            <constraint firstItem="fv5-pI-JqK" firstAttribute="top" secondItem="y2Z-eb-Xpq" secondAttribute="bottom" id="nrv-Qr-2U3"/>
                             <constraint firstItem="CTm-8a-nLE" firstAttribute="top" secondItem="y2Z-eb-Xpq" secondAttribute="bottom" constant="8" id="nx4-n9-EOW"/>
+                            <constraint firstItem="fv5-pI-JqK" firstAttribute="leading" secondItem="Ta2-Fg-RWC" secondAttribute="leading" id="tQ0-wc-poy"/>
                             <constraint firstAttribute="trailing" secondItem="CTm-8a-nLE" secondAttribute="trailing" id="tW8-so-Ye5"/>
                             <constraint firstItem="J7t-0R-4px" firstAttribute="top" secondItem="CTm-8a-nLE" secondAttribute="bottom" id="uYj-Nt-8Aa"/>
                         </constraints>
@@ -5881,7 +5905,7 @@ M:9428296497 </string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RNB-7f-adp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4488" y="-995"/>
+            <point key="canvasLocation" x="4486.9565217391309" y="-995.38043478260875"/>
         </scene>
         <!--Circular Detail Vc-->
         <scene sceneID="gzs-7a-W3S">
@@ -9205,7 +9229,7 @@ tesing of add circular notification</string>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Calender(Gaurav)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VBQ-Lg-uw3">
-                                        <rect key="frame" x="38" y="32" width="338" height="20"/>
+                                        <rect key="frame" x="38" y="35" width="338" height="17"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="17"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -15232,6 +15256,7 @@ tesing of add circular notification</string>
         <image name="dash_timetable" width="64" height="64"/>
         <image name="delete" width="512" height="512"/>
         <image name="double_tick_sky_blue" width="64" height="64"/>
+        <image name="down-arrow-1" width="512" height="512"/>
         <image name="down-arrow-12" width="32" height="32"/>
         <image name="downarrow" width="512" height="512"/>
         <image name="download_blue" width="64" height="64"/>

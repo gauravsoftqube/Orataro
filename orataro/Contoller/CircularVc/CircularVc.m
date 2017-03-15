@@ -141,11 +141,6 @@
         
         [d setObject:DateOfCircular forKey:@"Group"];
         
-      //  NSString *filterData = [Utility convertMiliSecondtoDate:@"MM/yyyy" date:[NSString stringWithFormat:@"%@",[[mutableArray objectAtIndex:i]objectForKey:@"DateOfCircular"]]];
-        
-      //  [d setObject:filterData forKey:@"Filter"];
-
-        
         [mutableArray replaceObjectAtIndex:i withObject:d];
         
         NSLog(@"data=%@",mutableArray);
@@ -156,14 +151,10 @@
     
     NSArray *temp = [arrResponce sortedArrayUsingDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"Group" ascending:YES]]];
     
-    NSLog(@"Temp=%@",temp);
-    
     [arrResponce removeAllObjects];
     [arrResponce addObjectsFromArray:temp];
     
     NSArray *areas = [arrResponce valueForKeyPath:@"@distinctUnionOfObjects.Group"];
-    
-    NSLog(@"area=%@",areas);
     
     NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:nil ascending:YES];
     
@@ -183,12 +174,7 @@
                              }];
     
     
-    NSLog(@"sorta1=%@",sortedArray1);
     sortedArray = [[NSArray alloc]initWithArray:sortedArray1];
-    
-    /////////////////
-    
-    /////////////////
     
     for (NSString *area in sortedArray)
     {
@@ -205,8 +191,14 @@
         
         items = [[NSMutableArray alloc] initWithArray:[temp sortedArrayUsingDescriptors:sortDescriptors]];
         
-        [entry setObject:items forKey:@"items"];
+        NSLog(@"items=%@",items);
         
+        NSSortDescriptor * brandDescriptor = [[NSSortDescriptor alloc] initWithKey:@"DateOfCircular" ascending:YES];
+        NSArray * sortedArray3 = [items sortedArrayUsingDescriptors:@[brandDescriptor]];
+        
+        NSLog(@"array=%@",sortedArray3);
+        
+        [entry setObject:sortedArray3 forKey:@"items"];
         [arrCircularList addObject:entry];
     }
     
@@ -334,12 +326,19 @@
     
     NSDictionary *d = [[[arrCircularList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
     
-    //NSLog(@"Dic=%@",d);
+    NSLog(@"Dic=%@",d);
     
+   
+    NSString *getdt = [d objectForKey:@"DateOfCircular"];
+    NSString *getMilisecond = [Utility convertMiliSecondtoDate:@"dd/MM/yyyy" date:getdt];
     UILabel *lbHeaderDt = (UILabel *)[cell.contentView viewWithTag:3];
-    NSString *getfrmt = [Utility convertDateFtrToDtaeFtr:@"dd/MM/yyyy" newDateFtr:@"dd EEE" date:[NSString stringWithFormat:@"%@",[d objectForKey:@"Group"]]];
+    
+    
+    NSString *getfrmt = [Utility convertDateFtrToDtaeFtr:@"dd/MM/yyyy" newDateFtr:@"dd EEE" date:getMilisecond];
     lbHeaderDt.text = getfrmt;
 
+    NSLog(@"Dic=%@",d);
+    
     UILabel *lbTitle = (UILabel *)[cell.contentView viewWithTag:4];
     lbTitle.text = [d objectForKey:@"CircularTitle"];
     
