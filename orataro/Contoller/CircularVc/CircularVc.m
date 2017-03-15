@@ -297,8 +297,7 @@
     [_CircularTableView reloadData];*/
     
     
-=======
->>>>>>> master/master
+
 }
 
 
