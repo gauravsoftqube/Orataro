@@ -18,7 +18,7 @@
 {
     int c2;
     AppDelegate *app;
-    
+    bool MemberType;
     NSMutableArray *arrCircularList,*arrCircularList_Section;
 }
 @end
@@ -53,13 +53,25 @@
     
     _CircularTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    
+    MemberType =YES;
     arrCircularList=[[NSMutableArray alloc]init];
     arrCircularList_Section=[[NSMutableArray alloc]init];
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    if([[dicCurrentUser objectForKey:@"MemberType"] isEqualToString:@"Student"])
+    {
+        MemberType=YES;
+        [self.AddBtn setHidden:YES];
+    }
+    else
+    {
+        MemberType=NO;
+        [self.AddBtn setHidden:NO];
+    }
+
     [self apiCallFor_getCircular];
 }
 
@@ -73,10 +85,28 @@
         return;
     }
     
-    
+        
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_circular,apk_GetCircularList_action];
     
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    /*[param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+    [param setValue:[NSString stringWithFormat:@""] forKey:@"BeachID"];
+    
+    if([[dicCurrentUser objectForKey:@"MemberType"] isEqualToString:@"Student"])
+    {
+        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"DivisionID"]] forKey:@"DivisionID"];
+        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"GradeID"]] forKey:@"GradeID"];
+    }
+    else
+    {
+        [param setValue:[NSString stringWithFormat:@""] forKey:@"DivisionID"];
+        [param setValue:[NSString stringWithFormat:@""] forKey:@"GradeID"];
+    }*/
     
     [param setValue:[NSString stringWithFormat:@"f1a6d89d-37dc-499a-9476-cb83f0aba0f2"] forKey:@"MemberID"];
     [param setValue:[NSString stringWithFormat:@"30032284-31d1-4ba6-8ef4-54edb8e223aa"] forKey:@"UserID"];
@@ -135,7 +165,7 @@
     {
         NSMutableDictionary *d = [[mutableArray objectAtIndex:i] mutableCopy];
         
-        NSLog(@"data=%@",[[mutableArray objectAtIndex:i]objectForKey:@"DateOfCircular"]);
+        //NSLog(@"data=%@",[[mutableArray objectAtIndex:i]objectForKey:@"DateOfCircular"]);
         
         NSString *DateOfCircular=[Utility convertMiliSecondtoDate:@"MM/yyyy" date:[NSString stringWithFormat:@"%@",[[mutableArray objectAtIndex:i]objectForKey:@"DateOfCircular"]]];
         
@@ -143,7 +173,7 @@
         
         [mutableArray replaceObjectAtIndex:i withObject:d];
         
-        NSLog(@"data=%@",mutableArray);
+        //NSLog(@"data=%@",mutableArray);
         
         
         arrResponce = mutableArray;
@@ -151,6 +181,7 @@
     
     NSArray *temp = [arrResponce sortedArrayUsingDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"Group" ascending:YES]]];
     
+
     [arrResponce removeAllObjects];
     [arrResponce addObjectsFromArray:temp];
     
@@ -173,7 +204,7 @@
                                  return [date1 compare:date2];
                              }];
     
-    
+
     sortedArray = [[NSArray alloc]initWithArray:sortedArray1];
     
     for (NSString *area in sortedArray)
@@ -201,94 +232,8 @@
         [entry setObject:sortedArray3 forKey:@"items"];
         [arrCircularList addObject:entry];
     }
-    
-    NSLog(@"ary=%@",arrCircularList);
-    
     [_CircularTableView reloadData];
-    
-   /* NSMutableArray *mutableArray = [NSMutableArray arrayWithArray:arrResponce];
-    
-    for (int i=0; i< mutableArray.count; i++)
-    {
-        NSMutableDictionary *d = [[mutableArray objectAtIndex:i] mutableCopy];
-        
-        NSLog(@"data=%@",[[mutableArray objectAtIndex:i]objectForKey:@"DateOfCircular"]);
-        
-        NSString *DateOfCircular=[Utility convertMiliSecondtoDate:@"dd/MM/yyyy" date:[NSString stringWithFormat:@"%@",[[mutableArray objectAtIndex:i]objectForKey:@"DateOfCircular"]]];
-        
-        [d setObject:DateOfCircular forKey:@"Group"];
-        
-        
-        [mutableArray replaceObjectAtIndex:i withObject:d];
-        
-        NSLog(@"data=%@",mutableArray);
-        
-        
-        arrResponce = mutableArray;
-    }
-<<<<<<< HEAD
-    
-    NSArray *temp = [arrResponce sortedArrayUsingDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"Group" ascending:YES]]];
-    
-    NSLog(@"Temp=%@",temp);
-    
-    [arrResponce removeAllObjects];
-    [arrResponce addObjectsFromArray:temp];
-    
-    NSArray *areas = [arrResponce valueForKeyPath:@"@distinctUnionOfObjects.Group"];
-    
-    NSLog(@"area=%@",areas);
-    
-    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:nil ascending:YES];
-    
-    NSArray *sorters = [[NSArray alloc] initWithObjects:sorter, nil];
-    
-    NSArray *sortedArray = [areas sortedArrayUsingDescriptors:sorters];
-    
-    NSDateFormatter *dateFormatter1 = [NSDateFormatter new];
-    dateFormatter1.dateFormat = @"dd-MM-yyyy";
-    
-    NSArray *sortedArray1 = [sortedArray sortedArrayUsingComparator:^(NSString *string1, NSString *string2)
-    {
-        NSDate *date1 = [dateFormatter1 dateFromString:string1];
-        NSDate *date2 = [dateFormatter1 dateFromString:string2];
-        
-        return [date1 compare:date2];
-    }];
-    
-    
-    NSLog(@"sorta1=%@",sortedArray1);
-    sortedArray = [[NSArray alloc]initWithArray:sortedArray1];
-    
-    /////////////////
-    
-    /////////////////
-    
-    for (NSString *area in sortedArray)
-    {
-        __autoreleasing NSMutableDictionary *entry = [NSMutableDictionary new];
-        [entry setObject:area forKey:@"Groups"];
-        
-        __autoreleasing NSArray *temp = [arrResponce filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"Group = %@", area]];
-        
-        __autoreleasing NSMutableArray *items = [NSMutableArray new];
-        
-        NSSortDescriptor *sortByName = [NSSortDescriptor sortDescriptorWithKey:@"Group"                                                                        ascending:YES];
-       
-        NSArray *sortDescriptors = [NSArray arrayWithObject:sortByName];
-        
-        items = [[NSMutableArray alloc] initWithArray:[temp sortedArrayUsingDescriptors:sortDescriptors]];
-        
-        [entry setObject:items forKey:@"items"];
-        
-        [arrCircularList addObject:entry];
-        }
-    
-    NSLog(@"ary=%@",arrCircularList);
-    
-    [_CircularTableView reloadData];*/
-    
-    
+
 
 }
 
@@ -344,6 +289,16 @@
     
     UILabel *lbDesc = (UILabel *)[cell.contentView viewWithTag:6];
     lbDesc.text = [d objectForKey:@"CircularDetails"];
+    
+    if(MemberType == YES)
+    {
+        //student
+        //hidden
+    }
+    else
+    {
+        //show
+    }
     
     return cell;
 }
