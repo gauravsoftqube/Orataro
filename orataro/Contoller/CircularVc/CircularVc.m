@@ -108,7 +108,6 @@
                  else
                  {
                      [self ManageCircularList:arrResponce];
-                     
                  }
              }
              else
@@ -235,6 +234,7 @@
         
         arrResponce = mutableArray;
     }
+<<<<<<< HEAD
     
     NSArray *temp = [arrResponce sortedArrayUsingDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"Group" ascending:YES]]];
     
@@ -297,6 +297,8 @@
     [_CircularTableView reloadData];*/
     
     
+=======
+>>>>>>> master/master
 }
 
 

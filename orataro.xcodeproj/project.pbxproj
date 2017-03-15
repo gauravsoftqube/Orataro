@@ -232,6 +232,7 @@
 		073E55C81E6FDAE3008BF93B /* ProgressHUB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressHUB.h; sourceTree = "<group>"; };
 		073E55C91E6FDAE3008BF93B /* ProgressHUB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressHUB.m; sourceTree = "<group>"; };
 		073E55CC1E703D04008BF93B /* OrataroLoacal_DB.sqlite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OrataroLoacal_DB.sqlite; sourceTree = "<group>"; };
+		0776A4B41E791D5F002C12AD /* orataro.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = orataro.entitlements; sourceTree = "<group>"; };
 		093227761E38750D00138A2B /* orataro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = orataro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0932277A1E38750D00138A2B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0932277C1E38750D00138A2B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -681,6 +682,8 @@
 			isa = PBXGroup;
 			children = (
 				C38EFFB11E79180100D45C51 /* orataro.entitlements */,
+
+
 				0932277C1E38750D00138A2B /* AppDelegate.h */,
 				0932277D1E38750D00138A2B /* AppDelegate.m */,
 				0932277F1E38750D00138A2B /* ViewController.h */,
