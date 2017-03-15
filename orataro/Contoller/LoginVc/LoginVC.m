@@ -145,6 +145,8 @@ int multipleUser = 0;
     
     NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"DeviceToken"];
     
+    NSLog(@"token **********************=%@",token);
+    
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
     
     [param setValue:[NSString stringWithFormat:@"%@",self.aPhonenumberTextField.text] forKey:@"UserName"];
@@ -152,6 +154,8 @@ int multipleUser = 0;
     [param setValue:[NSString stringWithFormat:@"%@",self.aPasswordTextField.text] forKey:@"Password"];
     [param setValue:[NSString stringWithFormat:@"%@",token] forKey:@"GCMID"];
     [param setValue:[NSString stringWithFormat:@"%@",currentDeviceId] forKey:@"DivRegistID"];
+    
+    NSLog(@"Param=%@",param);
     
     [ProgressHUB showHUDAddedTo:self.view];
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
@@ -218,6 +222,7 @@ int multipleUser = 0;
 
                              [[NSUserDefaults standardUserDefaults]setObject:_aPhonenumberTextField.text forKey:@"MobileNumber"];
                               [[NSUserDefaults standardUserDefaults]setObject:_aPasswordTextField.text forKey:@"Password"];
+                              [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
                              [[NSUserDefaults standardUserDefaults]synchronize];
                              
                              UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SwitchAcoountVC"];
@@ -264,6 +269,7 @@ int multipleUser = 0;
         
         [[NSUserDefaults standardUserDefaults]setObject:_aPhonenumberTextField.text forKey:@"MobileNumber"];
         [[NSUserDefaults standardUserDefaults]setObject:_aPasswordTextField.text forKey:@"Password"];
+         [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
         [[NSUserDefaults standardUserDefaults]synchronize];
         
         WallVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];

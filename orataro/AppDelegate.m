@@ -15,6 +15,7 @@
 
 @interface AppDelegate ()
 {
+    UIUserNotificationSettings *setting;
    // NSThread *th;
 }
 @end
@@ -24,6 +25,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
     [DBOperation checkCreateDB];
     REFrostedViewController *rf = [[REFrostedViewController alloc]init];
     
@@ -38,15 +40,29 @@
     _checkview = 0;
 
     
-  //  UIDevice *device = [UIDevice currentDevice];
-   // NSString  *currentDeviceId = [[device identifierForVendor]UUIDString];
-
+    UIDevice *device = [UIDevice currentDevice];
+    NSString  *currentDeviceId = [[device identifierForVendor]UUIDString];
+    NSLog(@"device=%@",currentDeviceId);
+    
+    //D736B155-DB5D-43F0-8DF8-B2362476B774
+    
     [[NSUserDefaults standardUserDefaults]setValue:@"8BC8323E-0F34-460B-83EA-77043737F29C" forKey:@"currentDeviceId"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
     
-  //  NSLog(@"device=%@",currentDeviceId);
+  //
     
-    NSLog(@"Check Status =%@",[[NSUserDefaults standardUserDefaults]valueForKey:@"CheckUser"]);
-    
+    if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerForRemoteNotifications)])
+    {
+        UIUserNotificationType types = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
+        UIUserNotificationSettings *mySettings = [UIUserNotificationSettings settingsForTypes:types categories:nil];
+        
+        [[UIApplication sharedApplication] registerUserNotificationSettings:mySettings];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    } else {
+        UIRemoteNotificationType types = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:types];
+    }
+
     // Override point for customization after application launch.
     return YES;
 }
@@ -73,17 +89,34 @@
     return NO;
 }
 
-- (void)application:(UIApplication* )app didRegisterForRemoteNotificationsWithDeviceToken:(NSData* )deviceToken
+#pragma mark - push notification
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-    NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet: [NSCharacterSet characterSetWithCharactersInString:@"<>"]];
-    token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
-    //_strToken = token;
-    
-   // NSLog(@"content---%@", token);
-    [[NSUserDefaults standardUserDefaults]setObject:token forKey:@"DeviceToken"];
+    NSString *token11 = [[deviceToken description] stringByTrimmingCharactersInSet: [NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    token11 = [token11 stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSLog(@"device token is >>>>>>>>%@ Devicetoken=%@", token11,deviceToken);
+    [[NSUserDefaults standardUserDefaults]setObject:@"8d103a40eb95a3b95335ee64d2a5bf7a958fdffd3d029d6d3c0cc3dc6eca8298" forKey:@"DeviceToken"];
     [[NSUserDefaults standardUserDefaults]synchronize];
-    
 }
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    NSLog(@"Did Fail to Register for Remote Notifications");
+    NSLog(@"%@, %@", error, error.localizedDescription);
+}
+
+//- (void)application:(UIApplication* )app didRegisterForRemoteNotificationsWithDeviceToken:(NSData* )deviceToken
+//{
+//    NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet: [NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+//    token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
+//    //_strToken = token;
+//    
+//    NSLog(@" content---%@", token);
+//    [[NSUserDefaults standardUserDefaults]setObject:token forKey:@"DeviceToken"];
+//    [[NSUserDefaults standardUserDefaults]synchronize];
+//    
+//}
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {

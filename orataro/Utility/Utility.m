@@ -562,13 +562,49 @@
 
 +(NSString *)convertMiliSecondtoDate:(NSString *)dateFormate date:(NSString *)strDate
 {
-    NSDate *date = [NSDate dateWithTimeIntervalSinceNow:([strDate integerValue] / 1000.0)];
+    strDate =[strDate stringByReplacingOccurrencesOfString:@"/Date(" withString:@""];
+    strDate=[strDate stringByReplacingOccurrencesOfString:@")/" withString:@""];
+    
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:([strDate integerValue] / 1000.0)];
     NSDateFormatter *df = [[NSDateFormatter alloc] init] ;
     [df setDateFormat:dateFormate];
     NSString *dateString =[df stringFromDate:date];
     return dateString;
 }
 
++(NSString *)convertDatetoSpecificDate:(NSString *)dateFormate date:(NSString *)strDate
+{
+    strDate =[strDate stringByReplacingOccurrencesOfString:@"/Date(" withString:@""];
+    strDate=[strDate stringByReplacingOccurrencesOfString:@")/" withString:@""];
+    
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:([strDate integerValue] / 1000.0)];
+    NSDateFormatter *df = [[NSDateFormatter alloc] init] ;
+    [df setDateFormat:dateFormate];
+    NSString *dateString =[df stringFromDate:date];
+    
+//    NSDateFormatter *df1 = [[NSDateFormatter alloc] init] ;
+//    [df1 setDateFormat:dateFormate];
+//    NSDate *dateString1 =[df1 dateFromString:dateString];
+    
+//    NSDateFormatter *df2 = [[NSDateFormatter alloc] init] ;
+//    [df2 setDateFormat:newDateFormate];
+//    NSString *dateString3 =[df2 stringFromDate:dateString1];
+    
+    return dateString;
+}
+
++(NSString *)convertDateFtrToDtaeFtr:(NSString *)dateFormate newDateFtr:(NSString *)newDateFtr date:(NSString *)strDate
+{
+    NSDateFormatter *df = [[NSDateFormatter alloc] init] ;
+    [df setDateFormat:dateFormate];
+    NSDate *dateString =[df dateFromString:strDate];
+    
+    NSDateFormatter *df1 = [[NSDateFormatter alloc] init] ;
+    [df1 setDateFormat:newDateFtr];
+    NSString *newDate =[df1 stringFromDate:dateString];
+    
+    return newDate;
+}
 
 #pragma mark - Api Function
 

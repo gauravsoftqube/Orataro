@@ -1495,7 +1495,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FfL-fN-4lV">
-                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="140"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="140.66666666666666"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uh6-qd-8Ob">
                                                             <rect key="frame" x="206" y="4" width="2" height="15"/>
@@ -1542,14 +1542,14 @@
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Jx-lO-XlL">
-                                                            <rect key="frame" x="206" y="119" width="2" height="21"/>
+                                                            <rect key="frame" x="206" y="118.99999999999999" width="2" height="21.666666666666643"/>
                                                             <color key="backgroundColor" red="0.79607843140000001" green="0.79607843140000001" blue="0.79607843140000001" alpha="1" colorSpace="calibratedRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="2" id="6j3-PY-HD3"/>
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eLq-is-sR2">
-                                                            <rect key="frame" x="132" y="138" width="150" height="2"/>
+                                                            <rect key="frame" x="132" y="138.66666666666666" width="150" height="2"/>
                                                             <color key="backgroundColor" red="0.79607843140000001" green="0.79607843140000001" blue="0.79607843140000001" alpha="1" colorSpace="calibratedRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="150" id="Zy3-1y-3Qa"/>
@@ -1557,7 +1557,7 @@
                                                             </constraints>
                                                         </view>
                                                     </subviews>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="bottom" secondItem="eLq-is-sR2" secondAttribute="bottom" id="2qj-2j-mVk"/>
                                                         <constraint firstItem="bNh-OS-gCC" firstAttribute="top" secondItem="Uh6-qd-8Ob" secondAttribute="bottom" id="GDA-p9-fOX"/>
@@ -1643,7 +1643,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstItem="sJX-Gm-gul" firstAttribute="leading" secondItem="zQD-CB-Tbc" secondAttribute="leading" id="795-1w-omk"/>
                                                         <constraint firstAttribute="trailing" secondItem="u6p-4a-hFn" secondAttribute="trailing" constant="8" id="Auo-Wk-T1H"/>
@@ -9205,7 +9205,7 @@ tesing of add circular notification</string>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Calender(Gaurav)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VBQ-Lg-uw3">
-                                        <rect key="frame" x="38" y="35" width="338" height="17"/>
+                                        <rect key="frame" x="38" y="32" width="338" height="20"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="17"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>

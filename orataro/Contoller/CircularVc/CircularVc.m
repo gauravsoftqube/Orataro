@@ -127,17 +127,174 @@
 
 -(void)ManageCircularList:(NSMutableArray *)arrResponce
 {
-    NSLog(@"%@",arrResponce);
-    for (NSMutableDictionary *dicResponce in arrResponce) {
-        NSString *DateOfCircular=[Utility convertMiliSecondtoDate:@"dd/MM/yyyy" date:[NSString stringWithFormat:@"%@",[dicResponce objectForKey:@"DateOfCircular"]]];
-        if(![arrCircularList_Section containsObject:DateOfCircular])
-        {
-            [arrCircularList_Section addObject:DateOfCircular];
-        }
+//    NSLog(@"total %lu",(unsigned long)arrResponce.count);
+//    NSLog(@"arra=%@",arrResponce);
+    
+    NSMutableArray *mutableArray = [NSMutableArray arrayWithArray:arrResponce];
+    
+    for (int i=0; i< mutableArray.count; i++)
+    {
+        NSMutableDictionary *d = [[mutableArray objectAtIndex:i] mutableCopy];
+        
+        NSLog(@"data=%@",[[mutableArray objectAtIndex:i]objectForKey:@"DateOfCircular"]);
+        
+        NSString *DateOfCircular=[Utility convertMiliSecondtoDate:@"MM/yyyy" date:[NSString stringWithFormat:@"%@",[[mutableArray objectAtIndex:i]objectForKey:@"DateOfCircular"]]];
+        
+        [d setObject:DateOfCircular forKey:@"Group"];
+        
+      //  NSString *filterData = [Utility convertMiliSecondtoDate:@"MM/yyyy" date:[NSString stringWithFormat:@"%@",[[mutableArray objectAtIndex:i]objectForKey:@"DateOfCircular"]]];
+        
+      //  [d setObject:filterData forKey:@"Filter"];
+
+        
+        [mutableArray replaceObjectAtIndex:i withObject:d];
+        
+        NSLog(@"data=%@",mutableArray);
+        
+        
+        arrResponce = mutableArray;
     }
     
+    NSArray *temp = [arrResponce sortedArrayUsingDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"Group" ascending:YES]]];
+    
+    NSLog(@"Temp=%@",temp);
+    
+    [arrResponce removeAllObjects];
+    [arrResponce addObjectsFromArray:temp];
+    
+    NSArray *areas = [arrResponce valueForKeyPath:@"@distinctUnionOfObjects.Group"];
+    
+    NSLog(@"area=%@",areas);
+    
+    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:nil ascending:YES];
+    
+    NSArray *sorters = [[NSArray alloc] initWithObjects:sorter, nil];
+    
+    NSArray *sortedArray = [areas sortedArrayUsingDescriptors:sorters];
+    
+    NSDateFormatter *dateFormatter1 = [NSDateFormatter new];
+    dateFormatter1.dateFormat = @"MM-yyyy";
+    
+    NSArray *sortedArray1 = [sortedArray sortedArrayUsingComparator:^(NSString *string1, NSString *string2)
+                             {
+                                 NSDate *date1 = [dateFormatter1 dateFromString:string1];
+                                 NSDate *date2 = [dateFormatter1 dateFromString:string2];
+                                 
+                                 return [date1 compare:date2];
+                             }];
     
     
+    NSLog(@"sorta1=%@",sortedArray1);
+    sortedArray = [[NSArray alloc]initWithArray:sortedArray1];
+    
+    /////////////////
+    
+    /////////////////
+    
+    for (NSString *area in sortedArray)
+    {
+        __autoreleasing NSMutableDictionary *entry = [NSMutableDictionary new];
+        [entry setObject:area forKey:@"Groups"];
+        
+        __autoreleasing NSArray *temp = [arrResponce filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"Group = %@", area]];
+        
+        __autoreleasing NSMutableArray *items = [NSMutableArray new];
+        
+        NSSortDescriptor *sortByName = [NSSortDescriptor sortDescriptorWithKey:@"Group"                                                                        ascending:YES];
+        
+        NSArray *sortDescriptors = [NSArray arrayWithObject:sortByName];
+        
+        items = [[NSMutableArray alloc] initWithArray:[temp sortedArrayUsingDescriptors:sortDescriptors]];
+        
+        [entry setObject:items forKey:@"items"];
+        
+        [arrCircularList addObject:entry];
+    }
+    
+    NSLog(@"ary=%@",arrCircularList);
+    
+    [_CircularTableView reloadData];
+    
+   /* NSMutableArray *mutableArray = [NSMutableArray arrayWithArray:arrResponce];
+    
+    for (int i=0; i< mutableArray.count; i++)
+    {
+        NSMutableDictionary *d = [[mutableArray objectAtIndex:i] mutableCopy];
+        
+        NSLog(@"data=%@",[[mutableArray objectAtIndex:i]objectForKey:@"DateOfCircular"]);
+        
+        NSString *DateOfCircular=[Utility convertMiliSecondtoDate:@"dd/MM/yyyy" date:[NSString stringWithFormat:@"%@",[[mutableArray objectAtIndex:i]objectForKey:@"DateOfCircular"]]];
+        
+        [d setObject:DateOfCircular forKey:@"Group"];
+        
+        
+        [mutableArray replaceObjectAtIndex:i withObject:d];
+        
+        NSLog(@"data=%@",mutableArray);
+        
+        
+        arrResponce = mutableArray;
+    }
+    
+    NSArray *temp = [arrResponce sortedArrayUsingDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"Group" ascending:YES]]];
+    
+    NSLog(@"Temp=%@",temp);
+    
+    [arrResponce removeAllObjects];
+    [arrResponce addObjectsFromArray:temp];
+    
+    NSArray *areas = [arrResponce valueForKeyPath:@"@distinctUnionOfObjects.Group"];
+    
+    NSLog(@"area=%@",areas);
+    
+    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:nil ascending:YES];
+    
+    NSArray *sorters = [[NSArray alloc] initWithObjects:sorter, nil];
+    
+    NSArray *sortedArray = [areas sortedArrayUsingDescriptors:sorters];
+    
+    NSDateFormatter *dateFormatter1 = [NSDateFormatter new];
+    dateFormatter1.dateFormat = @"dd-MM-yyyy";
+    
+    NSArray *sortedArray1 = [sortedArray sortedArrayUsingComparator:^(NSString *string1, NSString *string2)
+    {
+        NSDate *date1 = [dateFormatter1 dateFromString:string1];
+        NSDate *date2 = [dateFormatter1 dateFromString:string2];
+        
+        return [date1 compare:date2];
+    }];
+    
+    
+    NSLog(@"sorta1=%@",sortedArray1);
+    sortedArray = [[NSArray alloc]initWithArray:sortedArray1];
+    
+    /////////////////
+    
+    /////////////////
+    
+    for (NSString *area in sortedArray)
+    {
+        __autoreleasing NSMutableDictionary *entry = [NSMutableDictionary new];
+        [entry setObject:area forKey:@"Groups"];
+        
+        __autoreleasing NSArray *temp = [arrResponce filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"Group = %@", area]];
+        
+        __autoreleasing NSMutableArray *items = [NSMutableArray new];
+        
+        NSSortDescriptor *sortByName = [NSSortDescriptor sortDescriptorWithKey:@"Group"                                                                        ascending:YES];
+       
+        NSArray *sortDescriptors = [NSArray arrayWithObject:sortByName];
+        
+        items = [[NSMutableArray alloc] initWithArray:[temp sortedArrayUsingDescriptors:sortDescriptors]];
+        
+        [entry setObject:items forKey:@"items"];
+        
+        [arrCircularList addObject:entry];
+        }
+    
+    NSLog(@"ary=%@",arrCircularList);
+    
+    [_CircularTableView reloadData];*/
     
     
 }
@@ -147,29 +304,14 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
-}
+    return [arrCircularList count];
 
-- (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    static NSString *HeaderCellIdentifier = @"CircularHeaderCell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:HeaderCellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:HeaderCellIdentifier];
-    }
-    UIView *viewRound=(UIView *)[cell.contentView viewWithTag:1];
-    [viewRound.layer setCornerRadius:50];
-    viewRound.clipsToBounds=YES;
-    [viewRound.layer setBorderColor:[UIColor colorWithRed:202/255.0f green:202/255.0f blue:202/255.0f alpha:1.0f].CGColor];
-    [viewRound.layer setBorderWidth:2];
-    
-    return cell;
 }
-
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    NSInteger rows = [[[arrCircularList objectAtIndex:section] objectForKey:@"items"] count];
+    
+    return rows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -189,10 +331,53 @@
         // [viewDateBackground setBackgroundColor:[UIColor colorWithRed:29/255.0f green:42/255.0f blue:76/255.0f alpha:1.0f]];
     }
     
+    NSDictionary *d = [[[arrCircularList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
     
+    //NSLog(@"Dic=%@",d);
+    
+    UILabel *lbHeaderDt = (UILabel *)[cell.contentView viewWithTag:3];
+    NSString *getfrmt = [Utility convertDateFtrToDtaeFtr:@"dd/MM/yyyy" newDateFtr:@"dd EEE" date:[NSString stringWithFormat:@"%@",[d objectForKey:@"Group"]]];
+    lbHeaderDt.text = getfrmt;
+
+    UILabel *lbTitle = (UILabel *)[cell.contentView viewWithTag:4];
+    lbTitle.text = [d objectForKey:@"CircularTitle"];
+    
+    UILabel *lbDesc = (UILabel *)[cell.contentView viewWithTag:6];
+    lbDesc.text = [d objectForKey:@"CircularDetails"];
     
     return cell;
 }
+- (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    static NSString *HeaderCellIdentifier = @"CircularHeaderCell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:HeaderCellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:HeaderCellIdentifier];
+    }
+    UIView *viewRound=(UIView *)[cell.contentView viewWithTag:1];
+    [viewRound.layer setCornerRadius:50];
+    viewRound.clipsToBounds=YES;
+    [viewRound.layer setBorderColor:[UIColor colorWithRed:202/255.0f green:202/255.0f blue:202/255.0f alpha:1.0f].CGColor];
+    [viewRound.layer setBorderWidth:2];
+    
+    NSLog(@"data=%@",[arrCircularList objectAtIndex:section]);
+    
+    NSString *st = [[arrCircularList objectAtIndex:section] objectForKey:@"Groups"];
+    
+    NSString *getfrmt = [Utility convertDateFtrToDtaeFtr:@"MM/yyyy" newDateFtr:@"MMM yyyy" date:st];
+    
+    NSArray* getary = [getfrmt componentsSeparatedByString: @" "];
+    
+    UILabel *lbTitle = (UILabel *)[cell.contentView viewWithTag:2];
+    lbTitle.text = [getary objectAtIndex: 0];
+    
+    UILabel *lbDesc = (UILabel *)[cell.contentView viewWithTag:3];
+    lbDesc.text = [getary objectAtIndex: 1];
+    return cell;
+}
+
+
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

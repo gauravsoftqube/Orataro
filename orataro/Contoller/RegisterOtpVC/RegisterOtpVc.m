@@ -131,11 +131,6 @@ int show =0;
                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                     [alrt show];
                     
-                    
-//                    WallVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
-//                    vc.checkscreen = @"FromLogin";
-//                    app.checkview = 0;
-                    
                     [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
                      [[NSUserDefaults standardUserDefaults]setObject:aPasswordTextField.text forKey:@"Password"];
                     [[NSUserDefaults standardUserDefaults]synchronize];

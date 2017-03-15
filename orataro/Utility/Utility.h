@@ -79,6 +79,10 @@
 
 +(NSString *)convertMiliSecondtoDate:(NSString *)dateFormate date:(NSString *)strDate;
 
++(NSString *)convertDatetoSpecificDate:(NSString *)dateFormate date:(NSString *)strDate;
+
++(NSString *)convertDateFtrToDtaeFtr:(NSString *)dateFormate newDateFtr:(NSString *)newDateFtr date:(NSString *)strDate;
+
 #pragma mark - Api Function
 
 +(void)PostApiCall:(NSString *)apiUrl params:(NSMutableDictionary *)param block:(void (^)(NSMutableDictionary *,NSError *))block;

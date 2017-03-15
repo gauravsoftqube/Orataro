@@ -38,7 +38,10 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    
 }
+
+
 #pragma mark - tableview delegate
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -144,7 +147,26 @@
     img3.image = [img3.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [img3 setTintColor:[UIColor colorWithRed:40.0/255.0 green:49.0/255.0 blue:90.0/255.0 alpha:1.0]];
     
+    UIImageView *imgActiveUser = (UIImageView *)[cell.contentView viewWithTag:20];
+     imgActiveUser.tag = indexPath.row;
     
+    NSString *getSelectRow = [[NSUserDefaults standardUserDefaults]valueForKey:@"SelectedRow"];
+    int row = [[NSString stringWithFormat:@"%ld",(long)indexPath.row]intValue];
+    
+    NSLog(@"row =%@",getSelectRow);
+    
+    if([getSelectRow isEqual: [NSNull null]] || getSelectRow.length == 0 || getSelectRow == nil)
+    {
+       [imgActiveUser setImage:[UIImage imageNamed:@""]];
+   }
+    else if ([getSelectRow isEqualToString:[NSString stringWithFormat:@"%d",row]])
+    {
+        [imgActiveUser setImage:[UIImage imageNamed:@"swichusertick"]];
+    }
+    else
+    {
+        [imgActiveUser setImage:[UIImage imageNamed:@""]];
+    }
     
     return cell;
 }
@@ -160,6 +182,27 @@
     return 194;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [DBOperation executeSQL:@"delete from CurrentActiveUser"];
+    
+    NSMutableDictionary *getActiveUserdata = [fetchDataAry objectAtIndex:indexPath.row];
+    NSString *strJSon = [Utility Convertjsontostring:getActiveUserdata];
+    
+    [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO CurrentActiveUser (JsonStr) VALUES ('%@')",strJSon]];
+    
+    NSLog(@"fetch data%@",[DBOperation selectData:@"Select * from CurrentActiveUser"]);
+    
+    int row = [[NSString stringWithFormat:@"%ld",(long)indexPath.row]intValue];
+    
+    [[NSUserDefaults standardUserDefaults]setValue:[NSString stringWithFormat:@"%d",row] forKey:@"SelectedRow"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+    
+    UIViewController  *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"WallVc"];
+    
+    [self.navigationController pushViewController:vc animated:YES];
+    
+}
 
 #pragma mark - button action
 
