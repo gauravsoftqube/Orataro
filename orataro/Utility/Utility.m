@@ -659,11 +659,26 @@
     }
 }
 
+
 +(NSMutableDictionary *)ConvertStringtoJSON:(NSString *)jsonStr;
 {
     NSData *data = [jsonStr dataUsingEncoding:NSUTF8StringEncoding];
     id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
     
+    return json;
+}
+
++(NSMutableDictionary *)getCurrentUserDetail
+{
+    NSArray *jsonStr=[DBOperation selectData:[NSString stringWithFormat:@"select JsonStr from CurrentActiveUser"]];
+    NSData *data;
+    
+    if([jsonStr count] != 0)
+    {
+        data= [[[jsonStr objectAtIndex:0]objectForKey:@"JsonStr"]  dataUsingEncoding:NSUTF8StringEncoding];
+    }
+    
+    id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
     return json;
 }
 
