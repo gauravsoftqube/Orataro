@@ -44,6 +44,8 @@
  
  */
 
+#define BypassLogin @"NO"
+
 #pragma mark - Alert Message
 
 #define PHONE @"Contact Numeber Must Be 10 Digit"
@@ -110,10 +112,10 @@
 
 #define URL_Api  @"http://orataro.com/Services/"
 
+
 #pragma mark - Register
 
 #define apk_registration  @"apk_registration.asmx"
-
 #define apk_CheckUserMobileNumberForRegistration_action @"CheckUserMobileNumberForRegistration"
 #define apk_CheckOTPForRegistration_action @"UserMobileNumberRegistration"
 
@@ -121,7 +123,6 @@
 #pragma mark - Login
 
 #define apk_login  @"apk_login.asmx"
-
 #define apk_LoginWithGCM_action  @"LoginWithGCM"
 #define apk_NewFogotPasswordCheckUserData_action  @"NewFogotPasswordCheckUserData"
 #define apk_CheckSentOTPData_action  @"CheckSentOTPData"
@@ -132,11 +133,14 @@
 
 #define apk_ImageUrl @"http://orataro.com/DataFiles"
 
+
 #pragma mark - Circular
 
 #define apk_circular  @"apk_circular.asmx"
-
 #define apk_GetCircularList_action  @"GetCircularList"
+#define apk_GetCircularType @"GetProjectType"
+#define apk_gradedivisionsubject @"apk_gradedivisionsubject.asmx"
+#define apk_GetGradeDivisionSubjectbyTeacher @"GetGradeDivisionSubjectbyTeacher"
 
 
 #pragma mark - Homework
