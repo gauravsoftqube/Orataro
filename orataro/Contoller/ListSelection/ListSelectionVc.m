@@ -151,7 +151,6 @@
 {
     self.frostedViewController.direction = REFrostedViewControllerDirectionRight;
     
-    
     if (ad.checkview == 0)
     {
         [self.frostedViewController presentMenuViewController];
