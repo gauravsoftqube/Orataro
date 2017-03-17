@@ -16,6 +16,7 @@
     BOOL isValid;
     AppDelegate *app;
     NSString *currentDeviceId;
+    
 }
 @end
 
@@ -132,6 +133,8 @@ int multipleUser = 0;
 
 -(void)apiCallLogin
 {
+    NSMutableArray *arrSelectInstiUser = [[NSMutableArray alloc]init];
+    
     if ([Utility isInterNetConnectionIsActive] == false)
     {
         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -181,6 +184,8 @@ int multipleUser = 0;
                  {
                      [DBOperation executeSQL:[NSString stringWithFormat:@"delete from Login"]];
                      
+                     
+                     
                      if (arrResponce.count ==1)
                      {
                          [self checkMultipleUser:arrResponce];
@@ -209,24 +214,69 @@ int multipleUser = 0;
                          }
                          else
                          {
-                             for (NSMutableDictionary *dic in arrResponce)
+                             if ([BypassLogin isEqualToString:@"NO"])
                              {
-                                 if ([[dic objectForKey:@"DeviceIdentity"] isEqualToString:currentDeviceId])
+                                 NSArray *instituteID = @[
+                                                          @"4F4BBF0E-858A-46FA-A0A7-BF116F537653",
+                                                          @"4f4bbf0e-858a-46fa-a0a7-bf116f537653",
+                                                          @"3ccb88d9-f4bf-465d-b85a-5402871a0144",
+                                                          @"3CCB88D9-F4BF-465D-B85A-5402871A0144",
+                                                          ];
+                                 
+                                 for (NSMutableDictionary *dic in arrResponce)
+                                 {
+                                     
+                                     if ([instituteID containsObject:[dic objectForKey:@"InstituteID"]])
+                                     {
+                                         [arrSelectInstiUser addObject:dic];
+                                         
+                                     }
+                                     else if([[dic objectForKey:@"DeviceIdentity"] isEqualToString:currentDeviceId])
+                                     {
+                                         [arrSelectInstiUser addObject:dic];
+                                     }
+                                     
+                                 }
+                                 if (arrSelectInstiUser.count == 0)
+                                 {
+                                     [WToast showWithText:@"User not found"];
+                                 }
+                                 else
+                                 {
+                                     for (NSMutableDictionary *dic in arrSelectInstiUser)
+                                     {
+                                         NSString *getjsonstr = [Utility Convertjsontostring:dic];
+                                         
+                                         [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Login (dic_json_string,ActiveUser) VALUES ('%@','%@')",getjsonstr,@"0"]];
+                                     }
+                                     [[NSUserDefaults standardUserDefaults]setObject:_aPhonenumberTextField.text forKey:@"MobileNumber"];
+                                     [[NSUserDefaults standardUserDefaults]setObject:_aPasswordTextField.text forKey:@"Password"];
+                                     [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
+                                     [[NSUserDefaults standardUserDefaults]synchronize];
+                                     
+                                     UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SwitchAcoountVC"];
+                                     [self.navigationController pushViewController:wc animated:YES];
+                                 }
+                                
+                                 
+                             }
+                             else
+                             {
+                                 for (NSMutableDictionary *dic in arrResponce)
                                  {
                                      NSString *getjsonstr = [Utility Convertjsontostring:dic];
                                      
                                      [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Login (dic_json_string,ActiveUser) VALUES ('%@','%@')",getjsonstr,@"0"]];
                                  }
+                                 [[NSUserDefaults standardUserDefaults]setObject:_aPhonenumberTextField.text forKey:@"MobileNumber"];
+                                 [[NSUserDefaults standardUserDefaults]setObject:_aPasswordTextField.text forKey:@"Password"];
+                                 [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
+                                 [[NSUserDefaults standardUserDefaults]synchronize];
                                  
+                                 UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SwitchAcoountVC"];
+                                 [self.navigationController pushViewController:wc animated:YES];
                              }
-
-                             [[NSUserDefaults standardUserDefaults]setObject:_aPhonenumberTextField.text forKey:@"MobileNumber"];
-                              [[NSUserDefaults standardUserDefaults]setObject:_aPasswordTextField.text forKey:@"Password"];
-                              [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
-                             [[NSUserDefaults standardUserDefaults]synchronize];
-                             
-                             UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SwitchAcoountVC"];
-                             [self.navigationController pushViewController:wc animated:YES];
+                            
                          }
                      }
                      [[NSUserDefaults standardUserDefaults]setObject:[NSString stringWithFormat:@"%d",cnt] forKey:@"RememberMe"];
@@ -256,20 +306,90 @@ int multipleUser = 0;
 {
     NSMutableDictionary *getDic = [ary objectAtIndex:0];
     
-    NSLog(@"Device identity=%@",[getDic objectForKey:@"DeviceIdentity"]);
+    NSArray *instituteID = @[
+                             @"4F4BBF0E-858A-46FA-A0A7-BF116F537653",
+                             @"4f4bbf0e-858a-46fa-a0a7-bf116f537653",
+                             @"3ccb88d9-f4bf-465d-b85a-5402871a0144",
+                             @"3CCB88D9-F4BF-465D-B85A-5402871A0144",
+                             ];
     
-    if ([[getDic objectForKey:@"DeviceIdentity"] isEqualToString:currentDeviceId])
+    if ([BypassLogin isEqualToString:@"NO"])
+    {
+        if ([instituteID containsObject:[getDic objectForKey:@"InstituteID"]])
+        {
+            for (NSMutableDictionary *dic in ary)
+            {
+                
+                NSString *getjsonstr = [Utility Convertjsontostring:dic];
+                [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Login (dic_json_string,ActiveUser) VALUES ('%@','%@')",getjsonstr,@"0"]];
+                
+                
+                [DBOperation executeSQL:@"delete from CurrentActiveUser"];
+                NSString *strJSon = [Utility Convertjsontostring:dic];
+                
+                [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO CurrentActiveUser (JsonStr) VALUES ('%@')",strJSon]];
+                
+            }
+            
+            [[NSUserDefaults standardUserDefaults]setObject:_aPhonenumberTextField.text forKey:@"MobileNumber"];
+            [[NSUserDefaults standardUserDefaults]setObject:_aPasswordTextField.text forKey:@"Password"];
+            [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
+            [[NSUserDefaults standardUserDefaults]synchronize];
+            
+            WallVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
+            vc.checkscreen = @"FromLogin";
+            app.checkview = 0;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        else
+        {
+            if ([[getDic objectForKey:@"DeviceIdentity"] isEqualToString:currentDeviceId])
+            {
+                for (NSMutableDictionary *dic in ary)
+                {
+                    
+                    NSString *getjsonstr = [Utility Convertjsontostring:dic];
+                    [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Login (dic_json_string,ActiveUser) VALUES ('%@','%@')",getjsonstr,@"0"]];
+                    [DBOperation executeSQL:@"delete from CurrentActiveUser"];
+                    NSString *strJSon = [Utility Convertjsontostring:dic];
+                    
+                    [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO CurrentActiveUser (JsonStr) VALUES ('%@')",strJSon]];
+                    
+                }
+                
+                [[NSUserDefaults standardUserDefaults]setObject:_aPhonenumberTextField.text forKey:@"MobileNumber"];
+                [[NSUserDefaults standardUserDefaults]setObject:_aPasswordTextField.text forKey:@"Password"];
+                [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
+                [[NSUserDefaults standardUserDefaults]synchronize];
+                
+                WallVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
+                vc.checkscreen = @"FromLogin";
+                app.checkview = 0;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            else
+            {
+                // show toast
+                [WToast showWithText:@"User not found"];
+            }
+        }
+    }
+    else
     {
         for (NSMutableDictionary *dic in ary)
         {
             
             NSString *getjsonstr = [Utility Convertjsontostring:dic];
             [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Login (dic_json_string,ActiveUser) VALUES ('%@','%@')",getjsonstr,@"0"]];
+            [DBOperation executeSQL:@"delete from CurrentActiveUser"];
+            NSString *strJSon = [Utility Convertjsontostring:dic];
+            
+            [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO CurrentActiveUser (JsonStr) VALUES ('%@')",strJSon]];
         }
         
         [[NSUserDefaults standardUserDefaults]setObject:_aPhonenumberTextField.text forKey:@"MobileNumber"];
         [[NSUserDefaults standardUserDefaults]setObject:_aPasswordTextField.text forKey:@"Password"];
-         [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
+        [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
         [[NSUserDefaults standardUserDefaults]synchronize];
         
         WallVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
@@ -277,11 +397,7 @@ int multipleUser = 0;
         app.checkview = 0;
         [self.navigationController pushViewController:vc animated:YES];
     }
-    else
-    {
-        // show toast
-        [WToast showWithText:@"User not found"];
-    }
+    
 }
 
 

@@ -71,7 +71,7 @@
         MemberType=NO;
         [self.AddBtn setHidden:NO];
     }
-
+//
     [self apiCallFor_getCircular];
 }
 
