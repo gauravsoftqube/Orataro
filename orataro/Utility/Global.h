@@ -138,5 +138,19 @@
 
 #define apk_GetCircularList_action  @"GetCircularList"
 
+
+#pragma mark - Homework
+
+#define apk_homework  @"apk_homework.asmx"
+
+#define apk_GetHomework_action  @"GetHomework"
+
+
+#pragma mark - apk_classwork
+
+#define apk_classwork  @"apk_classwork.asmx"
+
+#define apk_GetClassWorkList_action  @"GetClassWorkList"
+
 #endif /* Global_h */
 
