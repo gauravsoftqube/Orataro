@@ -142,5 +142,19 @@
 #define apk_gradedivisionsubject @"apk_gradedivisionsubject.asmx"
 #define apk_GetGradeDivisionSubjectbyTeacher @"GetGradeDivisionSubjectbyTeacher"
 
+
+#pragma mark - Homework
+
+#define apk_homework  @"apk_homework.asmx"
+
+#define apk_GetHomework_action  @"GetHomework"
+
+
+#pragma mark - apk_classwork
+
+#define apk_classwork  @"apk_classwork.asmx"
+
+#define apk_GetClassWorkList_action  @"GetClassWorkList"
+
 #endif /* Global_h */
 
