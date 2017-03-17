@@ -413,7 +413,7 @@
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
   
     
-  //  [ProgressHUB showHUDAddedTo:self.view];
+    [ProgressHUB showHUDAddedTo:self.view];
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
         // [ProgressHUB hideenHUDAddedTo:self.view];
@@ -459,6 +459,7 @@
     if ([Utility isInterNetConnectionIsActive] == false) {
         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alrt show];
+        [ProgressHUB hideenHUDAddedTo:self.view];
         return;
     }
     
@@ -479,7 +480,7 @@
     //[ProgressHUB showHUDAddedTo:self.view];
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
-       //  [ProgressHUB hideenHUDAddedTo:self.view];
+         [ProgressHUB hideenHUDAddedTo:self.view];
          if(!error)
          {
             // NSLog(@"data=%@",dicResponce);

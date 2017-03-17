@@ -60,8 +60,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
-    if([[dicCurrentUser objectForKey:@"MemberType"] isEqualToString:@"Student"])
+    if([[Utility getMemberType] isEqualToString:@"Student"])
     {
         MemberType=YES;
         [self.AddBtn setHidden:YES];
@@ -71,15 +70,46 @@
         MemberType=NO;
         [self.AddBtn setHidden:NO];
     }
-//
-    [self apiCallFor_getCircular];
+    
+    arrCircularList = [DBOperation selectData:@"select * from CircularList"];
+    
+    if (arrCircularList.count == 0)
+    {
+        if ([Utility isInterNetConnectionIsActive] == false)
+        {
+            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alrt show];
+            return;
+        }
+        else
+        {
+            [self apiCallFor_getCircular:YES];
+            
+        }
+    }
+    else
+    {
+        if ([Utility isInterNetConnectionIsActive] == false)
+        {
+            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alrt show];
+            return;
+        }
+        else
+        {
+            [self apiCallFor_getCircular:NO];
+            
+        }
+    }
+   
 }
 
 #pragma mark - ApiCall
 
--(void)apiCallFor_getCircular
+-(void)apiCallFor_getCircular : (BOOL)checkProgress
 {
-    if ([Utility isInterNetConnectionIsActive] == false) {
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alrt show];
         return;
@@ -90,8 +120,16 @@
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+//
+//    [param setValue:[NSString stringWithFormat:@"f1a6d89d-37dc-499a-9476-cb83f0aba0f2"] forKey:@"MemberID"];
+//    [param setValue:[NSString stringWithFormat:@"30032284-31d1-4ba6-8ef4-54edb8e223aa"] forKey:@"UserID"];
+//    [param setValue:[NSString stringWithFormat:@"d79901a7-f9f7-4d47-8e3b-198ede7c9f58"] forKey:@"ClientID"];
+//    [param setValue:[NSString stringWithFormat:@"4f4bbf0e-858a-46fa-a0a7-bf116f537653"] forKey:@"InstituteID"];
+//    [param setValue:[NSString stringWithFormat:@""] forKey:@"DivisionID"];
+//    [param setValue:[NSString stringWithFormat:@""] forKey:@"GradeID"];
+//    [param setValue:[NSString stringWithFormat:@""] forKey:@"BeachID"];
     
-    /*[param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
@@ -106,17 +144,13 @@
     {
         [param setValue:[NSString stringWithFormat:@""] forKey:@"DivisionID"];
         [param setValue:[NSString stringWithFormat:@""] forKey:@"GradeID"];
-    }*/
+    }
     
-    [param setValue:[NSString stringWithFormat:@"f1a6d89d-37dc-499a-9476-cb83f0aba0f2"] forKey:@"MemberID"];
-    [param setValue:[NSString stringWithFormat:@"30032284-31d1-4ba6-8ef4-54edb8e223aa"] forKey:@"UserID"];
-    [param setValue:[NSString stringWithFormat:@"d79901a7-f9f7-4d47-8e3b-198ede7c9f58"] forKey:@"ClientID"];
-    [param setValue:[NSString stringWithFormat:@"4f4bbf0e-858a-46fa-a0a7-bf116f537653"] forKey:@"InstituteID"];
-    [param setValue:[NSString stringWithFormat:@""] forKey:@"DivisionID"];
-    [param setValue:[NSString stringWithFormat:@""] forKey:@"GradeID"];
-    [param setValue:[NSString stringWithFormat:@""] forKey:@"BeachID"];
-    
-    [ProgressHUB showHUDAddedTo:self.view];
+    if (checkProgress == YES)
+    {
+         [ProgressHUB showHUDAddedTo:self.view];
+    }
+   
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
          [ProgressHUB hideenHUDAddedTo:self.view];
@@ -156,8 +190,9 @@
 
 -(void)ManageCircularList:(NSMutableArray *)arrResponce
 {
-//    NSLog(@"total %lu",(unsigned long)arrResponce.count);
-//    NSLog(@"arra=%@",arrResponce);
+  
+    
+    NSMutableArray *aryResponseTemp = [[NSMutableArray alloc]init];
     
     NSMutableArray *mutableArray = [NSMutableArray arrayWithArray:arrResponce];
     
@@ -165,16 +200,11 @@
     {
         NSMutableDictionary *d = [[mutableArray objectAtIndex:i] mutableCopy];
         
-        //NSLog(@"data=%@",[[mutableArray objectAtIndex:i]objectForKey:@"DateOfCircular"]);
-        
         NSString *DateOfCircular=[Utility convertMiliSecondtoDate:@"MM/yyyy" date:[NSString stringWithFormat:@"%@",[[mutableArray objectAtIndex:i]objectForKey:@"DateOfCircular"]]];
         
         [d setObject:DateOfCircular forKey:@"Group"];
         
         [mutableArray replaceObjectAtIndex:i withObject:d];
-        
-        //NSLog(@"data=%@",mutableArray);
-        
         
         arrResponce = mutableArray;
     }
@@ -222,16 +252,25 @@
         
         items = [[NSMutableArray alloc] initWithArray:[temp sortedArrayUsingDescriptors:sortDescriptors]];
         
-        NSLog(@"items=%@",items);
-        
         NSSortDescriptor * brandDescriptor = [[NSSortDescriptor alloc] initWithKey:@"DateOfCircular" ascending:YES];
         NSArray * sortedArray3 = [items sortedArrayUsingDescriptors:@[brandDescriptor]];
         
-        NSLog(@"array=%@",sortedArray3);
-        
         [entry setObject:sortedArray3 forKey:@"items"];
-        [arrCircularList addObject:entry];
+        [aryResponseTemp addObject:entry];
     }
+    
+      [DBOperation executeSQL:@"delete from CircularList"];
+    
+    for (NSMutableDictionary *dic in aryResponseTemp)
+    {
+            NSString *getjsonstr = [Utility Convertjsontostring:dic];
+            [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO CircularList (CircularJsonStr) VALUES ('%@')",getjsonstr]];
+
+    }
+    
+    NSArray *ary = [DBOperation selectData:@"select * from CircularList"];
+    arrCircularList = [Utility getLocalDetail:ary columnKey:@"CircularJsonStr"];
+    
     [_CircularTableView reloadData];
 
 
@@ -271,7 +310,6 @@
     
     NSDictionary *d = [[[arrCircularList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
     
-    NSLog(@"Dic=%@",d);
     
    
     NSString *getdt = [d objectForKey:@"DateOfCircular"];
@@ -282,7 +320,7 @@
     NSString *getfrmt = [Utility convertDateFtrToDtaeFtr:@"dd/MM/yyyy" newDateFtr:@"dd EEE" date:getMilisecond];
     lbHeaderDt.text = getfrmt;
 
-    NSLog(@"Dic=%@",d);
+   
     
     UILabel *lbTitle = (UILabel *)[cell.contentView viewWithTag:4];
     lbTitle.text = [d objectForKey:@"CircularTitle"];
@@ -290,7 +328,7 @@
     UILabel *lbDesc = (UILabel *)[cell.contentView viewWithTag:6];
     lbDesc.text = [d objectForKey:@"CircularDetails"];
     
-    if(MemberType == YES)
+    if([[Utility getMemberType] isEqualToString:@"Student"])
     {
         //student
         //hidden
@@ -315,8 +353,6 @@
     viewRound.clipsToBounds=YES;
     [viewRound.layer setBorderColor:[UIColor colorWithRed:202/255.0f green:202/255.0f blue:202/255.0f alpha:1.0f].CGColor];
     [viewRound.layer setBorderWidth:2];
-    
-    NSLog(@"data=%@",[arrCircularList objectAtIndex:section]);
     
     NSString *st = [[arrCircularList objectAtIndex:section] objectForKey:@"Groups"];
     

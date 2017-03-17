@@ -94,6 +94,9 @@
 +(NSMutableDictionary *)ConvertStringtoJSON:(NSString *)jsonStr;
 +(NSMutableDictionary *)getCurrentUserDetail;
 
++(NSMutableArray *)getLocalDetail : (NSArray *)jsonstr columnKey:(NSString *)columnKey;
++(NSString *)getMemberType;
+
 /*+(void)POSTapiCall:(NSString *)apiName parms:(NSMutableDictionary *)parms block:(void (^)(NSMutableDictionary *,NSError *))block;
 //+(void)APIPhoto:(NSString *)apiName parms:(NSMutableDictionary*)parms block:(void (^)(NSDictionary *, NSError *))block;
 +(void)APIWithImage:(NSString *)apiName parms:(NSMutableDictionary*)parms block:(void (^)(NSDictionary *, NSError *))block;

@@ -1665,7 +1665,7 @@
                                                             </constraints>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" tag="4" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Maha Shivratri" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eaI-gM-3Su">
-                                                            <rect key="frame" x="73" y="8" width="300" height="25"/>
+                                                            <rect key="frame" x="73" y="8" width="295" height="25"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="25" id="t1S-5y-A7V"/>
                                                             </constraints>
@@ -1674,14 +1674,14 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" tag="5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="down-arrow-1" translatesAutoresizingMaskIntoConstraints="NO" id="46D-Ai-3Gu">
-                                                            <rect key="frame" x="381" y="8" width="25" height="25"/>
+                                                            <rect key="frame" x="376" y="8" width="30" height="30"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="25" id="EMu-aE-x8a"/>
-                                                                <constraint firstAttribute="height" constant="25" id="cr1-7g-CIx"/>
+                                                                <constraint firstAttribute="width" constant="30" id="EMu-aE-x8a"/>
+                                                                <constraint firstAttribute="height" constant="30" id="cr1-7g-CIx"/>
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" tag="6" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Maha shivaratri" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u6p-4a-hFn">
-                                                            <rect key="frame" x="73" y="41" width="333" height="40"/>
+                                                            <rect key="frame" x="73" y="46" width="333" height="40"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="40" id="gJ2-pI-Faq"/>
                                                             </constraints>
@@ -6339,6 +6339,7 @@ Assign top space to both the buttons.</string>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="HomeBtn" destination="yvN-UG-ZAC" id="dJl-26-T4x"/>
                         <outlet property="NavigationTitle" destination="wL7-Us-cx1" id="hQd-mA-Okn"/>
                         <outlet property="aListTableView" destination="dIu-yn-LRJ" id="CdH-vX-l5s"/>
                         <outlet property="aMenuBtn" destination="RSN-ao-NLs" id="KPy-He-cl3"/>

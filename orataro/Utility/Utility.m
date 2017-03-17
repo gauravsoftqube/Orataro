@@ -681,5 +681,42 @@
     id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
     return json;
 }
++(NSString *)getMemberType
+{
+    NSArray *jsonStr=[DBOperation selectData:[NSString stringWithFormat:@"select JsonStr from CurrentActiveUser"]];
+    NSData *data;
+    
+    if([jsonStr count] != 0)
+    {
+        data= [[[jsonStr objectAtIndex:0]objectForKey:@"JsonStr"]  dataUsingEncoding:NSUTF8StringEncoding];
+    }
+    
+    id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+    
+    NSString *getMemberType = [json valueForKey:@"MemberType"];
+    
+    return getMemberType;
+}
 
++(NSMutableArray *)getLocalDetail : (NSArray *)jsonstr columnKey:(NSString *)columnKey
+{
+    NSData *data;
+    NSMutableArray *json = [[NSMutableArray alloc]init];
+    
+   // NSLog(@"json count=%lu",(unsigned long)jsonstr.count);
+    
+    if([jsonstr count] != 0)
+    {
+        for (int i=0; i<jsonstr.count; i++)
+        {
+            data= [[[jsonstr objectAtIndex:i]objectForKey:columnKey]  dataUsingEncoding:NSUTF8StringEncoding];
+            [json addObject:[NSJSONSerialization JSONObjectWithData:data options:0 error:nil]];
+        }
+        
+    }
+    
+    NSLog(@"json=%@",json);
+    
+    return json;
+}
 @end

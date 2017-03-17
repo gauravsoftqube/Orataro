@@ -165,33 +165,7 @@
 }
 - (IBAction)HomeBtnClicked:(id)sender
 {
-    if (ad.checkListelection == 1)
-    {
-        //        [HomeBtn setBackgroundImage:[UIImage imageNamed:@"dash_home"] forState:UIControlStateNormal];
-//        aMenuBtn.hidden = NO;
-//        [NavigationTitle setText:@"Homework (Name)"];
-    }
-    if (ad.checkListelection == 2)
-    {
-        [self.navigationController popViewControllerAnimated:YES];
-
-        
-//        [HomeBtn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
-//        aMenuBtn.hidden = YES;
-//        [NavigationTitle setText:@"List Selection (name)"];
-        
-    }
-    if (ad.checkListelection == 3)
-    {
-        [self.navigationController popViewControllerAnimated:YES];
-//        [HomeBtn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
-//        aMenuBtn.hidden = YES;
-//        [NavigationTitle setText:@"List Selection (name)"];
-    }
-    if (ad.checkListelection == 4)
-    {
-         [self.navigationController popViewControllerAnimated:YES];
-    }
+    
 //    UIImage* checkImage = [UIImage imageNamed:@"back"];
 //    NSData *checkImageData = UIImagePNGRepresentation(checkImage);
 //    NSData *propertyImageData = UIImagePNGRepresentation([HomeBtn currentBackgroundImage]);
@@ -207,10 +181,44 @@
 
 - (IBAction)btnHomeClicked:(id)sender
 {
-    [self.frostedViewController hideMenuViewController];
-    UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"OrataroVc"];
+    NSLog(@"ad=%d",ad.checkListelection);
     
-    [self.navigationController pushViewController:wc animated:NO];
+    if (ad.checkListelection == 0)
+    {
+        [self.frostedViewController hideMenuViewController];
+        UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"OrataroVc"];
+        
+        [self.navigationController pushViewController:wc animated:NO];
+    }
+    if (ad.checkListelection == 1)
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+        //        [HomeBtn setBackgroundImage:[UIImage imageNamed:@"dash_home"] forState:UIControlStateNormal];
+        //        aMenuBtn.hidden = NO;
+        //        [NavigationTitle setText:@"Homework (Name)"];
+    }
+    if (ad.checkListelection == 2)
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+        
+        
+        //        [HomeBtn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+        //        aMenuBtn.hidden = YES;
+        //        [NavigationTitle setText:@"List Selection (name)"];
+        
+    }
+    if (ad.checkListelection == 3)
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+        //        [HomeBtn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+        //        aMenuBtn.hidden = YES;
+        //        [NavigationTitle setText:@"List Selection (name)"];
+    }
+    if (ad.checkListelection == 4)
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+   
 }
 
 /*
