@@ -10,7 +10,7 @@
 #import "REFrostedViewController.h"
 #import "AppDelegate.h"
 
-@interface MessageVc ()
+@interface MessageVc ()<UIWebViewDelegate>
 {
     int c2;
      AppDelegate *app;
@@ -26,11 +26,13 @@
    
     app = (AppDelegate *)[UIApplication sharedApplication].delegate;
 
+    aWebview.delegate=self;
+    //NSString *str = @"<p>Hey you. My <b>name </b> is <h1> Joe </h1></p>";
     
-    NSString *str = @"<p>Hey you. My <b>name </b> is <h1> Joe </h1></p>";
+  //  NSString *str=@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\"\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\"><html xmlns=\"http://www.w3.org/1999/xhtml\"><head><meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\"/><title>Hello World - Google  Web Search API Sample</title><script src=\"https://www.google.com/jsapi\"type=\"text/javascript\"></script><script language=\"Javascript\" type=\"text/javascript\">//<!google.load('search', '1');//]]></script></head><body><div id=\"searchcontrol\">Loading</div></body></html>";
    // aWebview.scalesPageToFit = NO;
    // aWebview.scrollView.zoomScale = 2.0;
-    [aWebview loadHTMLString:str baseURL:nil];
+  //  [aWebview loadHTMLString:str baseURL:nil];
     
     // Do any additional setup after loading the view.
 }
@@ -38,6 +40,25 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    if ([[[request URL] absoluteString] hasPrefix:@"ios:"]) {
+        
+        // Call the given selector
+        [self performSelector:@selector(webToNativeCall)];
+        // Cancel the location change
+        return NO;
+    }
+    return YES;
+}
+
+- (void)webToNativeCall
+{
+    NSString *returnvalue =  [aWebview stringByEvaluatingJavaScriptFromString:@"OnLoad()"];
+    
+    NSLog(@"%@",[NSString stringWithFormat:@"From browser : %@", returnvalue ]);
 }
 
 #pragma mark - stepper value change

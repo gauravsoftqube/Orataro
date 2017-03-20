@@ -14,11 +14,14 @@
 #import "ProfileHappyGramListdetailListVc.h"
 #import "AddClassWorkVc.h"
 #import "AddHomeworkVc.h"
+#import "Global.h"
 
 @interface ListSelectionVc ()
 {
     AppDelegate *ad;
     int c2;
+    
+    NSMutableArray *arrList;
 }
 @end
 
@@ -84,11 +87,76 @@
         aMenuBtn.hidden = YES;
         [NavigationTitle setText:@"List Selection (name)"];
     }
+    
+    arrList = [[NSMutableArray alloc]init];
+    
+    [self apiCallFor_getList];
 }
+
+-(void)apiCallFor_getList
+{
+    if ([Utility isInterNetConnectionIsActive] == false) {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_gradedivisionsubject,apk_GetGradeDivisionSubjectbyTeacher_action];
+    
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
+    [param setValue:@"Teacher" forKey:@"Role"];
+    
+    [ProgressHUB showHUDAddedTo:self.view];
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         [ProgressHUB hideenHUDAddedTo:self.view];
+         if(!error)
+         {
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             
+             if([arrResponce count] != 0)
+             {
+                 NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                 NSString *strStatus=[dic objectForKey:@"message"];
+                 if([strStatus isEqualToString:@"No Data Found"])
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                 }
+                 else
+                 {
+                     arrList = [arrResponce mutableCopy];
+                     [self.aListTableView reloadData];
+                 }
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
+}
+
+
 #pragma mark - tabelview delegate
+
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return  [arrList count];
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -103,6 +171,15 @@
          cell.backgroundColor = [UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    UILabel *lblGrade = (UILabel *)[cell.contentView viewWithTag:1];
+    [lblGrade setText:[NSString stringWithFormat:@"%@",[[arrList objectAtIndex:indexPath.row] objectForKey:@"Grade"]]];
+    
+    UILabel *lblDivision = (UILabel *)[cell.contentView viewWithTag:2];
+    [lblDivision setText:[NSString stringWithFormat:@"%@",[[arrList objectAtIndex:indexPath.row] objectForKey:@"Division"]]];
+    
+    UILabel *lblSubject = (UILabel *)[cell.contentView viewWithTag:3];
+    [lblSubject setText:[NSString stringWithFormat:@"%@",[[arrList objectAtIndex:indexPath.row] objectForKey:@"Subject"]]];
     return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -125,6 +202,7 @@
     if (ad.checkListelection == 2)
     {
         AddHomeworkVc *s = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddHomeworkVc"];
+        s.dicSelectListSelection=[arrList objectAtIndex:indexPath.row];
         [self.navigationController pushViewController:s animated:YES];
     }
     if (ad.checkListelection == 3)
@@ -220,17 +298,4 @@
     }
    
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
-
-
 @end
