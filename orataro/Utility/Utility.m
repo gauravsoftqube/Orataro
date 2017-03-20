@@ -613,8 +613,10 @@
     NSURL *urlLoginAuthentication= [NSURL URLWithString:apiUrl];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:urlLoginAuthentication];
     [request setHTTPMethod:@"POST"];
-    
+
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:param options:kNilOptions error:nil];
+    
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setValue:@"application/json; charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
     
@@ -628,6 +630,7 @@
             
             if(!error)
             {
+                
                 NSMutableDictionary * jsonData  = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
                 if (block) {
                     block(jsonData,nil);

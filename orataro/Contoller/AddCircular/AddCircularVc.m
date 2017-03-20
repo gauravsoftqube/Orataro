@@ -70,6 +70,7 @@
              cancelButtonTitle:@"OK"
              otherButtonTitles:@"Cancel", nil];
     alert.delegate = self;
+    alert.tag = 2;
     [alert setValue:datePicker forKey:@"accessoryView"];
     
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -264,50 +265,6 @@
     
 }
 
-
-
-#pragma mark - textview delegate
-
-- (BOOL) textViewShouldBeginEditing:(UITextView *)textView
-{
-    if (aDescTextView.text.length == 0)
-    {
-        aDescTextView.text = @"";
-        aDescTextView.textColor = [UIColor blackColor];
-    }
-    if ([aDescTextView.text isEqualToString:@"Description"])
-    {
-        aDescTextView.text = @"";
-        aDescTextView.textColor = [UIColor blackColor];
-    }
-    
-    return YES;
-}
-
--(void) textViewDidChange:(UITextView *)textView
-{
-    if(aDescTextView.text.length == 0){
-        aDescTextView.textColor = [UIColor lightGrayColor];
-        aDescTextView.text = @"Description";
-        [aDescTextView resignFirstResponder];
-    }
-}
-
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-    
-    if([text isEqualToString:@"\n"]) {
-        [textView resignFirstResponder];
-        if(aDescTextView.text.length == 0){
-            aDescTextView.textColor = [UIColor lightGrayColor];
-            aDescTextView.text = @"Desciption";
-            [aDescTextView resignFirstResponder];
-        }
-        return NO;
-    }
-    
-    return YES;
-}
-
 #pragma mark - gesture reconize
 
 -(void)TaptoHideViewCircular:(UIGestureRecognizer *)tap
@@ -365,6 +322,8 @@
 
 - (IBAction)btnSaveClicked:(id)sender
 {
+    NSLog(@"data=%@",_lbStandard.text);
+    
     if ([Utility isInterNetConnectionIsActive] == false)
     {
         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -389,7 +348,13 @@
         [alrt show];
         return;
     }
-    else if ([standardTextfield.text isEqualToString:@""])
+    else if ([aDescTextView.text isEqualToString:@"Description"])
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:CIRCULAR_DESC delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    else if ([_lbStandard.text isEqualToString:@"Select Standard And Division"])
     {
         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@CIRCULAR_STANDARD delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alrt show];
@@ -439,7 +404,6 @@
 
 - (IBAction)btnDoneClciked:(id)sender
 {
-    
     NSMutableArray *strStandard = [[NSMutableArray alloc]init];
     
     NSMutableArray *aryGet = [[NSUserDefaults standardUserDefaults]valueForKey:@"SelectAryData"];
@@ -453,6 +417,7 @@
     }
     
     NSMutableArray *arySet = [[NSMutableArray alloc]init];
+    
     for(int i=0 ; i<strStandard.count;i++)
     {
         [arySet addObject:[NSString stringWithFormat:@"%@-%@",[[strStandard objectAtIndex:i]objectForKey:@"Grade"],[[strStandard objectAtIndex:i]objectForKey:@"Division"]]];
@@ -479,17 +444,21 @@
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 0)
+    if (alertView.tag == 2)
     {
-        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-        [dateFormat setDateFormat:@"dd-MM-yyyy"];
-        NSString *theDate = [dateFormat stringFromDate:[datePicker date]];
-        endDateTextfield.text = theDate;
-        
-    }
-    if (buttonIndex == 1)
-    {
-        alert.hidden = YES;
+        if (buttonIndex == 0)
+        {
+            NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+            [dateFormat setDateFormat:@"dd-MM-yyyy"];
+            NSString *theDate = [dateFormat stringFromDate:[datePicker date]];
+            endDateTextfield.text = theDate;
+            
+        }
+        if (buttonIndex == 1)
+        {
+            alert.hidden = YES;
+        }
+
     }
 }
 
@@ -565,8 +534,32 @@
         return;
     }
     
+    //NSLog(@"sub=%@",subAry);
+    
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_circular,apk_CreateCircularWithMulty_action];
     
+    
+    NSMutableArray *getDivId = [[NSMutableArray alloc] initWithArray:[[NSUserDefaults standardUserDefaults] arrayForKey:@"SelectAryData"]];
+    NSMutableArray *aryDivId = [[NSMutableArray alloc]init];
+    
+    NSLog(@"getdata=%@",getDivId);
+    
+    for (int i=0; i<subAry.count; i++)
+    {
+        if ([getDivId containsObject:[NSString stringWithFormat:@"%d",i]])
+        {
+            [aryDivId addObject:[subAry objectAtIndex:i]];
+        }
+    }
+    
+    NSMutableArray *arySet = [[NSMutableArray alloc]init];
+    
+    for(int i=0 ; i<aryDivId.count;i++)
+    {
+        [arySet addObject:[NSString stringWithFormat:@"%@,%@",[[aryDivId objectAtIndex:i]objectForKey:@"GradeID"],[[aryDivId objectAtIndex:i]objectForKey:@"DivisionID"]]];
+    }
+    
+    NSString *strTableColumn = [arySet componentsJoinedByString:@"#"];
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
      NSLog(@"dic=%@",dicCurrentUser);
@@ -575,17 +568,19 @@
     [param setValue:@"" forKey:@"EditID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"WallID"]] forKey:@"WallID"];
     [param setValue:aTitleTextfield.text forKey:@"title"];
-    //[param setValue:[NSString stringWithFormat:@"%@",] forKey:@"GradeDivisoinID"];
+    [param setValue:strTableColumn forKey:@"GradeDivisoinID"];
     
     [param setValue:selectTypeTextfield.text forKey:@"CircularType"];
-    [param setValue:endDateTextfield.text forKey:@"DateOfCircular"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[Utility convertDateFtrToDtaeFtr:@"dd-MM-yyyy" newDateFtr:@"MM-dd-yyyy" date:endDateTextfield.text]] forKey:@"DateOfCircular"];
+    
     [param setValue:aDescTextView.text forKey:@"CircularDetails"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
     
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
-    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"BeachID"]] forKey:@"BeachID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"BatchID"]] forKey:@"BeachID"];
     
     NSData *data =  UIImagePNGRepresentation(PhotoBtn.currentBackgroundImage);
     const unsigned char *bytes = [data bytes];
@@ -596,16 +591,14 @@
         [byteArray addObject:[NSNumber numberWithUnsignedChar:bytes[i]]];
     }
     [param setValue:byteArray forKey:@"File"];
+    
     NSString *getImageName = [Utility randomImageGenerator];
     [param setValue:[NSString stringWithFormat:@"%@.jpg",getImageName] forKey:@"FileName"];
-     [param setValue:@"IMAGE" forKey:@"FileType"];
+    [param setValue:@"IMAGE" forKey:@"FileType"];
     [param setValue:@"" forKey:@"FileMineType"];
     
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstitutionWallID"]] forKey:@"InstitutionWallID"];
    
-    
-   
-    
     [ProgressHUB showHUDAddedTo:self.view];
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
@@ -617,22 +610,20 @@
              NSString *strArrd=[dicResponce objectForKey:@"d"];
              NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
              NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-             //NSLog(@"array=%@",arrResponce);
+             NSLog(@"array=%@",arrResponce);
              
              if([arrResponce count] != 0)
              {
                  NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
                  NSString *strStatus=[dic objectForKey:@"message"];
-                 if([strStatus isEqualToString:@"No Data Found"])
+                 if([strStatus isEqualToString:@"Circular Created SuccessFully...!!"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     [alrt show];
+                     [self.navigationController popViewControllerAnimated:YES];
                  }
                  else
                  {
-                     subAry = arrResponce;
-                     [tblSubject reloadData];
-                     [tblCircularType reloadData];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
                      // NSLog(@"arra=%@",subAry);
                  }
              }
@@ -723,8 +714,7 @@
     }
     
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_gradedivisionsubject,apk_GetGradeDivisionSubjectbyTeacher_action];
-    
-    
+
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
     // NSLog(@"dic=%@",dicCurrentUser);
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
