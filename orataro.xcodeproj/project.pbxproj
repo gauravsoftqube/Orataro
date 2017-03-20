@@ -12,6 +12,7 @@
 		072A85AF1E67FADC00F54A30 /* DEMONavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 072A85AA1E67FADC00F54A30 /* DEMONavigationController.m */; };
 		072A85B01E67FADC00F54A30 /* DEMORootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 072A85AC1E67FADC00F54A30 /* DEMORootViewController.m */; };
 		0739EC521E713AE20099658F /* ForgotNewPwdVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 0739EC511E713AE20099658F /* ForgotNewPwdVc.m */; };
+		073A31201E7D427800702EA0 /* sam.html in Resources */ = {isa = PBXBuildFile; fileRef = 073A311F1E7D427800702EA0 /* sam.html */; };
 		073E55CA1E6FDAE3008BF93B /* ProgressHUB.m in Sources */ = {isa = PBXBuildFile; fileRef = 073E55C91E6FDAE3008BF93B /* ProgressHUB.m */; };
 		073E55CD1E703D04008BF93B /* OrataroLoacal_DB.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 073E55CC1E703D04008BF93B /* OrataroLoacal_DB.sqlite */; };
 		0932277B1E38750D00138A2B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0932277A1E38750D00138A2B /* main.m */; };
@@ -229,6 +230,7 @@
 		072A85AC1E67FADC00F54A30 /* DEMORootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DEMORootViewController.m; sourceTree = "<group>"; };
 		0739EC501E713AE20099658F /* ForgotNewPwdVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgotNewPwdVc.h; sourceTree = "<group>"; };
 		0739EC511E713AE20099658F /* ForgotNewPwdVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgotNewPwdVc.m; sourceTree = "<group>"; };
+		073A311F1E7D427800702EA0 /* sam.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = sam.html; sourceTree = "<group>"; };
 		073E55C81E6FDAE3008BF93B /* ProgressHUB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressHUB.h; sourceTree = "<group>"; };
 		073E55C91E6FDAE3008BF93B /* ProgressHUB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressHUB.m; sourceTree = "<group>"; };
 		073E55CC1E703D04008BF93B /* OrataroLoacal_DB.sqlite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OrataroLoacal_DB.sqlite; sourceTree = "<group>"; };
@@ -663,6 +665,7 @@
 		0932276D1E38750D00138A2B = {
 			isa = PBXGroup;
 			children = (
+				073A311F1E7D427800702EA0 /* sam.html */,
 				093227781E38750D00138A2B /* orataro */,
 				093227771E38750D00138A2B /* Products */,
 				C360CD381E4B47FD00761ABE /* Frameworks */,
@@ -741,6 +744,7 @@
 				C3645AFC1E5C7E0F0012F4CF /* CreateReminderVc */,
 				C3645AF81E5C6BA20012F4CF /* NotesVc */,
 				C3645AF01E5C05C00012F4CF /* ClassWorkVc */,
+				C391E4F01E40C2C4007BE2EA /* AddClasswork */,
 				C3645A861E5BF41A0012F4CF /* HomeWorkVc */,
 				C369E6E51E5B28E60048D601 /* CircularVc */,
 				C369E6E11E5AFA3A0048D601 /* RegisterOtpVC */,
@@ -770,7 +774,6 @@
 				C38ABFA91E48931E00689426 /* PTCommunication */,
 				C38ABFA51E487DB900689426 /* StudentListVc */,
 				C35C07241E4839AD004C55EB /* AttendanceVC */,
-				C391E4F01E40C2C4007BE2EA /* AddClasswork */,
 				C391E4EC1E40C1DF007BE2EA /* SubjectDetail */,
 				C36DD1C31E409B400011221E /* ListSelection */,
 				C36DD1BE1E408DAE0011221E /* CircularDetails */,
@@ -1076,6 +1079,7 @@
 				C375B6381E65B63C00E8D63D /* AddHomeworkVc */,
 				C3645A871E5BF44B0012F4CF /* HomeWrokVc.h */,
 				C3645A881E5BF44B0012F4CF /* HomeWrokVc.m */,
+				C375B6381E65B63C00E8D63D /* AddHomeworkVc */,
 			);
 			path = HomeWorkVc;
 			sourceTree = "<group>";
@@ -2037,6 +2041,7 @@
 			files = (
 				073E55CD1E703D04008BF93B /* OrataroLoacal_DB.sqlite in Resources */,
 				C3645AEF1E5BFE980012F4CF /* Info.plist in Resources */,
+				073A31201E7D427800702EA0 /* sam.html in Resources */,
 				093227891E38750D00138A2B /* LaunchScreen.storyboard in Resources */,
 				C365CCBE1E49AB7000A4ABAA /* HolidayVcCell.xib in Resources */,
 				C36DD1CC1E409CB30011221E /* ListCell.xib in Resources */,

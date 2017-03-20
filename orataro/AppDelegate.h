@@ -14,7 +14,7 @@
 @property (assign,nonatomic) int commonvar;
 @property (assign,nonatomic)int checkhomeLang;
 @property (assign,nonatomic)int scoolgroup;
-@property (assign,nonatomic)int checkListelection ;
+@property (assign,nonatomic)int checkListelection;
 @property (assign,nonatomic)int c2;
 @property (assign,nonatomic)int checkview;
 @property(strong,nonatomic)UINavigationController *nav;

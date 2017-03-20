@@ -146,9 +146,12 @@
 #define apk_circular  @"apk_circular.asmx"
 #define apk_GetCircularList_action  @"GetCircularList"
 #define apk_GetCircularType @"GetProjectType"
+
 #define apk_gradedivisionsubject @"apk_gradedivisionsubject.asmx"
-#define apk_GetGradeDivisionSubjectbyTeacher @"GetGradeDivisionSubjectbyTeacher"
+
 #define apk_CreateCircularWithMulty_action @"CreateCircularWithMulty"
+
+#define apk_GetGradeDivisionSubjectbyTeacher_action @"GetGradeDivisionSubjectbyTeacher"
 
 
 #pragma mark - Homework
@@ -156,7 +159,7 @@
 #define apk_homework  @"apk_homework.asmx"
 
 #define apk_GetHomework_action  @"GetHomework"
-
+#define apk_CreateHomework_action  @"CreateHomework"
 
 #pragma mark - apk_classwork
 

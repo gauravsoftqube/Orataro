@@ -10,6 +10,8 @@
 
 @interface AddHomeworkVc : UIViewController
 
+@property (strong, nonatomic) NSMutableDictionary *dicSelectListSelection;
+
 @property (weak, nonatomic) IBOutlet UIButton *btnbAck;
 - (IBAction)btnBack:(id)sender;
 
