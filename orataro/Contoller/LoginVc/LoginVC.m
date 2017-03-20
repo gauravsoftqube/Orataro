@@ -65,7 +65,19 @@ int multipleUser = 0;
         _aPasswordTextField.text = getPassword;
     }
     
-    
+    if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"RememberMe"]length] == 0)
+    {
+        [aCheckBtn setBackgroundImage:[UIImage imageNamed:@"tick_mark"] forState:UIControlStateNormal];
+    }
+    else if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"RememberMe"] isEqualToString:@"0"])
+    {
+        [aCheckBtn setBackgroundImage:[UIImage imageNamed:@"tick_mark"] forState:UIControlStateNormal];
+       
+    }
+    else
+    {
+        [aCheckBtn setBackgroundImage:[UIImage imageNamed:@"uncheck"] forState:UIControlStateNormal];
+    }
 }
 #pragma mark - button action
 
@@ -89,6 +101,10 @@ int multipleUser = 0;
 {
     NSLog(@"Remember Values=%d",cnt);
     
+     NSMutableArray *arrSelectInstiUser = [[NSMutableArray alloc]init];
+    
+   currentDeviceId =[[NSUserDefaults standardUserDefaults]objectForKey:@"currentDeviceId"];
+    
     if ([Utility validateBlankField:_aPhonenumberTextField.text])
     {
         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:PHONE_EMPTY delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -101,7 +117,123 @@ int multipleUser = 0;
         [alrt show];
         return;
     }
-    [self apiCallLogin];
+    
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"RememberMe"] isEqualToString:@"0"])
+        {
+            NSArray *ary = [DBOperation selectData:@"select * from Login"];
+            NSMutableArray *arrResponce = [[NSMutableArray alloc]init];
+            
+            arrResponce = [Utility getLocalDetail:ary columnKey:@"dic_json_string"];
+            
+            [DBOperation executeSQL:[NSString stringWithFormat:@"delete from Login"]];
+            
+                if (arrResponce.count ==1)
+                {
+                    [self checkMultipleUser:arrResponce];
+                }
+                else
+                {
+                    for (NSMutableDictionary *dic in arrResponce)
+                    {
+                        if ([[dic objectForKey:@"DeviceIdentity"] isEqualToString:currentDeviceId])
+                        {
+                            multipleUser++;
+                        }
+                        else
+                        {
+                            
+                        }
+                    }
+                    if (multipleUser == 0)
+                    {
+                        [WToast showWithText:@"User not found"];
+                    }
+                    else if (multipleUser == 1)
+                    {
+                        [self checkMultipleUser:arrResponce];
+                        
+                    }
+                    else
+                    {
+                        if ([BypassLogin isEqualToString:@"NO"])
+                        {
+                            NSArray *instituteID = @[
+                                                     @"4F4BBF0E-858A-46FA-A0A7-BF116F537653",
+                                                     @"4f4bbf0e-858a-46fa-a0a7-bf116f537653",
+                                                     @"3ccb88d9-f4bf-465d-b85a-5402871a0144",
+                                                     @"3CCB88D9-F4BF-465D-B85A-5402871A0144",
+                                                     ];
+                            
+                            for (NSMutableDictionary *dic in arrResponce)
+                            {
+                                
+                                if ([instituteID containsObject:[dic objectForKey:@"InstituteID"]])
+                                {
+                                    [arrSelectInstiUser addObject:dic];
+                                    
+                                }
+                                else if([[dic objectForKey:@"DeviceIdentity"] isEqualToString:currentDeviceId])
+                                {
+                                    [arrSelectInstiUser addObject:dic];
+                                }
+                                
+                            }
+                            if (arrSelectInstiUser.count == 0)
+                            {
+                                [WToast showWithText:@"User not found"];
+                            }
+                            else
+                            {
+                                for (NSMutableDictionary *dic in arrSelectInstiUser)
+                                {
+                                    NSString *getjsonstr = [Utility Convertjsontostring:dic];
+                                    
+                                    [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Login (dic_json_string,ActiveUser) VALUES ('%@','%@')",getjsonstr,@"0"]];
+                                }
+                                [[NSUserDefaults standardUserDefaults]setObject:_aPhonenumberTextField.text forKey:@"MobileNumber"];
+                                [[NSUserDefaults standardUserDefaults]setObject:_aPasswordTextField.text forKey:@"Password"];
+                                [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
+                                [[NSUserDefaults standardUserDefaults]synchronize];
+                                
+                                UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SwitchAcoountVC"];
+                                [self.navigationController pushViewController:wc animated:YES];
+                            }
+                            
+                        }
+                        else
+                        {
+                            for (NSMutableDictionary *dic in arrResponce)
+                            {
+                                NSString *getjsonstr = [Utility Convertjsontostring:dic];
+                                
+                                [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Login (dic_json_string,ActiveUser) VALUES ('%@','%@')",getjsonstr,@"0"]];
+                            }
+                            [[NSUserDefaults standardUserDefaults]setObject:_aPhonenumberTextField.text forKey:@"MobileNumber"];
+                            [[NSUserDefaults standardUserDefaults]setObject:_aPasswordTextField.text forKey:@"Password"];
+                            [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
+                            [[NSUserDefaults standardUserDefaults]synchronize];
+                            
+                            UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SwitchAcoountVC"];
+                            [self.navigationController pushViewController:wc animated:YES];
+                        }
+                }
+            }
+        }
+        else
+        {
+            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alrt show];
+        }
+    }
+    else
+    {
+         [self apiCallLogin];
+    }
+    
+    
+    
     
 }
 
@@ -118,6 +250,8 @@ int multipleUser = 0;
         cnt = 0;
     }
     
+    [[NSUserDefaults standardUserDefaults]setObject:[NSString stringWithFormat:@"%d",cnt] forKey:@"RememberMe"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
 }
 
 - (IBAction)btnForgotPassword:(id)sender {
@@ -137,7 +271,7 @@ int multipleUser = 0;
     
     if ([Utility isInterNetConnectionIsActive] == false)
     {
-        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alrt show];
         return;
     }
@@ -184,8 +318,7 @@ int multipleUser = 0;
                  {
                      [DBOperation executeSQL:[NSString stringWithFormat:@"delete from Login"]];
                      
-                     
-                     
+                    
                      if (arrResponce.count ==1)
                      {
                          [self checkMultipleUser:arrResponce];

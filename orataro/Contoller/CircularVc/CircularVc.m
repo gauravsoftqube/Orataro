@@ -71,7 +71,12 @@
         [self.AddBtn setHidden:NO];
     }
     
-    arrCircularList = [DBOperation selectData:@"select * from CircularList"];
+    //arrCircularList = [DBOperation selectData:@"select * from CircularList"];
+    NSArray *ary = [DBOperation selectData:@"select * from CircularList"];
+    arrCircularList = [Utility getLocalDetail:ary columnKey:@"CircularJsonStr"];
+    [self.CircularTableView reloadData];
+  //  dispatch_group_t group = dispatch_group_create();
+   
     
     if (arrCircularList.count == 0)
     {
@@ -83,7 +88,13 @@
         }
         else
         {
-            [self apiCallFor_getCircular:YES];
+            
+            //block 1
+           // dispatch_group_async(group, dispatch_get_global_queue(0, 0), ^{
+                // code here
+                [self apiCallFor_getCircular:YES];
+           // });
+            
             
         }
     }
@@ -97,7 +108,13 @@
         }
         else
         {
-            [self apiCallFor_getCircular:NO];
+            //block 2
+            //dispatch_group_async(group, dispatch_get_global_queue(0, 0), ^{
+                // code here
+                 [self apiCallFor_getCircular:NO];
+           // });
+
+           
             
         }
     }
@@ -120,15 +137,6 @@
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
-//
-//    [param setValue:[NSString stringWithFormat:@"f1a6d89d-37dc-499a-9476-cb83f0aba0f2"] forKey:@"MemberID"];
-//    [param setValue:[NSString stringWithFormat:@"30032284-31d1-4ba6-8ef4-54edb8e223aa"] forKey:@"UserID"];
-//    [param setValue:[NSString stringWithFormat:@"d79901a7-f9f7-4d47-8e3b-198ede7c9f58"] forKey:@"ClientID"];
-//    [param setValue:[NSString stringWithFormat:@"4f4bbf0e-858a-46fa-a0a7-bf116f537653"] forKey:@"InstituteID"];
-//    [param setValue:[NSString stringWithFormat:@""] forKey:@"DivisionID"];
-//    [param setValue:[NSString stringWithFormat:@""] forKey:@"GradeID"];
-//    [param setValue:[NSString stringWithFormat:@""] forKey:@"BeachID"];
-    
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
@@ -171,7 +179,12 @@
                  }
                  else
                  {
-                     [self ManageCircularList:arrResponce];
+                     //dispatch_async(dispatch_get_main_queue(), ^{
+                         
+                         [self ManageCircularList:arrResponce];
+                         
+                     //});
+                     
                  }
              }
              else
@@ -190,88 +203,89 @@
 
 -(void)ManageCircularList:(NSMutableArray *)arrResponce
 {
-  
-    
     NSMutableArray *aryResponseTemp = [[NSMutableArray alloc]init];
     
     NSMutableArray *mutableArray = [NSMutableArray arrayWithArray:arrResponce];
     
     for (int i=0; i< mutableArray.count; i++)
-    {
-        NSMutableDictionary *d = [[mutableArray objectAtIndex:i] mutableCopy];
+        {
+            NSMutableDictionary *d = [[mutableArray objectAtIndex:i] mutableCopy];
+            
+            NSString *DateOfCircular=[Utility convertMiliSecondtoDate:@"MM/yyyy" date:[NSString stringWithFormat:@"%@",[[mutableArray objectAtIndex:i]objectForKey:@"DateOfCircular"]]];
+            
+            [d setObject:DateOfCircular forKey:@"Group"];
+            
+            [mutableArray replaceObjectAtIndex:i withObject:d];
+            
+            arrResponce = mutableArray;
+        }
         
-        NSString *DateOfCircular=[Utility convertMiliSecondtoDate:@"MM/yyyy" date:[NSString stringWithFormat:@"%@",[[mutableArray objectAtIndex:i]objectForKey:@"DateOfCircular"]]];
+        NSArray *temp = [arrResponce sortedArrayUsingDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"Group" ascending:YES]]];
+    
+        [arrResponce removeAllObjects];
+        [arrResponce addObjectsFromArray:temp];
         
-        [d setObject:DateOfCircular forKey:@"Group"];
+        NSArray *areas = [arrResponce valueForKeyPath:@"@distinctUnionOfObjects.Group"];
         
-        [mutableArray replaceObjectAtIndex:i withObject:d];
+        NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:nil ascending:YES];
         
-        arrResponce = mutableArray;
-    }
-    
-    NSArray *temp = [arrResponce sortedArrayUsingDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"Group" ascending:YES]]];
-    
-
-    [arrResponce removeAllObjects];
-    [arrResponce addObjectsFromArray:temp];
-    
-    NSArray *areas = [arrResponce valueForKeyPath:@"@distinctUnionOfObjects.Group"];
-    
-    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:nil ascending:YES];
-    
-    NSArray *sorters = [[NSArray alloc] initWithObjects:sorter, nil];
-    
-    NSArray *sortedArray = [areas sortedArrayUsingDescriptors:sorters];
-    
-    NSDateFormatter *dateFormatter1 = [NSDateFormatter new];
-    dateFormatter1.dateFormat = @"MM-yyyy";
-    
-    NSArray *sortedArray1 = [sortedArray sortedArrayUsingComparator:^(NSString *string1, NSString *string2)
-                             {
-                                 NSDate *date1 = [dateFormatter1 dateFromString:string1];
-                                 NSDate *date2 = [dateFormatter1 dateFromString:string2];
-                                 
-                                 return [date1 compare:date2];
-                             }];
-    
-
-    sortedArray = [[NSArray alloc]initWithArray:sortedArray1];
-    
-    for (NSString *area in sortedArray)
-    {
-        __autoreleasing NSMutableDictionary *entry = [NSMutableDictionary new];
-        [entry setObject:area forKey:@"Groups"];
+        NSArray *sorters = [[NSArray alloc] initWithObjects:sorter, nil];
         
-        __autoreleasing NSArray *temp = [arrResponce filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"Group = %@", area]];
+        NSArray *sortedArray = [areas sortedArrayUsingDescriptors:sorters];
         
-        __autoreleasing NSMutableArray *items = [NSMutableArray new];
+        NSDateFormatter *dateFormatter1 = [NSDateFormatter new];
+        dateFormatter1.dateFormat = @"MM-yyyy";
         
-        NSSortDescriptor *sortByName = [NSSortDescriptor sortDescriptorWithKey:@"Group"                                                                        ascending:YES];
+        NSArray *sortedArray1 = [sortedArray sortedArrayUsingComparator:^(NSString *string1, NSString *string2)
+                                 {
+                                     NSDate *date1 = [dateFormatter1 dateFromString:string1];
+                                     NSDate *date2 = [dateFormatter1 dateFromString:string2];
+                                     
+                                     return [date1 compare:date2];
+                                 }];
         
-        NSArray *sortDescriptors = [NSArray arrayWithObject:sortByName];
         
-        items = [[NSMutableArray alloc] initWithArray:[temp sortedArrayUsingDescriptors:sortDescriptors]];
+        sortedArray = [[NSArray alloc]initWithArray:sortedArray1];
         
-        NSSortDescriptor * brandDescriptor = [[NSSortDescriptor alloc] initWithKey:@"DateOfCircular" ascending:YES];
-        NSArray * sortedArray3 = [items sortedArrayUsingDescriptors:@[brandDescriptor]];
+        for (NSString *area in sortedArray)
+        {
+            __autoreleasing NSMutableDictionary *entry = [NSMutableDictionary new];
+            [entry setObject:area forKey:@"Groups"];
+            
+            __autoreleasing NSArray *temp = [arrResponce filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"Group = %@", area]];
+            
+            __autoreleasing NSMutableArray *items = [NSMutableArray new];
+            
+            NSSortDescriptor *sortByName = [NSSortDescriptor sortDescriptorWithKey:@"Group"                                                                        ascending:YES];
+            
+            NSArray *sortDescriptors = [NSArray arrayWithObject:sortByName];
+            
+            items = [[NSMutableArray alloc] initWithArray:[temp sortedArrayUsingDescriptors:sortDescriptors]];
+            
+            NSSortDescriptor * brandDescriptor = [[NSSortDescriptor alloc] initWithKey:@"DateOfCircular" ascending:YES];
+            NSArray * sortedArray3 = [items sortedArrayUsingDescriptors:@[brandDescriptor]];
+            
+            [entry setObject:sortedArray3 forKey:@"items"];
+            [aryResponseTemp addObject:entry];
+        }
         
-        [entry setObject:sortedArray3 forKey:@"items"];
-        [aryResponseTemp addObject:entry];
-    }
-    
-      [DBOperation executeSQL:@"delete from CircularList"];
-    
-    for (NSMutableDictionary *dic in aryResponseTemp)
-    {
+        [DBOperation executeSQL:@"delete from CircularList"];
+        
+        for (NSMutableDictionary *dic in aryResponseTemp)
+        {
             NSString *getjsonstr = [Utility Convertjsontostring:dic];
             [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO CircularList (CircularJsonStr) VALUES ('%@')",getjsonstr]];
-
-    }
+            
+        }
+        
+        NSArray *ary = [DBOperation selectData:@"select * from CircularList"];
+        arrCircularList = [Utility getLocalDetail:ary columnKey:@"CircularJsonStr"];
     
-    NSArray *ary = [DBOperation selectData:@"select * from CircularList"];
-    arrCircularList = [Utility getLocalDetail:ary columnKey:@"CircularJsonStr"];
+        [_CircularTableView reloadData];
+        
+ //   });
     
-    [_CircularTableView reloadData];
+    
 
 
 }

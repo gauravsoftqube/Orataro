@@ -43,19 +43,32 @@
     
    
     
-    if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"CheckUser"] isEqualToString:@"Login"])
+//    if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"CheckUser"] isEqualToString:@"Login"])
+//    {
+//        UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"LoginVC"];
+//        [self.navigationController pushViewController:wc animated:NO];
+//    }
+//   else
+//   {
+//       
+//   }
+    
+    NSLog(@"getdata=%@",[[NSUserDefaults standardUserDefaults]valueForKey:@"RememberMe"]);
+    if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"RememberMe"]length] == 0)
     {
         UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"LoginVC"];
         [self.navigationController pushViewController:wc animated:NO];
     }
-   else
-   {
-       
-   }
-    
-    if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"RememberMe"] isEqualToString:@"1"])
+    else if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"RememberMe"] isEqualToString:@"0"])
     {
-        
+        UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"LoginVC"];
+        [self.navigationController pushViewController:wc animated:NO];
+    }
+    else
+    {
+        WallVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
+        [self.navigationController pushViewController:wc animated:NO];
+
     }
     
     
@@ -94,10 +107,6 @@
         
         [self.navigationController pushViewController:wc animated:YES];
     }
-    
-    //WallVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
-    
-    //[self.navigationController pushViewController:wc animated:YES];
     
 }
 

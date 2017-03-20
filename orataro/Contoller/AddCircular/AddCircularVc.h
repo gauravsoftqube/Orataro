@@ -28,8 +28,11 @@
 - (IBAction)addPhotoBtnClicked:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIView *viewCircularType;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewHeight;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *aScrollview;
+@property (weak, nonatomic) IBOutlet UILabel *lbStandard;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lbStandardHeight;
 @property (weak, nonatomic) IBOutlet UITextField *endDateTextfield;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *aViewHeight;
 - (IBAction)BackBtnClicked1:(id)sender;

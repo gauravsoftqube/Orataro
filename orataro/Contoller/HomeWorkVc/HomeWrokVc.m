@@ -126,11 +126,13 @@
              UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
              [alrt show];
          }
-     }];
+     }]; 
 }
 
 -(void)ManageHomeworkList:(NSMutableArray *)arrResponce
 {
+    arrHomeworkList = [[NSMutableArray alloc]init];
+    
     NSMutableArray *mutableArray = [NSMutableArray arrayWithArray:arrResponce];
     
     for (int i=0; i< mutableArray.count; i++)
