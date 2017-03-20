@@ -51,13 +51,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "orataro/Utility/Utility.m"
-            timestampString = "511428167.049387"
+            filePath = "orataro/Contoller/ListSelection/ListSelectionVc.m"
+            timestampString = "511436938.151891"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "718"
-            endingLineNumber = "718"
-            landmarkName = "+getLocalDetail:columnKey:"
+            startingLineNumber = "169"
+            endingLineNumber = "169"
+            landmarkName = "-HomeBtnClicked:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -67,13 +67,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "orataro/Contoller/ListSelection/ListSelectionVc.m"
-            timestampString = "511436938.151891"
+            filePath = "orataro/Contoller/AddCircular/AddCircularVc.m"
+            timestampString = "511685766.877121"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "169"
-            endingLineNumber = "169"
-            landmarkName = "-HomeBtnClicked:"
+            startingLineNumber = "574"
+            endingLineNumber = "574"
+            landmarkName = "-apiCallFor_SaveCircular"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
