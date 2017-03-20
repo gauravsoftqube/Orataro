@@ -62,6 +62,13 @@
 
 #define OTPCODE @"Please Enter OTP"
 
+
+#define CIRCULAR_TITLE @"Please Enter Title"
+#define CIRCULAR_DESC @"Please Enter Description"
+#define CIRCULAR_ENDDATE "Please Enter EndDate"
+#define CIRCULAR_TYPE "Please Enter CircularType"
+#define CIRCULAR_STANDARD "Please Enter At least one Standard and Division"
+
 #pragma mark - IMPORT UIViewController
 
 
@@ -141,6 +148,9 @@
 #define apk_GetCircularType @"GetProjectType"
 
 #define apk_gradedivisionsubject @"apk_gradedivisionsubject.asmx"
+
+#define apk_CreateCircularWithMulty_action @"CreateCircularWithMulty"
+
 #define apk_GetGradeDivisionSubjectbyTeacher_action @"GetGradeDivisionSubjectbyTeacher"
 
 

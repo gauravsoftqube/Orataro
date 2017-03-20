@@ -538,13 +538,13 @@
         //        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Talents Arena" message:@"Please make sure that you have an active Internet connection." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
         //        [alertView show];
         
-        UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle:@"Talents Arena"
-                              message:@"Please make sure that you have an active Internet connection."
-                              delegate:self // <== changed from nil to self
-                              cancelButtonTitle:nil
-                              otherButtonTitles:@"Ok", nil];
-        [alert show];
+//        UIAlertView *alert = [[UIAlertView alloc]
+//                              initWithTitle:@"ORATARO"
+//                              message:@"Please make sure that you have an active Internet connection."
+//                              delegate:self // <== changed from nil to self
+//                              cancelButtonTitle:nil
+//                              otherButtonTitles:@"Ok", nil];
+//        [alert show];
         return NO;
     }
     return YES;
@@ -715,8 +715,14 @@
         
     }
     
-    NSLog(@"json=%@",json);
+  //  NSLog(@"json=%@",json);
     
     return json;
 }
+
++(NSString *)randomImageGenerator
+{
+    return [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSince1970] * 1000];
+}
+
 @end

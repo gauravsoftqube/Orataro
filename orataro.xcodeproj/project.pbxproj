@@ -1076,6 +1076,7 @@
 		C3645A861E5BF41A0012F4CF /* HomeWorkVc */ = {
 			isa = PBXGroup;
 			children = (
+				C375B6381E65B63C00E8D63D /* AddHomeworkVc */,
 				C3645A871E5BF44B0012F4CF /* HomeWrokVc.h */,
 				C3645A881E5BF44B0012F4CF /* HomeWrokVc.m */,
 				C375B6381E65B63C00E8D63D /* AddHomeworkVc */,
