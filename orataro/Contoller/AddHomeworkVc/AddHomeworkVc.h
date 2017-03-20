@@ -14,6 +14,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *btnbAck;
 - (IBAction)btnBack:(id)sender;
+@property (weak, nonatomic) IBOutlet UIImageView *imgAttechedFile;
 
 @property (weak, nonatomic) IBOutlet UITextField *txtTitle;
 @property (weak, nonatomic) IBOutlet UITextView *txtViewDescription;

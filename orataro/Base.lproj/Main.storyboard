@@ -870,7 +870,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="Mqy-0z-Qga" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="w7F-J7-7XK">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="w7F-J7-7XK">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1538,7 +1538,7 @@
                                         <rect key="frame" x="0.0" y="141" width="414" height="141"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="k7L-zD-4gt" id="c6w-f4-wol">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="140.66666666666666"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="140"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FfL-fN-4lV">
@@ -1630,7 +1630,7 @@
                                         <rect key="frame" x="0.0" y="282" width="414" height="89"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="58b-wW-XKu" id="rKR-8q-HuQ">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="88.666666666666671"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="88"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zQD-CB-Tbc">
@@ -1839,7 +1839,7 @@
                                         <rect key="frame" x="0.0" y="141" width="414" height="141"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xbX-m5-x9d" id="gTp-vA-CVO">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="140.66666666666666"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="140"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yzr-nc-4oe">
@@ -1932,7 +1932,7 @@
                                         <rect key="frame" x="0.0" y="282" width="414" height="128"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Pkl-in-K7d" id="Ybl-Bd-7dA">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="127.66666666666667"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="127"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0As-vU-1zp">
@@ -2545,7 +2545,7 @@ Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed 
                                         <rect key="frame" x="0.0" y="28" width="414" height="194"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="X3Q-Dh-Ux7" id="KiN-Ak-eb4">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="193.66666666666666"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="193"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PUk-vF-ehQ">
@@ -3184,7 +3184,7 @@ M:9428296497 </string>
                                         <rect key="frame" x="0.0" y="28" width="414" height="63"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="p73-FK-UOR" id="s4L-Ut-PcX">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="62.666666666666664"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="62"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="share" translatesAutoresizingMaskIntoConstraints="NO" id="bLp-md-5ak">
@@ -3577,7 +3577,7 @@ M:9428296497 </string>
                                         <rect key="frame" x="0.0" y="28" width="414" height="58"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Xyt-dK-lkY" id="74M-Sw-ei6">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="57.666666666666664"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="57"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3jJ-wk-QNp">
@@ -3652,7 +3652,7 @@ M:9428296497 </string>
                                         <rect key="frame" x="0.0" y="141" width="414" height="141"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HX4-qU-iJh" id="XpY-8b-hF2">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="140.66666666666666"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="140"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hdd-bt-tbS">
@@ -3744,7 +3744,7 @@ M:9428296497 </string>
                                         <rect key="frame" x="0.0" y="282" width="414" height="128"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZwY-4b-1kt" id="wDP-6x-a87">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="127.66666666666667"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="127"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V86-eO-udu">
@@ -4195,7 +4195,7 @@ M:9428296497 </string>
                                         <rect key="frame" x="0.0" y="28" width="414" height="146"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="B9M-aH-ZfB" id="8mT-Yy-mf1">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="145.66666666666666"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="145"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FMH-5R-6Fs">
@@ -4902,7 +4902,7 @@ M:9428296497 </string>
                                         <rect key="frame" x="0.0" y="28" width="414" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WBS-Ss-0DW" id="BDK-Cb-YUj">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="49.666666666666664"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NzJ-1G-FSc">
@@ -5286,7 +5286,7 @@ M:9428296497 </string>
                                         <rect key="frame" x="0.0" y="28" width="394" height="82"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2I4-XX-Bsa" id="5EF-gh-Q53">
-                                            <rect key="frame" x="0.0" y="0.0" width="394" height="81.666666666666671"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="394" height="81"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gaY-Z4-0Aa">
@@ -5771,7 +5771,7 @@ M:9428296497 </string>
                                                 <rect key="frame" x="0.0" y="28" width="384" height="59"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="APM-2A-zYs" id="jjD-IC-9Oy">
-                                                    <rect key="frame" x="0.0" y="0.0" width="384" height="58.666666666666664"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="384" height="58"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kxE-YW-rXA">
@@ -7662,7 +7662,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="28" width="414" height="124"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pio-0D-qJX" id="ee4-9g-TPN">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="123.66666666666667"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="123"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="g1" translatesAutoresizingMaskIntoConstraints="NO" id="kWO-mG-xvs">
@@ -8129,7 +8129,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="28" width="414" height="65"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ROf-mG-IJr" id="md7-oT-9qP">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="64.666666666666671"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="blogico" translatesAutoresizingMaskIntoConstraints="NO" id="eo6-vu-x8b">
@@ -8414,7 +8414,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="28" width="414" height="65"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hwK-RB-jFC" id="7kx-Me-U1o">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="64.666666666666671"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pages" translatesAutoresizingMaskIntoConstraints="NO" id="9nc-Kq-gOp">
@@ -8539,7 +8539,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="28" width="414" height="71"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vPb-RB-wUq" id="8c3-cI-MN9">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="70.666666666666671"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="70"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LEM-nE-WPr">
@@ -8660,7 +8660,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="141" width="414" height="141"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="U9m-Ja-a8h" id="AsX-1s-9Xj">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="140.66666666666666"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="140"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A3y-9N-9Eq">
@@ -8752,7 +8752,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="282" width="414" height="128"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="slD-Ra-hGg" id="LNB-z6-brQ">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="127.66666666666667"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="127"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NXR-Ev-iUi">
@@ -8987,7 +8987,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="141" width="414" height="141"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="j75-e1-R4S" id="6Mf-OE-bk6">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="140.66666666666666"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="140"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PBC-ds-OiZ">
@@ -9079,7 +9079,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="282" width="414" height="89"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KOK-nn-IaG" id="K3T-SQ-eza">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="88.666666666666671"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="88"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iWL-Lg-LDM">
@@ -9863,7 +9863,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="141" width="414" height="141"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MXi-fx-e6B" id="gxN-kI-wxn">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="140.66666666666666"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="140"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mdE-Ku-deL">
@@ -9955,7 +9955,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="282" width="414" height="89"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2he-vu-V5e" id="bwl-dR-V9g">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="88.666666666666671"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="88"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NKX-ao-HvM">
@@ -10621,7 +10621,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="28" width="411" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1EE-35-18a" id="mH2-XR-JTu">
-                                            <rect key="frame" x="0.0" y="0.0" width="411" height="99.666666666666671"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="411" height="99"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CKW-0k-asq">
@@ -10920,7 +10920,7 @@ Assign top space to both the buttons.</string>
                                                         <rect key="frame" x="0.0" y="28" width="394" height="105"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="V4R-Ni-JrI" id="FL0-Lg-9B9">
-                                                            <rect key="frame" x="0.0" y="0.0" width="394" height="104.66666666666667"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="394" height="104"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2hh-8H-PBW">
@@ -11260,7 +11260,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="67" width="414" height="67"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DRW-0l-AFW" id="wAi-xq-dD9">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="66.666666666666671"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="66"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KJ2-lO-evB">
@@ -11520,7 +11520,7 @@ Assign top space to both the buttons.</string>
                                                         <rect key="frame" x="0.0" y="28" width="394" height="105"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="INv-oa-XIL" id="R5X-qv-nh3">
-                                                            <rect key="frame" x="0.0" y="0.0" width="394" height="104.66666666666667"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="394" height="104"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gz8-Bw-nP5">
@@ -12519,7 +12519,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="67" width="414" height="42"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iIF-b0-FZP" id="Di6-4F-oM4">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="41.666666666666664"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="41"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hky-Zj-h8q">
@@ -12627,7 +12627,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="67" width="414" height="42"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HFv-wL-kh0" id="Pmm-OD-sIn">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="41.666666666666664"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="41"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5mh-7n-kfB">
@@ -12735,7 +12735,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="67" width="414" height="42"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7kg-wv-9Ra" id="bEd-I7-ASW">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="41.666666666666664"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="41"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Xt-Ne-mpX">
@@ -12843,7 +12843,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="67" width="414" height="42"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7zV-kb-1VS" id="eob-Wa-noB">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="41.666666666666664"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="41"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LfN-Je-Tbv">
@@ -12963,7 +12963,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="141" width="414" height="141"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5jM-Sy-Zji" id="94q-HP-mKd">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="140.66666666666666"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="140"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nEV-ps-J8x">
@@ -13055,7 +13055,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="282" width="414" height="89"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lI4-Lh-YsJ" id="KhO-pq-OHy">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="88.666666666666671"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="88"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cDr-Bn-HfI">
@@ -13612,7 +13612,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="28" width="411" height="130"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dnf-DN-76y" id="nWR-gu-AGw">
-                                            <rect key="frame" x="0.0" y="0.0" width="411" height="129.66666666666666"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="411" height="129"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qgB-ga-Ice">
@@ -13858,7 +13858,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="28" width="414" height="124"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="god-iF-jJa" id="vhA-0V-lfz">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="123.66666666666667"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="123"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="g1" translatesAutoresizingMaskIntoConstraints="NO" id="zKZ-Ql-itW">
@@ -14272,7 +14272,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="81" width="414" height="81"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hpv-uU-nEM" id="MYD-fL-i2Q">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="80.666666666666671"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Sn-Cz-hFc">
@@ -14334,7 +14334,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="162" width="414" height="170"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CN1-Oc-BI1" id="udQ-FH-0hK">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="169.66666666666666"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="169"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iu1-Az-GcK">
@@ -14574,7 +14574,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="28" width="398" height="231"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LGn-H8-VCW" id="YTJ-bq-Q3s">
-                                            <rect key="frame" x="0.0" y="0.0" width="398" height="230.66666666666666"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="398" height="230"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UeW-Yd-sbI">
@@ -14980,6 +14980,9 @@ Assign top space to both the buttons.</string>
                                                 <color key="textColor" red="0.1333333333" green="0.19215686269999999" blue="0.34901960780000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="MBZ-Iu-I66" id="pNM-ba-JpZ"/>
+                                                </connections>
                                             </textField>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="mot-cN-HDO">
                                                 <rect key="frame" x="10" y="68" width="394" height="128"/>
@@ -14987,8 +14990,18 @@ Assign top space to both the buttons.</string>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="128" id="DbQ-Xh-9Xl"/>
                                                 </constraints>
+                                                <color key="textColor" red="0.13333333333333333" green="0.19215686274509802" blue="0.34901960784313724" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Description"/>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                                        <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <outlet property="delegate" destination="MBZ-Iu-I66" id="xvT-mB-xw3"/>
+                                                </connections>
                                             </textView>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="End Date" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VSn-Rc-7J1">
                                                 <rect key="frame" x="10" y="204" width="394" height="40"/>
@@ -14999,6 +15012,9 @@ Assign top space to both the buttons.</string>
                                                 <color key="textColor" red="0.1333333333" green="0.19215686269999999" blue="0.34901960780000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="MBZ-Iu-I66" id="2Cu-l3-Vyn"/>
+                                                </connections>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SFg-pL-J6f">
                                                 <rect key="frame" x="10" y="204" width="394" height="40"/>
@@ -15017,7 +15033,7 @@ Assign top space to both the buttons.</string>
                                                 <color key="textColor" red="0.1333333333" green="0.19215686269999999" blue="0.34901960780000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="id_proof" translatesAutoresizingMaskIntoConstraints="NO" id="1ZV-Yo-W39">
+                                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="id_proof" translatesAutoresizingMaskIntoConstraints="NO" id="1ZV-Yo-W39">
                                                 <rect key="frame" x="314" y="262" width="60" height="110"/>
                                             </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hla-jt-IBI">
@@ -15103,6 +15119,7 @@ Assign top space to both the buttons.</string>
                         <outlet property="btnEndDate" destination="SFg-pL-J6f" id="st9-uh-SXx"/>
                         <outlet property="btnSave" destination="eKL-rQ-zpz" id="6dI-gL-vMW"/>
                         <outlet property="btnbAck" destination="QyX-DC-pcC" id="0Fh-lu-Fx9"/>
+                        <outlet property="imgAttechedFile" destination="1ZV-Yo-W39" id="kNq-oN-Rsa"/>
                         <outlet property="txtEndDate" destination="VSn-Rc-7J1" id="BS6-cO-uL7"/>
                         <outlet property="txtTitle" destination="XEC-Vv-mZT" id="B6Y-Uj-f4P"/>
                         <outlet property="txtViewDescription" destination="mot-cN-HDO" id="XIh-1G-McL"/>
@@ -15137,7 +15154,7 @@ Assign top space to both the buttons.</string>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <toolbarItems/>
                     <nil key="simulatedTopBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="pdI-Qy-zpU">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="pdI-Qy-zpU">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -15170,7 +15187,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="22" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5wG-96-xud" id="ppv-kZ-raJ">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="59.666666666666664"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="59"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>

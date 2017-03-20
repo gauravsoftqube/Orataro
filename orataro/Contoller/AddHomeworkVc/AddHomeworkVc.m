@@ -12,7 +12,6 @@
 {
     UIDatePicker *datePicker;
     UIAlertView *alert;
-    UIImage *selectImage;
 }
 @end
 
@@ -49,10 +48,11 @@
              cancelButtonTitle:@"OK"
              otherButtonTitles:@"Cancel", nil];
     alert.delegate = self;
+    alert.tag=111;
     [alert setValue:datePicker forKey:@"accessoryView"];
     
     self.txtViewDescription.textContainerInset = UIEdgeInsetsMake(5, 1, 0, 0);
-
+    
 }
 
 -(void)apiCallFor_createHomework
@@ -68,19 +68,24 @@
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
     
-    [param setValue:[NSString stringWithFormat:@"null"] forKey:@"EditID"];
+    [param setValue:@"" forKey:@"EditID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"WallID"]] forKey:@"WallID"];
     [param setValue:[NSString stringWithFormat:@"%@",self.txtTitle.text] forKey:@"title"];
     
     [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelectListSelection objectForKey:@"GradeID"]] forKey:@"GradeID"];
     
-    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"DivisionID"]] forKey:@"DivisionID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelectListSelection objectForKey:@"DivisionID"]] forKey:@"DivisionID"];
     
-    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"SubjectID"]] forKey:@"SubjectID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelectListSelection objectForKey:@"SubjectID"]] forKey:@"SubjectID"];
     
-    [param setValue:[NSString stringWithFormat:@"%@",self.txtEndDate.text] forKey:@"DateOfHomeWork"];
     
-    [param setValue:[NSString stringWithFormat:@"%@",self.txtEndDate.text] forKey:@"DateOfFinish"];
+    NSDate *Date=[NSDate date];
+    NSDateFormatter *df=[[NSDateFormatter alloc]init];
+    [df setDateFormat:@"MM-dd-yyyy"];
+    NSString *strCurrentDate=[df stringFromDate:Date];
+    [param setValue:[NSString stringWithFormat:@"%@",strCurrentDate] forKey:@"DateOfHomeWork"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[Utility convertDateFtrToDtaeFtr:@"dd-MM-yy" newDateFtr:@"MM-dd-yyyy" date:self.txtEndDate.text]] forKey:@"DateOfFinish"];
     
     [param setValue:[NSString stringWithFormat:@"%@",self.txtViewDescription.text] forKey:@"HomeWorksDetails"];
     
@@ -92,25 +97,24 @@
     
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
     
-    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"BeachID"]] forKey:@"BeachID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"BatchID"]] forKey:@"BeachID"];
     
-    NSData *data = UIImagePNGRepresentation(selectImage);
+    NSData *data = UIImagePNGRepresentation(_imgAttechedFile.image);
     const unsigned char *bytes = [data bytes];
     NSUInteger length = [data length];
     NSMutableArray *byteArray = [NSMutableArray array];
     for (NSUInteger i = 0; i < length; i++) {
         [byteArray addObject:[NSNumber numberWithUnsignedChar:bytes[i]]];
     }
-
-    [param setValue:[NSString stringWithFormat:@"%@",byteArray] forKey:@"File"];
     
-    [param setValue:[NSString stringWithFormat:@""] forKey:@"FileName"];
+   
+    [param setValue:byteArray forKey:@"File"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@.jpg",[Utility randomImageGenerator]] forKey:@"FileName"];
     
     [param setValue:[NSString stringWithFormat:@"IMAGE"] forKey:@"FileType"];
     
     [param setValue:[NSString stringWithFormat:@""] forKey:@"FileMineType"];
-    
-    [param setValue:@"Teacher" forKey:@"Role"];
     
     [ProgressHUB showHUDAddedTo:self.view];
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
@@ -126,13 +130,25 @@
              {
                  NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
                  NSString *strStatus=[dic objectForKey:@"message"];
-                 if([strStatus isEqualToString:@"No Data Found"])
+                 if([strStatus isEqualToString:@"HomeWork Created SuccessFully...!!"])
                  {
                      UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
+                     for (UIViewController *controller in self.navigationController.viewControllers)
+                     {
+                         if ([controller isKindOfClass:[HomeWrokVc class]])
+                         {
+                             [self.navigationController popToViewController:controller animated:YES];
+                             
+                             break;
+                         }
+                     }
+
                  }
                  else
                  {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
                  }
              }
              else
@@ -153,73 +169,48 @@
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 0)
+    if (alertView.tag == 111)
     {
-        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-        [dateFormat setDateFormat:@"dd-MM-yyyy"];
-        NSString *theDate = [dateFormat stringFromDate:[datePicker date]];
-        self.txtEndDate.text = theDate;
-    }
-    if (buttonIndex == 1)
-    {
-        alert.hidden = YES;
-    }
+        if (buttonIndex == 0)
+        {
+            NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+            [dateFormat setDateFormat:@"dd-MM-yyyy"];
+            NSString *theDate = [dateFormat stringFromDate:[datePicker date]];
+            self.txtEndDate.text = theDate;
+        }
+        if (buttonIndex == 1)
+        {
+            alert.hidden = YES;
+        }
+   }
 }
+#pragma mark - PickerDelegates
 
+//- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+//{
+//    
+//    [self dismissViewControllerAnimated:YES completion:^{
+//        
+//    }];
+//    
+//    selectImage = [info valueForKey:UIImagePickerControllerEditedImage];
+//    
+//    [self.btnAttachment setBackgroundImage:selectImage forState:UIControlStateNormal];
+//}
 
 #pragma mark - UIImagePicker Delegate
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
-    UIImage *selectImage = info[UIImagePickerControllerOriginalImage];
+   UIImage *selectImage = info[UIImagePickerControllerOriginalImage];
+    //[self.btnAttachment setImage:selectImage forState:UIControlStateNormal];
+    [_imgAttechedFile setImage:selectImage];
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     [picker dismissViewControllerAnimated:YES completion:nil];
-}
-
-#pragma mark - textview delegate
-
-- (BOOL) textViewShouldBeginEditing:(UITextView *)textView
-{
-    if (_txtViewDescription.text.length == 0)
-    {
-        _txtViewDescription.text = @"";
-        _txtViewDescription.textColor = [UIColor blackColor];
-    }
-    if ([_txtViewDescription.text isEqualToString:@"Description"])
-    {
-        _txtViewDescription.text = @"";
-        _txtViewDescription.textColor = [UIColor blackColor];
-    }
-    
-    return YES;
-}
-
--(void) textViewDidChange:(UITextView *)textView
-{
-    if(_txtViewDescription.text.length == 0){
-        _txtViewDescription.textColor = [UIColor lightGrayColor];
-        _txtViewDescription.text = @"Description";
-        [_txtViewDescription resignFirstResponder];
-    }
-}
-
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-    
-    if([text isEqualToString:@"\n"]) {
-        [textView resignFirstResponder];
-        if(_txtViewDescription.text.length == 0){
-            _txtViewDescription.textColor = [UIColor lightGrayColor];
-            _txtViewDescription.text = @"Desciption";
-            [_txtViewDescription resignFirstResponder];
-        }
-        return NO;
-    }
-    
-    return YES;
 }
 
 #pragma mark - UIButton Action
@@ -261,17 +252,17 @@
 
 - (IBAction)btnBack:(id)sender
 {
-    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)btnEndDate:(id)sender {
+    [self.view endEditing:YES];
     [datePicker setDate:[NSDate date]];
     [alert show];
 }
 
 - (IBAction)btnSave:(id)sender {
-    
+    [self.view endEditing:YES];
     if ([Utility isInterNetConnectionIsActive] == false)
     {
         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -279,36 +270,26 @@
         return;
     }
     
-   /* if ([_txtTitle.text isEqualToString:@""])
+    if ([Utility validateBlankField:self.txtTitle.text])
     {
         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:CIRCULAR_TITLE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alrt show];
         return;
     }
-    else if ([selectTypeTextfield.text isEqualToString:@""])
-    {
-        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@CIRCULAR_TYPE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alrt show];
-        return;
-    }
-    else if ([aDescTextView.text isEqualToString:@""])
+    
+    if ([Utility validateBlankField:self.txtViewDescription.text] || [self.txtViewDescription.text isEqualToString:@"Description"])
     {
         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:CIRCULAR_DESC delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alrt show];
         return;
     }
-    else if ([standardTextfield.text isEqualToString:@""])
-    {
-        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@CIRCULAR_STANDARD delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alrt show];
-        return;
-    }
-    else if ([endDateTextfield.text isEqualToString:@""])
+    
+    if ([Utility validateBlankField:self.txtEndDate.text])
     {
         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@CIRCULAR_ENDDATE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alrt show];
         return;
-    }*/
+    }
     
     [self apiCallFor_createHomework];
 }

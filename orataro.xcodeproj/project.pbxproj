@@ -12,9 +12,9 @@
 		072A85AF1E67FADC00F54A30 /* DEMONavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 072A85AA1E67FADC00F54A30 /* DEMONavigationController.m */; };
 		072A85B01E67FADC00F54A30 /* DEMORootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 072A85AC1E67FADC00F54A30 /* DEMORootViewController.m */; };
 		0739EC521E713AE20099658F /* ForgotNewPwdVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 0739EC511E713AE20099658F /* ForgotNewPwdVc.m */; };
-		073A31201E7D427800702EA0 /* sam.html in Resources */ = {isa = PBXBuildFile; fileRef = 073A311F1E7D427800702EA0 /* sam.html */; };
 		073E55CA1E6FDAE3008BF93B /* ProgressHUB.m in Sources */ = {isa = PBXBuildFile; fileRef = 073E55C91E6FDAE3008BF93B /* ProgressHUB.m */; };
 		073E55CD1E703D04008BF93B /* OrataroLoacal_DB.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 073E55CC1E703D04008BF93B /* OrataroLoacal_DB.sqlite */; };
+		07801FC91E7FE2F400E34D36 /* UITextView+Placeholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 07801FC81E7FE2F400E34D36 /* UITextView+Placeholder.m */; };
 		0932277B1E38750D00138A2B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0932277A1E38750D00138A2B /* main.m */; };
 		0932277E1E38750D00138A2B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0932277D1E38750D00138A2B /* AppDelegate.m */; };
 		093227811E38750D00138A2B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 093227801E38750D00138A2B /* ViewController.m */; };
@@ -230,10 +230,11 @@
 		072A85AC1E67FADC00F54A30 /* DEMORootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DEMORootViewController.m; sourceTree = "<group>"; };
 		0739EC501E713AE20099658F /* ForgotNewPwdVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgotNewPwdVc.h; sourceTree = "<group>"; };
 		0739EC511E713AE20099658F /* ForgotNewPwdVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgotNewPwdVc.m; sourceTree = "<group>"; };
-		073A311F1E7D427800702EA0 /* sam.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = sam.html; sourceTree = "<group>"; };
 		073E55C81E6FDAE3008BF93B /* ProgressHUB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressHUB.h; sourceTree = "<group>"; };
 		073E55C91E6FDAE3008BF93B /* ProgressHUB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressHUB.m; sourceTree = "<group>"; };
 		073E55CC1E703D04008BF93B /* OrataroLoacal_DB.sqlite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OrataroLoacal_DB.sqlite; sourceTree = "<group>"; };
+		07801FC71E7FE2F400E34D36 /* UITextView+Placeholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+Placeholder.h"; sourceTree = "<group>"; };
+		07801FC81E7FE2F400E34D36 /* UITextView+Placeholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+Placeholder.m"; sourceTree = "<group>"; };
 		093227761E38750D00138A2B /* orataro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = orataro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0932277A1E38750D00138A2B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0932277C1E38750D00138A2B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -662,10 +663,18 @@
 			path = LocalDataBase_SQL;
 			sourceTree = "<group>";
 		};
+		07801FC61E7FE2BC00E34D36 /* TextView_PlaceHolder */ = {
+			isa = PBXGroup;
+			children = (
+				07801FC71E7FE2F400E34D36 /* UITextView+Placeholder.h */,
+				07801FC81E7FE2F400E34D36 /* UITextView+Placeholder.m */,
+			);
+			path = TextView_PlaceHolder;
+			sourceTree = "<group>";
+		};
 		0932276D1E38750D00138A2B = {
 			isa = PBXGroup;
 			children = (
-				073A311F1E7D427800702EA0 /* sam.html */,
 				093227781E38750D00138A2B /* orataro */,
 				093227771E38750D00138A2B /* Products */,
 				C360CD381E4B47FD00761ABE /* Frameworks */,
@@ -813,6 +822,7 @@
 		0949E9401E3B783600723301 /* thirdparty */ = {
 			isa = PBXGroup;
 			children = (
+				07801FC61E7FE2BC00E34D36 /* TextView_PlaceHolder */,
 				C3666CCF1E72A35C0083AA34 /* WToast */,
 				073E55C71E6FDAA7008BF93B /* ProgressHUB */,
 				C36BDAE51E66FF8900779C5B /* REFrostedViewController */,
@@ -1076,7 +1086,6 @@
 		C3645A861E5BF41A0012F4CF /* HomeWorkVc */ = {
 			isa = PBXGroup;
 			children = (
-				C375B6381E65B63C00E8D63D /* AddHomeworkVc */,
 				C3645A871E5BF44B0012F4CF /* HomeWrokVc.h */,
 				C3645A881E5BF44B0012F4CF /* HomeWrokVc.m */,
 				C375B6381E65B63C00E8D63D /* AddHomeworkVc */,
@@ -2041,7 +2050,6 @@
 			files = (
 				073E55CD1E703D04008BF93B /* OrataroLoacal_DB.sqlite in Resources */,
 				C3645AEF1E5BFE980012F4CF /* Info.plist in Resources */,
-				073A31201E7D427800702EA0 /* sam.html in Resources */,
 				093227891E38750D00138A2B /* LaunchScreen.storyboard in Resources */,
 				C365CCBE1E49AB7000A4ABAA /* HolidayVcCell.xib in Resources */,
 				C36DD1CC1E409CB30011221E /* ListCell.xib in Resources */,
@@ -2201,6 +2209,7 @@
 				C36DD1B41E4086210011221E /* IQNSArray+Sort.m in Sources */,
 				C36724771E546CFB007E9326 /* MyProfileVc.m in Sources */,
 				C3666CCC1E726B4E0083AA34 /* UIView+WebCache.m in Sources */,
+				07801FC91E7FE2F400E34D36 /* UITextView+Placeholder.m in Sources */,
 				C36B589B1E5F163200DE7464 /* AlbumPhotoCell.m in Sources */,
 				C365CCCD1E4A0DF700A4ABAA /* ResultVc.m in Sources */,
 				C36BDAF51E66FFC900779C5B /* UIImage+REFrostedViewController.m in Sources */,

@@ -65,7 +65,7 @@
 
 #define CIRCULAR_TITLE @"Please Enter Title"
 #define CIRCULAR_DESC @"Please Enter Description"
-#define CIRCULAR_ENDDATE "Please Enter EndDate"
+#define CIRCULAR_ENDDATE "Please Select EndDate"
 #define CIRCULAR_TYPE "Please Enter CircularType"
 #define CIRCULAR_STANDARD "Please Enter At least one Standard and Division"
 
@@ -114,6 +114,8 @@
 #import "SDImageCache.h"
 #import "UIImageView+WebCache.h"
 #import "WToast.h"
+#import "UITextView+Placeholder.h"
+#import "HomeWrokVc.h"
 
 #pragma mark - Api Url And Name List
 
