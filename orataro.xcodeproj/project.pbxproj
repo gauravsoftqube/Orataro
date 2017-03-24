@@ -47,6 +47,7 @@
 		09F428CD1E38BC0B00A80F0D /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 09F428BA1E38BC0B00A80F0D /* UIWebView+AFNetworking.m */; };
 		09F428D11E38E76400A80F0D /* LoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 09F428D01E38E76400A80F0D /* LoginVC.m */; };
 		C331B0891E4DB09F001C274D /* AboutUsVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C331B0881E4DB09F001C274D /* AboutUsVc.m */; };
+		C35120E81E827C5F00D7461B /* UIImage+ImageCompress.m in Sources */ = {isa = PBXBuildFile; fileRef = C35120E71E827C5F00D7461B /* UIImage+ImageCompress.m */; };
 		C35C07271E4839F3004C55EB /* AttendanceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C35C07261E4839F3004C55EB /* AttendanceVC.m */; };
 		C35C07371E485346004C55EB /* ClassVcCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C35C07351E485346004C55EB /* ClassVcCell.m */; };
 		C35C07381E485346004C55EB /* ClassVcCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C35C07361E485346004C55EB /* ClassVcCell.xib */; };
@@ -298,6 +299,8 @@
 		09F428D01E38E76400A80F0D /* LoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginVC.m; sourceTree = "<group>"; };
 		C331B0871E4DB09F001C274D /* AboutUsVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AboutUsVc.h; path = AboutUsVc/AboutUsVc.h; sourceTree = "<group>"; };
 		C331B0881E4DB09F001C274D /* AboutUsVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AboutUsVc.m; path = AboutUsVc/AboutUsVc.m; sourceTree = "<group>"; };
+		C35120E61E827C5F00D7461B /* UIImage+ImageCompress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageCompress.h"; sourceTree = "<group>"; };
+		C35120E71E827C5F00D7461B /* UIImage+ImageCompress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageCompress.m"; sourceTree = "<group>"; };
 		C35C07251E4839F3004C55EB /* AttendanceVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendanceVC.h; sourceTree = "<group>"; };
 		C35C07261E4839F3004C55EB /* AttendanceVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendanceVC.m; sourceTree = "<group>"; };
 		C35C07341E485346004C55EB /* ClassVcCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassVcCell.h; sourceTree = "<group>"; };
@@ -756,6 +759,9 @@
 				C391E4F01E40C2C4007BE2EA /* AddClasswork */,
 				C3645A861E5BF41A0012F4CF /* HomeWorkVc */,
 				C369E6E51E5B28E60048D601 /* CircularVc */,
+				C38F8C7E1E3F81C300A67FBE /* AddCircular */,
+				C36DD1BE1E408DAE0011221E /* CircularDetails */,
+				C35C07241E4839AD004C55EB /* AttendanceVC */,
 				C369E6E11E5AFA3A0048D601 /* RegisterOtpVC */,
 				C364D91B1E56D93500CE72DC /* FriendVc */,
 				C364D9171E56D48D00CE72DC /* BlogDetailVc */,
@@ -782,11 +788,8 @@
 				C38ABFAD1E48A61700689426 /* PostChatVc */,
 				C38ABFA91E48931E00689426 /* PTCommunication */,
 				C38ABFA51E487DB900689426 /* StudentListVc */,
-				C35C07241E4839AD004C55EB /* AttendanceVC */,
 				C391E4EC1E40C1DF007BE2EA /* SubjectDetail */,
 				C36DD1C31E409B400011221E /* ListSelection */,
-				C36DD1BE1E408DAE0011221E /* CircularDetails */,
-				C38F8C7E1E3F81C300A67FBE /* AddCircular */,
 				C38F8C7A1E3F486200A67FBE /* AddPostVc */,
 				0949E9451E3B81E200723301 /* RightSlideMenuVc */,
 				0977D5FA1E3B143B00ACB7A5 /* WallVc */,
@@ -822,6 +825,7 @@
 		0949E9401E3B783600723301 /* thirdparty */ = {
 			isa = PBXGroup;
 			children = (
+				C35120E51E827C3C00D7461B /* ImageCompress */,
 				07801FC61E7FE2BC00E34D36 /* TextView_PlaceHolder */,
 				C3666CCF1E72A35C0083AA34 /* WToast */,
 				073E55C71E6FDAA7008BF93B /* ProgressHUB */,
@@ -956,6 +960,15 @@
 				C331B0881E4DB09F001C274D /* AboutUsVc.m */,
 			);
 			name = AboutUsVc;
+			sourceTree = "<group>";
+		};
+		C35120E51E827C3C00D7461B /* ImageCompress */ = {
+			isa = PBXGroup;
+			children = (
+				C35120E61E827C5F00D7461B /* UIImage+ImageCompress.h */,
+				C35120E71E827C5F00D7461B /* UIImage+ImageCompress.m */,
+			);
+			path = ImageCompress;
 			sourceTree = "<group>";
 		};
 		C35C07241E4839AD004C55EB /* AttendanceVC */ = {
@@ -2242,6 +2255,7 @@
 				C365CCC21E49E55400A4ABAA /* CalenderVc.m in Sources */,
 				C3A2D7351E644FA600B91B54 /* ProfilePhotoShowVc.m in Sources */,
 				C3645AFB1E5C6BC80012F4CF /* NoteVc.m in Sources */,
+				C35120E81E827C5F00D7461B /* UIImage+ImageCompress.m in Sources */,
 				C360CD231E4AF6C600761ABE /* NotificationVc.m in Sources */,
 				C38ABFB41E48A78600689426 /* SchooltimeVc.m in Sources */,
 				C36BDAF41E66FFC900779C5B /* REFrostedViewController.m in Sources */,
