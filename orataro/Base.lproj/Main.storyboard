@@ -2203,6 +2203,7 @@
         <!--Setting Vc View Controller-->
         <scene sceneID="Zu2-ML-a3J">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="M1r-2O-Lai" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="SettingVcViewController" id="wup-No-MOQ" customClass="SettingVcViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="mae-6j-qWj"/>
@@ -2363,9 +2364,9 @@
                     <connections>
                         <outlet property="aSoundBtn" destination="V0P-wt-VOV" id="Jrq-Hx-bzQ"/>
                         <outlet property="aViratBtn" destination="wGP-rv-axX" id="xLd-SC-6GZ"/>
+                        <outlet property="lblHeaderTitle" destination="p1O-nN-gSG" id="Abw-Rq-MYk"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="M1r-2O-Lai" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3828" y="8248"/>
         </scene>
