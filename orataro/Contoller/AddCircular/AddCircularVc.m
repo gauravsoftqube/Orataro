@@ -33,8 +33,6 @@
     circularAry = [[NSMutableArray alloc]init];
     subAry = [[NSMutableArray alloc]init];
     aryTempStore= [[NSMutableArray alloc]init];
-    //  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(TaptoHideViewCircular:)];
-    //  [viewCircularType addGestureRecognizer:tap];
     
     viewSubjectandDiv.hidden = YES;
     viewCircularType.hidden = YES;
@@ -87,9 +85,6 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    //standardTextfield.hidden = YES;
-    
-   
     if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"SelectTerm"]length] == 0)
     {
         
@@ -227,7 +222,7 @@
     {
         if (subAry.count > 0)
         {
-            return subAry.count;
+                return subAry.count;
         }
     }
     return 0;
@@ -342,13 +337,7 @@
         [alrt show];
         return;
     }
-    else if ([aDescTextView.text isEqualToString:@""])
-    {
-        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:CIRCULAR_DESC delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alrt show];
-        return;
-    }
-    else if ([aDescTextView.text isEqualToString:@"Description"])
+    else if ([Utility validateBlankField:self.aDescTextView.text] || [self.aDescTextView.text isEqualToString:@"Description"])
     {
         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:CIRCULAR_DESC delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alrt show];
@@ -593,7 +582,7 @@
     [param setValue:byteArray forKey:@"File"];
     
     NSString *getImageName = [Utility randomImageGenerator];
-    [param setValue:[NSString stringWithFormat:@"%@.jpg",getImageName] forKey:@"FileName"];
+    [param setValue:[NSString stringWithFormat:@"%@.png",getImageName] forKey:@"FileName"];
     [param setValue:@"IMAGE" forKey:@"FileType"];
     [param setValue:@"" forKey:@"FileMineType"];
     
@@ -735,6 +724,7 @@
              NSString *strArrd=[dicResponce objectForKey:@"d"];
              NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
              NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             
              //NSLog(@"array=%@",arrResponce);
              
              if([arrResponce count] != 0)
@@ -748,10 +738,7 @@
                  }
                  else
                  {
-                     subAry = arrResponce;
-                     [tblSubject reloadData];
-                     [tblCircularType reloadData];
-                     // NSLog(@"arra=%@",subAry);
+                     [self ManageSubjectList:arrResponce];
                  }
              }
              else
@@ -769,6 +756,58 @@
 }
 
 
+#pragma mark - Manage Group of Subject and Division
+
+-(void)ManageSubjectList : (NSMutableArray *)aryResponse
+{
+    NSLog(@"ary=%@",aryResponse);
+    NSMutableArray *aryTmp = [[NSMutableArray alloc]initWithArray:aryResponse];
+    for (int i=0; i< aryTmp.count; i++)
+    {
+        NSMutableDictionary *d = [[aryTmp objectAtIndex:i] mutableCopy];
+        NSString *str = [NSString stringWithFormat:@"%@%@",[d objectForKey:@"Grade"],[d objectForKey:@"Division"]];
+        [d setObject:str forKey:@"Group"];
+        NSLog(@"d=%@",d);
+        [aryTmp replaceObjectAtIndex:i withObject:d];
+    }
+    
+    NSArray *temp = [aryTmp sortedArrayUsingDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"Group" ascending:YES]]];
+    [aryTmp removeAllObjects];
+    [aryTmp addObjectsFromArray:temp];
+    NSLog(@"Ary=%@",aryTmp);
+    
+    
+    
+    NSMutableArray *arr=[[NSMutableArray alloc]init];
+    
+    for (NSMutableDictionary *dic in aryTmp) {
+        NSString *STR=[dic objectForKey:@"Group"];
+        if (![[arr valueForKey:@"Group"] containsObject:STR]) {
+            [arr addObject:dic];
+        }
+    }
+    NSSortDescriptor *sortIdClient =
+    [NSSortDescriptor sortDescriptorWithKey:@"Group"
+                                  ascending:YES
+                                 comparator: ^(id obj1, id obj2){
+                                     
+                                     return [obj1 compare:obj2 options:NSOrderedAscending];
+                                     
+                                 }];
+    
+    NSArray *sortDescriptors = @[sortIdClient];
+    
+    NSArray *arrTemp = [arr sortedArrayUsingDescriptors:sortDescriptors];
+
+   
+    
+    subAry = [[NSMutableArray alloc]initWithArray:arrTemp];
+     NSLog(@"arrTemp=%@",subAry);
+    [tblCircularType reloadData];
+    [tblSubject reloadData];
+   
+    // NSLog(@"arra=%@",subAry);
+}
 /*
  #pragma mark - Navigation
  

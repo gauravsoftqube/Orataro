@@ -13,4 +13,5 @@
 - (IBAction)BackBtn1Clicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *BackBtnClicked;
 @property(strong,nonatomic)NSString *passVal;
+@property(strong,nonatomic)NSMutableDictionary *classworkDic;
 @end

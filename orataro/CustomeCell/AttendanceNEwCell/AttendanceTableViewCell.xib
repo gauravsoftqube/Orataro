@@ -16,7 +16,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AttendanceCell" rowHeight="59" id="QdY-Jm-kEo">
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AttendanceCell" rowHeight="59" id="QdY-Jm-kEo" customClass="AttendanceTableViewCell">
             <rect key="frame" x="0.0" y="0.0" width="314" height="59"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QdY-Jm-kEo" id="WHc-so-y1K">
@@ -32,7 +32,7 @@
                         <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="14"/>
                         <inset key="titleEdgeInsets" minX="-35" minY="8" maxX="0.0" maxY="0.0"/>
                         <inset key="imageEdgeInsets" minX="27" minY="11" maxX="36" maxY="6"/>
-                        <state key="normal" title="P" image="radiop">
+                        <state key="normal" title="P" image="unradiop">
                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
@@ -99,13 +99,20 @@
                     <constraint firstItem="eUR-5C-mC1" firstAttribute="leading" secondItem="dTr-sw-M6P" secondAttribute="trailing" constant="10" id="yJA-D5-He7"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="btnFirst" destination="S1R-0b-TtS" id="R8n-mm-FvL"/>
+                <outlet property="btnFourth" destination="Kpv-xl-SNM" id="emJ-H8-45w"/>
+                <outlet property="btnSecond" destination="dTr-sw-M6P" id="2Zx-ja-F0Y"/>
+                <outlet property="btnThird" destination="eUR-5C-mC1" id="fpT-lh-GTS"/>
+                <outlet property="lbName" destination="Nvi-VL-0fh" id="5YT-Dl-nSY"/>
+            </connections>
             <point key="canvasLocation" x="35" y="-253.5"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="radioa" width="64" height="64"/>
         <image name="radiol" width="64" height="64"/>
-        <image name="radiop" width="64" height="64"/>
         <image name="radios" width="64" height="64"/>
+        <image name="unradiop" width="64" height="64"/>
     </resources>
 </document>

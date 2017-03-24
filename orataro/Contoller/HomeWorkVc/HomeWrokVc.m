@@ -56,19 +56,60 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    [self apiCallFor_getHomework];
+    if([[Utility getMemberType] isEqualToString:@"Student"])
+    {
+        [self.aView1 setHidden:YES];
+    }
+    else
+    {
+        [self.aView1 setHidden:NO];
+    }
+    
+    NSArray *ary = [DBOperation selectData:@"select * from HomeWorkList"];
+    arrHomeworkList = [Utility getLocalDetail:ary columnKey:@"dicHomeWorkList"];
+    [self.HomeworkTableView reloadData];
+    
+    if (arrHomeworkList.count == 0)
+    {
+        if ([Utility isInterNetConnectionIsActive] == false)
+        {
+            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alrt show];
+            return;
+        }
+        else
+        {
+            [self apiCallFor_getHomework:YES];
+            
+        }
+    }
+    else
+    {
+        arrHomeworkList = [Utility getLocalDetail:ary columnKey:@"dicHomeWorkList"];
+        [self.HomeworkTableView reloadData];
+        
+        if ([Utility isInterNetConnectionIsActive] == false)
+        {
+            
+        }
+        else
+        {
+            [self apiCallFor_getHomework:NO];
+        }
+    }
+
 }
 
 #pragma mark - ApiCall
 
--(void)apiCallFor_getHomework
+-(void)apiCallFor_getHomework : (BOOL)checkProgress
 {
-    if ([Utility isInterNetConnectionIsActive] == false) {
-        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alrt show];
-        return;
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alrt show];
+            return;
     }
-    
     
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_homework,apk_GetHomework_action];
     
@@ -91,7 +132,10 @@
         [param setValue:[NSString stringWithFormat:@""] forKey:@"GradeID"];
     }
     
-    [ProgressHUB showHUDAddedTo:self.view];
+    if (checkProgress == YES)
+    {
+        [ProgressHUB showHUDAddedTo:self.view];
+    }
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
          [ProgressHUB hideenHUDAddedTo:self.view];
@@ -192,7 +236,17 @@
         [entry setObject:sortedArray3 forKey:@"items"];
         [arrHomeworkList addObject:entry];
     }
+    [DBOperation executeSQL:@"delete from HomeWorkList"];
     
+    for (NSMutableDictionary *dic in arrHomeworkList)
+    {
+        NSString *getjsonstr = [Utility Convertjsontostring:dic];
+        [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO HomeWorkList (dicHomeWorkList) VALUES ('%@')",getjsonstr]];
+        
+    }
+    
+    NSArray *ary = [DBOperation selectData:@"select * from HomeWorkList"];
+    arrHomeworkList = [Utility getLocalDetail:ary columnKey:@"dicHomeWorkList"];
     
     [_HomeworkTableView reloadData];
 }
@@ -338,9 +392,18 @@
 
 - (IBAction)AddBtn1Clicked:(id)sender
 {
-    ah.checkListelection = 2;
-    ListSelectionVc *l = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
-    [self.navigationController pushViewController:l animated:YES];
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    else
+    {
+        ah.checkListelection = 2;
+        ListSelectionVc *l = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
+        [self.navigationController pushViewController:l animated:YES];
+    }
 }
 
 - (IBAction)btnHomeClicked:(id)sender

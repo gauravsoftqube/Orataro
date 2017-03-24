@@ -114,5 +114,6 @@
 
 +(void)downloadresume:(NSString *)apiName fileData:(NSData *)fileData block:(void (^)(NSMutableDictionary *,NSError *))block; */
 
++ (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize isAspectRation:(BOOL)aspect;
 
 @end

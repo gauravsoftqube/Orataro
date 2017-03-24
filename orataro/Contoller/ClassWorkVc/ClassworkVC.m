@@ -47,12 +47,55 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    [self apiCallFor_getClasswork];
+    if([[Utility getMemberType] isEqualToString:@"Student"])
+    {
+        [self.aView1 setHidden:YES];
+    }
+    else
+    {
+        [self.aView1 setHidden:NO];
+    }
+
+    NSArray *ary = [DBOperation selectData:@"select * from ClassWorkList"];
+    //NSLog(@"ary=%@",ary);
+    
+    arrClassWorkList = [Utility getLocalDetail:ary columnKey:@"classworkJsonStr"];
+    [_tblClassworkList reloadData];
+    
+    if (arrClassWorkList.count == 0)
+    {
+        if ([Utility isInterNetConnectionIsActive] == false)
+        {
+            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alrt show];
+            return;
+        }
+        else
+        {
+            [self apiCallFor_getClasswork:YES];
+            
+        }
+    }
+    else
+    {
+        arrClassWorkList = [Utility getLocalDetail:ary columnKey:@"classworkJsonStr"];
+        [_tblClassworkList reloadData];
+        
+        if ([Utility isInterNetConnectionIsActive] == false)
+        {
+            
+        }
+        else
+        {
+            [self apiCallFor_getClasswork:NO];
+        }
+    }
+
 }
 
 #pragma mark - ApiCall
 
--(void)apiCallFor_getClasswork
+-(void)apiCallFor_getClasswork : (BOOL)checkProgress
 {
     if ([Utility isInterNetConnectionIsActive] == false) {
         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -83,7 +126,11 @@
         [param setValue:[NSString stringWithFormat:@""] forKey:@"GradeID"];
     }
     
-    [ProgressHUB showHUDAddedTo:self.view];
+    if (checkProgress == YES)
+    {
+        [ProgressHUB showHUDAddedTo:self.view];
+    }
+    
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
          [ProgressHUB hideenHUDAddedTo:self.view];
@@ -185,7 +232,17 @@
         [arrClassWorkList addObject:entry];
     }
     
+    [DBOperation executeSQL:@"delete from ClassWorkList"];
+    for (NSMutableDictionary *dic in arrClassWorkList)
+    {
+        NSString *getjsonstr = [Utility Convertjsontostring:dic];
+        [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO ClassWorkList (classworkJsonStr) VALUES ('%@')",getjsonstr]];
+        
+    }
+    NSArray *ary = [DBOperation selectData:@"select * from ClassWorkList"];
+    arrClassWorkList = [Utility getLocalDetail:ary columnKey:@"classworkJsonStr"];
     [_tblClassworkList reloadData];
+    
 }
 #pragma mark - UITableView
 
@@ -249,7 +306,7 @@
     
     NSDictionary *d = [[[arrClassWorkList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
     
-    NSLog(@"Dic=%@",d);
+  //  NSLog(@"Dic=%@",d);
     
     
     NSString *getdt = [d objectForKey:@"DateOfClassWork"];
@@ -297,6 +354,7 @@
 {
     SubjectVc *b = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SubjectVc"];
     b.passVal = @"Classwork";
+    b.classworkDic = [[[arrClassWorkList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:b animated:YES];
 }
 
@@ -333,10 +391,19 @@
 
 - (IBAction)btnAddClicked:(id)sender
 {
-    gh.checkListelection = 4;
+    if ([Utility isInterNetConnectionIsActive] == false) {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    else
+    {
+        gh.checkListelection = 4;
+        ListSelectionVc *l = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
+        [self.navigationController pushViewController:l animated:YES];
+    }
 
-    ListSelectionVc *l = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
-    [self.navigationController pushViewController:l animated:YES];
+   
 }
 
 - (IBAction)btnHomeClicked:(id)sender

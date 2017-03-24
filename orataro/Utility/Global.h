@@ -66,6 +66,9 @@
 #define CIRCULAR_TITLE @"Please Enter Title"
 #define CIRCULAR_DESC @"Please Enter Description"
 #define CIRCULAR_ENDDATE "Please Select EndDate"
+#define SELECT_STARTTIME "Please Select StartTime"
+#define SELECT_ENDTIME "Please Select EndTime"
+#define CLASSWORK_REFERNCELINK @"Please Enter Reference Link"
 #define CIRCULAR_TYPE "Please Enter CircularType"
 #define CIRCULAR_STANDARD "Please Enter At least one Standard and Division"
 
@@ -116,6 +119,7 @@
 #import "WToast.h"
 #import "UITextView+Placeholder.h"
 #import "HomeWrokVc.h"
+#import "ClassworkVC.h"
 
 #pragma mark - Api Url And Name List
 
@@ -159,15 +163,20 @@
 #pragma mark - Homework
 
 #define apk_homework  @"apk_homework.asmx"
-
 #define apk_GetHomework_action  @"GetHomework"
 #define apk_CreateHomework_action  @"CreateHomework"
 
 #pragma mark - apk_classwork
 
 #define apk_classwork  @"apk_classwork.asmx"
-
 #define apk_GetClassWorkList_action  @"GetClassWorkList"
+#define apk_CreateClassWork_action @"CreateClassWork"
+
+
+#pragma mark - apk_attendance
+#define apk_attendance  @"apk_attendance.asmx"
+#define apk_AttendanceListForTeacher_action @"AttendanceListForTeacher"
+#define apk_SaveAttendance @"SaveAttendance"
 
 #endif /* Global_h */
 

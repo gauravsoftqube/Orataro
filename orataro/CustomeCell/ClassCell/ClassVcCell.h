@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ClassVcCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UILabel *lbSubDiv;
 
 @end

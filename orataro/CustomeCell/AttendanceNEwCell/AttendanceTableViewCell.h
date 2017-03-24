@@ -9,5 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface AttendanceTableViewCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIButton *btnSecond;
 
+@property (weak, nonatomic) IBOutlet UIButton *btnThird;
+@property (weak, nonatomic) IBOutlet UIButton *btnFourth;
+@property (weak, nonatomic) IBOutlet UILabel *lbName;
+@property(strong,nonatomic)IBOutlet UIButton *btnFirst;
 @end

@@ -102,9 +102,7 @@
     {
         if ([Utility isInterNetConnectionIsActive] == false)
         {
-            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alrt show];
-            return;
+          
         }
         else
         {
@@ -411,11 +409,22 @@
         app.checkview = 0;
     }
 }
+
 - (IBAction)AddBtnClicked:(UIButton *)sender
 {
-    AddCircularVc *p = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddCircularVc"];
-    [self.navigationController pushViewController:p animated:YES];
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    else
+    {
+        AddCircularVc *p = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddCircularVc"];
+        [self.navigationController pushViewController:p animated:YES];
+    }
 }
+
 - (IBAction)CircularBtnClicked:(UIButton *)sender
 {
     CircularDetailVc *c = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"CircularDetailVc"];

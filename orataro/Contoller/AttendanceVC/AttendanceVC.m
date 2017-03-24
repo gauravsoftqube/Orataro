@@ -12,6 +12,7 @@
 #import "REFrostedViewController.h"
 #import "StudentListViewController.h"
 #import "AppDelegate.h"
+#import "Global.h"
 
 @interface AttendanceVC ()
 {
@@ -20,6 +21,11 @@
     UIAlertView *alert;
     int c2;
     AppDelegate *app;
+    NSMutableArray *subAry;
+    NSString *strDivId,*strGradeId,*strMonth,*strYear;
+    NSMutableArray *arySaveTag;
+    NSMutableArray *aryTable;
+    int presentcnt,absentcnt,leavecnt;
 }
 @end
 
@@ -32,52 +38,32 @@ int cn =0;
 {
     [super viewDidLoad];
     
+    subAry = [[NSMutableArray alloc]init];
+    aryTable = [[NSMutableArray alloc]init];
+    
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     app =(AppDelegate *)[UIApplication sharedApplication].delegate;
     
-    classTableDataAry = [[NSMutableArray alloc]initWithObjects:@"Class A",@"Class B",@"Class C",@"Class D",@"Class E", nil];
-    
-      [AttendanceTableView registerNib:[UINib nibWithNibName:@"AttendanceTableViewCell" bundle:nil] forCellReuseIdentifier:@"AttendanceCell"];
+    [AttendanceTableView registerNib:[UINib nibWithNibName:@"AttendanceTableViewCell" bundle:nil] forCellReuseIdentifier:@"AttendanceCell"];
     AttendanceTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [aClasstableView registerNib:[UINib nibWithNibName:@"ClassVcCell" bundle:nil] forCellReuseIdentifier:@"ClassCell"];
     aClasstableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
     aClassMAinView.hidden = YES;
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(TaptoHideView:)];
     
-    [aClassMAinView addGestureRecognizer:tap];
-    
-    UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 20)];
-    aTextfield1.leftView = paddingView;
-    aTextfield1.leftViewMode = UITextFieldViewModeAlways;
-    
-    UIView *paddingView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 20)];
-    aTextField2.leftView = paddingView1;
-    aTextField2.leftViewMode = UITextFieldViewModeAlways;
-    
-    UIView *paddingView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 20)];
-    aTextfield3.leftView = paddingView2;
-    aTextfield3.leftViewMode = UITextFieldViewModeAlways;
-    
+    [Utility setLeftViewInTextField:aTextfield1 imageName:@"" leftSpace:0 topSpace:0 size:5];
+    [Utility setLeftViewInTextField:aTextField2 imageName:@"" leftSpace:0 topSpace:0 size:5];
+    [Utility setLeftViewInTextField:aTextfield3 imageName:@"" leftSpace:0 topSpace:0 size:5];
     
     CGRect frame = CGRectMake(0, 0, 200, 200);
     datePicker = [[UIDatePicker alloc] initWithFrame:frame];
     datePicker = [[UIDatePicker alloc] init];
     datePicker.datePickerMode = UIDatePickerModeDate;
-    
-   // NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-    
-  //  [dateFormatter setDateFormat:@"dd MMM yyyy"];
-  // NSString * dateString = [dateFormatter stringFromDate:[NSDate date]];
-    
-  //  NSDate *dt = [dateFormatter dateFromString:dateString];
-    
-   // [datePicker setDate:dt];
-    
-    //NSLog(@"str=%@",dateString);
-    //NSLog(@"dt=%@",dt);
+    NSDate *Date=[NSDate date];
+    datePicker.minimumDate=Date;
     
     alert = [[UIAlertView alloc]
              initWithTitle:@"Select Date"
@@ -86,7 +72,16 @@ int cn =0;
              cancelButtonTitle:@"OK"
              otherButtonTitles:@"Cancel", nil];
     alert.delegate = self;
+    alert.tag = 2;
     [alert setValue:datePicker forKey:@"accessoryView"];
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"dd-MM-yyyy"];
+    NSString *theDate = [dateFormat stringFromDate:[NSDate date]];
+    _lbDate.text = theDate;
+    
+    [self hideTextfield];
+    
     
     // Do any additional setup after loading the view.
 }
@@ -96,12 +91,11 @@ int cn =0;
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-#pragma mark - tap to hide view
-
--(void)TaptoHideView :(UIGestureRecognizer *)tap
+-(void)viewWillAppear:(BOOL)animated
 {
-    aClassMAinView.hidden = YES;
+    [self apiCallFor_getSubDiv];
 }
+
 #pragma mark - tabelview delegate
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -110,14 +104,13 @@ int cn =0;
     {
         AttendanceTableViewCell *cell = (AttendanceTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"AttendanceCell"];
         
-        
         if (cell == nil)
         {
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"AttendanceTableViewCell" owner:self options:nil];
             cell = [nib objectAtIndex:0];
             
         }
-
+        
         if (indexPath.row % 2 ==0)
         {
             cell.backgroundColor = [UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0];
@@ -129,6 +122,56 @@ int cn =0;
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
+        cell.btnFirst.tag = 1;
+        cell.btnSecond.tag = 2;
+        cell.btnThird.tag = 3;
+        cell.btnFourth.tag = 4;
+        
+        
+        cell.lbName.text = [[arySaveTag objectAtIndex:indexPath.row]objectForKey:@"Name"];
+        
+        if ([[[arySaveTag objectAtIndex:indexPath.row]objectForKey:@"Present"] isEqualToString:@"1"])
+        {
+            [cell.btnFirst setImage:[UIImage imageNamed:@"unradiop"] forState:UIControlStateNormal];
+        }
+        else
+        {
+            [cell.btnFirst setImage:[UIImage imageNamed:@"radiop"] forState:UIControlStateNormal];
+        }
+        
+        if ([[[arySaveTag objectAtIndex:indexPath.row]objectForKey:@"Absent"] isEqualToString:@"1"])
+        {
+            [cell.btnSecond setImage:[UIImage imageNamed:@"unradioa"] forState:UIControlStateNormal];
+        }
+        else
+        {
+            [cell.btnSecond setImage:[UIImage imageNamed:@"radioa"] forState:UIControlStateNormal];
+        }
+        
+        if ([[[arySaveTag objectAtIndex:indexPath.row]objectForKey:@"sick Leave"] isEqualToString:@"1"])
+        {
+            [cell.btnThird setImage:[UIImage imageNamed:@"unradios"] forState:UIControlStateNormal];
+        }
+        else
+        {
+            [cell.btnThird setImage:[UIImage imageNamed:@"radios"] forState:UIControlStateNormal];
+        }
+        
+        if ([[[arySaveTag objectAtIndex:indexPath.row]objectForKey:@"Leave"] isEqualToString:@"1"])
+        {
+            [cell.btnFourth setImage:[UIImage imageNamed:@"unradiol"] forState:UIControlStateNormal];
+        }
+        else
+        {
+            [cell.btnFourth setImage:[UIImage imageNamed:@"radiol"] forState:UIControlStateNormal];
+        }
+        
+        
+        [cell.btnFirst addTarget:self action:@selector(changeRadioState:) forControlEvents: UIControlEventTouchUpInside];
+        [cell.btnSecond addTarget:self action:@selector(changeRadioState:) forControlEvents: UIControlEventTouchUpInside];
+        [cell.btnThird addTarget:self action:@selector(changeRadioState:) forControlEvents: UIControlEventTouchUpInside];
+        [cell.btnFourth addTarget:self action:@selector(changeRadioState:) forControlEvents: UIControlEventTouchUpInside];
+        
         return cell;
     }
     if (tableView == aClasstableView)
@@ -139,9 +182,9 @@ int cn =0;
         {
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ClassVcCell" owner:self options:nil];
             cell = [nib objectAtIndex:0];
-            
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.lbSubDiv.text = [NSString stringWithFormat:@"%@  %@",[[subAry objectAtIndex:indexPath.row] objectForKey:@"Grade"],[[subAry objectAtIndex:indexPath.row] objectForKey:@"Division"]];
         
         return cell;
     }
@@ -151,15 +194,14 @@ int cn =0;
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
-//        NSString *yourText = [yourArray objectAtIndex:indexPath.row];
-//
-//        CGSize labelWidth = CGSizeMake(300, CGFLOAT_MAX); // 300 is fixed width of label. You can change this value
-//        CGRect textRect = [visitorsPerRegion boundingRectWithSize:labelWidth options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont fontWithName:@"CenturyGothic" size:16.0]} context:nil];
-//
-//        int calculatedHeight = textRect.size.height+10;
-//        return (float)calculatedHeight;
-
+    //        NSString *yourText = [yourArray objectAtIndex:indexPath.row];
+    //
+    //        CGSize labelWidth = CGSizeMake(300, CGFLOAT_MAX); // 300 is fixed width of label. You can change this value
+    //        CGRect textRect = [visitorsPerRegion boundingRectWithSize:labelWidth options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont fontWithName:@"CenturyGothic" size:16.0]} context:nil];
+    //
+    //        int calculatedHeight = textRect.size.height+10;
+    //        return (float)calculatedHeight;
+    
     if (tableView == AttendanceTableView)
     {
         return 59;
@@ -167,22 +209,120 @@ int cn =0;
     
     if (tableView == aClasstableView)
     {
-        return 50;
+        return 44;
     }
-
+    
     return 0;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    if (tableView == AttendanceTableView)
+    {
+        if (arySaveTag.count > 0)
+        {
+            return arySaveTag.count;
+        }
+        
+    }
+    
+    if (tableView == aClasstableView)
+    {
+        return subAry.count;
+    }
+    return 0;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    StudentListViewController *s = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"StudentListViewController"];
-//    [self.navigationController pushViewController:s animated:YES];
+    if (tableView == AttendanceTableView)
+    {
+        
+    }
+    if (tableView == aClasstableView)
+    {
+        _lbSubDivision.text = [NSString stringWithFormat:@"%@ %@",[[subAry objectAtIndex:indexPath.row] objectForKey:@"Grade"],[[subAry objectAtIndex:indexPath.row] objectForKey:@"Division"]];
+        
+        strDivId = [[subAry objectAtIndex:indexPath.row] objectForKey:@"DivisionID"];
+        strGradeId = [[subAry objectAtIndex:indexPath.row] objectForKey:@"GradeID"];
+        NSArray *aryVal = [_lbDate.text componentsSeparatedByString:@"-"];
+        strMonth = [aryVal objectAtIndex:1];
+        strYear = [aryVal objectAtIndex:2];
+        
+        [self getAttendanceList:strDivId :strGradeId :strMonth :strYear];
+        
+        aClassMAinView.hidden = YES;
+    }
 }
+
 #pragma mark - button action
+
+-(void)changeRadioState :(id)sender
+{
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:AttendanceTableView];
+    NSIndexPath *indexPath = [AttendanceTableView indexPathForRowAtPoint:buttonPosition];
+    
+    UIButton *btn = (UIButton *)sender;
+    NSLog(@"sender tag=%ld",(long)btn.tag);
+    
+    NSMutableDictionary *d = [arySaveTag objectAtIndex:indexPath.row];
+    
+    NSLog(@"dic=%@",d);
+    
+    if (btn.tag == 1)
+    {
+        [d setObject:@"1" forKey:@"Present"];
+        [d setObject:@"0" forKey:@"Absent"];
+        [d setObject:@"0" forKey:@"sick Leave"];
+        [d setObject:@"0" forKey:@"Leave"];
+        [arySaveTag replaceObjectAtIndex:indexPath.row withObject:d];
+    }
+    if (btn.tag == 2)
+    {
+        [d setObject:@"1" forKey:@"Absent"];
+        [d setObject:@"0" forKey:@"Present"];
+        [d setObject:@"0" forKey:@"sick Leave"];
+        [d setObject:@"0" forKey:@"Leave"];
+        [arySaveTag replaceObjectAtIndex:indexPath.row withObject:d];
+    }
+    if (btn.tag == 3)
+    {
+        
+        [d setObject:@"1" forKey:@"sick Leave"];
+        [d setObject:@"0" forKey:@"Absent"];
+        [d setObject:@"0" forKey:@"Present"];
+        [d setObject:@"0" forKey:@"Leave"];
+        [arySaveTag replaceObjectAtIndex:indexPath.row withObject:d];
+    }
+    if (btn.tag == 4)
+    {
+        [d setObject:@"1" forKey:@"Leave"];
+        [d setObject:@"0" forKey:@"sick Leave"];
+        [d setObject:@"0" forKey:@"Absent"];
+        [d setObject:@"0" forKey:@"Present"];
+        [arySaveTag replaceObjectAtIndex:indexPath.row withObject:d];
+    }
+    [AttendanceTableView reloadData];
+    
+    
+}
+
+- (IBAction)btnSaveClicked:(id)sender
+{
+    if (cn == 0)
+    {
+        [self SaveAttendance];
+        //normal
+    }
+    else
+    {
+        //quick
+    }
+}
+
+- (IBAction)btnGenerateReportClicked:(id)sender
+{
+    
+}
 
 - (IBAction)ClassBtnClicked:(id)sender
 {
@@ -193,12 +333,10 @@ int cn =0;
 {
     self.frostedViewController.direction = REFrostedViewControllerDirectionRight;
     
-    
     if (app.checkview == 0)
     {
         [self.frostedViewController presentMenuViewController];
         app.checkview = 1;
-        
     }
     else
     {
@@ -214,13 +352,13 @@ int cn =0;
     {
         [workBtn setBackgroundImage:[UIImage imageNamed:@"checkboxblue"] forState:UIControlStateNormal];
         com =1;
-       
+        
     }
     else
     {
         [workBtn setBackgroundImage:[UIImage imageNamed:@"checkboxunselected"] forState:UIControlStateNormal];
         com =0;
-      
+        
     }
 }
 - (IBAction)DateSelectClicked:(id)sender
@@ -230,14 +368,23 @@ int cn =0;
 }
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 0)
+    if (alertView.tag == 2)
     {
+        if (buttonIndex == 0)
+        {
+            NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+            [dateFormat setDateFormat:@"dd-MM-yyyy"];
+            NSString *theDate = [dateFormat stringFromDate:[datePicker date]];
+            _lbDate.text = theDate;
+            
+        }
+        if (buttonIndex == 1)
+        {
+            alert.hidden = YES;
+        }
         
     }
-    if (buttonIndex == 1)
-    {
-        alert.hidden = YES;
-    }
+    
 }
 - (IBAction)NormalBtnClicked:(id)sender
 {
@@ -263,28 +410,494 @@ int cn =0;
         aTextfield1.hidden = YES;
         [self.view bringSubviewToFront:AttendanceTableView];
         
-
+        
     }
 }
 
 - (IBAction)btnHomeClicked:(id)sender
 {
-     [self.frostedViewController hideMenuViewController];
+    [self.frostedViewController hideMenuViewController];
     
     UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"OrataroVc"];
     
     [self.navigationController pushViewController:wc animated:NO];
 }
 
-/*
-#pragma mark - Navigation
+#pragma mark - API Call
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(void)apiCallFor_getSubDiv
+{
+    if ([Utility isInterNetConnectionIsActive] == false) {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        [ProgressHUB hideenHUDAddedTo:self.view];
+        return;
+    }
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_gradedivisionsubject,apk_GetGradeDivisionSubjectbyTeacher_action];
+    
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    // NSLog(@"dic=%@",dicCurrentUser);
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
+    [param setValue:@"Teacher" forKey:@"Role"];
+    
+    [ProgressHUB showHUDAddedTo:self.view];
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         [ProgressHUB hideenHUDAddedTo:self.view];
+         if(!error)
+         {
+             // NSLog(@"data=%@",dicResponce);
+             
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             
+             //NSLog(@"array=%@",arrResponce);
+             
+             if([arrResponce count] != 0)
+             {
+                 NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                 NSString *strStatus=[dic objectForKey:@"message"];
+                 if([strStatus isEqualToString:@"No Data Found"])
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                 }
+                 else
+                 {
+                     [self ManageSubjectList:arrResponce];
+                 }
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
 }
-*/
+
+
+#pragma mark - Manage Group of Subject and Division
+
+-(void)ManageSubjectList : (NSMutableArray *)aryResponse
+{
+    //NSLog(@"ary=%@",aryResponse);
+    NSMutableArray *aryTmp = [[NSMutableArray alloc]initWithArray:aryResponse];
+    for (int i=0; i< aryTmp.count; i++)
+    {
+        NSMutableDictionary *d = [[aryTmp objectAtIndex:i] mutableCopy];
+        NSString *str = [NSString stringWithFormat:@"%@%@",[d objectForKey:@"Grade"],[d objectForKey:@"Division"]];
+        [d setObject:str forKey:@"Group"];
+        //NSLog(@"d=%@",d);
+        [aryTmp replaceObjectAtIndex:i withObject:d];
+    }
+    
+    NSArray *temp = [aryTmp sortedArrayUsingDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"Group" ascending:YES]]];
+    [aryTmp removeAllObjects];
+    [aryTmp addObjectsFromArray:temp];
+    //NSLog(@"Ary=%@",aryTmp);
+    
+    NSMutableArray *arr=[[NSMutableArray alloc]init];
+    
+    for (NSMutableDictionary *dic in aryTmp) {
+        NSString *STR=[dic objectForKey:@"Group"];
+        if (![[arr valueForKey:@"Group"] containsObject:STR]) {
+            [arr addObject:dic];
+        }
+    }
+    NSSortDescriptor *sortIdClient =
+    [NSSortDescriptor sortDescriptorWithKey:@"Group"
+                                  ascending:YES
+                                 comparator: ^(id obj1, id obj2){
+                                     
+                                     return [obj1 compare:obj2 options:NSOrderedAscending];
+                                     
+                                 }];
+    
+    NSArray *sortDescriptors = @[sortIdClient];
+    
+    NSArray *arrTemp = [arr sortedArrayUsingDescriptors:sortDescriptors];
+    subAry = [[NSMutableArray alloc]initWithArray:arrTemp];
+    
+    _lbSubDivision.text = [NSString stringWithFormat:@"%@ %@",[[subAry objectAtIndex:0] objectForKey:@"Grade"],[[subAry objectAtIndex:0] objectForKey:@"Division"]];
+    
+    strDivId = [[subAry objectAtIndex:0] objectForKey:@"DivisionID"];
+    strGradeId = [[subAry objectAtIndex:0] objectForKey:@"GradeID"];
+    NSArray *aryVal = [_lbDate.text componentsSeparatedByString:@"-"];
+    strMonth = [aryVal objectAtIndex:1];
+    strYear = [aryVal objectAtIndex:2];
+    [aClasstableView reloadData];
+    
+    [self getAttendanceList:strDivId :strGradeId :strMonth :strYear];
+}
+
+#pragma mark - hide textfield
+
+-(void)hideTextfield
+{
+    aTextfield3.hidden = YES;
+    aTextField2.hidden = YES;
+    aTextfield1.hidden = YES;
+}
+
+#pragma mark - getListofAttendance API
+
+-(void)getAttendanceList : (NSString *)divid :(NSString *)gradeId :(NSString *)strMonth1 :(NSString *)strYear1
+{
+    arySaveTag = [[NSMutableArray alloc]init];
+    
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        [ProgressHUB hideenHUDAddedTo:self.view];
+        return;
+    }
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_attendance,apk_AttendanceListForTeacher_action];
+    
+    NSLog(@"url=%@",strURL);
+    
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    // NSLog(@"dic=%@",dicCurrentUser);
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"BatchID"]] forKey:@"BatchID"];
+    [param setValue:[NSString stringWithFormat:@"%@",gradeId] forKey:@"GradeID"];
+    [param setValue:[NSString stringWithFormat:@"%@",strYear1] forKey:@"Year"];
+    [param setValue:[NSString stringWithFormat:@"%@",strMonth1] forKey:@"Month"];
+    [param setValue:[NSString stringWithFormat:@"%@",divid] forKey:@"DivisionID"];
+    
+    [ProgressHUB showHUDAddedTo:self.view];
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         [ProgressHUB hideenHUDAddedTo:self.view];
+         if(!error)
+         {
+             // NSLog(@"data=%@",dicResponce);
+             
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableDictionary *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             
+             aryTable = [arrResponce objectForKey:@"Table"];
+             
+             if([aryTable count] != 0)
+             {
+                 NSString *strStatus=[arrResponce objectForKey:@"message"];
+                 if([strStatus isEqualToString:@"No Data Found"])
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[arrResponce objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                 }
+                 else
+                 {
+                     
+                     for (int i=0; i<aryTable.count; i++)
+                     {
+                         NSMutableDictionary *d = [[NSMutableDictionary alloc]init];
+                         
+                         [d setObject:[[aryTable objectAtIndex:i]objectForKey:@"MemberID"] forKey:@"MemberId"];
+                         [d setObject:[[aryTable objectAtIndex:i]objectForKey:@"FullName"]  forKey:@"Name"];
+                         [d setObject:@"1" forKey:@"Present"];
+                         [d setObject:@"0" forKey:@"Absent"];
+                         [d setObject:@"0" forKey:@"sick Leave"];
+                         [d setObject:@"0" forKey:@"Leave"];
+                         [arySaveTag addObject:d];
+                     }
+                     
+                     [AttendanceTableView reloadData];
+                     
+                 }
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"No Data Found" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+                 
+                 [arySaveTag removeAllObjects];
+                 [AttendanceTableView reloadData];
+                 
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
+    
+    
+}
+
+#pragma mark - Save Attendance List
+
+-(void)SaveAttendance
+{
+    NSLog(@"arytable=%@",aryTable);
+    
+    
+    //#define apk_attendance  @"apk_attendance.asmx"
+    //define apk_SaveAttendance @"SaveAttendance"
+    
+    // StandardID=5bab2f94-61b6-46b5-9cec-e3023b118f91
+    // DivisionID=44de9eed-96af-43cf-a5ee-7cc63d9753ed
+    // ClientID=d79901a7-f9f7-4d47-8e3b-198ede7c9f58
+    // InstituteID=4f4bbf0e-858a-46fa-a0a7-bf116f537653
+    // AttendenceBy=30032284-31d1-4ba6-8ef4-54edb8e223aa (userid)
+    // DateOfAttendence=03-07-2017 (current lable date)
+    // BatchID=d58baefe-a45b-4631-bde7-69ec46ab5727
+    // DayOfAttendence_Term=Tuesday (Current day)
+    //  TotalStudents=2 (array count)
+    // PresentStudents=2
+    // AbsentStudents=0
+    // OnLeaveStudents=0
+    // IsWorkingDay=true
+    //StudentData=1eb82c3e-6b09-405a-8d8e-2d952ea05efa,Present#11748821-928d-48f9-91bf -256ead87bad5,Present#
+    
+    // OldStudAtteRegiMasterID= (Discuss about this parameter)
+    
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        [ProgressHUB hideenHUDAddedTo:self.view];
+        return;
+    }
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_attendance,apk_SaveAttendance];
+    
+    NSLog(@"url=%@",strURL);
+    
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    // NSLog(@"dic=%@",dicCurrentUser);
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    // StandardID=5bab2f94-61b6-46b5-9cec-e3023b118f91
+    // DivisionID=44de9eed-96af-43cf-a5ee-7cc63d9753ed
+    // ClientID=d79901a7-f9f7-4d47-8e3b-198ede7c9f58
+    // InstituteID=4f4bbf0e-858a-46fa-a0a7-bf116f537653
+    // AttendenceBy=30032284-31d1-4ba6-8ef4-54edb8e223aa (userid)
+    // DateOfAttendence=03-07-2017 (current lable date)
+    // BatchID=d58baefe-a45b-4631-bde7-69ec46ab5727
+    // DayOfAttendence_Term=Tuesday (Current day)
+    //  TotalStudents=2 (array count)
+    
+    // PresentStudents=2
+    // AbsentStudents=0
+    // OnLeaveStudents=0
+    
+    // IsWorkingDay=true
+    //StudentData=1eb82c3e-6b09-405a-8d8e-2d952ea05efa,Present#11748821-928d-48f9-91bf -256ead87bad5,Present#
+    
+    /*  On 22/03/17, at 7:15 PM, Darshan Kachhadiya wrote:
+     >  public static final String ABSENT="Absent";
+     public static final String LEAVE="Leave";
+     public static final String PRESENT="Present";
+     public static final String SICKLEAVE="Sick Leave";*/
+    
+    // strDivId = [[subAry objectAtIndex:indexPath.row] objectForKey:@"DivisionID"];
+    // strGradeId = [[subAry objectAtIndex:indexPath.row] objectForKey:@"GradeID"];
+    
+    // [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"BatchID"]] forKey:@"BeachID"];
+    
+    NSLog(@"sub=%@",subAry);
+    
+    NSLog(@"str =%@ %@",strDivId,strGradeId);
+    
+    [param setValue:strGradeId forKey:@"StandardID"];
+    [param setValue:strDivId forKey:@"DivisionID"];
+    
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"AttendenceBy"];
+    [param setValue:[NSString stringWithFormat:@"%@",[Utility convertDateFtrToDtaeFtr:@"dd-MM-yyyy" newDateFtr:@"MM-dd-yyyy" date:_lbDate.text]] forKey:@"DateOfAttendence"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"BatchID"]] forKey:@"BatchID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[Utility convertDateFtrToDtaeFtr:@"dd-MM-yyyy" newDateFtr:@"EEEE" date:_lbDate.text]] forKey:@"DayOfAttendence_Term"];
+    [param setValue:[NSString stringWithFormat:@"%lu",(unsigned long)aryTable.count] forKey:@"TotalStudents"];
+    
+    NSLog(@"data=%@",arySaveTag);
+    //  presentcnt,absentcnt,leavecnt
+    
+    
+    for (int i=0 ;i<arySaveTag.count; i++)
+    {
+        NSMutableDictionary *d = [arySaveTag objectAtIndex:i];
+        
+        if ([[d objectForKey:@"Present"] isEqualToString:@"1"])
+        {
+            presentcnt++;
+        }
+        if ([[d objectForKey:@"Absent"] isEqualToString:@"1"])
+        {
+            absentcnt++;
+        }
+        if ([[d objectForKey:@"Leave"] isEqualToString:@"1"] || [[d objectForKey:@"sick Leave"] isEqualToString:@"1"])
+        {
+            leavecnt++;
+        }
+    }
+    NSLog(@"present =%d,absent=%d save sick=%d",presentcnt,absentcnt,leavecnt);
+    
+    [param setValue:[NSString stringWithFormat:@"%d",presentcnt] forKey:@"PresentStudents"];
+    [param setValue:[NSString stringWithFormat:@"%d",absentcnt] forKey:@"AbsentStudents"];
+    [param setValue:[NSString stringWithFormat:@"%d",leavecnt] forKey:@"OnLeaveStudents"];
+    
+    if (com == 0)
+    {
+        [param setValue:@"false" forKey:@"IsWorkingDay"];
+    }
+    else
+    {
+        [param setValue:@"true" forKey:@"IsWorkingDay"];
+    }
+    
+    // public static final String ABSENT="Absent";
+    //  public static final String LEAVE="Leave";
+    // public static final String PRESENT="Present";
+    // public static final String SICKLEAVE="Sick Leave";
+    
+    // [param setValue:[NSString stringWithFormat:@"%@",divid] forKey:@"StudentData"];
+    //
+    NSMutableArray *arytmp = [[NSMutableArray alloc]init];
+    
+    for (int i=0 ;i<arySaveTag.count; i++)
+    {
+        NSMutableDictionary *tmpDic = [[NSMutableDictionary alloc]init];
+        
+        NSMutableDictionary *d = [arySaveTag objectAtIndex:i];
+        
+        if ([[d objectForKey:@"Present"] isEqualToString:@"1"])
+        {
+            [tmpDic setObject:@"Present" forKey:@"present"];
+            [tmpDic setObject:[d objectForKey:@"MemberId"] forKey:@"memberId"];
+            [arytmp addObject:tmpDic];
+        }
+        if ([[d objectForKey:@"Absent"] isEqualToString:@"1"])
+        {
+            [tmpDic setObject:@"Absent" forKey:@"present"];
+            [tmpDic setObject:[d objectForKey:@"MemberId"] forKey:@"memberId"];
+            [arytmp addObject:tmpDic];
+        }
+        if ([[d objectForKey:@"Leave"] isEqualToString:@"1"])
+        {
+            [tmpDic setObject:@"Leave" forKey:@"present"];
+            [tmpDic setObject:[d objectForKey:@"MemberId"] forKey:@"memberId"];
+            [arytmp addObject:tmpDic];
+        }
+        if ([[d objectForKey:@"sick Leave"] isEqualToString:@"1"])
+        {
+            [tmpDic setObject:@"Sick Leave" forKey:@"present"];
+            [tmpDic setObject:[d objectForKey:@"MemberId"] forKey:@"memberId"];
+            [arytmp addObject:tmpDic];
+        }
+    }
+    
+    //StudentData=1eb82c3e-6b09-405a-8d8e-2d952ea05efa,Present#11748821-928d-48f9-91bf-256ead87bad5,Present#
+    
+    NSLog(@"temp=%@",arytmp);
+    NSMutableArray *aryStore = [[NSMutableArray alloc]init];
+    NSString *strStud;
+    for (NSMutableDictionary *d in arytmp)
+    {
+        strStud = [NSString stringWithFormat:@"%@,%@#",[d objectForKey:@"memberId"],[d objectForKey:@"present"]];
+        [aryStore addObject:strStud];
+    }
+    NSString *st = [aryStore componentsJoinedByString:@""];
+
+    st = [st substringToIndex:[st length] - 1];
+    
+    NSLog(@"temp=%@",st);
+    
+    [param setValue:[NSString stringWithFormat:@"%@",st] forKey:@"StudentData"];
+    [param setValue:@"" forKey:@"OldStudAtteRegiMasterID"];
+    
+    //
+    [ProgressHUB showHUDAddedTo:self.view];
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         [ProgressHUB hideenHUDAddedTo:self.view];
+         if(!error)
+         {
+             // NSLog(@"data=%@",dicResponce);
+             
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableDictionary *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             
+             aryTable = [arrResponce objectForKey:@"Table"];
+             
+             if([aryTable count] != 0)
+             {
+                 NSString *strStatus=[arrResponce objectForKey:@"message"];
+                 if([strStatus isEqualToString:@"No Data Found"])
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[arrResponce objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                 }
+                 else
+                 {
+                     
+                     for (int i=0; i<aryTable.count; i++)
+                     {
+                         NSMutableDictionary *d = [[NSMutableDictionary alloc]init];
+                         
+                         
+                         [d setObject:[[aryTable objectAtIndex:i]objectForKey:@"MemberID"] forKey:@"MemberId"];
+                         [d setObject:[[aryTable objectAtIndex:i]objectForKey:@"FullName"]  forKey:@"Name"];
+                         [d setObject:@"1" forKey:@"Present"];
+                         [d setObject:@"0" forKey:@"Absent"];
+                         [d setObject:@"0" forKey:@"sick Leave"];
+                         [d setObject:@"0" forKey:@"Leave"];
+                         [arySaveTag addObject:d];
+                     }
+                     
+                     [AttendanceTableView reloadData];
+                     
+                 }
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"No Data Found" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+                 
+                 [arySaveTag removeAllObjects];
+                 [AttendanceTableView reloadData];
+                 
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
+    
+    
+}
+/*
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 
 

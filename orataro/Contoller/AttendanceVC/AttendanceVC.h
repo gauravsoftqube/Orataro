@@ -9,12 +9,16 @@
 #import <UIKit/UIKit.h>
 
 @interface AttendanceVC : UIViewController<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
+- (IBAction)btnSaveClicked:(id)sender;
+- (IBAction)btnGenerateReportClicked:(id)sender;
 
 - (IBAction)ClassBtnClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *lbSubDivision;
 @property (weak, nonatomic) IBOutlet UITableView *AttendanceTableView;
 @property (weak, nonatomic) IBOutlet UITextField *aTextfield3;
 - (IBAction)DateSelectClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UITextField *aTextField2;
+@property (weak, nonatomic) IBOutlet UILabel *lbDate;
 @property (weak, nonatomic) IBOutlet UITableView *aClasstableView;
 @property (weak, nonatomic) IBOutlet UIView *aClassMAinView;
 - (IBAction)MenuBtnClicked:(id)sender;

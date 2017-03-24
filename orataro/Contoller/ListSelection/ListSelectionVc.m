@@ -213,6 +213,7 @@
     if (ad.checkListelection == 4)
     {
         AddClassWorkVc  *vc1 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddClassWorkVc"];
+         vc1.dicSelectListSelection=[arrList objectAtIndex:indexPath.row];
         [self.navigationController pushViewController:vc1 animated:YES];
     }
    

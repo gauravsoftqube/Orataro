@@ -30,6 +30,7 @@
     if ([_passVal isEqualToString:@"Classwork"])
     {
         
+        NSLog(@"data=%@",_classworkDic);
     }
 }
 - (void)didReceiveMemoryWarning {
