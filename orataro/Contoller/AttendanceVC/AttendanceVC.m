@@ -62,8 +62,8 @@ int cn =0;
     datePicker = [[UIDatePicker alloc] initWithFrame:frame];
     datePicker = [[UIDatePicker alloc] init];
     datePicker.datePickerMode = UIDatePickerModeDate;
-    NSDate *Date=[NSDate date];
-    datePicker.minimumDate=Date;
+    // NSDate *Date=[NSDate date];
+    // datePicker.minimumDate=Date;
     
     alert = [[UIAlertView alloc]
              initWithTitle:@"Select Date"
@@ -310,12 +310,11 @@ int cn =0;
 {
     if (cn == 0)
     {
-        [self SaveAttendance];
-        //normal
+        [self SaveAttendance:YES];
     }
     else
     {
-        //quick
+        [self SaveAttendance:NO];
     }
 }
 
@@ -570,7 +569,6 @@ int cn =0;
     NSLog(@"url=%@",strURL);
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
-    // NSLog(@"dic=%@",dicCurrentUser);
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
     
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
@@ -587,52 +585,59 @@ int cn =0;
          [ProgressHUB hideenHUDAddedTo:self.view];
          if(!error)
          {
-             // NSLog(@"data=%@",dicResponce);
+             NSMutableDictionary *arrResponce;
              
-             NSString *strArrd=[dicResponce objectForKey:@"d"];
-             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
-             NSMutableDictionary *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             @try
+             {
+                 NSString *strArrd=[dicResponce objectForKey:@"d"];
+                 NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+                arrResponce  = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                 
+             } @catch (NSException *exception)
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"Please try again" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+                 
+             } @finally {
+                 
+                
+                 
+             }
+           
              
              aryTable = [arrResponce objectForKey:@"Table"];
              
-             if([aryTable count] != 0)
-             {
-                 NSString *strStatus=[arrResponce objectForKey:@"message"];
-                 if([strStatus isEqualToString:@"No Data Found"])
-                 {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[arrResponce objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     [alrt show];
-                 }
-                 else
-                 {
-                     
-                     for (int i=0; i<aryTable.count; i++)
-                     {
-                         NSMutableDictionary *d = [[NSMutableDictionary alloc]init];
-                         
-                         [d setObject:[[aryTable objectAtIndex:i]objectForKey:@"MemberID"] forKey:@"MemberId"];
-                         [d setObject:[[aryTable objectAtIndex:i]objectForKey:@"FullName"]  forKey:@"Name"];
-                         [d setObject:@"1" forKey:@"Present"];
-                         [d setObject:@"0" forKey:@"Absent"];
-                         [d setObject:@"0" forKey:@"sick Leave"];
-                         [d setObject:@"0" forKey:@"Leave"];
-                         [arySaveTag addObject:d];
-                     }
-                     
-                     [AttendanceTableView reloadData];
-                     
-                 }
-             }
-             else
+             if([aryTable count] == 0)
              {
                  UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"No Data Found" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                  [alrt show];
                  
                  [arySaveTag removeAllObjects];
                  [AttendanceTableView reloadData];
-                 
+
              }
-         }
+             else
+             {
+                 for (int i=0; i<aryTable.count; i++)
+                 {
+                     NSMutableDictionary *d = [[NSMutableDictionary alloc]init];
+                     
+                     [d setObject:[[aryTable objectAtIndex:i]objectForKey:@"MemberID"] forKey:@"MemberId"];
+                     [d setObject:[[aryTable objectAtIndex:i]objectForKey:@"FullName"]  forKey:@"Name"];
+                     [d setObject:@"1" forKey:@"Present"];
+                     [d setObject:@"0" forKey:@"Absent"];
+                     [d setObject:@"0" forKey:@"sick Leave"];
+                     [d setObject:@"0" forKey:@"Leave"];
+                     [d setObject:[[aryTable objectAtIndex:i]objectForKey:@"RollNo"] forKey:@"RollNo"];
+                     
+                     [arySaveTag addObject:d];
+                 }
+                 
+                 NSLog(@"Data=%@",arySaveTag);
+                 
+                 [AttendanceTableView reloadData];
+             }
+        }
          else
          {
              UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -645,30 +650,11 @@ int cn =0;
 
 #pragma mark - Save Attendance List
 
--(void)SaveAttendance
+-(void)SaveAttendance : (BOOL)val
 {
-    NSLog(@"arytable=%@",aryTable);
-    
-    
-    //#define apk_attendance  @"apk_attendance.asmx"
-    //define apk_SaveAttendance @"SaveAttendance"
-    
-    // StandardID=5bab2f94-61b6-46b5-9cec-e3023b118f91
-    // DivisionID=44de9eed-96af-43cf-a5ee-7cc63d9753ed
-    // ClientID=d79901a7-f9f7-4d47-8e3b-198ede7c9f58
-    // InstituteID=4f4bbf0e-858a-46fa-a0a7-bf116f537653
-    // AttendenceBy=30032284-31d1-4ba6-8ef4-54edb8e223aa (userid)
-    // DateOfAttendence=03-07-2017 (current lable date)
-    // BatchID=d58baefe-a45b-4631-bde7-69ec46ab5727
-    // DayOfAttendence_Term=Tuesday (Current day)
-    //  TotalStudents=2 (array count)
-    // PresentStudents=2
-    // AbsentStudents=0
-    // OnLeaveStudents=0
-    // IsWorkingDay=true
-    //StudentData=1eb82c3e-6b09-405a-8d8e-2d952ea05efa,Present#11748821-928d-48f9-91bf -256ead87bad5,Present#
-    
-    // OldStudAtteRegiMasterID= (Discuss about this parameter)
+    NSMutableArray *aryStudentData = [[NSMutableArray alloc]init];
+    // NSMutableArray *aryTempData = [[NSMutableArray alloc]init];
+    NSMutableArray *tmpary = [[NSMutableArray alloc]init];
     
     if ([Utility isInterNetConnectionIsActive] == false)
     {
@@ -680,47 +666,280 @@ int cn =0;
     
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_attendance,apk_SaveAttendance];
     
-    NSLog(@"url=%@",strURL);
+    if (val == YES)
+    {
+        NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+        NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+        
+        [param setValue:strGradeId forKey:@"StandardID"];
+        [param setValue:strDivId forKey:@"DivisionID"];
+        
+        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
+        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"AttendenceBy"];
+        [param setValue:[NSString stringWithFormat:@"%@",[Utility convertDateFtrToDtaeFtr:@"dd-MM-yyyy" newDateFtr:@"MM-dd-yyyy" date:_lbDate.text]] forKey:@"DateOfAttendence"];
+        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"BatchID"]] forKey:@"BatchID"];
+        [param setValue:[NSString stringWithFormat:@"%@",[Utility convertDateFtrToDtaeFtr:@"dd-MM-yyyy" newDateFtr:@"EEEE" date:_lbDate.text]] forKey:@"DayOfAttendence_Term"];
+        [param setValue:[NSString stringWithFormat:@"%lu",(unsigned long)aryTable.count] forKey:@"TotalStudents"];
+        
+        for (int i=0 ;i<arySaveTag.count; i++)
+        {
+            NSMutableDictionary *d = [arySaveTag objectAtIndex:i];
+            
+            if ([[d objectForKey:@"Present"] isEqualToString:@"1"])
+            {
+                presentcnt++;
+            }
+            if ([[d objectForKey:@"Absent"] isEqualToString:@"1"])
+            {
+                absentcnt++;
+            }
+            if ([[d objectForKey:@"Leave"] isEqualToString:@"1"] || [[d objectForKey:@"sick Leave"] isEqualToString:@"1"])
+            {
+                leavecnt++;
+            }
+        }
+        
+        [param setValue:[NSString stringWithFormat:@"%d",presentcnt] forKey:@"PresentStudents"];
+        [param setValue:[NSString stringWithFormat:@"%d",absentcnt] forKey:@"AbsentStudents"];
+        [param setValue:[NSString stringWithFormat:@"%d",leavecnt] forKey:@"OnLeaveStudents"];
+        
+        if (com == 0)
+        {
+            [param setValue:@"false" forKey:@"IsWorkingDay"];
+        }
+        else
+        {
+            [param setValue:@"true" forKey:@"IsWorkingDay"];
+        }
+        
+        NSMutableArray *arytmp = [[NSMutableArray alloc]init];
+        
+        for (int i=0 ;i<arySaveTag.count; i++)
+        {
+            NSMutableDictionary *tmpDic = [[NSMutableDictionary alloc]init];
+            
+            NSMutableDictionary *d = [arySaveTag objectAtIndex:i];
+            
+            if ([[d objectForKey:@"Present"] isEqualToString:@"1"])
+            {
+                [tmpDic setObject:@"Present" forKey:@"present"];
+                [tmpDic setObject:[d objectForKey:@"MemberId"] forKey:@"memberId"];
+                [arytmp addObject:tmpDic];
+            }
+            if ([[d objectForKey:@"Absent"] isEqualToString:@"1"])
+            {
+                [tmpDic setObject:@"Absent" forKey:@"present"];
+                [tmpDic setObject:[d objectForKey:@"MemberId"] forKey:@"memberId"];
+                [arytmp addObject:tmpDic];
+            }
+            if ([[d objectForKey:@"Leave"] isEqualToString:@"1"])
+            {
+                [tmpDic setObject:@"Leave" forKey:@"present"];
+                [tmpDic setObject:[d objectForKey:@"MemberId"] forKey:@"memberId"];
+                [arytmp addObject:tmpDic];
+            }
+            if ([[d objectForKey:@"sick Leave"] isEqualToString:@"1"])
+            {
+                [tmpDic setObject:@"Sick Leave" forKey:@"present"];
+                [tmpDic setObject:[d objectForKey:@"MemberId"] forKey:@"memberId"];
+                [arytmp addObject:tmpDic];
+            }
+        }
+        NSMutableArray *aryStore = [[NSMutableArray alloc]init];
+        NSString *strStud;
+        for (NSMutableDictionary *d in arytmp)
+        {
+            strStud = [NSString stringWithFormat:@"%@,%@#",[d objectForKey:@"memberId"],[d objectForKey:@"present"]];
+            [aryStore addObject:strStud];
+        }
+        NSString *st = [aryStore componentsJoinedByString:@""];
+        
+        [param setValue:[NSString stringWithFormat:@"%@",st] forKey:@"StudentData"];
+        [param setValue:@"" forKey:@"OldStudAtteRegiMasterID"];
+        
+        [ProgressHUB showHUDAddedTo:self.view];
+        [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+         {
+             [ProgressHUB hideenHUDAddedTo:self.view];
+             if(!error)
+             {
+                 NSString *strArrd=[dicResponce objectForKey:@"d"];
+                 NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+                 NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                 
+                 if([arrResponce count] != 0)
+                 {
+                     NSString *strMsg = [[arrResponce objectAtIndex:0]objectForKey:@"message"];
+                     NSArray *ary = [strMsg componentsSeparatedByString:@"#"];
+                     NSString *strStatus=[ary objectAtIndex:0];
+                     
+                     if([strStatus isEqualToString:@"Attendence save successfully,"])
+                     {
+                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:strStatus delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                         [alrt show];
+                     }
+                     else
+                     {
+                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:strStatus delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                         [alrt show];
+                     }
+                 }
+                 else
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"No Data Found" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                     
+                 }
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }];
+
+    }
+    else
+    {
+        NSMutableArray *aryabsent; //= [[NSMutableArray alloc]init];
+        NSMutableArray *aryleave; //= [[NSMutableArray alloc]init];
+        NSMutableArray *aryseakleave;// = [[NSMutableArray alloc]init];
+       
+        
+
+        if ([Utility validateBlankField:aTextfield1.text])
+        {
+            
+        }
+        else
+        {
+            NSString *strAbsent = [NSString stringWithFormat:@"%@",aTextfield1.text];
+            NSArray *aryget = [strAbsent componentsSeparatedByString:@","];
+            
+            aryabsent = [[NSMutableArray alloc]initWithArray:aryget];
+            NSLog(@"count= ary=%@ %lu",aryabsent,(unsigned long)aryabsent.count);
+        }
+        
+        if ([Utility validateBlankField:aTextField2.text])
+        {
+            
+        }
+        else
+        {
+            NSString *strAbsent = [NSString stringWithFormat:@"%@",aTextField2.text];
+            NSArray *aryget = [strAbsent componentsSeparatedByString:@","];
+            aryleave = [[NSMutableArray alloc]initWithArray:aryget];
+            
+        }
+        
+        if ([Utility validateBlankField:aTextfield3.text])
+        {
+            
+        }
+        else
+        {
+            NSString *strAbsent = [NSString stringWithFormat:@"%@",aTextfield3.text];
+            NSArray *aryget = [strAbsent componentsSeparatedByString:@","];
+            aryseakleave = [[NSMutableArray alloc]initWithArray:aryget];
+        }
+        
+        if (aryabsent.count > 0)
+        {
+            
+            for (int i=0; i<arySaveTag.count; i++)
+            {
+                NSString *getval = [[arySaveTag objectAtIndex:i]objectForKey:@"RollNo"];
+                
+                for (int j=0; j<aryabsent.count;j++)
+                {
+                    if ([[aryabsent objectAtIndex:j] isEqualToString:getval])
+                    {
+                        NSLog(@"data");
+                        NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
+                        [dic setObject:[[arySaveTag objectAtIndex:i]objectForKey:@"MemberId"] forKey:@"memberId"];
+                        [dic setObject:@"Absent" forKey:@"absent"];
+                        [dic setObject:[[arySaveTag objectAtIndex:i]objectForKey:@"RollNo"] forKey:@"rollnum"];
+                        [aryStudentData addObject:dic];
+                    }
+                }
+            }
+        }
+       if(aryleave.count > 0)
+        {
+            for (int i=0; i<arySaveTag.count; i++)
+            {
+                NSString *getval = [[arySaveTag objectAtIndex:i]objectForKey:@"RollNo"];
+                
+                for (int j=0; j<aryleave.count;j++)
+                {
+                    if ([[aryleave objectAtIndex:j] isEqualToString:getval])
+                    {
+                        NSLog(@"data");
+                        NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
+                        [dic setObject:[[arySaveTag objectAtIndex:i]objectForKey:@"MemberId"] forKey:@"memberId"];
+                        [dic setObject:@"Leave" forKey:@"absent"];
+                        [dic setObject:[[arySaveTag objectAtIndex:i]objectForKey:@"RollNo"] forKey:@"rollnum"];
+                        [aryStudentData addObject:dic];
+                    }
+                }
+            }
+        }
+        if(aryseakleave.count > 0)
+        {
+            for (int i=0; i<arySaveTag.count; i++)
+            {
+                NSString *getval = [[arySaveTag objectAtIndex:i]objectForKey:@"RollNo"];
+                
+                for (int j=0; j<aryseakleave.count;j++)
+                {
+                    if ([[aryseakleave objectAtIndex:j] isEqualToString:getval])
+                    {
+                        NSLog(@"data");
+                        NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
+                        [dic setObject:[[arySaveTag objectAtIndex:i]objectForKey:@"MemberId"] forKey:@"memberId"];
+                        [dic setObject:@"Leave" forKey:@"absent"];
+                        [dic setObject:[[arySaveTag objectAtIndex:i]objectForKey:@"RollNo"] forKey:@"rollnum"];
+                        [aryStudentData addObject:dic];
+                    }
+                }
+            }
+        }
+
+        for (int i=0; i<arySaveTag.count; i++)
+        {
+            NSString *getval = [NSString stringWithFormat:@"%@",[[arySaveTag objectAtIndex:i]objectForKey:@"RollNo"]];
+            
+            for (int j=0; j<aryStudentData.count; j++)
+            {
+                if ([[aryStudentData valueForKey:@"rollnum"] containsObject:getval])
+                {
+                }
+                else
+                {
+                    if (![[tmpary valueForKey:@"rollnum"] containsObject:getval])
+                    {
+                        NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
+                        [dic setObject:[[arySaveTag objectAtIndex:i]objectForKey:@"MemberId"] forKey:@"memberId"];
+                        [dic setObject:@"Present" forKey:@"absent"];
+                        [dic setObject:[[arySaveTag objectAtIndex:i]objectForKey:@"RollNo"] forKey:@"rollnum"];
+                        [tmpary addObject:dic];
+                    }
+                }
+            }
+        }
+        
+    }
+
+    NSMutableArray *array = [NSMutableArray array];
+    [array addObjectsFromArray:aryStudentData];
+    [array addObjectsFromArray:tmpary];
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
-    // NSLog(@"dic=%@",dicCurrentUser);
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
-    
-    // StandardID=5bab2f94-61b6-46b5-9cec-e3023b118f91
-    // DivisionID=44de9eed-96af-43cf-a5ee-7cc63d9753ed
-    // ClientID=d79901a7-f9f7-4d47-8e3b-198ede7c9f58
-    // InstituteID=4f4bbf0e-858a-46fa-a0a7-bf116f537653
-    // AttendenceBy=30032284-31d1-4ba6-8ef4-54edb8e223aa (userid)
-    // DateOfAttendence=03-07-2017 (current lable date)
-    // BatchID=d58baefe-a45b-4631-bde7-69ec46ab5727
-    // DayOfAttendence_Term=Tuesday (Current day)
-    //  TotalStudents=2 (array count)
-    
-    // PresentStudents=2
-    // AbsentStudents=0
-    // OnLeaveStudents=0
-    
-    // IsWorkingDay=true
-    //StudentData=1eb82c3e-6b09-405a-8d8e-2d952ea05efa,Present#11748821-928d-48f9-91bf -256ead87bad5,Present#
-    
-    /*  On 22/03/17, at 7:15 PM, Darshan Kachhadiya wrote:
-     >  public static final String ABSENT="Absent";
-     public static final String LEAVE="Leave";
-     public static final String PRESENT="Present";
-     public static final String SICKLEAVE="Sick Leave";*/
-    
-    // strDivId = [[subAry objectAtIndex:indexPath.row] objectForKey:@"DivisionID"];
-    // strGradeId = [[subAry objectAtIndex:indexPath.row] objectForKey:@"GradeID"];
-    
-    // [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"BatchID"]] forKey:@"BeachID"];
-    
-    NSLog(@"sub=%@",subAry);
-    
-    NSLog(@"str =%@ %@",strDivId,strGradeId);
     
     [param setValue:strGradeId forKey:@"StandardID"];
     [param setValue:strDivId forKey:@"DivisionID"];
-    
     
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
@@ -730,28 +949,25 @@ int cn =0;
     [param setValue:[NSString stringWithFormat:@"%@",[Utility convertDateFtrToDtaeFtr:@"dd-MM-yyyy" newDateFtr:@"EEEE" date:_lbDate.text]] forKey:@"DayOfAttendence_Term"];
     [param setValue:[NSString stringWithFormat:@"%lu",(unsigned long)aryTable.count] forKey:@"TotalStudents"];
     
-    NSLog(@"data=%@",arySaveTag);
-    //  presentcnt,absentcnt,leavecnt
+    NSLog(@"array=%@",array);
     
-    
-    for (int i=0 ;i<arySaveTag.count; i++)
+    for (int i=0 ;i<array.count; i++)
     {
-        NSMutableDictionary *d = [arySaveTag objectAtIndex:i];
+        NSMutableDictionary *d = [array objectAtIndex:i];
         
-        if ([[d objectForKey:@"Present"] isEqualToString:@"1"])
-        {
-            presentcnt++;
-        }
-        if ([[d objectForKey:@"Absent"] isEqualToString:@"1"])
+        if ([[d objectForKey:@"absent"] isEqualToString:@"Absent"])
         {
             absentcnt++;
         }
-        if ([[d objectForKey:@"Leave"] isEqualToString:@"1"] || [[d objectForKey:@"sick Leave"] isEqualToString:@"1"])
+        if ([[d objectForKey:@"absent"] isEqualToString:@"Leave"])
         {
             leavecnt++;
         }
+        if ([[d objectForKey:@"absent"] isEqualToString:@"Present"])
+        {
+            presentcnt++;
+        }
     }
-    NSLog(@"present =%d,absent=%d save sick=%d",presentcnt,absentcnt,leavecnt);
     
     [param setValue:[NSString stringWithFormat:@"%d",presentcnt] forKey:@"PresentStudents"];
     [param setValue:[NSString stringWithFormat:@"%d",absentcnt] forKey:@"AbsentStudents"];
@@ -766,50 +982,33 @@ int cn =0;
         [param setValue:@"true" forKey:@"IsWorkingDay"];
     }
     
-    // public static final String ABSENT="Absent";
-    //  public static final String LEAVE="Leave";
-    // public static final String PRESENT="Present";
-    // public static final String SICKLEAVE="Sick Leave";
-    
-    // [param setValue:[NSString stringWithFormat:@"%@",divid] forKey:@"StudentData"];
-    //
     NSMutableArray *arytmp = [[NSMutableArray alloc]init];
     
-    for (int i=0 ;i<arySaveTag.count; i++)
+    for (int i=0 ;i<array.count; i++)
     {
         NSMutableDictionary *tmpDic = [[NSMutableDictionary alloc]init];
         
-        NSMutableDictionary *d = [arySaveTag objectAtIndex:i];
+        NSMutableDictionary *d = [array objectAtIndex:i];
         
-        if ([[d objectForKey:@"Present"] isEqualToString:@"1"])
-        {
-            [tmpDic setObject:@"Present" forKey:@"present"];
-            [tmpDic setObject:[d objectForKey:@"MemberId"] forKey:@"memberId"];
-            [arytmp addObject:tmpDic];
-        }
-        if ([[d objectForKey:@"Absent"] isEqualToString:@"1"])
+        if ([[d objectForKey:@"absent"] isEqualToString:@"Absent"])
         {
             [tmpDic setObject:@"Absent" forKey:@"present"];
-            [tmpDic setObject:[d objectForKey:@"MemberId"] forKey:@"memberId"];
+            [tmpDic setObject:[d objectForKey:@"memberId"] forKey:@"memberId"];
             [arytmp addObject:tmpDic];
         }
-        if ([[d objectForKey:@"Leave"] isEqualToString:@"1"])
+        if ([[d objectForKey:@"absent"] isEqualToString:@"Leave"])
         {
             [tmpDic setObject:@"Leave" forKey:@"present"];
-            [tmpDic setObject:[d objectForKey:@"MemberId"] forKey:@"memberId"];
+            [tmpDic setObject:[d objectForKey:@"memberId"] forKey:@"memberId"];
             [arytmp addObject:tmpDic];
         }
-        if ([[d objectForKey:@"sick Leave"] isEqualToString:@"1"])
+        if ([[d objectForKey:@"absent"] isEqualToString:@"Present"])
         {
-            [tmpDic setObject:@"Sick Leave" forKey:@"present"];
-            [tmpDic setObject:[d objectForKey:@"MemberId"] forKey:@"memberId"];
+            [tmpDic setObject:@"Present" forKey:@"present"];
+            [tmpDic setObject:[d objectForKey:@"memberId"] forKey:@"memberId"];
             [arytmp addObject:tmpDic];
         }
     }
-    
-    //StudentData=1eb82c3e-6b09-405a-8d8e-2d952ea05efa,Present#11748821-928d-48f9-91bf-256ead87bad5,Present#
-    
-    NSLog(@"temp=%@",arytmp);
     NSMutableArray *aryStore = [[NSMutableArray alloc]init];
     NSString *strStud;
     for (NSMutableDictionary *d in arytmp)
@@ -818,65 +1017,41 @@ int cn =0;
         [aryStore addObject:strStud];
     }
     NSString *st = [aryStore componentsJoinedByString:@""];
-
-    st = [st substringToIndex:[st length] - 1];
-    
-    NSLog(@"temp=%@",st);
     
     [param setValue:[NSString stringWithFormat:@"%@",st] forKey:@"StudentData"];
     [param setValue:@"" forKey:@"OldStudAtteRegiMasterID"];
     
-    //
     [ProgressHUB showHUDAddedTo:self.view];
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
          [ProgressHUB hideenHUDAddedTo:self.view];
          if(!error)
          {
-             // NSLog(@"data=%@",dicResponce);
-             
              NSString *strArrd=[dicResponce objectForKey:@"d"];
              NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
-             NSMutableDictionary *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
              
-             aryTable = [arrResponce objectForKey:@"Table"];
-             
-             if([aryTable count] != 0)
+             if([arrResponce count] != 0)
              {
-                 NSString *strStatus=[arrResponce objectForKey:@"message"];
-                 if([strStatus isEqualToString:@"No Data Found"])
+                 NSString *strMsg = [[arrResponce objectAtIndex:0]objectForKey:@"message"];
+                 NSArray *ary = [strMsg componentsSeparatedByString:@"#"];
+                 NSString *strStatus=[ary objectAtIndex:0];
+                 
+                 if([strStatus isEqualToString:@"Attendence save successfully,"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[arrResponce objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:strStatus delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
                  {
-                     
-                     for (int i=0; i<aryTable.count; i++)
-                     {
-                         NSMutableDictionary *d = [[NSMutableDictionary alloc]init];
-                         
-                         
-                         [d setObject:[[aryTable objectAtIndex:i]objectForKey:@"MemberID"] forKey:@"MemberId"];
-                         [d setObject:[[aryTable objectAtIndex:i]objectForKey:@"FullName"]  forKey:@"Name"];
-                         [d setObject:@"1" forKey:@"Present"];
-                         [d setObject:@"0" forKey:@"Absent"];
-                         [d setObject:@"0" forKey:@"sick Leave"];
-                         [d setObject:@"0" forKey:@"Leave"];
-                         [arySaveTag addObject:d];
-                     }
-                     
-                     [AttendanceTableView reloadData];
-                     
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:strStatus delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
                  }
              }
              else
              {
                  UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"No Data Found" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                  [alrt show];
-                 
-                 [arySaveTag removeAllObjects];
-                 [AttendanceTableView reloadData];
                  
              }
          }
@@ -886,6 +1061,7 @@ int cn =0;
              [alrt show];
          }
      }];
+
     
     
 }

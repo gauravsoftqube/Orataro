@@ -62,6 +62,12 @@
     //happy gram 3
     
     
+    if (ad.checkListelection == 0)
+    {
+        [HomeBtn setBackgroundImage:[UIImage imageNamed:@"dash_home"] forState:UIControlStateNormal];
+        aMenuBtn.hidden = NO;
+        [NavigationTitle setText:@"List Selection (Name)"];
+    }
     if (ad.checkListelection == 1)
     {
         [HomeBtn setBackgroundImage:[UIImage imageNamed:@"dash_home"] forState:UIControlStateNormal];
@@ -194,6 +200,10 @@
     
     //happy gram 3
     
+    if (ad.checkListelection == 0)
+    {
+        
+    }
     if (ad.checkListelection == 1)
     {
         StudentListViewController *s = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"StudentListViewController"];

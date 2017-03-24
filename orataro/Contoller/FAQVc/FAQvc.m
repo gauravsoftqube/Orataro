@@ -134,7 +134,7 @@
     NSString *stringWithoutSpaces1 = [stringWithoutSpaces
                                       stringByReplacingOccurrencesOfString:@")" withString:@""];
     
-    CGSize size = [stringWithoutSpaces1 sizeWithFont:[UIFont fontWithName:@"HelveticaNeueLTStd-Roman" size:17] constrainedToSize:CGSizeMake([[UIScreen mainScreen]bounds].size.width, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize size = [stringWithoutSpaces1 sizeWithFont:[UIFont fontWithName:@"HelveticaNeueLTStd-Roman" size:14] constrainedToSize:CGSizeMake([[UIScreen mainScreen]bounds].size.width, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
     
     
     if ([[hideshowary objectAtIndex:indexPath.section] boolValue])

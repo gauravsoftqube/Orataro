@@ -47,6 +47,7 @@
 #import "CreateReminderVc.h"
 #import "AppDelegate.h"
 #import "RightCell.h"
+#import "Global.h"
 
 @interface DEMOMenuViewController ()
 {
@@ -179,8 +180,19 @@
         case 5:
             
         {
-            AttendanceVC  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AttendanceVC"];
-            navigationController.viewControllers = @[homeViewController];
+            if ([Utility isInterNetConnectionIsActive] == false)
+            {
+                UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alrt show];
+                [ProgressHUB hideenHUDAddedTo:self.view];
+                return;
+            }
+            else
+            {
+                AttendanceVC  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AttendanceVC"];
+                navigationController.viewControllers = @[homeViewController];
+            }
+
             break;
         }
         case 6:
