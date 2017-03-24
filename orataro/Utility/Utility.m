@@ -324,13 +324,26 @@
 
 +(BOOL)validatePhoneLength:(NSString *)string {
     
+    
     NSString *value = [string stringByTrimmingCharactersInSet:[NSCharacterSet  whitespaceCharacterSet]];
     
     if([value length]  == 10) {
-        return NO;
+        NSCharacterSet *alphanumericSet = [NSCharacterSet alphanumericCharacterSet];
+        NSCharacterSet *numberSet = [NSCharacterSet decimalDigitCharacterSet];
+        BOOL isAplhaNumericOnly= [[string stringByTrimmingCharactersInSet:alphanumericSet] isEqualToString:@""] && ![[string stringByTrimmingCharactersInSet:numberSet] isEqualToString:@""];
+        
+        return isAplhaNumericOnly;
     }
     
-    return YES;
+    NSCharacterSet *alphanumericSet = [NSCharacterSet alphanumericCharacterSet];
+    NSCharacterSet *numberSet = [NSCharacterSet decimalDigitCharacterSet];
+    BOOL isAplhaNumericOnly= [[string stringByTrimmingCharactersInSet:alphanumericSet] isEqualToString:@""] && ![[string stringByTrimmingCharactersInSet:numberSet] isEqualToString:@""];
+    
+    if(isAplhaNumericOnly == NO) {
+        return YES;
+    }
+    
+    return isAplhaNumericOnly;
 }
 
 +(BOOL)validatePassword:(NSString *)string{
@@ -619,7 +632,7 @@
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setValue:@"application/json; charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
-    
+    [request setTimeoutInterval:150000];
     [request setValue:@"json" forHTTPHeaderField:@"dataType"];
     [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[jsonData length]] forHTTPHeaderField:@"Content-Length"];
     [request setHTTPBody: jsonData];

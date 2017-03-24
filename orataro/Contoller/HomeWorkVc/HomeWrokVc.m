@@ -300,7 +300,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UIViewController *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"SubjectVc"];
+    SubjectVc *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"SubjectVc"];
+    vc.dicSelect_detail=[[[arrHomeworkList objectAtIndex:indexPath.section]objectForKey:@"items"]objectAtIndex:indexPath.row];
+    vc.passVal=@"Homework";
     [self.navigationController pushViewController:vc animated:YES];
 }
 
