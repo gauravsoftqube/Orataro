@@ -111,6 +111,12 @@ int multipleUser = 0;
         [alrt show];
         return;
     }
+    if ([Utility validatePhoneLength:_aPhonenumberTextField.text])
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:PHONE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
     if ([Utility validateBlankField:_aPasswordTextField.text])
     {
         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:PASSWORD_EMPTY delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];

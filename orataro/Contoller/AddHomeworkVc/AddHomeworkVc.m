@@ -57,6 +57,7 @@
 
 #pragma mark - add HomeWork API
 
+
 -(void)apiCallFor_createHomework
 {
     if ([Utility isInterNetConnectionIsActive] == false) {
@@ -73,11 +74,8 @@
     [param setValue:@"" forKey:@"EditID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"WallID"]] forKey:@"WallID"];
     [param setValue:[NSString stringWithFormat:@"%@",self.txtTitle.text] forKey:@"title"];
-    
     [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelectListSelection objectForKey:@"GradeID"]] forKey:@"GradeID"];
-    
     [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelectListSelection objectForKey:@"DivisionID"]] forKey:@"DivisionID"];
-    
     [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelectListSelection objectForKey:@"SubjectID"]] forKey:@"SubjectID"];
     
     
@@ -85,39 +83,37 @@
     NSDateFormatter *df=[[NSDateFormatter alloc]init];
     [df setDateFormat:@"MM-dd-yyyy"];
     NSString *strCurrentDate=[df stringFromDate:Date];
+    
     [param setValue:[NSString stringWithFormat:@"%@",strCurrentDate] forKey:@"DateOfHomeWork"];
-    
     [param setValue:[NSString stringWithFormat:@"%@",[Utility convertDateFtrToDtaeFtr:@"dd-MM-yy" newDateFtr:@"MM-dd-yyyy" date:self.txtEndDate.text]] forKey:@"DateOfFinish"];
-    
     [param setValue:[NSString stringWithFormat:@"%@",self.txtViewDescription.text] forKey:@"HomeWorksDetails"];
-    
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
-    
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
-    
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
-    
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
     
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"BatchID"]] forKey:@"BeachID"];
     
-    NSData *data = UIImagePNGRepresentation(_imgAttechedFile.image);
+    CGRect rect = CGRectMake(0,0,30,30);
+    UIGraphicsBeginImageContext( rect.size );
+    [_imgAttechedFile.image drawInRect:rect];
+    UIImage *picture1 = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    
+    
+    NSData *data = UIImagePNGRepresentation(picture1);
     const unsigned char *bytes = [data bytes];
     NSUInteger length = [data length];
     NSMutableArray *byteArray = [NSMutableArray array];
     for (NSUInteger i = 0; i < length; i++) {
         [byteArray addObject:[NSNumber numberWithUnsignedChar:bytes[i]]];
     }
-    
    
     [param setValue:byteArray forKey:@"File"];
-    
-    [param setValue:[NSString stringWithFormat:@"%@.jpg",[Utility randomImageGenerator]] forKey:@"FileName"];
-    
+    [param setValue:[NSString stringWithFormat:@"%@.png",[Utility randomImageGenerator]] forKey:@"FileName"];
     [param setValue:[NSString stringWithFormat:@"IMAGE"] forKey:@"FileType"];
-    
     [param setValue:[NSString stringWithFormat:@""] forKey:@"FileMineType"];
-    
     [ProgressHUB showHUDAddedTo:self.view];
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
@@ -204,8 +200,7 @@
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
-   UIImage *selectImage = info[UIImagePickerControllerOriginalImage];
-    //[self.btnAttachment setImage:selectImage forState:UIControlStateNormal];
+    UIImage *selectImage = info[UIImagePickerControllerOriginalImage];
     [_imgAttechedFile setImage:selectImage];
     [picker dismissViewControllerAnimated:YES completion:nil];
 }

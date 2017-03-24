@@ -145,7 +145,7 @@
 #pragma mark - Image Url
 
 #define apk_ImageUrl @"http://orataro.com/DataFiles"
-
+#define apk_ImageUrlFor_HomeworkDetail @"http://orataro.com"
 
 #pragma mark - Circular
 

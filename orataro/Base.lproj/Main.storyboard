@@ -6430,7 +6430,7 @@ Assign top space to both the buttons.</string>
                                 <rect key="frame" x="10" y="596" width="394" height="140"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gaurav S Tripathi" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2mo-IO-oVC">
-                                        <rect key="frame" x="0.0" y="95" width="394" height="30"/>
+                                        <rect key="frame" x="0.0" y="98" width="394" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="Ua3-uG-WCY"/>
                                         </constraints>
@@ -6438,26 +6438,38 @@ Assign top space to both the buttons.</string>
                                         <color key="textColor" red="0.15686274510000001" green="0.19215686269999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dash_profile" translatesAutoresizingMaskIntoConstraints="NO" id="QeK-Ev-dHY">
-                                        <rect key="frame" x="167" y="25" width="60" height="60"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="alc-zo-ovV">
+                                        <rect key="frame" x="157" y="10" width="80" height="80"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dash_profile" translatesAutoresizingMaskIntoConstraints="NO" id="QeK-Ev-dHY">
+                                                <rect key="frame" x="5" y="5" width="70" height="70"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="70" id="Qed-uY-ivv"/>
+                                                    <constraint firstAttribute="width" constant="70" id="ShO-X5-L8M"/>
+                                                </constraints>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="60" id="Qed-uY-ivv"/>
-                                            <constraint firstAttribute="width" constant="60" id="ShO-X5-L8M"/>
+                                            <constraint firstAttribute="height" constant="80" id="4VM-Hr-XwK"/>
+                                            <constraint firstAttribute="width" constant="80" id="6vW-1u-U5k"/>
+                                            <constraint firstItem="QeK-Ev-dHY" firstAttribute="centerX" secondItem="alc-zo-ovV" secondAttribute="centerX" id="qL1-pe-Pu0"/>
+                                            <constraint firstItem="QeK-Ev-dHY" firstAttribute="centerY" secondItem="alc-zo-ovV" secondAttribute="centerY" id="und-wQ-04K"/>
                                         </constraints>
-                                    </imageView>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="140" id="7NO-LI-CCe"/>
-                                    <constraint firstItem="QeK-Ev-dHY" firstAttribute="centerX" secondItem="dck-rw-ic4" secondAttribute="centerX" id="BNM-y8-f8B"/>
-                                    <constraint firstAttribute="bottom" secondItem="2mo-IO-oVC" secondAttribute="bottom" constant="15" id="RuG-VD-acm"/>
+                                    <constraint firstItem="alc-zo-ovV" firstAttribute="top" secondItem="dck-rw-ic4" secondAttribute="top" constant="10" id="Csa-gq-B3b"/>
+                                    <constraint firstAttribute="bottom" secondItem="2mo-IO-oVC" secondAttribute="bottom" constant="12" id="RuG-VD-acm"/>
                                     <constraint firstAttribute="trailing" secondItem="2mo-IO-oVC" secondAttribute="trailing" id="bAg-nu-ac3"/>
-                                    <constraint firstItem="2mo-IO-oVC" firstAttribute="top" secondItem="QeK-Ev-dHY" secondAttribute="bottom" constant="10" id="nxa-CL-QLI"/>
+                                    <constraint firstItem="alc-zo-ovV" firstAttribute="centerX" secondItem="dck-rw-ic4" secondAttribute="centerX" id="qNi-8S-ZX9"/>
                                     <constraint firstItem="2mo-IO-oVC" firstAttribute="leading" secondItem="dck-rw-ic4" secondAttribute="leading" id="we8-Pk-5M8"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vlk-8Z-sSv">
-                                <rect key="frame" x="10" y="155" width="394" height="45"/>
+                                <rect key="frame" x="10" y="160" width="394" height="45"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="testingpurpose" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fRq-UQ-Imv">
                                         <rect key="frame" x="8" y="0.0" width="386" height="45"/>
@@ -6485,7 +6497,7 @@ Assign top space to both the buttons.</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Play house B" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YuL-oh-jXQ">
-                                <rect key="frame" x="10" y="114" width="394" height="31"/>
+                                <rect key="frame" x="10" y="119" width="394" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="31" id="DUi-3g-B3P"/>
                                 </constraints>
@@ -6493,8 +6505,8 @@ Assign top space to both the buttons.</string>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy_video" translatesAutoresizingMaskIntoConstraints="NO" id="Hhe-dL-fBJ">
-                                <rect key="frame" x="10" y="219" width="40" height="40"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dash_calendar_blue" translatesAutoresizingMaskIntoConstraints="NO" id="Hhe-dL-fBJ">
+                                <rect key="frame" x="10" y="224" width="40" height="40"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="40" id="GYR-9M-Q7L"/>
@@ -6502,7 +6514,7 @@ Assign top space to both the buttons.</string>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="09/09/2016" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0gh-gv-khy">
-                                <rect key="frame" x="65" y="224" width="339" height="31"/>
+                                <rect key="frame" x="65" y="229" width="339" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="31" id="5wl-Hj-W2d"/>
                                 </constraints>
@@ -6510,13 +6522,16 @@ Assign top space to both the buttons.</string>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0Nh-tx-ziJ">
+                                <rect key="frame" x="10" y="272" width="394" height="316"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="0gh-gv-khy" secondAttribute="trailing" constant="10" id="0bx-VB-1kN"/>
                             <constraint firstItem="vlk-8Z-sSv" firstAttribute="leading" secondItem="UhJ-xu-9Wv" secondAttribute="leading" constant="10" id="Abz-zk-GY3"/>
                             <constraint firstItem="Hhe-dL-fBJ" firstAttribute="leading" secondItem="UhJ-xu-9Wv" secondAttribute="leading" constant="10" id="EGO-9S-m6v"/>
-                            <constraint firstItem="YuL-oh-jXQ" firstAttribute="top" secondItem="kj7-ce-OCS" secondAttribute="bottom" constant="-5" id="FBr-LP-ke9"/>
+                            <constraint firstItem="YuL-oh-jXQ" firstAttribute="top" secondItem="kj7-ce-OCS" secondAttribute="bottom" id="FBr-LP-ke9"/>
                             <constraint firstItem="dck-rw-ic4" firstAttribute="leading" secondItem="UhJ-xu-9Wv" secondAttribute="leading" constant="10" id="FWT-qn-wKP"/>
                             <constraint firstItem="0gh-gv-khy" firstAttribute="top" secondItem="vlk-8Z-sSv" secondAttribute="bottom" constant="24" id="KXf-q1-pzc"/>
                             <constraint firstAttribute="trailing" secondItem="YuL-oh-jXQ" secondAttribute="trailing" constant="10" id="LO3-fO-yyd"/>
@@ -6527,18 +6542,33 @@ Assign top space to both the buttons.</string>
                             <constraint firstAttribute="trailing" secondItem="kj7-ce-OCS" secondAttribute="trailing" constant="10" id="Zik-01-IGf"/>
                             <constraint firstItem="tRk-hX-iVV" firstAttribute="top" secondItem="UhJ-xu-9Wv" secondAttribute="top" id="bQ5-pO-kHz"/>
                             <constraint firstAttribute="trailing" secondItem="dck-rw-ic4" secondAttribute="trailing" constant="10" id="eSZ-a3-nfx"/>
+                            <constraint firstAttribute="trailing" secondItem="0Nh-tx-ziJ" secondAttribute="trailing" constant="10" id="eg6-Av-1Ud"/>
                             <constraint firstAttribute="trailing" secondItem="vlk-8Z-sSv" secondAttribute="trailing" constant="10" id="egB-2T-fe4"/>
                             <constraint firstItem="Ybl-aL-EZo" firstAttribute="top" secondItem="dck-rw-ic4" secondAttribute="bottom" id="fm8-ez-NPW"/>
                             <constraint firstItem="0gh-gv-khy" firstAttribute="leading" secondItem="Hhe-dL-fBJ" secondAttribute="trailing" constant="15" id="gcd-AU-iwN"/>
                             <constraint firstItem="kj7-ce-OCS" firstAttribute="top" secondItem="tRk-hX-iVV" secondAttribute="bottom" constant="10" id="gdc-2F-y0R"/>
+                            <constraint firstItem="0Nh-tx-ziJ" firstAttribute="top" secondItem="Hhe-dL-fBJ" secondAttribute="bottom" constant="8" id="l0b-sK-fIj"/>
+                            <constraint firstItem="0Nh-tx-ziJ" firstAttribute="leading" secondItem="UhJ-xu-9Wv" secondAttribute="leading" constant="10" id="mJH-nd-f6K"/>
                             <constraint firstItem="tRk-hX-iVV" firstAttribute="leading" secondItem="UhJ-xu-9Wv" secondAttribute="leading" id="nqF-ea-nLT"/>
                             <constraint firstItem="vlk-8Z-sSv" firstAttribute="top" secondItem="YuL-oh-jXQ" secondAttribute="bottom" constant="10" id="v5Y-Nh-HEu"/>
+                            <constraint firstItem="dck-rw-ic4" firstAttribute="top" secondItem="0Nh-tx-ziJ" secondAttribute="bottom" constant="8" id="xSF-Ww-noa"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="imgHomework" destination="0Nh-tx-ziJ" id="nng-4A-HzT"/>
+                        <outlet property="imgUser" destination="QeK-Ev-dHY" id="QY7-UM-hpl"/>
+                        <outlet property="lblDate" destination="0gh-gv-khy" id="msA-TS-xhi"/>
+                        <outlet property="lblDetail" destination="fRq-UQ-Imv" id="LKU-Fs-VQI"/>
+                        <outlet property="lblGradeDivision" destination="YuL-oh-jXQ" id="rpm-oa-lcY"/>
+                        <outlet property="lblTitle" destination="kj7-ce-OCS" id="Pli-uG-zxh"/>
+                        <outlet property="lblTitleHeader" destination="p2m-Oe-icD" id="DmC-xR-tKu"/>
+                        <outlet property="lblUserName" destination="2mo-IO-oVC" id="j6P-ct-y9d"/>
+                        <outlet property="vewUserImage" destination="alc-zo-ovV" id="Rgp-Ns-AVs"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QDG-xL-Ehe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4528" y="-346"/>
+            <point key="canvasLocation" x="4527.536231884058" y="-346.46739130434787"/>
         </scene>
         <!--Add Class Work Vc-->
         <scene sceneID="POy-Bi-d2L">
@@ -15591,6 +15621,7 @@ Assign top space to both the buttons.</string>
         <image name="checkboxunselected" width="64" height="64"/>
         <image name="classimg" width="64" height="64"/>
         <image name="close" width="64" height="64"/>
+        <image name="dash_calendar_blue" width="64" height="64"/>
         <image name="dash_circular" width="64" height="64"/>
         <image name="dash_division-1" width="64" height="64"/>
         <image name="dash_grade" width="64" height="64"/>
@@ -15604,7 +15635,6 @@ Assign top space to both the buttons.</string>
         <image name="down-arrow-12" width="32" height="32"/>
         <image name="downarrow" width="512" height="512"/>
         <image name="download_blue" width="64" height="64"/>
-        <image name="dummy_video" width="640" height="360"/>
         <image name="edit" width="24" height="24"/>
         <image name="emotion_01" width="33" height="33"/>
         <image name="fb_req_frnd_white" width="64" height="64"/>
