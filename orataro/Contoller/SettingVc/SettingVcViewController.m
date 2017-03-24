@@ -9,10 +9,11 @@
 #import "SettingVcViewController.h"
 #import "REFrostedViewController.h"
 #import "AppDelegate.h"
+#import "Global.h"
 
 @interface SettingVcViewController ()
 {
-int c2;
+    int c2;
     AppDelegate *app;
 }
 @end
@@ -25,7 +26,7 @@ int ct1 =0;
 {
     [super viewDidLoad];
     
-
+    
     
     app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     
@@ -39,6 +40,51 @@ int ct1 =0;
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    
+    NSArray *arrSetting=[DBOperation selectData:[NSString stringWithFormat:@"Select * from Setting"]];
+
+    if([arrSetting count] != 0)
+    {
+        NSDictionary *dic=[arrSetting objectAtIndex:0];
+        if([[dic objectForKey:@"Notif_Sound"] integerValue] == 1)
+        {
+            [aSoundBtn setBackgroundImage:[UIImage imageNamed:@"tick_mark"] forState:UIControlStateNormal];
+            ct = 1;
+        }
+        else
+        {
+            [aSoundBtn setBackgroundImage:[UIImage imageNamed:@"uncheck"] forState:UIControlStateNormal];
+            ct = 0;
+        }
+        
+        if([[dic objectForKey:@"Notif_Vibration"] integerValue] == 1)
+        {
+            [aViratBtn setBackgroundImage:[UIImage imageNamed:@"tick_mark"] forState:UIControlStateNormal];
+            ct1 = 1;
+        }
+        else
+        {
+            [aViratBtn setBackgroundImage:[UIImage imageNamed:@"uncheck"] forState:UIControlStateNormal];
+            ct1 = 0;
+        }
+    }
+    else
+    {
+        
+        [aSoundBtn setBackgroundImage:[UIImage imageNamed:@"uncheck"] forState:UIControlStateNormal];
+        ct = 0;
+        
+        [aViratBtn setBackgroundImage:[UIImage imageNamed:@"uncheck"] forState:UIControlStateNormal];
+        ct1 = 0;
+        
+        
+        [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Setting(Notif_Sound,Notif_Vibration) values (0,0)"]];
+    }
+}
+
 #pragma mark - button action
 
 - (IBAction)MenuBtnClicked:(id)sender
@@ -62,11 +108,14 @@ int ct1 =0;
 {
     if (ct == 0)
     {
-        [aSoundBtn setBackgroundImage:[UIImage imageNamed:@"uncheck"] forState:UIControlStateNormal];
+        [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE Setting SET Notif_Sound = 1  WHERE id = 1"]];
+        [aSoundBtn setBackgroundImage:[UIImage imageNamed:@"tick_mark"] forState:UIControlStateNormal];
         ct = 1;
     }
-    else{
-         [aSoundBtn setBackgroundImage:[UIImage imageNamed:@"tick_mark"] forState:UIControlStateNormal];
+    else
+    {
+        [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE Setting SET Notif_Sound = 0  WHERE id = 1"]];
+        [aSoundBtn setBackgroundImage:[UIImage imageNamed:@"uncheck"] forState:UIControlStateNormal];
         ct = 0;
     }
 }
@@ -75,18 +124,20 @@ int ct1 =0;
 {
     if (ct1 == 0)
     {
-        [aViratBtn setBackgroundImage:[UIImage imageNamed:@"uncheck"] forState:UIControlStateNormal];
+        [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE Setting SET Notif_Vibration = 1  WHERE id = 1"]];
+        [aViratBtn setBackgroundImage:[UIImage imageNamed:@"tick_mark"] forState:UIControlStateNormal];
         ct1 = 1;
     }
-    else{
-        [aViratBtn setBackgroundImage:[UIImage imageNamed:@"tick_mark"] forState:UIControlStateNormal];
+    else
+    {
+        [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE Setting SET Notif_Vibration = 0  WHERE id = 1"]];
+        [aViratBtn setBackgroundImage:[UIImage imageNamed:@"uncheck"] forState:UIControlStateNormal];
         ct1 = 0;
     }
-
 }
 - (IBAction)btnHomeClicked:(id)sender
 {
-     [self.frostedViewController hideMenuViewController];
+    [self.frostedViewController hideMenuViewController];
     
     UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"OrataroVc"];
     
@@ -95,14 +146,14 @@ int ct1 =0;
 
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 
 @end

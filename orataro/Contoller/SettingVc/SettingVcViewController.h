@@ -15,4 +15,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *aViratBtn;
 @property (weak, nonatomic) IBOutlet UIButton *aSoundBtn;
 
+@property (weak, nonatomic) IBOutlet UILabel *lblHeaderTitle;
+
+
 @end

@@ -10,5 +10,7 @@
 
 @interface FAQCustomeCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *aTextLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *img_Height;
+@property (weak, nonatomic) IBOutlet UIImageView *imgName;
 
 @end
