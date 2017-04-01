@@ -120,6 +120,13 @@
 #import "UITextView+Placeholder.h"
 #import "HomeWrokVc.h"
 #import "ClassworkVC.h"
+#import "YTPlayerView.h"
+
+
+#pragma mark - YOUTube Video Key
+
+#define YouTubeVideo_Key  @"SII1LZqIAas"
+
 
 #pragma mark - Api Url And Name List
 
@@ -177,6 +184,16 @@
 #define apk_attendance  @"apk_attendance.asmx"
 #define apk_AttendanceListForTeacher_action @"AttendanceListForTeacher"
 #define apk_SaveAttendance @"SaveAttendance"
+
+
+#pragma mark -  PTCommunication
+#define apk_ptcommunication  @"apk_ptcommunication.asmx"
+#define apk_PTCommunicationGetStudentList_action @"PTCommunicationGetStudentList"
+#define apk_PTCommunicationGetTeacherList_action @"PTCommunicationGetTeacherList"
+#define apk_CreateNewPTCommnunication_action @"CreateNewPTCommnunication"
+
+#define apk_GetPTCommunicationList_action @"GetPTCommunicationList"
+
 
 #endif /* Global_h */
 

@@ -10,5 +10,9 @@
 
 @interface HelpDeskVc : UIViewController
 - (IBAction)BackBtnClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *btnPhoneNo;
+- (IBAction)btnPhoneNo:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *btnSupportURL;
+- (IBAction)btnSupportURL:(id)sender;
 
 @end

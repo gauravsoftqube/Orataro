@@ -10,6 +10,9 @@
 
 @interface PTCommuniVc : UIViewController<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource>
 
+@property (strong, nonatomic) NSMutableDictionary *dicSelectedList;
+@property (strong, nonatomic) NSString *strSelectMemberID;
+
 @property (weak, nonatomic) IBOutlet UIView *aPopupMainView;
 - (IBAction)CloseBtnClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIView *aAddBtnouterView;

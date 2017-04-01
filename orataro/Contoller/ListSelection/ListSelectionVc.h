@@ -10,7 +10,7 @@
 
 @interface ListSelectionVc : UIViewController<UITableViewDelegate,UITableViewDataSource>
 
-
+@property (weak, nonatomic) IBOutlet UILabel *lblHeaderTitle;
 @property (weak, nonatomic) IBOutlet UITableView *aListTableView;
 - (IBAction)BackBtnClicked:(id)sender;
 - (IBAction)MenuBtnClicked:(id)sender;

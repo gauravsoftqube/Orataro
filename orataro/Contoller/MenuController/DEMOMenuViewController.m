@@ -196,10 +196,19 @@
             break;
         }
         case 6:
-            
         {
-            ListSelectionVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
-            navigationController.viewControllers = @[homeViewController];
+            ag.checkListelection = 1;
+            if([[Utility getMemberType] isEqualToString:@"Student"])
+            {
+                StudentListViewController  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"StudentListViewController"];
+                navigationController.viewControllers = @[homeViewController];
+                
+            }
+            else
+            {
+                ListSelectionVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
+                navigationController.viewControllers = @[homeViewController];
+            }
             break;
         }
         case 7:

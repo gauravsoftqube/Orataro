@@ -42,6 +42,13 @@
     aListTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     // Do any additional setup after loading the view.
+    
+    NSArray *arr=[[[Utility getCurrentUserDetail]objectForKey:@"FullName"] componentsSeparatedByString:@" "];
+    if (arr.count != 0) {
+        self.lblHeaderTitle.text=[NSString stringWithFormat:@"List Selection (%@)",[arr objectAtIndex:0]];
+    }else{
+        self.lblHeaderTitle.text=[NSString stringWithFormat:@"List Selection"];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -79,7 +86,7 @@
         [HomeBtn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
         aMenuBtn.hidden = YES;
         [NavigationTitle setText:@"List Selection (name)"];
-
+        
     }
     if (ad.checkListelection == 3)
     {
@@ -94,12 +101,31 @@
         [NavigationTitle setText:@"List Selection (name)"];
     }
     
-    arrList = [[NSMutableArray alloc]init];
     
-    [self apiCallFor_getList];
+    
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        arrList = [[NSMutableArray alloc]init];
+        arrList=[DBOperation selectData:[NSString stringWithFormat:@"select * from SelectionList"]];
+        [self.aListTableView reloadData];
+    }
+    else
+    {
+        arrList=[DBOperation selectData:[NSString stringWithFormat:@"select * from SelectionList"]];
+        if(arrList.count == 0)
+        {
+            [self apiCallFor_getList:@"1"];
+        }
+        else
+        {
+            [self apiCallFor_getList:@"0"];
+        }
+    }
 }
 
--(void)apiCallFor_getList
+#pragma mark - apiCall
+
+-(void)apiCallFor_getList:(NSString *)strInternet
 {
     if ([Utility isInterNetConnectionIsActive] == false) {
         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -117,7 +143,11 @@
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
     [param setValue:@"Teacher" forKey:@"Role"];
     
-    [ProgressHUB showHUDAddedTo:self.view];
+    if([strInternet isEqualToString:@"1"])
+    {
+        [ProgressHUB showHUDAddedTo:self.view];
+    }
+    
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
          [ProgressHUB hideenHUDAddedTo:self.view];
@@ -138,7 +168,19 @@
                  }
                  else
                  {
+                     arrList = [[NSMutableArray alloc]init];
                      arrList = [arrResponce mutableCopy];
+                     [DBOperation executeSQL:[NSString stringWithFormat:@"DELETE FROM SelectionList"]];
+                     for (NSMutableDictionary *dic in arrList) {
+                         NSString *Division=[dic objectForKey:@"Division"];
+                         NSString *DivisionID=[dic objectForKey:@"DivisionID"];
+                         NSString *Grade=[dic objectForKey:@"Grade"];
+                         NSString *GradeID=[dic objectForKey:@"GradeID"];
+                         NSString *Subject=[dic objectForKey:@"Subject"];
+                         NSString *SubjectID=[dic objectForKey:@"SubjectID"];
+                         
+                         [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO SelectionList(Division,DivisionID,Grade,GradeID,Subject,SubjectID)values('%@','%@','%@','%@','%@','%@')",Division,DivisionID,Grade,GradeID,Subject,SubjectID]];
+                     }
                      [self.aListTableView reloadData];
                  }
              }
@@ -174,7 +216,7 @@
     }
     else
     {
-         cell.backgroundColor = [UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0];
+        cell.backgroundColor = [UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
@@ -207,6 +249,7 @@
     if (ad.checkListelection == 1)
     {
         StudentListViewController *s = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"StudentListViewController"];
+        s.dicSelectedList=[arrList objectAtIndex:indexPath.row];
         [self.navigationController pushViewController:s animated:YES];
     }
     if (ad.checkListelection == 2)
@@ -223,10 +266,10 @@
     if (ad.checkListelection == 4)
     {
         AddClassWorkVc  *vc1 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddClassWorkVc"];
-         vc1.dicSelectListSelection=[arrList objectAtIndex:indexPath.row];
+        vc1.dicSelectListSelection=[arrList objectAtIndex:indexPath.row];
         [self.navigationController pushViewController:vc1 animated:YES];
     }
-   
+    
 }
 
 #pragma mark - button action
@@ -255,17 +298,17 @@
 - (IBAction)HomeBtnClicked:(id)sender
 {
     
-//    UIImage* checkImage = [UIImage imageNamed:@"back"];
-//    NSData *checkImageData = UIImagePNGRepresentation(checkImage);
-//    NSData *propertyImageData = UIImagePNGRepresentation([HomeBtn currentBackgroundImage]);
-//    if ([checkImageData isEqualToData:propertyImageData])
-//    {
-//        [self.navigationController popViewControllerAnimated:YES];
-//    }
-//    else
-//    {
-//        
-//    }
+    //    UIImage* checkImage = [UIImage imageNamed:@"back"];
+    //    NSData *checkImageData = UIImagePNGRepresentation(checkImage);
+    //    NSData *propertyImageData = UIImagePNGRepresentation([HomeBtn currentBackgroundImage]);
+    //    if ([checkImageData isEqualToData:propertyImageData])
+    //    {
+    //        [self.navigationController popViewControllerAnimated:YES];
+    //    }
+    //    else
+    //    {
+    //
+    //    }
 }
 
 - (IBAction)btnHomeClicked:(id)sender
@@ -307,6 +350,6 @@
     {
         [self.navigationController popViewControllerAnimated:YES];
     }
-   
+    
 }
 @end

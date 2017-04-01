@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YTPlayerView.h"
 
 @interface AboutUsVc : UIViewController
 @property (weak, nonatomic) IBOutlet UITextView *aTextview;
@@ -15,5 +16,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *aTextviewHeight;
 @property (weak, nonatomic) IBOutlet UIView *aVideoView;
 - (IBAction)BackBtnClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *lblTitleHeader;
+@property (weak, nonatomic) IBOutlet YTPlayerView *viewTYPlayer;
 
 @end

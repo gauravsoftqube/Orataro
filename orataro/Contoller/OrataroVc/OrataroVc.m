@@ -47,7 +47,6 @@
     self.headerImageViewHeight.constant = 100;
     [self adjustContentViewHeight];
     
-    NSLog(@"data=%lu",(unsigned long)ary.count);
     
     for (int i=0; i<ary.count; i++)
     {
@@ -61,11 +60,6 @@
             NSLog(@"val1 is=%d",i);
         }
     }
-    
-    NSLog(@"ary count=%lu",ary.count/3);
-    
-    //[self.contentView setBackgroundColor:[UIColor orangeColor]];
-    
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     
@@ -341,8 +335,17 @@
         case 6:
             
         {
-            UIViewController  *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
-            [self.navigationController pushViewController:vc animated:YES];            break;
+            if([[Utility getMemberType] isEqualToString:@"Student"])
+            {
+                UIViewController  *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"StudentListViewController"];
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            else
+            {
+                UIViewController  *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+                break;
         }
         case 7:
             

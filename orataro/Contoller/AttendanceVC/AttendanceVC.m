@@ -314,6 +314,7 @@ int cn =0;
     }
     else
     {
+        
         [self SaveAttendance:NO];
     }
 }
