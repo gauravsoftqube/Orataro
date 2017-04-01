@@ -179,6 +179,7 @@
 		C36DD1C61E409C120011221E /* ListSelectionVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C36DD1C51E409C120011221E /* ListSelectionVc.m */; };
 		C36DD1CB1E409CB30011221E /* ListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C36DD1C91E409CB30011221E /* ListCell.m */; };
 		C36DD1CC1E409CB30011221E /* ListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C36DD1CA1E409CB30011221E /* ListCell.xib */; };
+		C371DFF61E8D323800276AB4 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C371DFF51E8D323800276AB4 /* AssetsLibrary.framework */; };
 		C3741FD81E4C9A3800BFFA23 /* ReminderVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C3741FD71E4C9A3800BFFA23 /* ReminderVc.m */; };
 		C3741FDC1E4CA29400BFFA23 /* AboutOrataroVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C3741FDB1E4CA29400BFFA23 /* AboutOrataroVc.m */; };
 		C3741FE01E4CAE6500BFFA23 /* HelpDeskVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C3741FDF1E4CAE6500BFFA23 /* HelpDeskVc.m */; };
@@ -546,6 +547,7 @@
 		C36DD1C81E409CB30011221E /* ListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListCell.h; sourceTree = "<group>"; };
 		C36DD1C91E409CB30011221E /* ListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListCell.m; sourceTree = "<group>"; };
 		C36DD1CA1E409CB30011221E /* ListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListCell.xib; sourceTree = "<group>"; };
+		C371DFF51E8D323800276AB4 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		C3741FD61E4C9A3800BFFA23 /* ReminderVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderVc.h; sourceTree = "<group>"; };
 		C3741FD71E4C9A3800BFFA23 /* ReminderVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderVc.m; sourceTree = "<group>"; };
 		C3741FDA1E4CA29400BFFA23 /* AboutOrataroVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutOrataroVc.h; sourceTree = "<group>"; };
@@ -630,6 +632,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C371DFF61E8D323800276AB4 /* AssetsLibrary.framework in Frameworks */,
 				C36CE4F01E71203F00DC3DC9 /* libsqlite3.tbd in Frameworks */,
 				C360CD3E1E4B480C00761ABE /* CoreGraphics.framework in Frameworks */,
 				C360CD3C1E4B480500761ABE /* Foundation.framework in Frameworks */,
@@ -749,7 +752,6 @@
 				C36B58611E5EE6B000DE7464 /* ProjectVc */,
 				C36B58581E5ED94500DE7464 /* ScoolGroupVc */,
 				C36B58541E5EC53A00DE7464 /* ChangePasswordVc */,
-				C36B58481E5EA4CC00DE7464 /* DisplayTitleVc */,
 				C35C665A1E5DC23E007EAF7D /* ContactUsVc */,
 				C35C66561E5DAE31007EAF7D /* NoteDescVc */,
 				C35C664F1E5D978F007EAF7D /* ChatVc */,
@@ -764,10 +766,8 @@
 				C35C07241E4839AD004C55EB /* AttendanceVC */,
 				C369E6E11E5AFA3A0048D601 /* RegisterOtpVC */,
 				C364D91B1E56D93500CE72DC /* FriendVc */,
-				C364D9171E56D48D00CE72DC /* BlogDetailVc */,
 				C364D9131E56C81D00CE72DC /* BlogVc */,
 				C36D39541E55D12C001A445E /* MessageVc */,
-				C36D39481E558C12001A445E /* PagesVc */,
 				C36724741E546CBB007E9326 /* MyProfileVc */,
 				C381726C1E518722004AB189 /* FAQVc */,
 				C38172681E517D5B004AB189 /* SettingVc */,
@@ -1088,6 +1088,7 @@
 		C360CD381E4B47FD00761ABE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C371DFF51E8D323800276AB4 /* AssetsLibrary.framework */,
 				C36CE4EF1E71203F00DC3DC9 /* libsqlite3.tbd */,
 				C360CD3D1E4B480C00761ABE /* CoreGraphics.framework */,
 				C360CD3B1E4B480500761ABE /* Foundation.framework */,
@@ -1176,6 +1177,7 @@
 		C364D9131E56C81D00CE72DC /* BlogVc */ = {
 			isa = PBXGroup;
 			children = (
+				C364D9171E56D48D00CE72DC /* BlogDetailVc */,
 				C364D9141E56C8EF00CE72DC /* BlogVc.h */,
 				C364D9151E56C8EF00CE72DC /* BlogVc.m */,
 			);
@@ -1188,7 +1190,8 @@
 				C364D9181E56D54600CE72DC /* BlogDetailVc.h */,
 				C364D9191E56D54600CE72DC /* BlogDetailVc.m */,
 			);
-			path = BlogDetailVc;
+			name = BlogDetailVc;
+			path = ../BlogDetailVc;
 			sourceTree = "<group>";
 		};
 		C364D91B1E56D93500CE72DC /* FriendVc */ = {
@@ -1309,6 +1312,8 @@
 			children = (
 				C36724751E546CFB007E9326 /* MyProfileVc.h */,
 				C36724761E546CFB007E9326 /* MyProfileVc.m */,
+				C36B58481E5EA4CC00DE7464 /* DisplayTitleVc */,
+				C36D39481E558C12001A445E /* PagesVc */,
 			);
 			path = MyProfileVc;
 			sourceTree = "<group>";
@@ -1365,7 +1370,8 @@
 				C36B58491E5EA50900DE7464 /* DisplayTitleVc.h */,
 				C36B584A1E5EA50900DE7464 /* DisplayTitleVc.m */,
 			);
-			path = DisplayTitleVc;
+			name = DisplayTitleVc;
+			path = ../DisplayTitleVc;
 			sourceTree = "<group>";
 		};
 		C36B584C1E5EBFBB00DE7464 /* CalenderEventVc */ = {
@@ -1550,7 +1556,8 @@
 				C36D39491E558C42001A445E /* PageVc.h */,
 				C36D394A1E558C42001A445E /* PageVc.m */,
 			);
-			path = PagesVc;
+			name = PagesVc;
+			path = ../PagesVc;
 			sourceTree = "<group>";
 		};
 		C36D39541E55D12C001A445E /* MessageVc */ = {
