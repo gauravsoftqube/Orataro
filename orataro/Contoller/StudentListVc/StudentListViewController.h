@@ -10,6 +10,14 @@
 
 @interface StudentListViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 
+@property (strong, nonatomic) NSMutableDictionary *dicSelectedList;
+@property (weak, nonatomic) IBOutlet UIButton *btnHome;
+- (IBAction)btnHome:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *btnMenu;
+- (IBAction)btnMenu:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *btnBack;
+@property (weak, nonatomic) IBOutlet UILabel *lblHeaderTitle;
+
 @property (weak, nonatomic) IBOutlet UITableView *aStudentTable;
 - (IBAction)BackBtnClicked:(id)sender;
 - (IBAction)BackClicked:(id)sender;

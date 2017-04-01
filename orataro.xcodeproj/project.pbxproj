@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0718DC8B1E89245E0099EC26 /* YTPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0718DC8A1E89245E0099EC26 /* YTPlayerView.m */; };
+		0718DC8D1E8924650099EC26 /* Assets.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0718DC8C1E8924650099EC26 /* Assets.bundle */; };
 		072A85AD1E67FADC00F54A30 /* DEMOHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 072A85A61E67FADC00F54A30 /* DEMOHomeViewController.m */; };
 		072A85AE1E67FADC00F54A30 /* DEMOMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 072A85A81E67FADC00F54A30 /* DEMOMenuViewController.m */; };
 		072A85AF1E67FADC00F54A30 /* DEMONavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 072A85AA1E67FADC00F54A30 /* DEMONavigationController.m */; };
@@ -222,6 +224,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0718DC891E89245E0099EC26 /* YTPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YTPlayerView.h; sourceTree = "<group>"; };
+		0718DC8A1E89245E0099EC26 /* YTPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YTPlayerView.m; sourceTree = "<group>"; };
+		0718DC8C1E8924650099EC26 /* Assets.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Assets.bundle; sourceTree = "<group>"; };
 		072A85A51E67FADC00F54A30 /* DEMOHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DEMOHomeViewController.h; sourceTree = "<group>"; };
 		072A85A61E67FADC00F54A30 /* DEMOHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DEMOHomeViewController.m; sourceTree = "<group>"; };
 		072A85A71E67FADC00F54A30 /* DEMOMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DEMOMenuViewController.h; sourceTree = "<group>"; };
@@ -643,6 +648,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0718DC881E8924050099EC26 /* YTPlayerView */ = {
+			isa = PBXGroup;
+			children = (
+				0718DC8C1E8924650099EC26 /* Assets.bundle */,
+				0718DC891E89245E0099EC26 /* YTPlayerView.h */,
+				0718DC8A1E89245E0099EC26 /* YTPlayerView.m */,
+			);
+			path = YTPlayerView;
+			sourceTree = "<group>";
+		};
 		0739EC4F1E7137920099658F /* ForgotNewPwdVc */ = {
 			isa = PBXGroup;
 			children = (
@@ -771,10 +786,9 @@
 				C36724741E546CBB007E9326 /* MyProfileVc */,
 				C381726C1E518722004AB189 /* FAQVc */,
 				C38172681E517D5B004AB189 /* SettingVc */,
+				C3741FD91E4CA25E00BFFA23 /* AboutOrataroVc */,
 				C331B0861E4DB05B001C274D /* AboutUsVc */,
 				C3741FDD1E4CAE2F00BFFA23 /* HelpDeskVc */,
-				C3741FD91E4CA25E00BFFA23 /* AboutOrataroVc */,
-				C3741FD51E4C99F900BFFA23 /* ReminderVc */,
 				C360CD241E4B15F400761ABE /* OrataroVc */,
 				C360CD201E4AF63900761ABE /* NotificationVc */,
 				C360CD1C1E4AEF2A00761ABE /* PollVc */,
@@ -786,8 +800,8 @@
 				C38ABFB51E48B2A700689426 /* TimeTableVc */,
 				C38ABFB11E48A73C00689426 /* SchoolTimeVc */,
 				C38ABFAD1E48A61700689426 /* PostChatVc */,
-				C38ABFA91E48931E00689426 /* PTCommunication */,
 				C38ABFA51E487DB900689426 /* StudentListVc */,
+				C38ABFA91E48931E00689426 /* PTCommunication */,
 				C391E4EC1E40C1DF007BE2EA /* SubjectDetail */,
 				C36DD1C31E409B400011221E /* ListSelection */,
 				C38F8C7A1E3F486200A67FBE /* AddPostVc */,
@@ -825,6 +839,7 @@
 		0949E9401E3B783600723301 /* thirdparty */ = {
 			isa = PBXGroup;
 			children = (
+				0718DC881E8924050099EC26 /* YTPlayerView */,
 				C35120E51E827C3C00D7461B /* ImageCompress */,
 				07801FC61E7FE2BC00E34D36 /* TextView_PlaceHolder */,
 				C3666CCF1E72A35C0083AA34 /* WToast */,
@@ -1170,6 +1185,7 @@
 			children = (
 				C35C66501E5D97BA007EAF7D /* CreateReminderVc.h */,
 				C35C66511E5D97BA007EAF7D /* CreateReminderVc.m */,
+				C3741FD51E4C99F900BFFA23 /* ReminderVc */,
 			);
 			name = CreateReminderVc;
 			sourceTree = "<group>";
@@ -2086,6 +2102,7 @@
 				C35C07431E486C15004C55EB /* AttendanceTableViewCell.xib in Resources */,
 				0977D6031E3B1F6300ACB7A5 /* WallCustomeCell.xib in Resources */,
 				C36724731E54374E007E9326 /* FAQCustomeCell.xib in Resources */,
+				0718DC8D1E8924650099EC26 /* Assets.bundle in Resources */,
 				C36B58821E5EE82B00DE7464 /* ORGMasterViewController.xib in Resources */,
 				09F428C41E38BC0B00A80F0D /* LICENSE in Resources */,
 				C36DD1B11E4086210011221E /* IQKeyboardManager.bundle in Resources */,
@@ -2216,6 +2233,7 @@
 				C3645AE81E5BFE980012F4CF /* FSCalendarDelegationProxy.m in Sources */,
 				C36DD1B91E4086210011221E /* IQUITextFieldView+Additions.m in Sources */,
 				C3666CBE1E726B4E0083AA34 /* SDImageCache.m in Sources */,
+				0718DC8B1E89245E0099EC26 /* YTPlayerView.m in Sources */,
 				C36B587A1E5EE82B00DE7464 /* ORGArticleCollectionViewCell.m in Sources */,
 				C38F8C7D1E3F48DD00A67FBE /* AddpostVc.m in Sources */,
 				C3645AEC1E5BFE980012F4CF /* FSCalendarStickyHeader.m in Sources */,

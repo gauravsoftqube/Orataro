@@ -12,6 +12,7 @@
 #import "ContactUsVc.h"
 #import "REFrostedViewController.h"
 #import "AppDelegate.h"
+#import "Global.h"
 
 @interface AboutOrataroVc ()
 {
@@ -41,7 +42,14 @@
     AboutTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     //AboutCell
     
-    
+    NSArray *arr=[[[Utility getCurrentUserDetail]objectForKey:@"FullName"] componentsSeparatedByString:@" "];
+    if (arr.count != 0) {
+        self.lblHeaderTitle.text=[NSString stringWithFormat:@"About Orataro (%@)",[arr objectAtIndex:0]];
+    }
+    else
+    {
+        self.lblHeaderTitle.text=[NSString stringWithFormat:@"About Orataro"];
+    }
     // Do any additional setup after loading the view.
 }
 
@@ -106,31 +114,85 @@
     switch (indexPath.row)
     {
         case 0:
+        {
+            NSString *url=@"";
+            NSMutableArray *sharingItems = [NSMutableArray new];
             
+            if (url) {
+                [sharingItems addObject:url];
+            }
+            
+            UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:sharingItems applicationActivities:nil];
+            [self presentViewController:activityController animated:YES completion:nil];
+        }
             break;
             
         case 1:
-            
+        {
+            NSString *iTunesLink = @"http://itunes.com/apps/orataro";
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
+        }
             break;
             
         case 2:
-            
+        {
+            NSString *iTunesLink = @"http://itunes.com/apps/orataro";
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
+        }
             break;
             
         case 3:
-            
+        {
+            if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"fb://"]])
+            {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"fb://page/890013191086690"]];
+            }
+            else
+            {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.facebook.com/ORATARO/"]];
+            }
+        }
             break;
             
         case 4:
-            
+        {
+             if ([self schemeAvailable:@"twitter://"])
+             {
+                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"twitter://orataroapp"]];
+             }
+             else
+             {
+                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://twitter.com/orataroapp"]];
+             }
+
+        }
             break;
             
         case 5:
-            
+        {
+            if ([self schemeAvailable:@"linkedin://"])
+            {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"linkedin://orataro"]];
+            }
+            else
+            {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.linkedin.com/company/orataro"]];
+            }
+        }
             break;
             
         case 6:
             
+        {
+            if ([self schemeAvailable:@"plus.google.com://"])
+            {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"plus.google.com://106006930296339413383"]];
+            }
+            else
+            {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://plus.google.com/106006930296339413383"]];
+            }
+        }
             break;
             
         case 7:
@@ -157,6 +219,13 @@
             break;
     }
 }
+
+- (BOOL)schemeAvailable:(NSString *)scheme {
+    UIApplication *application = [UIApplication sharedApplication];
+    NSURL *URL = [NSURL URLWithString:scheme];
+    return [application canOpenURL:URL];
+}
+
 
 #pragma mark - button action
 

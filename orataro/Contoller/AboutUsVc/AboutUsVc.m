@@ -8,6 +8,8 @@
 
 #import "AboutUsVc.h"
 
+#import "Global.h"
+
 @interface AboutUsVc ()
 
 @end
@@ -17,31 +19,36 @@
 
 - (void)viewDidLoad
 {
-        [super viewDidLoad];
+    [super viewDidLoad];
     
-        self.automaticallyAdjustsScrollViewInsets = NO;
-
-        [aTextview sizeToFit];
-        [aTextview layoutIfNeeded];
+    self.automaticallyAdjustsScrollViewInsets = NO;
     
-        CGFloat fixedWidth = aTextview.frame.size.width;
+    [aTextview sizeToFit];
+    [aTextview layoutIfNeeded];
     
-        CGSize newSize = [aTextview sizeThatFits:CGSizeMake(fixedWidth, aTextview.contentSize.height)];
+    CGFloat fixedWidth = aTextview.frame.size.width;
     
-        CGRect newFrame = aTextview.frame;
-        newFrame.size = CGSizeMake(fixedWidth, newSize.height);
+    CGSize newSize = [aTextview sizeThatFits:CGSizeMake(fixedWidth, aTextview.contentSize.height)];
     
-        aTextview.frame = newFrame;
+    CGRect newFrame = aTextview.frame;
+    newFrame.size = CGSizeMake(fixedWidth, newSize.height);
     
-        CGRect newFrame1 = aTableHeaderView.frame;
-        newFrame1.size.height = aVideoView.frame.origin.y + aVideoView.frame.size.height+aTextview.frame.origin.y+aTextview.contentSize.height;
+    aTextview.frame = newFrame;
     
-        aTableHeaderView.frame = newFrame1;
+    CGRect newFrame1 = aTableHeaderView.frame;
+    newFrame1.size.height = aVideoView.frame.origin.y + aVideoView.frame.size.height+aTextview.frame.origin.y+aTextview.contentSize.height;
     
-        aTableView.tableHeaderView = aTableHeaderView;
-
+    aTableHeaderView.frame = newFrame1;
+    aTableView.tableHeaderView = aTableHeaderView;
     
-    // Do any additional setup after loading the view.
+    [self.viewTYPlayer loadWithVideoId:YouTubeVideo_Key];
+    
+    NSArray *arr=[[[Utility getCurrentUserDetail]objectForKey:@"FullName"] componentsSeparatedByString:@" "];
+    if (arr.count != 0) {
+        self.lblTitleHeader.text=[NSString stringWithFormat:@"About Orataro (%@)",[arr objectAtIndex:0]];
+    }else{
+        self.lblTitleHeader.text=[NSString stringWithFormat:@"About Orataro"];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -59,17 +66,6 @@
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 
 @end

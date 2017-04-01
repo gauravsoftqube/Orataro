@@ -8,8 +8,12 @@
 
 #import "PTCommuniVc.h"
 #import "ChatVc.h"
-@interface PTCommuniVc ()
+#import "Global.h"
 
+@interface PTCommuniVc ()
+{
+    NSMutableArray *arrCummunicationList,*arrCummunicationList_Search;
+}
 @end
 
 @implementation PTCommuniVc
@@ -50,12 +54,271 @@
     aTextField.leftViewMode = UITextFieldViewModeAlways;
     
     // Do any additional setup after loading the view.
+    arrCummunicationList=[[NSMutableArray alloc]init];
+    arrCummunicationList_Search=[[NSMutableArray alloc]init];
+    if([[Utility getMemberType] isEqualToString:@"Student"])
+    {
+        [self.aAddBtnouterView setHidden:YES];
+        if ([Utility isInterNetConnectionIsActive] == false)
+        {
+            arrCummunicationList=[DBOperation selectData:[NSString stringWithFormat:@"SELECT * FROM PTCommunicationList"]];
+            arrCummunicationList_Search=[DBOperation selectData:[NSString stringWithFormat:@"SELECT * FROM PTCommunicationList"]];
+            [self.aTableView reloadData];
+        }
+        else
+        {
+            NSArray *Arr=[DBOperation selectData:[NSString stringWithFormat:@"SELECT * FROM PTCommunicationList"]];
+            
+            if(Arr.count != 0)
+            {
+                [self apiCallFor_getPTCommunicationList:@"0"];
+            }
+            else
+            {
+                [self apiCallFor_getPTCommunicationList:@"1"];
+            }
+        }
+    }
+    else
+    {
+        if ([Utility isInterNetConnectionIsActive] == false)
+        {
+            arrCummunicationList=[DBOperation selectData:[NSString stringWithFormat:@"SELECT * FROM PTCommunicationList"]];
+            arrCummunicationList_Search=[DBOperation selectData:[NSString stringWithFormat:@"SELECT * FROM PTCommunicationList"]];
+            [self.aTableView reloadData];
+        }
+        else
+        {
+           NSArray *Arr=[DBOperation selectData:[NSString stringWithFormat:@"SELECT * FROM PTCommunicationList"]];
+            
+            if(Arr.count != 0)
+            {
+                [self apiCallFor_getPTCommunicationList:@"0"];
+            }
+            else
+            {
+               [self apiCallFor_getPTCommunicationList:@"1"];
+            }
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - apiCall
+
+-(void)apiCallFor_getPTCommunicationList:(NSString *)strInternet
+{
+    if ([Utility isInterNetConnectionIsActive] == false) {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_ptcommunication,apk_GetPTCommunicationList_action];
+    
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
+    
+    if([[Utility getMemberType] isEqualToString:@"Student"])
+    {
+        [param setValue:[NSString stringWithFormat:@"Student"] forKey:@"MemberType"];
+        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"GradeID"]] forKey:@"GradeID"];
+        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"DivisionID"]] forKey:@"DivisionID"];
+        [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelectedList objectForKey:@"SubjectID"]] forKey:@"SubjectID"];
+        
+        
+        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"TeacherMemberID"];
+        [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelectedList objectForKey:@"MemberID"]] forKey:@"StudentMemberID"];
+    }
+    else
+    {
+        [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelectedList objectForKey:@"GradeID"]] forKey:@"GradeID"];
+        [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelectedList objectForKey:@"DivisionID"]] forKey:@"DivisionID"];
+        [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelectedList objectForKey:@"SubjectID"]] forKey:@"SubjectID"];
+        
+        [param setValue:[NSString stringWithFormat:@"Teacher"] forKey:@"MemberType"];
+        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"TeacherMemberID"];
+        [param setValue:[NSString stringWithFormat:@"%@",self.strSelectMemberID] forKey:@"StudentMemberID"];
+    }
+    
+    if([strInternet isEqualToString:@"1"])
+    {
+        [ProgressHUB showHUDAddedTo:self.view];
+    }
+    
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         [ProgressHUB hideenHUDAddedTo:self.view];
+         if(!error)
+         {
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             
+             if([arrResponce count] != 0)
+             {
+                 NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                 NSString *strStatus=[dic objectForKey:@"message"];
+                 if([strStatus isEqualToString:@"No Data Found"])
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                 }
+                 else
+                 {
+                     arrCummunicationList=[[NSMutableArray alloc]init];
+                     arrCummunicationList = [arrResponce mutableCopy];
+                     arrCummunicationList_Search=[[NSMutableArray alloc]init];
+                     arrCummunicationList_Search = [arrResponce mutableCopy];
+                     
+                     [DBOperation executeSQL:[NSString stringWithFormat:@"DELETE FROM PTCommunicationList"]];
+                     
+                     for (NSMutableDictionary *dic in arrCummunicationList)
+                     {
+                         NSString *CommunicationDetail = [dic objectForKey:@"CommunicationDetail"];
+                         NSString *CommunicationID = [dic objectForKey:@"CommunicationID"];
+                         NSString *SeqNo = [dic objectForKey:@"SeqNo"];
+                         NSString *UnReadCount = [dic objectForKey:@"UnReadCount"];
+                         NSString *UserName = [dic objectForKey:@"UserName"];
+                         
+                         [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO PTCommunicationList(CommunicationDetail,CommunicationID,SeqNo,UnReadCount,UserName)values('%@','%@','%@','%@','%@')",CommunicationDetail,CommunicationID,SeqNo,UnReadCount,UserName]];
+                     }
+                     
+                     [self.aTableView reloadData];
+                 }
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
+}
+
+-(void)apiCallFor_CreateNewPTCommnunication:(NSString *)strInternet
+{
+    if ([Utility isInterNetConnectionIsActive] == false) {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_ptcommunication,apk_CreateNewPTCommnunication_action];
+    
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"TeacherMemberID"];
+    [param setValue:[NSString stringWithFormat:@"%@",self.strSelectMemberID] forKey:@"StudentMemberID"];
+    [param setValue:[NSString stringWithFormat:@"Teacher"] forKey:@"MemberType"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",self.aTextField.text] forKey:@"Title"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelectedList objectForKey:@"DivisionID"]] forKey:@"DivisionID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelectedList objectForKey:@"GradeID"]] forKey:@"GradeID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelectedList objectForKey:@"SubjectID"]] forKey:@"SujbectID"];
+    [param setValue:@"" forKey:@"BeachID"];
+    //[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"BatchID"]]
+    if([strInternet isEqualToString:@"1"])
+    {
+        [ProgressHUB showHUDAddedTo:self.view];
+    }
+    
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         [ProgressHUB hideenHUDAddedTo:self.view];
+         if(!error)
+         {
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             
+             if([arrResponce count] != 0)
+             {
+                 NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                 NSString *strStatus=[dic objectForKey:@"message"];
+                 if([strStatus isEqualToString:@"No Data Found"])
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                 }
+                 else
+                 {
+                     
+                 }
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
+}
+
+#pragma mark - UITextField Delegate
+
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSString *newString = [[textField text] stringByReplacingCharactersInRange:range withString:string];
+    if (textField == self.aTextField)
+    {
+        if([newString length] > 0)
+        {
+            arrCummunicationList=[[NSMutableArray alloc]init];
+            NSArray *arrKeyName=[[arrCummunicationList_Search valueForKey:@"FullName"]mutableCopy];
+            
+            NSUInteger index = 0;
+            for (NSString *strKeyName in arrKeyName)
+            {
+                NSMutableDictionary *dicData=[[arrCummunicationList_Search objectAtIndex:index]mutableCopy];
+                
+                if([strKeyName rangeOfString:newString options:NSCaseInsensitiveSearch].location == NSNotFound)
+                {
+                    [arrCummunicationList removeObject:dicData];
+                }
+                else
+                {
+                    if(![arrCummunicationList containsObject:dicData])
+                    {
+                        [arrCummunicationList addObject:dicData];
+                    }
+                }
+                index++;
+            }
+        }
+        else if([newString isEqualToString:@""])
+        {
+            arrCummunicationList=[[NSMutableArray alloc]init];
+            arrCummunicationList=[arrCummunicationList_Search mutableCopy];
+        }
+    }
+    
+    [self.aTableView reloadData];
+    return YES;
+}
+
 
 #pragma mark - tableview delegate
 
@@ -76,15 +339,19 @@
         cell.backgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
     }
     
-    //cell.textLabel.text = [stuAry objectAtIndex:indexPath.row];
+    UILabel *lblTitle=(UILabel*)[cell.contentView viewWithTag:11];
+    [lblTitle setText:[NSString stringWithFormat:@"%@",[arrCummunicationList[indexPath.row] objectForKey:@"CommunicationDetail"]]];
     
+    UILabel *lblUserName=(UILabel*)[cell.contentView viewWithTag:12];
+    [lblUserName setText:[NSString stringWithFormat:@"%@",[arrCummunicationList[indexPath.row] objectForKey:@"UserName"]]];
+
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return [arrCummunicationList count];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -102,6 +369,8 @@
 -(void)Taptohide:(UIGestureRecognizer *)tap
 {
     aPopupMainView.hidden = YES;
+    [self.view endEditing:YES];
+    [self apiCallFor_CreateNewPTCommnunication:@"1"];
 }
 - (IBAction)AddBtnClicked:(id)sender
 {
@@ -118,17 +387,5 @@
 {
      aPopupMainView.hidden = YES;
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
-
 
 @end

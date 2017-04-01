@@ -252,7 +252,7 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    upDownArrow.tag = section;
+  /*  upDownArrow.tag = section;
     
     UIView *headerView= [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
     headerView.tag                  = section;
@@ -281,30 +281,53 @@
     //downgray
     
     BOOL manyCells  = [[hideshowary objectAtIndex:section] boolValue];
-    
+    UIImageView *img=[[UIImageView alloc]init];
+    img.frame=CGRectMake(headerString.frame.size.width+23, (headerView.frame.size.height-300)/2, 30, 30);
+   //  upDownArrow.frame = CGRectMake(headerString.frame.size.width+23, (headerView.frame.size.height-300)/2, 30, 30);
+  
     if (!manyCells)
     {
-        upDownArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow-down"]];
-        
-        upDownArrow.frame = CGRectMake(headerString.frame.size.width+23, (headerView.frame.size.height-300)/2, 30, 30);
+        img.image = [UIImage imageNamed:@"arrow-down"];
     }
     else
     {
-        upDownArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow-up"]];
-        
-        upDownArrow.frame = CGRectMake(headerString.frame.size.width+23, (headerView.frame.size.height-30)/2, 30, 30);
+        img.image = [UIImage imageNamed:@"arrow-up"];
     }
     
-    [headerView addSubview:upDownArrow];
+    [headerView addSubview:img];
+    */
+    
+    
+    UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"sectionCell"];
+    
+    if (section % 2 == 0)
+    {
+        cell.backgroundColor = [UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0];
+    }
+    else
+    {
+        cell.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0];
+    }
+    UILabel *lblTitle=(UILabel *)[cell.contentView viewWithTag:1];
+    lblTitle.text = [sectionary objectAtIndex:section];
+    
+    UIImageView *img=(UIImageView *)[cell.contentView viewWithTag:2];
+    BOOL manyCells  = [[hideshowary objectAtIndex:section] boolValue];
+    if (!manyCells)
+    {
+        img.image = [UIImage imageNamed:@"arrow-down"];
+    }
+    else
+    {
+        img.image = [UIImage imageNamed:@"arrow-up"];
+    }
     
     UITapGestureRecognizer  *headerTapped   = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sectionHeaderTapped:)];
     headerTapped.view.tag = section;
+    [cell.contentView addGestureRecognizer:headerTapped];
+    cell.contentView.tag  = section;
     
-    [headerView addGestureRecognizer:headerTapped];
-    
-    headerView.tag  = section;
-    
-    return headerView;
+    return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -314,9 +337,6 @@
 
 - (void)sectionHeaderTapped:(UITapGestureRecognizer *)gestureRecognizer
 {
-    ///CGPoint point = [gestureRecognizer locationInView:aTabelView];
-////NSIndexPath *indexPath = [aTabelView indexPathForRowAtPoint:point];
-
     
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:gestureRecognizer.view.tag];
     NSString *sectionstr = [NSString stringWithFormat:@"%ld",(long)indexPath.section];

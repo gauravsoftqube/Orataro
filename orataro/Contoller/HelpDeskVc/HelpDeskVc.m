@@ -31,15 +31,13 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-/*
-#pragma mark - Navigation
+- (IBAction)btnPhoneNo:(id)sender {
+    NSString *phoneNumber = [NSString stringWithFormat:@"tel://8530974227"];
+    NSURL *phoneURL = [NSURL URLWithString:phoneNumber];
+    [[UIApplication sharedApplication] openURL:phoneURL];
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
 }
-*/
-
-
+- (IBAction)btnSupportURL:(id)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://support@orataro.com"]];
+}
 @end

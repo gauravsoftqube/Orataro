@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface ReminderVc : UIViewController
+@property (weak, nonatomic) IBOutlet UILabel *lblTitleHeader;
 @property (weak, nonatomic) IBOutlet UITextField *aTitleTextfield;
 @property (weak, nonatomic) IBOutlet UITextView *aDescriptionTextview;
 @property (weak, nonatomic) IBOutlet UITextField *aImportantTextField;
