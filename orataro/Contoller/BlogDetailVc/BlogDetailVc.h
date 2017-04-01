@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface BlogDetailVc : UIViewController
+@property (weak, nonatomic) IBOutlet UILabel *lbNavTitle;
+@property (weak, nonatomic) IBOutlet UIWebView *webview;
 
 @end

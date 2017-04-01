@@ -324,7 +324,6 @@ int multipleUser = 0;
                  {
                      [DBOperation executeSQL:[NSString stringWithFormat:@"delete from Login"]];
                      
-                    
                      if (arrResponce.count ==1)
                      {
                          [self checkMultipleUser:arrResponce];

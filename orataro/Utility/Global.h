@@ -120,6 +120,14 @@
 #import "UITextView+Placeholder.h"
 #import "HomeWrokVc.h"
 #import "ClassworkVC.h"
+#import "DisplayTitleVc.h"
+#import "BlogDetailVc.h"
+#import "profileSearchFriend.h"
+#import "ProfileFriendRequestVc.h"
+#import "PhotoVc.h"
+#import "PhototableCell.h"
+#import "ProfilePhotoShowVc.h"
+#import <AssetsLibrary/AssetsLibrary.h>
 
 #pragma mark - Api Url And Name List
 
@@ -174,9 +182,38 @@
 
 
 #pragma mark - apk_attendance
+
 #define apk_attendance  @"apk_attendance.asmx"
 #define apk_AttendanceListForTeacher_action @"AttendanceListForTeacher"
 #define apk_SaveAttendance @"SaveAttendance"
+
+
+#pragma mark - apk_cmspage
+
+#define apk_InstitutePage @"apk_cmspage.asmx"
+#define apk_GetCmsPages_action @"GetCmsPages"
+#define apk_GetCmsPageDetail_action @"GetCmsPageDetail"
+
+
+#pragma mark - apk_blogs
+
+#define apk_blogs @"apk_blogs.asmx"
+#define apk_GetBlogList_action @"GetBlogList"
+#define apk_GetBlogDetail_action @"GetBlogDetail"
+
+
+#pragma mark - apk_friends
+
+#define apk_friends @"apk_friends.asmx"
+#define apk_GetFriendList @"GetFriendList"
+#define apk_Searchfriend_action @"Searchfriend"
+#define apk_GetFriendRequestList_action @"GetFriendRequestList"
+
+
+#pragma mark - apk_Photo
+
+#define apk_Photos @"apk_Photos.asmx"
+#define apk_GetPhotoList_action @"GetPhotoList"
 
 #endif /* Global_h */
 

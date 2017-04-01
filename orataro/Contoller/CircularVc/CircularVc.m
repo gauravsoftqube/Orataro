@@ -26,7 +26,8 @@
 @implementation CircularVc
 @synthesize aView1;
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
     app = (AppDelegate *)[UIApplication sharedApplication].delegate;
@@ -34,9 +35,11 @@
     
 }
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+
 }
 
 -(void)commonData
@@ -89,13 +92,7 @@
         else
         {
             
-            //block 1
-           // dispatch_group_async(group, dispatch_get_global_queue(0, 0), ^{
-                // code here
                 [self apiCallFor_getCircular:YES];
-           // });
-            
-            
         }
     }
     else
@@ -106,14 +103,7 @@
         }
         else
         {
-            //block 2
-            //dispatch_group_async(group, dispatch_get_global_queue(0, 0), ^{
-                // code here
-                 [self apiCallFor_getCircular:NO];
-           // });
-
-           
-            
+            [self apiCallFor_getCircular:NO];
         }
     }
    

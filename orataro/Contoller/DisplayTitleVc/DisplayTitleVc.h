@@ -8,7 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DisplayTitleVc : UIViewController
-- (IBAction)BackBtnClicked:(UIButton *)sender;
+@interface DisplayTitleVc : UIViewController<UIWebViewDelegate>
 
+- (IBAction)BackBtnClicked:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UIWebView *webview;
+@property (weak, nonatomic) IBOutlet UILabel *lbNavTitle;
+@property (strong,nonatomic) NSMutableDictionary *dicPageDetail;
+@property(strong,nonatomic)NSMutableDictionary *dicBlogDatail;
+@property(strong,nonatomic)NSString *strCheckBlogPage;
 @end

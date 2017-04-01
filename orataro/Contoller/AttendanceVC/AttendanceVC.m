@@ -591,20 +591,23 @@ int cn =0;
              {
                  NSString *strArrd=[dicResponce objectForKey:@"d"];
                  NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
-                arrResponce  = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                 if (data != nil)
+                 {
+                     arrResponce  = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                 }
+                else
+                {
+                    UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"Please try again" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alrt show];
+                }
                  
              } @catch (NSException *exception)
              {
                  UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"Please try again" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                  [alrt show];
                  
-             } @finally {
-                 
-                
-                 
              }
-           
-             
+                 
              aryTable = [arrResponce objectForKey:@"Table"];
              
              if([aryTable count] == 0)

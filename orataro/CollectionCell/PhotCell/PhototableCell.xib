@@ -55,6 +55,13 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="no_img" translatesAutoresizingMaskIntoConstraints="NO" id="UHz-zi-GWC">
                                 <rect key="frame" x="5" y="34" width="138" height="126"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="exm-MF-VVs">
+                                <rect key="frame" x="116" y="165" width="32" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="32" id="lq7-hc-UEK"/>
+                                    <constraint firstAttribute="height" constant="29" id="ms6-ET-B9K"/>
+                                </constraints>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -62,7 +69,9 @@
                             <constraint firstAttribute="trailing" secondItem="kNa-sq-XHG" secondAttribute="trailing" constant="8" id="8iT-w8-3Eh"/>
                             <constraint firstItem="UHz-zi-GWC" firstAttribute="leading" secondItem="D86-fM-tkE" secondAttribute="leading" constant="5" id="B7p-xE-eTo"/>
                             <constraint firstItem="oAk-pj-RKj" firstAttribute="leading" secondItem="D86-fM-tkE" secondAttribute="leading" constant="8" id="IYJ-z0-7q6"/>
+                            <constraint firstAttribute="trailing" secondItem="exm-MF-VVs" secondAttribute="trailing" id="MjT-Xb-6BL"/>
                             <constraint firstItem="ewl-OV-DPb" firstAttribute="leading" secondItem="oAk-pj-RKj" secondAttribute="trailing" constant="8" id="PSG-BR-k0v"/>
+                            <constraint firstAttribute="bottom" secondItem="exm-MF-VVs" secondAttribute="bottom" id="VfS-fa-jbW"/>
                             <constraint firstItem="kNa-sq-XHG" firstAttribute="top" secondItem="D86-fM-tkE" secondAttribute="top" constant="8" id="dno-7P-zCs"/>
                             <constraint firstAttribute="bottom" secondItem="ewl-OV-DPb" secondAttribute="bottom" constant="8" id="dpa-Xn-Rn2"/>
                             <constraint firstAttribute="trailing" secondItem="ewl-OV-DPb" secondAttribute="trailing" constant="8" id="mIl-Ea-PgJ"/>
@@ -84,6 +93,9 @@
             <connections>
                 <outlet property="DownloadImageView" destination="ewl-OV-DPb" id="6aC-Jq-Zsz"/>
                 <outlet property="aOuteView" destination="D86-fM-tkE" id="hGR-9O-qH3"/>
+                <outlet property="btnDownload" destination="exm-MF-VVs" id="40n-t8-0nG"/>
+                <outlet property="imgShowImage" destination="UHz-zi-GWC" id="Pun-VJ-bN8"/>
+                <outlet property="lbDate" destination="kNa-sq-XHG" id="fx7-54-SCT"/>
             </connections>
             <point key="canvasLocation" x="-46" y="21"/>
         </collectionViewCell>
