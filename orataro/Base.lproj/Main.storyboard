@@ -870,7 +870,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="Mqy-0z-Qga" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="w7F-J7-7XK">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="w7F-J7-7XK">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1538,7 +1538,7 @@
                                         <rect key="frame" x="0.0" y="141" width="414" height="141"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="k7L-zD-4gt" id="c6w-f4-wol">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="141"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="140.66666666666666"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FfL-fN-4lV">
@@ -1630,7 +1630,7 @@
                                         <rect key="frame" x="0.0" y="282" width="414" height="89"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="58b-wW-XKu" id="rKR-8q-HuQ">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="89"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="88.666666666666671"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zQD-CB-Tbc">
@@ -1839,7 +1839,7 @@
                                         <rect key="frame" x="0.0" y="141" width="414" height="141"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xbX-m5-x9d" id="gTp-vA-CVO">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="141"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="140.66666666666666"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yzr-nc-4oe">
@@ -1932,7 +1932,7 @@
                                         <rect key="frame" x="0.0" y="282" width="414" height="128"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Pkl-in-K7d" id="Ybl-Bd-7dA">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="128"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="127.66666666666667"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0As-vU-1zp">
@@ -2180,7 +2180,7 @@
                                         <rect key="frame" x="0.0" y="28" width="414" height="51"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HeM-Ob-Wzo" id="hYj-f6-Cp8">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="51"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="50.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gwB-U2-yu7">
@@ -2589,7 +2589,7 @@
                                         <rect key="frame" x="0.0" y="28" width="414" height="194"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="X3Q-Dh-Ux7" id="KiN-Ak-eb4">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="194"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="193.66666666666666"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PUk-vF-ehQ">
@@ -2886,7 +2886,7 @@
                                     <constraint firstAttribute="height" constant="72" id="Klu-5U-Rgr"/>
                                 </constraints>
                                 <string key="text">Copyright  2016
-Sunsoft Eduware Solutions LLP.</string>
+                                    Sunsoft Eduware Solutions LLP.</string>
                                 <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="16"/>
                                 <color key="textColor" red="0.15686274509803921" green="0.19215686274509802" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -2925,11 +2925,11 @@ Sunsoft Eduware Solutions LLP.</string>
                                         <rect key="frame" x="34" y="48" width="352" height="172"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <string key="text">
-37,Sadguru Tirthdham, Raiya Road,
-Rajkot - 360001
-
-PH:(O)0281-2450274
-M:9428296497 </string>
+                                            37,Sadguru Tirthdham, Raiya Road,
+                                            Rajkot - 360001
+                                            
+                                            PH:(O)0281-2450274
+                                            M:9428296497 </string>
                                         <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="15"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
@@ -3252,7 +3252,7 @@ M:9428296497 </string>
                                         <rect key="frame" x="0.0" y="28" width="414" height="63"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="p73-FK-UOR" id="s4L-Ut-PcX">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="63"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="62.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="share" translatesAutoresizingMaskIntoConstraints="NO" id="bLp-md-5ak">
@@ -3646,7 +3646,7 @@ M:9428296497 </string>
                                         <rect key="frame" x="0.0" y="28" width="414" height="58"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Xyt-dK-lkY" id="74M-Sw-ei6">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="58"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="57.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3jJ-wk-QNp">
@@ -3721,7 +3721,7 @@ M:9428296497 </string>
                                         <rect key="frame" x="0.0" y="141" width="414" height="141"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HX4-qU-iJh" id="XpY-8b-hF2">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="141"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="140.66666666666666"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hdd-bt-tbS">
@@ -3813,7 +3813,7 @@ M:9428296497 </string>
                                         <rect key="frame" x="0.0" y="282" width="414" height="128"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZwY-4b-1kt" id="wDP-6x-a87">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="128"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="127.66666666666667"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V86-eO-udu">
@@ -4264,7 +4264,7 @@ M:9428296497 </string>
                                         <rect key="frame" x="0.0" y="28" width="414" height="146"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="B9M-aH-ZfB" id="8mT-Yy-mf1">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="146"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="145.66666666666666"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FMH-5R-6Fs">
@@ -4971,7 +4971,7 @@ M:9428296497 </string>
                                         <rect key="frame" x="0.0" y="28" width="414" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WBS-Ss-0DW" id="BDK-Cb-YUj">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="49.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NzJ-1G-FSc">
@@ -6136,7 +6136,7 @@ M:9428296497 </string>
                                                 <rect key="frame" x="0.0" y="28" width="384" height="59"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="APM-2A-zYs" id="jjD-IC-9Oy">
-                                                    <rect key="frame" x="0.0" y="0.0" width="384" height="59"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="384" height="58.666666666666664"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kxE-YW-rXA">
@@ -6398,14 +6398,14 @@ M:9428296497 </string>
                                 <rect key="frame" x="0.0" y="74" width="414" height="522"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <string key="text">test of enter circular
-
-tesing of add circular notification
-
-Assign equal width from button1 to button2.
-Assign horizontal spacing between both buttons.
-Assign leading space from button1 to its superview.
-Assign trailing space from button2 to its superview.
-Assign top space to both the buttons.</string>
+                                    
+                                    tesing of add circular notification
+                                    
+                                    Assign equal width from button1 to button2.
+                                    Assign horizontal spacing between both buttons.
+                                    Assign leading space from button1 to its superview.
+                                    Assign trailing space from button2 to its superview.
+                                    Assign top space to both the buttons.</string>
                                 <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <connections>
@@ -7891,6 +7891,63 @@ Assign top space to both the buttons.</string>
                                     <constraint firstAttribute="height" constant="64" id="xaO-wl-P5b"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J1U-Ka-BVS">
+                                <rect key="frame" x="0.0" y="64" width="414" height="55"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DP0-KU-PSz">
+                                        <rect key="frame" x="10" y="5" width="394" height="40"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="search" translatesAutoresizingMaskIntoConstraints="NO" id="9U9-FY-Y4q">
+                                                <rect key="frame" x="366" y="11" width="19" height="19"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="19" id="6Ls-EZ-z3L"/>
+                                                    <constraint firstAttribute="width" constant="19" id="gxc-nV-i9h"/>
+                                                </constraints>
+                                            </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QBo-8z-LD9">
+                                                <rect key="frame" x="346" y="0.0" width="48" height="40"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="48" id="ePB-Th-2pd"/>
+                                                </constraints>
+                                                <connections>
+                                                    <action selector="btnSearchClicked:" destination="DDP-DX-yyd" eventType="touchUpInside" id="tGy-HV-7Mn"/>
+                                                </connections>
+                                            </button>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OEi-bB-4aT">
+                                                <rect key="frame" x="8" y="5" width="330" height="30"/>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="17"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <action selector="TxtValueChanged:" destination="DDP-DX-yyd" eventType="valueChanged" id="i5j-4F-11x"/>
+                                                    <outlet property="delegate" destination="DDP-DX-yyd" id="XJP-Bj-dMH"/>
+                                                </connections>
+                                            </textField>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="QBo-8z-LD9" secondAttribute="bottom" id="34z-GX-VWh"/>
+                                            <constraint firstAttribute="trailing" secondItem="9U9-FY-Y4q" secondAttribute="trailing" constant="9" id="3h1-ep-75R"/>
+                                            <constraint firstAttribute="trailing" secondItem="QBo-8z-LD9" secondAttribute="trailing" id="3uX-dx-zRI"/>
+                                            <constraint firstItem="OEi-bB-4aT" firstAttribute="top" secondItem="DP0-KU-PSz" secondAttribute="top" constant="5" id="OnV-9K-c4h"/>
+                                            <constraint firstAttribute="height" constant="40" id="cMB-JB-H88"/>
+                                            <constraint firstItem="9U9-FY-Y4q" firstAttribute="centerY" secondItem="DP0-KU-PSz" secondAttribute="centerY" id="cPa-Xe-wCV"/>
+                                            <constraint firstItem="OEi-bB-4aT" firstAttribute="leading" secondItem="DP0-KU-PSz" secondAttribute="leading" constant="8" id="dPR-UJ-dUA"/>
+                                            <constraint firstItem="QBo-8z-LD9" firstAttribute="top" secondItem="DP0-KU-PSz" secondAttribute="top" id="i0L-SZ-GVU"/>
+                                            <constraint firstItem="QBo-8z-LD9" firstAttribute="leading" secondItem="OEi-bB-4aT" secondAttribute="trailing" constant="8" id="ov8-Vq-aMB"/>
+                                            <constraint firstAttribute="bottom" secondItem="OEi-bB-4aT" secondAttribute="bottom" constant="5" id="wQO-EV-Dio"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="DP0-KU-PSz" firstAttribute="leading" secondItem="J1U-Ka-BVS" secondAttribute="leading" constant="10" id="M0D-Ky-buk"/>
+                                    <constraint firstAttribute="bottom" secondItem="DP0-KU-PSz" secondAttribute="bottom" constant="10" id="lGp-YN-Qtq"/>
+                                    <constraint firstAttribute="trailing" secondItem="DP0-KU-PSz" secondAttribute="trailing" constant="10" id="tZV-O1-L3n"/>
+                                    <constraint firstAttribute="height" constant="55" id="xW5-7R-rMz"/>
+                                </constraints>
+                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Friend List Available" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pQc-Ry-zih">
                                 <rect key="frame" x="0.0" y="346" width="414" height="45"/>
                                 <constraints>
@@ -7900,22 +7957,15 @@ Assign top space to both the buttons.</string>
                                 <color key="textColor" red="0.61960784313725492" green="0.61960784313725492" blue="0.61960784313725492" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <searchBar contentMode="redraw" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="F65-uY-Jtk">
-                                <rect key="frame" x="0.0" y="64" width="414" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="W8g-3a-oIo"/>
-                                </constraints>
-                                <textInputTraits key="textInputTraits"/>
-                            </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="124" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="kGH-vu-YMY">
-                                <rect key="frame" x="0.0" y="108" width="414" height="628"/>
+                                <rect key="frame" x="0.0" y="119" width="414" height="617"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FriendCell" rowHeight="124" id="pio-0D-qJX">
                                         <rect key="frame" x="0.0" y="28" width="414" height="124"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pio-0D-qJX" id="ee4-9g-TPN">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="124"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="123.66666666666667"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="g1" translatesAutoresizingMaskIntoConstraints="NO" id="kWO-mG-xvs">
@@ -7985,7 +8035,7 @@ Assign top space to both the buttons.</string>
                                                         <constraint firstAttribute="height" constant="1" id="jyZ-Pg-SpA"/>
                                                     </constraints>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Standard : 11" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="17E-IH-Zgc">
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Standard : 11" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="17E-IH-Zgc">
                                                     <rect key="frame" x="98" y="61" width="167" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="kek-fP-k0v"/>
@@ -7994,7 +8044,7 @@ Assign top space to both the buttons.</string>
                                                     <color key="textColor" red="0.61960784313725492" green="0.61960784313725492" blue="0.61960784313725492" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Division : A" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QbJ-TQ-6uO">
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="4" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Division : A" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QbJ-TQ-6uO">
                                                     <rect key="frame" x="98" y="81" width="167" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="FkQ-MH-23R"/>
@@ -8219,16 +8269,16 @@ Assign top space to both the buttons.</string>
                         <constraints>
                             <constraint firstItem="pQc-Ry-zih" firstAttribute="centerX" secondItem="Cow-y6-mDP" secondAttribute="centerX" id="1bQ-aa-B0E"/>
                             <constraint firstItem="pQc-Ry-zih" firstAttribute="centerY" secondItem="Cow-y6-mDP" secondAttribute="centerY" id="6I8-tY-0OA"/>
+                            <constraint firstAttribute="trailing" secondItem="J1U-Ka-BVS" secondAttribute="trailing" id="8ra-yV-kOd"/>
+                            <constraint firstItem="J1U-Ka-BVS" firstAttribute="top" secondItem="j43-fn-TxZ" secondAttribute="bottom" id="DIG-q6-GKC"/>
                             <constraint firstItem="pQc-Ry-zih" firstAttribute="leading" secondItem="Cow-y6-mDP" secondAttribute="leading" id="G7o-ek-yE3"/>
                             <constraint firstItem="CSQ-wP-dNL" firstAttribute="top" secondItem="kGH-vu-YMY" secondAttribute="bottom" id="IKD-7Z-QzZ"/>
-                            <constraint firstItem="F65-uY-Jtk" firstAttribute="top" secondItem="j43-fn-TxZ" secondAttribute="bottom" id="PsZ-cc-J9M"/>
-                            <constraint firstItem="F65-uY-Jtk" firstAttribute="leading" secondItem="Cow-y6-mDP" secondAttribute="leading" id="UC2-J9-rtB"/>
-                            <constraint firstAttribute="trailing" secondItem="F65-uY-Jtk" secondAttribute="trailing" id="VDI-se-ktK"/>
                             <constraint firstAttribute="trailing" secondItem="j43-fn-TxZ" secondAttribute="trailing" id="Vjr-JJ-KWV"/>
-                            <constraint firstItem="kGH-vu-YMY" firstAttribute="top" secondItem="F65-uY-Jtk" secondAttribute="bottom" id="a5y-jF-uze"/>
                             <constraint firstItem="kGH-vu-YMY" firstAttribute="leading" secondItem="Cow-y6-mDP" secondAttribute="leading" id="f2V-hL-fDJ"/>
+                            <constraint firstItem="J1U-Ka-BVS" firstAttribute="leading" secondItem="Cow-y6-mDP" secondAttribute="leading" id="kfx-xx-9Rp"/>
                             <constraint firstAttribute="trailing" secondItem="pQc-Ry-zih" secondAttribute="trailing" id="li9-5H-oRN"/>
                             <constraint firstItem="j43-fn-TxZ" firstAttribute="top" secondItem="Cow-y6-mDP" secondAttribute="top" id="mLt-1h-eB5"/>
+                            <constraint firstItem="kGH-vu-YMY" firstAttribute="top" secondItem="J1U-Ka-BVS" secondAttribute="bottom" id="mff-2s-0IE"/>
                             <constraint firstAttribute="trailing" secondItem="AgG-cA-clC" secondAttribute="trailing" constant="20" id="nhW-8I-hhD"/>
                             <constraint firstItem="j43-fn-TxZ" firstAttribute="leading" secondItem="Cow-y6-mDP" secondAttribute="leading" id="vWs-L0-Ff7"/>
                             <constraint firstAttribute="trailing" secondItem="kGH-vu-YMY" secondAttribute="trailing" id="xGx-HR-oaH"/>
@@ -8245,11 +8295,13 @@ Assign top space to both the buttons.</string>
                         <outlet property="aPopupView" destination="AgG-cA-clC" id="Wvc-cz-btI"/>
                         <outlet property="aSecondBtn" destination="w4T-KF-b2r" id="buK-xn-2b6"/>
                         <outlet property="friendTableView" destination="kGH-vu-YMY" id="aaI-sz-DNF"/>
+                        <outlet property="txtSearchFriend" destination="OEi-bB-4aT" id="6BT-5O-Mzq"/>
+                        <outlet property="viewSearch" destination="DP0-KU-PSz" id="7qN-Mb-8j4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="raK-4H-QZb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6539" y="-1643"/>
+            <point key="canvasLocation" x="7186.9565217391309" y="-1661.413043478261"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="TRI-BT-aXr">
@@ -8301,7 +8353,7 @@ Assign top space to both the buttons.</string>
                                 <rect key="frame" x="0.0" y="64" width="414" height="672"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <outlet property="delegate" destination="aYX-ty-Cvv" id="OxI-yT-rRA"/>
+                                    <outlet property="delegate" destination="aYX-ty-Cvv" id="ATO-3Q-D3t"/>
                                 </connections>
                             </webView>
                         </subviews>
@@ -8316,10 +8368,14 @@ Assign top space to both the buttons.</string>
                             <constraint firstItem="i0e-15-njk" firstAttribute="top" secondItem="Bkf-RR-0F9" secondAttribute="bottom" id="qiv-2u-hwp"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="lbNavTitle" destination="b8i-Au-OPL" id="sAO-5R-etZ"/>
+                        <outlet property="webview" destination="Bkf-RR-0F9" id="SrM-nH-BCW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mo1-49-Jqg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="9412" y="324"/>
+            <point key="canvasLocation" x="6532" y="-1655"/>
         </scene>
         <!--Blog Vc-->
         <scene sceneID="ktd-cu-uCH">
@@ -8375,14 +8431,14 @@ Assign top space to both the buttons.</string>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="65" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6zX-fn-Qnt">
-                                <rect key="frame" x="0.0" y="128" width="414" height="608"/>
+                                <rect key="frame" x="0.0" y="108" width="414" height="628"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BlogCell" rowHeight="65" id="ROf-mG-IJr">
                                         <rect key="frame" x="0.0" y="28" width="414" height="65"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ROf-mG-IJr" id="md7-oT-9qP">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="65"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="64.666666666666671"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="blogico" translatesAutoresizingMaskIntoConstraints="NO" id="eo6-vu-x8b">
@@ -8429,7 +8485,7 @@ Assign top space to both the buttons.</string>
                             <constraint firstItem="QKd-uZ-KnK" firstAttribute="top" secondItem="6zX-fn-Qnt" secondAttribute="bottom" id="fTW-dq-Ylo"/>
                             <constraint firstItem="ggt-DN-i1N" firstAttribute="leading" secondItem="d15-cQ-Yso" secondAttribute="leading" id="miN-Kr-EEw"/>
                             <constraint firstItem="6zX-fn-Qnt" firstAttribute="leading" secondItem="d15-cQ-Yso" secondAttribute="leading" id="rV7-a1-80u"/>
-                            <constraint firstItem="6zX-fn-Qnt" firstAttribute="top" secondItem="ggt-DN-i1N" secondAttribute="bottom" constant="20" id="uLX-q6-OL1"/>
+                            <constraint firstItem="6zX-fn-Qnt" firstAttribute="top" secondItem="ggt-DN-i1N" secondAttribute="bottom" id="uLX-q6-OL1"/>
                         </constraints>
                     </view>
                     <connections>
@@ -8456,9 +8512,9 @@ Assign top space to both the buttons.</string>
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="title (Gaurav)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qw2-yH-3JI">
-                                        <rect key="frame" x="0.0" y="35" width="414" height="17"/>
+                                        <rect key="frame" x="40" y="35" width="334" height="17"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="17" id="ZRB-sQ-kr1"/>
+                                            <constraint firstAttribute="height" constant="17" id="Nfq-0q-Kit"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -8479,16 +8535,19 @@ Assign top space to both the buttons.</string>
                                 <color key="backgroundColor" red="0.1529411765" green="0.18823529410000001" blue="0.35686274509999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="Fcc-9I-kvm"/>
-                                    <constraint firstAttribute="bottom" secondItem="qw2-yH-3JI" secondAttribute="bottom" constant="12" id="WXk-B7-gQp"/>
+                                    <constraint firstItem="qw2-yH-3JI" firstAttribute="leading" secondItem="OUB-Vt-rXR" secondAttribute="trailing" constant="2" id="NMK-9k-6rP"/>
+                                    <constraint firstAttribute="bottom" secondItem="qw2-yH-3JI" secondAttribute="bottom" constant="12" id="WGf-b0-xNZ"/>
                                     <constraint firstItem="OUB-Vt-rXR" firstAttribute="top" secondItem="f8G-6E-kyk" secondAttribute="top" constant="25" id="XH1-Sm-I5B"/>
-                                    <constraint firstAttribute="trailing" secondItem="qw2-yH-3JI" secondAttribute="trailing" id="grI-nM-R1I"/>
                                     <constraint firstItem="OUB-Vt-rXR" firstAttribute="leading" secondItem="f8G-6E-kyk" secondAttribute="leading" constant="8" id="gxI-By-gTW"/>
-                                    <constraint firstItem="qw2-yH-3JI" firstAttribute="leading" secondItem="f8G-6E-kyk" secondAttribute="leading" id="uJn-o5-r7b"/>
+                                    <constraint firstAttribute="trailing" secondItem="qw2-yH-3JI" secondAttribute="trailing" constant="40" id="uxx-wj-qi7"/>
                                 </constraints>
                             </view>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WNj-j2-3vZ">
                                 <rect key="frame" x="0.0" y="64" width="414" height="672"/>
-                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="delegate" destination="tA3-z9-elV" id="alq-oN-MaZ"/>
+                                </connections>
                             </webView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -8502,10 +8561,14 @@ Assign top space to both the buttons.</string>
                             <constraint firstAttribute="trailing" secondItem="f8G-6E-kyk" secondAttribute="trailing" id="ySb-pl-9eF"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="lbNavTitle" destination="qw2-yH-3JI" id="now-Dt-U8g"/>
+                        <outlet property="webview" destination="WNj-j2-3vZ" id="ddh-rQ-81f"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1aM-Kg-mOv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5896" y="-1643"/>
+            <point key="canvasLocation" x="5895.652173913044" y="-1643.4782608695652"/>
         </scene>
         <!--Message Vc-->
         <scene sceneID="UG5-i9-erm">
@@ -8660,24 +8723,25 @@ Assign top space to both the buttons.</string>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="65" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="BGU-VG-B1t">
-                                <rect key="frame" x="0.0" y="128" width="414" height="608"/>
+                                <rect key="frame" x="0.0" y="108" width="414" height="628"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PageCell" rowHeight="65" id="hwK-RB-jFC">
                                         <rect key="frame" x="0.0" y="28" width="414" height="65"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hwK-RB-jFC" id="7kx-Me-U1o">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="65"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="64.666666666666671"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pages" translatesAutoresizingMaskIntoConstraints="NO" id="9nc-Kq-gOp">
-                                                    <rect key="frame" x="10" y="17" width="35" height="30"/>
+                                                    <rect key="frame" x="10" y="13" width="31" height="31"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="35" id="Qgz-uW-5Fs"/>
+                                                        <constraint firstAttribute="height" constant="31" id="Idd-qY-bBS"/>
+                                                        <constraint firstAttribute="width" constant="31" id="XnM-Zf-IO9"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About Institute" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gav-26-9K7">
-                                                    <rect key="frame" x="55" y="0.0" width="359" height="64"/>
+                                                    <rect key="frame" x="51" y="0.0" width="363" height="64"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -8685,15 +8749,18 @@ Assign top space to both the buttons.</string>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
-                                                <constraint firstItem="9nc-Kq-gOp" firstAttribute="leading" secondItem="7kx-Me-U1o" secondAttribute="leading" constant="10" id="1gi-BT-K6W"/>
                                                 <constraint firstAttribute="trailing" secondItem="gav-26-9K7" secondAttribute="trailing" id="5gF-oE-uRd"/>
-                                                <constraint firstAttribute="bottom" secondItem="9nc-Kq-gOp" secondAttribute="bottom" constant="17" id="7Fp-XP-meu"/>
                                                 <constraint firstAttribute="bottom" secondItem="gav-26-9K7" secondAttribute="bottom" id="A7Y-sr-hnZ"/>
-                                                <constraint firstItem="gav-26-9K7" firstAttribute="leading" secondItem="9nc-Kq-gOp" secondAttribute="trailing" constant="10" id="Hec-zn-Orv"/>
+                                                <constraint firstItem="gav-26-9K7" firstAttribute="leading" secondItem="9nc-Kq-gOp" secondAttribute="trailing" constant="10" id="RPb-t7-emd"/>
+                                                <constraint firstItem="9nc-Kq-gOp" firstAttribute="leading" secondItem="7kx-Me-U1o" secondAttribute="leading" constant="10" id="Tzj-7d-k4M"/>
+                                                <constraint firstItem="gav-26-9K7" firstAttribute="top" secondItem="7kx-Me-U1o" secondAttribute="top" id="cVZ-81-As6"/>
+                                                <constraint firstAttribute="trailing" secondItem="gav-26-9K7" secondAttribute="trailing" id="ksG-UO-wKW"/>
+                                                <constraint firstItem="9nc-Kq-gOp" firstAttribute="top" secondItem="7kx-Me-U1o" secondAttribute="top" constant="13" id="m57-aS-b6T"/>
+                                                <constraint firstAttribute="bottom" secondItem="gav-26-9K7" secondAttribute="bottom" id="r0e-Ha-dtY"/>
                                                 <constraint firstItem="gav-26-9K7" firstAttribute="top" secondItem="7kx-Me-U1o" secondAttribute="top" id="tQf-gQ-sd0"/>
-                                                <constraint firstItem="9nc-Kq-gOp" firstAttribute="top" secondItem="7kx-Me-U1o" secondAttribute="top" constant="17" id="ysV-6S-q3A"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -8706,7 +8773,7 @@ Assign top space to both the buttons.</string>
                         <constraints>
                             <constraint firstItem="rT0-0c-Q7r" firstAttribute="top" secondItem="EgG-Yt-Crs" secondAttribute="bottom" id="21t-EF-RhK"/>
                             <constraint firstItem="EgG-Yt-Crs" firstAttribute="leading" secondItem="sei-oK-7Mp" secondAttribute="leading" id="3fV-Rl-I9T"/>
-                            <constraint firstItem="BGU-VG-B1t" firstAttribute="top" secondItem="rT0-0c-Q7r" secondAttribute="bottom" constant="20" id="4S3-6u-YEf"/>
+                            <constraint firstItem="BGU-VG-B1t" firstAttribute="top" secondItem="rT0-0c-Q7r" secondAttribute="bottom" id="4S3-6u-YEf"/>
                             <constraint firstItem="ua2-pD-Ksf" firstAttribute="top" secondItem="BGU-VG-B1t" secondAttribute="bottom" id="4tD-ul-LUT"/>
                             <constraint firstAttribute="trailing" secondItem="EgG-Yt-Crs" secondAttribute="trailing" id="ASc-pg-Q7k"/>
                             <constraint firstItem="rT0-0c-Q7r" firstAttribute="leading" secondItem="sei-oK-7Mp" secondAttribute="leading" id="FyT-Os-Mxz"/>
@@ -8722,7 +8789,7 @@ Assign top space to both the buttons.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Ps-xA-qIk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4528" y="-1643"/>
+            <point key="canvasLocation" x="4527.536231884058" y="-1643.4782608695652"/>
         </scene>
         <!--My Profile Vc-->
         <scene sceneID="o61-y2-gWh">
@@ -8792,7 +8859,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="28" width="414" height="71"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vPb-RB-wUq" id="8c3-cI-MN9">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="71"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="70.666666666666671"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LEM-nE-WPr">
@@ -8913,7 +8980,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="141" width="414" height="141"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="U9m-Ja-a8h" id="AsX-1s-9Xj">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="141"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="140.66666666666666"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A3y-9N-9Eq">
@@ -9005,7 +9072,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="282" width="414" height="128"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="slD-Ra-hGg" id="LNB-z6-brQ">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="128"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="127.66666666666667"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NXR-Ev-iUi">
@@ -9240,7 +9307,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="141" width="414" height="141"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="j75-e1-R4S" id="6Mf-OE-bk6">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="141"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="140.66666666666666"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PBC-ds-OiZ">
@@ -9332,7 +9399,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="282" width="414" height="89"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KOK-nn-IaG" id="K3T-SQ-eza">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="89"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="88.666666666666671"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iWL-Lg-LDM">
@@ -9610,7 +9677,7 @@ Assign top space to both the buttons.</string>
                                                     <constraint firstAttribute="height" constant="55" id="YUk-hG-p6r"/>
                                                 </constraints>
                                                 <string key="text">JAN
-2017</string>
+                                                    2017</string>
                                                 <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -10116,7 +10183,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="141" width="414" height="141"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MXi-fx-e6B" id="gxN-kI-wxn">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="141"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="140.66666666666666"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mdE-Ku-deL">
@@ -10208,7 +10275,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="282" width="414" height="89"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2he-vu-V5e" id="bwl-dR-V9g">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="89"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="88.666666666666671"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NKX-ao-HvM">
@@ -10821,7 +10888,7 @@ Assign top space to both the buttons.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9zX-vL-Gbz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7180" y="-1643"/>
+            <point key="canvasLocation" x="7832" y="-1665"/>
         </scene>
         <!--Scool Group Vc-->
         <scene sceneID="ijn-T3-Keb">
@@ -10874,7 +10941,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="28" width="411" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1EE-35-18a" id="mH2-XR-JTu">
-                                            <rect key="frame" x="0.0" y="0.0" width="411" height="100"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="411" height="99.666666666666671"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CKW-0k-asq">
@@ -11010,7 +11077,7 @@ Assign top space to both the buttons.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="syf-78-WQY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7828" y="-1643"/>
+            <point key="canvasLocation" x="8478" y="-1665"/>
         </scene>
         <!--Create Scool Group Vc-->
         <scene sceneID="Q61-Xn-Hch">
@@ -11173,7 +11240,7 @@ Assign top space to both the buttons.</string>
                                                         <rect key="frame" x="0.0" y="28" width="394" height="105"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="V4R-Ni-JrI" id="FL0-Lg-9B9">
-                                                            <rect key="frame" x="0.0" y="0.0" width="394" height="105"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="394" height="104.66666666666667"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2hh-8H-PBW">
@@ -11460,7 +11527,7 @@ Assign top space to both the buttons.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V4w-8r-Q9Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8477" y="-1643"/>
+            <point key="canvasLocation" x="9142" y="-1674"/>
         </scene>
         <!--Project Vc-->
         <scene sceneID="ISi-ep-ceF">
@@ -11513,7 +11580,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="67" width="414" height="67"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DRW-0l-AFW" id="wAi-xq-dD9">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="67"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="66.666666666666671"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KJ2-lO-evB">
@@ -11639,7 +11706,7 @@ Assign top space to both the buttons.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ccz-Xy-e6w" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="9116" y="-1643"/>
+            <point key="canvasLocation" x="9857" y="-1674"/>
         </scene>
         <!--Create Project Vc-->
         <scene sceneID="OkJ-Tj-qhj">
@@ -11653,50 +11720,6 @@ Assign top space to both the buttons.</string>
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vLX-kZ-vrL">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create Project(Gaurav)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kAd-2j-uDf">
-                                        <rect key="frame" x="20" y="35" width="374" height="17"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="17"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TOA-b0-maH">
-                                        <rect key="frame" x="8" y="25" width="30" height="30"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="J4L-2R-J9r"/>
-                                            <constraint firstAttribute="width" constant="30" id="aDD-jM-hlE"/>
-                                        </constraints>
-                                        <state key="normal" backgroundImage="back"/>
-                                        <connections>
-                                            <action selector="btnBack:" destination="9U8-Ys-bCX" eventType="touchUpInside" id="2i7-oR-RPz"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GZs-Cb-I1t">
-                                        <rect key="frame" x="376" y="25" width="30" height="30"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="30" id="9m1-2V-XKy"/>
-                                            <constraint firstAttribute="height" constant="30" id="ExG-zz-d3g"/>
-                                        </constraints>
-                                        <state key="normal" image="tick"/>
-                                        <connections>
-                                            <action selector="btnSumbit:" destination="9U8-Ys-bCX" eventType="touchUpInside" id="DkH-5W-dYv"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" red="0.1529411765" green="0.18823529410000001" blue="0.35686274509999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstItem="TOA-b0-maH" firstAttribute="leading" secondItem="vLX-kZ-vrL" secondAttribute="leading" constant="8" id="6sy-T1-Gz3"/>
-                                    <constraint firstAttribute="trailing" secondItem="GZs-Cb-I1t" secondAttribute="trailing" constant="8" id="EQU-CS-W9i"/>
-                                    <constraint firstItem="GZs-Cb-I1t" firstAttribute="top" secondItem="vLX-kZ-vrL" secondAttribute="top" constant="25" id="OQD-Mc-WJA"/>
-                                    <constraint firstAttribute="height" constant="64" id="VNv-nC-zSN"/>
-                                    <constraint firstItem="TOA-b0-maH" firstAttribute="top" secondItem="vLX-kZ-vrL" secondAttribute="top" constant="25" id="XIj-x0-B62"/>
-                                    <constraint firstItem="kAd-2j-uDf" firstAttribute="leading" secondItem="vLX-kZ-vrL" secondAttribute="leading" constant="20" id="hNi-s1-L0p"/>
-                                    <constraint firstAttribute="bottom" secondItem="kAd-2j-uDf" secondAttribute="bottom" constant="12" id="wmP-xH-DWA"/>
-                                    <constraint firstAttribute="trailing" secondItem="kAd-2j-uDf" secondAttribute="trailing" constant="20" id="yQ6-eR-Lem"/>
-                                </constraints>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="clg-cN-dPG">
                                 <rect key="frame" x="0.0" y="64" width="414" height="672"/>
                                 <subviews>
@@ -11773,7 +11796,7 @@ Assign top space to both the buttons.</string>
                                                         <rect key="frame" x="0.0" y="28" width="394" height="105"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="INv-oa-XIL" id="R5X-qv-nh3">
-                                                            <rect key="frame" x="0.0" y="0.0" width="394" height="105"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="394" height="104.66666666666667"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gz8-Bw-nP5">
@@ -11887,6 +11910,50 @@ Assign top space to both the buttons.</string>
                                     <constraint firstItem="Zlm-S5-tfh" firstAttribute="leading" secondItem="clg-cN-dPG" secondAttribute="leading" id="vV8-py-Uml"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vLX-kZ-vrL">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create Project(Gaurav)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kAd-2j-uDf">
+                                        <rect key="frame" x="20" y="35" width="374" height="17"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="17"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TOA-b0-maH">
+                                        <rect key="frame" x="8" y="25" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="J4L-2R-J9r"/>
+                                            <constraint firstAttribute="width" constant="30" id="aDD-jM-hlE"/>
+                                        </constraints>
+                                        <state key="normal" backgroundImage="back"/>
+                                        <connections>
+                                            <action selector="btnBack:" destination="9U8-Ys-bCX" eventType="touchUpInside" id="2i7-oR-RPz"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GZs-Cb-I1t">
+                                        <rect key="frame" x="376" y="25" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="30" id="9m1-2V-XKy"/>
+                                            <constraint firstAttribute="height" constant="30" id="ExG-zz-d3g"/>
+                                        </constraints>
+                                        <state key="normal" image="tick"/>
+                                        <connections>
+                                            <action selector="btnSumbit:" destination="9U8-Ys-bCX" eventType="touchUpInside" id="DkH-5W-dYv"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.1529411765" green="0.18823529410000001" blue="0.35686274509999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="TOA-b0-maH" firstAttribute="leading" secondItem="vLX-kZ-vrL" secondAttribute="leading" constant="8" id="6sy-T1-Gz3"/>
+                                    <constraint firstAttribute="trailing" secondItem="GZs-Cb-I1t" secondAttribute="trailing" constant="8" id="EQU-CS-W9i"/>
+                                    <constraint firstItem="GZs-Cb-I1t" firstAttribute="top" secondItem="vLX-kZ-vrL" secondAttribute="top" constant="25" id="OQD-Mc-WJA"/>
+                                    <constraint firstAttribute="height" constant="64" id="VNv-nC-zSN"/>
+                                    <constraint firstItem="TOA-b0-maH" firstAttribute="top" secondItem="vLX-kZ-vrL" secondAttribute="top" constant="25" id="XIj-x0-B62"/>
+                                    <constraint firstItem="kAd-2j-uDf" firstAttribute="leading" secondItem="vLX-kZ-vrL" secondAttribute="leading" constant="20" id="hNi-s1-L0p"/>
+                                    <constraint firstAttribute="bottom" secondItem="kAd-2j-uDf" secondAttribute="bottom" constant="12" id="wmP-xH-DWA"/>
+                                    <constraint firstAttribute="trailing" secondItem="kAd-2j-uDf" secondAttribute="trailing" constant="20" id="yQ6-eR-Lem"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -11915,7 +11982,7 @@ Assign top space to both the buttons.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UcJ-tu-59J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="9761" y="-1643"/>
+            <point key="canvasLocation" x="10516" y="-1674"/>
         </scene>
         <!--Photo Vc-->
         <scene sceneID="5l5-qa-x6u">
@@ -11960,17 +12027,17 @@ Assign top space to both the buttons.</string>
                                     <constraint firstAttribute="bottom" secondItem="Esk-gR-jQd" secondAttribute="bottom" constant="12" id="bWa-3D-grH"/>
                                 </constraints>
                             </view>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="9Xs-bE-mE8">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ZmH-Sr-pPW">
                                 <rect key="frame" x="0.0" y="64" width="414" height="672"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="x1h-3p-lbW">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="tzl-U8-oRW">
                                     <size key="itemSize" width="0.0" height="0.0"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCell" id="AyR-br-5fV">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCell" id="QkD-sp-yd4">
                                         <rect key="frame" x="207" y="0.0" width="0.0" height="0.0"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -11979,29 +12046,29 @@ Assign top space to both the buttons.</string>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
-                                    <outlet property="dataSource" destination="bcp-2K-sbQ" id="w2g-VD-ofz"/>
-                                    <outlet property="delegate" destination="bcp-2K-sbQ" id="by5-K4-dsk"/>
+                                    <outlet property="dataSource" destination="bcp-2K-sbQ" id="iGG-4x-r5j"/>
+                                    <outlet property="delegate" destination="bcp-2K-sbQ" id="maP-Bk-rQc"/>
                                 </connections>
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="9Xs-bE-mE8" firstAttribute="top" secondItem="9ow-Wo-lKa" secondAttribute="bottom" id="3Xo-LD-9R1"/>
+                            <constraint firstItem="Jtd-ja-hYb" firstAttribute="top" secondItem="ZmH-Sr-pPW" secondAttribute="bottom" id="GNH-tG-dBl"/>
+                            <constraint firstAttribute="trailing" secondItem="ZmH-Sr-pPW" secondAttribute="trailing" id="J6d-KD-aRU"/>
                             <constraint firstAttribute="trailing" secondItem="9ow-Wo-lKa" secondAttribute="trailing" id="JDt-Ke-pAU"/>
-                            <constraint firstAttribute="trailing" secondItem="9Xs-bE-mE8" secondAttribute="trailing" id="M97-BI-2WN"/>
+                            <constraint firstItem="ZmH-Sr-pPW" firstAttribute="top" secondItem="9ow-Wo-lKa" secondAttribute="bottom" id="SlZ-yT-8rA"/>
+                            <constraint firstItem="ZmH-Sr-pPW" firstAttribute="leading" secondItem="gBY-pH-D6x" secondAttribute="leading" id="U1a-e5-rwj"/>
                             <constraint firstItem="9ow-Wo-lKa" firstAttribute="top" secondItem="gBY-pH-D6x" secondAttribute="top" id="clx-E0-1Qz"/>
-                            <constraint firstItem="Jtd-ja-hYb" firstAttribute="top" secondItem="9Xs-bE-mE8" secondAttribute="bottom" id="h2A-hg-kt1"/>
-                            <constraint firstItem="9Xs-bE-mE8" firstAttribute="leading" secondItem="gBY-pH-D6x" secondAttribute="leading" id="qvn-P5-I1S"/>
                             <constraint firstItem="9ow-Wo-lKa" firstAttribute="leading" secondItem="gBY-pH-D6x" secondAttribute="leading" id="yVH-Ce-jLd"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="aCollectionView" destination="9Xs-bE-mE8" id="ETC-ji-kXn"/>
+                        <outlet property="aCollectionView" destination="ZmH-Sr-pPW" id="s0w-iq-bTl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JUH-Mg-BTK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="10419" y="-1649"/>
+            <point key="canvasLocation" x="11179.710144927538" y="-1674.4565217391305"/>
         </scene>
         <!--Photo Album Vc-->
         <scene sceneID="5jV-q0-jEZ">
@@ -12015,37 +12082,6 @@ Assign top space to both the buttons.</string>
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sbc-xU-GQE">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PhotosAlbum (Name)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4xO-Fs-FHj">
-                                        <rect key="frame" x="20" y="35" width="374" height="17"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="17"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KNU-Go-oAY">
-                                        <rect key="frame" x="8" y="25" width="30" height="30"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="30" id="o0v-cg-cuR"/>
-                                            <constraint firstAttribute="height" constant="30" id="sEk-5d-F5u"/>
-                                        </constraints>
-                                        <state key="normal" backgroundImage="back"/>
-                                        <connections>
-                                            <action selector="BackBtnClicked:" destination="Skh-eC-r7H" eventType="touchUpInside" id="S3m-vG-B2m"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" red="0.1529411765" green="0.18823529410000001" blue="0.35686274509999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="4xO-Fs-FHj" secondAttribute="trailing" constant="20" id="BLa-gA-9ru"/>
-                                    <constraint firstItem="KNU-Go-oAY" firstAttribute="top" secondItem="sbc-xU-GQE" secondAttribute="top" constant="25" id="PpC-eS-Pae"/>
-                                    <constraint firstItem="4xO-Fs-FHj" firstAttribute="leading" secondItem="sbc-xU-GQE" secondAttribute="leading" constant="20" id="QFo-tf-YKu"/>
-                                    <constraint firstItem="KNU-Go-oAY" firstAttribute="leading" secondItem="sbc-xU-GQE" secondAttribute="leading" constant="8" id="QZJ-2p-7jd"/>
-                                    <constraint firstAttribute="height" constant="64" id="tUi-gZ-9th"/>
-                                    <constraint firstAttribute="bottom" secondItem="4xO-Fs-FHj" secondAttribute="bottom" constant="12" id="wDm-Oy-2wt"/>
-                                </constraints>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F8o-Yj-XZ8">
                                 <rect key="frame" x="0.0" y="64" width="414" height="70"/>
                                 <subviews>
@@ -12206,6 +12242,37 @@ Assign top space to both the buttons.</string>
                                     <action selector="addBtnClicked:" destination="Skh-eC-r7H" eventType="touchUpInside" id="23u-rE-fh2"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sbc-xU-GQE">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PhotosAlbum (Name)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4xO-Fs-FHj">
+                                        <rect key="frame" x="20" y="35" width="374" height="17"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="17"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KNU-Go-oAY">
+                                        <rect key="frame" x="8" y="25" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="30" id="o0v-cg-cuR"/>
+                                            <constraint firstAttribute="height" constant="30" id="sEk-5d-F5u"/>
+                                        </constraints>
+                                        <state key="normal" backgroundImage="back"/>
+                                        <connections>
+                                            <action selector="BackBtnClicked:" destination="Skh-eC-r7H" eventType="touchUpInside" id="S3m-vG-B2m"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.1529411765" green="0.18823529410000001" blue="0.35686274509999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="4xO-Fs-FHj" secondAttribute="trailing" constant="20" id="BLa-gA-9ru"/>
+                                    <constraint firstItem="KNU-Go-oAY" firstAttribute="top" secondItem="sbc-xU-GQE" secondAttribute="top" constant="25" id="PpC-eS-Pae"/>
+                                    <constraint firstItem="4xO-Fs-FHj" firstAttribute="leading" secondItem="sbc-xU-GQE" secondAttribute="leading" constant="20" id="QFo-tf-YKu"/>
+                                    <constraint firstItem="KNU-Go-oAY" firstAttribute="leading" secondItem="sbc-xU-GQE" secondAttribute="leading" constant="8" id="QZJ-2p-7jd"/>
+                                    <constraint firstAttribute="height" constant="64" id="tUi-gZ-9th"/>
+                                    <constraint firstAttribute="bottom" secondItem="4xO-Fs-FHj" secondAttribute="bottom" constant="12" id="wDm-Oy-2wt"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -12241,7 +12308,7 @@ Assign top space to both the buttons.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dnf-bI-ZlL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="11684" y="-1649"/>
+            <point key="canvasLocation" x="12477" y="-1674"/>
         </scene>
         <!--Profile Video Vc-->
         <scene sceneID="puT-Cb-GGF">
@@ -12428,7 +12495,7 @@ Assign top space to both the buttons.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s6u-4R-wHu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="12370" y="-1643"/>
+            <point key="canvasLocation" x="13154" y="-1674"/>
         </scene>
         <!--Profile Photo Show Vc-->
         <scene sceneID="NRA-Uu-BCV">
@@ -12567,7 +12634,7 @@ Assign top space to both the buttons.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zhe-RD-i49" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="11059" y="-1649"/>
+            <point key="canvasLocation" x="11829" y="-1674"/>
         </scene>
         <!--Profile Video Detail Vc-->
         <scene sceneID="hu2-fn-dy5">
@@ -12719,7 +12786,7 @@ Assign top space to both the buttons.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bxN-t4-lB1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="13038" y="-1639"/>
+            <point key="canvasLocation" x="13833" y="-1674"/>
         </scene>
         <!--Profile Standard Vc-->
         <scene sceneID="Lpu-en-25d">
@@ -12733,37 +12800,6 @@ Assign top space to both the buttons.</string>
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XMT-tv-UF0">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Standard(Gaurav)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bd8-wN-ULr">
-                                        <rect key="frame" x="20" y="35" width="374" height="17"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="17"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rk8-V5-xYa">
-                                        <rect key="frame" x="8" y="25" width="30" height="30"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="Bnf-yW-uXm"/>
-                                            <constraint firstAttribute="width" constant="30" id="zOF-XH-aBS"/>
-                                        </constraints>
-                                        <state key="normal" backgroundImage="back"/>
-                                        <connections>
-                                            <action selector="btnBack:" destination="AL7-cq-cim" eventType="touchUpInside" id="g2h-jw-5Fn"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" red="0.1529411765" green="0.18823529410000001" blue="0.35686274509999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstItem="Rk8-V5-xYa" firstAttribute="leading" secondItem="XMT-tv-UF0" secondAttribute="leading" constant="8" id="6K1-d8-QuO"/>
-                                    <constraint firstAttribute="bottom" secondItem="bd8-wN-ULr" secondAttribute="bottom" constant="12" id="9I4-8X-9Qn"/>
-                                    <constraint firstAttribute="trailing" secondItem="bd8-wN-ULr" secondAttribute="trailing" constant="20" id="U4j-Gy-wxJ"/>
-                                    <constraint firstAttribute="height" constant="64" id="WCV-mC-jWb"/>
-                                    <constraint firstItem="Rk8-V5-xYa" firstAttribute="top" secondItem="XMT-tv-UF0" secondAttribute="top" constant="25" id="Xix-1x-7X6"/>
-                                    <constraint firstItem="bd8-wN-ULr" firstAttribute="leading" secondItem="XMT-tv-UF0" secondAttribute="leading" constant="20" id="eds-Kb-95k"/>
-                                </constraints>
-                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="42" sectionHeaderHeight="67" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="YPb-Ar-2yo">
                                 <rect key="frame" x="0.0" y="64" width="414" height="672"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -12772,7 +12808,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="67" width="414" height="42"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iIF-b0-FZP" id="Di6-4F-oM4">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="42"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="41.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hky-Zj-h8q">
@@ -12808,6 +12844,37 @@ Assign top space to both the buttons.</string>
                                     <outlet property="delegate" destination="AL7-cq-cim" id="8jz-tx-grY"/>
                                 </connections>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XMT-tv-UF0">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Standard(Gaurav)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bd8-wN-ULr">
+                                        <rect key="frame" x="20" y="35" width="374" height="17"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="17"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rk8-V5-xYa">
+                                        <rect key="frame" x="8" y="25" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="Bnf-yW-uXm"/>
+                                            <constraint firstAttribute="width" constant="30" id="zOF-XH-aBS"/>
+                                        </constraints>
+                                        <state key="normal" backgroundImage="back"/>
+                                        <connections>
+                                            <action selector="btnBack:" destination="AL7-cq-cim" eventType="touchUpInside" id="g2h-jw-5Fn"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.1529411765" green="0.18823529410000001" blue="0.35686274509999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="Rk8-V5-xYa" firstAttribute="leading" secondItem="XMT-tv-UF0" secondAttribute="leading" constant="8" id="6K1-d8-QuO"/>
+                                    <constraint firstAttribute="bottom" secondItem="bd8-wN-ULr" secondAttribute="bottom" constant="12" id="9I4-8X-9Qn"/>
+                                    <constraint firstAttribute="trailing" secondItem="bd8-wN-ULr" secondAttribute="trailing" constant="20" id="U4j-Gy-wxJ"/>
+                                    <constraint firstAttribute="height" constant="64" id="WCV-mC-jWb"/>
+                                    <constraint firstItem="Rk8-V5-xYa" firstAttribute="top" secondItem="XMT-tv-UF0" secondAttribute="top" constant="25" id="Xix-1x-7X6"/>
+                                    <constraint firstItem="bd8-wN-ULr" firstAttribute="leading" secondItem="XMT-tv-UF0" secondAttribute="leading" constant="20" id="eds-Kb-95k"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -12827,7 +12894,7 @@ Assign top space to both the buttons.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iv1-2H-FP0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="13748" y="-1639"/>
+            <point key="canvasLocation" x="14480" y="-1674"/>
         </scene>
         <!--Profile Division Vc-->
         <scene sceneID="d13-Qu-ET8">
@@ -12880,7 +12947,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="67" width="414" height="42"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HFv-wL-kh0" id="Pmm-OD-sIn">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="42"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="41.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5mh-7n-kfB">
@@ -12935,7 +13002,7 @@ Assign top space to both the buttons.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IjN-MH-67E" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="14406" y="-1639"/>
+            <point key="canvasLocation" x="15112" y="-1674"/>
         </scene>
         <!--Profile Subject Vc-->
         <scene sceneID="pfi-SF-iui">
@@ -12988,7 +13055,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="67" width="414" height="42"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7kg-wv-9Ra" id="bEd-I7-ASW">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="42"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="41.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Xt-Ne-mpX">
@@ -13043,7 +13110,7 @@ Assign top space to both the buttons.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fCO-ey-LKN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="15054" y="-1643"/>
+            <point key="canvasLocation" x="15764" y="-1674"/>
         </scene>
         <!--Profile Leave List Select Vc-->
         <scene sceneID="9yx-QI-Iva">
@@ -13096,7 +13163,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="67" width="414" height="42"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7zV-kb-1VS" id="eob-Wa-noB">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="42"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="41.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LfN-Je-Tbv">
@@ -13163,7 +13230,7 @@ Assign top space to both the buttons.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ytN-ce-TYR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="15699" y="-1639"/>
+            <point key="canvasLocation" x="16390" y="-1674"/>
         </scene>
         <!--Profile Leave Detail List Vc-->
         <scene sceneID="luh-F8-XUx">
@@ -13216,7 +13283,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="141" width="414" height="141"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5jM-Sy-Zji" id="94q-HP-mKd">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="141"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="140.66666666666666"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nEV-ps-J8x">
@@ -13308,7 +13375,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="282" width="414" height="89"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lI4-Lh-YsJ" id="KhO-pq-OHy">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="89"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="88.666666666666671"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cDr-Bn-HfI">
@@ -13432,7 +13499,7 @@ Assign top space to both the buttons.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nXP-3n-muk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="16336" y="-1639"/>
+            <point key="canvasLocation" x="17074" y="-1674"/>
         </scene>
         <!--Leave Vc-->
         <scene sceneID="Kjs-bo-Tuw">
@@ -13843,7 +13910,7 @@ Assign top space to both the buttons.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wME-LA-8Po" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="16968" y="-1639"/>
+            <point key="canvasLocation" x="17699" y="-1674"/>
         </scene>
         <!--Profile Friend Request Vc-->
         <scene sceneID="pOP-Vl-sso">
@@ -13858,14 +13925,14 @@ Assign top space to both the buttons.</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="130" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="z9H-ll-6A0">
-                                <rect key="frame" x="0.0" y="108" width="411" height="628"/>
+                                <rect key="frame" x="0.0" y="119" width="411" height="617"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellRow" rowHeight="130" id="dnf-DN-76y">
                                         <rect key="frame" x="0.0" y="28" width="411" height="130"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dnf-DN-76y" id="nWR-gu-AGw">
-                                            <rect key="frame" x="0.0" y="0.0" width="411" height="130"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="411" height="129.66666666666666"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qgB-ga-Ice">
@@ -14001,10 +14068,6 @@ Assign top space to both the buttons.</string>
                                     <outlet property="delegate" destination="D8N-2e-u60" id="Ihk-Y9-nOB"/>
                                 </connections>
                             </tableView>
-                            <searchBar contentMode="redraw" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="uKV-HC-lDs">
-                                <rect key="frame" x="0.0" y="64" width="414" height="44"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </searchBar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vwF-wA-iky">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
                                 <subviews>
@@ -14036,29 +14099,87 @@ Assign top space to both the buttons.</string>
                                     <constraint firstItem="lh2-tl-5Oo" firstAttribute="top" secondItem="vwF-wA-iky" secondAttribute="top" constant="25" id="ztw-NL-j43"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FLG-ae-HaN">
+                                <rect key="frame" x="0.0" y="64" width="414" height="55"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gyf-kG-N7v">
+                                        <rect key="frame" x="10" y="5" width="394" height="40"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="search" translatesAutoresizingMaskIntoConstraints="NO" id="E2O-j1-iYE">
+                                                <rect key="frame" x="366" y="11" width="19" height="19"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="19" id="5n2-KC-axv"/>
+                                                    <constraint firstAttribute="height" constant="19" id="xGt-1e-tgy"/>
+                                                </constraints>
+                                            </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y5V-Yt-XwI">
+                                                <rect key="frame" x="346" y="0.0" width="48" height="40"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="48" id="xsq-E3-MHJ"/>
+                                                </constraints>
+                                                <connections>
+                                                    <action selector="btnSearchClicked:" destination="D8N-2e-u60" eventType="touchUpInside" id="2ek-ss-Zrn"/>
+                                                </connections>
+                                            </button>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vRu-s3-vjC">
+                                                <rect key="frame" x="8" y="5" width="330" height="30"/>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="17"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="D8N-2e-u60" id="QQW-lM-jpg"/>
+                                                </connections>
+                                            </textField>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="3O5-C8-Koo"/>
+                                            <constraint firstAttribute="bottom" secondItem="vRu-s3-vjC" secondAttribute="bottom" constant="5" id="A3U-N0-qM4"/>
+                                            <constraint firstAttribute="trailing" secondItem="E2O-j1-iYE" secondAttribute="trailing" constant="9" id="G5L-gG-fBj"/>
+                                            <constraint firstItem="y5V-Yt-XwI" firstAttribute="top" secondItem="gyf-kG-N7v" secondAttribute="top" id="Hid-yJ-VSS"/>
+                                            <constraint firstAttribute="bottom" secondItem="y5V-Yt-XwI" secondAttribute="bottom" id="NHO-OM-MKg"/>
+                                            <constraint firstItem="vRu-s3-vjC" firstAttribute="leading" secondItem="gyf-kG-N7v" secondAttribute="leading" constant="8" id="Nyr-V7-etR"/>
+                                            <constraint firstItem="y5V-Yt-XwI" firstAttribute="leading" secondItem="vRu-s3-vjC" secondAttribute="trailing" constant="8" id="UMH-dd-36Q"/>
+                                            <constraint firstItem="vRu-s3-vjC" firstAttribute="top" secondItem="gyf-kG-N7v" secondAttribute="top" constant="5" id="dND-3E-zWq"/>
+                                            <constraint firstAttribute="trailing" secondItem="y5V-Yt-XwI" secondAttribute="trailing" id="erj-IG-gzy"/>
+                                            <constraint firstItem="E2O-j1-iYE" firstAttribute="centerY" secondItem="gyf-kG-N7v" secondAttribute="centerY" id="uo7-Vb-Y6c"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="gyf-kG-N7v" firstAttribute="leading" secondItem="FLG-ae-HaN" secondAttribute="leading" constant="10" id="UWm-jW-cAZ"/>
+                                    <constraint firstAttribute="bottom" secondItem="gyf-kG-N7v" secondAttribute="bottom" constant="10" id="soB-kk-Ctm"/>
+                                    <constraint firstAttribute="trailing" secondItem="gyf-kG-N7v" secondAttribute="trailing" constant="10" id="ucd-ok-vIT"/>
+                                    <constraint firstAttribute="height" constant="55" id="vU9-3k-aY5"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="uKV-HC-lDs" firstAttribute="top" secondItem="vwF-wA-iky" secondAttribute="bottom" id="2rN-aI-2EM"/>
                             <constraint firstItem="z9H-ll-6A0" firstAttribute="leading" secondItem="8o9-cR-puc" secondAttribute="leading" id="7sY-L0-N0I"/>
                             <constraint firstItem="Qtk-Ta-or2" firstAttribute="top" secondItem="z9H-ll-6A0" secondAttribute="bottom" id="9cP-x3-053"/>
                             <constraint firstItem="vwF-wA-iky" firstAttribute="leading" secondItem="8o9-cR-puc" secondAttribute="leading" id="A8p-59-IzF"/>
                             <constraint firstAttribute="trailing" secondItem="vwF-wA-iky" secondAttribute="trailing" id="BaJ-Eg-T4G"/>
                             <constraint firstItem="vwF-wA-iky" firstAttribute="top" secondItem="8o9-cR-puc" secondAttribute="top" id="CgX-ks-c9A"/>
                             <constraint firstAttribute="trailing" secondItem="z9H-ll-6A0" secondAttribute="trailing" constant="3" id="Cmo-Ej-caa"/>
-                            <constraint firstItem="z9H-ll-6A0" firstAttribute="top" secondItem="uKV-HC-lDs" secondAttribute="bottom" id="ENc-25-e6l"/>
-                            <constraint firstItem="uKV-HC-lDs" firstAttribute="leading" secondItem="8o9-cR-puc" secondAttribute="leading" id="PdJ-Nm-rIB"/>
-                            <constraint firstAttribute="trailing" secondItem="uKV-HC-lDs" secondAttribute="trailing" id="kMg-Pw-UrA"/>
+                            <constraint firstItem="FLG-ae-HaN" firstAttribute="top" secondItem="vwF-wA-iky" secondAttribute="bottom" id="OOS-n4-DwW"/>
+                            <constraint firstItem="z9H-ll-6A0" firstAttribute="top" secondItem="FLG-ae-HaN" secondAttribute="bottom" id="enG-k8-Uij"/>
+                            <constraint firstAttribute="trailing" secondItem="FLG-ae-HaN" secondAttribute="trailing" id="k0T-2U-gKx"/>
+                            <constraint firstItem="FLG-ae-HaN" firstAttribute="leading" secondItem="8o9-cR-puc" secondAttribute="leading" id="o8a-d0-zGo"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="btnBack" destination="lh2-tl-5Oo" id="hq3-Wn-ROx"/>
                         <outlet property="tblFriendList" destination="z9H-ll-6A0" id="tEM-nD-bZN"/>
+                        <outlet property="txtSearchText" destination="vRu-s3-vjC" id="UHi-gj-Iku"/>
+                        <outlet property="viewSearch" destination="gyf-kG-N7v" id="8wD-v8-Crb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U9W-p3-pvU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="17630" y="-1643"/>
+            <point key="canvasLocation" x="18331.884057971016" y="-1674.4565217391305"/>
         </scene>
         <!--Profile Search Friend-->
         <scene sceneID="euw-NG-EHQ">
@@ -14111,7 +14232,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="28" width="414" height="124"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="god-iF-jJa" id="vhA-0V-lfz">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="124"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="123.66666666666667"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="g1" translatesAutoresizingMaskIntoConstraints="NO" id="zKZ-Ql-itW">
@@ -14269,6 +14390,9 @@ Assign top space to both the buttons.</string>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="rPY-AW-7CL" id="aAo-t9-cUw"/>
+                                                </connections>
                                             </textField>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -14316,7 +14440,7 @@ Assign top space to both the buttons.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6nJ-24-hHz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="18255" y="-1649"/>
+            <point key="canvasLocation" x="18964" y="-1674"/>
         </scene>
         <!--Otp Password Vc-->
         <scene sceneID="Acf-Ue-4oR">
@@ -14525,7 +14649,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="81" width="414" height="81"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hpv-uU-nEM" id="MYD-fL-i2Q">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="81"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="80.666666666666671"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Sn-Cz-hFc">
@@ -14587,7 +14711,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="162" width="414" height="170"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CN1-Oc-BI1" id="udQ-FH-0hK">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="170"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="169.66666666666666"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iu1-Az-GcK">
@@ -14761,7 +14885,7 @@ Assign top space to both the buttons.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sot-h2-Gj2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="18917" y="-1649"/>
+            <point key="canvasLocation" x="19593" y="-1674"/>
         </scene>
         <!--Profile Add Update List Detail List Vc-->
         <scene sceneID="Rhx-uf-5Jx">
@@ -14827,7 +14951,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="28" width="398" height="231"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LGn-H8-VCW" id="YTJ-bq-Q3s">
-                                            <rect key="frame" x="0.0" y="0.0" width="398" height="231"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="398" height="230.66666666666666"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UeW-Yd-sbI">
@@ -15109,7 +15233,7 @@ Assign top space to both the buttons.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dsb-5Z-nPk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="19543" y="-1649"/>
+            <point key="canvasLocation" x="20217" y="-1674"/>
         </scene>
         <!--School Vc-->
         <scene sceneID="7lb-0L-oBH">
@@ -15173,7 +15297,7 @@ Assign top space to both the buttons.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Vx-WQ-jK0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="20224.637681159424" y="-1655.7065217391305"/>
+            <point key="canvasLocation" x="20900" y="-1674"/>
         </scene>
         <!--Add Homework Vc-->
         <scene sceneID="59G-rs-a8s">
@@ -15407,7 +15531,7 @@ Assign top space to both the buttons.</string>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <toolbarItems/>
                     <nil key="simulatedTopBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="pdI-Qy-zpU">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="pdI-Qy-zpU">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -15440,7 +15564,7 @@ Assign top space to both the buttons.</string>
                                         <rect key="frame" x="0.0" y="22" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5wG-96-xud" id="ppv-kZ-raJ">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="59.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>

@@ -7,6 +7,7 @@
 //
 
 #import "profileSearchFriend.h"
+#import "Global.h"
 
 @interface profileSearchFriend ()
 {
@@ -20,8 +21,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    //
-    
      nameary = [[NSMutableArray alloc]initWithObjects:@"mangroliya dhara",@"Patel Diya",@"patel nilam" ,@"patel ridhhi",nil];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
@@ -29,41 +28,13 @@
     
     aTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    //Bottom border
-    CALayer *bottomBorder = [CALayer layer];
-    bottomBorder.frame = CGRectMake(0.0f, self.aSerchview.frame.size.height - 1, self.view.frame.size.width-20, 1.0f);
-    bottomBorder.shadowColor = [UIColor grayColor].CGColor;
-    bottomBorder.shadowOffset = CGSizeMake(1, 1);
-    bottomBorder.shadowOpacity = 1;
-    bottomBorder.shadowRadius = 1.0;
-    bottomBorder.backgroundColor = [UIColor lightGrayColor].CGColor;
-    [self.aSerchview.layer addSublayer:bottomBorder];
-    
-    //left border
-    CALayer *leftBorder = [CALayer layer];
-    leftBorder.frame = CGRectMake(0.0f, 30.0f, 1.0f, self.aSerchview.frame.size.height-30);
-    leftBorder.shadowColor = [UIColor grayColor].CGColor;
-    leftBorder.shadowOffset = CGSizeMake(1, 1);
-    leftBorder.shadowOpacity = 1;
-    leftBorder.shadowRadius = 1.0;
-    leftBorder.backgroundColor = [UIColor lightGrayColor].CGColor;
-    [self.aSerchview.layer addSublayer:leftBorder];
-    
-    //right border
-    CALayer *rightBorder = [CALayer layer];
-    rightBorder.frame = CGRectMake(self.view.frame.size.width-20, 30.0f, 1.0f, self.aSerchview.frame.size.height-30);
-    rightBorder.shadowColor = [UIColor grayColor].CGColor;
-    rightBorder.shadowOffset = CGSizeMake(1, 1);
-    rightBorder.shadowOpacity = 1;
-    rightBorder.shadowRadius = 1.0;
-    rightBorder.backgroundColor = [UIColor lightGrayColor].CGColor;
-    [self.aSerchview.layer addSublayer:rightBorder];
-    
+    [Utility SearchTextView:aSerchview];
     
     // Do any additional setup after loading the view.
 }
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }

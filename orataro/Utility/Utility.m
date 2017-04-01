@@ -1,4 +1,4 @@
-//
+ //
 //  Utility.m
 
 //
@@ -546,18 +546,9 @@
     
     Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
-    if (networkStatus == NotReachable) {
+    if (networkStatus == NotReachable)
+    {
         NSLog(@"There IS NO internet connection");
-        //        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Talents Arena" message:@"Please make sure that you have an active Internet connection." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-        //        [alertView show];
-        
-//        UIAlertView *alert = [[UIAlertView alloc]
-//                              initWithTitle:@"ORATARO"
-//                              message:@"Please make sure that you have an active Internet connection."
-//                              delegate:self // <== changed from nil to self
-//                              cancelButtonTitle:nil
-//                              otherButtonTitles:@"Ok", nil];
-//        [alert show];
         return NO;
     }
     return YES;
@@ -595,13 +586,13 @@
     [df setDateFormat:dateFormate];
     NSString *dateString =[df stringFromDate:date];
     
-//    NSDateFormatter *df1 = [[NSDateFormatter alloc] init] ;
-//    [df1 setDateFormat:dateFormate];
-//    NSDate *dateString1 =[df1 dateFromString:dateString];
+    //    NSDateFormatter *df1 = [[NSDateFormatter alloc] init] ;
+    //    [df1 setDateFormat:dateFormate];
+    //    NSDate *dateString1 =[df1 dateFromString:dateString];
     
-//    NSDateFormatter *df2 = [[NSDateFormatter alloc] init] ;
-//    [df2 setDateFormat:newDateFormate];
-//    NSString *dateString3 =[df2 stringFromDate:dateString1];
+    //    NSDateFormatter *df2 = [[NSDateFormatter alloc] init] ;
+    //    [df2 setDateFormat:newDateFormate];
+    //    NSString *dateString3 =[df2 stringFromDate:dateString1];
     
     return dateString;
 }
@@ -626,7 +617,7 @@
     NSURL *urlLoginAuthentication= [NSURL URLWithString:apiUrl];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:urlLoginAuthentication];
     [request setHTTPMethod:@"POST"];
-
+    
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:param options:kNilOptions error:nil];
     
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
@@ -652,6 +643,7 @@
             else
             {
                 NSMutableDictionary * jsonData  = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                NSLog(@"data=%@",jsonData);
                 
                 if (block) {
                     block(jsonData,error);
@@ -719,9 +711,9 @@
     NSData *data;
     NSMutableArray *json = [[NSMutableArray alloc]init];
     
-  //  NSLog(@"data=%@ column=%@",jsonstr,columnKey);
+    //  NSLog(@"data=%@ column=%@",jsonstr,columnKey);
     
-   // NSLog(@"json count=%lu",(unsigned long)jsonstr.count);
+    // NSLog(@"json count=%lu",(unsigned long)jsonstr.count);
     
     if([jsonstr count] != 0)
     {
@@ -733,7 +725,7 @@
         
     }
     
-  //  NSLog(@"json=%@",json);
+    //  NSLog(@"json=%@",json);
     
     return json;
 }
@@ -782,6 +774,60 @@
     UIGraphicsEndImageContext();
     return newImage;
 }
+/*+(void)SaveImageDocumentDirectory :(NSMutableDictionary *)dicImg :(NSString *)url
+{
+    NSLog(@"dic=%@",dicImg);
+    NSData *data ;
+    
+    NSURL *url1 = [NSURL URLWithString:[[NSString stringWithFormat:@"%@/%@",url,[dicImg objectForKey:@"ProfilePicture"]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    NSLog(@"url:%@",url1);
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSLog(@"Directory :%@",documentsDirectory);
+    
+    NSString *savedImagePath = [documentsDirectory stringByAppendingPathComponent:[dicImg objectForKey:@"ProfilePicture"]];
+    UIImage *image = imageView.image; // imageView is my image from camera
+    NSData *imageData = UIImagePNGRepresentation(image);
+    [imageData writeToFile:savedImagePath atomically:NO];
+    
+    [data writeToURL:url1 atomically:YES];
+    
+   // [data writeToFile:[documentsDirectory stringByAppendingPathComponent:[NSString str]] atomically:YES];
+    
+}*/
 
++(void)SearchTextView: (UIView *)viewSearch
+{
+    //Bottom border self.view.frame.size.width
+    CALayer *bottomBorder = [CALayer layer];
+    bottomBorder.frame = CGRectMake(0.0f, viewSearch.frame.size.height - 1, [UIScreen mainScreen].bounds.size.width -20, 1.0f);
+    bottomBorder.shadowColor = [UIColor grayColor].CGColor;
+    bottomBorder.shadowOffset = CGSizeMake(1, 1);
+    bottomBorder.shadowOpacity = 1;
+    bottomBorder.shadowRadius = 1.0;
+    bottomBorder.backgroundColor = [UIColor lightGrayColor].CGColor;
+    [viewSearch.layer addSublayer:bottomBorder];
+    
+    //left border
+    CALayer *leftBorder = [CALayer layer];
+    leftBorder.frame = CGRectMake(0.0f, 30.0f, 1.0f, viewSearch.frame.size.height-30);
+    leftBorder.shadowColor = [UIColor grayColor].CGColor;
+    leftBorder.shadowOffset = CGSizeMake(1, 1);
+    leftBorder.shadowOpacity = 1;
+    leftBorder.shadowRadius = 1.0;
+    leftBorder.backgroundColor = [UIColor lightGrayColor].CGColor;
+    [viewSearch.layer addSublayer:leftBorder];
+    
+    //right border
+    CALayer *rightBorder = [CALayer layer];
+    rightBorder.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-20, 30.0f, 1.0f, viewSearch.frame.size.height-30);
+    rightBorder.shadowColor = [UIColor grayColor].CGColor;
+    rightBorder.shadowOffset = CGSizeMake(1, 1);
+    rightBorder.shadowOpacity = 1;
+    rightBorder.shadowRadius = 1.0;
+    rightBorder.backgroundColor = [UIColor lightGrayColor].CGColor;
+    [viewSearch.layer addSublayer:rightBorder];
+}
 
 @end

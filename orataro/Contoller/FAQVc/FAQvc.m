@@ -154,7 +154,7 @@
     aTabelView.separatorStyle = UITableViewCellSeparatorStyleNone;
     aTabelView.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
    
-    [aTabelView reloadData];
+    //[aTabelView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {

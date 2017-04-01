@@ -8,11 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FriendVc : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface FriendVc : UIViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
+
 - (IBAction)BackBtnClicked:(id)sender;
+- (IBAction)TxtValueChanged:(UITextField *)sender;
 - (IBAction)FriendRequestBtnClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *aFirstBtn;
 @property (weak, nonatomic) IBOutlet UIButton *aSecondBtn;
+@property (weak, nonatomic) IBOutlet UIView *viewSearch;
+- (IBAction)btnSearchClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UITextField *txtSearchFriend;
+- (IBAction)txtValueChange:(id)sender;
 
 - (IBAction)AddFrinedBtnClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIView *aPopupView;

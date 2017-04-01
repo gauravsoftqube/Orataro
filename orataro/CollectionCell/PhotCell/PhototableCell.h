@@ -11,5 +11,8 @@
 @interface PhototableCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *DownloadImageView;
 @property (weak, nonatomic) IBOutlet UIView *aOuteView;
+@property (weak, nonatomic) IBOutlet UILabel *lbDate;
+@property (weak, nonatomic) IBOutlet UIButton *btnDownload;
+@property (weak, nonatomic) IBOutlet UIImageView *imgShowImage;
 
 @end
