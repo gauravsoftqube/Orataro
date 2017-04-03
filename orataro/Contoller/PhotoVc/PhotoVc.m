@@ -69,9 +69,6 @@
         [self apiCallFor_GetPhotoList:NO];
         
     }
-    
-    
-    
 }
 #pragma mark - COLLECTIONVIEW DELEGATE
 

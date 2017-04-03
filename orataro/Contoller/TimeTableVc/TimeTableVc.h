@@ -20,4 +20,13 @@
 @property (strong, nonatomic) IBOutlet UIView *aTableHeaderView;
 @property (weak, nonatomic) IBOutlet UITableView *aTableView;
 
+@property (weak, nonatomic) IBOutlet UILabel *lblHeaderTitle;
+
+@property (weak, nonatomic) IBOutlet UIButton *btnNext;
+- (IBAction)btnNext:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UIButton *btnPre;
+- (IBAction)btnPre:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *lblDayName;
+
 @end

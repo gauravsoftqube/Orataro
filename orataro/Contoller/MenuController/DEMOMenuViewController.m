@@ -178,7 +178,6 @@
             break;
         }
         case 5:
-            
         {
             if ([Utility isInterNetConnectionIsActive] == false)
             {
@@ -212,86 +211,71 @@
             break;
         }
         case 7:
-            
         {
             MessageVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MessageVc"];
             navigationController.viewControllers = @[homeViewController];
             break;
         }
         case 8:
-            
         {
             TimeTableVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"TimeTableVc"];
             navigationController.viewControllers = @[homeViewController];
             break;
         }
         case 9:
-            
         {
             NoteVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NoteVc"];
             navigationController.viewControllers = @[homeViewController];
             break;
         }
         case 10:
-            
         {
             HolidayVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"HolidayVc"];
             navigationController.viewControllers = @[homeViewController];
             break;
         }
-            
         case 11:
-            
         {
             CalenderVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CalenderVc"];
             navigationController.viewControllers = @[homeViewController];
             break;
         }
         case 12:
-            
         {
             PollVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PollVc"];
             navigationController.viewControllers = @[homeViewController];
             break;
         }
         case 13:
-            
         {
             NotificationVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NotificationVc"];
             navigationController.viewControllers = @[homeViewController];
             break;
         }
         case 14:
-            
         {
             CreateReminderVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CreateReminderVc"];
             navigationController.viewControllers = @[homeViewController];
             break;
         }
-            
         case 15:
-            
         {
             AboutOrataroVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AboutOrataroVc"];
             navigationController.viewControllers = @[homeViewController];
             break;
         }
-            
         case 16:
-            
         {
             SettingVcViewController  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SettingVcViewController"];
             navigationController.viewControllers = @[homeViewController];
             break;
         }
         case 17:
-            
         {
             FAQvc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"FAQvc"];
             navigationController.viewControllers = @[homeViewController];
             break;
         }
-            
         default:
             break;
     }

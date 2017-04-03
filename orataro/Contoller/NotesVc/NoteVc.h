@@ -15,5 +15,6 @@
 - (IBAction)CellBtnClicked:(UIButton *)sender;
 - (IBAction)CreateNoteBtnClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UITableView *tblNote;
+@property (weak, nonatomic) IBOutlet UILabel *lblHeaderTitle;
 
 @end

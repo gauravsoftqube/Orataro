@@ -230,5 +230,14 @@
 #define apk_GetPTCommunicationList_action @"GetPTCommunicationList"
 
 
+#pragma mark -  Timetable
+#define apk_timetable  @"apk_timetable.asmx"
+#define apk_GetTimeTableListForTeachert_action @"GetTimeTableListForTeacher"
+
+#pragma mark - Notes
+#define apk_notes  @"apk_notes.asmx"
+#define apk_GetNotesList_action @"GetNotesList"
+
+
 #endif /* Global_h */
 

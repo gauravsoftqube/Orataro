@@ -14,5 +14,6 @@
 @property (weak, nonatomic) IBOutlet UIWebView *aWebview;
 @property (weak, nonatomic) IBOutlet UIStepper *Steper;
 - (IBAction)MenuBtnClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *lblHeaderTitle;
 
 @end
