@@ -73,7 +73,15 @@ int s =0 ;
     }
     else
     {
-        [self apiCallFor_GetFriendList:NO];
+        if ([Utility isInterNetConnectionIsActive] == true)
+        {
+            [self apiCallFor_GetFriendList:NO];
+        }
+        else
+        {
+            
+        }
+
     }
     
     
@@ -102,6 +110,8 @@ int s =0 ;
     UIImageView *img = (UIImageView *)[cell.contentView viewWithTag:1];
     
     NSLog(@"get ary=%@",arygetIdflag);
+    
+      NSString *documentDirectory=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     
     if ([[[arygetIdflag objectAtIndex:indexPath.row]objectForKey:@"flag"] isEqualToString:@"0"])
     {
@@ -142,7 +152,7 @@ int s =0 ;
     else
     {
          //fetch from local
-            NSString *documentDirectory=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+        
             
             NSString *setImage = [NSString stringWithFormat:@"%@",[[arygetIdflag objectAtIndex:indexPath.row]objectForKey:@"ImageStr"]];
             

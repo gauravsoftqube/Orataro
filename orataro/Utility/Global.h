@@ -222,12 +222,18 @@
 
 
 #pragma mark -  PTCommunication
+
 #define apk_ptcommunication  @"apk_ptcommunication.asmx"
 #define apk_PTCommunicationGetStudentList_action @"PTCommunicationGetStudentList"
 #define apk_PTCommunicationGetTeacherList_action @"PTCommunicationGetTeacherList"
 #define apk_CreateNewPTCommnunication_action @"CreateNewPTCommnunication"
-
 #define apk_GetPTCommunicationList_action @"GetPTCommunicationList"
+
+
+#pragma mark - PostedImage
+
+#define apk_apk_Post @"apk_Post.asmx"
+#define apk_GetPosted_FileImgaeVideos @"GetPosted_FileImgaeVideos"
 
 
 #endif /* Global_h */

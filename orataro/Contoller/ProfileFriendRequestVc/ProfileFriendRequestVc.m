@@ -72,7 +72,15 @@
     }
     else
     {
-        [self apiCallFor_GetFriendRequestList:NO];
+        if ([Utility isInterNetConnectionIsActive] == true)
+        {
+           [self apiCallFor_GetFriendRequestList:NO];
+        }
+        else
+        {
+            
+        }
+        
     }
 
 }
@@ -165,6 +173,8 @@
     
     UIImageView *img = (UIImageView *)[cell.contentView viewWithTag:2];
 
+     NSString *documentDirectory=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    
     if ([[[aryTemp objectAtIndex:indexPath.row]objectForKey:@"flag"] isEqualToString:@"0"])
     {
         if ([Utility isInterNetConnectionIsActive] == true)
@@ -204,7 +214,7 @@
     else
     {
         //fetch from local
-        NSString *documentDirectory=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+       
         
         NSString *setImage = [NSString stringWithFormat:@"%@",[[aryTemp objectAtIndex:indexPath.row]objectForKey:@"FriendRequestImageStr"]];
         
