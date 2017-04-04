@@ -312,19 +312,24 @@
     NSString *NoteTitle = [d objectForKey:@"NoteTitle"];
     NSString *NoteDetails = [d objectForKey:@"NoteDetails"];
     
+    
     UILabel *lblTitle = (UILabel *)[cell.contentView viewWithTag:4];
     [lblTitle setText:[[NSString stringWithFormat:@"%@",NoteTitle] capitalizedString]];
     
     UILabel *lblDetail = (UILabel *)[cell.contentView viewWithTag:6];
-    [lblDetail setText:[[NSString stringWithFormat:@"%@",NoteDetails] capitalizedString]];
-    
+    [lblDetail setText:@""];
+    if(![NoteDetails isKindOfClass:[NSNull class]])
+    {
+        [lblDetail setText:[[NSString stringWithFormat:@"%@",NoteDetails] capitalizedString]];
+    }
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NoteDecsVc *n = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NoteDecsVc"];
-    [self.navigationController pushViewController:n animated:YES];
+    NoteDecsVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NoteDecsVc"];
+    vc.dicSelectNotes=[[[arrNotesList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 
