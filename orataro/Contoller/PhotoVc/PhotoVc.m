@@ -19,6 +19,7 @@
 
 @implementation PhotoVc
 @synthesize aCollectionView;
+int pagecount = 1;
 
 - (void)viewDidLoad
 {
@@ -41,6 +42,11 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    //CREATE TABLE "PhotoList" ("id" INTEGER PRIMARY KEY  NOT NULL ,"PhotoJsonStr" VARCHAR,"PhotoImageStr" VARCHAR DEFAULT (null) ,"flag" VARCHAR)
+    
+    
+    
+    
     NSArray *ary = [DBOperation selectData:@"select * from PhotoList"];
     aryPhotoGet = [Utility getLocalDetail:ary columnKey:@"PhotoJsonStr"];
     
@@ -66,7 +72,15 @@
     }
     else
     {
-        [self apiCallFor_GetPhotoList:NO];
+        if ([Utility isInterNetConnectionIsActive] == true)
+        {
+            [self apiCallFor_GetPhotoList:NO];
+        }
+        else
+        {
+            
+        }
+        
         
     }
 }
@@ -108,6 +122,9 @@
     
     NSLog(@"ary=%@",aryPhotoGet);
     
+    //fetch from local
+    NSString *documentDirectory=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    
     if ([[[aryTempGetData objectAtIndex:indexPath.row]objectForKey:@"flag"] isEqualToString:@"0"])
     {
         if ([Utility isInterNetConnectionIsActive] == true)
@@ -120,12 +137,14 @@
              {
                  [DBOperation selectData:[NSString stringWithFormat:@"update PhotoList set flag='1' where id=%@",[[aryTempGetData objectAtIndex:indexPath.row]objectForKey:@"id"]]];
                  
-                 NSData *imageData = UIImagePNGRepresentation(image);
+                 
+                 //no_img
                  
                  NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
                  NSString *documentsDirectory = [paths objectAtIndex:0];
                  
-                 NSString *setImage = [NSString stringWithFormat:@"%@",[[aryTempGetData objectAtIndex:indexPath.row]objectForKey:@"ImageStr"]];
+                 NSString *setImage = [NSString stringWithFormat:@"%@",[[aryTempGetData objectAtIndex:indexPath.row]objectForKey:@"PhotoImageStr"]];
+                 
                  
                  NSArray *ary = [setImage componentsSeparatedByString:@"/"];
                  
@@ -133,17 +152,48 @@
                  
                  NSString *imagePath =[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",strSaveImg]];
                  
-                 [imageData writeToFile:imagePath atomically:NO];
+                 NSLog(@"image Saperator=%@",[strSaveImg componentsSeparatedByString:@"."]);
                  
-                 if (![imageData writeToFile:imagePath atomically:NO])
+                 NSArray *getExtension = [strSaveImg componentsSeparatedByString:@"."];
+                 
+                 if ([[getExtension objectAtIndex:1] isEqualToString:@"jpg"] || [[getExtension objectAtIndex:1] isEqualToString:@"JPG"] ||
+                     [[getExtension objectAtIndex:1] isEqualToString:@"jpeg"] )
                  {
-                     NSLog(@"Failed to cache image data to disk");
+                     NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
+                     [imageData writeToFile:imagePath atomically:NO];
+                     
+                     if (![imageData writeToFile:imagePath atomically:NO])
+                     {
+                         NSLog(@"Failed to cache image data to disk");
+                     }
+                     else
+                     {
+                         [imageData writeToFile:imagePath atomically:NO];
+                         NSLog(@"the cachedImagedPath is %@",imagePath);
+                     }
                  }
                  else
                  {
+                     NSData *imageData = UIImagePNGRepresentation(image);
                      [imageData writeToFile:imagePath atomically:NO];
-                     NSLog(@"the cachedImagedPath is %@",imagePath);
+                     
+                     if (![imageData writeToFile:imagePath atomically:NO])
+                     {
+                         NSLog(@"Failed to cache image data to disk");
+                     }
+                     else
+                     {
+                         [imageData writeToFile:imagePath atomically:NO];
+                         NSLog(@"the cachedImagedPath is %@",imagePath);
+                     }
+                     
                  }
+                 //jpg
+                 //JPG
+                 //png
+                 //jpeg
+                 
+                 
                  
              }];
             
@@ -151,19 +201,28 @@
     }
     else
     {
-        //fetch from local
-        NSString *documentDirectory=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+        NSLog(@"count=%lu",(unsigned long)aryTempGetData.count);
         
         NSString *setImage = [NSString stringWithFormat:@"%@",[[aryTempGetData objectAtIndex:indexPath.row]objectForKey:@"PhotoImageStr"]];
-        
+        NSLog(@"image=%@",setImage);
         NSArray *ary = [setImage componentsSeparatedByString:@"/"];
-        
         NSString *strSaveImg = [ary lastObject];
-        
         NSString *imagePath=[documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",strSaveImg]];
         UIImage *image=[UIImage imageWithContentsOfFile:imagePath];
         
-        cell2.imgShowImage.image = image;
+        CGDataProviderRef provider = CGImageGetDataProvider(image.CGImage);
+        NSData* data = (id)CFBridgingRelease(CGDataProviderCopyData(provider));
+        
+        if (data.length == 0)
+        {
+            NSLog(@"noooooo image");
+            cell2.imgShowImage.image = [UIImage imageNamed:@"no_img"];
+        }
+        else
+        {
+            cell2.imgShowImage.image = image;
+        }
+        
         
     }
     return cell2;
@@ -188,58 +247,90 @@
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    ProfilePhotoShowVc *p7 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfilePhotoShowVc"];
-    [self.navigationController pushViewController:p7 animated:YES];
+    NSString *documentDirectory=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        if (aryPhotoGet.count > 0)
+        {
+            // from local
+            
+            NSString *setImage = [NSString stringWithFormat:@"%@",[[aryTempGetData objectAtIndex:indexPath.row]objectForKey:@"PhotoImageStr"]];
+            NSLog(@"image=%@",setImage);
+            NSArray *ary = [setImage componentsSeparatedByString:@"/"];
+            NSString *strSaveImg = [ary lastObject];
+            NSString *imagePath=[documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",strSaveImg]];
+            ProfilePhotoShowVc *p7 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfilePhotoShowVc"];
+            p7.imagename = imagePath;
+            p7.strOfflineOnline = @"Offline";
+            [self.navigationController pushViewController:p7 animated:YES];
+            
+        }
+        else
+        {
+            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"sorry no image available" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alrt show];
+            
+        }
+    }
+    else
+    {
+        NSString *str = [NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[aryPhotoGet objectAtIndex:indexPath.row]objectForKey:@"Photo"]];
+        ProfilePhotoShowVc *p7 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfilePhotoShowVc"];
+        p7.imagename = str;
+        p7.strOfflineOnline = @"Online";
+        [self.navigationController pushViewController:p7 animated:YES];
+        
+    }
+    
 }
 
+#pragma mark - scrollview delegate
 
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    for (UICollectionViewCell *cell in [aCollectionView visibleCells])
+    {
+        NSIndexPath *indexPath = [aCollectionView indexPathForCell:cell];
+        NSLog(@"Last Row:=%ld",(long)indexPath.row);
+    }
+}
 #pragma mark - button action
 
 -(void)btnDownloadClicked:(id)sender
 {
     UIButton *btn = (UIButton *)sender;
     
-    // NSLog(@"get image=%@",)
-    
-    NSLog(@"image=%@",[[aryPhotoGet objectAtIndex:btn.tag]objectForKey:@"Photo"]);
+    NSString *documentDirectory=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     
     if ([Utility isInterNetConnectionIsActive] == false)
     {
-        if ([[[aryPhotoGet objectAtIndex:btn.tag]objectForKey:@"Photo"]count]>0)
+        if (aryPhotoGet.count > 0)
         {
             // from local
             
-            NSString *documentDirectory=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-            
-            NSString *setImage = [NSString stringWithFormat:@"%@",[[aryTempGetData objectAtIndex:btn.tag]objectForKey:@"ImageStr"]];
-            
+            NSString *setImage = [NSString stringWithFormat:@"%@",[[aryTempGetData objectAtIndex:btn.tag]objectForKey:@"PhotoImageStr"]];
+            NSLog(@"image=%@",setImage);
             NSArray *ary = [setImage componentsSeparatedByString:@"/"];
-            
             NSString *strSaveImg = [ary lastObject];
-            
             NSString *imagePath=[documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",strSaveImg]];
             UIImage *image=[UIImage imageWithContentsOfFile:imagePath];
             
             ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-            
             [library writeImageToSavedPhotosAlbum:[image CGImage] orientation:(ALAssetOrientation)[image imageOrientation] completionBlock:^(NSURL *assetURL, NSError *error)
-            {
-                if (error)
-                {
-                    // TODO: error handling
-                    NSLog(@"Not handle");
-                }
-                else
-                {
-                    // TODO: success handling
-                    NSLog(@"Success");
-                    
-                }
-            }];
-            
-            
-            //
-            //        cell2.imgShowImage.image = image;
+             {
+                 if (error)
+                 {
+                     // TODO: error handling
+                     //  NSLog(@"Not handle");
+                 }
+                 else
+                 {
+                     // TODO: success handling
+                     // NSLog(@"Success");
+                     
+                 }
+             }];
             
             
         }
@@ -252,7 +343,29 @@
     }
     else
     {
-        // direct from url
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[aryPhotoGet objectAtIndex:btn.tag]objectForKey:@"Photo"]]];
+        
+        NSData *data = [[NSData alloc] initWithContentsOfURL:url];
+        
+        UIImage *tmpImage = [[UIImage alloc] initWithData:data];
+        
+        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+        
+        [library writeImageToSavedPhotosAlbum:[tmpImage CGImage] orientation:(ALAssetOrientation)[tmpImage imageOrientation] completionBlock:^(NSURL *assetURL, NSError *error)
+         {
+             if (error)
+             {
+                 // TODO: error handling
+                 //  NSLog(@"Not handle");
+             }
+             else
+             {
+                 // TODO: success handling
+                 //   NSLog(@"Success");
+                 
+             }
+         }];
+        
         
     }
     
@@ -262,27 +375,36 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-
 #pragma mark - ApiCall
 
 -(void)apiCallFor_GetPhotoList : (BOOL)checkProgress
 {
-    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_Photos,apk_GetPhotoList_action];
+    //WallID=3f553bdf-a302-410f-ab2f-a82bd5aca7b5
+    //MemberID=f1a6d89d-37dc-499a-9476-cb83f0aba0f2
+    //Count=10
+    //PostFilterType=IMAGE
+    //OR
+    //PostFilterType=VIDEO
+    
+    //#define apk_apk_Post @"apk_Post.asmx"
+    //#define apk_GetPosted_FileImgaeVideos @"GetPosted_FileImgaeVideos"
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_apk_Post,apk_GetPosted_FileImgaeVideos];
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
     
-    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
-    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
-    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
+    //pagecount
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"WallID"]] forKey:@"WallID"];
-    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"BatchID"]] forKey:@"BeachID"];
+    [param setValue:[NSString stringWithFormat:@"%d",pagecount] forKey:@"Count"];
+    [param setValue:@"IMAGE" forKey:@"PostFilterType"];
     
     if (checkProgress == YES)
     {
         [ProgressHUB showHUDAddedTo:self.view];
     }
-    
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
          [ProgressHUB hideenHUDAddedTo:self.view];
@@ -352,6 +474,69 @@
     [aCollectionView reloadData];
     
 }
+
+
+
+
+
+/*-(void)apiCallFor_GetPhotoList : (BOOL)checkProgress
+ {
+ NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_Photos,apk_GetPhotoList_action];
+ 
+ NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+ NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+ 
+ [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+ [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
+ [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
+ [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"WallID"]] forKey:@"WallID"];
+ [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"BatchID"]] forKey:@"BeachID"];
+ 
+ if (checkProgress == YES)
+ {
+ [ProgressHUB showHUDAddedTo:self.view];
+ }
+ 
+ [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+ {
+ [ProgressHUB hideenHUDAddedTo:self.view];
+ if(!error)
+ {
+ NSString *strArrd=[dicResponce objectForKey:@"d"];
+ NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+ NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+ 
+ if([arrResponce count] != 0)
+ {
+ NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+ NSString *strStatus=[dic objectForKey:@"message"];
+ if([strStatus isEqualToString:@"No Data Found"])
+ {
+ UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+ [alrt show];
+ }
+ else
+ {
+ [self ManageCircularList:arrResponce];
+ 
+ 
+ }
+ }
+ else
+ {
+ UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+ [alrt show];
+ }
+ }
+ else
+ {
+ UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+ [alrt show];
+ }
+ }];
+ 
+ 
+ }*/
 
 /*
  #pragma mark - Navigation

@@ -15,5 +15,7 @@
 @property (weak, nonatomic) IBOutlet UIView *aInnerView;
 - (IBAction)OnSaveClicked:(UIButton *)sender;
 @property (weak, nonatomic) IBOutlet UIButton *saveBtn;
-
+@property (weak, nonatomic) IBOutlet UIImageView *imgView;
+@property (strong,nonatomic)NSString *imagename;
+@property(strong,nonatomic)NSString *strOfflineOnline;
 @end

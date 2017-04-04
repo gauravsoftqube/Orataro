@@ -222,21 +222,29 @@
 
 
 #pragma mark -  PTCommunication
+
 #define apk_ptcommunication  @"apk_ptcommunication.asmx"
 #define apk_PTCommunicationGetStudentList_action @"PTCommunicationGetStudentList"
 #define apk_PTCommunicationGetTeacherList_action @"PTCommunicationGetTeacherList"
 #define apk_CreateNewPTCommnunication_action @"CreateNewPTCommnunication"
-
 #define apk_GetPTCommunicationList_action @"GetPTCommunicationList"
 
 
+#pragma mark - PostedImage
+
+#define apk_apk_Post @"apk_Post.asmx"
+#define apk_GetPosted_FileImgaeVideos @"GetPosted_FileImgaeVideos"
+
 #pragma mark -  Timetable
+
 #define apk_timetable  @"apk_timetable.asmx"
 #define apk_GetTimeTableListForTeachert_action @"GetTimeTableListForTeacher"
 
 #pragma mark - Notes
+
 #define apk_notes  @"apk_notes.asmx"
 #define apk_GetNotesList_action @"GetNotesList"
+
 
 
 #endif /* Global_h */

@@ -7,6 +7,8 @@
 //
 
 #import "ProfilePhotoShowVc.h"
+#import "Global.h"
+
 
 @interface ProfilePhotoShowVc ()
 
@@ -23,6 +25,49 @@ int d =0;
     
     aOuterView.hidden = YES;
     
+    
+    NSLog(@"image=%@",_imagename);
+
+    
+    if([_strOfflineOnline isEqualToString:@"Offline"])
+    {
+        
+        UIImage *image=[UIImage imageWithContentsOfFile:_imagename];
+         _imgView.contentMode = UIViewContentModeScaleAspectFit;
+        _imgView.image = image;
+        
+        CGDataProviderRef provider = CGImageGetDataProvider(_imgView.image.CGImage);
+        NSData* data = (id)CFBridgingRelease(CGDataProviderCopyData(provider));
+        
+        if (data.length == 0)
+        {
+            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"No image available" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alrt show];
+   
+        }
+        
+    }
+    else
+    {
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@",_imagename]];
+        _imgView.contentMode = UIViewContentModeScaleAspectFit;
+        
+        CGDataProviderRef provider = CGImageGetDataProvider(_imgView.image.CGImage);
+        NSData* data = (id)CFBridgingRelease(CGDataProviderCopyData(provider));
+        
+        if (data.length == 0)
+        {
+            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"No image available" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alrt show];
+            
+        }
+        
+        [_imgView sd_setImageWithURL:url completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL)
+        {
+            NSLog(@"Error");
+        }];
+    }
+   
     // Do any additional setup after loading the view.
 }
 
@@ -55,6 +100,24 @@ int d =0;
 - (IBAction)OnSaveClicked:(UIButton *)sender
 {
     aOuterView.hidden = YES;
+    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+    
+    [library writeImageToSavedPhotosAlbum:[_imgView.image CGImage] orientation:(ALAssetOrientation)[_imgView.image imageOrientation] completionBlock:^(NSURL *assetURL, NSError *error)
+     {
+         if (error)
+         {
+             // TODO: error handling
+             //  NSLog(@"Not handle");
+         }
+         else
+         {
+             // TODO: success handling
+             //   NSLog(@"Success");
+             
+         }
+     }];
+
+    
 }
 
 
