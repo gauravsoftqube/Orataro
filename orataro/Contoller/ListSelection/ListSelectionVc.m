@@ -43,12 +43,7 @@
     
     // Do any additional setup after loading the view.
     
-    NSArray *arr=[[[Utility getCurrentUserDetail]objectForKey:@"FullName"] componentsSeparatedByString:@" "];
-    if (arr.count != 0) {
-        self.lblHeaderTitle.text=[NSString stringWithFormat:@"List Selection (%@)",[arr objectAtIndex:0]];
-    }else{
-        self.lblHeaderTitle.text=[NSString stringWithFormat:@"List Selection"];
-    }
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -120,6 +115,12 @@
         {
             [self apiCallFor_getList:@"0"];
         }
+    }
+    NSArray *arr=[[[Utility getCurrentUserDetail]objectForKey:@"FullName"] componentsSeparatedByString:@" "];
+    if (arr.count != 0) {
+        NavigationTitle.text=[NSString stringWithFormat:@"List Selection (%@)",[arr objectAtIndex:0]];
+    }else{
+        NavigationTitle.text=[NSString stringWithFormat:@"List Selection"];
     }
 }
 

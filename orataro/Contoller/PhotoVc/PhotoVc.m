@@ -83,9 +83,6 @@ int pagecount = 1;
         
         
     }
-    
-    
-    
 }
 #pragma mark - COLLECTIONVIEW DELEGATE
 
@@ -288,7 +285,16 @@ int pagecount = 1;
     
 }
 
+#pragma mark - scrollview delegate
 
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    for (UICollectionViewCell *cell in [aCollectionView visibleCells])
+    {
+        NSIndexPath *indexPath = [aCollectionView indexPathForCell:cell];
+        NSLog(@"Last Row:=%ld",(long)indexPath.row);
+    }
+}
 #pragma mark - button action
 
 -(void)btnDownloadClicked:(id)sender

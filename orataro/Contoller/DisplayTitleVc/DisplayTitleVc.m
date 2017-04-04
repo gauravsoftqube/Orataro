@@ -74,6 +74,7 @@
 {
      [loadingIndicator stopAnimating];
 }
+
 #pragma mark - call API
 
 -(void)apiCallFor_getPageDetail
@@ -127,8 +128,6 @@
 
 -(void)apiCallFor_getBlogDetail
 {
-
-    
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_blogs,apk_GetBlogDetail_action];
     
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];

@@ -9,6 +9,7 @@
 #import "MessageVc.h"
 #import "REFrostedViewController.h"
 #import "AppDelegate.h"
+#import "Global.h"
 
 @interface MessageVc ()<UIWebViewDelegate>
 {
@@ -22,24 +23,117 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
-   
     app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-
     aWebview.delegate=self;
-    //NSString *str = @"<p>Hey you. My <b>name </b> is <h1> Joe </h1></p>";
     
-  //  NSString *str=@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\"\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\"><html xmlns=\"http://www.w3.org/1999/xhtml\"><head><meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\"/><title>Hello World - Google  Web Search API Sample</title><script src=\"https://www.google.com/jsapi\"type=\"text/javascript\"></script><script language=\"Javascript\" type=\"text/javascript\">//<!google.load('search', '1');//]]></script></head><body><div id=\"searchcontrol\">Loading</div></body></html>";
-   // aWebview.scalesPageToFit = NO;
-   // aWebview.scrollView.zoomScale = 2.0;
-  //  [aWebview loadHTMLString:str baseURL:nil];
-    
-    // Do any additional setup after loading the view.
+    NSArray *arr=[[[Utility getCurrentUserDetail]objectForKey:@"FullName"] componentsSeparatedByString:@" "];
+    if (arr.count != 0) {
+        self.lblHeaderTitle.text=[NSString stringWithFormat:@"Exam Timing (%@)",[arr objectAtIndex:0]];
+    }
+    else
+    {
+        self.lblHeaderTitle.text=[NSString stringWithFormat:@"Exam Timing"];
+    }
+
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        NSMutableArray *arrTemp=[DBOperation selectData:[NSString stringWithFormat:@"select htmlString from ExamTiming"]];
+        if([arrTemp count] != 0)
+        {
+            NSString* htmlPath = [NSString stringWithFormat:@"%@",[[arrTemp objectAtIndex:0]objectForKey:@"htmlString"]];
+            [aWebview loadHTMLString:htmlPath baseURL:nil];
+        }
+        if(arrTemp.count == 0)
+        {
+            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alrt show];
+            return;
+        }
+    }
+    else
+    {
+        NSMutableArray *arrTemp=[DBOperation selectData:[NSString stringWithFormat:@"select htmlString from ExamTiming"]];
+        
+        if([arrTemp count] != 0)
+        {
+            NSString* htmlPath = [NSString stringWithFormat:@"%@",[[arrTemp objectAtIndex:0]objectForKey:@"htmlString"]];
+            [aWebview loadHTMLString:htmlPath baseURL:nil];
+        }
+        
+        if(arrTemp.count == 0)
+        {
+            [self apiCallFor_getPageDetail:@"1"];
+        }
+        else
+        {
+            [self apiCallFor_getPageDetail:@"0"];
+        }
+ 
+    }
+}
+
+#pragma mark - ApiCall
+
+-(void)apiCallFor_getPageDetail:(NSString *)strShowHUB
+{
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_InstitutePage,apk_GetCmsPageDetail_action];
+    
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"SchoolTiming"]] forKey:@"CMSPageID"];
+    if([strShowHUB isEqualToString:@"1"])
+    {
+        [ProgressHUB showHUDAddedTo:self.view];
+    }
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         [ProgressHUB hideenHUDAddedTo:self.view];
+         if(!error)
+         {
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             
+             if([arrResponce count] != 0)
+             {
+                 NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                 NSString *strStatus=[dic objectForKey:@"message"];
+                 if([strStatus isEqualToString:@"No Data Found"])
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                 }
+                 else
+                 {
+                     [DBOperation executeSQL:[NSString stringWithFormat:@"DELETE FROM ExamTiming"]];
+                     NSString* htmlPath = [NSString stringWithFormat:@"%@",[[arrResponce objectAtIndex:0]objectForKey:@"PageDetails"]];
+                     [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO ExamTiming(htmlString)values('%@')",htmlPath]];
+                     [aWebview loadHTMLString:htmlPath baseURL:nil];
+                 }
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
@@ -61,23 +155,25 @@
     NSLog(@"%@",[NSString stringWithFormat:@"From browser : %@", returnvalue ]);
 }
 
+
+
 #pragma mark - stepper value change
 
 - (IBAction)steprChanged:(UIStepper *)sender
 {
-    NSLog(@"change%f",_Steper.value);
+    //NSLog(@"change%f",_Steper.value);
     int myInt = (int) _Steper.value;
-    NSLog(@"data=%d",myInt);
+    //NSLog(@"data=%d",myInt);
     
     NSString *com = [NSString stringWithFormat:@"%d",myInt];
     if ([com isEqualToString:@"-1"])
     {
         aWebview.scalesPageToFit = NO;
-        aWebview.scrollView.zoomScale = 2.1;
+        aWebview.scrollView.zoomScale = 0.0;
     }
     else
     {
-        aWebview.scalesPageToFit = YES;
+        aWebview.scalesPageToFit = NO;
         aWebview.scrollView.zoomScale = 2.0 ;
     }
 }
