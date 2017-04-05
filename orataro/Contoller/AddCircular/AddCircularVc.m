@@ -640,7 +640,7 @@
         return;
     }
     
-    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_login,apk_GetCircularType];
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_login,apk_GetProjectType_action];
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
     NSLog(@"dic=%@",dicCurrentUser);

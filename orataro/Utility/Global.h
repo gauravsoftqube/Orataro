@@ -154,7 +154,7 @@
 #define apk_NewFogotPasswordCheckUserData_action  @"NewFogotPasswordCheckUserData"
 #define apk_CheckSentOTPData_action  @"CheckSentOTPData"
 #define apk_UpdateUserPassword_action  @"UpdateUserPassword"
-
+#define apk_GetProjectType_action @"GetProjectType"
 
 #pragma mark - Image Url
 
@@ -165,7 +165,7 @@
 
 #define apk_circular  @"apk_circular.asmx"
 #define apk_GetCircularList_action  @"GetCircularList"
-#define apk_GetCircularType @"GetProjectType"
+
 
 #define apk_gradedivisionsubject @"apk_gradedivisionsubject.asmx"
 
@@ -245,6 +245,10 @@
 #define apk_notes  @"apk_notes.asmx"
 #define apk_GetNotesList_action @"GetNotesList"
 
+#pragma mark - apk_holiday
+
+#define apk_holiday  @"apk_holiday.asmx"
+#define apk_GetHoliday_action @"GetHoliday"
 
 
 #endif /* Global_h */
