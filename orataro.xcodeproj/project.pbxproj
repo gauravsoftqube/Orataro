@@ -191,6 +191,7 @@
 		C375B63B1E65B67700E8D63D /* AddHomeworkVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C375B63A1E65B67700E8D63D /* AddHomeworkVc.m */; };
 		C37A9A371E6EEB7200F1EAE0 /* SwitchAcoountVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C37A9A361E6EEB7200F1EAE0 /* SwitchAcoountVC.m */; };
 		C37EED0A1E6949A1004ACCCC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C37EED081E6949A1004ACCCC /* Main.storyboard */; };
+		C37FEE9F1E93A2BD00CE32F5 /* UIScrollView+BottomRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C37FEE9E1E93A2BD00CE32F5 /* UIScrollView+BottomRefreshControl.m */; };
 		C381726B1E517DCD004AB189 /* SettingVcViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C381726A1E517DCD004AB189 /* SettingVcViewController.m */; };
 		C381726F1E518756004AB189 /* FAQvc.m in Sources */ = {isa = PBXBuildFile; fileRef = C381726E1E518756004AB189 /* FAQvc.m */; };
 		C38ABFA81E487DF900689426 /* StudentListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C38ABFA71E487DF900689426 /* StudentListViewController.m */; };
@@ -570,6 +571,8 @@
 		C37A9A351E6EEB7200F1EAE0 /* SwitchAcoountVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchAcoountVC.h; sourceTree = "<group>"; };
 		C37A9A361E6EEB7200F1EAE0 /* SwitchAcoountVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchAcoountVC.m; sourceTree = "<group>"; };
 		C37EED091E6949A1004ACCCC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C37FEE9D1E93A2BD00CE32F5 /* UIScrollView+BottomRefreshControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+BottomRefreshControl.h"; sourceTree = "<group>"; };
+		C37FEE9E1E93A2BD00CE32F5 /* UIScrollView+BottomRefreshControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+BottomRefreshControl.m"; sourceTree = "<group>"; };
 		C38172691E517DCD004AB189 /* SettingVcViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingVcViewController.h; sourceTree = "<group>"; };
 		C381726A1E517DCD004AB189 /* SettingVcViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingVcViewController.m; sourceTree = "<group>"; };
 		C381726D1E518756004AB189 /* FAQvc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FAQvc.h; sourceTree = "<group>"; };
@@ -761,8 +764,8 @@
 				C38AF0F51E6035E800E4F40B /* ProfileDivisionVc */,
 				C38AF0F01E60350D00E4F40B /* ProfileStandardVc */,
 				C38AF0E91E60342D00E4F40B /* ProfileVideoVc */,
-				C36B588D1E5F096C00DE7464 /* PhotAlbumVc */,
 				C36B58891E5EF3ED00DE7464 /* PhotoVc */,
+				C36B588D1E5F096C00DE7464 /* PhotAlbumVc */,
 				C36B58621E5EE6CA00DE7464 /* CreateProjectVc */,
 				C36B58611E5EE6B000DE7464 /* ProjectVc */,
 				C36B58581E5ED94500DE7464 /* ScoolGroupVc */,
@@ -839,6 +842,7 @@
 		0949E9401E3B783600723301 /* thirdparty */ = {
 			isa = PBXGroup;
 			children = (
+				C37FEE9C1E93A2A900CE32F5 /* PulltoRefreshCollectionView */,
 				0718DC881E8924050099EC26 /* YTPlayerView */,
 				C35120E51E827C3C00D7461B /* ImageCompress */,
 				07801FC61E7FE2BC00E34D36 /* TextView_PlaceHolder */,
@@ -1732,6 +1736,15 @@
 			path = SwitchAccountVC;
 			sourceTree = "<group>";
 		};
+		C37FEE9C1E93A2A900CE32F5 /* PulltoRefreshCollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				C37FEE9D1E93A2BD00CE32F5 /* UIScrollView+BottomRefreshControl.h */,
+				C37FEE9E1E93A2BD00CE32F5 /* UIScrollView+BottomRefreshControl.m */,
+			);
+			path = PulltoRefreshCollectionView;
+			sourceTree = "<group>";
+		};
 		C38172681E517D5B004AB189 /* SettingVc */ = {
 			isa = PBXGroup;
 			children = (
@@ -2254,6 +2267,7 @@
 				C3645AF31E5C05EA0012F4CF /* ClassworkVC.m in Sources */,
 				C36D394B1E558C42001A445E /* PageVc.m in Sources */,
 				C369E6DC1E5AF2A40048D601 /* Reachability.m in Sources */,
+				C37FEE9F1E93A2BD00CE32F5 /* UIScrollView+BottomRefreshControl.m in Sources */,
 				C38F8C781E3F36A300A67FBE /* RightCell.m in Sources */,
 				0977D6021E3B1F6300ACB7A5 /* WallCustomeCell.m in Sources */,
 				072A85AF1E67FADC00F54A30 /* DEMONavigationController.m in Sources */,
