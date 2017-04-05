@@ -129,6 +129,9 @@
 #import "ProfilePhotoShowVc.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "YTPlayerView.h"
+#import "ProfileVideoVc.h"
+#import "ProfileVideoDetailVc.h"
+#import "UIScrollView+BottomRefreshControl.h"
 
 
 #pragma mark - YOUTube Video Key
