@@ -85,6 +85,9 @@
             <size key="customSize" width="141" height="152"/>
             <connections>
                 <outlet property="aOuterView" destination="oWW-lv-6ur" id="0w2-Sw-R7I"/>
+                <outlet property="imgPhoto" destination="owy-VK-jjq" id="1iD-Rb-Z1Z"/>
+                <outlet property="lbPhotoCount" destination="x3d-i9-afm" id="uRy-eY-Ga7"/>
+                <outlet property="lbTitle" destination="Xg1-lb-DlI" id="r2k-hk-3GU"/>
             </connections>
             <point key="canvasLocation" x="79" y="104.5"/>
         </collectionViewCell>

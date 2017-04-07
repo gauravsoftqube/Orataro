@@ -14,6 +14,7 @@
 - (IBAction)btnBack:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionVideolist;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *ActivityIndicator;
 
 
 @end

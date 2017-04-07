@@ -10,5 +10,7 @@
 
 @interface PhotoalbumCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIView *aOuterView;
+@property (weak, nonatomic) IBOutlet UIImageView *imgPhoto;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @end

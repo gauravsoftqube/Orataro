@@ -537,69 +537,6 @@ int pagecount = 1;
     
 }
 
-
-
-
-
-/*-(void)apiCallFor_GetPhotoList : (BOOL)checkProgress
- {
- NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_Photos,apk_GetPhotoList_action];
- 
- NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
- NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
- 
- [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
- [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
- [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
- [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"WallID"]] forKey:@"WallID"];
- [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"BatchID"]] forKey:@"BeachID"];
- 
- if (checkProgress == YES)
- {
- [ProgressHUB showHUDAddedTo:self.view];
- }
- 
- [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
- {
- [ProgressHUB hideenHUDAddedTo:self.view];
- if(!error)
- {
- NSString *strArrd=[dicResponce objectForKey:@"d"];
- NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
- NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
- 
- if([arrResponce count] != 0)
- {
- NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
- NSString *strStatus=[dic objectForKey:@"message"];
- if([strStatus isEqualToString:@"No Data Found"])
- {
- UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
- [alrt show];
- }
- else
- {
- [self ManageCircularList:arrResponce];
- 
- 
- }
- }
- else
- {
- UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
- [alrt show];
- }
- }
- else
- {
- UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
- [alrt show];
- }
- }];
- 
- 
- }*/
-
 /*
  #pragma mark - Navigation
  

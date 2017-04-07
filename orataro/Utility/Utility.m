@@ -642,7 +642,7 @@
             }
             else
             {
-                NSMutableDictionary * jsonData  = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                NSMutableDictionary * jsonData  = [[NSMutableDictionary alloc]init];
                 NSLog(@"data=%@",jsonData);
                 
                 if (block) {

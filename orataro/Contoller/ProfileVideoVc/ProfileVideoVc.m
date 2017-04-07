@@ -28,10 +28,10 @@ int videocount = 1;
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    UIRefreshControl *refreshControl = [UIRefreshControl new];
-    refreshControl.triggerVerticalOffset = 100.;
-    [refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
-    _collectionVideolist.bottomRefreshControl = refreshControl;
+    //UIRefreshControl *refreshControl = [UIRefreshControl new];
+    // refreshControl.triggerVerticalOffset = 100.;
+    //  [refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
+    //   _collectionVideolist.bottomRefreshControl = refreshControl;
     
     // Do any additional setup after loading the view.
 }
@@ -106,7 +106,7 @@ int videocount = 1;
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-     return aryVideoData.count;
+    return aryVideoData.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -133,164 +133,31 @@ int videocount = 1;
     // [btn addTarget:self action:@selector(btnDownloadClicked:) forControlEvents:UIControlEventTouchUpInside];
     // btn.tag = indexPath.row;
     
-    UIImageView *img = (UIImageView *)[cell.contentView viewWithTag:2];
-    
-    
-    NSString *documentDirectory=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    
     //CREATE TABLE "VideoList" ("id" INTEGER PRIMARY KEY  NOT NULL , "VideoJsonStr" VARCHAR, "flag" VARCHAR, "VideoThumbStr" VARCHAR, "VideoNameStr" VARCHAR)
     
     if ([[[aryTempVideo objectAtIndex:indexPath.row]objectForKey:@"flag"] isEqualToString:@"0"])
     {
         if ([Utility isInterNetConnectionIsActive] == true)
         {
-            NSLog(@"data=%@",[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[aryVideoData objectAtIndex:indexPath.row]objectForKey:@"Photo"]]);
-            
-            //  [cell2 setContentMode:UIViewContentModeScaleAspectFit];
-            
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-               
-                
-                [DBOperation selectData:[NSString stringWithFormat:@"update VideoList set flag='1' where id=%@",[[aryTempVideo objectAtIndex:indexPath.row]objectForKey:@"id"]]];
-                
-                
-                //no_img
-                
-                NSLog(@"Downloading Started");
-                NSString *urlToDownload = [NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[aryVideoData objectAtIndex:indexPath.row]objectForKey:@"Photo"]];
-                
-                NSURL  *url = [NSURL URLWithString:urlToDownload];
-                NSData *urlData = [NSData dataWithContentsOfURL:url];
-                
-                img.image = [[UIImage alloc]initWithData:urlData];
-                
-                NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-                NSString *documentsDirectory = [paths objectAtIndex:0];
-                
-                NSString *setImage = [NSString stringWithFormat:@"%@",[[aryTempVideo objectAtIndex:indexPath.row]objectForKey:@"VideoNameStr"]];
-                
-                NSArray *ary = [setImage componentsSeparatedByString:@"/"];
-                
-                NSString *strSaveImg = [ary lastObject];
-                
-                NSString *imagePath =[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",strSaveImg]];
-                //saving is done on main thread
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [urlData writeToFile:imagePath atomically:YES];
-                    NSLog(@"File Saved !");
-                });
-                
-                
-            });
+             [DBOperation selectData:[NSString stringWithFormat:@"update VideoList set flag='1' where id=%@",[[aryTempVideo objectAtIndex:indexPath.row]objectForKey:@"id"]]];
         }
     }
     else
     {
-        //CREATE TABLE "VideoList" ("id" INTEGER PRIMARY KEY  NOT NULL , "VideoJsonStr" VARCHAR, "flag" VARCHAR, "VideoThumbStr" VARCHAR, "VideoNameStr" VARCHAR)
+        NSLog(@"Temp=%@",aryTempVideo);
         
         NSLog(@"count=%lu",(unsigned long)aryTempVideo.count);
+        
+        NSArray       *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString  *documentsDirectory = [paths objectAtIndex:0];
         
         NSString *setImage = [NSString stringWithFormat:@"%@",[[aryTempVideo objectAtIndex:indexPath.row]objectForKey:@"VideoNameStr"]];
         NSLog(@"image=%@",setImage);
         NSArray *ary = [setImage componentsSeparatedByString:@"/"];
         NSString *strSaveImg = [ary lastObject];
-        NSString *imagePath=[documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",strSaveImg]];
-        UIImage *image=[UIImage imageWithContentsOfFile:imagePath];
-        
-        CGDataProviderRef provider = CGImageGetDataProvider(image.CGImage);
-        NSData* data = (id)CFBridgingRelease(CGDataProviderCopyData(provider));
-        
-        if (data.length == 0)
-        {
-            
-        }
-        else
-        {
-            img.image = image;
-        }
-        
+        NSString *imagePath=[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",strSaveImg]];
         
     }
-    
-    
-    /* //  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[aryVideoData objectAtIndex:indexPath.row]objectForKey:@"Photo"]]];
-     
-     //NSLog(@"data=%@",[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[aryPhotoGet objectAtIndex:indexPath.row]objectForKey:@"Photo"]]);
-     
-     
-     //#define apk_ImageUrl @"http://orataro.com/DataFiles"
-     
-     //    NSString *str = [[self.vedioArray objectAtIndex:i] valueForKey:@"vName"];
-     //    NSURL *videoURL = [NSURL URLWithString:str] ;
-     //    MPMoviePlayerController *player = [[[MPMoviePlayerController alloc] initWithContentURL:videoURL]autorelease];
-     //    UIImage  *thumbnail = [player thumbnailImageAtTime:1.0 timeOption:MPMovieTimeOptionNearestKeyFrame];
-     //    player = nil;
-     
-     
-     
-     //CREATE TABLE "VideoList" ("id" INTEGER PRIMARY KEY  NOT NULL , "VideoJsonStr" VARCHAR, "flag" VARCHAR, "VideoThumbStr" VARCHAR, "VideoNameStr" VARCHAR)
-     
-     
-     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-     NSLog(@"Downloading Started");
-     NSString *urlToDownload = [NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[aryVideoData objectAtIndex:indexPath.row]objectForKey:@"Photo"]];
-     
-     NSURL  *url = [NSURL URLWithString:urlToDownload];
-     NSData *urlData = [NSData dataWithContentsOfURL:url];
-     
-     /*
-     NSString *setImage = [NSString stringWithFormat:@"%@",[[aryTempGetData objectAtIndex:indexPath.row]objectForKey:@"PhotoImageStr"]];
-     
-     
-     NSArray *ary = [setImage componentsSeparatedByString:@"/"];
-     
-     NSString *strSaveImg = [ary lastObject];
-     
-     NSString *imagePath =[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",strSaveImg]];
-     
-     NSLog(@"image Saperator=%@",[strSaveImg componentsSeparatedByString:@"."]);
-     NSData *imageData = UIImagePNGRepresentation(image);
-     [imageData writeToFile:imagePath atomically:NO];
-     
-     if (![imageData writeToFile:imagePath atomically:NO])
-     {
-     NSLog(@"Failed to cache image data to disk");
-     }
-     else
-     {
-     [imageData writeToFile:imagePath atomically:NO];
-     NSLog(@"the cachedImagedPath is %@",imagePath);
-     }
-     
-     
-     
-     if ( urlData )
-     {
-     
-     [DBOperation selectData:[NSString stringWithFormat:@"update VideoList set flag='1' where id=%@",[[aryVideoData objectAtIndex:indexPath.row]objectForKey:@"id"]]];
-     
-     NSArray       *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-     NSString  *documentsDirectory = [paths objectAtIndex:0];
-     
-     NSString *setImage = [NSString stringWithFormat:@"%@",[[aryVideoData objectAtIndex:indexPath.row]objectForKey:@"id"]];
-     
-     
-     NSArray *ary = [setImage componentsSeparatedByString:@"/"];
-     
-     NSString *strSaveImg = [ary lastObject];
-     
-     NSString *imagePath =[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",strSaveImg]];
-     
-     NSString  *filePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory,@"thefile.mp4"];
-     
-     //saving is done on main thread
-     dispatch_async(dispatch_get_main_queue(), ^{
-     [urlData writeToFile:filePath atomically:YES];
-     NSLog(@"File Saved !");
-     });
-     }
-     
-     });*/
     
     return cell;
     
@@ -354,7 +221,8 @@ int videocount = 1;
     
     if (checkvalue == YES)
     {
-        [ProgressHUB showHUDAddedTo:self.view];
+        [_ActivityIndicator startAnimating];
+        // [ProgressHUB showHUDAddedTo:self.view];
     }
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
@@ -418,16 +286,38 @@ int videocount = 1;
     
     NSLog(@"response=%@",arrResponce);
     
-    NSMutableArray *ary1 = [[NSMutableArray alloc]initWithArray:arrResponce];
-    
-    NSLog(@"array=%@",ary1);
-    
     [DBOperation executeSQL:@"delete from VideoList"];
     
     for (NSMutableDictionary *dic in arrResponce)
     {
         
-        NSString *setImage = [NSString stringWithFormat:@"%@",[dic objectForKey:@"Photo"]];
+       /* NSString *setImage = [NSString stringWithFormat:@"%@",[dic objectForKey:@"Photo"]];
+        
+        NSArray *ary = [setImage componentsSeparatedByString:@"/"];
+        
+        NSString *strSaveImg = [ary lastObject];
+        
+        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[dic objectForKey:@"Photo"]]]];
+        
+        AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+        
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsDirectory = [paths objectAtIndex:0];
+        NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:strSaveImg];
+        
+        operation.outputStream = [NSOutputStream outputStreamToFileAtPath:dataPath append:NO];
+        
+        [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"Successfully downloaded file to %@", dataPath);
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Error: %@", error);
+        }];
+        
+        [operation start];*/
+        
+  
+    
+       NSString *setImage = [NSString stringWithFormat:@"%@",[dic objectForKey:@"Photo"]];
         
         NSArray *ary = [setImage componentsSeparatedByString:@"/"];
         
@@ -435,14 +325,56 @@ int videocount = 1;
         
         NSLog(@"data=%@",setImage);
         
+        //
+        
+        NSData *urlData = [NSData dataWithContentsOfURL:[NSURL URLWithString: [NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[dic objectForKey:@"Photo"]]]];
+        
+        if (urlData)
+        {
+            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString *documentsDirectory = [paths objectAtIndex:0];
+            NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:strSaveImg];
+            
+            NSLog(@"PAth=%@",dataPath);
+            
+            // Create folder if needed
+            //  [[NSFileManager defaultFileManager] createDirectoryAtPath:dataPath withIntermediateDirectories:YES attributes:nil error:nil];
+            
+            // NSString *filePath = [dataPath stringByAppendingPathComponent:@"test.mp4"];
+            
+            if ([urlData writeToFile:dataPath atomically:NO])
+            {
+                // yeah - file written
+                NSLog(@"File Save");
+            }
+            else
+            {
+                NSLog(@"File Not Save");
+                
+                // oops - file not written
+            }
+        }
+        else
+        {
+            NSLog(@"No Url Found");
+            // oops - couldn't get data
+        }
+        
+        
+        //
         NSString *getjsonstr = [Utility Convertjsontostring:dic];
+        
         [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO VideoList (VideoJsonStr,VideoNameStr,flag) VALUES ('%@','%@','0')",getjsonstr,strSaveImg]];
     }
+    
+    [_ActivityIndicator stopAnimating];
+    
     NSArray *ary = [DBOperation selectData:@"select * from VideoList"];
     aryVideoData = [Utility getLocalDetail:ary columnKey:@"VideoJsonStr"];
     
     aryTempVideo = [DBOperation selectData:@"select id,flag,VideoNameStr from VideoList"];
     
+    NSLog(@"Video=%@",aryVideoData);
     [_collectionVideolist reloadData];
     
 }
