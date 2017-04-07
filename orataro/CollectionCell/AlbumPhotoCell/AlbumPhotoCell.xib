@@ -62,15 +62,24 @@
                                     <constraint firstItem="x3d-i9-afm" firstAttribute="top" secondItem="Xg1-lb-DlI" secondAttribute="bottom" id="vBV-Vd-713"/>
                                 </constraints>
                             </view>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="obE-lC-oVn">
+                                <rect key="frame" x="71" y="77" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="CVW-hf-bx4"/>
+                                    <constraint firstAttribute="height" constant="20" id="ggt-z7-tYG"/>
+                                </constraints>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="obE-lC-oVn" firstAttribute="centerX" secondItem="oWW-lv-6ur" secondAttribute="centerX" id="5Kh-bz-tTu"/>
                             <constraint firstAttribute="trailing" secondItem="Sz9-hR-hVX" secondAttribute="trailing" id="Wn9-34-K4r"/>
                             <constraint firstItem="owy-VK-jjq" firstAttribute="top" secondItem="oWW-lv-6ur" secondAttribute="top" id="Ymn-Rb-1f7"/>
                             <constraint firstItem="owy-VK-jjq" firstAttribute="leading" secondItem="oWW-lv-6ur" secondAttribute="leading" id="ZTN-AC-Q7c"/>
                             <constraint firstItem="Sz9-hR-hVX" firstAttribute="leading" secondItem="oWW-lv-6ur" secondAttribute="leading" id="eRO-9J-8mM"/>
                             <constraint firstAttribute="bottom" secondItem="Sz9-hR-hVX" secondAttribute="bottom" id="eaX-iR-wZH"/>
                             <constraint firstAttribute="trailing" secondItem="owy-VK-jjq" secondAttribute="trailing" id="jqN-ks-bZk"/>
+                            <constraint firstItem="obE-lC-oVn" firstAttribute="centerY" secondItem="oWW-lv-6ur" secondAttribute="centerY" id="keo-O8-WPN"/>
                             <constraint firstAttribute="bottom" secondItem="owy-VK-jjq" secondAttribute="bottom" id="w9s-yb-guy"/>
                         </constraints>
                     </view>
@@ -85,6 +94,7 @@
             <size key="customSize" width="141" height="152"/>
             <connections>
                 <outlet property="aOuterView" destination="oWW-lv-6ur" id="0w2-Sw-R7I"/>
+                <outlet property="activityIndicatorImage" destination="obE-lC-oVn" id="bRm-hx-nxU"/>
                 <outlet property="imgPhoto" destination="owy-VK-jjq" id="1iD-Rb-Z1Z"/>
                 <outlet property="lbPhotoCount" destination="x3d-i9-afm" id="uRy-eY-Ga7"/>
                 <outlet property="lbTitle" destination="Xg1-lb-DlI" id="r2k-hk-3GU"/>

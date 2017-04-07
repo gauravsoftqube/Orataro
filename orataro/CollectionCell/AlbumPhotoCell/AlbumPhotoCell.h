@@ -13,5 +13,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imgPhoto;
 @property (weak, nonatomic) IBOutlet UILabel *lbTitle;
 @property (weak, nonatomic) IBOutlet UILabel *lbPhotoCount;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *activityIndicator;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicatorImage;
 
 @end

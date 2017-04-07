@@ -62,6 +62,13 @@
                                     <constraint firstAttribute="height" constant="29" id="ms6-ET-B9K"/>
                                 </constraints>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="93d-Dx-DfG">
+                                <rect key="frame" x="64" y="87" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="IDV-zy-AGP"/>
+                                    <constraint firstAttribute="height" constant="20" id="xCI-05-JqX"/>
+                                </constraints>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -70,6 +77,7 @@
                             <constraint firstItem="UHz-zi-GWC" firstAttribute="leading" secondItem="D86-fM-tkE" secondAttribute="leading" constant="5" id="B7p-xE-eTo"/>
                             <constraint firstItem="oAk-pj-RKj" firstAttribute="leading" secondItem="D86-fM-tkE" secondAttribute="leading" constant="8" id="IYJ-z0-7q6"/>
                             <constraint firstAttribute="trailing" secondItem="exm-MF-VVs" secondAttribute="trailing" id="MjT-Xb-6BL"/>
+                            <constraint firstItem="93d-Dx-DfG" firstAttribute="centerX" secondItem="D86-fM-tkE" secondAttribute="centerX" id="OOX-ZM-94d"/>
                             <constraint firstItem="ewl-OV-DPb" firstAttribute="leading" secondItem="oAk-pj-RKj" secondAttribute="trailing" constant="8" id="PSG-BR-k0v"/>
                             <constraint firstAttribute="bottom" secondItem="exm-MF-VVs" secondAttribute="bottom" id="VfS-fa-jbW"/>
                             <constraint firstItem="kNa-sq-XHG" firstAttribute="top" secondItem="D86-fM-tkE" secondAttribute="top" constant="8" id="dno-7P-zCs"/>
@@ -79,6 +87,7 @@
                             <constraint firstItem="kNa-sq-XHG" firstAttribute="leading" secondItem="D86-fM-tkE" secondAttribute="leading" constant="8" id="rnI-h1-Fms"/>
                             <constraint firstItem="UHz-zi-GWC" firstAttribute="top" secondItem="kNa-sq-XHG" secondAttribute="bottom" constant="5" id="soE-o6-I4x"/>
                             <constraint firstAttribute="bottom" secondItem="oAk-pj-RKj" secondAttribute="bottom" constant="8" id="tXx-CM-y1W"/>
+                            <constraint firstItem="93d-Dx-DfG" firstAttribute="centerY" secondItem="D86-fM-tkE" secondAttribute="centerY" id="z9d-xt-joz"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -93,6 +102,7 @@
             <connections>
                 <outlet property="DownloadImageView" destination="ewl-OV-DPb" id="6aC-Jq-Zsz"/>
                 <outlet property="aOuteView" destination="D86-fM-tkE" id="hGR-9O-qH3"/>
+                <outlet property="activityIndicator" destination="93d-Dx-DfG" id="jrS-3W-Vs9"/>
                 <outlet property="btnDownload" destination="exm-MF-VVs" id="40n-t8-0nG"/>
                 <outlet property="imgShowImage" destination="UHz-zi-GWC" id="Pun-VJ-bN8"/>
                 <outlet property="lbDate" destination="kNa-sq-XHG" id="fx7-54-SCT"/>

@@ -136,6 +136,8 @@
 #import "AlbumPhotoCell.h"
 #import "PhotoalbumCell.h"
 #import "ProfilePhotoShowVc.h"
+#import "AlbumPhotoVc.h"
+#import "AlbumPhotoVc.h"
 
 #pragma mark - YOUTube Video Key
 
@@ -230,7 +232,7 @@
 
 #define apk_albums @"apk_albums.asmx"
 #define apk_GetAlbumList_action @"GetAlbumList"
-
+#define apk_GetAllPhotosByAlbum_action @"GetAllPhotosByAlbum"
 
 #pragma mark -  PTCommunication
 

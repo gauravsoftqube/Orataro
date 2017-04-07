@@ -131,6 +131,8 @@ int pagecount = 1;
     NSLog(@"indexpath row=%ld",(long)indexPath.row);
     
     
+    [cell2.activityIndicator startAnimating];
+    
     //fetch from local
     NSString *documentDirectory=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     
@@ -138,12 +140,17 @@ int pagecount = 1;
     {
         if ([Utility isInterNetConnectionIsActive] == true)
         {
+           
+            
             NSLog(@"data=%@",[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[aryPhotoGet objectAtIndex:indexPath.row]objectForKey:@"Photo"]]);
             
             [cell2 setContentMode:UIViewContentModeScaleAspectFit];
             
             [cell2.imgShowImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[aryPhotoGet objectAtIndex:indexPath.row]objectForKey:@"Photo"]]] placeholderImage:[UIImage imageNamed:@"no_img"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL)
              {
+                 [cell2.activityIndicator stopAnimating];
+                 [cell2.activityIndicator removeFromSuperview];
+                 
                  [DBOperation selectData:[NSString stringWithFormat:@"update PhotoList set flag='1' where id=%@",[[aryTempGetData objectAtIndex:indexPath.row]objectForKey:@"id"]]];
                  
                  
@@ -209,6 +216,7 @@ int pagecount = 1;
            
             
         }
+        
     }
     else
     {

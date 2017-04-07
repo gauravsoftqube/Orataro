@@ -26,8 +26,6 @@
     [super viewDidLoad];
     
     
-   
-    
     arySaveImage = [[NSMutableArray alloc]init];
     arySaveTempImage = [[NSMutableArray alloc]init];
     
@@ -36,8 +34,7 @@
     aSecondBottomView.hidden = YES;
     aFirstBottomView.hidden = NO;
     
-    aFirstBtn.tag = 1;
-    aSecondBtn.tag = 1;
+   
     
     //PhotosCell
     //AlbumCell
@@ -64,6 +61,9 @@
     //arySaveTempImage = [[NSMutableArray alloc]init];
     
     //CREATE TABLE "PhotoAlbumList" ("id" INTEGER PRIMARY KEY  NOT NULL , "PhotoAlbumJsonStr" VARCHAR, "Flag" VARCHAR, "PhotoAlbumImageStr" VARCHAR)
+    
+    aFirstBtn.tag = 1;
+    aSecondBtn.tag = 0;
     
     NSArray *ary = [DBOperation selectData:@"select * from PhotoAlbumList"];
     arySaveImage = [Utility getLocalDetail:ary columnKey:@"PhotoAlbumJsonStr"];
@@ -114,6 +114,9 @@
     aSecondBtn.tag = 0;
     str = @"first";
     
+    [arySaveImage removeAllObjects];
+    [arySaveTempImage removeAllObjects];
+    
     NSArray *ary = [DBOperation selectData:@"select * from PhotoAlbumList"];
     arySaveImage = [Utility getLocalDetail:ary columnKey:@"PhotoAlbumJsonStr"];
     
@@ -163,6 +166,21 @@
     aSecondBtn.tag = 1;
     str = @"Second";
     
+    [arySaveImage removeAllObjects];
+    [arySaveTempImage removeAllObjects];
+    
+    // arySaveImage =
+    // arySaveTempImage =
+    
+    //CREATE TABLE "PhotoMultipleAlbumList" ("id" INTEGER PRIMARY KEY  NOT NULL , "PhotoAlbumJsonStr" VARCHAR, "PhotoAlbumImageStr" VARCHAR, "flag" VARCHAR)
+    
+    NSArray *ary = [DBOperation selectData:@"select * from PhotoMultipleAlbumList"];
+    arySaveImage = [Utility getLocalDetail:ary columnKey:@"PhotoAlbumJsonStr"];
+    
+    arySaveTempImage = [DBOperation selectData:@"select id,flag,PhotoAlbumImageStr from PhotoMultipleAlbumList"];
+    
+    NSLog(@"ary=%@",arySaveTempImage);
+    
     if (arySaveTempImage.count == 0)
     {
         if ([Utility isInterNetConnectionIsActive] == false)
@@ -202,6 +220,7 @@
     }
     if ([str isEqualToString:@"Second"])
     {
+        
     }
 }
 
@@ -210,19 +229,25 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    if (aFirstBtn.tag ==1)
+    if (aFirstBtn.tag == 1)
     {
-        return arySaveImage.count;
+        return  arySaveImage.count;
+
     }
-    //    if (aSecondBtn.tag ==1)
-    //    {
-    //        return ary;
-    //    }
+    else
+    {
+        return  arySaveImage.count;
+
+    }
     return 0;
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    NSLog(@"tag=%ld",(long)aFirstBtn.tag);
+    NSLog(@"Secon=%ld",(long)aSecondBtn.tag);
+    
     if (aFirstBtn.tag ==1)
     {
         [aCollectionView registerNib:[UINib nibWithNibName:@"PhotoalbumCell" bundle:nil] forCellWithReuseIdentifier:@"PhotosCell"];
@@ -240,8 +265,8 @@
         
         NSString *documentDirectory=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
         
-       // UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        //activityIndicator.center = cell2.imgPhoto.center;
+        
+        [cell2.activityIndicator startAnimating];
         
         if ([[[arySaveTempImage objectAtIndex:indexPath.row]objectForKey:@"Flag"] isEqualToString:@"0"])
         {
@@ -250,18 +275,13 @@
                 NSLog(@"data=%@",[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[arySaveImage objectAtIndex:indexPath.row]objectForKey:@"Photo"]]);
                 
                 [cell2 setContentMode:UIViewContentModeScaleAspectFit];
-            
+                
                 [cell2.imgPhoto sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[arySaveImage objectAtIndex:indexPath.row]objectForKey:@"Photo"]]] placeholderImage:[UIImage imageNamed:@"no_img"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL)
                  {
                      //CREATE TABLE "PhotoAlbumList" ("id" INTEGER PRIMARY KEY  NOT NULL , "PhotoAlbumJsonStr" VARCHAR, "Flag" VARCHAR, "PhotoAlbumImageStr" VARCHAR)
                      
-                    // activityIndicator.hidesWhenStopped = YES;
-                    // [cell2.imgPhoto willRemoveSubview:activityIndicator];
-                     //[activityIndicator removeFromSuperview];
-                    // activityIndicator.hidesWhenStopped = YES;
-                     
                      [cell2.activityIndicator stopAnimating];
-                     [cell2.activityIndicator removeFromSuperview];
+                     cell2.activityIndicator.hidden = YES;
                      
                      [DBOperation selectData:[NSString stringWithFormat:@"update PhotoAlbumList set Flag='1' where id=%@",[[arySaveTempImage objectAtIndex:indexPath.row]objectForKey:@"id"]]];
                      
@@ -279,8 +299,8 @@
                      NSString *imagePath =[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",strSaveImg]];
                      
                      NSLog(@"image Saperator=%@",[strSaveImg componentsSeparatedByString:@"."]);
-                    
-                     if (strSaveImg == (id)[NSNull null] || strSaveImg.length == 0 )
+                     
+                     if (strSaveImg == (id)[NSNull null] || strSaveImg.length == 0 || [strSaveImg isEqualToString:@"null"])
                      {
                          
                      }
@@ -321,9 +341,9 @@
                              
                          }
                          //jpg
-
+                         
                      }
-                    //JPG
+                     //JPG
                      //png
                      //jpeg
                      
@@ -331,9 +351,9 @@
                      
                  }];
                 
+                
                 [cell2.activityIndicator startAnimating];
-               // [cell2.imgPhoto addSubview:activityIndicator];
-               // [activityIndicator startAnimating];
+                // [activityIndicator ];
                 
             }
         }
@@ -363,6 +383,8 @@
                 cell2.imgPhoto.image = image;
             }
             
+            NSLog(@"image=%@",arySaveImage);
+            
         }
         
         
@@ -370,7 +392,7 @@
         return cell2;
         
     }
-    if(aSecondBtn.tag ==1)
+    if (aSecondBtn.tag ==1)
     {
         [aCollectionView registerNib:[UINib nibWithNibName:@"AlbumPhotoCell" bundle:nil] forCellWithReuseIdentifier:@"AlbumCell"];
         
@@ -385,6 +407,148 @@
         cell2.aOuterView.layer.borderWidth = 1.0;
         cell2.aOuterView.layer.borderColor = [UIColor lightGrayColor].CGColor;
         
+        
+        
+        ////// ********************** ////////////
+        
+        
+        cell2.lbTitle.text = [[arySaveImage objectAtIndex:indexPath.row]objectForKey:@"AlbumTitle"];
+        
+        cell2.lbPhotoCount.text = [NSString stringWithFormat:@"%@ Photos",[[arySaveImage objectAtIndex:indexPath.row]objectForKey:@"Total"]];
+        
+        
+    
+        NSString *documentDirectory=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+        
+     
+        NSLog(@"ary=%@",arySaveImage);
+        NSLog(@"ary=%@",arySaveTempImage);
+        
+        [cell2.activityIndicatorImage startAnimating];
+        
+        if ([[[arySaveTempImage objectAtIndex:indexPath.row]objectForKey:@"flag"] isEqualToString:@"0"])
+        {
+            if ([Utility isInterNetConnectionIsActive] == true)
+            {
+                NSLog(@"data=%@",[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[arySaveImage objectAtIndex:indexPath.row]objectForKey:@"Photo"]]);
+                
+                [cell2 setContentMode:UIViewContentModeScaleAspectFit];
+                
+                [cell2.imgPhoto sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[arySaveImage objectAtIndex:indexPath.row]objectForKey:@"Photo"]]] placeholderImage:[UIImage imageNamed:@"no_img"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL)
+                 {
+                    
+                     [cell2.activityIndicatorImage stopAnimating];
+                     cell2.activityIndicatorImage.hidden= YES;
+                     
+                       // CREATE TABLE "PhotoMultipleAlbumList" ("id" INTEGER PRIMARY KEY  NOT NULL , "PhotoAlbumJsonStr" VARCHAR, "PhotoAlbumImageStr" VARCHAR, "flag" VARCHAR)
+                     
+                     [DBOperation selectData:[NSString stringWithFormat:@"update PhotoMultipleAlbumList set flag='1' where id=%@",[[arySaveTempImage objectAtIndex:indexPath.row]objectForKey:@"id"]]];
+                     
+                     //no_img
+                     
+                     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                     NSString *documentsDirectory = [paths objectAtIndex:0];
+                     
+                     NSString *setImage = [NSString stringWithFormat:@"%@",[[arySaveTempImage objectAtIndex:indexPath.row]objectForKey:@"PhotoAlbumImageStr"]];
+                     
+                     NSArray *ary = [setImage componentsSeparatedByString:@"/"];
+                     
+                     NSString *strSaveImg = [ary lastObject];
+                     
+                     NSString *imagePath =[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",strSaveImg]];
+                     
+                     NSLog(@"image Saperator=%@",[strSaveImg componentsSeparatedByString:@"."]);
+                     
+                     if (strSaveImg == (id)[NSNull null] || strSaveImg.length == 0 || [strSaveImg isEqualToString:@"null"])
+                     {
+                         
+                     }
+                     else
+                     {
+                         NSArray *getExtension = [strSaveImg componentsSeparatedByString:@"."];
+                         
+                         if ([[getExtension objectAtIndex:1] isEqualToString:@"jpg"] || [[getExtension objectAtIndex:1] isEqualToString:@"JPG"] ||
+                             [[getExtension objectAtIndex:1] isEqualToString:@"jpeg"] )
+                         {
+                             NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
+                             [imageData writeToFile:imagePath atomically:NO];
+                             
+                             if (![imageData writeToFile:imagePath atomically:NO])
+                             {
+                                 NSLog(@"Failed to cache image data to disk");
+                             }
+                             else
+                             {
+                                 [imageData writeToFile:imagePath atomically:NO];
+                                 NSLog(@"the cachedImagedPath is %@",imagePath);
+                             }
+                         }
+                         else
+                         {
+                             NSData *imageData = UIImagePNGRepresentation(image);
+                             [imageData writeToFile:imagePath atomically:NO];
+                             
+                             if (![imageData writeToFile:imagePath atomically:NO])
+                             {
+                                 NSLog(@"Failed to cache image data to disk");
+                             }
+                             else
+                             {
+                                 [imageData writeToFile:imagePath atomically:NO];
+                                 NSLog(@"the cachedImagedPath is %@",imagePath);
+                             }
+                             
+                         }
+                         //jpg
+                         
+                     }
+                     //JPG
+                     //png
+                     //jpeg
+                     
+                     
+                     
+                 }];
+                
+                
+              //  [cell2.activityIndicator startAnimating];
+                // [activityIndicator ];
+                
+            }
+        }
+        else
+        {
+            //CREATE TABLE "PhotoAlbumList" ("id" INTEGER PRIMARY KEY  NOT NULL , "PhotoAlbumJsonStr" VARCHAR, "Flag" VARCHAR, "PhotoAlbumImageStr" VARCHAR)
+            
+            NSLog(@"count=%lu",(unsigned long)arySaveTempImage.count);
+            
+            NSString *setImage = [NSString stringWithFormat:@"%@",[[arySaveTempImage objectAtIndex:indexPath.row]objectForKey:@"PhotoAlbumImageStr"]];
+            NSLog(@"image=%@",setImage);
+            NSArray *ary = [setImage componentsSeparatedByString:@"/"];
+            NSString *strSaveImg = [ary lastObject];
+            NSString *imagePath=[documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",strSaveImg]];
+            UIImage *image=[UIImage imageWithContentsOfFile:imagePath];
+            
+            CGDataProviderRef provider = CGImageGetDataProvider(image.CGImage);
+            NSData* data = (id)CFBridgingRelease(CGDataProviderCopyData(provider));
+            
+            if (data.length == 0)
+            {
+                NSLog(@"noooooo image");
+                cell2.imgPhoto.image = [UIImage imageNamed:@"no_img"];
+            }
+            else
+            {
+                cell2.imgPhoto.image = image;
+            }
+            
+            NSLog(@"image=%@",arySaveImage);
+            
+        }
+
+        
+        
+        ////// ********************** ////////////
         return cell2;
         
     }
@@ -400,12 +564,54 @@
     
     if ([str isEqualToString:@"first"])
     {
-        ProfilePhotoShowVc *p7 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfilePhotoShowVc"];
-        [self.navigationController pushViewController:p7 animated:YES];
+        NSString *documentDirectory=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+        
+        if ([Utility isInterNetConnectionIsActive] == false)
+        {
+            if (arySaveImage.count > 0)
+            {
+                // from local
+                
+                 // CREATE TABLE "PhotoMultipleAlbumList" ("id" INTEGER PRIMARY KEY  NOT NULL , "PhotoAlbumJsonStr" VARCHAR, "PhotoAlbumImageStr" VARCHAR, "flag" VARCHAR)
+                
+                NSString *setImage = [NSString stringWithFormat:@"%@",[[arySaveTempImage objectAtIndex:indexPath.row]objectForKey:@"PhotoAlbumImageStr"]];
+                NSLog(@"image=%@",setImage);
+                NSArray *ary = [setImage componentsSeparatedByString:@"/"];
+                NSString *strSaveImg = [ary lastObject];
+                NSString *imagePath=[documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",strSaveImg]];
+                
+                ProfilePhotoShowVc *p7 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfilePhotoShowVc"];
+                p7.imagename = imagePath;
+                p7.strOfflineOnline = @"Offline";
+               [self.navigationController pushViewController:p7 animated:YES];
+                
+            }
+            else
+            {
+                UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"sorry no image available" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alrt show];
+                
+            }
+        }
+        else
+        {
+            NSString *str3 = [NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[arySaveImage objectAtIndex:indexPath.row]objectForKey:@"Photo"]];
+            ProfilePhotoShowVc *p7 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfilePhotoShowVc"];
+            p7.imagename = str3;
+            p7.strOfflineOnline = @"Online";
+            [self.navigationController pushViewController:p7 animated:YES];
+            
+        }
+        
     }
     if ([str isEqualToString:@"Second"])
     {
+        NSLog(@"data=%@",arySaveImage);
+        NSLog(@"temp=%@",arySaveTempImage);
         
+        AlbumPhotoVc *p7 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AlbumPhotoVc"];
+        p7.strAlbumId = [[arySaveImage objectAtIndex:indexPath.row]objectForKey:@"AlbumID"];
+        [self.navigationController pushViewController:p7 animated:YES];
     }
     
 }
@@ -537,7 +743,71 @@
                      }
                      else
                      {
-                         [self ManageCircularList:arrResponce];
+                         [self ManageCircularList:arrResponce :@"Photo"];
+                         
+                         
+                     }
+                 }
+                 else
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                 }
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }];
+        
+    }
+    else
+    {
+        //#define apk_albums @"apk_albums.asmx"
+        //#define apk_GetAlbumList_action @"GetAlbumList"
+        //MemberID=f1a6d89d-37dc-499a-9476-cb83f0aba0f2
+        //ClientID=d79901a7-f9f7-4d47-8e3b-198ede7c9f58
+        //InstituteID=4f4bbf0e-858a-46fa-a0a7-bf116f537653
+        //BeachID=null
+        
+        
+        NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_albums,apk_GetAlbumList_action];
+        
+        NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+        NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+        
+        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
+        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
+        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"BatchID"]] forKey:@"BeachID"];
+        
+        if (checkProgress == YES)
+        {
+            [ProgressHUB showHUDAddedTo:self.view];
+        }
+        
+        [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+         {
+             [ProgressHUB hideenHUDAddedTo:self.view];
+             if(!error)
+             {
+                 NSString *strArrd=[dicResponce objectForKey:@"d"];
+                 NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+                 NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                 
+                 if([arrResponce count] != 0)
+                 {
+                     NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                     NSString *strStatus=[dic objectForKey:@"message"];
+                     if([strStatus isEqualToString:@"No Data Found"])
+                     {
+                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                         [alrt show];
+                     }
+                     else
+                     {
+                         [self ManageCircularList:arrResponce :@"Album"];
                          
                          
                      }
@@ -555,52 +825,87 @@
              }
          }];
 
-    }
-    else
-    {
         
     }
     
 }
 
 
--(void)ManageCircularList:(NSMutableArray *)arrResponce
+-(void)ManageCircularList:(NSMutableArray *)arrResponce :(NSString *)CheckAlbum
 {
-    //  CREATE TABLE "PhotoAlbumList" ("id" INTEGER PRIMARY KEY  NOT NULL , "PhotoAlbumJsonStr" VARCHAR, "Flag" VARCHAR, "PhotoAlbumImageStr" VARCHAR)
+   
     
-    // arySaveImage = [[NSMutableArray alloc]init];
-    // arySaveTempImage = [[NSMutableArray alloc]init];
-    
-    
-    NSLog(@"response=%@",arrResponce);
-    
-    NSMutableArray *ary1 = [[NSMutableArray alloc]initWithArray:arrResponce];
-    
-    NSLog(@"array=%@",ary1);
-    
-    [DBOperation executeSQL:@"delete from PhotoAlbumList"];
-    
-    for (NSMutableDictionary *dic in arrResponce)
+    if ([CheckAlbum  isEqualToString:@"Photo"])
     {
-        NSString *setImage = [NSString stringWithFormat:@"%@",[dic objectForKey:@"Photo"]];
+        NSLog(@"response=%@",arrResponce);
         
-        NSArray *ary = [setImage componentsSeparatedByString:@"/"];
+        //  CREATE TABLE "PhotoAlbumList" ("id" INTEGER PRIMARY KEY  NOT NULL , "PhotoAlbumJsonStr" VARCHAR, "Flag" VARCHAR, "PhotoAlbumImageStr" VARCHAR)
         
-        NSString *strSaveImg = [ary lastObject];
+        // arySaveImage = [[NSMutableArray alloc]init];
+        // arySaveTempImage = [[NSMutableArray alloc]init];
         
-      //  NSLog(@"data=%@",setImage);
+        //Album
+        //Photo
         
-        // CREATE TABLE "PhotoAlbumList" ("id" INTEGER PRIMARY KEY  NOT NULL , "PhotoAlbumJsonStr" VARCHAR, "Flag" VARCHAR, "PhotoAlbumImageStr" VARCHAR)
+        NSMutableArray *ary1 = [[NSMutableArray alloc]initWithArray:arrResponce];
         
-        NSString *getjsonstr = [Utility Convertjsontostring:dic];
-        [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO PhotoAlbumList (PhotoAlbumJsonStr,PhotoAlbumImageStr,Flag) VALUES ('%@','%@','0')",getjsonstr,strSaveImg]];
+        NSLog(@"array=%@",ary1);
+        
+        [DBOperation executeSQL:@"delete from PhotoAlbumList"];
+        
+        for (NSMutableDictionary *dic in arrResponce)
+        {
+            NSString *setImage = [NSString stringWithFormat:@"%@",[dic objectForKey:@"Photo"]];
+            
+            NSArray *ary = [setImage componentsSeparatedByString:@"/"];
+            
+            NSString *strSaveImg = [ary lastObject];
+            
+            //  NSLog(@"data=%@",setImage);
+            
+            // CREATE TABLE "PhotoAlbumList" ("id" INTEGER PRIMARY KEY  NOT NULL , "PhotoAlbumJsonStr" VARCHAR, "Flag" VARCHAR, "PhotoAlbumImageStr" VARCHAR)
+            
+            NSString *getjsonstr = [Utility Convertjsontostring:dic];
+            [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO PhotoAlbumList (PhotoAlbumJsonStr,PhotoAlbumImageStr,Flag) VALUES ('%@','%@','0')",getjsonstr,strSaveImg]];
+        }
+        NSArray *ary = [DBOperation selectData:@"select * from PhotoAlbumList"];
+        arySaveImage = [Utility getLocalDetail:ary columnKey:@"PhotoAlbumJsonStr"];
+        
+        arySaveTempImage = [DBOperation selectData:@"select id,Flag,PhotoAlbumImageStr from PhotoAlbumList"];
+        
+        [aCollectionView reloadData];
     }
-    NSArray *ary = [DBOperation selectData:@"select * from PhotoAlbumList"];
-    arySaveImage = [Utility getLocalDetail:ary columnKey:@"PhotoAlbumJsonStr"];
-    
-    arySaveTempImage = [DBOperation selectData:@"select id,Flag,PhotoAlbumImageStr from PhotoAlbumList"];
-    
-    [aCollectionView reloadData];
+    if ([CheckAlbum  isEqualToString:@"Album"])
+    {
+      
+         NSLog(@"response=%@",arrResponce);
+        
+        [DBOperation executeSQL:@"delete from PhotoMultipleAlbumList"];
+        
+        for (NSMutableDictionary *dic in arrResponce)
+        {
+            NSString *setImage = [NSString stringWithFormat:@"%@",[dic objectForKey:@"Photo"]];
+            
+            NSArray *ary = [setImage componentsSeparatedByString:@"/"];
+            
+            NSString *strSaveImg = [ary lastObject];
+            
+            //  NSLog(@"data=%@",setImage);
+            
+             // CREATE TABLE "PhotoMultipleAlbumList" ("id" INTEGER PRIMARY KEY  NOT NULL , "PhotoAlbumJsonStr" VARCHAR, "PhotoAlbumImageStr" VARCHAR, "flag" VARCHAR)
+            
+            NSString *getjsonstr = [Utility Convertjsontostring:dic];
+            [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO PhotoMultipleAlbumList (PhotoAlbumJsonStr,PhotoAlbumImageStr,flag) VALUES ('%@','%@','0')",getjsonstr,strSaveImg]];
+        }
+        NSArray *ary = [DBOperation selectData:@"select * from PhotoMultipleAlbumList"];
+        arySaveImage = [Utility getLocalDetail:ary columnKey:@"PhotoAlbumJsonStr"];
+        
+        arySaveTempImage = [DBOperation selectData:@"select id,flag,PhotoAlbumImageStr from PhotoMultipleAlbumList"];
+        
+        [aCollectionView reloadData];
+
+        
+    }
     
 }
 

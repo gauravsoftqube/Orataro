@@ -14,5 +14,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *lbDate;
 @property (weak, nonatomic) IBOutlet UIButton *btnDownload;
 @property (weak, nonatomic) IBOutlet UIImageView *imgShowImage;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @end
