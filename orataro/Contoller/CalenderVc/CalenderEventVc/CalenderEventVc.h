@@ -9,6 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface CalenderEventVc : UIViewController
+
+@property (strong, nonatomic) NSMutableArray *arrCalenderDetail;
+@property (weak, nonatomic) IBOutlet UILabel *lblFilterImage;
+@property (weak, nonatomic) IBOutlet UIView *viewFilterImage;
+
 @property (weak, nonatomic) IBOutlet UITableView *tblCalenderEventList;
 @property (weak, nonatomic) IBOutlet UIButton *btnHeaderMenu;
 - (IBAction)btnHeaderMenu:(id)sender;

@@ -9,8 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @interface CalenderEventDetailVc : UIViewController
+
+@property (strong, nonatomic) NSMutableDictionary *dicSelectedEventdDetail;
+
 @property (weak, nonatomic) IBOutlet UIButton *btnBack;
 - (IBAction)btnBack:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UILabel *lblTitle;
 
 @property (weak, nonatomic) IBOutlet UITextView *txtViewDetailEvent;
 

@@ -136,8 +136,13 @@
 #import "AlbumPhotoCell.h"
 #import "PhotoalbumCell.h"
 #import "ProfilePhotoShowVc.h"
+
 #import "AlbumPhotoVc.h"
 #import "AlbumPhotoVc.h"
+
+#import "CalenderEventVc.h"
+#import "CalenderEventDetailVc.h"
+
 
 #pragma mark - YOUTube Video Key
 
