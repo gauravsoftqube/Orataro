@@ -222,6 +222,7 @@
 		C3A2D72D1E64212D00B91B54 /* OBShapedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C3A2D72C1E64212D00B91B54 /* OBShapedButton.m */; };
 		C3A2D7311E64244000B91B54 /* OtpPasswordVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C3A2D7301E64244000B91B54 /* OtpPasswordVc.m */; };
 		C3A2D7351E644FA600B91B54 /* ProfilePhotoShowVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C3A2D7341E644FA600B91B54 /* ProfilePhotoShowVc.m */; };
+		C3CF92211E979DA700A6BFBA /* AlbumPhotoVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C3CF92201E979DA700A6BFBA /* AlbumPhotoVc.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -633,6 +634,8 @@
 		C3A2D7301E64244000B91B54 /* OtpPasswordVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtpPasswordVc.m; sourceTree = "<group>"; };
 		C3A2D7331E644FA600B91B54 /* ProfilePhotoShowVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfilePhotoShowVc.h; sourceTree = "<group>"; };
 		C3A2D7341E644FA600B91B54 /* ProfilePhotoShowVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilePhotoShowVc.m; sourceTree = "<group>"; };
+		C3CF921F1E979DA700A6BFBA /* AlbumPhotoVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumPhotoVc.h; sourceTree = "<group>"; };
+		C3CF92201E979DA700A6BFBA /* AlbumPhotoVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumPhotoVc.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1501,6 +1504,7 @@
 		C36B588D1E5F096C00DE7464 /* PhotAlbumVc */ = {
 			isa = PBXGroup;
 			children = (
+				C3CF921E1E979D5200A6BFBA /* AlbumPhotosVc */,
 				C36B588E1E5F09A800DE7464 /* PhotoAlbumVc.h */,
 				C36B588F1E5F09A800DE7464 /* PhotoAlbumVc.m */,
 			);
@@ -2033,6 +2037,15 @@
 			path = ProfilePhotoShowVC;
 			sourceTree = "<group>";
 		};
+		C3CF921E1E979D5200A6BFBA /* AlbumPhotosVc */ = {
+			isa = PBXGroup;
+			children = (
+				C3CF921F1E979DA700A6BFBA /* AlbumPhotoVc.h */,
+				C3CF92201E979DA700A6BFBA /* AlbumPhotoVc.m */,
+			);
+			path = AlbumPhotosVc;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2280,6 +2293,7 @@
 				C36DD1BA1E4086210011221E /* IQUIView+Hierarchy.m in Sources */,
 				C381726F1E518756004AB189 /* FAQvc.m in Sources */,
 				C3741FE01E4CAE6500BFFA23 /* HelpDeskVc.m in Sources */,
+				C3CF92211E979DA700A6BFBA /* AlbumPhotoVc.m in Sources */,
 				C364D9161E56C8EF00CE72DC /* BlogVc.m in Sources */,
 				C375B62F1E65460F00E8D63D /* ProfileHappyGramListdetailListVc.m in Sources */,
 				C360CD1F1E4AEF6200761ABE /* PollVc.m in Sources */,
