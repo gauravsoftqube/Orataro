@@ -234,8 +234,8 @@
         [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO NotList (dic_json) VALUES ('%@')",getjsonstr]];
     }
     
-    NSArray *ary = [DBOperation selectData:@"select * from NotList"];
-    arrNotesList = [Utility getLocalDetail:ary columnKey:@"dic_json"];
+    //NSArray *ary = [DBOperation selectData:@"select * from NotList"];
+   // arrNotesList = [Utility getLocalDetail:ary columnKey:@"dic_json"];
     [self.tblNote reloadData];
 }
 
@@ -261,9 +261,7 @@
     [viewRound.layer setBorderWidth:2];
     
     NSString *st = [[arrNotesList objectAtIndex:section] objectForKey:@"Groups"];
-    
     NSString *getfrmt = [Utility convertDateFtrToDtaeFtr:@"MM/yyyy" newDateFtr:@"MMM yyyy" date:st];
-    
     NSArray* getary = [getfrmt componentsSeparatedByString: @" "];
     
     UILabel *lbTitle = (UILabel *)[cell.contentView viewWithTag:2];

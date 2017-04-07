@@ -16,12 +16,22 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    [self commonData];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)commonData
+{
+    NSString *Title = [self.dicSelectedEventdDetail objectForKey:@"title"];
+    NSString *activitydetails = [self.dicSelectedEventdDetail objectForKey:@"activitydetails"];
+    
+    [self.lblTitle setText:[NSString stringWithFormat:@"%@",Title]];
+    [self.txtViewDetailEvent setText:[NSString stringWithFormat:@"%@",activitydetails]];
+    
 }
 
 #pragma mark - UIButton Action
