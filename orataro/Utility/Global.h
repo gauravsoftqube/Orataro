@@ -250,6 +250,10 @@
 #define apk_holiday  @"apk_holiday.asmx"
 #define apk_GetHoliday_action @"GetHoliday"
 
+#pragma mark - apk_calendar
+
+#define apk_calendar  @"apk_calendar.asmx"
+#define apk_GetCalendarData_action @"GetCalendarData"
 
 #endif /* Global_h */
 

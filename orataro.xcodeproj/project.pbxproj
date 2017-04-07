@@ -1241,10 +1241,10 @@
 		C365CCBF1E49E47100A4ABAA /* CalenderVc */ = {
 			isa = PBXGroup;
 			children = (
-				C36B584D1E5EBFD800DE7464 /* CalenderEventDetailVc */,
-				C36B584C1E5EBFBB00DE7464 /* CalenderEventVc */,
 				C365CCC01E49E55400A4ABAA /* CalenderVc.h */,
 				C365CCC11E49E55400A4ABAA /* CalenderVc.m */,
+				C36B584D1E5EBFD800DE7464 /* CalenderEventDetailVc */,
+				C36B584C1E5EBFBB00DE7464 /* CalenderEventVc */,
 			);
 			path = CalenderVc;
 			sourceTree = "<group>";
