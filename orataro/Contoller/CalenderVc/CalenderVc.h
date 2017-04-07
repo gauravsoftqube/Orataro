@@ -27,6 +27,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *lblEventCount;
 @property (weak, nonatomic) IBOutlet UIButton *btnEventDetailLIst;
 - (IBAction)btnEventDetailLIst:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *lblHeaderTitle;
+@property (weak, nonatomic) IBOutlet UIView *viewEventTotal;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *ViewMoreEvent;
 
 @end
