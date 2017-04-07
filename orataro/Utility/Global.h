@@ -129,7 +129,13 @@
 #import "ProfilePhotoShowVc.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "YTPlayerView.h"
-
+#import "ProfileVideoVc.h"
+#import "ProfileVideoDetailVc.h"
+#import "UIScrollView+BottomRefreshControl.h"
+#import "AFHTTPRequestOperation.h"
+#import "AlbumPhotoCell.h"
+#import "PhotoalbumCell.h"
+#import "ProfilePhotoShowVc.h"
 
 #pragma mark - YOUTube Video Key
 
@@ -219,6 +225,11 @@
 
 #define apk_Photos @"apk_Photos.asmx"
 #define apk_GetPhotoList_action @"GetPhotoList"
+
+#pragma mark - apk_albums
+
+#define apk_albums @"apk_albums.asmx"
+#define apk_GetAlbumList_action @"GetAlbumList"
 
 
 #pragma mark -  PTCommunication

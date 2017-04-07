@@ -10,5 +10,8 @@
 
 @interface AlbumPhotoCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIView *aOuterView;
+@property (weak, nonatomic) IBOutlet UIImageView *imgPhoto;
+@property (weak, nonatomic) IBOutlet UILabel *lbTitle;
+@property (weak, nonatomic) IBOutlet UILabel *lbPhotoCount;
 
 @end

@@ -7,13 +7,14 @@
 //
 
 #import "PhotoVc.h"
-#import "PhototableCell.h"
-#import "ProfilePhotoShowVc.h"
 #import "Global.h"
+
 
 @interface PhotoVc ()
 {
     NSMutableArray *aryPhotoGet,*aryTempGetData;
+    NSMutableArray *aryTempForPagination;
+    BOOL isloadMore;
 }
 @end
 
@@ -27,12 +28,20 @@ int pagecount = 1;
     
     aryPhotoGet =[[NSMutableArray alloc]init];
     aryTempGetData =[[NSMutableArray alloc]init];
+    aryTempForPagination = [[NSMutableArray alloc]init];
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     [aCollectionView registerNib:[UINib nibWithNibName:@"PhototableCell" bundle:nil] forCellWithReuseIdentifier:@"PhotoCell"];
     
-    // Do any additional setup after loading the view.
+    UIRefreshControl *refreshControl = [UIRefreshControl new];
+    refreshControl.triggerVerticalOffset = 100.;
+    [refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
+    aCollectionView.bottomRefreshControl = refreshControl;
+
+   
+    
+ // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning
@@ -43,9 +52,6 @@ int pagecount = 1;
 -(void)viewWillAppear:(BOOL)animated
 {
     //CREATE TABLE "PhotoList" ("id" INTEGER PRIMARY KEY  NOT NULL ,"PhotoJsonStr" VARCHAR,"PhotoImageStr" VARCHAR DEFAULT (null) ,"flag" VARCHAR)
-    
-    
-    
     
     NSArray *ary = [DBOperation selectData:@"select * from PhotoList"];
     aryPhotoGet = [Utility getLocalDetail:ary columnKey:@"PhotoJsonStr"];
@@ -122,6 +128,9 @@ int pagecount = 1;
     
     NSLog(@"ary=%@",aryPhotoGet);
     
+    NSLog(@"indexpath row=%ld",(long)indexPath.row);
+    
+    
     //fetch from local
     NSString *documentDirectory=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     
@@ -193,9 +202,11 @@ int pagecount = 1;
                  //png
                  //jpeg
                  
-                 
+              
                  
              }];
+            
+           
             
         }
     }
@@ -285,6 +296,22 @@ int pagecount = 1;
     
 }
 
+- (UICollectionReusableView *)collectionView:(UICollectionView *)theCollectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)theIndexPath
+{
+    
+    UICollectionReusableView *theView;
+    
+    if(kind == UICollectionElementKindSectionHeader)
+    {
+        theView = [theCollectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header" forIndexPath:theIndexPath];
+    } else {
+        theView = [theCollectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"footer" forIndexPath:theIndexPath];
+        //aCollectionView.refreshControl
+    }
+    
+    return theView;
+}
+
 #pragma mark - scrollview delegate
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
@@ -293,8 +320,22 @@ int pagecount = 1;
     {
         NSIndexPath *indexPath = [aCollectionView indexPathForCell:cell];
         NSLog(@"Last Row:=%ld",(long)indexPath.row);
+        
+        if (indexPath.row == [aryPhotoGet count]-1)
+        {
+            [self refresh];
+        }
     }
 }
+- (void)refresh
+{
+    isloadMore = YES;
+    int  i = [[NSString stringWithFormat:@"%ld",aryPhotoGet.count]intValue];
+    pagecount = i + 1;
+    [self apiCallFor_GetPhotoList:NO];
+    // Do refresh stuff here
+}
+
 #pragma mark - button action
 
 -(void)btnDownloadClicked:(id)sender
@@ -389,6 +430,8 @@ int pagecount = 1;
     //#define apk_apk_Post @"apk_Post.asmx"
     //#define apk_GetPosted_FileImgaeVideos @"GetPosted_FileImgaeVideos"
     
+    NSLog(@"pagecount=%d",pagecount);
+    
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_apk_Post,apk_GetPosted_FileImgaeVideos];
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
@@ -412,6 +455,7 @@ int pagecount = 1;
          {
              NSString *strArrd=[dicResponce objectForKey:@"d"];
              NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             
              NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
              
              if([arrResponce count] != 0)
@@ -425,9 +469,22 @@ int pagecount = 1;
                  }
                  else
                  {
-                     [self ManageCircularList:arrResponce];
+                    // [self ManageCircularList:arrResponce];
+
                      
+                     NSLog(@"get =%@",aryPhotoGet);
                      
+                     if (isloadMore == YES)
+                     {
+                         NSMutableArray *allMyObjects = [NSMutableArray arrayWithArray: arrResponce];
+                         [aryPhotoGet addObjectsFromArray: allMyObjects];
+                         [self ManageCircularList:aryPhotoGet];
+                     }
+                     else
+                     {
+                         [self ManageCircularList:arrResponce];
+                     }
+                      [aCollectionView.bottomRefreshControl endRefreshing];
                  }
              }
              else
@@ -448,6 +505,10 @@ int pagecount = 1;
 -(void)ManageCircularList:(NSMutableArray *)arrResponce
 {
     NSLog(@"response=%@",arrResponce);
+    
+    NSMutableArray *ary1 = [[NSMutableArray alloc]initWithArray:arrResponce];
+    
+    NSLog(@"array=%@",ary1);
     
     [DBOperation executeSQL:@"delete from PhotoList"];
     
@@ -471,72 +532,10 @@ int pagecount = 1;
     
     aryTempGetData = [DBOperation selectData:@"select id,flag,PhotoImageStr from PhotoList"];
     
+    
     [aCollectionView reloadData];
     
 }
-
-
-
-
-
-/*-(void)apiCallFor_GetPhotoList : (BOOL)checkProgress
- {
- NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_Photos,apk_GetPhotoList_action];
- 
- NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
- NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
- 
- [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
- [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
- [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
- [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"WallID"]] forKey:@"WallID"];
- [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"BatchID"]] forKey:@"BeachID"];
- 
- if (checkProgress == YES)
- {
- [ProgressHUB showHUDAddedTo:self.view];
- }
- 
- [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
- {
- [ProgressHUB hideenHUDAddedTo:self.view];
- if(!error)
- {
- NSString *strArrd=[dicResponce objectForKey:@"d"];
- NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
- NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
- 
- if([arrResponce count] != 0)
- {
- NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
- NSString *strStatus=[dic objectForKey:@"message"];
- if([strStatus isEqualToString:@"No Data Found"])
- {
- UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
- [alrt show];
- }
- else
- {
- [self ManageCircularList:arrResponce];
- 
- 
- }
- }
- else
- {
- UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
- [alrt show];
- }
- }
- else
- {
- UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
- [alrt show];
- }
- }];
- 
- 
- }*/
 
 /*
  #pragma mark - Navigation
