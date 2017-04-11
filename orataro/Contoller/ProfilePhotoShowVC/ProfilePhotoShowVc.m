@@ -17,7 +17,8 @@
 @implementation ProfilePhotoShowVc
 @synthesize aInnerView,aOuterView,saveBtn;
 int d =0;
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
     [aInnerView.layer setBorderColor:[UIColor colorWithRed:34/255.0f green:49/255.0f blue:89/255.0f alpha:1.0f].CGColor];
@@ -82,6 +83,7 @@ int d =0;
 
 - (IBAction)BackBtnClicked:(UIButton *)sender
 {
+    d =0;
     [self.navigationController popViewControllerAnimated:YES];
 }
 

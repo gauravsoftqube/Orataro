@@ -72,6 +72,8 @@
 #define CIRCULAR_TYPE "Please Enter CircularType"
 #define CIRCULAR_STANDARD "Please Enter At least one Standard and Division"
 
+#define SUBJECT @"Please Enter Subject"
+
 #pragma mark - IMPORT UIViewController
 
 
@@ -143,6 +145,11 @@
 #import "CalenderEventVc.h"
 #import "CalenderEventDetailVc.h"
 
+
+#import "ScoolGroupVc.h"
+#import "CreateScoolGroupVc.h"
+
+#import "CreateScoolGroupVc.h"
 
 #pragma mark - YOUTube Video Key
 
@@ -272,6 +279,17 @@
 
 #define apk_calendar  @"apk_calendar.asmx"
 #define apk_GetCalendarData_action @"GetCalendarData"
+
+
+#pragma mark - apk_group
+
+#define apk_group @"apk_group.asmx"
+#define apk_Group_List_action @"Group_List"
+#define apk_Remove_Group_action @"Remove_Group"
+#define apk_SaveUpdate_Group @"SaveUpdate_Group"
+
+
+
 
 #endif /* Global_h */
 
