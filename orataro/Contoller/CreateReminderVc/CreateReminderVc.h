@@ -13,4 +13,8 @@
 @property (weak, nonatomic) IBOutlet UIView *aView1;
 - (IBAction)MenuBtnClicked:(id)sender;
 - (IBAction)AddBtnClicked:(UIButton *)sender;
+
+@property (weak, nonatomic) IBOutlet UITableView *tblTodoList;
+
+@property (weak, nonatomic) IBOutlet UILabel *lblHeaderTitle;
 @end

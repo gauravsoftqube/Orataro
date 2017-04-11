@@ -28,9 +28,9 @@
 {
     [super viewDidLoad];
     
-    [aScrollview setContentSize:CGSizeMake(self.view.frame.size.width, 2000)];
-    [aViewHeight setConstant:700];
-    [aViewWidth setConstant:self.view.frame.size.width];
+  //  [aScrollview setContentSize:CGSizeMake(self.view.frame.size.width, 2000)];
+//    [aViewHeight setConstant:700];
+ //   [aViewWidth setConstant:self.view.frame.size.width];
     
     UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
     aTitleTextfield.leftView = paddingView;
@@ -546,7 +546,7 @@
         {
             NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
             [dateFormat setDateFormat:@"dd-MM-yyyy"];
-            NSString *theDate = [dateFormat stringFromDate:[datePicker date]];
+            NSString *theDate = [dateFormat stringFromDate:[datePickerEnd date]];
             self.aEnddateTextfield.text = theDate;
         }
         

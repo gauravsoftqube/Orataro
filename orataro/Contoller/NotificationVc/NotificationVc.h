@@ -12,5 +12,6 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *aTableview;
 - (IBAction)MenuBtnClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *lblHeaderTitle;
 
 @end
