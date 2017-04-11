@@ -75,6 +75,7 @@
 #define CIRCULAR_STANDARD "Please Enter At least one Standard and Division"
 
 
+#define SUBJECT @"Please Enter Subject"
 
 #pragma mark - IMPORT UIViewController
 
@@ -148,6 +149,11 @@
 
 #import "ReminderVc.h"
 #import "CreateReminderVc.h"
+
+#import "ScoolGroupVc.h"
+#import "CreateScoolGroupVc.h"
+
+#import "CreateScoolGroupVc.h"
 
 #pragma mark - YOUTube Video Key
 
@@ -278,6 +284,14 @@
 #define apk_calendar  @"apk_calendar.asmx"
 #define apk_GetCalendarData_action @"GetCalendarData"
 
+
+#pragma mark - apk_group
+
+#define apk_group @"apk_group.asmx"
+#define apk_Group_List_action @"Group_List"
+#define apk_Remove_Group_action @"Remove_Group"
+#define apk_SaveUpdate_Group @"SaveUpdate_Group"
+
 #pragma mark - Todos
 
 #define apk_todos  @"apk_todos.asmx"
@@ -290,6 +304,7 @@
 #define apk_notifications  @"apk_notifications.asmx"
 #define apk_NotificationGetList_action  @"NotificationGetList"
 #define apk_SetViewFlageOnNotification_action  @"SetViewFlageOnNotification"
+
 
 
 

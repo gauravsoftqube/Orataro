@@ -21,7 +21,7 @@
 @implementation PhotoVc
 @synthesize aCollectionView;
 int pagecount = 1;
-
+int lastvalue = 0;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -58,7 +58,7 @@ int pagecount = 1;
     
     aryTempGetData = [DBOperation selectData:@"select id,flag,PhotoImageStr from PhotoList"];
     
-    NSLog(@"ary=%@",aryTempGetData);
+    //NSLog(@"ary=%@",aryTempGetData);
     
     [aCollectionView reloadData];
     
@@ -117,18 +117,24 @@ int pagecount = 1;
     
     cell2.DownloadImageView.contentMode = UIViewContentModeScaleAspectFit;
     
-    NSDate *todayDate = [NSDate date]; //Get todays date
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init]; // here we create NSDateFormatter object for change the Format of date.
-    [dateFormatter setDateFormat:@"dd-MM-yyyy"]; //Here we can set the format which we need
-    NSString *convertedDateString = [dateFormatter stringFromDate:todayDate];// Here convert date in NSString
     [cell2.btnDownload addTarget:self action:@selector(btnDownloadClicked:) forControlEvents:UIControlEventTouchUpInside];
     cell2.btnDownload.tag = indexPath.row;
     
-    cell2.lbDate.text = [NSString stringWithFormat:@"Date: %@",convertedDateString];
+    //NSString *getMilisecond = [Utility convertMiliSecondtoDate:@"dd/MM/yyyy" date:getdt];
+
     
-    NSLog(@"ary=%@",aryPhotoGet);
+    NSString *strdt = [Utility convertMiliSecondtoDate:@"dd-MM-yyyy" date:[NSString stringWithFormat:@"%@",[[aryPhotoGet objectAtIndex:indexPath.row]objectForKey:@"DateOfPost"]]];
     
-    NSLog(@"indexpath row=%ld",(long)indexPath.row);
+    cell2.lbDate.text = [NSString stringWithFormat:@"Date: %@",strdt];
+    
+//    NSDate *todayDate = [NSDate date]; //Get todays date
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init]; // here we create NSDateFormatter object for change the Format of date.
+//    [dateFormatter setDateFormat:@"dd-MM-yyyy"]; //Here we can set the format which we need
+//    NSString *convertedDateString = [dateFormatter stringFromDate:todayDate];// Here
+    
+   // NSLog(@"ary=%@",aryPhotoGet);
+    
+   // NSLog(@"indexpath row=%ld",(long)indexPath.row);
     
     
     [cell2.activityIndicator startAnimating];
@@ -142,7 +148,7 @@ int pagecount = 1;
         {
            
             
-            NSLog(@"data=%@",[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[aryPhotoGet objectAtIndex:indexPath.row]objectForKey:@"Photo"]]);
+          //  NSLog(@"data=%@",[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[aryPhotoGet objectAtIndex:indexPath.row]objectForKey:@"Photo"]]);
             
             [cell2 setContentMode:UIViewContentModeScaleAspectFit];
             
@@ -168,7 +174,7 @@ int pagecount = 1;
                  
                  NSString *imagePath =[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",strSaveImg]];
                  
-                 NSLog(@"image Saperator=%@",[strSaveImg componentsSeparatedByString:@"."]);
+                // NSLog(@"image Saperator=%@",[strSaveImg componentsSeparatedByString:@"."]);
                  
                  NSArray *getExtension = [strSaveImg componentsSeparatedByString:@"."];
                  
@@ -220,10 +226,13 @@ int pagecount = 1;
     }
     else
     {
-        NSLog(@"count=%lu",(unsigned long)aryTempGetData.count);
+        //NSLog(@"count=%lu",(unsigned long)aryTempGetData.count);
         
+        [cell2.activityIndicator stopAnimating];
+        [cell2.activityIndicator removeFromSuperview];
+    
         NSString *setImage = [NSString stringWithFormat:@"%@",[[aryTempGetData objectAtIndex:indexPath.row]objectForKey:@"PhotoImageStr"]];
-        NSLog(@"image=%@",setImage);
+       // NSLog(@"image=%@",setImage);
         NSArray *ary = [setImage componentsSeparatedByString:@"/"];
         NSString *strSaveImg = [ary lastObject];
         NSString *imagePath=[documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",strSaveImg]];
@@ -275,7 +284,7 @@ int pagecount = 1;
             // from local
             
             NSString *setImage = [NSString stringWithFormat:@"%@",[[aryTempGetData objectAtIndex:indexPath.row]objectForKey:@"PhotoImageStr"]];
-            NSLog(@"image=%@",setImage);
+          //  NSLog(@"image=%@",setImage);
             NSArray *ary = [setImage componentsSeparatedByString:@"/"];
             NSString *strSaveImg = [ary lastObject];
             NSString *imagePath=[documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",strSaveImg]];
@@ -327,7 +336,7 @@ int pagecount = 1;
     for (UICollectionViewCell *cell in [aCollectionView visibleCells])
     {
         NSIndexPath *indexPath = [aCollectionView indexPathForCell:cell];
-        NSLog(@"Last Row:=%ld",(long)indexPath.row);
+       // NSLog(@"Last Row:=%ld",(long)indexPath.row);
         
         if (indexPath.row == [aryPhotoGet count]-1)
         {
@@ -338,10 +347,10 @@ int pagecount = 1;
 - (void)refresh
 {
     isloadMore = YES;
-    int  i = [[NSString stringWithFormat:@"%ld",aryPhotoGet.count]intValue];
-    pagecount = i + 1;
+   // int  i = [[NSString stringWithFormat:@"%ld",aryPhotoGet.count]intValue];
+    pagecount = pagecount + 11;
     [self apiCallFor_GetPhotoList:NO];
-    // Do refresh stuff here
+       // Do refresh stuff here
 }
 
 #pragma mark - button action
@@ -359,7 +368,7 @@ int pagecount = 1;
             // from local
             
             NSString *setImage = [NSString stringWithFormat:@"%@",[[aryTempGetData objectAtIndex:btn.tag]objectForKey:@"PhotoImageStr"]];
-            NSLog(@"image=%@",setImage);
+            //NSLog(@"image=%@",setImage);
             NSArray *ary = [setImage componentsSeparatedByString:@"/"];
             NSString *strSaveImg = [ary lastObject];
             NSString *imagePath=[documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",strSaveImg]];
@@ -472,24 +481,25 @@ int pagecount = 1;
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     [alrt show];
+                     [aCollectionView.bottomRefreshControl endRefreshing];
+                     [aCollectionView.bottomRefreshControl removeFromSuperview];
+                     
                  }
                  else
                  {
-                    // [self ManageCircularList:arrResponce];
-
-                     
-                     NSLog(@"get =%@",aryPhotoGet);
-                     
                      if (isloadMore == YES)
                      {
                          NSMutableArray *allMyObjects = [NSMutableArray arrayWithArray: arrResponce];
-                         [aryPhotoGet addObjectsFromArray: allMyObjects];
-                         [self ManageCircularList:aryPhotoGet];
+                         
+                         if(![aryPhotoGet containsObject:allMyObjects])
+                         {
+                              [aryPhotoGet addObjectsFromArray: allMyObjects];
+                             [self ManageCircularList:aryPhotoGet];
+                         }
                      }
                      else
                      {
+                        // isloadMore = NO;
                          [self ManageCircularList:arrResponce];
                      }
                       [aCollectionView.bottomRefreshControl endRefreshing];
@@ -512,12 +522,8 @@ int pagecount = 1;
 }
 -(void)ManageCircularList:(NSMutableArray *)arrResponce
 {
-    NSLog(@"response=%@",arrResponce);
-    
-    NSMutableArray *ary1 = [[NSMutableArray alloc]initWithArray:arrResponce];
-    
-    NSLog(@"array=%@",ary1);
-    
+   // NSLog(@"response=%@",arrResponce);
+
     [DBOperation executeSQL:@"delete from PhotoList"];
     
     for (NSMutableDictionary *dic in arrResponce)
@@ -528,7 +534,7 @@ int pagecount = 1;
         
         NSString *strSaveImg = [ary lastObject];
         
-        NSLog(@"data=%@",setImage);
+       // NSLog(@"data=%@",setImage);
         
         //CREATE TABLE "PhotoList" ("id" INTEGER PRIMARY KEY  NOT NULL , "PhotoJsonStr" VARCHAR, "ImageStr" VARCHAR, "flag" VARCHAR)
         

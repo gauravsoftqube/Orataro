@@ -30,9 +30,7 @@
     arySaveTempImage = [[NSMutableArray alloc]init];
     
     
-    addBtn.layer.cornerRadius  = 30.0;
-    aSecondBottomView.hidden = YES;
-    aFirstBottomView.hidden = NO;
+    
     
    
     
@@ -46,6 +44,10 @@
     [aCollectionView registerNib:[UINib nibWithNibName:@"AlbumPhotoCell" bundle:nil] forCellWithReuseIdentifier:@"AlbumCell"];
     
     [aCollectionView registerNib:[UINib nibWithNibName:@"PhotoalbumCell" bundle:nil] forCellWithReuseIdentifier:@"PhotosCell"];
+    
+    addBtn.layer.cornerRadius  = 30.0;
+    aSecondBottomView.hidden = YES;
+    aFirstBottomView.hidden = NO;
     
     // Do any additional setup after loading the view.
 }
@@ -62,44 +64,97 @@
     
     //CREATE TABLE "PhotoAlbumList" ("id" INTEGER PRIMARY KEY  NOT NULL , "PhotoAlbumJsonStr" VARCHAR, "Flag" VARCHAR, "PhotoAlbumImageStr" VARCHAR)
     
+  
     aFirstBtn.tag = 1;
     aSecondBtn.tag = 0;
     
-    NSArray *ary = [DBOperation selectData:@"select * from PhotoAlbumList"];
-    arySaveImage = [Utility getLocalDetail:ary columnKey:@"PhotoAlbumJsonStr"];
+   // AlbumPhotoVc *p7 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AlbumPhotoVc"];
     
-    arySaveTempImage = [DBOperation selectData:@"select id,Flag,PhotoAlbumImageStr from PhotoAlbumList"];
+    //  str = @"Second";
+
     
-    NSLog(@"ary=%@",arySaveTempImage);
+    NSLog(@"Values of Album=%@",str);
     
-    [aCollectionView reloadData];
-    
-    if (arySaveTempImage.count == 0)
+    if ([str isEqualToString:@"Second"])
     {
-        if ([Utility isInterNetConnectionIsActive] == false)
+        NSArray *ary = [DBOperation selectData:@"select * from PhotoMultipleAlbumList"];
+        arySaveImage = [Utility getLocalDetail:ary columnKey:@"PhotoAlbumJsonStr"];
+        
+        arySaveTempImage = [DBOperation selectData:@"select id,flag,PhotoAlbumImageStr from PhotoMultipleAlbumList"];
+        
+        NSLog(@"ary=%@",arySaveTempImage);
+        
+        [aCollectionView reloadData];
+
+        
+        if (arySaveTempImage.count == 0)
         {
-            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alrt show];
-            return;
+            if ([Utility isInterNetConnectionIsActive] == false)
+            {
+                UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alrt show];
+                return;
+            }
+            else
+            {
+                [self apiCallFor_GetPhotoList:YES :@"Album"];
+            }
         }
         else
         {
-            [self apiCallFor_GetPhotoList:YES :@"Photo"];
+            if ([Utility isInterNetConnectionIsActive] == true)
+            {
+                [self apiCallFor_GetPhotoList:NO :@"Album"];
+            }
+            else
+            {
+                
+            }
+            
         }
+
     }
     else
     {
-        if ([Utility isInterNetConnectionIsActive] == true)
+        NSArray *ary = [DBOperation selectData:@"select * from PhotoAlbumList"];
+        arySaveImage = [Utility getLocalDetail:ary columnKey:@"PhotoAlbumJsonStr"];
+        
+        arySaveTempImage = [DBOperation selectData:@"select id,Flag,PhotoAlbumImageStr from PhotoAlbumList"];
+        
+        NSLog(@"ary=%@",arySaveTempImage);
+        
+        [aCollectionView reloadData];
+        
+        if (arySaveTempImage.count == 0)
         {
-            [self apiCallFor_GetPhotoList:NO :@"Photo"];
+            if ([Utility isInterNetConnectionIsActive] == false)
+            {
+                UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alrt show];
+                return;
+            }
+            else
+            {
+                [self apiCallFor_GetPhotoList:YES :@"Photo"];
+            }
         }
         else
         {
+            if ([Utility isInterNetConnectionIsActive] == true)
+            {
+                [self apiCallFor_GetPhotoList:NO :@"Photo"];
+            }
+            else
+            {
+                
+            }
+            
             
         }
-        
-        
+
     }
+   
+    
     
 }
 #pragma mark - button action
@@ -114,8 +169,8 @@
     aSecondBtn.tag = 0;
     str = @"first";
     
-    [arySaveImage removeAllObjects];
-    [arySaveTempImage removeAllObjects];
+   // [arySaveImage removeAllObjects];
+   // [arySaveTempImage removeAllObjects];
     
     NSArray *ary = [DBOperation selectData:@"select * from PhotoAlbumList"];
     arySaveImage = [Utility getLocalDetail:ary columnKey:@"PhotoAlbumJsonStr"];
@@ -124,7 +179,7 @@
     
     NSLog(@"ary=%@",arySaveTempImage);
     
-    //  [aCollectionView reloadData];
+      [aCollectionView reloadData];
     
     if (arySaveTempImage.count == 0)
     {
@@ -166,13 +221,18 @@
     aSecondBtn.tag = 1;
     str = @"Second";
     
-    [arySaveImage removeAllObjects];
-    [arySaveTempImage removeAllObjects];
+   
     
     // arySaveImage =
     // arySaveTempImage =
     
     //CREATE TABLE "PhotoMultipleAlbumList" ("id" INTEGER PRIMARY KEY  NOT NULL , "PhotoAlbumJsonStr" VARCHAR, "PhotoAlbumImageStr" VARCHAR, "flag" VARCHAR)
+    
+  //  [arySaveImage removeAllObjects];
+   // [arySaveTempImage removeAllObjects];
+    
+    //[DBOperation executeSQL:@"delete from PhotoMultipleAlbumList"];
+    
     
     NSArray *ary = [DBOperation selectData:@"select * from PhotoMultipleAlbumList"];
     arySaveImage = [Utility getLocalDetail:ary columnKey:@"PhotoAlbumJsonStr"];
@@ -181,6 +241,9 @@
     
     NSLog(@"ary=%@",arySaveTempImage);
     
+    
+    [aCollectionView reloadData];
+
     if (arySaveTempImage.count == 0)
     {
         if ([Utility isInterNetConnectionIsActive] == false)
@@ -363,6 +426,9 @@
             
             NSLog(@"count=%lu",(unsigned long)arySaveTempImage.count);
             
+            [cell2.activityIndicator stopAnimating];
+            cell2.activityIndicator.hidden = YES;
+            
             NSString *setImage = [NSString stringWithFormat:@"%@",[[arySaveTempImage objectAtIndex:indexPath.row]objectForKey:@"PhotoAlbumImageStr"]];
             NSLog(@"image=%@",setImage);
             NSArray *ary = [setImage componentsSeparatedByString:@"/"];
@@ -411,142 +477,145 @@
         
         ////// ********************** ////////////
         
-        
-        cell2.lbTitle.text = [[arySaveImage objectAtIndex:indexPath.row]objectForKey:@"AlbumTitle"];
-        
-        cell2.lbPhotoCount.text = [NSString stringWithFormat:@"%@ Photos",[[arySaveImage objectAtIndex:indexPath.row]objectForKey:@"Total"]];
-        
-        
-    
-        NSString *documentDirectory=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-        
-     
-        NSLog(@"ary=%@",arySaveImage);
-        NSLog(@"ary=%@",arySaveTempImage);
-        
-        [cell2.activityIndicatorImage startAnimating];
-        
-        if ([[[arySaveTempImage objectAtIndex:indexPath.row]objectForKey:@"flag"] isEqualToString:@"0"])
+        if (arySaveImage.count>0)
         {
-            if ([Utility isInterNetConnectionIsActive] == true)
+            cell2.lbTitle.text = [[arySaveImage objectAtIndex:indexPath.row]objectForKey:@"AlbumTitle"];
+            
+            cell2.lbPhotoCount.text = [NSString stringWithFormat:@"%@ Photos",[[arySaveImage objectAtIndex:indexPath.row]objectForKey:@"Total"]];
+            
+            
+            
+            NSString *documentDirectory=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+            
+            
+            NSLog(@"ary=%@",arySaveImage);
+            NSLog(@"ary=%@",arySaveTempImage);
+            
+            [cell2.activityIndicatorImage startAnimating];
+            
+            if ([[[arySaveTempImage objectAtIndex:indexPath.row]objectForKey:@"flag"] isEqualToString:@"0"])
             {
-                NSLog(@"data=%@",[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[arySaveImage objectAtIndex:indexPath.row]objectForKey:@"Photo"]]);
-                
-                [cell2 setContentMode:UIViewContentModeScaleAspectFit];
-                
-                [cell2.imgPhoto sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[arySaveImage objectAtIndex:indexPath.row]objectForKey:@"Photo"]]] placeholderImage:[UIImage imageNamed:@"no_img"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL)
-                 {
+                if ([Utility isInterNetConnectionIsActive] == true)
+                {
+                    NSLog(@"data=%@",[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[arySaveImage objectAtIndex:indexPath.row]objectForKey:@"Photo"]]);
                     
-                     [cell2.activityIndicatorImage stopAnimating];
-                     cell2.activityIndicatorImage.hidden= YES;
-                     
-                       // CREATE TABLE "PhotoMultipleAlbumList" ("id" INTEGER PRIMARY KEY  NOT NULL , "PhotoAlbumJsonStr" VARCHAR, "PhotoAlbumImageStr" VARCHAR, "flag" VARCHAR)
-                     
-                     [DBOperation selectData:[NSString stringWithFormat:@"update PhotoMultipleAlbumList set flag='1' where id=%@",[[arySaveTempImage objectAtIndex:indexPath.row]objectForKey:@"id"]]];
-                     
-                     //no_img
-                     
-                     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-                     NSString *documentsDirectory = [paths objectAtIndex:0];
-                     
-                     NSString *setImage = [NSString stringWithFormat:@"%@",[[arySaveTempImage objectAtIndex:indexPath.row]objectForKey:@"PhotoAlbumImageStr"]];
-                     
-                     NSArray *ary = [setImage componentsSeparatedByString:@"/"];
-                     
-                     NSString *strSaveImg = [ary lastObject];
-                     
-                     NSString *imagePath =[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",strSaveImg]];
-                     
-                     NSLog(@"image Saperator=%@",[strSaveImg componentsSeparatedByString:@"."]);
-                     
-                     if (strSaveImg == (id)[NSNull null] || strSaveImg.length == 0 || [strSaveImg isEqualToString:@"null"])
+                    [cell2 setContentMode:UIViewContentModeScaleAspectFit];
+                    
+                    [cell2.imgPhoto sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[arySaveImage objectAtIndex:indexPath.row]objectForKey:@"Photo"]]] placeholderImage:[UIImage imageNamed:@"no_img"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL)
                      {
                          
-                     }
-                     else
-                     {
-                         NSArray *getExtension = [strSaveImg componentsSeparatedByString:@"."];
+                         [cell2.activityIndicatorImage stopAnimating];
+                         cell2.activityIndicatorImage.hidden= YES;
                          
-                         if ([[getExtension objectAtIndex:1] isEqualToString:@"jpg"] || [[getExtension objectAtIndex:1] isEqualToString:@"JPG"] ||
-                             [[getExtension objectAtIndex:1] isEqualToString:@"jpeg"] )
+                         // CREATE TABLE "PhotoMultipleAlbumList" ("id" INTEGER PRIMARY KEY  NOT NULL , "PhotoAlbumJsonStr" VARCHAR, "PhotoAlbumImageStr" VARCHAR, "flag" VARCHAR)
+                         
+                         [DBOperation selectData:[NSString stringWithFormat:@"update PhotoMultipleAlbumList set flag='1' where id=%@",[[arySaveTempImage objectAtIndex:indexPath.row]objectForKey:@"id"]]];
+                         
+                         //no_img
+                         
+                         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                         NSString *documentsDirectory = [paths objectAtIndex:0];
+                         
+                         NSString *setImage = [NSString stringWithFormat:@"%@",[[arySaveTempImage objectAtIndex:indexPath.row]objectForKey:@"PhotoAlbumImageStr"]];
+                         
+                         NSArray *ary = [setImage componentsSeparatedByString:@"/"];
+                         
+                         NSString *strSaveImg = [ary lastObject];
+                         
+                         NSString *imagePath =[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",strSaveImg]];
+                         
+                         NSLog(@"image Saperator=%@",[strSaveImg componentsSeparatedByString:@"."]);
+                         
+                         if (strSaveImg == (id)[NSNull null] || strSaveImg.length == 0 || [strSaveImg isEqualToString:@"null"])
                          {
-                             NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
-                             [imageData writeToFile:imagePath atomically:NO];
                              
-                             if (![imageData writeToFile:imagePath atomically:NO])
-                             {
-                                 NSLog(@"Failed to cache image data to disk");
-                             }
-                             else
-                             {
-                                 [imageData writeToFile:imagePath atomically:NO];
-                                 NSLog(@"the cachedImagedPath is %@",imagePath);
-                             }
                          }
                          else
                          {
-                             NSData *imageData = UIImagePNGRepresentation(image);
-                             [imageData writeToFile:imagePath atomically:NO];
+                             NSArray *getExtension = [strSaveImg componentsSeparatedByString:@"."];
                              
-                             if (![imageData writeToFile:imagePath atomically:NO])
+                             if ([[getExtension objectAtIndex:1] isEqualToString:@"jpg"] || [[getExtension objectAtIndex:1] isEqualToString:@"JPG"] ||
+                                 [[getExtension objectAtIndex:1] isEqualToString:@"jpeg"] )
                              {
-                                 NSLog(@"Failed to cache image data to disk");
+                                 NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
+                                 [imageData writeToFile:imagePath atomically:NO];
+                                 
+                                 if (![imageData writeToFile:imagePath atomically:NO])
+                                 {
+                                     NSLog(@"Failed to cache image data to disk");
+                                 }
+                                 else
+                                 {
+                                     [imageData writeToFile:imagePath atomically:NO];
+                                     NSLog(@"the cachedImagedPath is %@",imagePath);
+                                 }
                              }
                              else
                              {
+                                 NSData *imageData = UIImagePNGRepresentation(image);
                                  [imageData writeToFile:imagePath atomically:NO];
-                                 NSLog(@"the cachedImagedPath is %@",imagePath);
+                                 
+                                 if (![imageData writeToFile:imagePath atomically:NO])
+                                 {
+                                     NSLog(@"Failed to cache image data to disk");
+                                 }
+                                 else
+                                 {
+                                     [imageData writeToFile:imagePath atomically:NO];
+                                     NSLog(@"the cachedImagedPath is %@",imagePath);
+                                 }
+                                 
                              }
+                             //jpg
                              
                          }
-                         //jpg
+                         //JPG
+                         //png
+                         //jpeg
                          
-                     }
-                     //JPG
-                     //png
-                     //jpeg
-                     
-                     
-                     
-                 }];
-                
-                
-              //  [cell2.activityIndicator startAnimating];
-                // [activityIndicator ];
-                
-            }
-        }
-        else
-        {
-            //CREATE TABLE "PhotoAlbumList" ("id" INTEGER PRIMARY KEY  NOT NULL , "PhotoAlbumJsonStr" VARCHAR, "Flag" VARCHAR, "PhotoAlbumImageStr" VARCHAR)
-            
-            NSLog(@"count=%lu",(unsigned long)arySaveTempImage.count);
-            
-            NSString *setImage = [NSString stringWithFormat:@"%@",[[arySaveTempImage objectAtIndex:indexPath.row]objectForKey:@"PhotoAlbumImageStr"]];
-            NSLog(@"image=%@",setImage);
-            NSArray *ary = [setImage componentsSeparatedByString:@"/"];
-            NSString *strSaveImg = [ary lastObject];
-            NSString *imagePath=[documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",strSaveImg]];
-            UIImage *image=[UIImage imageWithContentsOfFile:imagePath];
-            
-            CGDataProviderRef provider = CGImageGetDataProvider(image.CGImage);
-            NSData* data = (id)CFBridgingRelease(CGDataProviderCopyData(provider));
-            
-            if (data.length == 0)
-            {
-                NSLog(@"noooooo image");
-                cell2.imgPhoto.image = [UIImage imageNamed:@"no_img"];
+                         
+                         
+                     }];
+                    
+                    
+                    //  [cell2.activityIndicator startAnimating];
+                    // [activityIndicator ];
+                    
+                }
             }
             else
             {
-                cell2.imgPhoto.image = image;
+                //CREATE TABLE "PhotoAlbumList" ("id" INTEGER PRIMARY KEY  NOT NULL , "PhotoAlbumJsonStr" VARCHAR, "Flag" VARCHAR, "PhotoAlbumImageStr" VARCHAR)
+                
+                NSLog(@"count=%lu",(unsigned long)arySaveTempImage.count);
+                
+                NSString *setImage = [NSString stringWithFormat:@"%@",[[arySaveTempImage objectAtIndex:indexPath.row]objectForKey:@"PhotoAlbumImageStr"]];
+                NSLog(@"image=%@",setImage);
+                NSArray *ary = [setImage componentsSeparatedByString:@"/"];
+                NSString *strSaveImg = [ary lastObject];
+                NSString *imagePath=[documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",strSaveImg]];
+                UIImage *image=[UIImage imageWithContentsOfFile:imagePath];
+                
+                CGDataProviderRef provider = CGImageGetDataProvider(image.CGImage);
+                NSData* data = (id)CFBridgingRelease(CGDataProviderCopyData(provider));
+                
+                if (data.length == 0)
+                {
+                    NSLog(@"noooooo image");
+                    cell2.imgPhoto.image = [UIImage imageNamed:@"no_img"];
+                }
+                else
+                {
+                    cell2.imgPhoto.image = image;
+                }
+                
+                NSLog(@"image=%@",arySaveImage);
+                
             }
             
-            NSLog(@"image=%@",arySaveImage);
             
-        }
 
-        
+        }
         
         ////// ********************** ////////////
         return cell2;
@@ -595,6 +664,13 @@
         }
         else
         {
+            if ([Utility isInterNetConnectionIsActive] == false)
+            {
+                UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alrt show];
+                return;
+            }
+            
             NSString *str3 = [NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[arySaveImage objectAtIndex:indexPath.row]objectForKey:@"Photo"]];
             ProfilePhotoShowVc *p7 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfilePhotoShowVc"];
             p7.imagename = str3;
@@ -611,6 +687,7 @@
         
         AlbumPhotoVc *p7 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AlbumPhotoVc"];
         p7.strAlbumId = [[arySaveImage objectAtIndex:indexPath.row]objectForKey:@"AlbumID"];
+        p7.strSetView = @"Back";
         [self.navigationController pushViewController:p7 animated:YES];
     }
     

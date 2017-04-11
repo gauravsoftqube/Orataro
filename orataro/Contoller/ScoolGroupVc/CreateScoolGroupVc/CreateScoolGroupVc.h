@@ -57,5 +57,5 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnSelectGroupMemberTecher;
 - (IBAction)btnSelectGroupMemberTecher:(id)sender;
 
-
+@property(strong,nonatomic)NSMutableDictionary *dicCreateSchoolGroup;
 @end

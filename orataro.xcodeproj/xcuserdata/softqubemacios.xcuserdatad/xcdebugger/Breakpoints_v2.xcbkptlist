@@ -307,29 +307,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "orataro/Contoller/ProfilePhotoShowVC/ProfilePhotoShowVc.m"
-            timestampString = "513237984.19754"
+            filePath = "orataro/Contoller/ScoolGroupVc/CreateScoolGroupVc/CreateScoolGroupVc.m"
+            timestampString = "513579142.891318"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
-            landmarkName = "-viewDidLoad"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "orataro/Contoller/PhotAlbumVc/AlbumPhotosVc/AlbumPhotoVc.m"
-            timestampString = "513265410.937505"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "310"
-            endingLineNumber = "310"
-            landmarkName = "-ManageCircularList:"
+            startingLineNumber = "56"
+            endingLineNumber = "56"
+            landmarkName = "-commonData"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
