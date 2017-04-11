@@ -59,6 +59,8 @@
 #define Password_Conf_Empty @"Please Enter Confirm Password"
 #define Password_Conf_Not_Match @"Confirm Password not match"
 
+#define Select_End_Date @"Please select end date."
+#define Select_Start_Date @"Please select start date."
 
 #define OTPCODE @"Please Enter OTP"
 
@@ -72,8 +74,9 @@
 #define CIRCULAR_TYPE "Please Enter CircularType"
 #define CIRCULAR_STANDARD "Please Enter At least one Standard and Division"
 
-#pragma mark - IMPORT UIViewController
 
+
+#pragma mark - IMPORT UIViewController
 
 #import "Utility.h"
 #import "ProgressHUB.h"
@@ -143,6 +146,8 @@
 #import "CalenderEventVc.h"
 #import "CalenderEventDetailVc.h"
 
+#import "ReminderVc.h"
+#import "CreateReminderVc.h"
 
 #pragma mark - YOUTube Video Key
 
@@ -263,15 +268,30 @@
 #define apk_notes  @"apk_notes.asmx"
 #define apk_GetNotesList_action @"GetNotesList"
 
-#pragma mark - apk_holiday
+#pragma mark - Holiday
 
 #define apk_holiday  @"apk_holiday.asmx"
 #define apk_GetHoliday_action @"GetHoliday"
 
-#pragma mark - apk_calendar
+#pragma mark - Calendar
 
 #define apk_calendar  @"apk_calendar.asmx"
 #define apk_GetCalendarData_action @"GetCalendarData"
+
+#pragma mark - Todos
+
+#define apk_todos  @"apk_todos.asmx"
+#define apk_GetToDosList_action  @"GetToDosList"
+#define apk_SaveUpdateTodos_action  @"SaveUpdateTodos"
+
+
+#pragma mark - apk_notifications
+
+#define apk_notifications  @"apk_notifications.asmx"
+#define apk_NotificationGetList_action  @"NotificationGetList"
+#define apk_SetViewFlageOnNotification_action  @"SetViewFlageOnNotification"
+
+
 
 #endif /* Global_h */
 

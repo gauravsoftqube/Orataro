@@ -77,7 +77,7 @@
     {
         self.lblHeaderTitle.text=[NSString stringWithFormat:@"Calender"];
     }
-
+    
     if ([Utility isInterNetConnectionIsActive] == false)
     {
         arrCalenderDetailList = [[NSMutableArray alloc]init];
@@ -105,14 +105,14 @@
         
         if(arrCalenderDetailList.count == 0)
         {
-           [self apiCallFor_getCalendar:YES];
+            [self apiCallFor_getCalendar:YES];
         }
         else
         {
             [self apiCallFor_getCalendar:NO];
         }
     }
-
+    
     
 }
 
@@ -193,7 +193,6 @@
     [param setValue:[NSString stringWithFormat:@"%@",yearString] forKey:@"year"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
-    
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"BatchID"]] forKey:@"BeachID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"RoleName"]] forKey:@"RoleName"];
@@ -254,13 +253,11 @@
     [formatter12 setDateFormat:@"MM"];
     NSString *strDate11=[formatter12 stringFromDate:currentPageDate];
     
-    
     for (NSMutableDictionary *dic in arrCalenderDetailList)
     {
         NSDateFormatter *formatterYear=[[NSDateFormatter alloc]init];
         [formatterYear setDateFormat:@"yyyy"];
         NSString *strDate123Year=[formatterYear stringFromDate:currentPageDate];
-
         
         NSString *start11=[dic objectForKey:@"start"];
         NSArray *arr=[start11 componentsSeparatedByString:@"/"];
@@ -275,10 +272,10 @@
         }
         if([strDate11 isEqual:strResStartDate])
         {
-        if([strDate123Year isEqual:strResStartDateYear])
-        {
-            [arrTotalEventThisMonth addObject:strResStartDate];
-        }
+            if([strDate123Year isEqual:strResStartDateYear])
+            {
+                [arrTotalEventThisMonth addObject:strResStartDate];
+            }
         }
     }
     long totalEvent=[arrTotalEventThisMonth count];
@@ -408,7 +405,7 @@
             {
                 strDate1Year = [arrResDate objectAtIndex:0];
             }
-
+            
             
             if([strDate123 isEqual:strDate1])
             {
@@ -437,7 +434,7 @@
             {
                 strDate1Year = [arrResDate objectAtIndex:0];
             }
-
+            
             
             if([strDate123 isEqual:strDate1])
             {
@@ -466,7 +463,7 @@
             {
                 strDate1Year = [arrResDate objectAtIndex:0];
             }
-
+            
             
             if([strDate123 isEqual:strDate1])
             {
@@ -581,7 +578,7 @@
         [_lblYear setText:[NSString stringWithFormat:@"%@",strYear]];
         [self.calendar setCurrentPage:nextMonth animated:YES];
     }
-
+    
     
     [self setTotalEventCount];
 }
@@ -610,7 +607,7 @@
         [_lblYear setText:[NSString stringWithFormat:@"%@",strYear]];
         [self.calendar setCurrentPage:previousMonth animated:YES];
     }
-
+    
     
     [self setTotalEventCount];
 }
@@ -639,8 +636,6 @@
         [_lblYear setText:[NSString stringWithFormat:@"%@",strYear]];
         [self.calendar setCurrentPage:nextMonth animated:YES];
     }
-
-    
     [self setTotalEventCount];
 }
 

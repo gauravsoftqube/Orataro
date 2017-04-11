@@ -174,7 +174,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static HolidayVcCell *cell = nil;
+    //static HolidayVcCell *cell = nil;
     NSString *yourText = [[arrHolidayList objectAtIndex:indexPath.row]objectForKey:@"HolidayTitle"];
     
     CGSize size = [yourText sizeWithFont:[UIFont fontWithName:@"HelveticaNeueLTStd-Roman" size:12] constrainedToSize:CGSizeMake([[UIScreen mainScreen]bounds].size.width-162, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
