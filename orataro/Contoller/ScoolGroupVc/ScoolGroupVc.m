@@ -324,6 +324,8 @@
 
 - (IBAction)btnSaveClicked:(id)sender
 {
+    UIButton *btn = (UIButton *)sender;
+    
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tblScoolGroupList];
     NSIndexPath *indexPath = [self.tblScoolGroupList indexPathForRowAtPoint:buttonPosition];
     
@@ -335,7 +337,10 @@
     }
     else
     {
-        [self apiCallFor_DeleteGroupList:[[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"GropuID"] row:[[NSString stringWithFormat:@"%ld",(long)indexPath.row] intValue]];
+        
+        NSLog(@"Fetch=%@",[[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"GropuID"]);
+        
+        [self apiCallFor_DeleteGroupList:[[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"GropuID"] row:[[NSString stringWithFormat:@"%ld",btn.tag] intValue]];
     }
 }
 

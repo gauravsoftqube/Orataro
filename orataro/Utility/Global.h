@@ -78,6 +78,9 @@
 
 
 #define SUBJECT @"Please Enter Subject"
+#define STUDENTGROUP @"Please Enter Group Member of Student"
+#define TEACHERGROUP @"Please Enter Group Member of Teacher"
+
 
 #pragma mark - IMPORT UIViewController
 
@@ -296,6 +299,10 @@
 #define apk_Group_List_action @"Group_List"
 #define apk_Remove_Group_action @"Remove_Group"
 #define apk_SaveUpdate_Group @"SaveUpdate_Group"
+#define apk_GetStudentsListNameAndMemberID @"GetStudentsListNameAndMemberID"
+#define apk_GetTeacherListNameAndMemberID @"GetTeacherListNameAndMemberID"
+#define apk_StuGroup @"StuGroup"
+#define apk_Remove_GroupMembers @"Remove_GroupMembers"
 
 #pragma mark - Todos
 
@@ -316,7 +323,6 @@
 #define apk_GetPollsListForAddPage_action  @"GetPollsListForAddPage"
 #define apk_GetPollsListForParticipantPage_action  @"GetPollsListForParticipantPage"
 #define apk_SavePollOptionVote_action  @"SavePollOptionVote"
-
 
 
 
