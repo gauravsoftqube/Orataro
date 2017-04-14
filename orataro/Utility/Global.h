@@ -74,6 +74,8 @@
 #define CIRCULAR_TYPE "Please Enter CircularType"
 #define CIRCULAR_STANDARD "Please Enter At least one Standard and Division"
 
+#define Select_Option @"Please select more than one option."
+
 
 #define SUBJECT @"Please Enter Subject"
 
@@ -154,6 +156,9 @@
 #import "CreateScoolGroupVc.h"
 
 #import "CreateScoolGroupVc.h"
+
+#import "CMPopTipView.h"
+
 
 #pragma mark - YOUTube Video Key
 
@@ -304,6 +309,13 @@
 #define apk_notifications  @"apk_notifications.asmx"
 #define apk_NotificationGetList_action  @"NotificationGetList"
 #define apk_SetViewFlageOnNotification_action  @"SetViewFlageOnNotification"
+
+#pragma mark - apk_poll
+
+#define apk_poll  @"apk_poll.asmx"
+#define apk_GetPollsListForAddPage_action  @"GetPollsListForAddPage"
+#define apk_GetPollsListForParticipantPage_action  @"GetPollsListForParticipantPage"
+#define apk_SavePollOptionVote_action  @"SavePollOptionVote"
 
 
 

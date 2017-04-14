@@ -16,6 +16,7 @@
 		0739EC521E713AE20099658F /* ForgotNewPwdVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 0739EC511E713AE20099658F /* ForgotNewPwdVc.m */; };
 		073E55CA1E6FDAE3008BF93B /* ProgressHUB.m in Sources */ = {isa = PBXBuildFile; fileRef = 073E55C91E6FDAE3008BF93B /* ProgressHUB.m */; };
 		073E55CD1E703D04008BF93B /* OrataroLoacal_DB.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 073E55CC1E703D04008BF93B /* OrataroLoacal_DB.sqlite */; };
+		074E426B1E9DF98200AE162C /* CMPopTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 074E426A1E9DF98200AE162C /* CMPopTipView.m */; };
 		07801FC91E7FE2F400E34D36 /* UITextView+Placeholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 07801FC81E7FE2F400E34D36 /* UITextView+Placeholder.m */; };
 		0932277B1E38750D00138A2B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0932277A1E38750D00138A2B /* main.m */; };
 		0932277E1E38750D00138A2B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0932277D1E38750D00138A2B /* AppDelegate.m */; };
@@ -242,6 +243,8 @@
 		073E55C81E6FDAE3008BF93B /* ProgressHUB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressHUB.h; sourceTree = "<group>"; };
 		073E55C91E6FDAE3008BF93B /* ProgressHUB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressHUB.m; sourceTree = "<group>"; };
 		073E55CC1E703D04008BF93B /* OrataroLoacal_DB.sqlite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OrataroLoacal_DB.sqlite; sourceTree = "<group>"; };
+		074E42691E9DF98200AE162C /* CMPopTipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMPopTipView.h; sourceTree = "<group>"; };
+		074E426A1E9DF98200AE162C /* CMPopTipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMPopTipView.m; sourceTree = "<group>"; };
 		07801FC71E7FE2F400E34D36 /* UITextView+Placeholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+Placeholder.h"; sourceTree = "<group>"; };
 		07801FC81E7FE2F400E34D36 /* UITextView+Placeholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+Placeholder.m"; sourceTree = "<group>"; };
 		093227761E38750D00138A2B /* orataro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = orataro.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -690,6 +693,15 @@
 			path = LocalDataBase_SQL;
 			sourceTree = "<group>";
 		};
+		074E42681E9DF92B00AE162C /* CMPopTipView */ = {
+			isa = PBXGroup;
+			children = (
+				074E42691E9DF98200AE162C /* CMPopTipView.h */,
+				074E426A1E9DF98200AE162C /* CMPopTipView.m */,
+			);
+			path = CMPopTipView;
+			sourceTree = "<group>";
+		};
 		07801FC61E7FE2BC00E34D36 /* TextView_PlaceHolder */ = {
 			isa = PBXGroup;
 			children = (
@@ -792,6 +804,7 @@
 				C38ABFB91E48B72900689426 /* AddNoteVc */,
 				C365CCAD1E49A77A00A4ABAA /* HolidayVc */,
 				C360CD1C1E4AEF2A00761ABE /* PollVc */,
+				C365CCC31E49E67B00A4ABAA /* AddPollVc */,
 				C360CD201E4AF63900761ABE /* NotificationVc */,
 				C36724741E546CBB007E9326 /* MyProfileVc */,
 				C381726C1E518722004AB189 /* FAQVc */,
@@ -801,7 +814,6 @@
 				C3741FDD1E4CAE2F00BFFA23 /* HelpDeskVc */,
 				C360CD241E4B15F400761ABE /* OrataroVc */,
 				C365CCC71E4A0CD500A4ABAA /* ResultVc */,
-				C365CCC31E49E67B00A4ABAA /* AddPollVc */,
 				C365CCBF1E49E47100A4ABAA /* CalenderVc */,
 				C3645AFC1E5C7E0F0012F4CF /* CreateReminderVc */,
 				C38ABFB11E48A73C00689426 /* SchoolTimeVc */,
@@ -845,6 +857,7 @@
 		0949E9401E3B783600723301 /* thirdparty */ = {
 			isa = PBXGroup;
 			children = (
+				074E42681E9DF92B00AE162C /* CMPopTipView */,
 				C37FEE9C1E93A2A900CE32F5 /* PulltoRefreshCollectionView */,
 				0718DC881E8924050099EC26 /* YTPlayerView */,
 				C35120E51E827C3C00D7461B /* ImageCompress */,
@@ -2266,6 +2279,7 @@
 				09F428C81E38BC0B00A80F0D /* UIAlertView+AFNetworking.m in Sources */,
 				C3A2D7271E64211900B91B54 /* UIImage+ColorAtPixel.m in Sources */,
 				C38ABFB81E48B31200689426 /* TimeTableVc.m in Sources */,
+				074E426B1E9DF98200AE162C /* CMPopTipView.m in Sources */,
 				09F428BE1E38BC0B00A80F0D /* AFNetworkReachabilityManager.m in Sources */,
 				C3666CBB1E726B4E0083AA34 /* MKAnnotationView+WebCache.m in Sources */,
 				C36DD1C61E409C120011221E /* ListSelectionVc.m in Sources */,

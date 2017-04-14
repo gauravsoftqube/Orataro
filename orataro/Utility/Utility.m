@@ -610,6 +610,45 @@
     return newDate;
 }
 
+#pragma mark - UITableViewCell Popup
+
++ (void)dismissAllPopTipViews : (NSMutableArray *)arr
+{
+    while ([arr count] > 0) {
+        CMPopTipView *popTipView = [arr objectAtIndex:0];
+        [popTipView dismissAnimated:YES];
+        [arr removeObjectAtIndex:0];
+    }
+}
+
++(UIView*)addCell_PopupView:(UIView *)viewCustome ParentView:(UIView*)ParentView sender:(id)sender
+{
+    CMPopTipView *popTipView;
+    if (viewCustome)
+    {
+        popTipView = [[CMPopTipView alloc] initWithCustomView:viewCustome];
+    }
+    popTipView.backgroundColor = [UIColor colorWithRed:34/255.0f green:49/255.0f blue:89/255.0f alpha:1.0f];
+    popTipView.borderColor=[UIColor colorWithRed:34/255.0f green:49/255.0f blue:89/255.0f alpha:1.0f];
+    popTipView.borderWidth=1.0f;
+    popTipView.cornerRadius=0;
+    popTipView.has3DStyle=NO;
+    popTipView.dismissTapAnywhere = YES;
+    //popTipView.dismissAlongWithUserInteraction=YES;
+    
+    if ([sender isKindOfClass:[UIButton class]])
+    {
+        UIButton *button = (UIButton *)sender;
+        [popTipView presentPointingAtView:button inView:ParentView animated:YES];
+    }
+    else
+    {
+        UIBarButtonItem *barButtonItem = (UIBarButtonItem *)sender;
+        [popTipView presentPointingAtBarButtonItem:barButtonItem animated:YES];
+    }
+    return popTipView;
+}
+
 #pragma mark - Api Function
 
 +(void)PostApiCall:(NSString *)apiUrl params:(NSMutableDictionary *)param block:(void (^)(NSMutableDictionary *,NSError *))block{

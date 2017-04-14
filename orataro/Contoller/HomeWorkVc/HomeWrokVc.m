@@ -18,7 +18,7 @@
 {
     AppDelegate *ah ;
     int c2;
-    
+    NSString *strFlagShowTab;
     NSMutableArray *arrHomeworkList;
 }
 @end
@@ -28,18 +28,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     ah = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    
     aView1.layer.cornerRadius = 30.0;
-    
     aCalenderView.layer.cornerRadius = 50.0;
     aCalenderView.layer.borderWidth = 2.0;
     aCalenderView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     
+    strFlagShowTab=@"AddPage";
     [self commonData];
-    
-    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
@@ -263,9 +259,11 @@
     static NSString *HeaderCellIdentifier = @"cellSection";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:HeaderCellIdentifier];
-    if (cell == nil) {
+    if (cell == nil)
+    {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:HeaderCellIdentifier];
     }
+    
     UIView *viewRound=(UIView *)[cell.contentView viewWithTag:1];
     [viewRound.layer setCornerRadius:50];
     viewRound.clipsToBounds=YES;
@@ -290,9 +288,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSInteger rows = [[[arrHomeworkList objectAtIndex:section] objectForKey:@"items"] count];
-    
     return rows;
-    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

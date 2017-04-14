@@ -83,6 +83,12 @@
 
 +(NSString *)convertDateFtrToDtaeFtr:(NSString *)dateFormate newDateFtr:(NSString *)newDateFtr date:(NSString *)strDate;
 
+#pragma mark - UITableViewCell Popup
+
++(UIView*)addCell_PopupView:(UIView *)viewCustome ParentView:(UIView*)ParentView sender:(id)sender;
++ (void)dismissAllPopTipViews : (NSMutableArray *)arr;
+
+
 #pragma mark - Api Function
 
 +(void)PostApiCall:(NSString *)apiUrl params:(NSMutableDictionary *)param block:(void (^)(NSMutableDictionary *,NSError *))block;
