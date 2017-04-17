@@ -20,6 +20,9 @@
     int c2;
     NSString *strFlagShowTab;
     NSMutableArray *arrHomeworkList;
+    
+    NSMutableArray *arrPopup;
+    NSString *strdelete_selecteid;
 }
 @end
 
@@ -29,12 +32,24 @@
 {
     [super viewDidLoad];
     ah = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    aView1.layer.cornerRadius = 30.0;
+    aView1.layer.cornerRadius = 20;
     aCalenderView.layer.cornerRadius = 50.0;
     aCalenderView.layer.borderWidth = 2.0;
     aCalenderView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     
     strFlagShowTab=@"AddPage";
+    
+    //set Header Title
+    NSArray *arr=[[[Utility getCurrentUserDetail]objectForKey:@"FullName"] componentsSeparatedByString:@" "];
+    if (arr.count != 0) {
+        self.lblHeaderTitle.text=[NSString stringWithFormat:@"Homework (%@)",[arr objectAtIndex:0]];
+    }
+    else
+    {
+        self.lblHeaderTitle.text=[NSString stringWithFormat:@"Homework"];
+    }
+
+    //
     [self commonData];
 }
 
@@ -48,6 +63,13 @@
     self.HomeworkTableView.separatorStyle=UITableViewCellSeparatorStyleNone;
     
     arrHomeworkList=[[NSMutableArray alloc]init];
+    
+    //
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refreshData) forControlEvents:UIControlEventValueChanged];
+    UITableViewController *tableViewController = [[UITableViewController alloc] init];
+    tableViewController.tableView = self.HomeworkTableView;
+    tableViewController.refreshControl = refreshControl;
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -61,13 +83,23 @@
         [self.aView1 setHidden:NO];
     }
     
-    NSArray *ary = [DBOperation selectData:@"select * from HomeWorkList"];
-    arrHomeworkList = [Utility getLocalDetail:ary columnKey:@"dicHomeWorkList"];
-    [self.HomeworkTableView reloadData];
     
-    if (arrHomeworkList.count == 0)
+    [self apiCallMethod];
+}
+
+-(void)refreshData
+{
+    [self apiCallMethod];
+}
+
+-(void)apiCallMethod
+{
+    if ([Utility isInterNetConnectionIsActive] == false)
     {
-        if ([Utility isInterNetConnectionIsActive] == false)
+        NSMutableArray *arrLoacalDb = [DBOperation selectData:@"select * from HomeWorkList"];
+        NSMutableArray *arrListTemp = [Utility getLocalDetail:arrLoacalDb columnKey:@"dicHomeWorkList"];
+        
+        if(arrListTemp.count == 0)
         {
             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [alrt show];
@@ -75,25 +107,24 @@
         }
         else
         {
-            [self apiCallFor_getHomework:YES];
-            
+             [self ManageHomeworkList:arrListTemp];
         }
     }
     else
     {
-        arrHomeworkList = [Utility getLocalDetail:ary columnKey:@"dicHomeWorkList"];
-        [self.HomeworkTableView reloadData];
+        NSMutableArray *arrLoacalDb = [DBOperation selectData:@"select * from HomeWorkList"];
+        NSMutableArray *arrListTemp = [Utility getLocalDetail:arrLoacalDb columnKey:@"dicHomeWorkList"];
+        [self ManageHomeworkList:arrListTemp];
         
-        if ([Utility isInterNetConnectionIsActive] == false)
+        if(arrListTemp.count == 0)
         {
-            
+            [self apiCallFor_getHomework:YES];
         }
         else
         {
             [self apiCallFor_getHomework:NO];
         }
     }
-
 }
 
 #pragma mark - ApiCall
@@ -152,6 +183,13 @@
                  }
                  else
                  {
+                     [DBOperation executeSQL:@"delete from HomeWorkList"];
+                     for (NSMutableDictionary *dic in arrResponce)
+                     {
+                         NSString *getjsonstr = [Utility Convertjsontostring:dic];
+                         [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO HomeWorkList (dicHomeWorkList) VALUES ('%@')",getjsonstr]];
+                     }
+                     
                      [self ManageHomeworkList:arrResponce];
                  }
              }
@@ -225,27 +263,89 @@
         items = [[NSMutableArray alloc] initWithArray:[temp sortedArrayUsingDescriptors:sortDescriptors]];
         
         
-        NSSortDescriptor * brandDescriptor = [[NSSortDescriptor alloc] initWithKey:@"DateOfHomeWork" ascending:YES];
+        NSSortDescriptor * brandDescriptor = [[NSSortDescriptor alloc] initWithKey:@"DateOfHomeWork" ascending:NO];
         NSArray * sortedArray3 = [items sortedArrayUsingDescriptors:@[brandDescriptor]];
         
         
         [entry setObject:sortedArray3 forKey:@"items"];
         [arrHomeworkList addObject:entry];
     }
-    [DBOperation executeSQL:@"delete from HomeWorkList"];
+    arrHomeworkList = [[[arrHomeworkList reverseObjectEnumerator]allObjects]mutableCopy];
     
-    for (NSMutableDictionary *dic in arrHomeworkList)
-    {
-        NSString *getjsonstr = [Utility Convertjsontostring:dic];
-        [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO HomeWorkList (dicHomeWorkList) VALUES ('%@')",getjsonstr]];
-        
-    }
-    
-    NSArray *ary = [DBOperation selectData:@"select * from HomeWorkList"];
-    arrHomeworkList = [Utility getLocalDetail:ary columnKey:@"dicHomeWorkList"];
+   // NSArray *ary = [DBOperation selectData:@"select * from HomeWorkList"];
+   // arrHomeworkList = [Utility getLocalDetail:ary columnKey:@"dicHomeWorkList"];
     
     [_HomeworkTableView reloadData];
 }
+
+-(void)apiCallFor_Delete : (BOOL)checkProgress  deleteId:(NSString *)deleteID
+{
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_notes,apk_AssociationDelete_action];
+    
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",deleteID] forKey:@"PrimaryID"];
+    
+    [param setValue:[NSString stringWithFormat:@"HomeWork"] forKey:@"AssociationType"];
+    
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
+
+    
+    if (checkProgress == YES)
+    {
+        [ProgressHUB showHUDAddedTo:self.view];
+    }
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+          [_HomeworkTableView.refreshControl endRefreshing];
+         [ProgressHUB hideenHUDAddedTo:self.view];
+         if(!error)
+         {
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableArray *arrResponce = [[NSJSONSerialization JSONObjectWithData:data options:0 error:nil]mutableCopy];
+             
+             if([arrResponce count] != 0)
+             {
+                 NSMutableDictionary *dicResponce=[arrResponce objectAtIndex:0];
+                 NSString *strStatus=[[dicResponce objectForKey:@"message"]mutableCopy];
+                 if([strStatus isEqualToString:@"No Data Found"])
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dicResponce objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                 }
+                 else
+                 {
+//                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dicResponce objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//                     [alrt show];
+                 }
+                 
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
+}
+
 
 #pragma mark - UITableView
 
@@ -311,10 +411,21 @@
     
     NSDictionary *d = [[[arrHomeworkList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
     NSString *getdt = [d objectForKey:@"DateOfHomeWork"];
+    NSString *IsRead = [d objectForKey:@"IsRead"];
     
     UILabel *lbHeaderDt = (UILabel *)[cell.contentView viewWithTag:3];
     NSString *getfrmt = [Utility convertDateFtrToDtaeFtr:@"MM/dd/yyyy" newDateFtr:@"dd EEE" date:getdt];
     lbHeaderDt.text = getfrmt;
+    
+    UIImageView *img = (UIImageView *)[cell.contentView viewWithTag:31];
+    if([IsRead integerValue] == 1)
+    {
+        [img setImage:[UIImage imageNamed:@"double_tick_sky_blue"]];
+    }
+    else
+    {
+        [img setImage:[UIImage imageNamed:@"tick_sky_blue"]];
+    }
     
     NSString *SubjectName = [d objectForKey:@"SubjectName"];
     NSString *DateOfFinish = [d objectForKey:@"DateOfFinish"];
@@ -358,8 +469,56 @@
 
 #pragma mark - tbl UIButton Actio
 
-- (IBAction)btntblDeleteHomework:(id)sender {
+- (IBAction)btntblDeleteHomework:(id)sender
+{
+    arrPopup = [[NSMutableArray alloc]init];
+    [arrPopup addObject:[Utility addCell_PopupView:self.viewAddPage ParentView:self.view sender:sender]];
     
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.HomeworkTableView];
+    NSIndexPath *indexPath = [self.HomeworkTableView indexPathForRowAtPoint:buttonPosition];
+    NSMutableDictionary *dicAddpage = [[[arrHomeworkList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
+    strdelete_selecteid=[dicAddpage objectForKey:@"AssignmentID"];
+
+}
+
+#pragma mark - CMPopTipViewDelegate methods
+
+- (void)popTipViewWasDismissedByUser:(CMPopTipView *)popTipView
+{
+    [arrPopup removeObject:popTipView];
+}
+
+- (IBAction)btnDelete_popup:(id)sender
+{
+    [Utility dismissAllPopTipViews:arrPopup];
+    
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    NSArray *ary = [DBOperation selectData:@"select * from HomeWorkList"];
+    NSMutableArray *arrTemp = [Utility getLocalDetail:ary columnKey:@"dicHomeWorkList"];
+    for (int i=0;i<[arrTemp count]; i++) {
+        NSMutableDictionary *dic=[arrTemp objectAtIndex:i];
+        NSString *str=[[dic objectForKey:@"AssignmentID"]mutableCopy];
+        if([str isEqualToString:strdelete_selecteid])
+        {
+            NSMutableDictionary *dicLocalDB=[[ary objectAtIndex:i]mutableCopy];
+            NSString *strid=[dicLocalDB objectForKey:@"id"];
+            [DBOperation executeSQL:[NSString stringWithFormat:@"delete from HomeWorkList where id = '%@'",strid]];
+            [arrTemp removeObject:dic];
+        }
+    }
+    
+    [self ManageHomeworkList:arrTemp];
+    
+    if([strdelete_selecteid length] != 0)
+    {
+        [self apiCallFor_Delete:NO deleteId:strdelete_selecteid];
+    }
 }
 
 #pragma mark - button action

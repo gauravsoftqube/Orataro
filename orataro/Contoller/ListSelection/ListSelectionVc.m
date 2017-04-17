@@ -96,8 +96,6 @@
         [NavigationTitle setText:@"List Selection (name)"];
     }
     
-    
-    
     if ([Utility isInterNetConnectionIsActive] == false)
     {
         arrList = [[NSMutableArray alloc]init];

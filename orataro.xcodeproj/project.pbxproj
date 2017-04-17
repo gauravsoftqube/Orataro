@@ -17,6 +17,9 @@
 		073E55CA1E6FDAE3008BF93B /* ProgressHUB.m in Sources */ = {isa = PBXBuildFile; fileRef = 073E55C91E6FDAE3008BF93B /* ProgressHUB.m */; };
 		073E55CD1E703D04008BF93B /* OrataroLoacal_DB.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 073E55CC1E703D04008BF93B /* OrataroLoacal_DB.sqlite */; };
 		074E426B1E9DF98200AE162C /* CMPopTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 074E426A1E9DF98200AE162C /* CMPopTipView.m */; };
+		0757D4DB1EA0D4FC00474F98 /* ResultAddPageVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 0757D4DA1EA0D4FC00474F98 /* ResultAddPageVc.m */; };
+		0757D4DF1EA0E48D00474F98 /* FBProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0757D4DE1EA0E48D00474F98 /* FBProgressView.m */; };
+		0757D4E31EA0E67400474F98 /* ResultAddPageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0757D4E21EA0E67400474F98 /* ResultAddPageCell.m */; };
 		07801FC91E7FE2F400E34D36 /* UITextView+Placeholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 07801FC81E7FE2F400E34D36 /* UITextView+Placeholder.m */; };
 		0932277B1E38750D00138A2B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0932277A1E38750D00138A2B /* main.m */; };
 		0932277E1E38750D00138A2B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0932277D1E38750D00138A2B /* AppDelegate.m */; };
@@ -245,6 +248,12 @@
 		073E55CC1E703D04008BF93B /* OrataroLoacal_DB.sqlite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OrataroLoacal_DB.sqlite; sourceTree = "<group>"; };
 		074E42691E9DF98200AE162C /* CMPopTipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMPopTipView.h; sourceTree = "<group>"; };
 		074E426A1E9DF98200AE162C /* CMPopTipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMPopTipView.m; sourceTree = "<group>"; };
+		0757D4D91EA0D4FC00474F98 /* ResultAddPageVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultAddPageVc.h; sourceTree = "<group>"; };
+		0757D4DA1EA0D4FC00474F98 /* ResultAddPageVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultAddPageVc.m; sourceTree = "<group>"; };
+		0757D4DD1EA0E48D00474F98 /* FBProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBProgressView.h; sourceTree = "<group>"; };
+		0757D4DE1EA0E48D00474F98 /* FBProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBProgressView.m; sourceTree = "<group>"; };
+		0757D4E11EA0E67400474F98 /* ResultAddPageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultAddPageCell.h; sourceTree = "<group>"; };
+		0757D4E21EA0E67400474F98 /* ResultAddPageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultAddPageCell.m; sourceTree = "<group>"; };
 		07801FC71E7FE2F400E34D36 /* UITextView+Placeholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+Placeholder.h"; sourceTree = "<group>"; };
 		07801FC81E7FE2F400E34D36 /* UITextView+Placeholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+Placeholder.m"; sourceTree = "<group>"; };
 		093227761E38750D00138A2B /* orataro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = orataro.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -702,6 +711,34 @@
 			path = CMPopTipView;
 			sourceTree = "<group>";
 		};
+		0757D4D81EA0D48300474F98 /* ResultVc */ = {
+			isa = PBXGroup;
+			children = (
+				0757D4E01EA0E61E00474F98 /* ResultCell */,
+				0757D4D91EA0D4FC00474F98 /* ResultAddPageVc.h */,
+				0757D4DA1EA0D4FC00474F98 /* ResultAddPageVc.m */,
+			);
+			path = ResultVc;
+			sourceTree = "<group>";
+		};
+		0757D4DC1EA0E45C00474F98 /* FBProgressView */ = {
+			isa = PBXGroup;
+			children = (
+				0757D4DD1EA0E48D00474F98 /* FBProgressView.h */,
+				0757D4DE1EA0E48D00474F98 /* FBProgressView.m */,
+			);
+			path = FBProgressView;
+			sourceTree = "<group>";
+		};
+		0757D4E01EA0E61E00474F98 /* ResultCell */ = {
+			isa = PBXGroup;
+			children = (
+				0757D4E11EA0E67400474F98 /* ResultAddPageCell.h */,
+				0757D4E21EA0E67400474F98 /* ResultAddPageCell.m */,
+			);
+			path = ResultCell;
+			sourceTree = "<group>";
+		};
 		07801FC61E7FE2BC00E34D36 /* TextView_PlaceHolder */ = {
 			isa = PBXGroup;
 			children = (
@@ -857,6 +894,7 @@
 		0949E9401E3B783600723301 /* thirdparty */ = {
 			isa = PBXGroup;
 			children = (
+				0757D4DC1EA0E45C00474F98 /* FBProgressView */,
 				074E42681E9DF92B00AE162C /* CMPopTipView */,
 				C37FEE9C1E93A2A900CE32F5 /* PulltoRefreshCollectionView */,
 				0718DC881E8924050099EC26 /* YTPlayerView */,
@@ -1067,6 +1105,7 @@
 			children = (
 				C360CD1D1E4AEF6200761ABE /* PollVc.h */,
 				C360CD1E1E4AEF6200761ABE /* PollVc.m */,
+				0757D4D81EA0D48300474F98 /* ResultVc */,
 			);
 			path = PollVc;
 			sourceTree = "<group>";
@@ -2218,6 +2257,7 @@
 				C3645AE71E5BFE980012F4CF /* FSCalendarDelegationFactory.m in Sources */,
 				C367247B1E5480ED007E9326 /* GlobalVc.m in Sources */,
 				C35C07371E485346004C55EB /* ClassVcCell.m in Sources */,
+				0757D4DB1EA0D4FC00474F98 /* ResultAddPageVc.m in Sources */,
 				C36B587C1E5EE82B00DE7464 /* ORGContainerCell.m in Sources */,
 				C36B586A1E5EE75400DE7464 /* ProjectVc.m in Sources */,
 				C3666CBF1E726B4E0083AA34 /* SDImageCacheConfig.m in Sources */,
@@ -2229,6 +2269,7 @@
 				C3666CC81E726B4E0083AA34 /* UIImage+MultiFormat.m in Sources */,
 				C36724721E54374E007E9326 /* FAQCustomeCell.m in Sources */,
 				072A85AD1E67FADC00F54A30 /* DEMOHomeViewController.m in Sources */,
+				0757D4E31EA0E67400474F98 /* ResultAddPageCell.m in Sources */,
 				C36B585F1E5ED99C00DE7464 /* CreateScoolGroupVc.m in Sources */,
 				09F428CC1E38BC0B00A80F0D /* UIRefreshControl+AFNetworking.m in Sources */,
 				0932277E1E38750D00138A2B /* AppDelegate.m in Sources */,
@@ -2293,6 +2334,7 @@
 				C36BDAF51E66FFC900779C5B /* UIImage+REFrostedViewController.m in Sources */,
 				C3645AF31E5C05EA0012F4CF /* ClassworkVC.m in Sources */,
 				C36D394B1E558C42001A445E /* PageVc.m in Sources */,
+				0757D4DF1EA0E48D00474F98 /* FBProgressView.m in Sources */,
 				C369E6DC1E5AF2A40048D601 /* Reachability.m in Sources */,
 				C37FEE9F1E93A2BD00CE32F5 /* UIScrollView+BottomRefreshControl.m in Sources */,
 				C38F8C781E3F36A300A67FBE /* RightCell.m in Sources */,

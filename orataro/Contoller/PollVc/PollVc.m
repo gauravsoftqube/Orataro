@@ -33,6 +33,7 @@
     NSMutableDictionary *dicSelected_Participaint;
     
     NSString *isRefresh;
+    NSString *strdeletePollID;
 }
 @end
 
@@ -66,7 +67,21 @@
 -(void)commonData
 {
     strFlagShowList = @"AddPage";
+    //
+    if(![[Utility getMemberType] isEqualToString:@"Teacher"])
+    {
+        strFlagShowList=@"participantPage";
+        [self.viewStudentTop setHidden:NO];
+        [self.viewAdd setHidden:YES];
+        [self.btnadd setHidden:YES];
+        [self apiCallMethod_ParticipaintPage];
+    }
+    else
+    {
+        [self.viewStudentTop setHidden:YES];
+    }
     
+    //
     NSArray *arr=[[[Utility getCurrentUserDetail]objectForKey:@"FullName"] componentsSeparatedByString:@" "];
     if (arr.count != 0) {
         self.lblHeaderTitle.text=[NSString stringWithFormat:@"Poll (%@)",[arr objectAtIndex:0]];
@@ -76,6 +91,8 @@
         self.lblHeaderTitle.text=[NSString stringWithFormat:@"Poll"];
     }
     
+    //
+    arrVoteList_selected=[[NSMutableArray alloc]init];
     
     //vote
     [self.viewVote_Popup setHidden:YES];
@@ -85,7 +102,6 @@
     UITableViewController *tableViewController = [[UITableViewController alloc] init];
     tableViewController.tableView = self.tblPoll;
     tableViewController.refreshControl = refreshControl;
-
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -94,6 +110,7 @@
     {
         [self.viewAdd setHidden:NO];
         [self.btnadd setHidden:NO];
+        [self apiCallMethod_AddPage];
     }
     else
     {
@@ -102,7 +119,6 @@
     }
     
     
-    [self apiCallMethod_AddPage];
 }
 
 -(void)refreshData
@@ -116,7 +132,6 @@
     
     if([strFlagShowList isEqualToString:@"AddPage"])
     {
-        isRefresh = @"1";
         [self apiCallFor_GetPollsListForAddPage:NO];
     }
     else
@@ -255,14 +270,7 @@
                          [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO PollAddPage (dic_json) VALUES ('%@')",getjsonstr]];
                      }
                      [self manageAddPageList:arrResponce];
-                     if([isRefresh isEqualToString:@"1"])
-                     {
-                         isRefresh = @"0";
-                     }
-                     else
-                     {
-                         [self apiCallMethod_ParticipaintPage];
-                     }
+                     
                  }
              }
              else
@@ -603,6 +611,66 @@
      }];
 }
 
+-(void)apiCallFor_PollDelete : (BOOL)checkProgress  PollID:(NSString *)PollID
+{
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_poll,apk_PollDelete_action];
+    
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",PollID] forKey:@"PollID"];
+    
+    if (checkProgress == YES)
+    {
+        [ProgressHUB showHUDAddedTo:self.view];
+    }
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         [ProgressHUB hideenHUDAddedTo:self.view];
+         if(!error)
+         {
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableArray *arrResponce = [[NSJSONSerialization JSONObjectWithData:data options:0 error:nil]mutableCopy];
+             
+             if([arrResponce count] != 0)
+             {
+                 NSMutableDictionary *dicResponce=[arrResponce objectAtIndex:0];
+                 NSString *strStatus=[[dicResponce objectForKey:@"message"]mutableCopy];
+                 if([strStatus isEqualToString:@"No Data Found"])
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dicResponce objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                 }
+                 else if([strStatus isEqualToString:@"Record delete successfully"])
+                 {
+//                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dicResponce objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//                     [alrt show];
+                 }
+                 else
+                 {
+                 }
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
+}
+
 
 #pragma mark - UITableView
 
@@ -887,6 +955,11 @@
 {
     arrPopup = [[NSMutableArray alloc]init];
     [arrPopup addObject:[Utility addCell_PopupView:self.viewAddPage ParentView:self.view sender:sender]];
+    
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tblPoll];
+    NSIndexPath *indexPath = [self.tblPoll indexPathForRowAtPoint:buttonPosition];
+    NSMutableDictionary *dicAddpage = [[[arrFiled objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
+    strdeletePollID=[dicAddpage objectForKey:@"PollID"];
 }
 
 - (IBAction)btnCell_ParticipaintPage:(id)sender
@@ -910,7 +983,7 @@
     if([IsMultiChoice integerValue] == 1)
     {
         NSMutableDictionary *dic=[[arrVoteList objectAtIndex:indexPath.row]mutableCopy];
-        if([arrVoteList containsObject:dic])
+        if([arrVoteList_selected containsObject:dic])
         {
             [arrVoteList_selected removeObject:dic];
         }
@@ -976,6 +1049,16 @@
     [self.viewAdd setHidden:YES];
     [self.btnadd setHidden:YES];
     
+//    if([isRefresh isEqualToString:@"1"])
+//    {
+//        
+//    }
+//    else
+//    {
+//        isRefresh = @"1";
+        [self apiCallMethod_ParticipaintPage];
+//    }
+    
     arrFiled = [[NSMutableArray alloc]init];
     arrFiled = [arrParticipantPage mutableCopy];
     [self.tblPoll reloadData];
@@ -1010,12 +1093,50 @@
 - (IBAction)btnResult_AddPage_popup:(id)sender
 {
     [Utility dismissAllPopTipViews:arrPopup];
+    
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+
+    ResultAddPageVc *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"ResultAddPageVc"];
+    vc.strSelectPollID=strdeletePollID;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (IBAction)btnDelete_AddPage_popup:(id)sender
 {
     [Utility dismissAllPopTipViews:arrPopup];
     
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    NSArray *ary = [DBOperation selectData:@"select * from PollAddPage"];
+    NSMutableArray *arrAddPageTemp = [Utility getLocalDetail:ary columnKey:@"dic_json"];
+    for (int i=0;i<[arrAddPageTemp count]; i++) {
+        NSMutableDictionary *dic=[arrAddPageTemp objectAtIndex:i];
+        NSString *str=[[dic objectForKey:@"PollID"]mutableCopy];
+        if([str isEqualToString:strdeletePollID])
+        {
+            NSMutableDictionary *dicLocalDB=[[ary objectAtIndex:i]mutableCopy];
+            NSString *strid=[dicLocalDB objectForKey:@"id"];
+            [DBOperation executeSQL:[NSString stringWithFormat:@"delete from PollAddPage where id = '%@'",strid]];
+            [arrAddPageTemp removeObject:dic];
+        }
+    }
+    
+    [self manageAddPageList:arrAddPageTemp];
+    
+    if([strdeletePollID length] != 0)
+    {
+        [self apiCallFor_PollDelete:NO PollID:strdeletePollID];
+    }
 }
 
 #pragma mark - Vote UIButton Action

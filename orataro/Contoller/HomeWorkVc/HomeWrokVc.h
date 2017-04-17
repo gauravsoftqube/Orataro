@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface HomeWrokVc : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@property (weak, nonatomic) IBOutlet UILabel *lblHeaderTitle;
 
 - (IBAction)MenuBtnClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIView *aView1;
@@ -18,5 +19,8 @@
 - (IBAction)CellBtnClicked:(id)sender;
 - (IBAction)AddBtn1Clicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UITableView *HomeworkTableView;
+
+//popup AddPage
+@property (strong, nonatomic) IBOutlet UIView *viewAddPage;
 
 @end
