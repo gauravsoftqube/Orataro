@@ -291,13 +291,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "orataro/Contoller/ListSelection/ListSelectionVc.m"
-            timestampString = "513786468.298357"
+            filePath = "orataro/Contoller/ProfileHappyGramListdetailListVc/ProfileAddUpdateListDetailListVc/ProfileAddUpdateListDetailListVc.m"
+            timestampString = "514106527.304282"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "88"
-            endingLineNumber = "88"
-            landmarkName = "-viewWillAppear:"
+            startingLineNumber = "179"
+            endingLineNumber = "179"
+            landmarkName = "-btnAddCheckBox:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
