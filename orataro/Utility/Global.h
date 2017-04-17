@@ -162,6 +162,9 @@
 
 #import "CMPopTipView.h"
 
+#import "ProfileHappyGramListdetailListVc.h"
+#import "ProfileAddUpdateListDetailListVc.h"
+
 
 #pragma mark - YOUTube Video Key
 
@@ -325,6 +328,14 @@
 #define apk_SavePollOptionVote_action  @"SavePollOptionVote"
 
 
+#pragma mark - apk_HappyGramme
+
+#define apk_happygram @"apk_happygram.asmx"
+#define apk_StudentHappyGramSelectForListing_action @"StudentHappyGramSelectForListing"
+#define apk_GetStudentListForAddNewHappyGram_action @"GetStudentListForAddNewHappyGram"
+#define apk_StudentHappyGramSelectForListing @"StudentHappyGramSelectForListing"
+#define apk_AddHappyGramData @"AddHappyGramData"
+#define apk_UpdateSingleStudentHappyGram @"UpdateSingleStudentHappyGram"
 
 #endif /* Global_h */
 

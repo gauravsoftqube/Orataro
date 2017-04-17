@@ -95,9 +95,6 @@
         aMenuBtn.hidden = YES;
         [NavigationTitle setText:@"List Selection (name)"];
     }
-    
-    
-    
     if ([Utility isInterNetConnectionIsActive] == false)
     {
         arrList = [[NSMutableArray alloc]init];
@@ -107,6 +104,7 @@
     else
     {
         arrList=[DBOperation selectData:[NSString stringWithFormat:@"select * from SelectionList"]];
+        
         if(arrList.count == 0)
         {
             [self apiCallFor_getList:@"1"];
@@ -172,7 +170,9 @@
                      arrList = [[NSMutableArray alloc]init];
                      arrList = [arrResponce mutableCopy];
                      [DBOperation executeSQL:[NSString stringWithFormat:@"DELETE FROM SelectionList"]];
-                     for (NSMutableDictionary *dic in arrList) {
+                     
+                     for (NSMutableDictionary *dic in arrList)
+                     {
                          NSString *Division=[dic objectForKey:@"Division"];
                          NSString *DivisionID=[dic objectForKey:@"DivisionID"];
                          NSString *Grade=[dic objectForKey:@"Grade"];
@@ -262,6 +262,8 @@
     if (ad.checkListelection == 3)
     {
         ProfileHappyGramListdetailListVc  *vc1 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfileHappyGramListdetailListVc"];
+        vc1.dicHappyGrameList = [arrList objectAtIndex:indexPath.row];
+        
         [self.navigationController pushViewController:vc1 animated:YES];
     }
     if (ad.checkListelection == 4)
