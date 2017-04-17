@@ -11,6 +11,7 @@
 @interface PollVc : UIViewController<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong)	id				currentPopTipViewTarget;
+@property (weak, nonatomic) IBOutlet UIView *viewStudentTop;
 
 - (IBAction)aFirstBtnClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIImageView *aFirstImage;

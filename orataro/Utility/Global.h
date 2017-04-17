@@ -161,6 +161,11 @@
 #import "CreateScoolGroupVc.h"
 
 #import "CMPopTipView.h"
+#import "ResultAddPageVc.h"
+
+#import "FBProgressView.h"
+#import "ResultAddPageCell.h"
+
 
 #import "ProfileHappyGramListdetailListVc.h"
 #import "ProfileAddUpdateListDetailListVc.h"
@@ -326,7 +331,16 @@
 #define apk_GetPollsListForAddPage_action  @"GetPollsListForAddPage"
 #define apk_GetPollsListForParticipantPage_action  @"GetPollsListForParticipantPage"
 #define apk_SavePollOptionVote_action  @"SavePollOptionVote"
+#define apk_SaveUpdatePolls_action  @"SaveUpdatePolls"
+#define apk_GetPollForEdit_action  @"GetPollForEdit"
+#define apk_PollDelete_action  @"PollDelete"
+#define apk_GetPollResult_action  @"GetPollResult"
+#define apk_ShareResult_action  @"ShareResult"
 
+
+#pragma mark - apk_notes  - AssociationDelete
+
+#define apk_AssociationDelete_action  @"AssociationDelete"
 
 #pragma mark - apk_HappyGramme
 

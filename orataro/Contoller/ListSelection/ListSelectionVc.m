@@ -62,8 +62,6 @@
     //pt communication 1
     
     //happy gram 3
-    
-    
     if (ad.checkListelection == 0)
     {
         [HomeBtn setBackgroundImage:[UIImage imageNamed:@"dash_home"] forState:UIControlStateNormal];
@@ -95,6 +93,7 @@
         aMenuBtn.hidden = YES;
         [NavigationTitle setText:@"List Selection (name)"];
     }
+
     if ([Utility isInterNetConnectionIsActive] == false)
     {
         arrList = [[NSMutableArray alloc]init];

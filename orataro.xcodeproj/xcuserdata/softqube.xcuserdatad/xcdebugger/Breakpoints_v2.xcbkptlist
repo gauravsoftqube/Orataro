@@ -147,13 +147,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "orataro/Contoller/AddPollVc/AddPollVc.m"
-            timestampString = "513786318.723952"
+            filePath = "orataro/Contoller/PollVc/PollVc.m"
+            timestampString = "513870780.021123"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "139"
-            endingLineNumber = "139"
-            landmarkName = "-textFieldDidEndEditing:"
+            startingLineNumber = "916"
+            endingLineNumber = "916"
+            landmarkName = "-tableView:didSelectRowAtIndexPath:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "orataro/Contoller/HomeWorkVc/HomeWrokVc.m"
+            timestampString = "514106656.975219"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "502"
+            endingLineNumber = "502"
+            landmarkName = "-btnDelete_popup:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
