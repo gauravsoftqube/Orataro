@@ -58,6 +58,16 @@ int cn =0;
     [Utility setLeftViewInTextField:aTextField2 imageName:@"" leftSpace:0 topSpace:0 size:5];
     [Utility setLeftViewInTextField:aTextfield3 imageName:@"" leftSpace:0 topSpace:0 size:5];
     
+    //set Header Title
+    NSArray *arr=[[[Utility getCurrentUserDetail]objectForKey:@"FullName"] componentsSeparatedByString:@" "];
+    if (arr.count != 0) {
+        self.lblHeaderTitle.text=[NSString stringWithFormat:@"Attendance (%@)",[arr objectAtIndex:0]];
+    }
+    else
+    {
+        self.lblHeaderTitle.text=[NSString stringWithFormat:@"Attendance"];
+    }
+    
     CGRect frame = CGRectMake(0, 0, 200, 200);
     datePicker = [[UIDatePicker alloc] initWithFrame:frame];
     datePicker = [[UIDatePicker alloc] init];

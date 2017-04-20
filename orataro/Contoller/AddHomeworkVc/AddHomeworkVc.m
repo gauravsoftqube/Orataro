@@ -85,7 +85,7 @@
     NSString *strCurrentDate=[df stringFromDate:Date];
     
     [param setValue:[NSString stringWithFormat:@"%@",strCurrentDate] forKey:@"DateOfHomeWork"];
-    [param setValue:[NSString stringWithFormat:@"%@",[Utility convertDateFtrToDtaeFtr:@"dd-MM-yy" newDateFtr:@"MM-dd-yyyy" date:self.txtEndDate.text]] forKey:@"DateOfFinish"];
+    [param setValue:[NSString stringWithFormat:@"%@",[Utility convertDateFtrToDtaeFtr:@"dd-MM-yyyy" newDateFtr:@"MM-dd-yyyy" date:self.txtEndDate.text]] forKey:@"DateOfFinish"];
     [param setValue:[NSString stringWithFormat:@"%@",self.txtViewDescription.text] forKey:@"HomeWorksDetails"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
@@ -94,14 +94,16 @@
     
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"BatchID"]] forKey:@"BeachID"];
     
+    [param setValue:[NSString stringWithFormat:@"%@.png",[Utility randomImageGenerator]] forKey:@"FileName"];
+    [param setValue:[NSString stringWithFormat:@"IMAGE"] forKey:@"FileType"];
+    [param setValue:[NSString stringWithFormat:@""] forKey:@"FileMineType"];
+ 
     CGRect rect = CGRectMake(0,0,30,30);
     UIGraphicsBeginImageContext( rect.size );
     [_imgAttechedFile.image drawInRect:rect];
     UIImage *picture1 = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
-    
-    
+
     NSData *data = UIImagePNGRepresentation(picture1);
     const unsigned char *bytes = [data bytes];
     NSUInteger length = [data length];
@@ -111,9 +113,7 @@
     }
    
     [param setValue:byteArray forKey:@"File"];
-    [param setValue:[NSString stringWithFormat:@"%@.png",[Utility randomImageGenerator]] forKey:@"FileName"];
-    [param setValue:[NSString stringWithFormat:@"IMAGE"] forKey:@"FileType"];
-    [param setValue:[NSString stringWithFormat:@""] forKey:@"FileMineType"];
+    
     [ProgressHUB showHUDAddedTo:self.view];
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
@@ -182,19 +182,6 @@
         }
    }
 }
-#pragma mark - PickerDelegates
-
-//- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-//{
-//    
-//    [self dismissViewControllerAnimated:YES completion:^{
-//        
-//    }];
-//    
-//    selectImage = [info valueForKey:UIImagePickerControllerEditedImage];
-//    
-//    [self.btnAttachment setBackgroundImage:selectImage forState:UIControlStateNormal];
-//}
 
 #pragma mark - UIImagePicker Delegate
 

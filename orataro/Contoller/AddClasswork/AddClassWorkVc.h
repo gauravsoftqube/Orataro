@@ -29,5 +29,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *aEndTextField;
 @property (weak, nonatomic) IBOutlet UITextField *aReferenceLinkTextField;
 - (IBAction)selectPhotoBtnClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *lblHeaderTitle;
 
 @end

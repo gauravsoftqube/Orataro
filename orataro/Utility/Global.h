@@ -67,11 +67,15 @@
 
 #define CIRCULAR_TITLE @"Please Enter Title"
 #define CIRCULAR_DESC @"Please Enter Description"
+
 #define CIRCULAR_ENDDATE "Please Select EndDate"
+
 #define SELECT_STARTTIME "Please Select StartTime"
 #define SELECT_ENDTIME "Please Select EndTime"
+
 #define CLASSWORK_REFERNCELINK @"Please Enter Reference Link"
 #define CIRCULAR_TYPE "Please Enter CircularType"
+
 #define CIRCULAR_STANDARD "Please Enter At least one Standard and Division"
 
 #define Select_Option @"Please select more than one option."
@@ -170,8 +174,12 @@
 #import "ProfileHappyGramListdetailListVc.h"
 #import "ProfileAddUpdateListDetailListVc.h"
 
+
 #import "ProfileLeaveListSelectVc.h"
 #import "ProfileLeaveDetailListVc.h"
+
+#import "ReminderDetailVc.h"
+
 
 #pragma mark - YOUTube Video Key
 
@@ -180,6 +188,9 @@
 #pragma mark - Api Url And Name List
 
 #define URL_Api  @"http://orataro.com/Services/"
+//#define URL_Api  @"http://beta.orataro.com/Services/"
+
+#define URL_CSS_File  @"http://orataro.com/Content/bootstrap.css"
 
 
 #pragma mark - Register
@@ -203,18 +214,21 @@
 #define apk_ImageUrl @"http://orataro.com/DataFiles"
 #define apk_ImageUrlFor_HomeworkDetail @"http://orataro.com"
 
+
+#pragma mark - Ganara wall
+
+#define apk_generalwall  @"apk_generalwall.asmx"
+#define apk_GetGeneralWallData_action  @"GetGeneralWallData"
+
+
 #pragma mark - Circular
 
 #define apk_circular  @"apk_circular.asmx"
 #define apk_GetCircularList_action  @"GetCircularList"
 
-
 #define apk_gradedivisionsubject @"apk_gradedivisionsubject.asmx"
-
 #define apk_CreateCircularWithMulty_action @"CreateCircularWithMulty"
-
 #define apk_GetGradeDivisionSubjectbyTeacher_action @"GetGradeDivisionSubjectbyTeacher"
-
 
 #pragma mark - Homework
 
@@ -291,6 +305,7 @@
 
 #define apk_notes  @"apk_notes.asmx"
 #define apk_GetNotesList_action @"GetNotesList"
+#define apk_CreateNotesWithMulty_action @"CreateNotesWithMulty"
 
 #pragma mark - Holiday
 
@@ -319,7 +334,7 @@
 #define apk_todos  @"apk_todos.asmx"
 #define apk_GetToDosList_action  @"GetToDosList"
 #define apk_SaveUpdateTodos_action  @"SaveUpdateTodos"
-
+#define apk_DeleteToDos_action  @"DeleteToDos"
 
 #pragma mark - apk_notifications
 

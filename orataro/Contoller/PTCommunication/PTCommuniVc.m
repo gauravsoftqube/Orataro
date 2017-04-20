@@ -22,7 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    aAddBtnouterView.layer.cornerRadius = 30.0;
+    aAddBtnouterView.layer.cornerRadius = 20;
     aAddBtnouterView.layer.masksToBounds = YES;
     
     UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
@@ -282,27 +282,29 @@
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     NSString *newString = [[textField text] stringByReplacingCharactersInRange:range withString:string];
-    if (textField == self.aTextField)
+    if (textField == self.aSearchTextField)
     {
         if([newString length] > 0)
         {
             arrCummunicationList=[[NSMutableArray alloc]init];
-            NSArray *arrKeyName=[[arrCummunicationList_Search valueForKey:@"FullName"]mutableCopy];
+            NSArray *arrKeyName=[[arrCummunicationList_Search valueForKey:@"CommunicationDetail"]mutableCopy];
             
             NSUInteger index = 0;
             for (NSString *strKeyName in arrKeyName)
             {
                 NSMutableDictionary *dicData=[[arrCummunicationList_Search objectAtIndex:index]mutableCopy];
-                
-                if([strKeyName rangeOfString:newString options:NSCaseInsensitiveSearch].location == NSNotFound)
+                if(![strKeyName isKindOfClass:[NSNull class]])
                 {
-                    [arrCummunicationList removeObject:dicData];
-                }
-                else
-                {
-                    if(![arrCummunicationList containsObject:dicData])
+                    if([strKeyName rangeOfString:newString options:NSCaseInsensitiveSearch].location == NSNotFound)
                     {
-                        [arrCummunicationList addObject:dicData];
+                        [arrCummunicationList removeObject:dicData];
+                    }
+                    else
+                    {
+                        if(![arrCummunicationList containsObject:dicData])
+                        {
+                            [arrCummunicationList addObject:dicData];
+                        }
                     }
                 }
                 index++;
