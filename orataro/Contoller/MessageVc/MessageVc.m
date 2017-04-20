@@ -119,7 +119,8 @@
                      [DBOperation executeSQL:[NSString stringWithFormat:@"DELETE FROM ExamTiming"]];
                      NSString* htmlPath = [NSString stringWithFormat:@"%@",[[arrResponce objectAtIndex:0]objectForKey:@"PageDetails"]];
                      [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO ExamTiming(htmlString)values('%@')",htmlPath]];
-                     [aWebview loadHTMLString:htmlPath baseURL:nil];
+                     
+                     [aWebview loadHTMLString:[NSString stringWithFormat:@"<HTML><HEAD><LINK href=%@ type=\"text/css\" rel=\"stylesheet\"/></HEAD><body>%@</body></HTML>",URL_CSS_File,htmlPath] baseURL:nil];
                  }
              }
              else

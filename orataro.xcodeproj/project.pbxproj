@@ -21,6 +21,7 @@
 		0757D4DF1EA0E48D00474F98 /* FBProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0757D4DE1EA0E48D00474F98 /* FBProgressView.m */; };
 		0757D4E31EA0E67400474F98 /* ResultAddPageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0757D4E21EA0E67400474F98 /* ResultAddPageCell.m */; };
 		07801FC91E7FE2F400E34D36 /* UITextView+Placeholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 07801FC81E7FE2F400E34D36 /* UITextView+Placeholder.m */; };
+		07FB8B111EA77F42003C163E /* ReminderDetailVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 07FB8B101EA77F42003C163E /* ReminderDetailVc.m */; };
 		0932277B1E38750D00138A2B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0932277A1E38750D00138A2B /* main.m */; };
 		0932277E1E38750D00138A2B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0932277D1E38750D00138A2B /* AppDelegate.m */; };
 		093227811E38750D00138A2B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 093227801E38750D00138A2B /* ViewController.m */; };
@@ -256,6 +257,8 @@
 		0757D4E21EA0E67400474F98 /* ResultAddPageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultAddPageCell.m; sourceTree = "<group>"; };
 		07801FC71E7FE2F400E34D36 /* UITextView+Placeholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+Placeholder.h"; sourceTree = "<group>"; };
 		07801FC81E7FE2F400E34D36 /* UITextView+Placeholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+Placeholder.m"; sourceTree = "<group>"; };
+		07FB8B0F1EA77F42003C163E /* ReminderDetailVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderDetailVc.h; sourceTree = "<group>"; };
+		07FB8B101EA77F42003C163E /* ReminderDetailVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderDetailVc.m; sourceTree = "<group>"; };
 		093227761E38750D00138A2B /* orataro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = orataro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0932277A1E38750D00138A2B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0932277C1E38750D00138A2B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -748,6 +751,15 @@
 			path = TextView_PlaceHolder;
 			sourceTree = "<group>";
 		};
+		07FB8B0E1EA77EAA003C163E /* ReminderDetailVc */ = {
+			isa = PBXGroup;
+			children = (
+				07FB8B0F1EA77F42003C163E /* ReminderDetailVc.h */,
+				07FB8B101EA77F42003C163E /* ReminderDetailVc.m */,
+			);
+			path = ReminderDetailVc;
+			sourceTree = "<group>";
+		};
 		0932276D1E38750D00138A2B = {
 			isa = PBXGroup;
 			children = (
@@ -823,14 +835,11 @@
 				C36B58581E5ED94500DE7464 /* ScoolGroupVc */,
 				C36B58541E5EC53A00DE7464 /* ChangePasswordVc */,
 				C35C665A1E5DC23E007EAF7D /* ContactUsVc */,
-				C35C66561E5DAE31007EAF7D /* NoteDescVc */,
 				C35C664F1E5D978F007EAF7D /* ChatVc */,
 				C3645AF01E5C05C00012F4CF /* ClassWorkVc */,
-				C391E4F01E40C2C4007BE2EA /* AddClasswork */,
 				C3645A861E5BF41A0012F4CF /* HomeWorkVc */,
+				C391E4EC1E40C1DF007BE2EA /* SubjectDetail */,
 				C369E6E51E5B28E60048D601 /* CircularVc */,
-				C38F8C7E1E3F81C300A67FBE /* AddCircular */,
-				C36DD1BE1E408DAE0011221E /* CircularDetails */,
 				C35C07241E4839AD004C55EB /* AttendanceVC */,
 				C369E6E11E5AFA3A0048D601 /* RegisterOtpVC */,
 				C364D91B1E56D93500CE72DC /* FriendVc */,
@@ -838,7 +847,6 @@
 				C36D39541E55D12C001A445E /* MessageVc */,
 				C38ABFB51E48B2A700689426 /* TimeTableVc */,
 				C3645AF81E5C6BA20012F4CF /* NotesVc */,
-				C38ABFB91E48B72900689426 /* AddNoteVc */,
 				C365CCAD1E49A77A00A4ABAA /* HolidayVc */,
 				C360CD1C1E4AEF2A00761ABE /* PollVc */,
 				C365CCC31E49E67B00A4ABAA /* AddPollVc */,
@@ -857,7 +865,6 @@
 				C38ABFAD1E48A61700689426 /* PostChatVc */,
 				C38ABFA51E487DB900689426 /* StudentListVc */,
 				C38ABFA91E48931E00689426 /* PTCommunication */,
-				C391E4EC1E40C1DF007BE2EA /* SubjectDetail */,
 				C36DD1C31E409B400011221E /* ListSelection */,
 				C38F8C7A1E3F486200A67FBE /* AddPostVc */,
 				0949E9451E3B81E200723301 /* RightSlideMenuVc */,
@@ -1088,7 +1095,8 @@
 				C35C66571E5DAE7D007EAF7D /* NoteDecsVc.h */,
 				C35C66581E5DAE7D007EAF7D /* NoteDecsVc.m */,
 			);
-			path = NoteDescVc;
+			name = NoteDescVc;
+			path = ../NoteDescVc;
 			sourceTree = "<group>";
 		};
 		C35C665A1E5DC23E007EAF7D /* ContactUsVc */ = {
@@ -1226,6 +1234,7 @@
 			children = (
 				C3645AF11E5C05EA0012F4CF /* ClassworkVC.h */,
 				C3645AF21E5C05EA0012F4CF /* ClassworkVC.m */,
+				C391E4F01E40C2C4007BE2EA /* AddClasswork */,
 			);
 			path = ClassWorkVc;
 			sourceTree = "<group>";
@@ -1235,6 +1244,8 @@
 			children = (
 				C3645AF91E5C6BC80012F4CF /* NoteVc.h */,
 				C3645AFA1E5C6BC80012F4CF /* NoteVc.m */,
+				C35C66561E5DAE31007EAF7D /* NoteDescVc */,
+				C38ABFB91E48B72900689426 /* AddNoteVc */,
 			);
 			path = NotesVc;
 			sourceTree = "<group>";
@@ -1244,6 +1255,7 @@
 			children = (
 				C35C66501E5D97BA007EAF7D /* CreateReminderVc.h */,
 				C35C66511E5D97BA007EAF7D /* CreateReminderVc.m */,
+				07FB8B0E1EA77EAA003C163E /* ReminderDetailVc */,
 				C3741FD51E4C99F900BFFA23 /* ReminderVc */,
 			);
 			name = CreateReminderVc;
@@ -1435,6 +1447,8 @@
 			children = (
 				C369E6E61E5B2A9B0048D601 /* CircularVc.h */,
 				C369E6E71E5B2A9B0048D601 /* CircularVc.m */,
+				C36DD1BE1E408DAE0011221E /* CircularDetails */,
+				C38F8C7E1E3F81C300A67FBE /* AddCircular */,
 			);
 			path = CircularVc;
 			sourceTree = "<group>";
@@ -1696,7 +1710,8 @@
 				C36DD1BF1E4097980011221E /* CircularDetailVc.h */,
 				C36DD1C01E4097980011221E /* CircularDetailVc.m */,
 			);
-			path = CircularDetails;
+			name = CircularDetails;
+			path = ../CircularDetails;
 			sourceTree = "<group>";
 		};
 		C36DD1C31E409B400011221E /* ListSelection */ = {
@@ -1880,7 +1895,8 @@
 				C38ABFBA1E48B77300689426 /* AddNoteVc.h */,
 				C38ABFBB1E48B77300689426 /* AddNoteVc.m */,
 			);
-			path = AddNoteVc;
+			name = AddNoteVc;
+			path = ../AddNoteVc;
 			sourceTree = "<group>";
 		};
 		C38AF0E91E60342D00E4F40B /* ProfileVideoVc */ = {
@@ -1993,7 +2009,8 @@
 				C38F8C7F1E3F821C00A67FBE /* AddCircularVc.h */,
 				C38F8C801E3F821C00A67FBE /* AddCircularVc.m */,
 			);
-			path = AddCircular;
+			name = AddCircular;
+			path = ../AddCircular;
 			sourceTree = "<group>";
 		};
 		C391E4EC1E40C1DF007BE2EA /* SubjectDetail */ = {
@@ -2011,7 +2028,8 @@
 				C391E4F11E40C33C007BE2EA /* AddClassWorkVc.h */,
 				C391E4F21E40C33C007BE2EA /* AddClassWorkVc.m */,
 			);
-			path = AddClasswork;
+			name = AddClasswork;
+			path = ../AddClasswork;
 			sourceTree = "<group>";
 		};
 		C3A2D7111E63F20000B91B54 /* ProfileSearchFriend */ = {
@@ -2221,6 +2239,7 @@
 				C3741FD81E4C9A3800BFFA23 /* ReminderVc.m in Sources */,
 				C36B58951E5F15E700DE7464 /* PhotoalbumCell.m in Sources */,
 				C3A2D72A1E64212200B91B54 /* PNTUtility.m in Sources */,
+				07FB8B111EA77F42003C163E /* ReminderDetailVc.m in Sources */,
 				C3741FDC1E4CA29400BFFA23 /* AboutOrataroVc.m in Sources */,
 				C36B58871E5EEF4400DE7464 /* PhototableCell.m in Sources */,
 				09F428BF1E38BC0B00A80F0D /* AFSecurityPolicy.m in Sources */,

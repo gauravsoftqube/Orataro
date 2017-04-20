@@ -17,6 +17,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [_viewUserBorder.layer setCornerRadius:40];
+    [_viewUserBorder.layer setBorderWidth:1];
+    [_viewUserBorder.layer setBorderColor:[UIColor colorWithRed:34/255.0f green:49/255.0f blue:89/255.0f alpha:1.0f].CGColor];
     // Do any additional setup after loading the view.
     [self setSelectedValue];
 }
@@ -34,9 +37,9 @@
     NSString *ActionStartDate=[self.dicSelectNotes objectForKey:@"ActionStartDate"];
     NSString *ActionEndDate=[self.dicSelectNotes objectForKey:@"ActionEndDate"];
     
-    _lblTitle.text=NoteTitle;
-    _lblDesc.text=NoteDetails;
-    _lblDressCode.text=DressCode;
+    _lblTitle.text=[NoteTitle capitalizedString];
+    _lblDesc.text=[NoteDetails capitalizedString];
+    _lblDressCode.text=[DressCode capitalizedString];
     
     ActionStartDate=[Utility convertMiliSecondtoDate:@"dd/MM/yyyy" date:ActionStartDate];
     ActionEndDate=[Utility convertMiliSecondtoDate:@"dd/MM/yyyy" date:ActionEndDate];
@@ -64,21 +67,59 @@
                                    UIImage *img = [UIImage imageWithData:imageData];
                                    if (img != nil)
                                    {
-                                       self.imgUser.image = [UIImage imageWithData:imageData];
+                                       self.imgNote.image = [UIImage imageWithData:imageData];
                                    }
                                    else
                                    {
-                                       self.imgUser.image = [UIImage imageNamed:@"no_img"];
+                                       self.imgNote.image = [UIImage imageNamed:@"no_img"];
                                    }
                                    
+                                   [self getUserImage];
                                    
                                });
                            });
         }
         else
         {
+            [self getUserImage];
         }
     }
+    
+}
+
+-(void)getUserImage
+{
+    if ([Utility isInterNetConnectionIsActive] == true)
+    {
+        NSString *strURLForTeacherProfilePicture=[NSString stringWithFormat:@"%@",[self.dicSelectNotes objectForKey:@"ProfilePicture"]];
+        if(![strURLForTeacherProfilePicture isKindOfClass:[NSNull class]])
+        {
+            strURLForTeacherProfilePicture=[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[self.dicSelectNotes objectForKey:@"ProfilePicture"]];
+            [ProgressHUB showHUDAddedTo:self.view];
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
+                           ^{
+                               
+                               NSURL *imageURL = [NSURL URLWithString:strURLForTeacherProfilePicture];
+                               NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+                               
+                               //This is your completion handler
+                               dispatch_sync(dispatch_get_main_queue(), ^{
+                                   [ProgressHUB hideenHUDAddedTo:self.view];
+                                   UIImage *img = [UIImage imageWithData:imageData];
+                                   if (img != nil)
+                                   {
+                                       self.imgUser.image = [UIImage imageWithData:imageData];
+                                   }
+                                   else
+                                   {
+                                       self.imgUser.image = [UIImage imageNamed:@"dash_profile"];
+                                   }
+                                   
+                               });
+                           });
+        }
+    }
+    
 }
 
 #pragma mark - button action

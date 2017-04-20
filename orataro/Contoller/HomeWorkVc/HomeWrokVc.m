@@ -70,6 +70,14 @@
     UITableViewController *tableViewController = [[UITableViewController alloc] init];
     tableViewController.tableView = self.HomeworkTableView;
     tableViewController.refreshControl = refreshControl;
+    
+    //
+    [self.viewDelete_Conf setHidden:YES];
+    _viewSave.layer.cornerRadius = 30.0;
+    _viewInnerSave.layer.cornerRadius = 25.0;
+    _imgCancel.image = [_imgCancel.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [_imgCancel setTintColor:[UIColor colorWithRed:40.0/255.0 green:49.0/255.0 blue:90.0/255.0 alpha:1.0]];
+
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -82,7 +90,6 @@
     {
         [self.aView1 setHidden:NO];
     }
-    
     
     [self apiCallMethod];
 }
@@ -165,6 +172,7 @@
     }
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
+         [_HomeworkTableView.refreshControl endRefreshing];
          [ProgressHUB hideenHUDAddedTo:self.view];
          if(!error)
          {
@@ -308,7 +316,7 @@
     }
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
-          [_HomeworkTableView.refreshControl endRefreshing];
+         
          [ProgressHUB hideenHUDAddedTo:self.view];
          if(!error)
          {
@@ -456,6 +464,13 @@
     UILabel *lblHomeWorksDetails = (UILabel *)[cell.contentView viewWithTag:8];
     [lblHomeWorksDetails setText:[NSString stringWithFormat:@"%@",HomeWorksDetails]];
     
+    UIButton *btnDelete = (UIButton *)[cell.contentView viewWithTag:5];
+    if([[Utility getMemberType] isEqualToString:@"Student"])
+    {
+        [btnDelete setHidden:YES];
+        [btnDelete setFrame:CGRectMake(btnDelete.frame.origin.x, btnDelete.frame.origin.y, 0, btnDelete.frame.size.height)];
+    }
+
     return cell;
 }
 
@@ -467,7 +482,7 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-#pragma mark - tbl UIButton Actio
+#pragma mark - tbl UIButton Action
 
 - (IBAction)btntblDeleteHomework:(id)sender
 {
@@ -478,27 +493,18 @@
     NSIndexPath *indexPath = [self.HomeworkTableView indexPathForRowAtPoint:buttonPosition];
     NSMutableDictionary *dicAddpage = [[[arrHomeworkList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
     strdelete_selecteid=[dicAddpage objectForKey:@"AssignmentID"];
+    [self.lblDeleteConf_Detail setText:[NSString stringWithFormat:@"%@",[dicAddpage objectForKey:@"SubjectName"]]];
 
 }
 
-#pragma mark - CMPopTipViewDelegate methods
-
-- (void)popTipViewWasDismissedByUser:(CMPopTipView *)popTipView
+- (IBAction)btnDeleteConf_Cancel:(id)sender
 {
-    [arrPopup removeObject:popTipView];
+    [self.viewDelete_Conf setHidden:YES];
 }
 
-- (IBAction)btnDelete_popup:(id)sender
+- (IBAction)btnDeleteConf_Yes:(id)sender
 {
-    [Utility dismissAllPopTipViews:arrPopup];
-    
-    if ([Utility isInterNetConnectionIsActive] == false)
-    {
-        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alrt show];
-        return;
-    }
-    
+    [self.viewDelete_Conf setHidden:YES];
     NSArray *ary = [DBOperation selectData:@"select * from HomeWorkList"];
     NSMutableArray *arrTemp = [Utility getLocalDetail:ary columnKey:@"dicHomeWorkList"];
     for (int i=0;i<[arrTemp count]; i++) {
@@ -519,6 +525,27 @@
     {
         [self apiCallFor_Delete:NO deleteId:strdelete_selecteid];
     }
+    
+}
+
+#pragma mark - CMPopTipViewDelegate methods
+
+- (void)popTipViewWasDismissedByUser:(CMPopTipView *)popTipView
+{
+    [arrPopup removeObject:popTipView];
+}
+
+- (IBAction)btnDelete_popup:(id)sender
+{
+    [Utility dismissAllPopTipViews:arrPopup];
+    
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    [self.viewDelete_Conf setHidden:NO];
 }
 
 #pragma mark - button action

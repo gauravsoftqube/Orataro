@@ -43,4 +43,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *aViewwidth;
 @property (weak, nonatomic) IBOutlet UITextField *selectTypeTextfield;
 
+@property (weak, nonatomic) IBOutlet UILabel *lblHeaderTitle;
+
+
 @end

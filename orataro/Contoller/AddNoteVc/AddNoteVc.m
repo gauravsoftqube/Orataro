@@ -18,6 +18,9 @@
     UIAlertView *alertEnd;
     
     NSMutableArray *arrSubandDiv,*arrSortDesc,*arrSelected_SortDesc;
+    NSMutableArray *arrSelected_SubAndStd;
+    
+    NSString *strSelect_Timing,*strSelect_EndTime;
 }
 @end
 
@@ -27,32 +30,29 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
     
-  //  [aScrollview setContentSize:CGSizeMake(self.view.frame.size.width, 2000)];
-//    [aViewHeight setConstant:700];
- //   [aViewWidth setConstant:self.view.frame.size.width];
-    
-    UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+    UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 20)];
     aTitleTextfield.leftView = paddingView;
     aTitleTextfield.leftViewMode = UITextFieldViewModeAlways;
     
-    UIView *paddingView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+    UIView *paddingView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 20)];
     aStandardTextfield.leftView = paddingView1;
     aStandardTextfield.leftViewMode = UITextFieldViewModeAlways;
     
-    UIView *paddingView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+    UIView *paddingView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 20)];
     aEnddateTextfield.leftView = paddingView2;
     aEnddateTextfield.leftViewMode = UITextFieldViewModeAlways;
     
-    UIView *paddingView3 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+    UIView *paddingView3 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 20)];
     aShortDescTextfield.leftView = paddingView3;
     aShortDescTextfield.leftViewMode = UITextFieldViewModeAlways;
     
-    UIView *paddingView4 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+    UIView *paddingView4 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 20)];
     aStartdateTextfield.leftView = paddingView4;
     aStartdateTextfield.leftViewMode = UITextFieldViewModeAlways;
     
-    aDescTextview.textContainerInset = UIEdgeInsetsMake(10, 17, 0, 0);
+    aDescTextview.textContainerInset = UIEdgeInsetsMake(10, 0, 0, 0);
     
     [self.tblStd_Div setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.tblShortDesc_popup setSeparatorStyle:UITableViewCellSeparatorStyleNone];
@@ -70,7 +70,7 @@
     [self.viewStandardANdDevision_popup setHidden:YES];
     [self.viewShortDesc_Popup setHidden:YES];
     arrSelected_SortDesc = [[NSMutableArray alloc]init];
-    
+    arrSelected_SubAndStd=[[NSMutableArray alloc]init];
     
     
     //StartDate
@@ -113,48 +113,6 @@
     [alertEnd setValue:datePickerEnd forKey:@"accessoryView"];
     
     [self apiCallFor_getSubDiv];
-}
-
-#pragma mark - UTexfield delegate
-
-- (BOOL) textViewShouldBeginEditing:(UITextView *)textView
-{
-    if (aDescTextview.text.length == 0)
-    {
-        aDescTextview.text = @"";
-        aDescTextview.textColor = [UIColor blackColor];
-    }
-    if ([aDescTextview.text isEqualToString:@"Description"])
-    {
-        aDescTextview.text = @"";
-        aDescTextview.textColor = [UIColor blackColor];
-    }
-    
-    return YES;
-}
-
--(void) textViewDidChange:(UITextView *)textView
-{
-    if(aDescTextview.text.length == 0){
-        aDescTextview.textColor = [UIColor lightGrayColor];
-        aDescTextview.text = @"Description";
-        [aDescTextview resignFirstResponder];
-    }
-}
-
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-    
-    if([text isEqualToString:@"\n"]) {
-        [textView resignFirstResponder];
-        if(aDescTextview.text.length == 0){
-            aDescTextview.textColor = [UIColor lightGrayColor];
-            aDescTextview.text = @"Desciption";
-            [aDescTextview resignFirstResponder];
-        }
-        return NO;
-    }
-    
-    return YES;
 }
 
 #pragma mark - apiCall
@@ -278,6 +236,122 @@
      }];
 }
 
+-(void)apiCallFor_CreateNotesWithMulty
+{
+    if ([Utility isInterNetConnectionIsActive] == false) {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        [ProgressHUB hideenHUDAddedTo:self.view];
+        return;
+    }
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_notes,apk_CreateNotesWithMulty_action];
+    
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    [param setValue:[NSString stringWithFormat:@""] forKey:@"EditID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"WallID"]] forKey:@"WallID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"BatchID"]] forKey:@"BeachID"];
+    
+    //GradeDivisoinID
+    NSString *strSelect_SubAndStdId;
+    NSString *SubjectID;
+    for (NSMutableDictionary *dic in arrSelected_SubAndStd) {
+        SubjectID=[dic objectForKey:@"SubjectID"];
+        NSString *GradeID=[dic objectForKey:@"GradeID"];
+        NSString *DivisionID=[dic objectForKey:@"DivisionID"];
+        if([strSelect_SubAndStdId length] == 0)
+        {
+            strSelect_SubAndStdId = [NSString stringWithFormat:@"%@,%@",GradeID,DivisionID];
+        }
+        else
+        {
+            strSelect_SubAndStdId = [NSString stringWithFormat:@"%@#%@,%@",strSelect_SubAndStdId,GradeID,DivisionID];
+        }
+    }
+    [param setValue:[NSString stringWithFormat:@"%@",strSelect_SubAndStdId] forKey:@"GradeDivisoinID"];
+    [param setValue:[NSString stringWithFormat:@"%@",SubjectID] forKey:@"SubjectID"];
+    
+    //IMAGE
+    CGRect rect = CGRectMake(0,0,30,30);
+    UIGraphicsBeginImageContext( rect.size );
+    [aPhoto.currentBackgroundImage drawInRect:rect];
+    UIImage *picture1 = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    NSData *data =  UIImagePNGRepresentation(picture1);
+    const unsigned char *bytes = [data bytes];
+    NSUInteger length = [data length];
+    NSMutableArray *byteArray = [NSMutableArray array];
+    for (NSUInteger i = 0; i < length; i++)
+    {
+        [byteArray addObject:[NSNumber numberWithUnsignedChar:bytes[i]]];
+    }
+    [param setValue:byteArray forKey:@"File"];
+    NSString *getImageName = [Utility randomImageGenerator];
+    [param setValue:[NSString stringWithFormat:@"%@.png",getImageName] forKey:@"FileName"];
+    [param setValue:@"IMAGE" forKey:@"FileType"];
+    [param setValue:@"" forKey:@"FileMineType"];
+    
+    //
+    [param setValue:[NSString stringWithFormat:@"%@",self.aTitleTextfield.text] forKey:@"NoteTitle"];
+    [param setValue:[NSString stringWithFormat:@"0"] forKey:@"Rating"];
+    
+    
+    [param setValue:[NSString stringWithFormat:@"%@",self.aShortDescTextfield.text] forKey:@"DressCode"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",self.aDescTextview.text] forKey:@"NoteDetails"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[Utility convertDateFtrToDtaeFtr:@"dd-MM-yyyy" newDateFtr:@"MM-dd-yyyy" date:self.aStartdateTextfield.text]] forKey:@"ActionStartDate"];
+    [param setValue:[NSString stringWithFormat:@"%@",[Utility convertDateFtrToDtaeFtr:@"dd-MM-yyyy" newDateFtr:@"MM-dd-yyyy" date:self.aEnddateTextfield.text]] forKey:@"ActionEndDate"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstitutionWallID"]] forKey:@"InstitutionWallID"];
+    [param setValue:[NSString stringWithFormat:@"%@",strSelect_Timing] forKey:@"Timing"];
+    [param setValue:[NSString stringWithFormat:@"%@",strSelect_EndTime] forKey:@"EndTime"];
+    
+    [ProgressHUB showHUDAddedTo:self.view];
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         [ProgressHUB hideenHUDAddedTo:self.view];
+         if(!error)
+         {
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             
+             if([arrResponce count] != 0)
+             {
+                 NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                 NSString *strStatus=[dic objectForKey:@"message"];
+                 if([strStatus isEqualToString:@"No Data Found"])
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                 }
+                 else if([strStatus isEqualToString:@"Note Created SuccessFully."])
+                 {
+                     [self.navigationController popViewControllerAnimated:YES];
+                 }
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
+}
+
 #pragma mark - Manage Group of Subject and Division
 
 -(void)ManageSubjectList : (NSMutableArray *)aryResponse
@@ -323,7 +397,36 @@
     [self.tblStd_Div reloadData];
 }
 
-#pragma mark - tabelview delegate
+#pragma mark - UITableView Delegate
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (tableView == self.tblStd_Div)
+    {
+        return 59;
+    }
+    if (tableView == _tblShortDesc_popup)
+    {
+        return 44;
+    }
+    return 0;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (tableView == self.tblStd_Div)
+    {
+        if (arrSubandDiv.count > 0)
+        {
+            return arrSubandDiv.count;
+        }
+    }
+    if (tableView == self.tblShortDesc_popup)
+    {
+        return [arrSortDesc count];
+    }
+    return 5;
+}
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -360,9 +463,9 @@
         
         UIImageView *img = (UIImageView *)[cell.contentView viewWithTag:3];
         
-        NSMutableArray *arySelect = [[NSMutableArray alloc] initWithArray:[[NSUserDefaults standardUserDefaults] arrayForKey:@"SelectAryData"]];
+        NSMutableDictionary *dic=[[arrSubandDiv objectAtIndex:indexPath.row]mutableCopy];
         
-        if ([arySelect containsObject:[NSString stringWithFormat:@"%ld",(long)indexPath.row]])
+        if ([arrSelected_SubAndStd containsObject:dic])
         {
             [img setImage:[UIImage imageNamed:@"checkboxblue"]];
         }
@@ -370,7 +473,7 @@
         {
             [img setImage:[UIImage imageNamed:@"checkboxunselected"]];
         }
-        
+
         return cell;
     }
     if (tableView == _tblShortDesc_popup)
@@ -398,35 +501,6 @@
     return nil;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (tableView == self.tblStd_Div)
-    {
-        return 59;
-    }
-    if (tableView == _tblShortDesc_popup)
-    {
-        return 44;
-    }
-    return 0;
-}
-
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    if (tableView == self.tblStd_Div)
-    {
-        if (arrSubandDiv.count > 0)
-        {
-            return arrSubandDiv.count;
-        }
-    }
-    if (tableView == self.tblShortDesc_popup)
-    {
-        return [arrSortDesc count];
-    }
-    return 5;
-}
-
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView == self.tblStd_Div)
@@ -445,6 +519,8 @@
         [self.viewShortDesc_Popup setHidden:YES];
     }
 }
+
+#pragma mark - tbl UIButton Action
 
 - (IBAction)btnRadio_ShortDesc:(id)sender {
     //
@@ -469,20 +545,16 @@
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tblStd_Div];
     NSIndexPath *indexPath = [self.tblStd_Div indexPathForRowAtPoint:buttonPosition];
     
-    NSMutableArray *aryTemp=[[NSMutableArray alloc]init];
-    aryTemp = [[NSMutableArray alloc] initWithArray:[[NSUserDefaults standardUserDefaults] arrayForKey:@"SelectAryData"]];
+    NSMutableDictionary *dic=[[arrSubandDiv objectAtIndex:indexPath.row]mutableCopy];
     
-    if ([aryTemp containsObject:[NSString stringWithFormat:@"%ld",indexPath.row]])
+    if ([arrSelected_SubAndStd containsObject:dic])
     {
-        [aryTemp removeObject:[NSString stringWithFormat:@"%ld",indexPath.row]];
+        [arrSelected_SubAndStd removeObject:dic];
     }
     else
     {
-        [aryTemp addObject:[NSString stringWithFormat:@"%ld",indexPath.row]];
+        [arrSelected_SubAndStd addObject:dic];
     }
-    
-    [[NSUserDefaults standardUserDefaults]setObject:aryTemp forKey:@"SelectAryData"];
-    [[NSUserDefaults standardUserDefaults]synchronize];
     
     [self.tblStd_Div reloadData];
 }
@@ -537,8 +609,11 @@
             [dateFormat setDateFormat:@"dd-MM-yyyy"];
             NSString *theDate = [dateFormat stringFromDate:[datePicker date]];
             self.aStartdateTextfield.text = theDate;
+            
+            NSDateFormatter *dateFormatTime = [[NSDateFormatter alloc] init];
+            [dateFormatTime setDateFormat:@"HH:MM a"];
+            strSelect_Timing = [dateFormatTime stringFromDate:[datePicker date]];
         }
-        
     }
     if (alertView.tag == 112)
     {
@@ -548,13 +623,15 @@
             [dateFormat setDateFormat:@"dd-MM-yyyy"];
             NSString *theDate = [dateFormat stringFromDate:[datePickerEnd date]];
             self.aEnddateTextfield.text = theDate;
+            
+            NSDateFormatter *dateFormatTime = [[NSDateFormatter alloc] init];
+            [dateFormatTime setDateFormat:@"HH:MM a"];
+            strSelect_EndTime = [dateFormatTime stringFromDate:[datePickerEnd date]];
         }
-        
     }
-
 }
 
-#pragma mark - Button Action
+#pragma mark - UIButton Action
 
 - (IBAction)BackBtnClicked:(id)sender
 {
@@ -563,39 +640,44 @@
 
 - (IBAction)SelectPhotoBtnClicked:(id)sender
 {
+    [self.view endEditing:YES];
     UIActionSheet *action = [[UIActionSheet alloc] initWithTitle:@"Add Photo!" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Take Photo",@"Choose from Liabrary", nil];
-    
     [action showInView:self.view];
 }
 
-- (IBAction)btnStandardDevision:(id)sender {
+- (IBAction)btnStandardDevision:(id)sender
+{
+    [self.view endEditing:YES];
     [self.viewStandardANdDevision_popup setHidden:NO];
 }
 
-- (IBAction)btnShortDescText:(id)sender {
+- (IBAction)btnShortDescText:(id)sender
+{
+    [self.view endEditing:YES];
     [self.viewShortDesc_Popup setHidden:NO];
 }
 
-- (IBAction)btnStartDate:(id)sender {
+- (IBAction)btnStartDate:(id)sender
+{
     [self.view endEditing:YES];
     [datePicker setDate:[NSDate date]];
     [alert show];
 }
 
-- (IBAction)btnEndDate:(id)sender {
+- (IBAction)btnEndDate:(id)sender
+{
     [self.view endEditing:YES];
     [datePickerEnd setDate:[NSDate date]];
     [alertEnd show];
-
 }
 
-
-
-- (IBAction)btnCancel_StdandDiv:(id)sender {
+- (IBAction)btnCancel_StdandDiv:(id)sender
+{
     [self.viewStandardANdDevision_popup setHidden:YES];
 }
 
-- (IBAction)btnDone_StdandDiv:(id)sender {
+- (IBAction)btnDone_StdandDiv:(id)sender
+{
     NSMutableArray *strStandard = [[NSMutableArray alloc]init];
     
     NSMutableArray *aryGet = [[NSUserDefaults standardUserDefaults]valueForKey:@"SelectAryData"];
@@ -622,4 +704,52 @@
     self.aStandardTextfield.text = strTableColumn;
     [self.viewStandardANdDevision_popup setHidden:YES];
 }
+
+- (IBAction)btnSave:(id)sender
+{
+    [self.view endEditing:YES];
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    if([Utility validateBlankField:self.aTitleTextfield.text])
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:CIRCULAR_TITLE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    if ([Utility validateBlankField:self.aDescTextview.text])
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:CIRCULAR_DESC delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    if ([Utility validateBlankField:self.aStandardTextfield.text])
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@CIRCULAR_STANDARD delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    if ([Utility validateBlankField:self.aStartdateTextfield.text])
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Select_Start_Date delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+
+    if ([Utility validateBlankField:self.aEnddateTextfield.text])
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Select_End_Date delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    [self apiCallFor_CreateNotesWithMulty];
+}
+
 @end

@@ -12,6 +12,7 @@
 - (IBAction)btnSaveClicked:(id)sender;
 - (IBAction)btnGenerateReportClicked:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UILabel *lblHeaderTitle;
 - (IBAction)ClassBtnClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UILabel *lbSubDivision;
 @property (weak, nonatomic) IBOutlet UITableView *AttendanceTableView;

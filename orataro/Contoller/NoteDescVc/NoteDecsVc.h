@@ -16,6 +16,7 @@
 
 @property (strong, nonatomic) NSMutableDictionary *dicSelectNotes;
 
+@property (weak, nonatomic) IBOutlet UIImageView *imgNote;
 @property (weak, nonatomic) IBOutlet UIImageView *imgUser;
 
 @property (weak, nonatomic) IBOutlet UILabel *lblTitle;
@@ -24,6 +25,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *lblDressCode;
 @property (weak, nonatomic) IBOutlet UILabel *lblStartDate;
 @property (weak, nonatomic) IBOutlet UILabel *lblEndDate;
-@property (weak, nonatomic) IBOutlet UIView *viewUserImgBorder;
+@property (weak, nonatomic) IBOutlet UIView *viewUserBorder;
 
 @end

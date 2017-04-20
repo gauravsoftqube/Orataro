@@ -18,6 +18,9 @@
     int c2;
     AppDelegate *app;
     NSMutableArray *arrNotesList;
+    
+    NSMutableArray *arrPopup;
+    NSString *strdelete_selecteid;
 }
 @end
 
@@ -33,7 +36,7 @@
     aCalenderView.layer.borderWidth = 2.0;
     aCalenderView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     
-    aView1.layer.cornerRadius = 30.0;
+    aView1.layer.cornerRadius = 20;
     self.automaticallyAdjustsScrollViewInsets = NO;
     _tblNote.separatorStyle = UITableViewCellSeparatorStyleNone;
     
@@ -55,43 +58,80 @@
 
 -(void)commonData
 {
+    //
+    [self.viewDelete_Conf setHidden:YES];
+    _viewSave.layer.cornerRadius = 30.0;
+    _viewInnerSave.layer.cornerRadius = 25.0;
+    _imgCancel.image = [_imgCancel.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [_imgCancel setTintColor:[UIColor colorWithRed:40.0/255.0 green:49.0/255.0 blue:90.0/255.0 alpha:1.0]];
+
+    //
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refreshData) forControlEvents:UIControlEventValueChanged];
+    UITableViewController *tableViewController = [[UITableViewController alloc] init];
+    tableViewController.tableView = self.tblNote;
+    tableViewController.refreshControl = refreshControl;
+    
+}
+
+-(void)refreshData
+{
+    [self apiCallMethod];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    //
+    if([[Utility getMemberType] isEqualToString:@"Student"])
+    {
+        [self.aView1 setHidden:YES];
+    }
+    else
+    {
+        [self.aView1 setHidden:NO];
+    }
+
+    [self apiCallMethod];
+}
+
+-(void)apiCallMethod
+{
     if ([Utility isInterNetConnectionIsActive] == false)
     {
-        arrNotesList = [[NSMutableArray alloc]init];
-        NSArray *ary = [DBOperation selectData:@"select * from NotList"];
-        arrNotesList = [Utility getLocalDetail:ary columnKey:@"dic_json"];
-        [self.tblNote reloadData];
+        NSMutableArray *arrLoacalDb = [DBOperation selectData:@"select * from NotList"];
+        NSMutableArray *arrListTemp = [Utility getLocalDetail:arrLoacalDb columnKey:@"dic_json"];
         
-        if(arrNotesList.count == 0)
+        if(arrListTemp.count == 0)
         {
             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [alrt show];
             return;
         }
+        else
+        {
+            [self ManageNotesList:arrListTemp];
+        }
     }
     else
     {
-        arrNotesList = [[NSMutableArray alloc]init];
-        NSArray *ary = [DBOperation selectData:@"select * from NotList"];
-        arrNotesList = [Utility getLocalDetail:ary columnKey:@"dic_json"];
-        [self.tblNote reloadData];
+        NSMutableArray *arrLoacalDb = [DBOperation selectData:@"select * from NotList"];
+        NSMutableArray *arrListTemp = [Utility getLocalDetail:arrLoacalDb columnKey:@"dic_json"];
+        [self ManageNotesList:arrListTemp];
         
-        if(arrNotesList.count == 0)
+        if(arrListTemp.count == 0)
         {
-            [self apiCallFor_getTimeTableList:@"1"];
+            [self apiCallFor_getTimeTableList:YES];
         }
         else
         {
-           [self apiCallFor_getTimeTableList:@"0"];
+            [self apiCallFor_getTimeTableList:NO];
         }
     }
-
-    
 }
 
 #pragma mark - ApiCall
 
--(void)apiCallFor_getTimeTableList:(NSString *)strShowHUB
+-(void)apiCallFor_getTimeTableList:(bool)strShowHUB
 {
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_notes,apk_GetNotesList_action];
     
@@ -120,7 +160,7 @@
     }
     
     
-    if([strShowHUB isEqualToString:@"1"])
+    if(strShowHUB == YES)
     {
         [ProgressHUB showHUDAddedTo:self.view];
     }
@@ -145,6 +185,13 @@
                  else
                  {
                      [self ManageNotesList:arrResponce];
+                     
+                     [DBOperation executeSQL:@"delete from NotList"];
+                     for (NSMutableDictionary *dic in arrResponce)
+                     {
+                         NSString *getjsonstr = [Utility Convertjsontostring:dic];
+                         [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO NotList (dic_json) VALUES ('%@')",getjsonstr]];
+                     }
                  }
              }
              else
@@ -219,24 +266,84 @@
         items = [[NSMutableArray alloc] initWithArray:[temp sortedArrayUsingDescriptors:sortDescriptors]];
         
         
-        NSSortDescriptor * brandDescriptor = [[NSSortDescriptor alloc] initWithKey:@"ActionStartDate" ascending:YES];
+        NSSortDescriptor * brandDescriptor = [[NSSortDescriptor alloc] initWithKey:@"ActionStartDate" ascending:NO];
         NSArray * sortedArray3 = [items sortedArrayUsingDescriptors:@[brandDescriptor]];
         
         
         [entry setObject:sortedArray3 forKey:@"items"];
         [arrNotesList addObject:entry];
     }
+    arrNotesList =[[[arrNotesList reverseObjectEnumerator]allObjects]mutableCopy];
     
-    [DBOperation executeSQL:@"delete from NotList"];
-    for (NSMutableDictionary *dic in arrNotesList)
+    [self.tblNote reloadData];
+}
+
+-(void)apiCallFor_Delete : (BOOL)checkProgress  deleteId:(NSString *)deleteID
+{
+    if ([Utility isInterNetConnectionIsActive] == false)
     {
-        NSString *getjsonstr = [Utility Convertjsontostring:dic];
-        [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO NotList (dic_json) VALUES ('%@')",getjsonstr]];
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
     }
     
-    //NSArray *ary = [DBOperation selectData:@"select * from NotList"];
-   // arrNotesList = [Utility getLocalDetail:ary columnKey:@"dic_json"];
-    [self.tblNote reloadData];
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_notes,apk_AssociationDelete_action];
+    
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",deleteID] forKey:@"PrimaryID"];
+    
+    [param setValue:[NSString stringWithFormat:@"Note"] forKey:@"AssociationType"];
+    
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
+    
+    
+    if (checkProgress == YES)
+    {
+        [ProgressHUB showHUDAddedTo:self.view];
+    }
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         
+         [ProgressHUB hideenHUDAddedTo:self.view];
+         if(!error)
+         {
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableArray *arrResponce = [[NSJSONSerialization JSONObjectWithData:data options:0 error:nil]mutableCopy];
+             
+             if([arrResponce count] != 0)
+             {
+                 NSMutableDictionary *dicResponce=[arrResponce objectAtIndex:0];
+                 NSString *strStatus=[[dicResponce objectForKey:@"message"]mutableCopy];
+                 if([strStatus isEqualToString:@"No Data Found"])
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dicResponce objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                 }
+                 else
+                 {
+                     //                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dicResponce objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     //                     [alrt show];
+                 }
+                 
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
 }
 
 #pragma mark - UITableView
@@ -307,6 +414,17 @@
     NSString *getfrmt = [Utility convertDateFtrToDtaeFtr:@"MM/dd/yyyy" newDateFtr:@"dd EEE" date:getdt];
     lbHeaderDt.text = getfrmt;
     
+    NSString *IsRead = [d objectForKey:@"IsRead"];
+    UIImageView *img = (UIImageView *)[cell.contentView viewWithTag:31];
+    if([IsRead integerValue] == 1)
+    {
+        [img setImage:[UIImage imageNamed:@"double_tick_sky_blue"]];
+    }
+    else
+    {
+        [img setImage:[UIImage imageNamed:@"tick_sky_blue"]];
+    }
+    
     NSString *NoteTitle = [d objectForKey:@"NoteTitle"];
     NSString *NoteDetails = [d objectForKey:@"NoteDetails"];
     
@@ -320,6 +438,13 @@
     {
         [lblDetail setText:[[NSString stringWithFormat:@"%@",NoteDetails] capitalizedString]];
     }
+    
+    UIButton *btnDelete = (UIButton *)[cell.contentView viewWithTag:5];
+    if([[Utility getMemberType] isEqualToString:@"Student"])
+    {
+        [btnDelete setHidden:YES];
+        [btnDelete setFrame:CGRectMake(btnDelete.frame.origin.x, btnDelete.frame.origin.y, 0, btnDelete.frame.size.height)];
+    }
     return cell;
 }
 
@@ -330,6 +455,70 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+#pragma mark - tbl UIButton Action
+
+- (IBAction)btnDeleteConf_Cancel:(id)sender
+{
+    [self.viewDelete_Conf setHidden:YES];
+}
+
+- (IBAction)btnDeleteConf_Yes:(id)sender
+{
+    [self.viewDelete_Conf setHidden:YES];
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    NSArray *ary = [DBOperation selectData:@"select * from NotList"];
+    NSMutableArray *arrTemp = [Utility getLocalDetail:ary columnKey:@"dic_json"];
+    for (int i=0;i<[arrTemp count]; i++) {
+        NSMutableDictionary *dic=[arrTemp objectAtIndex:i];
+        NSString *str=[[dic objectForKey:@"NotesID"]mutableCopy];
+        if([str isEqualToString:strdelete_selecteid])
+        {
+            NSMutableDictionary *dicLocalDB=[[ary objectAtIndex:i]mutableCopy];
+            NSString *strid=[dicLocalDB objectForKey:@"id"];
+            [DBOperation executeSQL:[NSString stringWithFormat:@"delete from NotList where id = '%@'",strid]];
+            [arrTemp removeObject:dic];
+        }
+    }
+    
+    [self ManageNotesList:arrTemp];
+    
+    if([strdelete_selecteid length] != 0)
+    {
+        [self apiCallFor_Delete:NO deleteId:strdelete_selecteid];
+    }
+    
+}
+
+- (IBAction)btnCell_DeleteRow:(id)sender
+{
+    arrPopup = [[NSMutableArray alloc]init];
+    [arrPopup addObject:[Utility addCell_PopupView:self.viewAddPage ParentView:self.view sender:sender]];
+    
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tblNote];
+    NSIndexPath *indexPath = [self.tblNote indexPathForRowAtPoint:buttonPosition];
+    NSMutableDictionary *dicAddpage = [[[arrNotesList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
+    strdelete_selecteid=[dicAddpage objectForKey:@"NotesID"];
+    [self.lblDeleteConf_Detail setText:[NSString stringWithFormat:@"%@",[dicAddpage objectForKey:@"NoteTitle"]]];
+}
+
+- (IBAction)btnDeleteCell_Popup:(id)sender
+{
+    [Utility dismissAllPopTipViews:arrPopup];
+    
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    [self.viewDelete_Conf setHidden:NO];
+}
 
 #pragma mark - button action
 

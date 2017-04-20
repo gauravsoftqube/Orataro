@@ -26,21 +26,15 @@
 {
     [super viewDidLoad];
     
-    [aViewHeight setConstant:600];
-    [aViewWidth setConstant:self.view.frame.size.width];
-    
     [Utility setLeftViewInTextField:aEndTextField imageName:@"" leftSpace:0 topSpace:0 size:5];
-    
     [Utility setLeftViewInTextField:aEnddaTextfield imageName:@"" leftSpace:0 topSpace:0 size:5];
-    
     [Utility setLeftViewInTextField:aStartTextField imageName:@"" leftSpace:0 topSpace:0 size:5];
-    
     [Utility setLeftViewInTextField:aTitleTextField imageName:@"" leftSpace:0 topSpace:0 size:5];
-    
     [Utility setLeftViewInTextField:aReferenceLinkTextField imageName:@"" leftSpace:0 topSpace:0 size:5];
     
     aDescriptionTextView.textContainerInset = UIEdgeInsetsMake(10, 1, 0, 0);
     
+    //
     CGRect frame = CGRectMake(0, 0, 200, 200);
     datePicker = [[UIDatePicker alloc] initWithFrame:frame];
     datePicker = [[UIDatePicker alloc] init];
@@ -72,23 +66,27 @@
     alert1.tag = 3;
     [alert1 setValue:timepicker forKey:@"accessoryView"];
     
-    // Do any additional setup after loading the view.
+    //set Header Title
+    NSArray *arr=[[[Utility getCurrentUserDetail]objectForKey:@"FullName"] componentsSeparatedByString:@" "];
+    if (arr.count != 0) {
+        self.lblHeaderTitle.text=[NSString stringWithFormat:@"Add Classwork (%@)",[arr objectAtIndex:0]];
+    }
+    else
+    {
+        self.lblHeaderTitle.text=[NSString stringWithFormat:@"Add Classwork"];
+    }
+
+    
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-#pragma mark - button action
 
-- (IBAction)selectPhotoBtnClicked:(id)sender
-{
-    UIActionSheet *action = [[UIActionSheet alloc] initWithTitle:@"Add Photo!" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Take Photo",@"Choose from Liabrary", nil];
-    
-    [action showInView:self.view];
-}
-#pragma mark - ActionSheet delegates
+
+
+#pragma mark - ActionSheet Delegates
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -117,24 +115,59 @@
     }
 }
 
-#pragma mark - PickerDelegates
+#pragma mark - UIImagePicker Delegate
 
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
-    
-    //  [self dismissModalViewControllerAnimated:true];
-    
-    [self dismissViewControllerAnimated:YES completion:^{
-        
-    }];
-    
-    UIImage * img = [info valueForKey:UIImagePickerControllerEditedImage];
-    
-    [aSelectBtn setBackgroundImage:img forState:UIControlStateNormal];
-    
+    UIImage *selectImage = info[UIImagePickerControllerOriginalImage];
+    [aSelectBtn setBackgroundImage:selectImage forState:UIControlStateNormal];
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma mark - button action
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+
+#pragma mark - UIButton Action
+
+- (IBAction)selectPhotoBtnClicked:(id)sender
+{
+    [self.view endEditing:YES];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Attach image" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction* pickFromGallery = [UIAlertAction actionWithTitle:@"Take a photo"
+                                                              style:UIAlertActionStyleDefault
+                                                            handler:^(UIAlertAction * action) {
+                                                                if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+                                                                {
+                                                                    UIImagePickerController* picker = [[UIImagePickerController alloc] init];
+                                                                    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+                                                                    picker.delegate = (id)self;
+                                                                    [self presentViewController:picker animated:YES completion:NULL];
+                                                                }
+                                                                
+                                                            }];
+    UIAlertAction* takeAPicture = [UIAlertAction actionWithTitle:@"Choose from gallery"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * action) {
+                                                             UIImagePickerController* picker = [[UIImagePickerController alloc] init];
+                                                             picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                                                             picker.delegate = (id)self;
+                                                             [self presentViewController:picker animated:YES completion:NULL];
+                                                         }];
+    UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel"
+                                                     style:UIAlertActionStyleCancel
+                                                   handler:^(UIAlertAction * action) {
+                                                   }];
+    
+    [alertController addAction:pickFromGallery];
+    [alertController addAction:takeAPicture];
+    [alertController addAction:cancel];
+    [self presentViewController:alertController animated:YES completion:nil];
+    
+}
 
 - (IBAction)BackBtnClicked:(id)sender
 {
@@ -190,6 +223,7 @@
 
 - (IBAction)btnStartTimeClicked:(id)sender
 {
+    [self.view endEditing:YES];
     _btnStartTime.tag =1;
     _btnEndTime.tag = 0;
     
@@ -201,6 +235,7 @@
 
 - (IBAction)btnEndTimeClicked:(id)sender
 {
+    [self.view endEditing:YES];
     _btnEndTime.tag = 1;
     _btnStartTime.tag =0;
     
@@ -212,6 +247,7 @@
 
 - (IBAction)btnEndDateClicked:(id)sender
 {
+    [self.view endEditing:YES];
     if (alert.tag == 2)
     {
         //   [datePicker setDate:[NSDate date]];
@@ -220,7 +256,7 @@
     
 }
 
-#pragma mark - alertview delegate
+#pragma mark - Alertview Delegate
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -264,11 +300,8 @@
         {
             alert.hidden = YES;
         }
-        
     }
-    
 }
-
 
 #pragma mark - add Classwork API
 
@@ -686,44 +719,6 @@
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
     
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"BatchID"]] forKey:@"BeachID"];
-    
-    // UIImage *getImageAfterResize  = [self resizeImage:aSelectBtn.currentBackgroundImage];
-    
-  //  UIImage *getImageAfterResize  =  [Utility imageWithImage:aSelectBtn.currentBackgroundImage scaledToSize:CGSizeMake(100, 100) isAspectRation:YES];
-    
-   /* NSData *imageData;
-    
-    imageData=[[NSData alloc] initWithData:UIImagePNGRepresentation(aSelectBtn.currentBackgroundImage)];
-    
-    NSLog(@"[before] image size: %lu--", (unsigned long)[imageData length]);
-    
-    CGFloat scale= (100*1024)/(CGFloat)[imageData length]; // For 100KB.
-    
-    UIImage *small_image=[UIImage imageWithCGImage:aSelectBtn.currentBackgroundImage.CGImage scale:scale orientation:aSelectBtn.currentBackgroundImage.imageOrientation];
-    imageData = UIImagePNGRepresentation(small_image);
-    
-    NSLog(@"[after] image size: %lu:%f", (unsigned long)[imageData length],scale);
-    */
-    
-    //Original image setup
-    //UIImage *imageToCompress = [UIImage imageNamed:@"theJoker.jpg"];
-    
-    NSData *imageToCompressData = [[NSData alloc] initWithData:UIImagePNGRepresentation(aSelectBtn.currentBackgroundImage)];
-    
-    NSLog(@"%@",[NSString stringWithFormat:@"Before Original size: %lu", (unsigned long)imageToCompressData.length]);
-    
-    
-    //Compressed image almost a 90% reduction
-   // UIImage *compressedImage = [UIImage compressImage:aSelectBtn.currentBackgroundImage
-                                       // compressRatio:0.9f];
-//    [UIImage compressRemoteImage:<#(NSString *)#> compressRatio:<#(CGFloat)#> maxCompressRatio:<#(CGFloat)#>]
-//    NSData *compressedImageData = [[NSData alloc] initWithData:UIImagePNGRepresentation(compressedImage)];
-//    
-//     NSLog(@"%@",[NSString stringWithFormat:@"After Original size: %lu", (unsigned long)compressedImageData.length]);
-    
-  // UIImage *compressedImage = [UIImage compressImage:aSelectBtn.currentBackgroundImage compressRatio:20.0 maxCompressRatio:5.0];
-   // (UIImage *)compressImage:(UIImage *)image compressRatio:(CGFloat)ratio maxCompressRatio:(CGFloat)maxRatio
-    
     
     NSData *data = UIImagePNGRepresentation(aSelectBtn.currentBackgroundImage);
     const unsigned char *bytes = [data bytes];

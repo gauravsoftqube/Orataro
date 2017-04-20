@@ -180,12 +180,12 @@
         NSArray *ary = [DBOperation selectData:@"select * from PollParticipantPage"];
         NSMutableArray *arrParticipantPageTemp = [Utility getLocalDetail:ary columnKey:@"dic_json"];
         [self manageParticipantPageList:arrParticipantPageTemp];
-
+        
         //option
         NSArray *aryOption = [DBOperation selectData:@"select * from PollParticipantPage_Votelist"];
         arrParticipantPageOption = [[NSMutableArray alloc]init];
         arrParticipantPageOption = [Utility getLocalDetail:aryOption columnKey:@"dic_json"];
-
+        
         
         if(arrParticipantPage.count == 0)
         {
@@ -434,7 +434,7 @@
                          NSString *getjsonstr = [Utility Convertjsontostring:dic];
                          [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO PollParticipantPage_Votelist (dic_json) VALUES ('%@')",getjsonstr]];
                      }
-
+                     
                      [self manageParticipantPageList:Table];
                  }
              }
@@ -650,8 +650,8 @@
                  }
                  else if([strStatus isEqualToString:@"Record delete successfully"])
                  {
-//                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dicResponce objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-//                     [alrt show];
+                     //                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dicResponce objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     //                     [alrt show];
                  }
                  else
                  {
@@ -832,7 +832,7 @@
             [lblParticipant setText:[NSString stringWithFormat:@"Participant: %@",Participant]];
             
             NSString *strMemberType=[Utility getMemberType];
-            if([strMemberType isEqualToString:@""])
+            if([strMemberType isEqualToString:@"Student"])
             {
                 NSString *EndDate = [d objectForKey:@"EndDate"];
                 EndDate = [Utility convertMiliSecondtoDate:@"dd-MM-yyyy" date:EndDate];
@@ -859,7 +859,15 @@
                     [lblsubmmisionin setTextColor:[UIColor redColor]];
                     [lblsubmmisionin setText:[NSString stringWithFormat:@"Already End"]];
                 }
+                
+                UIButton *btnDelete = (UIButton *)[cell.contentView viewWithTag:5];
+                if([[Utility getMemberType] isEqualToString:@"Student"])
+                {
+                    [btnDelete setHidden:YES];
+                    [btnDelete setFrame:CGRectMake(btnDelete.frame.origin.x, btnDelete.frame.origin.y, 0, btnDelete.frame.size.height)];
+                }
             }
+            
             return cell;
         }
         else
@@ -903,6 +911,13 @@
             EndDate = [Utility convertMiliSecondtoDate:@"dd-MM-yyyy" date:EndDate];
             UILabel *lblsubmmisionin = (UILabel *)[cell.contentView viewWithTag:7];
             [lblsubmmisionin setText:[NSString stringWithFormat:@"%@",EndDate]];
+            
+            UIButton *btnDelete = (UIButton *)[cell.contentView viewWithTag:5];
+            if([[Utility getMemberType] isEqualToString:@"Student"])
+            {
+                [btnDelete setHidden:YES];
+                [btnDelete setFrame:CGRectMake(btnDelete.frame.origin.x, btnDelete.frame.origin.y, 0, btnDelete.frame.size.height)];
+            }
             
             return cell;
         }
@@ -978,7 +993,7 @@
 {
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tblVoteList];
     NSIndexPath *indexPath = [self.tblVoteList indexPathForRowAtPoint:buttonPosition];
-
+    
     NSString *IsMultiChoice=[dicSelected_Participaint objectForKey:@"IsMultiChoice"];
     if([IsMultiChoice integerValue] == 1)
     {
@@ -1000,7 +1015,7 @@
         [arrVoteList_selected addObject:dic];
         [self.tblVoteList reloadData];
     }
-
+    
 }
 
 #pragma mark - CMPopTipViewDelegate methods
@@ -1049,15 +1064,15 @@
     [self.viewAdd setHidden:YES];
     [self.btnadd setHidden:YES];
     
-//    if([isRefresh isEqualToString:@"1"])
-//    {
-//        
-//    }
-//    else
-//    {
-//        isRefresh = @"1";
-        [self apiCallMethod_ParticipaintPage];
-//    }
+    //    if([isRefresh isEqualToString:@"1"])
+    //    {
+    //
+    //    }
+    //    else
+    //    {
+    //        isRefresh = @"1";
+    [self apiCallMethod_ParticipaintPage];
+    //    }
     
     arrFiled = [[NSMutableArray alloc]init];
     arrFiled = [arrParticipantPage mutableCopy];
@@ -1100,7 +1115,7 @@
         [alrt show];
         return;
     }
-
+    
     ResultAddPageVc *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"ResultAddPageVc"];
     vc.strSelectPollID=strdeletePollID;
     [self.navigationController pushViewController:vc animated:YES];

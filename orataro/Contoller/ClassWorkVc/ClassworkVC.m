@@ -18,13 +18,17 @@
     AppDelegate *gh;
     int c2;
     NSMutableArray *arrClassWorkList;
+    
+    NSMutableArray *arrPopup;
+    NSString *strdelete_selecteid;
 }
 @end
 
 @implementation ClassworkVC
 @synthesize aCalenderView,aView1;
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
     gh =(AppDelegate *)[UIApplication sharedApplication].delegate;
@@ -33,16 +37,44 @@
     aCalenderView.layer.borderWidth =2.0;
     aCalenderView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     
-    aView1.layer.cornerRadius = 30.0;
+    aView1.layer.cornerRadius = 20;
+   
     
-     [self commonData];
-    
-    // Do any additional setup after loading the view.
+    [self commonData];
 }
+
 -(void)commonData
 {
     self.tblClassworkList.separatorStyle=UITableViewCellSeparatorStyleNone;
-    arrClassWorkList =[[NSMutableArray alloc]init];
+    
+    //set Header Title
+    NSArray *arr=[[[Utility getCurrentUserDetail]objectForKey:@"FullName"] componentsSeparatedByString:@" "];
+    if (arr.count != 0) {
+        self.lblHeaderTitle.text=[NSString stringWithFormat:@"Classwork (%@)",[arr objectAtIndex:0]];
+    }
+    else
+    {
+        self.lblHeaderTitle.text=[NSString stringWithFormat:@"Classwork"];
+    }
+    
+    //
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refreshData) forControlEvents:UIControlEventValueChanged];
+    UITableViewController *tableViewController = [[UITableViewController alloc] init];
+    tableViewController.tableView = self.tblClassworkList;
+    tableViewController.refreshControl = refreshControl;
+
+    //
+    [self.viewDelete_Conf setHidden:YES];
+    _viewSave.layer.cornerRadius = 30.0;
+    _viewInnerSave.layer.cornerRadius = 25.0;
+    _imgCancel.image = [_imgCancel.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [_imgCancel setTintColor:[UIColor colorWithRed:40.0/255.0 green:49.0/255.0 blue:90.0/255.0 alpha:1.0]];
+}
+
+-(void)refreshData
+{
+    [self apiCallMethod];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -55,16 +87,23 @@
     {
         [self.aView1 setHidden:NO];
     }
+    
+    [self apiCallMethod];
+}
 
-    NSArray *ary = [DBOperation selectData:@"select * from ClassWorkList"];
-    //NSLog(@"ary=%@",ary);
-    
-    arrClassWorkList = [Utility getLocalDetail:ary columnKey:@"classworkJsonStr"];
-    [_tblClassworkList reloadData];
-    
-    if (arrClassWorkList.count == 0)
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+}
+
+-(void)apiCallMethod
+{
+    if ([Utility isInterNetConnectionIsActive] == false)
     {
-        if ([Utility isInterNetConnectionIsActive] == false)
+        NSMutableArray *arrLoacalDb = [DBOperation selectData:@"select * from ClassWorkList"];
+        NSMutableArray *arrListTemp = [Utility getLocalDetail:arrLoacalDb columnKey:@"classworkJsonStr"];
+        
+        if(arrListTemp.count == 0)
         {
             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [alrt show];
@@ -72,25 +111,24 @@
         }
         else
         {
-            [self apiCallFor_getClasswork:YES];
-            
+            [self ManageClassWorkList:arrListTemp];
         }
     }
     else
     {
-        arrClassWorkList = [Utility getLocalDetail:ary columnKey:@"classworkJsonStr"];
-        [_tblClassworkList reloadData];
+        NSMutableArray *arrLoacalDb = [DBOperation selectData:@"select * from ClassWorkList"];
+        NSMutableArray *arrListTemp = [Utility getLocalDetail:arrLoacalDb columnKey:@"classworkJsonStr"];
+        [self ManageClassWorkList:arrListTemp];
         
-        if ([Utility isInterNetConnectionIsActive] == false)
+        if(arrListTemp.count == 0)
         {
-            
+            [self apiCallFor_getClasswork:YES];
         }
         else
         {
             [self apiCallFor_getClasswork:NO];
         }
     }
-
 }
 
 #pragma mark - ApiCall
@@ -102,7 +140,6 @@
         [alrt show];
         return;
     }
-    
     
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_classwork,apk_GetClassWorkList_action];
     
@@ -130,9 +167,9 @@
     {
         [ProgressHUB showHUDAddedTo:self.view];
     }
-    
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
+         [self.tblClassworkList.refreshControl endRefreshing];
          [ProgressHUB hideenHUDAddedTo:self.view];
          if(!error)
          {
@@ -151,7 +188,13 @@
                  }
                  else
                  {
-                     [self ManageHomeworkList:arrResponce];
+                     [self ManageClassWorkList:arrResponce];
+                     [DBOperation executeSQL:@"delete from ClassWorkList"];
+                     for (NSMutableDictionary *dic in arrResponce)
+                     {
+                         NSString *getjsonstr = [Utility Convertjsontostring:dic];
+                         [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO ClassWorkList (classworkJsonStr) VALUES ('%@')",getjsonstr]];
+                     }
                  }
              }
              else
@@ -168,8 +211,9 @@
      }];
 }
 
--(void)ManageHomeworkList:(NSMutableArray *)arrResponce
+-(void)ManageClassWorkList:(NSMutableArray *)arrResponce
 {
+    arrClassWorkList=[[NSMutableArray alloc]init];
     NSMutableArray *mutableArray = [NSMutableArray arrayWithArray:arrResponce];
     
     for (int i=0; i< mutableArray.count; i++)
@@ -223,27 +267,87 @@
         NSArray *sortDescriptors = [NSArray arrayWithObject:sortByName];
         items = [[NSMutableArray alloc] initWithArray:[temp sortedArrayUsingDescriptors:sortDescriptors]];
         
-        
-        NSSortDescriptor * brandDescriptor = [[NSSortDescriptor alloc] initWithKey:@"DateOfClassWork" ascending:YES];
+        NSSortDescriptor * brandDescriptor = [[NSSortDescriptor alloc] initWithKey:@"DateOfClassWork" ascending:NO];
         NSArray * sortedArray3 = [items sortedArrayUsingDescriptors:@[brandDescriptor]];
-        
         
         [entry setObject:sortedArray3 forKey:@"items"];
         [arrClassWorkList addObject:entry];
     }
     
-    [DBOperation executeSQL:@"delete from ClassWorkList"];
-    for (NSMutableDictionary *dic in arrClassWorkList)
-    {
-        NSString *getjsonstr = [Utility Convertjsontostring:dic];
-        [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO ClassWorkList (classworkJsonStr) VALUES ('%@')",getjsonstr]];
-        
-    }
-    NSArray *ary = [DBOperation selectData:@"select * from ClassWorkList"];
-    arrClassWorkList = [Utility getLocalDetail:ary columnKey:@"classworkJsonStr"];
+    arrClassWorkList = [[[arrClassWorkList reverseObjectEnumerator]allObjects]mutableCopy];
     [_tblClassworkList reloadData];
     
 }
+
+-(void)apiCallFor_Delete : (BOOL)checkProgress  deleteId:(NSString *)deleteID
+{
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_notes,apk_AssociationDelete_action];
+    
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",deleteID] forKey:@"PrimaryID"];
+    
+    [param setValue:[NSString stringWithFormat:@"ClassWork"] forKey:@"AssociationType"];
+    
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
+    
+    
+    if (checkProgress == YES)
+    {
+        [ProgressHUB showHUDAddedTo:self.view];
+    }
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         
+         [ProgressHUB hideenHUDAddedTo:self.view];
+         if(!error)
+         {
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableArray *arrResponce = [[NSJSONSerialization JSONObjectWithData:data options:0 error:nil]mutableCopy];
+             
+             if([arrResponce count] != 0)
+             {
+                 NSMutableDictionary *dicResponce=[arrResponce objectAtIndex:0];
+                 NSString *strStatus=[[dicResponce objectForKey:@"message"]mutableCopy];
+                 if([strStatus isEqualToString:@"No Data Found"])
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dicResponce objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                 }
+                 else
+                 {
+                     //                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dicResponce objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     //                     [alrt show];
+                 }
+                 
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
+}
+
+
 #pragma mark - UITableView
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -284,7 +388,7 @@
     NSInteger rows = [[[arrClassWorkList objectAtIndex:section] objectForKey:@"items"] count];
     
     return rows;
-
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -306,16 +410,24 @@
     
     NSDictionary *d = [[[arrClassWorkList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
     
-  //  NSLog(@"Dic=%@",d);
-    
-    
     NSString *getdt = [d objectForKey:@"DateOfClassWork"];
+    NSString *IsRead = [d objectForKey:@"IsRead"];
+    
     NSString *getMilisecond = [Utility convertMiliSecondtoDate:@"dd/MM/yyyy" date:getdt];
     UILabel *lbHeaderDt = (UILabel *)[cell.contentView viewWithTag:3];
     
-    
     NSString *getfrmt = [Utility convertDateFtrToDtaeFtr:@"dd/MM/yyyy" newDateFtr:@"dd EEE" date:getMilisecond];
     lbHeaderDt.text = getfrmt;
+    
+    UIImageView *img = (UIImageView *)[cell.contentView viewWithTag:31];
+    if([IsRead integerValue] == 1)
+    {
+        [img setImage:[UIImage imageNamed:@"double_tick_sky_blue"]];
+    }
+    else
+    {
+        [img setImage:[UIImage imageNamed:@"tick_sky_blue"]];
+    }
     
     NSString *SubjectName = [d objectForKey:@"SubjectName"];
     NSString *DateOfFinish = [d objectForKey:@"EndTime"];
@@ -339,7 +451,7 @@
     [lblDateOfFinish setText:[NSString stringWithFormat:@"End Date: %@",[Utility convertMiliSecondtoDate:@"dd/MM/yyyy" date:DateOfFinish]]];
     
     //UILabel *lblTitle = (UILabel *)[cell.contentView viewWithTag:6];
-   // [lblTitle setText:[NSString stringWithFormat:@"%@",Title]];
+    // [lblTitle setText:[NSString stringWithFormat:@"%@",Title]];
     
     UILabel *lblGradeNameDivision = (UILabel *)[cell.contentView viewWithTag:6];
     [lblGradeNameDivision setText:[NSString stringWithFormat:@"%@ %@",GradeName,DivisionName]];
@@ -347,6 +459,12 @@
     UILabel *lblHomeWorksDetails = (UILabel *)[cell.contentView viewWithTag:7];
     [lblHomeWorksDetails setText:[NSString stringWithFormat:@"%@",ClassWorkDetails]];
     
+    UIButton *btnDelete = (UIButton *)[cell.contentView viewWithTag:5];
+    if([[Utility getMemberType] isEqualToString:@"Student"])
+    {
+        [btnDelete setHidden:YES];
+        [btnDelete setFrame:CGRectMake(btnDelete.frame.origin.x, btnDelete.frame.origin.y, 0, btnDelete.frame.size.height)];
+    }
     return cell;
 }
 
@@ -354,27 +472,88 @@
 {
     SubjectVc *b = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SubjectVc"];
     b.passVal = @"Classwork";
-    b.classworkDic = [[[arrClassWorkList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
+    b.dicSelect_detail = [[[arrClassWorkList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:b animated:YES];
 }
 
 
 #pragma mark - tbl UIButton Action
 
-- (IBAction)btnTblDeleteClasswork:(id)sender {
+- (IBAction)btnTblDeleteClasswork:(id)sender
+{
+    arrPopup = [[NSMutableArray alloc]init];
+    [arrPopup addObject:[Utility addCell_PopupView:self.viewAddPage ParentView:self.view sender:sender]];
+    
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tblClassworkList];
+    NSIndexPath *indexPath = [self.tblClassworkList indexPathForRowAtPoint:buttonPosition];
+    NSMutableDictionary *dicAddpage = [[[arrClassWorkList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
+    strdelete_selecteid=[dicAddpage objectForKey:@"ClassWorkID"];
+    [self.lblDeleteConf_Detail setText:[NSString stringWithFormat:@"%@",[dicAddpage objectForKey:@"SubjectName"]]];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (IBAction)btnDeleteConf_Cancel:(id)sender
+{
+    [self.viewDelete_Conf setHidden:YES];
 }
 
-#pragma mark - button action
+- (IBAction)btnDeleteConf_Yes:(id)sender
+{
+    [self.viewDelete_Conf setHidden:YES];
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    NSArray *ary = [DBOperation selectData:@"select * from ClassWorkList"];
+    NSMutableArray *arrTemp = [Utility getLocalDetail:ary columnKey:@"classworkJsonStr"];
+    for (int i=0;i<[arrTemp count]; i++) {
+        NSMutableDictionary *dic=[arrTemp objectAtIndex:i];
+        NSString *str=[[dic objectForKey:@"ClassWorkID"]mutableCopy];
+        if([str isEqualToString:strdelete_selecteid])
+        {
+            NSMutableDictionary *dicLocalDB=[[ary objectAtIndex:i]mutableCopy];
+            NSString *strid=[dicLocalDB objectForKey:@"id"];
+            [DBOperation executeSQL:[NSString stringWithFormat:@"delete from ClassWorkList where id = '%@'",strid]];
+            [arrTemp removeObject:dic];
+        }
+    }
+    
+    [self ManageClassWorkList:arrTemp];
+    
+    if([strdelete_selecteid length] != 0)
+    {
+        [self apiCallFor_Delete:NO deleteId:strdelete_selecteid];
+    }
+
+}
+
+#pragma mark - CMPopTipViewDelegate methods
+
+- (void)popTipViewWasDismissedByUser:(CMPopTipView *)popTipView
+{
+    [arrPopup removeObject:popTipView];
+}
+
+- (IBAction)btnDelete_popup:(id)sender
+{
+    [Utility dismissAllPopTipViews:arrPopup];
+    
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    [self.viewDelete_Conf setHidden:NO];
+}
+
+#pragma mark - UIButton Action
 
 - (IBAction)MenuBtnClicked:(UIButton *)sender
 {
     self.frostedViewController.direction = REFrostedViewControllerDirectionRight;
-    
     
     if (gh.checkview == 0)
     {
@@ -402,13 +581,13 @@
         ListSelectionVc *l = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
         [self.navigationController pushViewController:l animated:YES];
     }
-
-   
+    
+    
 }
 
 - (IBAction)btnHomeClicked:(id)sender
 {
-     [self.frostedViewController hideMenuViewController];
+    [self.frostedViewController hideMenuViewController];
     
     UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"OrataroVc"];
     

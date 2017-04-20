@@ -17,6 +17,11 @@
     int c2;
     AppDelegate *app;
     NSMutableArray *arrTodoList;
+    
+    NSMutableArray *arrPopup;
+    NSString *strdelete_selecteid;
+
+    NSMutableDictionary *dicSelected_Reminder;
 }
 @end
 
@@ -29,7 +34,7 @@
     _aCalenderView.layer.cornerRadius = 50.0;
     _aCalenderView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     _aCalenderView.layer.borderWidth = 2.0;
-    _aView1.layer.cornerRadius = 30.0;
+    _aView1.layer.cornerRadius = 20;
     [self commonData];
 }
 
@@ -49,12 +54,19 @@
     }
     self.tblTodoList.separatorStyle=UITableViewCellSeparatorStyleNone;
     
+    //
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refreshData) forControlEvents:UIControlEventValueChanged];
-    //[self.mytable addSubview:refreshControl];
     UITableViewController *tableViewController = [[UITableViewController alloc] init];
     tableViewController.tableView = self.tblTodoList;
     tableViewController.refreshControl = refreshControl;
+    
+    //
+    [self.viewDelete_Conf setHidden:YES];
+    _viewSave.layer.cornerRadius = 30.0;
+    _viewInnerSave.layer.cornerRadius = 25.0;
+    _imgCancel.image = [_imgCancel.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [_imgCancel setTintColor:[UIColor colorWithRed:40.0/255.0 green:49.0/255.0 blue:90.0/255.0 alpha:1.0]];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -71,30 +83,27 @@
 {
     if ([Utility isInterNetConnectionIsActive] == false)
     {
-        arrTodoList = [[NSMutableArray alloc]init];
-        NSArray *ary = [DBOperation selectData:@"select * from ReminderList"];
-        arrTodoList = [Utility getLocalDetail:ary columnKey:@"dic_json"];
-       
-        [_tblTodoList.refreshControl endRefreshing];
-        [self.tblTodoList reloadData];
+        NSMutableArray *arrLoacalDb = [DBOperation selectData:@"select * from ReminderList"];
+        NSMutableArray *arrListTemp = [Utility getLocalDetail:arrLoacalDb columnKey:@"dic_json"];
         
-        if(arrTodoList.count == 0)
+        if(arrListTemp.count == 0)
         {
             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [alrt show];
             return;
         }
+        else
+        {
+            [self ManageTodoList:arrListTemp];
+        }
     }
     else
     {
-        arrTodoList = [[NSMutableArray alloc]init];
-        NSArray *ary = [DBOperation selectData:@"select * from ReminderList"];
-        arrTodoList = [Utility getLocalDetail:ary columnKey:@"dic_json"];
+        NSMutableArray *arrLoacalDb = [DBOperation selectData:@"select * from ReminderList"];
+        NSMutableArray *arrListTemp = [Utility getLocalDetail:arrLoacalDb columnKey:@"dic_json"];
+        [self ManageTodoList:arrListTemp];
         
-        
-        [self.tblTodoList reloadData];
-        
-        if(arrTodoList.count == 0)
+        if(arrListTemp.count == 0)
         {
             [self apiCallFor_getReminder:YES];
         }
@@ -153,6 +162,13 @@
                  else
                  {
                      [self ManageTodoList:arrResponce];
+                     
+                     [DBOperation executeSQL:@"delete from ReminderList"];
+                     for (NSMutableDictionary *dic in arrResponce)
+                     {
+                         NSString *getjsonstr = [Utility Convertjsontostring:dic];
+                         [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO ReminderList (dic_json) VALUES ('%@')",getjsonstr]];
+                     }
                  }
              }
              else
@@ -227,31 +243,160 @@
         items = [[NSMutableArray alloc] initWithArray:[temp sortedArrayUsingDescriptors:sortDescriptors]];
         
         
-        NSSortDescriptor * brandDescriptor = [[NSSortDescriptor alloc] initWithKey:@"CreateOn" ascending:YES];
+        NSSortDescriptor * brandDescriptor = [[NSSortDescriptor alloc] initWithKey:@"CreateOn" ascending:NO];
         NSArray * sortedArray3 = [items sortedArrayUsingDescriptors:@[brandDescriptor]];
         
         
         [entry setObject:sortedArray3 forKey:@"items"];
         [arrTodoList addObject:entry];
     }
-//    NSArray *temp12 = [arrTodoList sortedArrayUsingDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"Groups" ascending:YES]]];
-//    [arrTodoList removeAllObjects];
-//    arrTodoList =[temp12 mutableCopy];
     
     arrTodoList = [[[arrTodoList reverseObjectEnumerator]allObjects]mutableCopy];
     
-    [DBOperation executeSQL:@"delete from ReminderList"];
-    
-    for (NSMutableDictionary *dic in arrTodoList)
-    {
-        NSString *getjsonstr = [Utility Convertjsontostring:dic];
-        [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO ReminderList (dic_json) VALUES ('%@')",getjsonstr]];
-        
-    }
-    
-    [_tblTodoList.refreshControl endRefreshing];
     [_tblTodoList reloadData];
 }
+
+-(void)apiCallFor_Delete : (BOOL)checkProgress  deleteId:(NSString *)deleteID
+{
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_todos,apk_DeleteToDos_action];
+    
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",deleteID] forKey:@"TodoID"];
+    
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserId"];
+    
+    
+    if (checkProgress == YES)
+    {
+        [ProgressHUB showHUDAddedTo:self.view];
+    }
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         
+         [ProgressHUB hideenHUDAddedTo:self.view];
+         if(!error)
+         {
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableArray *arrResponce = [[NSJSONSerialization JSONObjectWithData:data options:0 error:nil]mutableCopy];
+             
+             if([arrResponce count] != 0)
+             {
+                 NSMutableDictionary *dicResponce=[arrResponce objectAtIndex:0];
+                 NSString *strStatus=[[dicResponce objectForKey:@"message"]mutableCopy];
+                 if([strStatus isEqualToString:@"No Data Found"])
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dicResponce objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                 }
+                 else
+                 {
+                     //                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dicResponce objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     //                     [alrt show];
+                 }
+                 
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
+}
+
+-(void)apiCallFor_Edit
+{
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_todos,apk_SaveUpdateTodos_action];
+    
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicSelected_Reminder objectForKey:@"TodosID"]] forKey:@"EditID"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"WallID"]] forKey:@"WallID"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"BatchID"]] forKey:@"BeachID"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicSelected_Reminder objectForKey:@"Title"]] forKey:@"title"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicSelected_Reminder objectForKey:@"Details"]] forKey:@"details"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicSelected_Reminder objectForKey:@"TypeTerm"]] forKey:@"typeterm"];
+    [param setValue:[NSString stringWithFormat:@"Completed"] forKey:@"status"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicSelected_Reminder objectForKey:@"CreateOn"]] forKey:@"startdate"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicSelected_Reminder objectForKey:@"EndDate"]] forKey:@"EndDate"];
+    
+    [param setValue:[NSString stringWithFormat:@""] forKey:@"CompletDate"];
+    
+    [ProgressHUB showHUDAddedTo:self.view];
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         [ProgressHUB hideenHUDAddedTo:self.view];
+         if(!error)
+         {
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             
+             if([arrResponce count] != 0)
+             {
+                 NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                 NSString *strStatus=[dic objectForKey:@"message"];
+                 if([strStatus isEqualToString:@"Record Updated Successfully..!!!"])
+                 {
+                     [self apiCallMethod];
+                 }
+                 else
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+
+                 }
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
+}
+
 
 #pragma mark - UITableView
 
@@ -354,15 +499,86 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    ReminderVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ReminderVc"];
+    ReminderDetailVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ReminderDetailVc"];
     vc.dicSelected=[[[arrTodoList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:vc animated:YES];
-    
 }
 
-- (IBAction)btnCell_DeleteRow:(id)sender {
+#pragma mark - tbl UIButton Action
+
+- (IBAction)btnCell_DeleteRow:(id)sender
+{
+    arrPopup = [[NSMutableArray alloc]init];
+    [arrPopup addObject:[Utility addCell_PopupView:self.viewAddPage ParentView:self.view sender:sender]];
     
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tblTodoList];
+    NSIndexPath *indexPath = [self.tblTodoList indexPathForRowAtPoint:buttonPosition];
+    dicSelected_Reminder = [[[arrTodoList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
+    strdelete_selecteid=[dicSelected_Reminder objectForKey:@"TodosID"];
+    [self.lblDeleteConf_Detail setText:[NSString stringWithFormat:@"%@",[dicSelected_Reminder objectForKey:@"Title"]]];
+}
+
+- (IBAction)btnDeleteConf_Cancel:(id)sender
+{
+    [self.viewDelete_Conf setHidden:YES];
+}
+
+- (IBAction)btnDeleteConf_Yes:(id)sender
+{
+    [self.viewDelete_Conf setHidden:YES];
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    NSArray *ary = [DBOperation selectData:@"select * from ReminderList"];
+    NSMutableArray *arrTemp = [Utility getLocalDetail:ary columnKey:@"dic_json"];
+    for (int i=0;i<[arrTemp count]; i++) {
+        NSMutableDictionary *dic=[arrTemp objectAtIndex:i];
+        NSString *str=[[dic objectForKey:@"TodosID"]mutableCopy];
+        if([str isEqualToString:strdelete_selecteid])
+        {
+            NSMutableDictionary *dicLocalDB=[[ary objectAtIndex:i]mutableCopy];
+            NSString *strid=[dicLocalDB objectForKey:@"id"];
+            [DBOperation executeSQL:[NSString stringWithFormat:@"delete from ReminderList where id = '%@'",strid]];
+            [arrTemp removeObject:dic];
+        }
+    }
+    
+    [self ManageTodoList:arrTemp];
+    
+    if([strdelete_selecteid length] != 0)
+    {
+        [self apiCallFor_Delete:NO deleteId:strdelete_selecteid];
+    }
+}
+
+- (IBAction)btnDeleteCell_Popup:(id)sender
+{
+    [Utility dismissAllPopTipViews:arrPopup];
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    [self.viewDelete_Conf setHidden:NO];
+}
+
+- (IBAction)btnEditCell:(id)sender
+{
+    [Utility dismissAllPopTipViews:arrPopup];
+    ReminderVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ReminderVc"];
+    vc.dicSelected=[dicSelected_Reminder mutableCopy];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (IBAction)btnCompleteCell_popup:(id)sender
+{
+    [Utility dismissAllPopTipViews:arrPopup];
+    [self apiCallFor_Edit];
 }
 
 #pragma mark - UIButton action
@@ -370,12 +586,10 @@
 - (IBAction)MenuBtnClicked:(id)sender
 {
     self.frostedViewController.direction = REFrostedViewControllerDirectionRight;
-    
     if (app.checkview == 0)
     {
         [self.frostedViewController presentMenuViewController];
         app.checkview = 1;
-        
     }
     else
     {
@@ -394,7 +608,6 @@
 {
     [self.frostedViewController hideMenuViewController];
     UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"OrataroVc"];
-    
     [self.navigationController pushViewController:wc animated:NO];
 }
 
