@@ -8,10 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LeaveVc : UIViewController
+@interface LeaveVc : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@property (weak, nonatomic) IBOutlet UIButton *btnPendingClicked;
 
 - (IBAction)btnBack:(id)sender;
+@property (weak, nonatomic) IBOutlet UITableView *tblLeaveStatus;
+- (IBAction)btnpendClicked:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UIView *viewLeaveStatus;
 @property (weak, nonatomic) IBOutlet UILabel *lblFullName;
 @property (weak, nonatomic) IBOutlet UILabel *lblSubTitleName;
 @property (weak, nonatomic) IBOutlet UILabel *lblApplicationBy;
@@ -26,5 +30,5 @@
 @property (weak, nonatomic) IBOutlet UITextView *txtViewNote;
 @property (weak, nonatomic) IBOutlet UIButton *btnSubmit;
 - (IBAction)btnSubmit:(id)sender;
-
+@property(strong,nonatomic)NSMutableDictionary *dicAddLeave;
 @end

@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SchoolVc : UIViewController
+@interface SchoolVc : UIViewController<UIWebViewDelegate>
+
 - (IBAction)BackBtnClicked:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UIWebView *webview;
 
 @end

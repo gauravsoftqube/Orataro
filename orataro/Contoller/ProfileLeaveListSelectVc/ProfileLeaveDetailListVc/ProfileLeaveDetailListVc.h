@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ProfileLeaveDetailListVc : UIViewController
+@interface ProfileLeaveDetailListVc : UIViewController<UITableViewDelegate,UITableViewDataSource>
+
 @property (weak, nonatomic) IBOutlet UIButton *btnBack;
 - (IBAction)btnBack:(id)sender;
 @property (weak, nonatomic) IBOutlet UITableView *tblListDetail;
-
+@property (strong,nonatomic)NSMutableDictionary *dicLeaveDetails;
 @end

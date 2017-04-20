@@ -106,7 +106,8 @@
 
 -(void)apiCallFor_getStudentList:(NSString *)strInternet
 {
-    if ([Utility isInterNetConnectionIsActive] == false) {
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alrt show];
         return;
@@ -161,8 +162,7 @@
                          NSString *str=[dic objectForKey:@"id"];
                          [DBOperation executeSQL:[NSString stringWithFormat:@"DELETE FROM StudentList WHERE id = %@",str]];
                      }
-                     
-                     
+                    
                      for (NSMutableDictionary *dic in arrStudentList)
                      {
                          NSString *FullName = [dic objectForKey:@"FullName"];
@@ -172,8 +172,6 @@
                          
                          [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO StudentList(FullName,MemberID,ProfilePicture,RegistrationNo,GradeID,DivisionID,SubjectID)values('%@','%@','%@','%@','%@','%@','%@')",FullName,MemberID,ProfilePicture,RegistrationNo,strGradeID,strDivisionID,strSubjectID]];
                      }
-                     
-                     
                      [self.aStudentTable reloadData];
                  }
              }

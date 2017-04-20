@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ProfileAddUpdateListDetailListVc : UIViewController<UICollectionViewDelegate,UICollectionViewDataSource,UITableViewDelegate,UITableViewDataSource>
+@interface ProfileAddUpdateListDetailListVc : UIViewController<UICollectionViewDelegate,UICollectionViewDataSource,UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate>
 
 
 @property (weak, nonatomic) NSString *strVctoNavigate;
@@ -30,5 +30,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *txtViewNote;
 @property (weak, nonatomic) IBOutlet UIButton *btnUpdateSmileadd;
 @property (weak, nonatomic) IBOutlet UIButton *btnUpdateSmileRemove;
+@property (weak, nonatomic) IBOutlet UIImageView *imgUpdateCancel;
 @property (strong,nonatomic) NSMutableDictionary *dicHappygramDetails;
+@property (strong,nonnull)NSMutableDictionary *dicUpdateList;
 @end

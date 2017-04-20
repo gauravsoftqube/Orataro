@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ProfileStandardVc : UIViewController
+@interface ProfileStandardVc : UIViewController<UITableViewDelegate,UITableViewDataSource>
+
 @property (weak, nonatomic) IBOutlet UIButton *btnBack;
 - (IBAction)btnBack:(id)sender;
 @property (weak, nonatomic) IBOutlet UITableView *tblStatndardList;

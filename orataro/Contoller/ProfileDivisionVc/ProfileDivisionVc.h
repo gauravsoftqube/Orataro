@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ProfileDivisionVc : UIViewController
+@interface ProfileDivisionVc : UIViewController<UITableViewDelegate,UITableViewDataSource>
+
 
 @property (weak, nonatomic) IBOutlet UIButton *btnBack;
 - (IBAction)btnBack:(id)sender;

@@ -170,6 +170,8 @@
 #import "ProfileHappyGramListdetailListVc.h"
 #import "ProfileAddUpdateListDetailListVc.h"
 
+#import "ProfileLeaveListSelectVc.h"
+#import "ProfileLeaveDetailListVc.h"
 
 #pragma mark - YOUTube Video Key
 
@@ -350,6 +352,18 @@
 #define apk_StudentHappyGramSelectForListing @"StudentHappyGramSelectForListing"
 #define apk_AddHappyGramData @"AddHappyGramData"
 #define apk_UpdateSingleStudentHappyGram @"UpdateSingleStudentHappyGram"
+
+
+#pragma mark - apk_Institute
+
+#define apk_GetUserDynamicMenuData @"GetUserDynamicMenuData"
+
+
+#pragma mark - apk_leave
+
+#define apk_leave @"apk_leave.asmx"
+#define apk_LeaveAppList_action @"LeaveAppList"
+
 
 #endif /* Global_h */
 

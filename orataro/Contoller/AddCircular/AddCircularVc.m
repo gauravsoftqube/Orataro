@@ -799,8 +799,6 @@
     
     NSArray *arrTemp = [arr sortedArrayUsingDescriptors:sortDescriptors];
 
-   
-    
     subAry = [[NSMutableArray alloc]initWithArray:arrTemp];
      NSLog(@"arrTemp=%@",subAry);
     [tblCircularType reloadData];

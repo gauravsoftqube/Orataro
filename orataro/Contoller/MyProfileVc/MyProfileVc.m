@@ -111,7 +111,7 @@
     lb.text = [textary objectAtIndex:indexPath.row];
     
     UIImageView *imageView;
-   
+    
     if (indexPath.row == 0 || indexPath.row == 1 || indexPath.row == 6)
     {
         imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"next"]];
@@ -146,13 +146,13 @@
     
     ProjectVc *p1 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProjectVc"];
     
-     PhotoVc *p2 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"PhotoVc"];
+    PhotoVc *p2 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"PhotoVc"];
     
     PhotoAlbumVc *p3 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"PhotoAlbumVc"];
     
     ProfileVideoVc *p4 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfileVideoVc"];
     
-     ProfileStandardVc *p5 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfileStandardVc"];
+    ProfileStandardVc *p5 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfileStandardVc"];
     
     ProfileDivisionVc *p6 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfileDivisionVc"];
     
@@ -182,27 +182,27 @@
             
             [self.navigationController pushViewController:f animated:YES];
             break;
-        
+            
         case 3:
             
             [self.navigationController pushViewController:p2 animated:YES];
             break;
-           
+            
         case 4:
             
-           [self.navigationController pushViewController:p4 animated:YES];
+            [self.navigationController pushViewController:p4 animated:YES];
             break;
             
         case 5:
             
-             [self.navigationController pushViewController:p3 animated:YES];
+            [self.navigationController pushViewController:p3 animated:YES];
             break;
             
         case 6:
             
             [self.navigationController pushViewController:s animated:YES];
             break;
-        
+            
         case 7:
             
             aj.checkListelection = 3;
@@ -219,7 +219,7 @@
             
             // wall vc
             vc10.checkscreen = @"Institute";
-             [self.navigationController pushViewController:vc10 animated:YES];
+            [self.navigationController pushViewController:vc10 animated:YES];
             
             break;
         case 10:
@@ -239,7 +239,7 @@
         case 13:
             
             
-           [self.navigationController pushViewController:p1 animated:YES];
+            [self.navigationController pushViewController:p1 animated:YES];
             break;
             
         case 14:
@@ -280,21 +280,21 @@
 
 - (IBAction)btnHomeClicked:(id)sender
 {
-     [self.frostedViewController hideMenuViewController];
+    [self.frostedViewController hideMenuViewController];
     UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"OrataroVc"];
     
     [self.navigationController pushViewController:wc animated:NO];
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 
 @end

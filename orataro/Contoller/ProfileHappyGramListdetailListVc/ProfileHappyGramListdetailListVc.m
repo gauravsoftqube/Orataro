@@ -158,8 +158,9 @@
 {
     ProfileAddUpdateListDetailListVc *l = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfileAddUpdateListDetailListVc"];
     l.strVctoNavigate =@"Edit";
+    
+    l.dicUpdateList = [[[aryGetHappyGramList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];;
     l.dicHappygramDetails = _dicHappyGrameList;
-
     [self.navigationController pushViewController:l animated:YES];
     
 }
