@@ -752,7 +752,6 @@
 			isa = PBXGroup;
 			children = (
 				093227781E38750D00138A2B /* orataro */,
-				093227771E38750D00138A2B /* Products */,
 				C360CD381E4B47FD00761ABE /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -763,6 +762,7 @@
 				093227761E38750D00138A2B /* orataro.app */,
 			);
 			name = Products;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		093227781E38750D00138A2B /* orataro */ = {
@@ -787,6 +787,7 @@
 				093227851E38750D00138A2B /* Assets.xcassets */,
 				C37EED081E6949A1004ACCCC /* Main.storyboard */,
 				093227871E38750D00138A2B /* LaunchScreen.storyboard */,
+				093227771E38750D00138A2B /* Products */,
 				0932278A1E38750D00138A2B /* Info.plist */,
 				093227791E38750D00138A2B /* Supporting Files */,
 			);
