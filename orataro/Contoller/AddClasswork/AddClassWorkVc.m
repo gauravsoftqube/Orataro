@@ -119,6 +119,7 @@
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
+   // NSData *imageData = UIImageJPEGRepresentation(aSelectBtn.currentBackgroundImage,1.0);
     UIImage *selectImage = info[UIImagePickerControllerOriginalImage];
     [aSelectBtn setBackgroundImage:selectImage forState:UIControlStateNormal];
     [picker dismissViewControllerAnimated:YES completion:nil];
@@ -682,6 +683,7 @@
      }];*/
     
      //NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_classwork,apk_CreateClassWork_action];
+ 
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_classwork,apk_CreateClassWork_action];
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
@@ -720,6 +722,12 @@
     
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"BatchID"]] forKey:@"BeachID"];
     
+    
+    [param setValue:[NSString stringWithFormat:@"%@.png",[Utility randomImageGenerator]] forKey:@"FileName"];
+    [param setValue:[NSString stringWithFormat:@"IMAGE"] forKey:@"FileType"];
+    
+    [param setValue:[NSString stringWithFormat:@""] forKey:@"FileMineType"];
+    
     NSData *data = UIImagePNGRepresentation(aSelectBtn.currentBackgroundImage);
     const unsigned char *bytes = [data bytes];
     NSUInteger length = [data length];
@@ -729,10 +737,6 @@
         [byteArray addObject:[NSNumber numberWithUnsignedChar:bytes[i]]];
     }
     [param setValue:byteArray forKey:@"File"];
-    [param setValue:[NSString stringWithFormat:@"%@.png",[Utility randomImageGenerator]] forKey:@"FileName"];
-    [param setValue:[NSString stringWithFormat:@"IMAGE"] forKey:@"FileType"];
-    
-    [param setValue:[NSString stringWithFormat:@""] forKey:@"FileMineType"];
     
     [ProgressHUB showHUDAddedTo:self.view];
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)

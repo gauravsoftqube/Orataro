@@ -183,6 +183,7 @@
 #pragma mark - Api Url And Name List
 
 #define URL_Api  @"http://orataro.com/Services/"
+//#define URL_Api  @"http://beta.orataro.com/Services/"
 
 #define URL_CSS_File  @"http://orataro.com/Content/bootstrap.css"
 
@@ -208,18 +209,21 @@
 #define apk_ImageUrl @"http://orataro.com/DataFiles"
 #define apk_ImageUrlFor_HomeworkDetail @"http://orataro.com"
 
+
+#pragma mark - Ganara wall
+
+#define apk_generalwall  @"apk_generalwall.asmx"
+#define apk_GetGeneralWallData_action  @"GetGeneralWallData"
+
+
 #pragma mark - Circular
 
 #define apk_circular  @"apk_circular.asmx"
 #define apk_GetCircularList_action  @"GetCircularList"
 
-
 #define apk_gradedivisionsubject @"apk_gradedivisionsubject.asmx"
-
 #define apk_CreateCircularWithMulty_action @"CreateCircularWithMulty"
-
 #define apk_GetGradeDivisionSubjectbyTeacher_action @"GetGradeDivisionSubjectbyTeacher"
-
 
 #pragma mark - Homework
 
