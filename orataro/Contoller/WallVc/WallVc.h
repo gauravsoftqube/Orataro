@@ -10,15 +10,45 @@
 #import "REFrostedViewController.h"
 
 @interface WallVc : UIViewController<UITableViewDelegate,UITableViewDataSource>
-- (IBAction)MenuBtnClicked:(id)sender;
-- (IBAction)WhatsyourmindBtnClicked:(id)sender;
-@property (strong, nonatomic) IBOutlet UIView *aTableHeaderView;
 
-@property (weak, nonatomic) IBOutlet UITableView *aWallTableView;
+- (IBAction)MenuBtnClicked:(id)sender;
+
 - (IBAction)HomeBtnClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *HomeBtn;
 @property (weak, nonatomic) IBOutlet UIButton *DisplayPopupView;
 @property(strong,nonatomic)NSString *checkscreen;
 @property (weak, nonatomic) IBOutlet UIButton *MenuBtn;
+@property (weak, nonatomic) IBOutlet UILabel *lblheaderTitle;
+
+@property (weak, nonatomic) IBOutlet UITableView *aWallTableView;
+
+// tbl Header view
+@property (strong, nonatomic) IBOutlet UIView *aTableHeaderView;
+- (IBAction)WhatsyourmindBtnClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UIImageView *imgUser_Tbl_HeaderView;
+
+//viewShare Pop up
+@property (strong, nonatomic) IBOutlet UIView *viewshare_Popup;
+- (IBAction)btnPublic_SharePopup:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *btnPublic_SharePopup;
+- (IBAction)btnOnlyMe_SharePopup:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *btnOnlyMe_SharePopup;
+- (IBAction)btnFriends_SharePopup:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *btnFriends_SharePopup;
+- (IBAction)btnSpecialFriend_SharePopup:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *btnSpecialFriend_SharePopup;
+
+
+//view SpecialFriends Pop up
+@property (weak, nonatomic) IBOutlet UIView *viewSpecialFriends_Popup;
+@property (weak, nonatomic) IBOutlet UIButton *btnBack_SpecialFriends;
+- (IBAction)btnBack_SpecialFriends:(id)sender;
+- (IBAction)btnDone_SpecialFriends:(id)sender;
+@property (weak, nonatomic) IBOutlet UIView *viewSearch_SpecialFriends;
+@property (weak, nonatomic) IBOutlet UITextField *txtSearch_SpecialFriends;
+@property (weak, nonatomic) IBOutlet UIButton *btnCheckAll_SpecialFriends;
+- (IBAction)btnCheckAll_SpecialFriends:(id)sender;
+@property (weak, nonatomic) IBOutlet UITableView *tblSpecialFriendsList;
+
 
 @end

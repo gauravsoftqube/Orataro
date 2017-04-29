@@ -9,17 +9,66 @@
 #import <UIKit/UIKit.h>
 
 @interface WallCustomeCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *aFirstViewheight;
-@property (weak, nonatomic) IBOutlet UIView *aThirdView;
-@property (weak, nonatomic) IBOutlet UIView *aMiddleView;
-@property (weak, nonatomic) IBOutlet UIView *aFirstView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *aShareViewWidth;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *aCommentViewWidth;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *aUnlikeViewWidth;
-@property (weak, nonatomic) IBOutlet UIView *aUnlikeView;
-@property (weak, nonatomic) IBOutlet UIView *aLikeView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *aLikeViewWidth;
-@property (weak, nonatomic) IBOutlet UIView *aCommentView;
-@property (weak, nonatomic) IBOutlet UIView *aShareView;
+
+//Header
+@property (weak, nonatomic) IBOutlet UIImageView *imgProfilePic;
+@property (weak, nonatomic) IBOutlet UILabel *lblProfileName;
+@property (weak, nonatomic) IBOutlet UILabel *lblProfileDetail;
+@property (weak, nonatomic) IBOutlet UILabel *lblProfile_PostType;
+
+
+
+//Post Detail
+@property (weak, nonatomic) IBOutlet UILabel *lblPostDetail;
+
+@property (weak, nonatomic) IBOutlet UIImageView *imgPost;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imgPost_Height;
+
+
+
+//count
+@property (weak, nonatomic) IBOutlet UILabel *lblLike_Count;
+@property (weak, nonatomic) IBOutlet UILabel *lblUnLike_Count;
+@property (weak, nonatomic) IBOutlet UILabel *lblComment_Count;
+
+
+//count height 15
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lblLike_Count_Height;
+
+
+
+//Like
+@property (weak, nonatomic) IBOutlet UIImageView *imgLike;
+@property (weak, nonatomic) IBOutlet UILabel *lblLike;
+@property (weak, nonatomic) IBOutlet UIButton *btnLike;
+
+
+//like Height 30
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewLike_Height;
+
+
+//UnLike
+@property (weak, nonatomic) IBOutlet UIImageView *imgUnlike;
+@property (weak, nonatomic) IBOutlet UILabel *lblUnlike;
+@property (weak, nonatomic) IBOutlet UIButton *btnUnlike;
+
+
+
+//Comment
+@property (weak, nonatomic) IBOutlet UIImageView *imgComment;
+@property (weak, nonatomic) IBOutlet UILabel *lblComment;
+@property (weak, nonatomic) IBOutlet UIButton *btnComment;
+
+
+//Share
+@property (weak, nonatomic) IBOutlet UIImageView *imgShare;
+@property (weak, nonatomic) IBOutlet UILabel *lblShare;
+@property (weak, nonatomic) IBOutlet UIButton *btnShare;
+
+
+
+
+
 
 @end
