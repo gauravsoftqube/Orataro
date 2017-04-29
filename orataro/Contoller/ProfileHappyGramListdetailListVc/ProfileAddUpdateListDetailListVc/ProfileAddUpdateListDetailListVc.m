@@ -65,7 +65,7 @@
         [self.viewUpdate setHidden:YES];
         [self.tblAddUpdateList setHidden:NO];
         [self.view bringSubviewToFront:_tblAddUpdateList];
-        // [self apiCallFor_createHappygramList: YES];
+         [self apiCallFor_createHappygramList: YES];
         //add
     }
     else

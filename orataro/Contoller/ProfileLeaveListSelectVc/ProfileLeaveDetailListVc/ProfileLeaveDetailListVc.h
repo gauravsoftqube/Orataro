@@ -13,5 +13,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnBack;
 - (IBAction)btnBack:(id)sender;
 @property (weak, nonatomic) IBOutlet UITableView *tblListDetail;
+@property (weak, nonatomic) IBOutlet UIView *viewAddbtn;
+- (IBAction)btnAddClicked:(id)sender;
 @property (strong,nonatomic)NSMutableDictionary *dicLeaveDetails;
 @end

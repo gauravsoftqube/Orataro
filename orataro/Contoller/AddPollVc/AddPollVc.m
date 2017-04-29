@@ -378,7 +378,8 @@
                      arrAnsOption = [[NSMutableArray alloc]init];
                      if([arrPollOption count] != 0)
                      {
-                         for (NSMutableDictionary *dic in arrPollOption) {
+                         for (NSMutableDictionary *dic in arrPollOption)
+                         {
                              NSString *strOpt=[dic objectForKey:@"Option"];
                              NSMutableDictionary *dic=[[NSMutableDictionary alloc]init];
                              [dic setObject:strOpt forKey:@"ans"];

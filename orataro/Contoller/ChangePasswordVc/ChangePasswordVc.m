@@ -30,6 +30,7 @@
 
 -(void)commonData
 {
+   // NSLog(@"ViewController=%@",[self.navigationController viewControllers]);
     [Utility setLeftViewInTextField:self.txtOldPassword imageName:@"password" leftSpace:0 topSpace:0 size:30];
     [Utility setLeftViewInTextField:self.txtNewPassword imageName:@"password" leftSpace:0 topSpace:0 size:30];
     [Utility setLeftViewInTextField:self.txtConformPassword imageName:@"password" leftSpace:0 topSpace:0 size:30];
@@ -56,6 +57,13 @@
     }
 }
 
+#pragma mark - alerview delegate
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    
+}
+
 #pragma mark - UIButton Action
 
 - (IBAction)btnBack:(id)sender
@@ -63,7 +71,24 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (IBAction)btnChangePassword:(id)sender {
+- (IBAction)btnChangePassword:(id)sender
+{
+    if([Utility validateBlankField:_txtOldPassword.text])
+    {
+        [WToast showWithText:@"Please enter oldpassword"];
+        return;
+    }
+    if([Utility validateBlankField:_txtNewPassword.text])
+    {
+        [WToast showWithText:@"Please enter newpassword"];
+        return;
+    }
+    if([Utility validateBlankField:_txtConformPassword.text])
+    {
+        [WToast showWithText:@"Please enter confirmpassword"];
+        return;
+    }
+    [self api_ChangePassword];
     
 }
 
@@ -95,10 +120,11 @@
         [self.txtNewPassword setSecureTextEntry:NO];
         NewpwdHS=YES;
     }
-
+    
 }
 
-- (IBAction)btnConfirmPwdShowHidden:(id)sender {
+- (IBAction)btnConfirmPwdShowHidden:(id)sender
+{
     if(ConfirmpwdHS)
     {
         [self.btnConfirmPwdShowHidden setImage:[UIImage imageNamed:@"hide_pass"] forState:UIControlStateNormal];
@@ -112,4 +138,87 @@
         ConfirmpwdHS=YES;
     }
 }
+-(void)api_ChangePassword
+{
+    if ([Utility isInterNetConnectionIsActive] == false) {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_login,apk_ChangePassword_action];
+    
+    //#define apk_login  @"apk_login.asmx"
+    //apk_ChangePassword_action
+    
+    //    <RoleName>string</RoleName>
+    //    <ClientID>guid</ClientID>
+    //    <InstituteID>guid</InstituteID>
+    //    <StudentCode>string</StudentCode>
+    //    <NewPass>string</NewPass>
+    //    <OldPass>string</OldPass>
+    //    <MobileNumber>string</MobileNumber>
+    
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"RoleName "]] forKey:@"RoleName"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+    [param setValue:@"" forKey:@"StudentCode"];
+    [param setValue:_txtNewPassword.text forKey:@"NewPass"];
+    [param setValue:_txtOldPassword.text forKey:@"OldPass"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MobileNumber"]] forKey:@"MobileNumber"];
+    
+    [ProgressHUB showHUDAddedTo:self.view];
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         [ProgressHUB hideenHUDAddedTo:self.view];
+         if(!error)
+         {
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             NSLog(@"%@",arrResponce);
+             if([arrResponce count] != 0)
+             {
+                 NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                 NSString *strStatus=[dic objectForKey:@"message"];
+                 if([strStatus isEqualToString:@"Data updated successfully."])
+                 {
+//                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//                     [alrt show];
+                     
+                     WallVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
+                    // vc.checkscreen = @"FromLogin";
+                     //app.checkview = 0;
+                     [self.navigationController pushViewController:vc animated:YES];
+                     
+                 }
+                 else
+                 {
+                     
+                     
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                     
+                 }
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
+    
+}
+
+
 @end

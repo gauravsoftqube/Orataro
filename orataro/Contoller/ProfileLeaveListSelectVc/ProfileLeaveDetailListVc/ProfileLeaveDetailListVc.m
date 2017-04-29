@@ -24,16 +24,31 @@
     
     // _tblListDetail.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
     _tblListDetail.separatorStyle=UITableViewCellSeparatorStyleNone;
+    _viewAddbtn.layer.cornerRadius = 30.0;
+    
     // Do any additional setup after loading the view.
 }
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
+     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    
+    if([[dicCurrentUser objectForKey:@"MemberType"] isEqualToString:@"Student"])
+    {
+        _viewAddbtn.hidden = NO;
+    }
+    else
+    {
+        _viewAddbtn.hidden = YES;
+    }
+    
+    
     NSLog(@"Dictionary=%@",_dicLeaveDetails);
     
     //CREATE TABLE "LeaveDetailList" ("id" INTEGER PRIMARY KEY  NOT NULL , "LeaveJsonStr" VARCHAR)
@@ -164,6 +179,7 @@
     //LeaveVc
     LeaveVc *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"LeaveVc"];
     vc.dicAddLeave = [[[arrLeaveList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
+    vc.dicLeaveDetails = _dicLeaveDetails;
     
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -376,4 +392,9 @@
 }
 
 
+- (IBAction)btnAddClicked:(id)sender
+{
+    ProfileStudentLeaveVc *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"ProfileStudentLeaveVc"];
+    [self.navigationController pushViewController:vc animated:YES];
+}
 @end

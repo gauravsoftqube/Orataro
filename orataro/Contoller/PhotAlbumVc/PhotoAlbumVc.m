@@ -369,40 +369,54 @@
                      }
                      else
                      {
-                         NSArray *getExtension = [strSaveImg componentsSeparatedByString:@"."];
+                        // NSArray *getExtension = [strSaveImg componentsSeparatedByString:@"."];
                          
-                         if ([[getExtension objectAtIndex:1] isEqualToString:@"jpg"] || [[getExtension objectAtIndex:1] isEqualToString:@"JPG"] ||
-                             [[getExtension objectAtIndex:1] isEqualToString:@"jpeg"] )
+                         NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
+                         [imageData writeToFile:imagePath atomically:NO];
+                         
+                         if (![imageData writeToFile:imagePath atomically:NO])
                          {
-                             NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
-                             [imageData writeToFile:imagePath atomically:NO];
-                             
-                             if (![imageData writeToFile:imagePath atomically:NO])
-                             {
-                                 NSLog(@"Failed to cache image data to disk");
-                             }
-                             else
-                             {
-                                 [imageData writeToFile:imagePath atomically:NO];
-                                 NSLog(@"the cachedImagedPath is %@",imagePath);
-                             }
+                             NSLog(@"Failed to cache image data to disk");
                          }
                          else
                          {
-                             NSData *imageData = UIImagePNGRepresentation(image);
                              [imageData writeToFile:imagePath atomically:NO];
-                             
-                             if (![imageData writeToFile:imagePath atomically:NO])
-                             {
-                                 NSLog(@"Failed to cache image data to disk");
-                             }
-                             else
-                             {
-                                 [imageData writeToFile:imagePath atomically:NO];
-                                 NSLog(@"the cachedImagedPath is %@",imagePath);
-                             }
-                             
+                             NSLog(@"the cachedImagedPath is %@",imagePath);
                          }
+
+                         
+//                         if ([[getExtension objectAtIndex:1] isEqualToString:@"jpg"] || [[getExtension objectAtIndex:1] isEqualToString:@"JPG"] ||
+//                             [[getExtension objectAtIndex:1] isEqualToString:@"jpeg"] )
+//                         {
+//                             NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
+//                             [imageData writeToFile:imagePath atomically:NO];
+//                             
+//                             if (![imageData writeToFile:imagePath atomically:NO])
+//                             {
+//                                 NSLog(@"Failed to cache image data to disk");
+//                             }
+//                             else
+//                             {
+//                                 [imageData writeToFile:imagePath atomically:NO];
+//                                 NSLog(@"the cachedImagedPath is %@",imagePath);
+//                             }
+//                         }
+//                         else
+//                         {
+//                             NSData *imageData = UIImagePNGRepresentation(image);
+//                             [imageData writeToFile:imagePath atomically:NO];
+//                             
+//                             if (![imageData writeToFile:imagePath atomically:NO])
+//                             {
+//                                 NSLog(@"Failed to cache image data to disk");
+//                             }
+//                             else
+//                             {
+//                                 [imageData writeToFile:imagePath atomically:NO];
+//                                 NSLog(@"the cachedImagedPath is %@",imagePath);
+//                             }
+//                             
+//                         }
                          //jpg
                          
                      }
@@ -532,40 +546,54 @@
                          }
                          else
                          {
-                             NSArray *getExtension = [strSaveImg componentsSeparatedByString:@"."];
+                             NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
+                             [imageData writeToFile:imagePath atomically:NO];
                              
-                             if ([[getExtension objectAtIndex:1] isEqualToString:@"jpg"] || [[getExtension objectAtIndex:1] isEqualToString:@"JPG"] ||
-                                 [[getExtension objectAtIndex:1] isEqualToString:@"jpeg"] )
+                             if (![imageData writeToFile:imagePath atomically:NO])
                              {
-                                 NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
-                                 [imageData writeToFile:imagePath atomically:NO];
-                                 
-                                 if (![imageData writeToFile:imagePath atomically:NO])
-                                 {
-                                     NSLog(@"Failed to cache image data to disk");
-                                 }
-                                 else
-                                 {
-                                     [imageData writeToFile:imagePath atomically:NO];
-                                     NSLog(@"the cachedImagedPath is %@",imagePath);
-                                 }
+                                 NSLog(@"Failed to cache image data to disk");
                              }
                              else
                              {
-                                 NSData *imageData = UIImagePNGRepresentation(image);
                                  [imageData writeToFile:imagePath atomically:NO];
-                                 
-                                 if (![imageData writeToFile:imagePath atomically:NO])
-                                 {
-                                     NSLog(@"Failed to cache image data to disk");
-                                 }
-                                 else
-                                 {
-                                     [imageData writeToFile:imagePath atomically:NO];
-                                     NSLog(@"the cachedImagedPath is %@",imagePath);
-                                 }
-                                 
+                                 NSLog(@"the cachedImagedPath is %@",imagePath);
                              }
+
+                             
+//                             NSArray *getExtension = [strSaveImg componentsSeparatedByString:@"."];
+//                             
+//                             if ([[getExtension objectAtIndex:1] isEqualToString:@"jpg"] || [[getExtension objectAtIndex:1] isEqualToString:@"JPG"] ||
+//                                 [[getExtension objectAtIndex:1] isEqualToString:@"jpeg"] )
+//                             {
+//                                 NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
+//                                 [imageData writeToFile:imagePath atomically:NO];
+//                                 
+//                                 if (![imageData writeToFile:imagePath atomically:NO])
+//                                 {
+//                                     NSLog(@"Failed to cache image data to disk");
+//                                 }
+//                                 else
+//                                 {
+//                                     [imageData writeToFile:imagePath atomically:NO];
+//                                     NSLog(@"the cachedImagedPath is %@",imagePath);
+//                                 }
+//                             }
+//                             else
+//                             {
+//                                 NSData *imageData = UIImagePNGRepresentation(image);
+//                                 [imageData writeToFile:imagePath atomically:NO];
+//                                 
+//                                 if (![imageData writeToFile:imagePath atomically:NO])
+//                                 {
+//                                     NSLog(@"Failed to cache image data to disk");
+//                                 }
+//                                 else
+//                                 {
+//                                     [imageData writeToFile:imagePath atomically:NO];
+//                                     NSLog(@"the cachedImagedPath is %@",imagePath);
+//                                 }
+//                                 
+//                             }
                              //jpg
                              
                          }

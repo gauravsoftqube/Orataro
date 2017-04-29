@@ -33,6 +33,9 @@
     
     // //HelveticaNeueLTStd-Roman 20.0
     
+    _txtSearchTextfield.delegate = self;
+    [Utility SearchTextView:_viewSearch];
+    
     // Do any additional setup after loading the view.
 }
 
@@ -139,6 +142,45 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+#pragma mark - textfield delegate
+
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if (textField.text.length == 0)
+    {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 [self viewWillAppear:YES];
+    }
+}
+-(void)textFieldDidChange :(UITextField *)theTextField
+{
+    NSLog( @"text changed: %@", theTextField.text);
+}
+
+- (IBAction)btnSearchClicked:(id)sender
+{
+    if(getdata.count>0)
+    {
+        NSMutableArray *tmpary = [[NSMutableArray alloc]init];
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.BlogTitle contains[c] %@",_txtSearchTextfield.text];
+        
+        tmpary = [NSMutableArray arrayWithArray:[getdata filteredArrayUsingPredicate:predicate]];
+        
+        if (tmpary.count > 0)
+        {
+            getdata = [[NSMutableArray alloc]initWithArray:tmpary];
+            [aBlogTable  reloadData];
+        }
+        else
+        {
+            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"No Data Found" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alrt show];
+        }
+    }
+    
+}
+
+
 #pragma mark - ApiCall
 
 -(void)apiCallFor_BlogetDetail : (BOOL)checkProgress
@@ -244,5 +286,6 @@
     // Pass the selected object to the new view controller.
 }
 */
+
 
 @end

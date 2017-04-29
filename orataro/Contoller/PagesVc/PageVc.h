@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PageVc : UIViewController<UITableViewDelegate,UITableViewDataSource>
+@interface PageVc : UIViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *aPageTableview;
 - (IBAction)BAckBtnClicked:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UIView *viewSearch;
+- (IBAction)btnSearchClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UITextField *txtSearch;
 
 @end

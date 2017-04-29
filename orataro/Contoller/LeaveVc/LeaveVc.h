@@ -31,4 +31,5 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnSubmit;
 - (IBAction)btnSubmit:(id)sender;
 @property(strong,nonatomic)NSMutableDictionary *dicAddLeave;
+@property (strong,nonatomic)NSMutableDictionary *dicLeaveDetails;
 @end

@@ -38,23 +38,12 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-    //CREATE TABLE "FriendRequestList" ("id" INTEGER PRIMARY KEY  NOT NULL , "FriendRequestJsonStr" VARCHAR, "FriendRequestImageStr" VARCHAR, "flag" VARCHAR)
-    
-    //NSArray *ary = [DBOperation selectData:@"select * from FriendList"];
-    //aryFriendRequest = [Utility getLocalDetail:ary columnKey:@"FriendJsonStr"];
-    
-   // aryTemp = [DBOperation selectData:@"select id,flag,ImageStr from FriendList"];
-    
-   // NSLog(@"ary=%@",arygetIdflag);
-    
     NSArray *ary = [DBOperation selectData:@"select * from FriendRequestList"];
     aryFriendRequest = [Utility getLocalDetail:ary columnKey:@"FriendRequestJsonStr"];
     
     aryTemp = [DBOperation selectData:@"select id,flag,FriendRequestImageStr from FriendRequestList"];
     
-    NSLog(@"ary=%@",aryFriendRequest);
-    
-    [_tblFriendList reloadData];
+    //[_tblFriendList reloadData];
     
     if (aryFriendRequest.count == 0)
     {
@@ -74,7 +63,7 @@
     {
         if ([Utility isInterNetConnectionIsActive] == true)
         {
-           [self apiCallFor_GetFriendRequestList:NO];
+            [self apiCallFor_GetFriendRequestList:NO];
         }
         else
         {
@@ -82,7 +71,7 @@
         }
         
     }
-
+    
 }
 
 
@@ -116,7 +105,7 @@
     [btnDecline.layer setBorderColor:[UIColor colorWithRed:34/255.0f green:49/255.0f blue:89/255.0f alpha:1.0f].CGColor];
     [btnDecline.layer setBorderWidth:1];
     
-    NSLog(@"get ary=%@",aryTemp);
+    NSLog(@"get ary=%@",aryFriendRequest);
     
     /*
      aryFriendRequest = [Utility getLocalDetail:ary columnKey:@"FriendRequestImageStr"];
@@ -135,7 +124,7 @@
      RequestID = "39c2ba9f-7ece-416b-b641-25e58cdee987";
      RequestWallID = "d7313e13-dc79-4fe5-bc47-977c1fce2980";
      }
-
+     
      */
     
     //tag 2
@@ -168,12 +157,12 @@
         
         lb3.text = [NSString stringWithFormat:@"%@",[[aryFriendRequest objectAtIndex:indexPath.row]objectForKey:@"DivisionName"]];
     }
-
+    
     
     
     UIImageView *img = (UIImageView *)[cell.contentView viewWithTag:2];
-
-     NSString *documentDirectory=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    
+    NSString *documentDirectory=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     
     if ([[[aryTemp objectAtIndex:indexPath.row]objectForKey:@"flag"] isEqualToString:@"0"])
     {
@@ -214,7 +203,7 @@
     else
     {
         //fetch from local
-       
+        
         
         NSString *setImage = [NSString stringWithFormat:@"%@",[[aryTemp objectAtIndex:indexPath.row]objectForKey:@"FriendRequestImageStr"]];
         
@@ -228,11 +217,11 @@
         img.image = image;
         
     }
-
+    
     //tag 2
     
-   // UILabel *lb = (UILabel *)[cell.contentView viewWithTag:2];
-   // lb.text = [[aryFriendRequest objectAtIndex:indexPath.row]objectForKey:@"FullName"];
+    // UILabel *lb = (UILabel *)[cell.contentView viewWithTag:2];
+    // lb.text = [[aryFriendRequest objectAtIndex:indexPath.row]objectForKey:@"FullName"];
     
     //tag 3
     
@@ -246,10 +235,25 @@
 
 #pragma mark - UIButton Action
 
-- (IBAction)btntblAccept:(id)sender {
+- (IBAction)btntblAccept:(id)sender
+{
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:_tblFriendList];
+    NSIndexPath *indexPath = [_tblFriendList indexPathForRowAtPoint:buttonPosition];
+    
+    NSLog(@"Data=%@",[aryFriendRequest objectAtIndex:indexPath.row]);
+    
+    [self apiCallFor_AcceptFriendList:YES :[aryFriendRequest objectAtIndex:indexPath.row]];
+    
 }
 
-- (IBAction)btntblDecline:(id)sender {
+- (IBAction)btntblDecline:(id)sender
+{
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:_tblFriendList];
+    NSIndexPath *indexPath = [_tblFriendList indexPathForRowAtPoint:buttonPosition];
+    NSLog(@"Data=%@",[aryFriendRequest objectAtIndex:indexPath.row]);
+    
+    [self apiCallFor_DeclineFriendList:YES :[aryFriendRequest objectAtIndex:indexPath.row]];
+    
 }
 
 - (IBAction)btnBack:(id)sender
@@ -297,23 +301,42 @@
             [self apiCallFor_SearchFriendList:YES];
         }
     }
-
+    
 }
 
-#pragma mark - FriendRequest API
+#pragma mark - alertview delegate
 
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == 400) {
+        
+        if (buttonIndex == 0)
+        {
+           
+          //  [self apiCallFor_GetFriendRequestList:YES];
+        }
+    }
+    if (alertView.tag == 500)
+    {
+        if (buttonIndex == 0)
+        {
+           //  [self.navigationController popViewControllerAnimated:YES];
+           // [self apiCallFor_GetFriendRequestList:YES];
+        }
+    }
 
+}
 #pragma mark - ApiCall
 
 -(void)apiCallFor_GetFriendRequestList : (BOOL)checkProgress
 {
-//    if ([Utility isInterNetConnectionIsActive] == false)
-//    {
-//        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-//        [alrt show];
-//        return;
-//    }
-
+    //    if ([Utility isInterNetConnectionIsActive] == false)
+    //    {
+    //        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    //        [alrt show];
+    //        return;
+    //    }
+    
     //MemberID=f1a6d89d-37dc-499a-9476-cb83f0aba0f2
     //ClientID=d79901a7-f9f7-4d47-8e3b-198ede7c9f58
     //InstituteID=4f4bbf0e-858a-46fa-a0a7-bf116f537653
@@ -335,6 +358,7 @@
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
          [ProgressHUB hideenHUDAddedTo:self.view];
+         
          if(!error)
          {
              NSString *strArrd=[dicResponce objectForKey:@"d"];
@@ -347,11 +371,18 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
+                     _viewSearch.hidden = YES;
+                     [DBOperation executeSQL:@"delete from FriendRequestList"];
+                     [aryFriendRequest removeAllObjects];
+                     [_tblFriendList reloadData];
+                     
                      UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
+                     
                  }
                  else
                  {
+                     _viewSearch.hidden = NO;
                      [self ManageCircularList:arrResponce];
                      
                  }
@@ -377,8 +408,8 @@
     //CREATE TABLE "FriendRequestList" ("id" INTEGER PRIMARY KEY  NOT NULL , "FriendRequestJsonStr" VARCHAR, "FriendRequestImageStr" VARCHAR, "flag" VARCHAR)
     
     
-  //  aryFriendRequest = [[NSMutableArray alloc]init];
-   // aryTemp = [[NSMutableArray alloc]init];
+    //  aryFriendRequest = [[NSMutableArray alloc]init];
+    // aryTemp = [[NSMutableArray alloc]init];
     
     [DBOperation executeSQL:@"delete from FriendRequestList"];
     
@@ -481,6 +512,180 @@
     
 }
 
+#pragma mark - api for Accept
 
+-(void)apiCallFor_AcceptFriendList : (BOOL)checkProgress :(NSMutableDictionary *)dic
+{
+    NSLog(@"Dic=%@",dic);
+    
+    //#define apk_friends @"apk_friends.asmx"
+    //#define apk_ApproveRequest_action @"ApproveRequest"
+    //#define apk_DeleteRequest_action @"DeleteRequest"
+    
+    //    <FriendListID>guid</FriendListID>
+    //    <RequestID>guid</RequestID>
+    //    <RequestWallID>guid</RequestWallID>
+    
+    //    <InstituteID>guid</InstituteID>
+    //    <ClientID>guid</ClientID>
+    //    <MemberID>guid</MemberID>
+    //    <WallID>guid</WallID>
+    //    <UserID>guid</UserID>
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_friends,apk_ApproveRequest_action];
+    
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dic objectForKey:@"FriendListID"]] forKey:@"FriendListID"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dic objectForKey:@"RequestID"]] forKey:@"RequestID"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dic objectForKey:@"RequestWallID"]] forKey:@"RequestWallID"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"WallID"]] forKey:@"WallID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
+    
+    
+    if (checkProgress == YES)
+    {
+        [ProgressHUB showHUDAddedTo:self.view];
+    }
+    
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         [ProgressHUB hideenHUDAddedTo:self.view];
+         if(!error)
+         {
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             
+             if([arrResponce count] != 0)
+             {
+                 NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                 NSString *strStatus=[dic objectForKey:@"message"];
+                 
+                 if([strStatus isEqualToString:@"No Data Found"])
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                 }
+                 else
+                 {
+                   //  UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    //   alrt.tag = 500;
+                    // [alrt show];
+                     
+                    [self.navigationController popViewControllerAnimated:YES];
+                     
+                 }
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
+    
+}
+
+#pragma mark - api for Decline
+
+-(void)apiCallFor_DeclineFriendList : (BOOL)checkProgress :(NSMutableDictionary *)dic
+{
+    NSLog(@"Dic=%@",dic);
+    
+    //#define apk_friends @"apk_friends.asmx"
+    //#define apk_ApproveRequest_action @"ApproveRequest"
+    //#define apk_DeleteRequest_action @"DeleteRequest"
+    
+    //    <FriendListID>guid</FriendListID>
+    //    <RequestID>guid</RequestID>
+    //    <RequestWallID>guid</RequestWallID>
+    
+    //    <InstituteID>guid</InstituteID>
+    //    <ClientID>guid</ClientID>
+    //    <MemberID>guid</MemberID>
+    //    <WallID>guid</WallID>
+    //    <UserID>guid</UserID>
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_friends,apk_DeleteRequest_action];
+    
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dic objectForKey:@"FriendListID"]] forKey:@"FriendListID"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dic objectForKey:@"RequestID"]] forKey:@"RequestID"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dic objectForKey:@"RequestWallID"]] forKey:@"RequestWallID"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"WallID"]] forKey:@"WallID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
+    
+    
+    if (checkProgress == YES)
+    {
+        [ProgressHUB showHUDAddedTo:self.view];
+    }
+    
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         [ProgressHUB hideenHUDAddedTo:self.view];
+         if(!error)
+         {
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             
+             if([arrResponce count] != 0)
+             {
+                 NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                 NSString *strStatus=[dic objectForKey:@"message"];
+                 
+                 if([strStatus isEqualToString:@"No Data Found"])
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                 }
+                 else
+                 {
+                     
+                      [self.navigationController popViewControllerAnimated:YES];
+//                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//                     alrt.tag = 400;
+//                     [alrt show];
+                     
+                     
+                 }
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
+
+    
+}
 
 @end

@@ -8,12 +8,33 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CreateProjectVc : UIViewController
+@interface CreateProjectVc : UIViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
+@property (weak, nonatomic) IBOutlet UITextField *txtSearchTextfield;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *LbSelectTeacherHeight;
 
 @property (weak, nonatomic) IBOutlet UIButton *btnBack;
 - (IBAction)btnBack:(id)sender;
 @property (weak, nonatomic) IBOutlet UILabel *aHeaderTitleLb;
+- (IBAction)btnSelectStudentMember:(id)sender;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *LbProjectMemberTeacher;
+@property (weak, nonatomic) IBOutlet UIView *viewSelectStandard;
+- (IBAction)btnSelectTeacherMember:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *viewSelect;
+- (IBAction)btnDoneClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *lbSelectTeacher;
+- (IBAction)btnEndDateClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *lbSelectStudent;
+- (IBAction)btnStartDateClicked:(id)sender;
+- (IBAction)btnCancelClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UIView *viewSelectDivision;
+@property (weak, nonatomic) IBOutlet UIView *viewStudentGroupMember;
+@property (weak, nonatomic) IBOutlet UILabel *lbStudentGroupHeader;
+@property (weak, nonatomic) IBOutlet UITableView *tblStandard;
+@property (weak, nonatomic) IBOutlet UITableView *tblDivision;
+@property (weak, nonatomic) IBOutlet UITableView *tblStudentGroupMember;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *LbProjectStudentHeight;
 @property (weak, nonatomic) IBOutlet UIButton *btnSubmit;
 - (IBAction)btnSumbit:(id)sender;
 @property (weak, nonatomic) IBOutlet UITextField *txtProjectTitle;
@@ -26,6 +47,6 @@
 @property (weak, nonatomic) IBOutlet UITableView *tblEditProjectMemberList;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tblEditProjectMemberList_Height;//105
 @property(strong,nonatomic)NSString *projectvar;
-
+@property (strong,nonatomic)NSMutableDictionary *dicCreateProject;
 
 @end

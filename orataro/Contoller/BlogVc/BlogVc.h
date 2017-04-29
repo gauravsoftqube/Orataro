@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BlogVc : UIViewController<UITableViewDelegate,UITableViewDataSource>
+@interface BlogVc : UIViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *aBlogTable;
 - (IBAction)BackBtnClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UIView *viewSearch;
+- (IBAction)btnSearchClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UITextField *txtSearchTextfield;
 
 @end

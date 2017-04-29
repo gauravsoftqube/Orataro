@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ChangePasswordVc : UIViewController
+@interface ChangePasswordVc : UIViewController<UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *btnBack;
 - (IBAction)btnBack:(id)sender;

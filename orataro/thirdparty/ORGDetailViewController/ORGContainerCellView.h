@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Global.h"
 
 @interface ORGContainerCellView : UIView
 - (void)setCollectionData:(NSArray *)collectionData;
