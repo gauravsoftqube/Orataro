@@ -110,7 +110,8 @@ int c2= 0;
     {
         self.lblheaderTitle.text=[NSString stringWithFormat:@"Wall"];
     }
-}
+    
+   }
 
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -148,6 +149,7 @@ int c2= 0;
     
     
     [self apiCallMethod];
+
 }
 
 -(void)refreshData

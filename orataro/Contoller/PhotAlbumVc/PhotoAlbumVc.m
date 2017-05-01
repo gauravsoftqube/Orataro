@@ -307,9 +307,8 @@
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    NSLog(@"tag=%ld",(long)aFirstBtn.tag);
-    NSLog(@"Secon=%ld",(long)aSecondBtn.tag);
+ //   NSLog(@"tag=%ld",(long)aFirstBtn.tag);
+  //  NSLog(@"Secon=%ld",(long)aSecondBtn.tag);
     
     if (aFirstBtn.tag ==1)
     {
