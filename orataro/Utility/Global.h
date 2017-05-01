@@ -91,8 +91,8 @@
 
 
 #define SUBJECT @"Please Enter Subject"
-#define STUDENTGROUP @"Please Enter Group Member of Student"
-#define TEACHERGROUP @"Please Enter Group Member of Teacher"
+#define STUDENTGROUP @"Please Select Group Member of Student"
+#define TEACHERGROUP @"Please Select Group Member of Teacher"
 
 
 #pragma mark - IMPORT UIViewController
@@ -179,15 +179,28 @@
 #import "FBProgressView.h"
 #import "ResultAddPageCell.h"
 
-
 #import "ProfileHappyGramListdetailListVc.h"
 #import "ProfileAddUpdateListDetailListVc.h"
-
 
 #import "ProfileLeaveListSelectVc.h"
 #import "ProfileLeaveDetailListVc.h"
 
 #import "ReminderDetailVc.h"
+
+#import "ProfileStudentLeaveVc.h"
+
+#import "profileSearchFriend.h"
+
+
+#import "ProjectVc.h"
+#import "ORGDetailViewController.h"
+#import "ORGContainerCell.h"
+#import "ORGContainerCellView.h"
+#import "CreateProjectVc.h"
+
+#import "ORGContainerCellView.h"
+#import "ORGArticleCollectionViewCell.h"
+#import <QuartzCore/QuartzCore.h>
 
 #import "AFNetworking.h"
 #import "UIImageView+AFNetworking.h"
@@ -195,6 +208,7 @@
 #import "IQKeyboardManager.h"
 
 #import "RapidVoiceCommands.h"
+
 
 
 #pragma mark - YOUTube Video Key
@@ -207,7 +221,6 @@
 //#define URL_Api  @"http://beta.orataro.com/Services/"
 
 #define URL_CSS_File  @"http://orataro.com/Content/bootstrap.css"
-
 
 #pragma mark - Register
 
@@ -224,6 +237,7 @@
 #define apk_CheckSentOTPData_action  @"CheckSentOTPData"
 #define apk_UpdateUserPassword_action  @"UpdateUserPassword"
 #define apk_GetProjectType_action @"GetProjectType"
+#define apk_ChangePassword_action @"ChangePassword"
 
 #pragma mark - Image Url
 
@@ -296,6 +310,9 @@
 #define apk_GetFriendList @"GetFriendList"
 #define apk_Searchfriend_action @"Searchfriend"
 #define apk_GetFriendRequestList_action @"GetFriendRequestList"
+#define apk_SendFriendRequest_action @"SendFriendRequest"
+#define apk_ApproveRequest_action @"ApproveRequest"
+#define apk_DeleteRequest_action @"DeleteRequest"
 
 
 #pragma mark - apk_Photo
@@ -395,16 +412,29 @@
 #define apk_AddHappyGramData @"AddHappyGramData"
 #define apk_UpdateSingleStudentHappyGram @"UpdateSingleStudentHappyGram"
 
-
 #pragma mark - apk_Institute
 
 #define apk_GetUserDynamicMenuData @"GetUserDynamicMenuData"
-
 
 #pragma mark - apk_leave
 
 #define apk_leave @"apk_leave.asmx"
 #define apk_LeaveAppList_action @"LeaveAppList"
+
+
+#pragma mark - apk_projects
+
+#define apk_projects @"apk_projects.asmx"
+
+#define apk_GetProjectList_action  @"GetProjectList"
+#define apk_PrjectDataByID_action  @"PrjectDataByID"
+#define apk_saveupdateproject_action @"saveupdateproject"
+#define apk_DeleteProjects_action @"DeleteProjects"
+#define apk_RemoveProjectGroupMembers @"RemoveProjectGroupMembers"
+
+#pragma mark - apk_getStandardList
+
+#define apk_GetGradeDivisionSubject @"GetGradeDivisionSubject"
 
 
 #endif /* Global_h */

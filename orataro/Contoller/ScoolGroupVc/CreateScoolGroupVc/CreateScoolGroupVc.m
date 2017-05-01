@@ -556,8 +556,6 @@
         NSString *strTableColumn = [arySet componentsJoinedByString:@","];
         strGroupStduentID = [aryID componentsJoinedByString:@","];
         
-        
-        
         if(aryStudentNameTemp.count == 0)
         {
             _lbStudentMember.text = @"Group Member Student";

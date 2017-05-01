@@ -200,6 +200,7 @@
 		C37FEE9F1E93A2BD00CE32F5 /* UIScrollView+BottomRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C37FEE9E1E93A2BD00CE32F5 /* UIScrollView+BottomRefreshControl.m */; };
 		C381726B1E517DCD004AB189 /* SettingVcViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C381726A1E517DCD004AB189 /* SettingVcViewController.m */; };
 		C381726F1E518756004AB189 /* FAQvc.m in Sources */ = {isa = PBXBuildFile; fileRef = C381726E1E518756004AB189 /* FAQvc.m */; };
+		C382C0CE1EAA27E400AD8912 /* ProfileStudentLeaveVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C382C0CD1EAA27E300AD8912 /* ProfileStudentLeaveVc.m */; };
 		C38ABFA81E487DF900689426 /* StudentListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C38ABFA71E487DF900689426 /* StudentListViewController.m */; };
 		C38ABFAC1E48936100689426 /* PTCommuniVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C38ABFAB1E48936100689426 /* PTCommuniVc.m */; };
 		C38ABFB01E48A65900689426 /* PostChatVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C38ABFAF1E48A65900689426 /* PostChatVc.m */; };
@@ -597,6 +598,8 @@
 		C381726A1E517DCD004AB189 /* SettingVcViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingVcViewController.m; sourceTree = "<group>"; };
 		C381726D1E518756004AB189 /* FAQvc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FAQvc.h; sourceTree = "<group>"; };
 		C381726E1E518756004AB189 /* FAQvc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FAQvc.m; sourceTree = "<group>"; };
+		C382C0CC1EAA27E300AD8912 /* ProfileStudentLeaveVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileStudentLeaveVc.h; sourceTree = "<group>"; };
+		C382C0CD1EAA27E300AD8912 /* ProfileStudentLeaveVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileStudentLeaveVc.m; sourceTree = "<group>"; };
 		C38ABFA61E487DF900689426 /* StudentListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StudentListViewController.h; sourceTree = "<group>"; };
 		C38ABFA71E487DF900689426 /* StudentListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StudentListViewController.m; sourceTree = "<group>"; };
 		C38ABFAA1E48936100689426 /* PTCommuniVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTCommuniVc.h; sourceTree = "<group>"; };
@@ -1994,6 +1997,8 @@
 			children = (
 				C38AF1171E6043A500E4F40B /* LeaveVc.h */,
 				C38AF1181E6043A500E4F40B /* LeaveVc.m */,
+				C382C0CC1EAA27E300AD8912 /* ProfileStudentLeaveVc.h */,
+				C382C0CD1EAA27E300AD8912 /* ProfileStudentLeaveVc.m */,
 			);
 			name = LeaveVc;
 			path = ../LeaveVc;
@@ -2300,6 +2305,7 @@
 				C391E4F31E40C33C007BE2EA /* AddClassWorkVc.m in Sources */,
 				C3645AE71E5BFE980012F4CF /* FSCalendarDelegationFactory.m in Sources */,
 				C367247B1E5480ED007E9326 /* GlobalVc.m in Sources */,
+				C382C0CE1EAA27E400AD8912 /* ProfileStudentLeaveVc.m in Sources */,
 				C35C07371E485346004C55EB /* ClassVcCell.m in Sources */,
 				0757D4DB1EA0D4FC00474F98 /* ResultAddPageVc.m in Sources */,
 				C36B587C1E5EE82B00DE7464 /* ORGContainerCell.m in Sources */,

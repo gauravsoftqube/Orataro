@@ -28,7 +28,6 @@
     aryFetchData = [[NSMutableArray alloc]init];
     aryTempStoreData = [[NSMutableArray alloc]init];
     
-    
     _viewDeletePopup.hidden = YES;
     
     _imgCancel.image = [_imgCancel.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -49,7 +48,7 @@
     _viewSave.layer.cornerRadius = 30.0;
     _viewInnerSave.layer.cornerRadius = 25.0;
     
-    // _btnSave.layer.masksToBounds = YES;
+    //_btnSave.layer.masksToBounds = YES;
     
     // Do any additional setup after loading the view.
     [self commonData];
@@ -135,20 +134,25 @@
     [img1 setTintColor:[UIColor colorWithRed:40.0/255.0 green:49.0/255.0 blue:90.0/255.0 alpha:1.0]];
     img1.contentMode = UIViewContentModeScaleAspectFit;
     
+   // img1.layer.cornerRadius = 30.0;
+   
     
     //UIButton *btn =(UIButton *)[cell.contentView viewWithTag:10];
     _btnSave.tag = indexPath.row;
     
-    //btn.tag = indexPath.row;
+   // btn.tag = indexPath.row;
     
     UIImageView *img2 = (UIImageView *)[cell.contentView viewWithTag:5];
-    img2.layer.cornerRadius = 30.0;
+   
     img2.layer.masksToBounds = YES;
     
     
     UIImageView *img = (UIImageView *)[cell.contentView viewWithTag:1];
     img.contentMode = UIViewContentModeScaleAspectFit;
-    
+    img.layer.cornerRadius = 30.0;
+    img.layer.masksToBounds = YES;
+    img.layer.borderWidth = 2.0;
+    img.layer.borderColor = [UIColor lightGrayColor].CGColor;
     
     UILabel *lb= (UILabel *)[cell.contentView viewWithTag:2];
     lb.text = [[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"GroupTitle"];
@@ -175,13 +179,13 @@
     {
         if ([Utility isInterNetConnectionIsActive] == true)
         {
-            NSLog(@"data=%@",[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"GroupImage"]]);
+            NSLog(@"data=%@",[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"GroupImage"]]);
             
             // [cell2 setContentMode:UIViewContentModeScaleAspectFit];
             
             NSLog(@"url=%@",[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"GroupImage"]]]);
             
-            [img sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",apk_ImageUrlFor_HomeworkDetail,[[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"GroupImage"]]] placeholderImage:[UIImage imageNamed:@"no_img"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL)
+            [img sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"GroupImage"]]] placeholderImage:[UIImage imageNamed:@"no_img"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL)
              {
                  // CREATE TABLE "SchoolGroupList" ("id" INTEGER PRIMARY KEY  NOT NULL , "jsonStr" VARCHAR, "ImageJsonstr" VARCHAR, "flag" VARCHAR)
                  
@@ -303,7 +307,7 @@
         [alrt show];
         return;
     }
-
+    
     p.scoolgroup = 2;
     CreateScoolGroupVc *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"CreateScoolGroupVc"];
     vc.dicCreateSchoolGroup = [aryFetchData objectAtIndex:indexPath.row];
@@ -316,13 +320,17 @@
     //NSIndexPath *indexPath = [self.tblScoolGroupList indexPathForRowAtPoint:buttonPosition];
     
     _viewDeletePopup.hidden = NO;
-    [_tblScoolGroupList bringSubviewToFront:_viewDeletePopup];
+    [self.view bringSubviewToFront:_viewDeletePopup];
 }
 
 
 #pragma mark - UIButton Action
 
 - (IBAction)btnSaveClicked:(id)sender
+{
+}
+
+- (IBAction)btnSave1Clicked:(id)sender
 {
     UIButton *btn = (UIButton *)sender;
     
@@ -337,11 +345,12 @@
     }
     else
     {
-        
+          _viewDeletePopup.hidden = YES;
         NSLog(@"Fetch=%@",[[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"GropuID"]);
         
         [self apiCallFor_DeleteGroupList:[[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"GropuID"] row:[[NSString stringWithFormat:@"%ld",btn.tag] intValue]];
     }
+
 }
 
 - (IBAction)btnCancelClicked:(id)sender
@@ -351,7 +360,8 @@
 
 - (IBAction)DeleteBtnClicked:(id)sender
 {
-    
+    _viewDeletePopup.hidden = NO;
+    [self.view bringSubviewToFront:_viewDeletePopup];
     
 }
 
@@ -421,9 +431,9 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                    // [_tblScoolGroupList reloadData];
-                     //[aryFetchData removeAllObjects];
-                    // [aryTempStoreData removeAllObjects];
+                      [_tblScoolGroupList reloadData];
+                     [aryFetchData removeAllObjects];
+                      [aryTempStoreData removeAllObjects];
                      
                      UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
@@ -491,8 +501,7 @@
     
     aryTempStoreData = [DBOperation selectData:@"select id,flag,ImageJsonstr from SchoolGroupList"];
     
-    _viewDeletePopup.hidden = YES;
-    
+
     [_tblScoolGroupList reloadData];
 }
 
@@ -547,7 +556,7 @@
                          [self apiCallFor_GetGroupList:YES];
                      }
                      
-                }
+                 }
              }
              else
              {

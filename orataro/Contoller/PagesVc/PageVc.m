@@ -29,6 +29,10 @@
     
     aPageTableview.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
     aPageTableview.separatorStyle = UITableViewCellSeparatorStyleNone;
+
+    _txtSearch.delegate = self;
+    
+    [Utility SearchTextView:_viewSearch];
     
     // Do any additional setup after loading the view.
 }
@@ -130,13 +134,52 @@
     
 }
 
+#pragma mark - textfield delegate
+
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if (textField.text.length == 0)
+    {
+        [self viewWillAppear:YES];
+    }
+}
+-(void)textFieldDidChange :(UITextField *)theTextField
+{
+    NSLog( @"text changed: %@", theTextField.text);
+}
+
 #pragma mark - button action
 
 - (IBAction)BAckBtnClicked:(UIButton *)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
+- (IBAction)btnSearchClicked:(id)sender
+{
+  //  NSMutableArray *nameary;
 
+        if(aryTitle.count>0)
+        {
+            NSMutableArray *tmpary = [[NSMutableArray alloc]init];
+            
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.PageTitle contains[c] %@",_txtSearch.text];
+            
+            tmpary = [NSMutableArray arrayWithArray:[aryTitle filteredArrayUsingPredicate:predicate]];
+            
+            if (tmpary.count > 0)
+            {
+                aryTitle = [[NSMutableArray alloc]initWithArray:tmpary];
+                [aPageTableview  reloadData];
+            }
+            else
+            {
+                UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"No Data Found" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alrt show];
+            }
+        }
+       
+    
+}
 
 #pragma mark - ApiCall
 
@@ -239,6 +282,8 @@
  // Pass the selected object to the new view controller.
  }
  */
+
+
 
 
 @end

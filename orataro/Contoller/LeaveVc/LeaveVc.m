@@ -28,7 +28,9 @@
     [self commonData];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
+    _tblLeaveStatus.separatorStyle = UITableViewCellSeparatorStyleNone;
     
+    strSetPreApplication =@"0";
 }
 
 - (void)didReceiveMemoryWarning
@@ -41,6 +43,7 @@
 {
     NSLog(@"Data=%@",_dicAddLeave);
     
+    NSLog(@"Dat=%@",_dicLeaveDetails);
     
     _lblFullName.text = [_dicAddLeave objectForKey:@"ApplicationBY"];
     _lblSubTitleName.text = [_dicAddLeave objectForKey:@"ReasonForLeave"];
@@ -49,9 +52,9 @@
     
     NSArray *ary = [str componentsSeparatedByString:@""];
     
-    _lblApplicationBy.text = [ary objectAtIndex:0];
+    _lblApplicationBy.text = [ary objectAtIndex:0] ;
     
-   // NSString *StartDate=[Utility convertMiliSecondtoDate:@"MM-dd-yyyy" date:[dicPoll objectForKey:@"StartDate"]];
+    // NSString *StartDate=[Utility convertMiliSecondtoDate:@"MM-dd-yyyy" date:[dicPoll objectForKey:@"StartDate"]];
     
     _lblApprovedOn.text = [Utility convertMiliSecondtoDate:@"dd-MM-yyyy" date:[_dicAddLeave objectForKey:@"ApprovedOn"]];
     
@@ -68,31 +71,38 @@
     if (checkPerApplication == YES)
     {
         [_btnPreApplication setImage:[UIImage imageNamed:@"checkboxblue"] forState:UIControlStateNormal];
+        checkPerApplication = NO;
     }
     else
     {
         [_btnPreApplication setImage:[UIImage imageNamed:@"checkboxunselected"] forState:UIControlStateNormal];
+        checkPerApplication = YES;
     }
-    //checkboxblue
-    //checkboxunselected
     
-    /*
-     
-     @property (weak, nonatomic) IBOutlet UIView *viewLeaveStatus;
-     @property (weak, nonatomic) IBOutlet UILabel *lblFullName;
-     @property (weak, nonatomic) IBOutlet UILabel *lblSubTitleName;
-     @property (weak, nonatomic) IBOutlet UILabel *lblApplicationBy;
-     @property (weak, nonatomic) IBOutlet UILabel *lblApprovedOn;
-     @property (weak, nonatomic) IBOutlet UILabel *lblStartDate;
-     @property (weak, nonatomic) IBOutlet UILabel *lblEndDate;
-     @property (weak, nonatomic) IBOutlet UILabel *lblTeacherName;
-     @property (weak, nonatomic) IBOutlet UILabel *lblApplicationDate;
-     @property (weak, nonatomic) IBOutlet UIButton *btnPreApplication;
-     - (IBAction)btnPreApplication:(id)sender;
-     @property (weak, nonatomic) IBOutlet UILabel *lblLeaveStatus;
-     @property (weak, nonatomic) IBOutlet UITextView *txtViewNote;
-     @property (weak, nonatomic) IBOutlet UIButton *btnSubmit;
-     */
+    NSDate *date1 = [NSDate date];
+    
+    NSString *dateStr = [Utility convertMiliSecondtoDate:@"dd-MM-yyyy" date:[_dicAddLeave objectForKey:@"StartDate"]];
+    
+    // Convert string to date object
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"dd-MM-yyyy"];
+    NSDate *date2 = [dateFormat dateFromString:dateStr];
+    
+    if ([date1 compare:date2] == NSOrderedDescending)
+    {
+        NSLog(@"date1 is later than date2");
+        // _btnSubmit.hidden = YES;
+    }
+    else if ([date1 compare:date2] == NSOrderedAscending)
+    {
+        NSLog(@"date1 is earlier than date2");
+        // _btnSubmit.hidden = NO;
+    }
+    else
+    {
+        NSLog(@"dates are the same");
+        // _btnSubmit.hidden = NO;
+    }
     
 }
 
@@ -115,24 +125,27 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"hrllll"];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LeaveCell"];
     
     if (cell ==nil)
     {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"hrllll"];
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"LeaveCell"];
     }
     
-    cell.textLabel.text = [aryStatusAry objectAtIndex:indexPath.row];
+    UILabel *lb= (UILabel *)[cell.contentView viewWithTag:2];
+    lb.text = [aryStatusAry objectAtIndex:indexPath.row];
     
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 40.0;
+    return 50.0;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    _lblLeaveStatus.text = [aryStatusAry objectAtIndex:indexPath.row];
+    _viewLeaveStatus.hidden =YES;
 }
 #pragma mark - button action
 
@@ -152,18 +165,138 @@
     if ([checkImageData isEqualToData:propertyImageData])
     {
         strSetPreApplication =@"0";
+        [_btnPreApplication setImage:[UIImage imageNamed:@"checkboxunselected"] forState:UIControlStateNormal];
     }
     else
     {
         strSetPreApplication =@"1";
+        [_btnPreApplication setImage:[UIImage imageNamed:@"checkboxblue"] forState:UIControlStateNormal];
     }
 }
 - (IBAction)btnSubmit:(id)sender
 {
+    [self apk_saveLeave:YES];
 }
 - (IBAction)btnpendClicked:(id)sender
 {
     _viewLeaveStatus.hidden = NO;
     [self.view bringSubviewToFront:_viewLeaveStatus];
+}
+
+#pragma mark - call API
+
+-(void)apk_saveLeave : (BOOL)checkProgress
+{
+    
+    
+    //#define apk_SaveUpdateTodos_action  @"SaveUpdateTodos"
+    //#define apk_leave @"apk_leave.asmx"
+    
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:                            nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_leave,apk_SaveUpdateTodos_action];
+    
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+   // 8733884646 
+    //qwerty/123456
+    
+    //    <UserID>guid</UserID>
+    //    <ClientID>guid</ClientID>
+    //    <InstituteID>guid</InstituteID>
+    //    <MemberID>guid</MemberID>
+    //    <GradeID>guid</GradeID>
+    //    <DivisionID>guid</DivisionID>
+    //    <StartDate>string</StartDate>
+    //    <EndDate>string</EndDate>
+    //    <SchoolLeaveNoteID>guid</SchoolLeaveNoteID>
+    //    <PostByType>string</PostByType>
+    //    <TeacherID>guid</TeacherID>
+    //    <IsPreApplication>boolean</IsPreApplication>
+    //    <ReasonForLeave>string</ReasonForLeave>
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
+
+    
+    if([[dicCurrentUser objectForKey:@"MemberType"] isEqualToString:@"Student"])
+    {
+        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"DivisionID"]] forKey:@"DivisionID"];
+        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"GradeID"]] forKey:@"GradeID"];
+    }
+    else
+    {
+        
+        [param setValue:[NSString stringWithFormat:@"%@",[_dicLeaveDetails objectForKey:@"DivisionID"]] forKey:@"DivisionID"];
+        
+        [param setValue:[NSString stringWithFormat:@"%@",[_dicLeaveDetails objectForKey:@"GradeID"]] forKey:@"GradeID"];
+        
+        
+    }
+    [param setValue:_lblStartDate.text forKey:@"StartDate"];
+    
+    [param setValue:_lblEndDate.text forKey:@"EndDate"];
+
+    [param setValue:[_dicAddLeave objectForKey:@"SchoolLeaveNoteID"] forKey:@"SchoolLeaveNoteID"];
+    
+    [param setValue:[NSNumber numberWithBool:strSetPreApplication] forKey:@"IsPreApplication"];
+    
+    [param setValue:[_dicAddLeave objectForKey:@"ReasonForLeave"] forKey:@"ReasonForLeave"];
+    
+    [param setValue:[dicCurrentUser objectForKey:@"PostByType"] forKey:@"PostByType"];
+    
+    // <PostByType>string</PostByType>
+    
+    if (checkProgress == YES)
+    {
+        [ProgressHUB showHUDAddedTo:self.view];
+    }
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         [ProgressHUB hideenHUDAddedTo:self.view];
+         if(!error)
+         {
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             
+             if([arrResponce count] != 0)
+             {
+                 NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                 NSString *strStatus=[dic objectForKey:@"message"];
+                 if([strStatus isEqualToString:@"No Data Found"])
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                 }
+                 else
+                 {
+                 }
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
+    
+    
 }
 @end

@@ -163,7 +163,7 @@ int multipleUser = 0;
                     }
                     else
                     {
-                        if ([BypassLogin isEqualToString:@"NO"])
+                        if ([BypassLogin isEqualToString:@"YES"])
                         {
                             NSArray *instituteID = @[
                                                      @"4F4BBF0E-858A-46FA-A0A7-BF116F537653",
@@ -286,15 +286,18 @@ int multipleUser = 0;
     
     currentDeviceId =[[NSUserDefaults standardUserDefaults]objectForKey:@"currentDeviceId"];
     
+    [[NSUserDefaults standardUserDefaults]setObject:@"8d103a40eb95a3b95335ee64d2a5bf7a958fdffd3d029d6d3c0cc3dc6eca8298" forKey:@"DeviceToken"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+    
     NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"DeviceToken"];
     
-    NSLog(@"token **********************=%@",token);
+   // NSLog(@"token **********************=%@",token);
     
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
     
     [param setValue:[NSString stringWithFormat:@"%@",self.aPhonenumberTextField.text] forKey:@"UserName"];
     
-    [param setValue:[NSString stringWithFormat:@"%@",self.aPasswordTextField.text] forKey:@"Password"];
+    [param setValue:[NSString stringWithFormat:@"%@",self.aPasswordTextField.text] forKey:@"Password"];                                                                      
     [param setValue:[NSString stringWithFormat:@"%@",token] forKey:@"GCMID"];
     [param setValue:[NSString stringWithFormat:@"%@",currentDeviceId] forKey:@"DivRegistID"];
     
@@ -343,12 +346,59 @@ int multipleUser = 0;
                          }
                          if (multipleUser == 0)
                          {
-                             [WToast showWithText:@"User not found"];
+                             if ([BypassLogin isEqualToString:@"NO"])
+                             {
+                                 NSArray *instituteID = @[
+                                                          @"4F4BBF0E-858A-46FA-A0A7-BF116F537653",
+                                                          @"4f4bbf0e-858a-46fa-a0a7-bf116f537653",
+                                                          @"3ccb88d9-f4bf-465d-b85a-5402871a0144",
+                                                          @"3CCB88D9-F4BF-465D-B85A-5402871A0144",
+                                                          ];
+                                 
+                                 for (NSMutableDictionary *dic in arrResponce)
+                                 {
+                                     
+                                     if ([instituteID containsObject:[dic objectForKey:@"InstituteID"]])
+                                     {
+                                         [arrSelectInstiUser addObject:dic];
+                                         
+                                     }
+                                     else if([[dic objectForKey:@"DeviceIdentity"] isEqualToString:currentDeviceId])
+                                     {
+                                         [arrSelectInstiUser addObject:dic];
+                                     }
+                                     
+                                 }
+                                 if (arrSelectInstiUser.count == 0)
+                                 {
+                                     [WToast showWithText:@"User not found"];
+                                 }
+                                 else
+                                 {
+                                     for (NSMutableDictionary *dic in arrSelectInstiUser)
+                                     {
+                                         NSString *getjsonstr = [Utility Convertjsontostring:dic];
+                                         
+                                         [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Login (dic_json_string,ActiveUser) VALUES ('%@','%@')",getjsonstr,@"0"]];
+                                     }
+                                     [[NSUserDefaults standardUserDefaults]setObject:_aPhonenumberTextField.text forKey:@"MobileNumber"];
+                                     [[NSUserDefaults standardUserDefaults]setObject:_aPasswordTextField.text forKey:@"Password"];
+                                     [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
+                                     [[NSUserDefaults standardUserDefaults]synchronize];
+                                     
+                                     UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SwitchAcoountVC"];
+                                     [self.navigationController pushViewController:wc animated:YES];
+                                 }
+
+                             }
+                             else
+                             {
+                                   [WToast showWithText:@"User not found"];
+                             }
                          }
                          else if (multipleUser == 1)
                          {
                              [self checkMultipleUser:arrResponce];
-                             
                          }
                          else
                          {
@@ -477,6 +527,7 @@ int multipleUser = 0;
             WallVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
             vc.checkscreen = @"FromLogin";
             app.checkview = 0;
+            
             [self.navigationController pushViewController:vc animated:YES];
         }
         else

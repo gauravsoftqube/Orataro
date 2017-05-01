@@ -14,6 +14,13 @@
 
 @property (strong, nonatomic) ORGDetailViewController *detailViewController;
 @property (weak, nonatomic) IBOutlet UIView *AddBtn;
+@property (weak, nonatomic) IBOutlet UIView *viewDeletePopup;
+- (IBAction)btnSaveClicked:(id)sender;
+- (IBAction)btnCancelClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *btnSave;
+@property (weak, nonatomic) IBOutlet UIImageView *imgCancel;
+@property (weak, nonatomic) IBOutlet UIView *viewSave;
+@property (weak, nonatomic) IBOutlet UIView *viewInnerSave;
 
 @property (strong, nonatomic) NSArray *sampleData;
 

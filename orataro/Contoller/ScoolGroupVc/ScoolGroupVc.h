@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UIView *imgCancelicon;
 - (IBAction)btnSaveClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIImageView *imgCancel;
+- (IBAction)btnSave1Clicked:(id)sender;
 
 - (IBAction)btnCancelClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *btnBackHeader;

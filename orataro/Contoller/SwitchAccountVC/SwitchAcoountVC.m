@@ -25,8 +25,7 @@
     fetchDataAry = [[NSMutableArray alloc]init];
     
     _tblSwitchAccount.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self fetchDataofUser];
-
+    
     
     // Do any additional setup after loading the view.
 }
@@ -38,7 +37,8 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    
+    [self fetchDataofUser];
+
 }
 
 
@@ -65,22 +65,20 @@
     UIImageView *img = (UIImageView *)[cell.contentView viewWithTag:2];
     //blank-user
     
+   // NSLog(@"Ary=%@",fetchDataAry);
+    
     [img sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",apk_ImageUrl,[[fetchDataAry objectAtIndex:indexPath.row]objectForKey:@"ProfilePicture"]]] placeholderImage:[UIImage imageNamed:@"blank-user"]];
     
-   // img.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@"]];
-    
-   // [NSString stringWithFormat:@"%@",apk_ImageUrl];
-    
     //tag 3
-    UILabel *lb1 = (UILabel *)[cell.contentView viewWithTag:3];
+    UILabel *lb1 = (UILabel *)[cell.contentView viewWithTag:60];
     lb1.text = [[fetchDataAry objectAtIndex:indexPath.row]objectForKey:@"FullName"];
     
     //tag 4
-    UILabel *lb2 = (UILabel *)[cell.contentView viewWithTag:4];
+    UILabel *lb2 = (UILabel *)[cell.contentView viewWithTag:300];
     lb2.text = [[fetchDataAry objectAtIndex:indexPath.row]objectForKey:@"InstituteName"];
     
     //tag 5
-    UILabel *lb3 = (UILabel *)[cell.contentView viewWithTag:5];
+    UILabel *lb3 = (UILabel *)[cell.contentView viewWithTag:45];
     
     NSString *strGrade = [NSString stringWithFormat:@"%@",[[fetchDataAry objectAtIndex:indexPath.row]objectForKey:@"GradeName"]];
     
@@ -94,7 +92,7 @@
     }
     
     //tag 6
-    UILabel *lb4 = (UILabel *)[cell.contentView viewWithTag:6];
+    UILabel *lb4 = (UILabel *)[cell.contentView viewWithTag:23];
     
     NSString *strDiv = [NSString stringWithFormat:@"%@",[[fetchDataAry objectAtIndex:indexPath.row]objectForKey:@"DivisionName"]];
     
@@ -112,11 +110,10 @@
     }
     
     
-    UIButton *btn = (UIButton *)[cell.contentView viewWithTag:7];
+    UIButton *btn = (UIButton *)[cell.contentView viewWithTag:67];
    
     [btn setTitle:[NSString stringWithFormat:@"%@",[[fetchDataAry objectAtIndex:indexPath.row]objectForKey:@"RoleName"]] forState:UIControlStateNormal];
 
-    
     UIView *view2 = (UIView *)[cell.contentView viewWithTag:8];
     view2.layer.borderWidth = 1.0;
     view2.layer.borderColor = [UIColor lightGrayColor].CGColor;
@@ -130,11 +127,11 @@
     view4.layer.borderColor = [UIColor lightGrayColor].CGColor;
     
     //20
-    UIImageView *img4 = (UIImageView *)[cell.contentView viewWithTag:20];
-    img4.layer.borderWidth = 0.5;
-    img4.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    
-    
+//    UIImageView *img4 = (UIImageView *)[cell.contentView viewWithTag:20];
+//    img4.layer.borderWidth = 0.5;
+//    img4.layer.borderColor = [UIColor lightGrayColor].CGColor;
+//    
+//    
     UIImageView *img1 = (UIImageView *)[cell.contentView viewWithTag:11];
     img1.image = [img1.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [img1 setTintColor:[UIColor colorWithRed:40.0/255.0 green:49.0/255.0 blue:90.0/255.0 alpha:1.0]];

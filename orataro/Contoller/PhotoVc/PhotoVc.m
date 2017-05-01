@@ -38,10 +38,10 @@ int lastvalue = 0;
     refreshControl.triggerVerticalOffset = 100.;
     [refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
     aCollectionView.bottomRefreshControl = refreshControl;
-
-   
     
- // Do any additional setup after loading the view.
+    
+    
+    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning
@@ -122,20 +122,20 @@ int lastvalue = 0;
     cell2.btnDownload.tag = indexPath.row;
     
     //NSString *getMilisecond = [Utility convertMiliSecondtoDate:@"dd/MM/yyyy" date:getdt];
-
+    
     
     NSString *strdt = [Utility convertMiliSecondtoDate:@"dd-MM-yyyy" date:[NSString stringWithFormat:@"%@",[[aryPhotoGet objectAtIndex:indexPath.row]objectForKey:@"DateOfPost"]]];
     
     cell2.lbDate.text = [NSString stringWithFormat:@"Date: %@",strdt];
     
-//    NSDate *todayDate = [NSDate date]; //Get todays date
-//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init]; // here we create NSDateFormatter object for change the Format of date.
-//    [dateFormatter setDateFormat:@"dd-MM-yyyy"]; //Here we can set the format which we need
-//    NSString *convertedDateString = [dateFormatter stringFromDate:todayDate];// Here
+    //    NSDate *todayDate = [NSDate date]; //Get todays date
+    //    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init]; // here we create NSDateFormatter object for change the Format of date.
+    //    [dateFormatter setDateFormat:@"dd-MM-yyyy"]; //Here we can set the format which we need
+    //    NSString *convertedDateString = [dateFormatter stringFromDate:todayDate];// Here
     
-   // NSLog(@"ary=%@",aryPhotoGet);
+    // NSLog(@"ary=%@",aryPhotoGet);
     
-   // NSLog(@"indexpath row=%ld",(long)indexPath.row);
+    // NSLog(@"indexpath row=%ld",(long)indexPath.row);
     
     
     [cell2.activityIndicator startAnimating];
@@ -147,9 +147,9 @@ int lastvalue = 0;
     {
         if ([Utility isInterNetConnectionIsActive] == true)
         {
-           
             
-          //  NSLog(@"data=%@",[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[aryPhotoGet objectAtIndex:indexPath.row]objectForKey:@"Photo"]]);
+            
+            //  NSLog(@"data=%@",[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[aryPhotoGet objectAtIndex:indexPath.row]objectForKey:@"Photo"]]);
             
             [cell2 setContentMode:UIViewContentModeScaleAspectFit];
             
@@ -175,52 +175,65 @@ int lastvalue = 0;
                  
                  NSString *imagePath =[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",strSaveImg]];
                  
-                // NSLog(@"image Saperator=%@",[strSaveImg componentsSeparatedByString:@"."]);
+                 NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
+                 [imageData writeToFile:imagePath atomically:NO];
                  
-                 NSArray *getExtension = [strSaveImg componentsSeparatedByString:@"."];
-                 
-                 if ([[getExtension objectAtIndex:1] isEqualToString:@"jpg"] || [[getExtension objectAtIndex:1] isEqualToString:@"JPG"] ||
-                     [[getExtension objectAtIndex:1] isEqualToString:@"jpeg"] )
+                 if (![imageData writeToFile:imagePath atomically:NO])
                  {
-                     NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
-                     [imageData writeToFile:imagePath atomically:NO];
-                     
-                     if (![imageData writeToFile:imagePath atomically:NO])
-                     {
-                         NSLog(@"Failed to cache image data to disk");
-                     }
-                     else
-                     {
-                         [imageData writeToFile:imagePath atomically:NO];
-                         NSLog(@"the cachedImagedPath is %@",imagePath);
-                     }
+                    // NSLog(@"Failed to cache image data to disk");
                  }
                  else
                  {
-                     NSData *imageData = UIImagePNGRepresentation(image);
                      [imageData writeToFile:imagePath atomically:NO];
-                     
-                     if (![imageData writeToFile:imagePath atomically:NO])
-                     {
-                         NSLog(@"Failed to cache image data to disk");
-                     }
-                     else
-                     {
-                         [imageData writeToFile:imagePath atomically:NO];
-                         NSLog(@"the cachedImagedPath is %@",imagePath);
-                     }
-                     
+                    // NSLog(@"the cachedImagedPath is %@",imagePath);
                  }
+                 
+                 // NSLog(@"image Saperator=%@",[strSaveImg componentsSeparatedByString:@"."]);
+                 
+                 // NSArray *getExtension = [strSaveImg componentsSeparatedByString:@"."];
+                 
+                 //                 if ([[getExtension objectAtIndex:1] isEqualToString:@"jpg"] || [[getExtension objectAtIndex:1] isEqualToString:@"JPG"] ||
+                 //                     [[getExtension objectAtIndex:1] isEqualToString:@"jpeg"] )
+                 //                 {
+                 //                     NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
+                 //                     [imageData writeToFile:imagePath atomically:NO];
+                 //
+                 //                     if (![imageData writeToFile:imagePath atomically:NO])
+                 //                     {
+                 //                         NSLog(@"Failed to cache image data to disk");
+                 //                     }
+                 //                     else
+                 //                     {
+                 //                         [imageData writeToFile:imagePath atomically:NO];
+                 //                         NSLog(@"the cachedImagedPath is %@",imagePath);
+                 //                     }
+                 //                 }
+                 //                 else
+                 //                 {
+                 //                     NSData *imageData = UIImagePNGRepresentation(image);
+                 //                     [imageData writeToFile:imagePath atomically:NO];
+                 //
+                 //                     if (![imageData writeToFile:imagePath atomically:NO])
+                 //                     {
+                 //                         NSLog(@"Failed to cache image data to disk");
+                 //                     }
+                 //                     else
+                 //                     {
+                 //                         [imageData writeToFile:imagePath atomically:NO];
+                 //                         NSLog(@"the cachedImagedPath is %@",imagePath);
+                 //                     }
+                 //
+                 //                 }
                  //jpg
                  //JPG
                  //png
                  //jpeg
                  
-              
+                 
                  
              }];
             
-           
+            
             
         }
         
@@ -231,9 +244,9 @@ int lastvalue = 0;
         
         [cell2.activityIndicator stopAnimating];
         [cell2.activityIndicator removeFromSuperview];
-    
+        
         NSString *setImage = [NSString stringWithFormat:@"%@",[[aryTempGetData objectAtIndex:indexPath.row]objectForKey:@"PhotoImageStr"]];
-       // NSLog(@"image=%@",setImage);
+        // NSLog(@"image=%@",setImage);
         NSArray *ary = [setImage componentsSeparatedByString:@"/"];
         NSString *strSaveImg = [ary lastObject];
         NSString *imagePath=[documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",strSaveImg]];
@@ -285,7 +298,7 @@ int lastvalue = 0;
             // from local
             
             NSString *setImage = [NSString stringWithFormat:@"%@",[[aryTempGetData objectAtIndex:indexPath.row]objectForKey:@"PhotoImageStr"]];
-          //  NSLog(@"image=%@",setImage);
+            //  NSLog(@"image=%@",setImage);
             NSArray *ary = [setImage componentsSeparatedByString:@"/"];
             NSString *strSaveImg = [ary lastObject];
             NSString *imagePath=[documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",strSaveImg]];
@@ -337,7 +350,7 @@ int lastvalue = 0;
     for (UICollectionViewCell *cell in [aCollectionView visibleCells])
     {
         NSIndexPath *indexPath = [aCollectionView indexPathForCell:cell];
-       // NSLog(@"Last Row:=%ld",(long)indexPath.row);
+        // NSLog(@"Last Row:=%ld",(long)indexPath.row);
         
         if (indexPath.row == [aryPhotoGet count]-1)
         {
@@ -348,10 +361,10 @@ int lastvalue = 0;
 - (void)refresh
 {
     isloadMore = YES;
-   // int  i = [[NSString stringWithFormat:@"%ld",aryPhotoGet.count]intValue];
+    // int  i = [[NSString stringWithFormat:@"%ld",aryPhotoGet.count]intValue];
     pagecount = pagecount + 11;
     [self apiCallFor_GetPhotoList:NO];
-       // Do refresh stuff here
+    // Do refresh stuff here
 }
 
 #pragma mark - button action
@@ -494,16 +507,16 @@ int lastvalue = 0;
                          
                          if(![aryPhotoGet containsObject:allMyObjects])
                          {
-                              [aryPhotoGet addObjectsFromArray: allMyObjects];
+                             [aryPhotoGet addObjectsFromArray: allMyObjects];
                              [self ManageCircularList:aryPhotoGet];
                          }
                      }
                      else
                      {
-                        // isloadMore = NO;
+                         // isloadMore = NO;
                          [self ManageCircularList:arrResponce];
                      }
-                      [aCollectionView.bottomRefreshControl endRefreshing];
+                     [aCollectionView.bottomRefreshControl endRefreshing];
                  }
              }
              else
@@ -523,8 +536,8 @@ int lastvalue = 0;
 }
 -(void)ManageCircularList:(NSMutableArray *)arrResponce
 {
-   // NSLog(@"response=%@",arrResponce);
-
+    // NSLog(@"response=%@",arrResponce);
+    
     [DBOperation executeSQL:@"delete from PhotoList"];
     
     for (NSMutableDictionary *dic in arrResponce)
@@ -535,7 +548,7 @@ int lastvalue = 0;
         
         NSString *strSaveImg = [ary lastObject];
         
-       // NSLog(@"data=%@",setImage);
+        // NSLog(@"data=%@",setImage);
         
         //CREATE TABLE "PhotoList" ("id" INTEGER PRIMARY KEY  NOT NULL , "PhotoJsonStr" VARCHAR, "ImageStr" VARCHAR, "flag" VARCHAR)
         
