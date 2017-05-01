@@ -467,60 +467,12 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "orataro/Contoller/ScoolGroupVc/CreateScoolGroupVc/CreateScoolGroupVc.m"
-            timestampString = "515141741.223554"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1149"
-            endingLineNumber = "1149"
-            landmarkName = "-apiCallFor_createSchoolGroup"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "orataro/Contoller/ScoolGroupVc/CreateScoolGroupVc/CreateScoolGroupVc.m"
-            timestampString = "515141747.760194"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1137"
-            endingLineNumber = "1137"
-            landmarkName = "-apiCallFor_createSchoolGroup"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "orataro/Contoller/ScoolGroupVc/CreateScoolGroupVc/CreateScoolGroupVc.m"
-            timestampString = "515141757.751371"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1133"
-            endingLineNumber = "1133"
-            landmarkName = "-apiCallFor_createSchoolGroup"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "orataro/Contoller/ScoolGroupVc/ScoolGroupVc.m"
-            timestampString = "515144305.452809"
+            timestampString = "515315218.79063"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "330"
-            endingLineNumber = "330"
+            startingLineNumber = "337"
+            endingLineNumber = "337"
             landmarkName = "-btnSaveClicked:"
             landmarkType = "7">
          </BreakpointContent>
@@ -531,29 +483,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "orataro/Contoller/ScoolGroupVc/ScoolGroupVc.m"
-            timestampString = "515145726.383284"
+            filePath = "orataro/DBOperation/DBOperation.m"
+            timestampString = "515308944.050978"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "505"
-            endingLineNumber = "505"
-            landmarkName = "-ManageCircularList:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "orataro/Contoller/ScoolGroupVc/ScoolGroupVc.m"
-            timestampString = "515145885.935055"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "546"
-            endingLineNumber = "546"
-            landmarkName = "-apiCallFor_DeleteGroupList:row:"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
+            landmarkName = "+selectData:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
