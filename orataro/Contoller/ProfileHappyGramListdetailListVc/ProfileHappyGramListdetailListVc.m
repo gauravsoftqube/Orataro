@@ -62,8 +62,8 @@
     }
     else
     {
-       // aryGetHappyGramList = [Utility getLocalDetail:ary columnKey:@"happyGramJsonStr"];
-       // [_tblDetailList reloadData];
+        aryGetHappyGramList = [Utility getLocalDetail:ary columnKey:@"happyGramJsonStr"];
+        [_tblDetailList reloadData];
         
         if ([Utility isInterNetConnectionIsActive] == false)
         {

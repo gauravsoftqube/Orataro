@@ -188,16 +188,16 @@
 {
     return 1;
 }
-- (UIEdgeInsets)collectionView:(UICollectionView*)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
-{
-    return UIEdgeInsetsMake(3, 5, -8, 5); // top, left, bottom, right
-}
+//- (UIEdgeInsets)collectionView:(UICollectionView*)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+//{
+//    return UIEdgeInsetsMake(3, 5, -8, 5); // top, left, bottom, right
+//}
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
                   layout:(UICollectionViewLayout *)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    float f = (([UIScreen mainScreen].bounds.size.width/5)-16);
+    float f = ([UIScreen mainScreen].bounds.size.width/5);
     [_collViewHeight setConstant:50*5];
     return CGSizeMake(f, 50);
 }
@@ -233,9 +233,12 @@
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:_tblAddUpdateList];
     NSIndexPath *indexPath = [_tblAddUpdateList indexPathForRowAtPoint:buttonPosition];
     
+    getRow = [[NSString stringWithFormat:@"%ld",(long)indexPath.row]intValue];
+    NSLog(@"Row=%d",getRow);
+    
     _viewEmogination.hidden = NO;
     [self.view bringSubviewToFront:_viewEmogination];
-    getRow = [[NSString stringWithFormat:@"%ld",(long)indexPath.row]intValue];
+   
 }
 
 - (IBAction)btnAddRemoveSmileImg:(id)sender
@@ -295,8 +298,12 @@
 {
     if([self.strVctoNavigate isEqualToString:@"Add"])
     {
+        
         CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:_collEmogination];
         NSIndexPath *indexPath = [_collEmogination indexPathForItemAtPoint:buttonPosition];
+        
+        NSLog(@"Emogies=%@",aryEmogination);
+        
         NSString *strEmogies1 = [aryEmogination objectAtIndex:indexPath.row];
         
         NSLog(@"Str=%@",strEmogies1);
@@ -304,18 +311,15 @@
         
         strEmogiesName = strEmogies1;
         
-        _viewEmogination.hidden = YES;
-        
         NSMutableDictionary *dic = [aryStoreHappyGrameData objectAtIndex:getRow];
         [dic setObject:@"1" forKey:@"SmileVal"];
-        [dic setObject:strEmogies1 forKey:@"EmogiesName"];
-        
-        
+        [dic setObject:strEmogiesName forKey:@"EmogiesName"];
         
         [aryStoreHappyGrameData replaceObjectAtIndex:getRow withObject:dic];
-        // NSLog(@"aryHappyGrame=%@",aryStoreHappyGrameData);
+         NSLog(@"aryHappyGrame=%@",aryStoreHappyGrameData);
         
         [_tblAddUpdateList reloadData];
+        _viewEmogination.hidden = YES;
         
         
     }
