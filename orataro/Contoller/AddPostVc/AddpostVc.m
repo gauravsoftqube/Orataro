@@ -153,7 +153,6 @@
         NSData *data = UIImageJPEGRepresentation([dic objectForKey:@"imageSelect"], 1.0);
         [data writeToFile:fileName atomically:YES];
     }
-    
 }
 
 #pragma mark - COLLECTIONVIEW DELEGATE
