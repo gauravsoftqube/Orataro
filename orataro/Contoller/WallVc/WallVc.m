@@ -163,8 +163,8 @@ int c2= 0;
         
         arrGeneralWall = [[NSMutableArray alloc]init];
         arrGeneralWall = [DBOperation selectData:@"select * from GeneralWall"];
-        countResponce = 10;
-        totalCountView = [arrGeneralWall count];
+        //countResponce = 10;
+        countResponce = [arrGeneralWall count];
         [self.aWallTableView reloadData];
         
         if(arrGeneralWall.count == 0)
@@ -178,8 +178,8 @@ int c2= 0;
     {
         arrGeneralWall = [[NSMutableArray alloc]init];
         arrGeneralWall = [DBOperation selectData:@"select * from GeneralWall"];
-        countResponce = 10;
-        totalCountView = [arrGeneralWall count];
+        //countResponce = 10;
+        countResponce = [arrGeneralWall count];
         [self.aWallTableView reloadData];
         
         if(arrGeneralWall.count == 0)
