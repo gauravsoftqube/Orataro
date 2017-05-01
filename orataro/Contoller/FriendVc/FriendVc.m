@@ -283,6 +283,8 @@ int s =0 ;
     }
     else
     {
+        NSLog(@"Data=%@",_txtSearchFriend.text);
+        
         if ([Utility validateBlankField:_txtSearchFriend.text])
         {
             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"Please Enter Search Text" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];

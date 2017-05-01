@@ -10911,16 +10911,6 @@
                                                     <constraint firstAttribute="width" constant="19" id="gxc-nV-i9h"/>
                                                 </constraints>
                                             </imageView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QBo-8z-LD9">
-                                                <rect key="frame" x="346" y="0.0" width="48" height="40"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="48" id="ePB-Th-2pd"/>
-                                                </constraints>
-                                                <connections>
-                                                    <action selector="btnSearchClicked:" destination="DDP-DX-yyd" eventType="touchUpInside" id="tGy-HV-7Mn"/>
-                                                </connections>
-                                            </button>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OEi-bB-4aT">
                                                 <rect key="frame" x="8" y="5" width="330" height="30"/>
                                                 <nil key="textColor"/>
@@ -10931,6 +10921,16 @@
                                                     <outlet property="delegate" destination="DDP-DX-yyd" id="XJP-Bj-dMH"/>
                                                 </connections>
                                             </textField>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QBo-8z-LD9">
+                                                <rect key="frame" x="346" y="0.0" width="48" height="40"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="48" id="ePB-Th-2pd"/>
+                                                </constraints>
+                                                <connections>
+                                                    <action selector="btnSearchClicked:" destination="DDP-DX-yyd" eventType="touchUpInside" id="tGy-HV-7Mn"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>

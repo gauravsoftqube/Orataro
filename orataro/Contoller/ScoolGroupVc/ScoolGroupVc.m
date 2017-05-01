@@ -25,8 +25,7 @@
     [super viewDidLoad];
     
     
-    aryFetchData = [[NSMutableArray alloc]init];
-    aryTempStoreData = [[NSMutableArray alloc]init];
+
     
     _viewDeletePopup.hidden = YES;
     
@@ -111,7 +110,11 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return aryFetchData.count;
+    if (aryFetchData.count > 0)
+    {
+         return aryFetchData.count;
+    }
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -154,146 +157,150 @@
     img.layer.borderWidth = 2.0;
     img.layer.borderColor = [UIColor lightGrayColor].CGColor;
     
-    UILabel *lb= (UILabel *)[cell.contentView viewWithTag:2];
-    lb.text = [[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"GroupTitle"];
-    
-    
-    UILabel *lb1= (UILabel *)[cell.contentView viewWithTag:3];
-    lb1.text = [[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"AboutGroup"];
-    
-    NSLog(@"ary=%@",aryFetchData);
-    NSLog(@"ary1=%@",aryTempStoreData);
-    
-    // CREATE TABLE "SchoolGroupList" ("id" INTEGER PRIMARY KEY  NOT NULL , "jsonStr" VARCHAR, "ImageJsonstr" VARCHAR, "flag" VARCHAR)
-    
-    //UserID=30032284-31d1-4ba6-8ef4-54edb8e223aa
-    //ClientID=d79901a7-f9f7-4d47-8e3b-198ede7c9f58
-    //InstituteID=4f4bbf0e-858a-46fa-a0a7-bf116f537653
-    
-    //#define apk_group @"apk_group.asmx"
-    //#define apk_Group_List_action @"Group_List"
-    
-    NSString *documentDirectory=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    
-    if ([[[aryTempStoreData objectAtIndex:indexPath.row]objectForKey:@"flag"] isEqualToString:@"0"])
+    if (aryFetchData.count > 0)
     {
-        if ([Utility isInterNetConnectionIsActive] == true)
+        UILabel *lb= (UILabel *)[cell.contentView viewWithTag:2];
+        lb.text = [[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"GroupTitle"];
+        
+        
+        UILabel *lb1= (UILabel *)[cell.contentView viewWithTag:3];
+        lb1.text = [[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"AboutGroup"];
+        
+        NSLog(@"ary=%@",aryFetchData);
+        NSLog(@"ary1=%@",aryTempStoreData);
+        
+        // CREATE TABLE "SchoolGroupList" ("id" INTEGER PRIMARY KEY  NOT NULL , "jsonStr" VARCHAR, "ImageJsonstr" VARCHAR, "flag" VARCHAR)
+        
+        //UserID=30032284-31d1-4ba6-8ef4-54edb8e223aa
+        //ClientID=d79901a7-f9f7-4d47-8e3b-198ede7c9f58
+        //InstituteID=4f4bbf0e-858a-46fa-a0a7-bf116f537653
+        
+        //#define apk_group @"apk_group.asmx"
+        //#define apk_Group_List_action @"Group_List"
+        
+        NSString *documentDirectory=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+        
+        if ([[[aryTempStoreData objectAtIndex:indexPath.row]objectForKey:@"flag"] isEqualToString:@"0"])
         {
-            NSLog(@"data=%@",[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"GroupImage"]]);
-            
-            // [cell2 setContentMode:UIViewContentModeScaleAspectFit];
-            
-            NSLog(@"url=%@",[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"GroupImage"]]]);
-            
-            [img sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"GroupImage"]]] placeholderImage:[UIImage imageNamed:@"no_img"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL)
-             {
-                 // CREATE TABLE "SchoolGroupList" ("id" INTEGER PRIMARY KEY  NOT NULL , "jsonStr" VARCHAR, "ImageJsonstr" VARCHAR, "flag" VARCHAR)
-                 
-                 [DBOperation selectData:[NSString stringWithFormat:@"update SchoolGroupList set flag='1' where id=%@",[[aryTempStoreData objectAtIndex:indexPath.row]objectForKey:@"id"]]];
-                 
-                 //no_img
-                 
-                 NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-                 NSString *documentsDirectory = [paths objectAtIndex:0];
-                 
-                 NSString *setImage = [NSString stringWithFormat:@"%@",[[aryTempStoreData objectAtIndex:indexPath.row]objectForKey:@"ImageJsonstr"]];
-                 
-                 NSArray *ary = [setImage componentsSeparatedByString:@"/"];
-                 
-                 NSString *strSaveImg = [ary lastObject];
-                 
-                 NSString *imagePath =[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",strSaveImg]];
-                 
-                 NSLog(@"image Saperator=%@",[strSaveImg componentsSeparatedByString:@"."]);
-                 
-                 if (strSaveImg == (id)[NSNull null] || strSaveImg.length == 0 || [strSaveImg isEqualToString:@"<null>"])
+            if ([Utility isInterNetConnectionIsActive] == true)
+            {
+                NSLog(@"data=%@",[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"GroupImage"]]);
+                
+                // [cell2 setContentMode:UIViewContentModeScaleAspectFit];
+                
+                NSLog(@"url=%@",[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"GroupImage"]]]);
+                
+                [img sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"GroupImage"]]] placeholderImage:[UIImage imageNamed:@"no_img"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL)
                  {
+                     // CREATE TABLE "SchoolGroupList" ("id" INTEGER PRIMARY KEY  NOT NULL , "jsonStr" VARCHAR, "ImageJsonstr" VARCHAR, "flag" VARCHAR)
                      
-                 }
-                 else
-                 {
-                     NSArray *getExtension = [strSaveImg componentsSeparatedByString:@"."];
+                     [DBOperation selectData:[NSString stringWithFormat:@"update SchoolGroupList set flag='1' where id=%@",[[aryTempStoreData objectAtIndex:indexPath.row]objectForKey:@"id"]]];
                      
-                     if ([[getExtension objectAtIndex:1] isEqualToString:@"jpg"] || [[getExtension objectAtIndex:1] isEqualToString:@"JPG"] ||
-                         [[getExtension objectAtIndex:1] isEqualToString:@"jpeg"] )
+                     //no_img
+                     
+                     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                     NSString *documentsDirectory = [paths objectAtIndex:0];
+                     
+                     NSString *setImage = [NSString stringWithFormat:@"%@",[[aryTempStoreData objectAtIndex:indexPath.row]objectForKey:@"ImageJsonstr"]];
+                     
+                     NSArray *ary = [setImage componentsSeparatedByString:@"/"];
+                     
+                     NSString *strSaveImg = [ary lastObject];
+                     
+                     NSString *imagePath =[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",strSaveImg]];
+                     
+                     NSLog(@"image Saperator=%@",[strSaveImg componentsSeparatedByString:@"."]);
+                     
+                     if (strSaveImg == (id)[NSNull null] || strSaveImg.length == 0 || [strSaveImg isEqualToString:@"<null>"])
                      {
-                         NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
-                         [imageData writeToFile:imagePath atomically:NO];
                          
-                         if (![imageData writeToFile:imagePath atomically:NO])
-                         {
-                             NSLog(@"Failed to cache image data to disk");
-                         }
-                         else
-                         {
-                             [imageData writeToFile:imagePath atomically:NO];
-                             NSLog(@"the cachedImagedPath is %@",imagePath);
-                         }
                      }
                      else
                      {
-                         NSData *imageData = UIImagePNGRepresentation(image);
-                         [imageData writeToFile:imagePath atomically:NO];
+                         NSArray *getExtension = [strSaveImg componentsSeparatedByString:@"."];
                          
-                         if (![imageData writeToFile:imagePath atomically:NO])
+                         if ([[getExtension objectAtIndex:1] isEqualToString:@"jpg"] || [[getExtension objectAtIndex:1] isEqualToString:@"JPG"] ||
+                             [[getExtension objectAtIndex:1] isEqualToString:@"jpeg"] )
                          {
-                             NSLog(@"Failed to cache image data to disk");
+                             NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
+                             [imageData writeToFile:imagePath atomically:NO];
+                             
+                             if (![imageData writeToFile:imagePath atomically:NO])
+                             {
+                                 NSLog(@"Failed to cache image data to disk");
+                             }
+                             else
+                             {
+                                 [imageData writeToFile:imagePath atomically:NO];
+                                 NSLog(@"the cachedImagedPath is %@",imagePath);
+                             }
                          }
                          else
                          {
+                             NSData *imageData = UIImagePNGRepresentation(image);
                              [imageData writeToFile:imagePath atomically:NO];
-                             NSLog(@"the cachedImagedPath is %@",imagePath);
+                             
+                             if (![imageData writeToFile:imagePath atomically:NO])
+                             {
+                                 NSLog(@"Failed to cache image data to disk");
+                             }
+                             else
+                             {
+                                 [imageData writeToFile:imagePath atomically:NO];
+                                 NSLog(@"the cachedImagedPath is %@",imagePath);
+                             }
+                             
                          }
+                         //jpg
                          
                      }
-                     //jpg
+                     //JPG
+                     //png
+                     //jpeg
                      
-                 }
-                 //JPG
-                 //png
-                 //jpeg
-                 
-                 
-                 
-             }];
-            
-            
-            //[cell2.activityIndicator startAnimating];
-            // [activityIndicator ];
-            
-        }
-    }
-    else
-    {
-        //CREATE TABLE "SchoolGroupList" ("id" INTEGER PRIMARY KEY  NOT NULL , "jsonStr" VARCHAR, "ImageJsonstr" VARCHAR, "flag" VARCHAR)
-        
-        NSLog(@"count=%lu",(unsigned long)aryTempStoreData.count);
-        
-        //  [cell2.activityIndicator stopAnimating];
-        // cell2.activityIndicator.hidden = YES;
-        
-        NSString *setImage = [NSString stringWithFormat:@"%@",[[aryTempStoreData objectAtIndex:indexPath.row]objectForKey:@"ImageJsonstr"]];
-        NSLog(@"image=%@",setImage);
-        NSArray *ary = [setImage componentsSeparatedByString:@"/"];
-        NSString *strSaveImg = [ary lastObject];
-        NSString *imagePath=[documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",strSaveImg]];
-        UIImage *image=[UIImage imageWithContentsOfFile:imagePath];
-        
-        CGDataProviderRef provider = CGImageGetDataProvider(image.CGImage);
-        NSData* data = (id)CFBridgingRelease(CGDataProviderCopyData(provider));
-        
-        if (data.length == 0)
-        {
-            NSLog(@"noooooo image");
-            img.image = [UIImage imageNamed:@"no_img"];
+                     
+                     
+                 }];
+                
+                
+                //[cell2.activityIndicator startAnimating];
+                // [activityIndicator ];
+                
+            }
         }
         else
         {
-            img.image = image;
+            //CREATE TABLE "SchoolGroupList" ("id" INTEGER PRIMARY KEY  NOT NULL , "jsonStr" VARCHAR, "ImageJsonstr" VARCHAR, "flag" VARCHAR)
+            
+            NSLog(@"count=%lu",(unsigned long)aryTempStoreData.count);
+            
+            //  [cell2.activityIndicator stopAnimating];
+            // cell2.activityIndicator.hidden = YES;
+            
+            NSString *setImage = [NSString stringWithFormat:@"%@",[[aryTempStoreData objectAtIndex:indexPath.row]objectForKey:@"ImageJsonstr"]];
+            NSLog(@"image=%@",setImage);
+            NSArray *ary = [setImage componentsSeparatedByString:@"/"];
+            NSString *strSaveImg = [ary lastObject];
+            NSString *imagePath=[documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",strSaveImg]];
+            UIImage *image=[UIImage imageWithContentsOfFile:imagePath];
+            
+            CGDataProviderRef provider = CGImageGetDataProvider(image.CGImage);
+            NSData* data = (id)CFBridgingRelease(CGDataProviderCopyData(provider));
+            
+            if (data.length == 0)
+            {
+                NSLog(@"noooooo image");
+                img.image = [UIImage imageNamed:@"no_img"];
+            }
+            else
+            {
+                img.image = image;
+            }
+            
+            NSLog(@"image=%@",aryFetchData);
+            
         }
-        
-        NSLog(@"image=%@",aryFetchData);
-        
+
     }
     
     return cell;
@@ -431,9 +438,12 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                      [_tblScoolGroupList reloadData];
-                     [aryFetchData removeAllObjects];
+                     
+                    [aryFetchData removeAllObjects];
                       [aryTempStoreData removeAllObjects];
+                      [_tblScoolGroupList reloadData];
+                     
+                     //[self ManageCircularList:arrResponce];
                      
                      UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
@@ -441,8 +451,6 @@
                  else
                  {
                      [self ManageCircularList:arrResponce];
-                     
-                     
                  }
              }
              else
@@ -462,6 +470,9 @@
 
 -(void)ManageCircularList:(NSMutableArray *)arrResponce
 {
+    aryFetchData = [[NSMutableArray alloc]init];
+    aryTempStoreData = [[NSMutableArray alloc]init];
+    
     NSLog(@"response=%@",arrResponce);
     
     //UserID=30032284-31d1-4ba6-8ef4-54edb8e223aa
@@ -544,17 +555,18 @@
              {
                  NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
                  NSString *strStatus=[dic objectForKey:@"message"];
-                 if([strStatus isEqualToString:@"No Data Found"])
+                 if([strStatus isEqualToString:@"Group Removed"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     [alrt show];
+                    // UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     //[alrt show];
+                   //  if (aryFetchData.count > 0)
+                   //  {
+                         [self apiCallFor_GetGroupList:YES];
+                    // }
                  }
                  else
                  {
-                     if (aryFetchData.count > 0)
-                     {
-                         [self apiCallFor_GetGroupList:YES];
-                     }
+                     
                      
                  }
              }
