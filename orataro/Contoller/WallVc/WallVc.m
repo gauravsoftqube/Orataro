@@ -307,6 +307,7 @@ int c2= 0;
                  else
                  {
                      countResponce = [arrResponce count];
+                     
                      for (NSMutableDictionary *dicWallID in arrResponce)
                      {
                          if ([[arrGeneralWall valueForKey:@"PostCommentID"] containsObject:[dicWallID objectForKey:@"PostCommentID"]])
@@ -868,8 +869,8 @@ int c2= 0;
         }
         else if([strFileType isEqualToString:@"Text"])
         {
-            NSString *strPostCommentNote=[dicResponce objectForKey:@"PostCommentNote"];
-            strPostCommentNote =[strPostCommentNote stringByReplacingOccurrencesOfString:@"</br> </br>" withString:@""];
+            NSString *strPostCommentNote = [dicResponce objectForKey:@"PostCommentNote"];
+            strPostCommentNote = [strPostCommentNote stringByReplacingOccurrencesOfString:@"</br> </br>" withString:@""];
             
             NSAttributedString * attrStr = [[NSAttributedString alloc] initWithData:[[NSString stringWithFormat:@"%@",strPostCommentNote] dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
             CGSize size = [[NSString stringWithFormat:@"%@",[attrStr string]] sizeWithFont:[UIFont fontWithName:@"HelveticaNeueLTStd-Roman" size:14] constrainedToSize:CGSizeMake([[UIScreen mainScreen]bounds].size.width-16, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
