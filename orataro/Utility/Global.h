@@ -48,6 +48,15 @@
 
 #pragma mark - Alert Message
 
+#define Post_share_successfully @"Post share successfully"
+#define Enter_Post_Comment @"Please Enter comment"
+#define Please_Select_Friend @"Please select at lest one friend"
+
+#define Post_Image_limit @"Post only less than 5 image"
+#define Post_Video_limit @"Post only one video"
+#define Post_only_Video_or_image @"Post only image or video"
+
+
 #define PHONE @"Contact Numeber Must Be 10 Digit"
 #define PHONE_EMPTY @"Please Enter PhoneNumber"
 
@@ -193,6 +202,15 @@
 #import "ORGArticleCollectionViewCell.h"
 #import <QuartzCore/QuartzCore.h>
 
+#import "AFNetworking.h"
+#import "UIImageView+AFNetworking.h"
+#import "AddCommentVc.h"
+#import "IQKeyboardManager.h"
+
+#import "RapidVoiceCommands.h"
+
+
+
 #pragma mark - YOUTube Video Key
 
 #define YouTubeVideo_Key  @"SII1LZqIAas"
@@ -231,6 +249,17 @@
 
 #define apk_generalwall  @"apk_generalwall.asmx"
 #define apk_GetGeneralWallData_action  @"GetGeneralWallData"
+
+#define apk_post  @"apk_post.asmx"
+#define apk_LikePost_action  @"LikePost"
+#define apk_DisLikePost_action  @"DisLikePost"
+#define apk_SharePost_action  @"SharePost"
+
+#pragma mark - apk_getwallpostcomment
+
+#define apk_getwallpostcomment  @"apk_getwallpostcomment.asmx"
+#define apk_GetWallPostComments_action  @"GetWallPostComments"
+#define apk_AddComments_action  @"AddComments"
 
 
 #pragma mark - Circular

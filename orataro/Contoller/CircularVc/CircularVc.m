@@ -384,6 +384,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"CircularRowCell"];
+    
     cell.selectionStyle=UITableViewCellSelectionStyleNone;
     UIView *viewBackgroundCell=(UIView *)[cell.contentView viewWithTag:1];
     if(indexPath.row % 2)

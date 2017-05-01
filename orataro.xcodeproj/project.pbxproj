@@ -16,6 +16,7 @@
 		0739EC521E713AE20099658F /* ForgotNewPwdVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 0739EC511E713AE20099658F /* ForgotNewPwdVc.m */; };
 		073E55CA1E6FDAE3008BF93B /* ProgressHUB.m in Sources */ = {isa = PBXBuildFile; fileRef = 073E55C91E6FDAE3008BF93B /* ProgressHUB.m */; };
 		073E55CD1E703D04008BF93B /* OrataroLoacal_DB.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 073E55CC1E703D04008BF93B /* OrataroLoacal_DB.sqlite */; };
+		073F792F1EAF5E25002DB64F /* AddCommentVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 073F792E1EAF5E25002DB64F /* AddCommentVc.m */; };
 		074E426B1E9DF98200AE162C /* CMPopTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 074E426A1E9DF98200AE162C /* CMPopTipView.m */; };
 		0757D4DB1EA0D4FC00474F98 /* ResultAddPageVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 0757D4DA1EA0D4FC00474F98 /* ResultAddPageVc.m */; };
 		0757D4DF1EA0E48D00474F98 /* FBProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0757D4DE1EA0E48D00474F98 /* FBProgressView.m */; };
@@ -248,8 +249,11 @@
 		073E55C81E6FDAE3008BF93B /* ProgressHUB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressHUB.h; sourceTree = "<group>"; };
 		073E55C91E6FDAE3008BF93B /* ProgressHUB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressHUB.m; sourceTree = "<group>"; };
 		073E55CC1E703D04008BF93B /* OrataroLoacal_DB.sqlite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OrataroLoacal_DB.sqlite; sourceTree = "<group>"; };
+		073F792D1EAF5E25002DB64F /* AddCommentVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddCommentVc.h; sourceTree = "<group>"; };
+		073F792E1EAF5E25002DB64F /* AddCommentVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddCommentVc.m; sourceTree = "<group>"; };
 		074E42691E9DF98200AE162C /* CMPopTipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMPopTipView.h; sourceTree = "<group>"; };
 		074E426A1E9DF98200AE162C /* CMPopTipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMPopTipView.m; sourceTree = "<group>"; };
+		075667B71EB31CF30053380C /* RapidVoiceCommands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RapidVoiceCommands.h; sourceTree = "<group>"; };
 		0757D4D91EA0D4FC00474F98 /* ResultAddPageVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultAddPageVc.h; sourceTree = "<group>"; };
 		0757D4DA1EA0D4FC00474F98 /* ResultAddPageVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultAddPageVc.m; sourceTree = "<group>"; };
 		0757D4DD1EA0E48D00474F98 /* FBProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBProgressView.h; sourceTree = "<group>"; };
@@ -708,6 +712,15 @@
 			path = LocalDataBase_SQL;
 			sourceTree = "<group>";
 		};
+		073F792C1EAF5DB8002DB64F /* AddCommentVc */ = {
+			isa = PBXGroup;
+			children = (
+				073F792D1EAF5E25002DB64F /* AddCommentVc.h */,
+				073F792E1EAF5E25002DB64F /* AddCommentVc.m */,
+			);
+			path = AddCommentVc;
+			sourceTree = "<group>";
+		};
 		074E42681E9DF92B00AE162C /* CMPopTipView */ = {
 			isa = PBXGroup;
 			children = (
@@ -715,6 +728,14 @@
 				074E426A1E9DF98200AE162C /* CMPopTipView.m */,
 			);
 			path = CMPopTipView;
+			sourceTree = "<group>";
+		};
+		075667B61EB31CA60053380C /* RapidVoiceCommands */ = {
+			isa = PBXGroup;
+			children = (
+				075667B71EB31CF30053380C /* RapidVoiceCommands.h */,
+			);
+			path = RapidVoiceCommands;
 			sourceTree = "<group>";
 		};
 		0757D4D81EA0D48300474F98 /* ResultVc */ = {
@@ -870,7 +891,6 @@
 				C38ABFA51E487DB900689426 /* StudentListVc */,
 				C38ABFA91E48931E00689426 /* PTCommunication */,
 				C36DD1C31E409B400011221E /* ListSelection */,
-				C38F8C7A1E3F486200A67FBE /* AddPostVc */,
 				0949E9451E3B81E200723301 /* RightSlideMenuVc */,
 				0977D5FA1E3B143B00ACB7A5 /* WallVc */,
 				097C98E31E39DB6D008B52EC /* ForgotVc */,
@@ -905,6 +925,7 @@
 		0949E9401E3B783600723301 /* thirdparty */ = {
 			isa = PBXGroup;
 			children = (
+				075667B61EB31CA60053380C /* RapidVoiceCommands */,
 				0757D4DC1EA0E45C00474F98 /* FBProgressView */,
 				074E42681E9DF92B00AE162C /* CMPopTipView */,
 				C37FEE9C1E93A2A900CE32F5 /* PulltoRefreshCollectionView */,
@@ -939,6 +960,8 @@
 			children = (
 				0977D5FB1E3B144E00ACB7A5 /* WallVc.h */,
 				0977D5FC1E3B144E00ACB7A5 /* WallVc.m */,
+				C38F8C7A1E3F486200A67FBE /* AddPostVc */,
+				073F792C1EAF5DB8002DB64F /* AddCommentVc */,
 			);
 			path = WallVc;
 			sourceTree = "<group>";
@@ -2006,7 +2029,8 @@
 				C38F8C7B1E3F48DD00A67FBE /* AddpostVc.h */,
 				C38F8C7C1E3F48DD00A67FBE /* AddpostVc.m */,
 			);
-			path = AddPostVc;
+			name = AddPostVc;
+			path = ../AddPostVc;
 			sourceTree = "<group>";
 		};
 		C38F8C7E1E3F81C300A67FBE /* AddCircular */ = {
@@ -2367,6 +2391,7 @@
 				0977D6021E3B1F6300ACB7A5 /* WallCustomeCell.m in Sources */,
 				072A85AF1E67FADC00F54A30 /* DEMONavigationController.m in Sources */,
 				072A85AE1E67FADC00F54A30 /* DEMOMenuViewController.m in Sources */,
+				073F792F1EAF5E25002DB64F /* AddCommentVc.m in Sources */,
 				09F428CD1E38BC0B00A80F0D /* UIWebView+AFNetworking.m in Sources */,
 				C3A2D7311E64244000B91B54 /* OtpPasswordVc.m in Sources */,
 				C3645AE01E5BFE980012F4CF /* FSCalendar+Deprecated.m in Sources */,

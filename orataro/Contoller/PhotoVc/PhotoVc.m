@@ -90,6 +90,7 @@ int lastvalue = 0;
         
     }
 }
+
 #pragma mark - COLLECTIONVIEW DELEGATE
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
