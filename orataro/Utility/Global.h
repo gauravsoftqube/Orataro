@@ -209,7 +209,12 @@
 
 #import "RapidVoiceCommands.h"
 
+#import "ProfilePhoneChainVc.h"
 
+#import "HealthRecordVc.h"
+#import "HMSegmentedControl.h"
+
+#import "ParentProfileVc.h"
 
 #pragma mark - YOUTube Video Key
 
@@ -435,6 +440,19 @@
 #pragma mark - apk_getStandardList
 
 #define apk_GetGradeDivisionSubject @"GetGradeDivisionSubject"
+
+#pragma mark - apk_phonebook
+
+#define apk_phonebook @"apk_phonebook.asmx"
+#define apk_GetPhoneBook @"GetPhoneBook"
+#define apk_CreatePhoneBook @"CreatePhoneBook"
+#define apk_DeletePhoneBook @"DeletePhoneBook"
+
+#pragma mark - apk_CreateHealthRecord'
+
+#define apk_healthrecord @"apk_healthrecord.asmx"
+#define apk_CreateHealthRecord @"CreateHealthRecord"
+#define apk_GetHealthRecord @"GetHealthRecord"
 
 
 #endif /* Global_h */

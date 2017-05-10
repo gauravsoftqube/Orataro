@@ -189,7 +189,7 @@
         UIImageView *img=(UIImageView *)[cell.contentView viewWithTag:2];
         [img.layer setBorderColor:[UIColor colorWithRed:34/255.0f green:49/255.0f blue:89/255.0f alpha:1.0f].CGColor];
         [img.layer setBorderWidth:1.0f];
-    
+        
         [img sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[[aryEditTableList objectAtIndex:indexPath.row]objectForKey:@"ProfilePicture"]]] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
             
             NSLog(@"img");
@@ -200,7 +200,7 @@
         lblName.text = [[aryEditTableList objectAtIndex:indexPath.row]objectForKey:@"MemberFullName"];
         
         UILabel *lblStatus=(UILabel *)[cell.contentView viewWithTag:4];
-         lblStatus.text = [[aryEditTableList objectAtIndex:indexPath.row]objectForKey:@"MemberRole"];
+        lblStatus.text = [[aryEditTableList objectAtIndex:indexPath.row]objectForKey:@"MemberRole"];
         
         UIButton *btnRemove=(UIButton *)[cell.contentView viewWithTag:5];
         [btnRemove.layer setCornerRadius:4];
@@ -443,59 +443,59 @@
 
 - (IBAction)btnSumbit:(id)sender
 {
-   // if ([_projectvar isEqualToString:@"Edit"])
-   // {
-        
-   // }
-   // else
-   // {
-        NSLog(@"Data  =%@",_txtProjectTitle.text);
-        
-        if ([Utility isInterNetConnectionIsActive] == false)
-        {
-            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alrt show];
-            return;
-        }
-        
-        if ([Utility validateBlankField:self.txtProjectTitle.text])
-        {
-            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:CIRCULAR_TITLE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alrt show];
-            return;
-        }
-        if ([Utility validateBlankField:self.txtStartDate.text])
-        {
-            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Select_Start_Date delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alrt show];
-            return;
-        }
-        if ([Utility validateBlankField:self.txtEndDate.text])
-        {
-            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Select_End_Date delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alrt show];
-            return;
-        }
-        if ([Utility validateBlankField:_txtProjectDefination.text])
-        {
-            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"Please enter project defination."  delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alrt show];
-            return;
-        }
-        
-        if ([_lbSelectStudent.text isEqualToString:@"Select Project Students"])
-        {
-            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:STUDENTGROUP delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alrt show];
-            return;
-        }
-        if ([_lbSelectTeacher.text isEqualToString:@"Project Member Teacher"])
-        {
-            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:TEACHERGROUP delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alrt show];
-            return;
-        }
-        [self api_createProject];
+    //  if ([_projectvar isEqualToString:@"Edit"])
+    //  {
+    
+    //  }
+    // else
+    // {
+    NSLog(@"Data  =%@",_txtProjectTitle.text);
+    
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    if ([Utility validateBlankField:self.txtProjectTitle.text])
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:CIRCULAR_TITLE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    if ([Utility validateBlankField:self.txtStartDate.text])
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Select_Start_Date delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    if ([Utility validateBlankField:self.txtEndDate.text])
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Select_End_Date delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    if ([Utility validateBlankField:_txtProjectDefination.text])
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"Please enter project defination."  delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    if ([_lbSelectStudent.text isEqualToString:@"Select Project Students"])
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:STUDENTGROUP delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    if ([_lbSelectTeacher.text isEqualToString:@"Project Member Teacher"])
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:TEACHERGROUP delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    [self api_createProject];
     //}
 }
 
@@ -879,14 +879,14 @@
     // NSLog(@"sddsdsd");
     
     
-//    if ([_projectvar isEqualToString:@"Edit"])
-//    {
-//        
-//    }
-//    else
-//    {
-//        
-//    }
+    //    if ([_projectvar isEqualToString:@"Edit"])
+    //    {
+    //
+    //    }
+    //    else
+    //    {
+    //
+    //    }
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
@@ -919,7 +919,18 @@
     //    <projectscope>string</projectscope>
     //    <groupmembers>string</groupmembers>
     
-    [param setValue:@"" forKey:@"ProjectID"];
+    if ([_projectvar isEqualToString:@"Edit"])
+    {
+        [param setValue:[_dicCreateProject objectForKey:@"ProjectID"] forKey:@"ProjectID"];
+        
+        
+    }
+    else
+    {
+        [param setValue:@"" forKey:@"ProjectID"];
+    }
+    
+    
     [param setValue:[dicCurrentUser objectForKey:@"InstituteID"] forKey:@"InstituteID"];
     [param setValue:[dicCurrentUser objectForKey:@"ClientID"] forKey:@"ClientID"];
     [param setValue:[dicCurrentUser objectForKey:@"WallID"] forKey:@"WallID"];
@@ -950,8 +961,24 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"Record save successfully"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     [alrt show];
+                    // UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    // [alrt show];
+                     
+                     for (UIViewController *controller in self.navigationController.viewControllers)
+                     {
+                         if ([controller isKindOfClass:[ProjectVc class]])
+                         {
+                             [self.navigationController popToViewController:controller animated:YES];
+                             
+                             break;
+                         }
+                     }
+                     
+                 }
+                 else if([strStatus isEqualToString:@"Record update successfully"])
+                 {
+                    // UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    // [alrt show];
                      
                      for (UIViewController *controller in self.navigationController.viewControllers)
                      {
@@ -1014,6 +1041,7 @@
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
     [param setValue:[NSString stringWithFormat:@"%@",[dic objectForKey:@"ProjectID"]] forKey:@"ProjectID"];
     
+    
     [ProgressHUB showHUDAddedTo:self.view];
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
@@ -1059,7 +1087,7 @@
                  [alrt show];
              }
          }
-        else
+         else
          {
              UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
              [alrt show];
@@ -1087,9 +1115,9 @@
     
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_projects,apk_RemoveProjectGroupMembers];
     
-//    <GropuMemberID>guid</GropuMemberID>
-//    <MemberID>guid</MemberID>
-//    <BeachID>guid</BeachID>
+    //    <GropuMemberID>guid</GropuMemberID>
+    //    <MemberID>guid</MemberID>
+    //    <BeachID>guid</BeachID>
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
     
@@ -1122,7 +1150,7 @@
                  {
                      UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
-                }
+                 }
              }
              else
              {
@@ -1136,7 +1164,7 @@
              [alrt show];
          }
      }];
-
+    
 }
 
 @end

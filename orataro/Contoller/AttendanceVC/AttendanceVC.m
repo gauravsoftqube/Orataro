@@ -605,6 +605,7 @@ int cn =0;
                  if (data != nil)
                  {
                      arrResponce  = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                     NSLog(@"Ary=%@",arrResponce);
                  }
                 else
                 {

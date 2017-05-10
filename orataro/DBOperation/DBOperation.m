@@ -65,12 +65,15 @@ static int conn;
         if (conn == SQLITE_OK)
         {
             sqlite3_stmt *stmt = nil;
-            if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, NULL) != SQLITE_OK) {
+            
+            if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, NULL) != SQLITE_OK)
+            {
                 [NSException raise:@"DatabaseException" format:@"Error while creating statement. '%s'", sqlite3_errmsg(database)];
             }
             NSMutableArray *obj = [[NSMutableArray alloc]init];
             int numResultColumns = 0;
-            while (sqlite3_step(stmt) == SQLITE_ROW) {
+            while (sqlite3_step(stmt) == SQLITE_ROW)
+            {
                 numResultColumns = sqlite3_column_count(stmt);
                 @autoreleasepool {
                     NSMutableDictionary *tmpObj = [[NSMutableDictionary alloc]init];

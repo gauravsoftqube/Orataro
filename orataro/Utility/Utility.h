@@ -83,6 +83,8 @@
 
 +(NSString *)convertDateFtrToDtaeFtr:(NSString *)dateFormate newDateFtr:(NSString *)newDateFtr date:(NSString *)strDate;
 
++(void)SearchTextView1: (UIView *)viewSearch;
+
 #pragma mark - UITableViewCell Popup
 
 +(UIView*)addCell_PopupView:(UIView *)viewCustome ParentView:(UIView*)ParentView sender:(id)sender;

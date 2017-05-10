@@ -749,7 +749,7 @@
              NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
              NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
              
-             //NSLog(@"array=%@",arrResponce);
+             NSLog(@"array=%@",arrResponce);
              
              if([arrResponce count] != 0)
              {
@@ -759,6 +759,8 @@
                  {
                      UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
+                     _viewStandard.hidden =YES;
+
                  }
                  else
                  {

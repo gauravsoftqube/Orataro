@@ -27,6 +27,7 @@
 #import "WallVc.h"
 #import "ProfileLeaveListSelectVc.h"
 #import "DEMONavigationController.h"
+#import "Utility.h"
 
 @interface MyProfileVc ()<UIGestureRecognizerDelegate>
 {
@@ -72,6 +73,18 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {
+    if([[Utility getMemberType] isEqualToString:@"Student"])
+    {
+        _btnHealth.hidden = NO;
+        _btnParent.hidden = NO;
+        _btnPhoneChain.hidden = NO;
+    }
+    else
+    {
+        _btnHealth.hidden = YES;
+        _btnParent.hidden = YES;
+        _btnPhoneChain.hidden = YES;
+    }
 }
 
 
@@ -284,6 +297,27 @@
     UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"OrataroVc"];
     
     [self.navigationController pushViewController:wc animated:NO];
+}
+
+- (IBAction)btnPhoneChainClicked:(id)sender
+{
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"ProfilePhoneChainVc" bundle:nil];
+    UIViewController *initViewController = [storyBoard instantiateViewControllerWithIdentifier:@"ProfilePhoneChainVc"];
+    [self.navigationController pushViewController:initViewController animated:YES];
+}
+
+- (IBAction)btnParentClicked:(id)sender
+{
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"ProfilePhoneChainVc" bundle:nil];
+    UIViewController *initViewController = [storyBoard instantiateViewControllerWithIdentifier:@"ParentProfileVc"];
+    [self.navigationController pushViewController:initViewController animated:YES];
+}
+
+- (IBAction)btnHealthClicked:(id)sender
+{
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"ProfilePhoneChainVc" bundle:nil];
+    UIViewController *initViewController = [storyBoard instantiateViewControllerWithIdentifier:@"HealthRecordVc"];
+    [self.navigationController pushViewController:initViewController animated:YES];
 }
 
 /*

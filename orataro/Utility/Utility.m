@@ -614,7 +614,8 @@
 
 + (void)dismissAllPopTipViews : (NSMutableArray *)arr
 {
-    while ([arr count] > 0) {
+    while ([arr count] > 0)
+    {
         CMPopTipView *popTipView = [arr objectAtIndex:0];
         [popTipView dismissAnimated:YES];
         [arr removeObjectAtIndex:0];
@@ -868,5 +869,39 @@
     rightBorder.backgroundColor = [UIColor lightGrayColor].CGColor;
     [viewSearch.layer addSublayer:rightBorder];
 }
+
++(void)SearchTextView1: (UIView *)viewSearch
+{
+    //Bottom border self.view.frame.size.width
+    CALayer *bottomBorder = [CALayer layer];
+    bottomBorder.frame = CGRectMake(5, viewSearch.frame.size.height - 1, [UIScreen mainScreen].bounds.size.width -30, 1.0f);
+    bottomBorder.shadowColor = [UIColor grayColor].CGColor;
+    bottomBorder.shadowOffset = CGSizeMake(1, 1);
+    bottomBorder.shadowOpacity = 1;
+    bottomBorder.shadowRadius = 1.0;
+    bottomBorder.backgroundColor = [UIColor lightGrayColor].CGColor;
+    [viewSearch.layer addSublayer:bottomBorder];
+    
+    //left border
+    CALayer *leftBorder = [CALayer layer];
+    leftBorder.frame = CGRectMake(5, 30.0f, 1.0f, viewSearch.frame.size.height-30);
+    leftBorder.shadowColor = [UIColor grayColor].CGColor;
+    leftBorder.shadowOffset = CGSizeMake(1, 1);
+    leftBorder.shadowOpacity = 1;
+    leftBorder.shadowRadius = 1.0;
+    leftBorder.backgroundColor = [UIColor lightGrayColor].CGColor;
+    [viewSearch.layer addSublayer:leftBorder];
+    
+    //right border
+    CALayer *rightBorder = [CALayer layer];
+    rightBorder.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-25, 30.0f, 1.0f, viewSearch.frame.size.height-30);
+    rightBorder.shadowColor = [UIColor grayColor].CGColor;
+    rightBorder.shadowOffset = CGSizeMake(1, 1);
+    rightBorder.shadowOpacity = 1;
+    rightBorder.shadowRadius = 1.0;
+    rightBorder.backgroundColor = [UIColor lightGrayColor].CGColor;
+    [viewSearch.layer addSublayer:rightBorder];
+}
+
 
 @end

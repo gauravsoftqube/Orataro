@@ -229,7 +229,6 @@
     
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
 
-    
     if([[dicCurrentUser objectForKey:@"MemberType"] isEqualToString:@"Student"])
     {
         [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"DivisionID"]] forKey:@"DivisionID"];
@@ -250,11 +249,14 @@
 
     [param setValue:[_dicAddLeave objectForKey:@"SchoolLeaveNoteID"] forKey:@"SchoolLeaveNoteID"];
     
+    [param setValue:[dicCurrentUser objectForKey:@"PostByType"] forKey:@"PostByType"];
+
+     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"TeacherID"];
+    
     [param setValue:[NSNumber numberWithBool:strSetPreApplication] forKey:@"IsPreApplication"];
     
     [param setValue:[_dicAddLeave objectForKey:@"ReasonForLeave"] forKey:@"ReasonForLeave"];
     
-    [param setValue:[dicCurrentUser objectForKey:@"PostByType"] forKey:@"PostByType"];
     
     // <PostByType>string</PostByType>
     
