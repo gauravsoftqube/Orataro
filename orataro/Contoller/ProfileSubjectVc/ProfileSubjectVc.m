@@ -112,6 +112,7 @@
 {
     WallVc  *vc10 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
     vc10.checkscreen = @"Subject";
+    vc10.dicSelect_std_divi_sub=[arySaveData objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:vc10 animated:YES];
 }
 

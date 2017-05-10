@@ -16,6 +16,7 @@
 {
     NSMutableArray *arrPopup;
     NSMutableArray *arrCollectionList;
+    NSMutableArray *arrResponceImagePath;
     NSIndexPath *indexPathTemp;
     
     //STT
@@ -25,6 +26,8 @@
     AVAudioEngine * audioEngine;
     // The command execution boolean.
     Boolean _commandExecuted;
+    
+    
 }
 @end
 
@@ -54,6 +57,7 @@
     
     //alloc
     arrCollectionList  = [[NSMutableArray alloc]init];
+    arrResponceImagePath = [[NSMutableArray alloc]init];
     
     // set STT
     [self.viewSTT_Poppup setHidden:YES];
@@ -69,19 +73,19 @@
     {
         self.lblheaderTitle.text=[NSString stringWithFormat:@"Add Post"];
     }
-
+    
 }
 
 -(void)allocSTT
 {
     speechRecognizer = [[SFSpeechRecognizer alloc] init];
     audioEngine = [[AVAudioEngine alloc] init];
-   // self.btnSpeechToText.enabled = true;
+    // self.btnSpeechToText.enabled = true;
     
     [SFSpeechRecognizer requestAuthorization:^(SFSpeechRecognizerAuthorizationStatus status) {
         switch (status) {
             case SFSpeechRecognizerAuthorizationStatusAuthorized:
-               // self.btnSpeechToText.enabled = true;
+                // self.btnSpeechToText.enabled = true;
                 break;
             case SFSpeechRecognizerAuthorizationStatusDenied:
                 [self updateText:@"User denied access to the microphone." forUIElement:PartialResultTextView];
@@ -107,7 +111,7 @@
         if(![strURLForTeacherProfilePicture isKindOfClass:[NSNull class]])
         {
             strURLForTeacherProfilePicture=[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[dic objectForKey:@"ProfilePicture"]];
-            [ProgressHUB showHUDAddedTo:self.view];
+            //[ProgressHUB showHUDAddedTo:self.view];
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
                            ^{
                                
@@ -134,9 +138,270 @@
     
 }
 
-#pragma mark - set local Databse post detail
+#pragma mark - apiCall
 
--(void)postImageInLocalDB
+-(void)apiCallFor_newPost:(NSString *)strInternet FileType:(NSString *)FileType
+{
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_post,apk_Post_action];
+    
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
+    
+    if ([_checkscreen isEqualToString:@"Institute"])
+    {
+        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstitutionWallID"]] forKey:@"WallID"];
+    }
+    else if([_checkscreen isEqualToString:@"Standard"])
+    {
+         [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]] forKey:@"WallID"];
+    }
+    else if ([_checkscreen isEqualToString:@"Division"])
+    {
+        [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]] forKey:@"WallID"];
+    }
+    else if ([_checkscreen isEqualToString:@"Subject"])
+    {
+        [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]] forKey:@"WallID"];
+    }
+    else
+    {
+        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"WallID"]] forKey:@"WallID"];
+    }
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
+    [param setValue:[NSString stringWithFormat:@""] forKey:@"BeachID"];
+    
+    
+    if([self.lblTo.text isEqualToString:@"Friends"])
+    {
+        [param setValue:[NSString stringWithFormat:@"Friend"] forKey:@"PostShareType"];
+    }
+    else if([self.lblTo.text isEqualToString:@"Public"])
+    {
+        [param setValue:[NSString stringWithFormat:@"Public"] forKey:@"PostShareType"];
+    }
+    else if([self.lblTo.text isEqualToString:@"Only Me"])
+    {
+        [param setValue:[NSString stringWithFormat:@"Only Me"] forKey:@"PostShareType"];
+    }
+    
+    [param setValue:[NSString stringWithFormat:@"%@",self.txtView_PostText.text] forKey:@"PostCommentNote"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"PostByType"]] forKey:@"PostByType"];
+    
+    if([FileType isEqualToString:@"IMAGE"])
+    {
+        NSString *ImagePath=[arrResponceImagePath componentsJoinedByString:@","];
+        [param setValue:[NSString stringWithFormat:@"%@",ImagePath] forKey:@"ImagePath"];
+    }
+    if([FileType isEqualToString:@"VIDEO"])
+    {
+        NSString *VideoPath=[arrResponceImagePath componentsJoinedByString:@","];
+        [param setValue:[NSString stringWithFormat:@"%@",VideoPath] forKey:@"ImagePath"];
+    }
+    if([FileType isEqualToString:@"Text"])
+    {
+        [param setValue:[NSString stringWithFormat:@""] forKey:@"ImagePath"];
+    }
+
+    
+    [param setValue:[NSString stringWithFormat:@"%@",FileType] forKey:@"FileType"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",FileType] forKey:@"FileMineType"];
+    
+    [param setValue:[NSString stringWithFormat:@"true"] forKey:@"approved"];
+    
+    
+    if([strInternet isEqualToString:@"1"])
+    {
+        [ProgressHUB showHUDAddedTo:self.view];
+    }
+    
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         [ProgressHUB hideenHUDAddedTo:self.view];
+         if(!error)
+         {
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             
+             if([arrResponce count] != 0)
+             {
+                 NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                 NSString *strStatus=[dic objectForKey:@"message"];
+                 if([strStatus isEqualToString:@"No Data Found"])
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                 }
+                 else if([strStatus isEqualToString:@"Post Added successfully."])
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                     [self.navigationController popViewControllerAnimated:YES];
+                 }
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
+    
+}
+
+
+-(void)apiCallFor_UploadFile:(NSString *)strInternet FileType:(NSString *)FileType FileName:(NSString *)FileName imageSelect:(UIImage*)imageSelect videoURL:(NSString *)strvideoURL
+{
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_post,apk_UploadFile_action];
+    
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",FileName] forKey:@"FileName"];
+    
+    if([FileType isEqualToString:@"IMAGE"])
+    {
+        NSData *data = UIImagePNGRepresentation(imageSelect);
+        const unsigned char *bytes = [data bytes];
+        NSUInteger length = [data length];
+        NSMutableArray *byteArray = [NSMutableArray array];
+        for (NSUInteger i = 0; i < length; i++)
+        {
+            [byteArray addObject:[NSNumber numberWithUnsignedChar:bytes[i]]];
+        }
+        [param setValue:byteArray forKey:@"File"];
+    }
+    if([FileType isEqualToString:@"VIDEO"])
+    {
+        
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsDirectoryPath = [paths objectAtIndex:0];
+        
+        NSURL *videoNSURL = [NSURL fileURLWithPath:[documentsDirectoryPath stringByAppendingPathComponent:strvideoURL]];
+        NSData *data = [NSData dataWithContentsOfURL:videoNSURL];
+        
+        const unsigned char *bytes = [data bytes];
+        NSUInteger length = [data length];
+        NSMutableArray *byteArray = [NSMutableArray array];
+        for (NSUInteger i = 0; i < length; i++)
+        {
+            [byteArray addObject:[NSNumber numberWithUnsignedChar:bytes[i]]];
+        }
+        [param setValue:byteArray forKey:@"File"];
+    }
+    
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
+    [param setValue:[NSString stringWithFormat:@"%@",FileType] forKey:@"FileType"];
+    
+    if([strInternet isEqualToString:@"1"])
+    {
+        [ProgressHUB showHUDAddedTo:self.view];
+    }
+    
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         [ProgressHUB hideenHUDAddedTo:self.view];
+         if(!error)
+         {
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             
+             if([arrResponce count] != 0)
+             {
+                 NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                 NSString *strStatus=[dic objectForKey:@"message"];
+                 if([strStatus isEqualToString:@"No Data Found"])
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                 }
+                 else
+                 {
+                     NSString *message=[dic objectForKey:@"message"];
+                     NSArray *arrMessage=[message componentsSeparatedByString:@" "];
+                     if([arrMessage count] > 0)
+                     {
+                         message=[arrMessage objectAtIndex:1];
+                     }
+                     [arrResponceImagePath addObject:message];
+                     
+                     NSArray *arrVideo=[arrCollectionList valueForKey:@"videoSelect"];
+                     NSArray *arrImage=[arrCollectionList valueForKey:@"imageSelect"];
+                     
+                     NSNull *strNull=[[NSNull alloc]init];
+                     if ([Utility isInterNetConnectionIsActive] == true)
+                     {
+                         if([arrVideo count] == 0 || [arrVideo containsObject:strNull])
+                         {
+                             if([arrCollectionList count] == [arrResponceImagePath count])
+                             {
+                                 [self apiCallFor_newPost:@"1" FileType:@"IMAGE"];
+                             }
+                         }
+                         else if([arrImage count] == 0 || [arrImage containsObject:strNull])
+                         {
+                             [self apiCallFor_newPost:@"1" FileType:@"VIDEO"];
+                         }
+                         else
+                         {
+                             [self apiCallFor_newPost:@"1" FileType:@"Text"];
+                         }
+                     }
+                     else
+                     {
+                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                         [alrt show];
+                     }
+                     
+                 }
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
+    
+}
+
+#pragma mark - set Local Databse post detail
+
+-(void)post_ImageIn_LocalDB
 {
     NSString *stringPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0];
     
@@ -149,10 +414,155 @@
     {
         NSString *imgName=[NSString stringWithFormat:@"/%@.png",[Utility randomImageGenerator]];
         [arrRandonImageName addObject:imgName];
+        
         NSString *fileName = [stringPath stringByAppendingFormat:@"%@",imgName];
         NSData *data = UIImageJPEGRepresentation([dic objectForKey:@"imageSelect"], 1.0);
         [data writeToFile:fileName atomically:YES];
     }
+    
+    [self postNew_Image_LocalDB:arrRandonImageName];
+}
+
+-(void)postNew_Image_LocalDB:(NSMutableArray*)arrImageName
+{
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    NSString *WallID;
+    if ([_checkscreen isEqualToString:@"Institute"])
+    {
+        WallID = [NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstitutionWallID"]];
+    }
+    else if([_checkscreen isEqualToString:@"Standard"])
+    {
+        WallID = [NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]];
+    }
+    else if ([_checkscreen isEqualToString:@"Division"])
+    {
+        WallID = [NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]];
+    }
+    else if ([_checkscreen isEqualToString:@"Subject"])
+    {
+        WallID = [NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]];
+    }
+    else
+    {
+        WallID = [NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"WallID"]];
+    }
+    NSString *PostShareType=[self.lblTo text];
+    NSString *PostCommentNote=[self.txtView_PostText text];
+    NSString *FileType;
+    
+    FileType=@"IMAGE";
+    
+    NSString *FileMineType;
+    
+    FileMineType= @"IMAGE";
+    
+    NSString *approved;
+    
+    approved=@"true";
+    
+    NSString *ImagePath=[arrImageName componentsJoinedByString:@","];
+    
+    [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO newPost (WallID,PostShareType,PostCommentNote,ImagePath,FileType,FileMineType,approved)values('%@','%@','%@','%@','%@','%@','%@')",WallID,PostShareType,PostCommentNote,ImagePath,FileType,FileMineType,approved]];
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)post_VideoIn_LocalDB
+{
+    NSMutableArray *arrRandonImageName=[[NSMutableArray alloc]init];
+    for (NSMutableDictionary *dic in arrCollectionList)
+    {
+        NSString *VideoName=[dic objectForKey:@"videoSelect"];
+        [arrRandonImageName addObject:VideoName];
+    }
+    
+    [self postNew_Video_LocalDB:arrRandonImageName];
+}
+
+-(void)postNew_Video_LocalDB:(NSMutableArray*)arrVideoName
+{
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    NSString *WallID;
+    if ([_checkscreen isEqualToString:@"Institute"])
+    {
+        WallID = [NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstitutionWallID"]];
+    }
+    else if([_checkscreen isEqualToString:@"Standard"])
+    {
+        WallID = [NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]];
+    }
+    else if ([_checkscreen isEqualToString:@"Division"])
+    {
+        WallID = [NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]];
+    }
+    else if ([_checkscreen isEqualToString:@"Subject"])
+    {
+        WallID = [NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]];
+    }
+    else
+    {
+        WallID = [NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"WallID"]];
+    }
+    
+    NSString *PostShareType=[self.lblTo text];
+    NSString *PostCommentNote=[self.txtView_PostText text];
+    NSString *FileType;
+    FileType=@"VIDEO";
+    
+    NSString *FileMineType;
+    FileMineType= @"VIDEO";
+    
+    NSString *approved;
+    approved=@"true";
+    
+    NSString *ImagePath=[arrVideoName componentsJoinedByString:@","];
+    
+    [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO newPost (WallID,PostShareType,PostCommentNote,ImagePath,FileType,FileMineType,approved)values('%@','%@','%@','%@','%@','%@','%@')",WallID,PostShareType,PostCommentNote,ImagePath,FileType,FileMineType,approved]];
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)post_TextIn_LocalDB
+{
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    NSString *WallID;
+    if ([_checkscreen isEqualToString:@"Institute"])
+    {
+        WallID = [NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstitutionWallID"]];
+    }
+    else if([_checkscreen isEqualToString:@"Standard"])
+    {
+        WallID = [NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]];
+    }
+    else if ([_checkscreen isEqualToString:@"Division"])
+    {
+        WallID = [NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]];
+    }
+    else if ([_checkscreen isEqualToString:@"Subject"])
+    {
+        WallID = [NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]];
+    }
+    else
+    {
+        WallID = [NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"WallID"]];
+    }
+    NSString *PostShareType=[self.lblTo text];
+    NSString *PostCommentNote=[self.txtView_PostText text];
+    NSString *FileType;
+    FileType=@"Text";
+    
+    NSString *FileMineType;
+    FileMineType= @"Text";
+    
+    NSString *approved;
+    approved=@"true";
+    
+    NSString *ImagePath=@"";
+    
+    [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO newPost (WallID,PostShareType,PostCommentNote,ImagePath,FileType,FileMineType,approved)values('%@','%@','%@','%@','%@','%@','%@')",WallID,PostShareType,PostCommentNote,ImagePath,FileType,FileMineType,approved]];
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - COLLECTIONVIEW DELEGATE
@@ -245,21 +655,22 @@
     //public.image
     //public.movie
     NSString *mediaType = [info objectForKey: UIImagePickerControllerMediaType];
-    if([mediaType isEqualToString:@"public.movie"])
+    if(![mediaType isEqualToString:@"public.image"])
     {
         NSURL *chosenMovie = [info objectForKey:UIImagePickerControllerMediaURL];
+       
         NSString *timestampVideo = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970]];
         NSArray *ary = [timestampVideo componentsSeparatedByString:@"."];
         NSString *getTime = [ary objectAtIndex:0];
-        NSURL *fileURL = [self grabFileURL:[NSString stringWithFormat:@"%@.mov",getTime]];
+        NSURL *fileURL = [self grabFileURL:[NSString stringWithFormat:@"%@.mp4",getTime]];
+     
         NSData *movieData = [NSData dataWithContentsOfURL:chosenMovie];
         [movieData writeToURL:fileURL atomically:YES];
         UISaveVideoAtPathToSavedPhotosAlbum([chosenMovie path], nil, nil, nil);
         
         NSMutableDictionary *dic=[[NSMutableDictionary alloc]init];
-        [dic setValue:[NSString stringWithFormat:@"%@",fileURL] forKey:@"videoSelect"];
+        [dic setValue:[NSString stringWithFormat:@"%@.mp4",getTime] forKey:@"videoSelect"];
         [arrCollectionList addObject:dic];
-        
     }
     else
     {
@@ -344,6 +755,56 @@
 - (IBAction)SaveBtnClicked:(UIButton *)sender
 {
     [self.view endEditing:YES];
+    
+    //image
+    NSArray *arrVideo=[arrCollectionList valueForKey:@"videoSelect"];
+    NSArray *arrImage=[arrCollectionList valueForKey:@"imageSelect"];
+    
+    NSNull *strNull=[[NSNull alloc]init];
+    if ([Utility isInterNetConnectionIsActive] == true)
+    {
+        if([arrCollectionList count] != 0)
+        {
+            if([arrVideo count] == 0 || [arrVideo containsObject:strNull])
+            {
+                for (NSMutableDictionary *dic in arrCollectionList)
+                {
+                    UIImage *img=[dic objectForKey:@"imageSelect"];
+                    [self apiCallFor_UploadFile:@"1" FileType:@"IMAGE" FileName:[NSString stringWithFormat:@"%@.png",[Utility randomImageGenerator]] imageSelect:img videoURL:nil];
+                }
+            }
+            else if([arrImage count] == 0 || [arrImage containsObject:strNull])
+            {
+                for (NSMutableDictionary *dic in arrCollectionList)
+                {
+                    NSString *strVideo=[dic objectForKey:@"videoSelect"];
+                    [self apiCallFor_UploadFile:@"1" FileType:@"VIDEO" FileName:[NSString stringWithFormat:@"%@.mp4",[Utility randomImageGenerator]] imageSelect:nil videoURL:strVideo];
+                }
+            }
+        }
+        else if (![Utility validateBlankField:self.txtView_PostText.text])
+        {
+                [self apiCallFor_newPost:@"1" FileType:@"Text"];
+        }
+    }
+    else
+    {
+        if([arrCollectionList count] != 0)
+        {
+            if([arrVideo count] == 0 || [arrVideo containsObject:strNull])
+            {
+                [self post_ImageIn_LocalDB];
+            }
+            else if([arrImage count] == 0 || [arrImage containsObject:strNull])
+            {
+                [self post_VideoIn_LocalDB];
+            }
+        }
+        else if (![Utility validateBlankField:self.txtView_PostText.text])
+        {
+            [self post_TextIn_LocalDB];
+        }
+    }
 }
 
 - (IBAction)btnTo:(id)sender
@@ -390,65 +851,65 @@
         if([arrCollectionList count] < 1)
         {
             
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"add Video" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
-                UIAlertAction* pickFromGallery = [UIAlertAction actionWithTitle:@"Take a video"
-                                                                          style:UIAlertActionStyleDefault
-                                                                        handler:^(UIAlertAction * action) {
-                                                                            if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"add Video" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+            UIAlertAction* pickFromGallery = [UIAlertAction actionWithTitle:@"Take a video"
+                                                                      style:UIAlertActionStyleDefault
+                                                                    handler:^(UIAlertAction * action) {
+                                                                        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+                                                                        {
+                                                                            if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
                                                                             {
-                                                                                if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
-                                                                                {
-                                                                                    
-                                                                                    UIImagePickerController *picker = [[UIImagePickerController alloc]init];
-                                                                                    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-                                                                                    picker.delegate = self;
-                                                                                    picker.allowsEditing = NO;
-                                                                                    NSArray *mediaTypes = [[NSArray alloc]initWithObjects:(NSString *)kUTTypeMovie, nil];
-                                                                                    picker.mediaTypes = mediaTypes;
-                                                                                    [self presentViewController:picker animated:YES completion:nil];
-                                                                                    
-                                                                                } else {
-                                                                                    
-                                                                                    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:@"I'm afraid there's no camera on this device!" delegate:nil cancelButtonTitle:@"Dang!" otherButtonTitles:nil, nil];
-                                                                                    [alertView show];
-                                                                                }
-
-                                                                            
+                                                                                
+                                                                                UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+                                                                                picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+                                                                                picker.delegate = self;
+                                                                                picker.allowsEditing = NO;
+                                                                                NSArray *mediaTypes = [[NSArray alloc]initWithObjects:(NSString *)kUTTypeMovie, nil];
+                                                                                picker.mediaTypes = mediaTypes;
+                                                                                [self presentViewController:picker animated:YES completion:nil];
+                                                                                
+                                                                            } else {
+                                                                                
+                                                                                UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:@"I'm afraid there's no camera on this device!" delegate:nil cancelButtonTitle:@"Dang!" otherButtonTitles:nil, nil];
+                                                                                [alertView show];
                                                                             }
                                                                             
-                                                                        }];
-                UIAlertAction* takeAPicture = [UIAlertAction actionWithTitle:@"Choose from gallery"
-                                                                       style:UIAlertActionStyleDefault
-                                                                     handler:^(UIAlertAction * action)
+                                                                            
+                                                                        }
+                                                                        
+                                                                    }];
+            UIAlertAction* takeAPicture = [UIAlertAction actionWithTitle:@"Choose from gallery"
+                                                                   style:UIAlertActionStyleDefault
+                                                                 handler:^(UIAlertAction * action)
+                                           {
+                                               if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
                                                {
-                                                   if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
-                                                   {
-                                                       
-                                                       UIImagePickerController *picker = [[UIImagePickerController alloc]init];
-                                                       picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-                                                       picker.delegate = self;
-                                                       picker.allowsEditing = NO;
-                                                       NSArray *mediaTypes = [[NSArray alloc]initWithObjects:(NSString *)kUTTypeMovie, nil];
-                                                       picker.mediaTypes = mediaTypes;
-                                                       [self presentViewController:picker animated:YES completion:nil];
-                                                       
-                                                   } else {
-                                                       
-                                                       UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:@"I'm afraid there's no camera on this device!" delegate:nil cancelButtonTitle:@"Dang!" otherButtonTitles:nil, nil];
-                                                       [alertView show];
-                                                   }
-
-                                                                     }];
-                UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel"
-                                                                 style:UIAlertActionStyleCancel
-                                                               handler:^(UIAlertAction * action) {
-                                                               }];
-                
-                [alertController addAction:pickFromGallery];
-                [alertController addAction:takeAPicture];
-                [alertController addAction:cancel];
-                [self presentViewController:alertController animated:YES completion:nil];
-                
+                                                   
+                                                   UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+                                                   picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                                                   picker.delegate = self;
+                                                   picker.allowsEditing = NO;
+                                                   NSArray *mediaTypes = [[NSArray alloc]initWithObjects:(NSString *)kUTTypeMovie, nil];
+                                                   picker.mediaTypes = mediaTypes;
+                                                   [self presentViewController:picker animated:YES completion:nil];
+                                                   
+                                               } else {
+                                                   
+                                                   UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:@"I'm afraid there's no camera on this device!" delegate:nil cancelButtonTitle:@"Dang!" otherButtonTitles:nil, nil];
+                                                   [alertView show];
+                                               }
+                                               
+                                           }];
+            UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel"
+                                                             style:UIAlertActionStyleCancel
+                                                           handler:^(UIAlertAction * action) {
+                                                           }];
+            
+            [alertController addAction:pickFromGallery];
+            [alertController addAction:takeAPicture];
+            [alertController addAction:cancel];
+            [self presentViewController:alertController animated:YES completion:nil];
+            
             
             
             
@@ -503,7 +964,7 @@
         
         if(result != nil)
         {
-          //  self.btnSpeechToText.enabled = true;
+            //  self.btnSpeechToText.enabled = true;
             NSString* response = [[result bestTranscription] formattedString];
             [self.txtView_PostText setText:[NSString stringWithFormat:@"%@",response]];
             [self updateText:[[result bestTranscription] formattedString] forUIElement:PartialResultTextView];
@@ -539,7 +1000,7 @@
             {
                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                 [alrt show];
-               // [self updateText:@"An error occured starting the Speech service. Try again later." forUIElement:PartialResultTextView];
+                // [self updateText:@"An error occured starting the Speech service. Try again later." forUIElement:PartialResultTextView];
                 return;
             }
             
@@ -550,8 +1011,8 @@
             }
             else
             {
-//                UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-//                [alrt show];
+                //                UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                //                [alrt show];
                 //[self updateText:@"Command was not found in local dictionary. Reaching to LUIS for intent extraction" forUIElement:ActionIssuedTextView];
                 
                 //   [self extractLuisIntent:[[result bestTranscription] formattedString]];
@@ -606,7 +1067,7 @@
 {
     [self.view endEditing:YES];
     [self.viewSTT_Poppup setHidden:NO];
-
+    
 }
 
 - (IBAction)btnBack_STT:(id)sender
@@ -616,21 +1077,21 @@
 
 - (IBAction)btnSTT_Start_Stop:(id)sender
 {
-//    UIButton *btn=(UIButton*)sender;
-//    if (btn.selected)
-//    {
-//        [self.lblSTT_Status setText:@"Tap to speak"];
-//        [self.btnSTT_Start_Stop setImage:[UIImage imageNamed:@"microphone_circle_white"] forState:UIControlStateNormal];
-//        [self.viewSTT_Poppup setHidden:YES];
-//        btn.selected=NO;
-//    }
-//    else
-//    {
-//        
-//        [self.lblSTT_Status setText:@"Speak now"];
-//        [self.btnSTT_Start_Stop setImage:[UIImage imageNamed:@"microphone_circle"] forState:UIControlStateNormal];
-//        btn.selected=YES;
-//    }
+    //    UIButton *btn=(UIButton*)sender;
+    //    if (btn.selected)
+    //    {
+    //        [self.lblSTT_Status setText:@"Tap to speak"];
+    //        [self.btnSTT_Start_Stop setImage:[UIImage imageNamed:@"microphone_circle_white"] forState:UIControlStateNormal];
+    //        [self.viewSTT_Poppup setHidden:YES];
+    //        btn.selected=NO;
+    //    }
+    //    else
+    //    {
+    //
+    //        [self.lblSTT_Status setText:@"Speak now"];
+    //        [self.btnSTT_Start_Stop setImage:[UIImage imageNamed:@"microphone_circle"] forState:UIControlStateNormal];
+    //        btn.selected=YES;
+    //    }
     
     if([audioEngine isRunning])
     {
@@ -639,11 +1100,11 @@
         {
             [speechRecognitionRequest endAudio];
         }
-      
+        
         [self.viewSTT_Poppup setHidden:YES];
         [self.lblSTT_Status setText:@"Tap to speak"];
         [self.btnSTT_Start_Stop setImage:[UIImage imageNamed:@"microphone_circle_white"] forState:UIControlStateNormal];
-
+        
         
         // self.btnSpeechToText.enabled=true;
         //[_StartListeningButton setTitle:@"Start listening" forState:UIControlStateNormal];
@@ -658,8 +1119,8 @@
         [self.lblSTT_Status setText:@"Speak now"];
         [self.btnSTT_Start_Stop setImage:[UIImage imageNamed:@"microphone_circle"] forState:UIControlStateNormal];
         [self.viewSTT_Poppup setHidden:NO];
-
-     }
-
+        
+    }
+    
 }
 @end

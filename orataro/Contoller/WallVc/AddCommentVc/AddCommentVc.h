@@ -10,6 +10,8 @@
 
 @interface AddCommentVc : UIViewController
 
+@property(strong,nonatomic)NSString *checkscreen;
+
 @property (strong, nonatomic) NSMutableDictionary *dicSelectedPost_Comment;
 @property (weak, nonatomic) IBOutlet UILabel *lblNoCommentYet;
 

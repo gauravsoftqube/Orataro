@@ -85,7 +85,6 @@
 {
     CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     self.viewCommentPost_Bottom.constant=keyboardSize.height;
-
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification
@@ -119,7 +118,9 @@
     
     [param setValue:[NSString stringWithFormat:@"%ld",totalCountView] forKey:@"rowno"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
+    
     [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelectedPost_Comment objectForKey:@"WallID"]] forKey:@"WallID"];
+    
     [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelectedPost_Comment objectForKey:@"PostCommentID"]] forKey:@"PostID"];
     
     if([strInternet isEqualToString:@"1"])
@@ -168,8 +169,16 @@
                      }
                      
                      NSString *PostCommentID=[self.dicSelectedPost_Comment objectForKey:@"PostCommentID"];
-                     //update
-                     [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE GeneralWall SET TotalComments = '%lu' WHERE PostCommentID = '%@'",(unsigned long)[arrCommentList count],PostCommentID]];
+                     if ([_checkscreen isEqualToString:@"Institute"])
+                     {
+                         //update
+                         [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE InstituteWall SET TotalComments = '%lu' WHERE PostCommentID = '%@'",(unsigned long)[arrCommentList count],PostCommentID]];
+                     }
+                     else
+                     {
+                         //update
+                         [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE GeneralWall SET TotalComments = '%lu' WHERE PostCommentID = '%@'",(unsigned long)[arrCommentList count],PostCommentID]];
+                     }
                      
                      [self.tblCommentList reloadData];
                  }
