@@ -208,14 +208,14 @@
 #import "IQKeyboardManager.h"
 
 #import "RapidVoiceCommands.h"
-<<<<<<< HEAD
+
 
 #import "ProfilePhoneChainVc.h"
-=======
+
 #import "HTMLLabel.h"
 #import "WallCustomeCell.h"
 #import "PostDetailVC.h"
->>>>>>> master/master
+
 
 #import "HealthRecordVc.h"
 #import "HMSegmentedControl.h"
