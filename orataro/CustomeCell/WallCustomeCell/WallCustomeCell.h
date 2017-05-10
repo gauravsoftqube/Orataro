@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Global.h"
 
 @interface WallCustomeCell : UITableViewCell
 
@@ -20,11 +21,13 @@
 
 //Post Detail
 @property (weak, nonatomic) IBOutlet UILabel *lblPostDetail;
+@property (weak, nonatomic) IBOutlet HTMLLabel *lblPostDetailHTML;
 
 @property (weak, nonatomic) IBOutlet UIImageView *imgPost;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imgPost_Height;
 
+@property (weak, nonatomic) IBOutlet UIButton *btnImageVideo_Click;
 
 
 //count

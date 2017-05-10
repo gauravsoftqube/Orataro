@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 
 
+
+
 //= = = = = = = = = = = = = = = = =
 
 #import <Speech/SFSpeechRecognizer.h>
@@ -24,7 +26,9 @@
 
 //========
 
+@property(strong,nonatomic)NSMutableDictionary *dicSelect_std_divi_sub;
 @property (strong, nonatomic) NSDictionary *rapidCommandsDictionary;
+@property(strong,nonatomic)NSString *checkscreen;
 
 //========
 

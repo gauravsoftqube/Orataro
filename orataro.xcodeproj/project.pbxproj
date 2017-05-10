@@ -21,7 +21,11 @@
 		0757D4DB1EA0D4FC00474F98 /* ResultAddPageVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 0757D4DA1EA0D4FC00474F98 /* ResultAddPageVc.m */; };
 		0757D4DF1EA0E48D00474F98 /* FBProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0757D4DE1EA0E48D00474F98 /* FBProgressView.m */; };
 		0757D4E31EA0E67400474F98 /* ResultAddPageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0757D4E21EA0E67400474F98 /* ResultAddPageCell.m */; };
+		07709F241EC0374E005B50D7 /* PostDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 07709F231EC0374E005B50D7 /* PostDetailVC.m */; };
+		07709F261EC0440F005B50D7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07709F251EC0440F005B50D7 /* AVFoundation.framework */; };
+		07709F281EC0441F005B50D7 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07709F271EC0441F005B50D7 /* AVKit.framework */; };
 		07801FC91E7FE2F400E34D36 /* UITextView+Placeholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 07801FC81E7FE2F400E34D36 /* UITextView+Placeholder.m */; };
+		07B6A5DB1EB77C460053C749 /* HTMLLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 07B6A5DA1EB77C460053C749 /* HTMLLabel.m */; };
 		07FB8B111EA77F42003C163E /* ReminderDetailVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 07FB8B101EA77F42003C163E /* ReminderDetailVc.m */; };
 		0932277B1E38750D00138A2B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0932277A1E38750D00138A2B /* main.m */; };
 		0932277E1E38750D00138A2B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0932277D1E38750D00138A2B /* AppDelegate.m */; };
@@ -267,8 +271,14 @@
 		0757D4DE1EA0E48D00474F98 /* FBProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBProgressView.m; sourceTree = "<group>"; };
 		0757D4E11EA0E67400474F98 /* ResultAddPageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultAddPageCell.h; sourceTree = "<group>"; };
 		0757D4E21EA0E67400474F98 /* ResultAddPageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultAddPageCell.m; sourceTree = "<group>"; };
+		07709F221EC0374E005B50D7 /* PostDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostDetailVC.h; sourceTree = "<group>"; };
+		07709F231EC0374E005B50D7 /* PostDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostDetailVC.m; sourceTree = "<group>"; };
+		07709F251EC0440F005B50D7 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		07709F271EC0441F005B50D7 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		07801FC71E7FE2F400E34D36 /* UITextView+Placeholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+Placeholder.h"; sourceTree = "<group>"; };
 		07801FC81E7FE2F400E34D36 /* UITextView+Placeholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+Placeholder.m"; sourceTree = "<group>"; };
+		07B6A5D91EB77C460053C749 /* HTMLLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTMLLabel.h; sourceTree = "<group>"; };
+		07B6A5DA1EB77C460053C749 /* HTMLLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTMLLabel.m; sourceTree = "<group>"; };
 		07FB8B0F1EA77F42003C163E /* ReminderDetailVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderDetailVc.h; sourceTree = "<group>"; };
 		07FB8B101EA77F42003C163E /* ReminderDetailVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderDetailVc.m; sourceTree = "<group>"; };
 		093227761E38750D00138A2B /* orataro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = orataro.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -684,6 +694,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07709F281EC0441F005B50D7 /* AVKit.framework in Frameworks */,
+				07709F261EC0440F005B50D7 /* AVFoundation.framework in Frameworks */,
 				C371DFF61E8D323800276AB4 /* AssetsLibrary.framework in Frameworks */,
 				C36CE4F01E71203F00DC3DC9 /* libsqlite3.tbd in Frameworks */,
 				C360CD3E1E4B480C00761ABE /* CoreGraphics.framework in Frameworks */,
@@ -785,6 +797,15 @@
 			path = ResultCell;
 			sourceTree = "<group>";
 		};
+		07709F211EC036CE005B50D7 /* PostDetailVC */ = {
+			isa = PBXGroup;
+			children = (
+				07709F221EC0374E005B50D7 /* PostDetailVC.h */,
+				07709F231EC0374E005B50D7 /* PostDetailVC.m */,
+			);
+			path = PostDetailVC;
+			sourceTree = "<group>";
+		};
 		07801FC61E7FE2BC00E34D36 /* TextView_PlaceHolder */ = {
 			isa = PBXGroup;
 			children = (
@@ -792,6 +813,15 @@
 				07801FC81E7FE2F400E34D36 /* UITextView+Placeholder.m */,
 			);
 			path = TextView_PlaceHolder;
+			sourceTree = "<group>";
+		};
+		07B6A5D81EB77BFB0053C749 /* HTMLLabel */ = {
+			isa = PBXGroup;
+			children = (
+				07B6A5D91EB77C460053C749 /* HTMLLabel.h */,
+				07B6A5DA1EB77C460053C749 /* HTMLLabel.m */,
+			);
+			path = HTMLLabel;
 			sourceTree = "<group>";
 		};
 		07FB8B0E1EA77EAA003C163E /* ReminderDetailVc */ = {
@@ -945,7 +975,11 @@
 		0949E9401E3B783600723301 /* thirdparty */ = {
 			isa = PBXGroup;
 			children = (
+
 				C35DDF8B1EBC434800A85CC7 /* Hmsegment */,
+
+				07B6A5D81EB77BFB0053C749 /* HTMLLabel */,
+
 				075667B61EB31CA60053380C /* RapidVoiceCommands */,
 				0757D4DC1EA0E45C00474F98 /* FBProgressView */,
 				074E42681E9DF92B00AE162C /* CMPopTipView */,
@@ -981,6 +1015,7 @@
 			children = (
 				0977D5FB1E3B144E00ACB7A5 /* WallVc.h */,
 				0977D5FC1E3B144E00ACB7A5 /* WallVc.m */,
+				07709F211EC036CE005B50D7 /* PostDetailVC */,
 				C38F8C7A1E3F486200A67FBE /* AddPostVc */,
 				073F792C1EAF5DB8002DB64F /* AddCommentVc */,
 			);
@@ -1263,6 +1298,8 @@
 		C360CD381E4B47FD00761ABE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				07709F271EC0441F005B50D7 /* AVKit.framework */,
+				07709F251EC0440F005B50D7 /* AVFoundation.framework */,
 				C371DFF51E8D323800276AB4 /* AssetsLibrary.framework */,
 				C36CE4EF1E71203F00DC3DC9 /* libsqlite3.tbd */,
 				C360CD3D1E4B480C00761ABE /* CoreGraphics.framework */,
@@ -2416,6 +2453,7 @@
 				0932277E1E38750D00138A2B /* AppDelegate.m in Sources */,
 				C38AF0F31E60355000E4F40B /* ProfileStandardVc.m in Sources */,
 				C375B6321E65464B00E8D63D /* ProfileAddUpdateListDetailListVc.m in Sources */,
+				07B6A5DB1EB77C460053C749 /* HTMLLabel.m in Sources */,
 				C36B58811E5EE82B00DE7464 /* ORGMasterViewController.m in Sources */,
 				C3645AE41E5BFE980012F4CF /* FSCalendarCollectionView.m in Sources */,
 				C38AF0F81E60365C00E4F40B /* ProfileDivisionVc.m in Sources */,
@@ -2485,6 +2523,7 @@
 				072A85AF1E67FADC00F54A30 /* DEMONavigationController.m in Sources */,
 				072A85AE1E67FADC00F54A30 /* DEMOMenuViewController.m in Sources */,
 				073F792F1EAF5E25002DB64F /* AddCommentVc.m in Sources */,
+				07709F241EC0374E005B50D7 /* PostDetailVC.m in Sources */,
 				09F428CD1E38BC0B00A80F0D /* UIWebView+AFNetworking.m in Sources */,
 				C3A2D7311E64244000B91B54 /* OtpPasswordVc.m in Sources */,
 				C3645AE01E5BFE980012F4CF /* FSCalendar+Deprecated.m in Sources */,

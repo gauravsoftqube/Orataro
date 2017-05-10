@@ -208,8 +208,14 @@
 #import "IQKeyboardManager.h"
 
 #import "RapidVoiceCommands.h"
+<<<<<<< HEAD
 
 #import "ProfilePhoneChainVc.h"
+=======
+#import "HTMLLabel.h"
+#import "WallCustomeCell.h"
+#import "PostDetailVC.h"
+>>>>>>> master/master
 
 #import "HealthRecordVc.h"
 #import "HMSegmentedControl.h"
@@ -250,15 +256,22 @@
 #define apk_ImageUrlFor_HomeworkDetail @"http://orataro.com"
 
 
-#pragma mark - Ganara wall
+#pragma mark - Ganara Wall
 
 #define apk_generalwall  @"apk_generalwall.asmx"
 #define apk_GetGeneralWallData_action  @"GetGeneralWallData"
+#define apk_GetDynamicWallData_action  @"GetDynamicWallData"
+#define apk_GetWallMember_action  @"GetWallMember"
+
+
 
 #define apk_post  @"apk_post.asmx"
 #define apk_LikePost_action  @"LikePost"
 #define apk_DisLikePost_action  @"DisLikePost"
 #define apk_SharePost_action  @"SharePost"
+#define apk_UploadFile_action  @"UploadFile"
+#define apk_Post_action  @"Post"
+#define apk_GetPostedPics_action  @"GetPostedPics"
 
 #pragma mark - apk_getwallpostcomment
 

@@ -24,7 +24,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B55-Rw-bwI">
-                        <rect key="frame" x="0.0" y="0.0" width="350" height="340"/>
+                        <rect key="frame" x="0.0" y="0.0" width="350" height="339"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LmX-eS-puG">
                                 <rect key="frame" x="0.0" y="0.0" width="350" height="55"/>
@@ -79,22 +79,26 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dP8-jf-Tj0">
-                                <rect key="frame" x="0.0" y="55" width="350" height="251"/>
+                                <rect key="frame" x="0.0" y="55" width="350" height="250"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" dsjnf df nf fdfb dfdfn dfnf fdf dfdf dfidfkn fdnf dfdjfb " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ocf-1u-0nI">
-                                        <rect key="frame" x="8" y="8" width="334" height="28"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ocf-1u-0nI" customClass="HTMLLabel">
+                                        <rect key="frame" x="8" y="4" width="334" height="28"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="28" id="bLC-fh-bSa"/>
+                                            <constraint firstAttribute="height" constant="28" id="bLC-fh-bSa"/>
                                         </constraints>
+                                        <string key="text"> dsjnf df nf fdfb dfdfn dfnf fdf dfdf dfidfkn fdnf sfd  d gdfdjfb  sdfuyh dfdufnh fdnfdifhd fdfn idfnif  fiudfnidff fiufnf fniunfif fniufnj fnfinf jfiunrf fjnfd  f</string>
                                         <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="14"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="no_img" translatesAutoresizingMaskIntoConstraints="NO" id="ZSF-wA-3bv">
-                                        <rect key="frame" x="8" y="44" width="334" height="183"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZSF-wA-3bv">
+                                        <rect key="frame" x="8" y="36" width="334" height="190"/>
                                     </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dPQ-VC-GVb">
+                                        <rect key="frame" x="8" y="36" width="334" height="190"/>
+                                    </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="950-7S-8nc">
-                                        <rect key="frame" x="8" y="235" width="0.0" height="15"/>
+                                        <rect key="frame" x="8" y="234" width="0.0" height="15"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="15" id="ip6-f5-ylC"/>
                                         </constraints>
@@ -103,13 +107,13 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="of9-K4-o5l">
-                                        <rect key="frame" x="8" y="235" width="0.0" height="15"/>
+                                        <rect key="frame" x="8" y="234" width="0.0" height="15"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="12"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OCo-vb-GWF">
-                                        <rect key="frame" x="8" y="235" width="0.0" height="15"/>
+                                        <rect key="frame" x="8" y="234" width="0.0" height="15"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="12"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -119,11 +123,15 @@
                                 <constraints>
                                     <constraint firstItem="ocf-1u-0nI" firstAttribute="leading" secondItem="dP8-jf-Tj0" secondAttribute="leading" constant="8" id="248-Ul-mj2"/>
                                     <constraint firstItem="OCo-vb-GWF" firstAttribute="height" secondItem="950-7S-8nc" secondAttribute="height" id="3Lv-9Z-wzO"/>
-                                    <constraint firstItem="ZSF-wA-3bv" firstAttribute="top" secondItem="ocf-1u-0nI" secondAttribute="bottom" constant="8" id="3zC-h8-Ymd"/>
+                                    <constraint firstItem="ZSF-wA-3bv" firstAttribute="top" secondItem="ocf-1u-0nI" secondAttribute="bottom" constant="4" id="3zC-h8-Ymd"/>
+                                    <constraint firstItem="dPQ-VC-GVb" firstAttribute="bottom" secondItem="ZSF-wA-3bv" secondAttribute="bottom" id="9k1-46-ebq"/>
+                                    <constraint firstItem="dPQ-VC-GVb" firstAttribute="trailing" secondItem="ZSF-wA-3bv" secondAttribute="trailing" id="9vp-B4-WZQ"/>
                                     <constraint firstItem="of9-K4-o5l" firstAttribute="height" secondItem="950-7S-8nc" secondAttribute="height" id="C4w-p1-isc"/>
                                     <constraint firstAttribute="bottom" secondItem="950-7S-8nc" secondAttribute="bottom" constant="1" id="J2R-B6-bkA"/>
                                     <constraint firstItem="of9-K4-o5l" firstAttribute="leading" secondItem="950-7S-8nc" secondAttribute="trailing" id="JTW-xQ-Cs8"/>
-                                    <constraint firstItem="ocf-1u-0nI" firstAttribute="top" secondItem="dP8-jf-Tj0" secondAttribute="top" constant="8" id="XN3-20-KD3"/>
+                                    <constraint firstItem="dPQ-VC-GVb" firstAttribute="top" secondItem="ZSF-wA-3bv" secondAttribute="top" id="VaF-Io-VIG"/>
+                                    <constraint firstItem="dPQ-VC-GVb" firstAttribute="leading" secondItem="ZSF-wA-3bv" secondAttribute="leading" id="WKQ-hl-sJi"/>
+                                    <constraint firstItem="ocf-1u-0nI" firstAttribute="top" secondItem="dP8-jf-Tj0" secondAttribute="top" constant="4" id="XN3-20-KD3"/>
                                     <constraint firstItem="950-7S-8nc" firstAttribute="leading" secondItem="dP8-jf-Tj0" secondAttribute="leading" constant="8" id="XRL-vD-8OQ"/>
                                     <constraint firstAttribute="trailing" secondItem="ocf-1u-0nI" secondAttribute="trailing" constant="8" id="Xg2-Wj-F0v"/>
                                     <constraint firstAttribute="bottom" secondItem="of9-K4-o5l" secondAttribute="bottom" constant="1" id="cKv-Fi-L60"/>
@@ -135,14 +143,14 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ByH-Zm-gNy">
-                                <rect key="frame" x="5" y="306" width="340" height="1"/>
+                                <rect key="frame" x="5" y="305" width="340" height="1"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="rWy-gP-gJ3"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="spZ-g9-4dc">
-                                <rect key="frame" x="10" y="310" width="82.5" height="30"/>
+                                <rect key="frame" x="10" y="309" width="82.5" height="30"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fb_like_gray" translatesAutoresizingMaskIntoConstraints="NO" id="sUs-s7-AYH">
                                         <rect key="frame" x="5" y="8" width="15" height="15"/>
@@ -177,7 +185,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lAB-qz-6L9">
-                                <rect key="frame" x="92.5" y="310" width="82.5" height="30"/>
+                                <rect key="frame" x="92.5" y="309" width="82.5" height="30"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fb_unlike_gray" translatesAutoresizingMaskIntoConstraints="NO" id="yvZ-uM-5Fh">
                                         <rect key="frame" x="5" y="8" width="15" height="15"/>
@@ -211,7 +219,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3F4-Hk-Ph1">
-                                <rect key="frame" x="175" y="310" width="82.5" height="30"/>
+                                <rect key="frame" x="175" y="309" width="82.5" height="30"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fb_comments_gry" translatesAutoresizingMaskIntoConstraints="NO" id="IZa-nM-wQd">
                                         <rect key="frame" x="5" y="8" width="15" height="15"/>
@@ -245,7 +253,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vsO-dH-i26">
-                                <rect key="frame" x="257.5" y="310" width="82.5" height="30"/>
+                                <rect key="frame" x="257.5" y="309" width="82.5" height="30"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fb_share_gray" translatesAutoresizingMaskIntoConstraints="NO" id="VSR-Id-3OB">
                                         <rect key="frame" x="5" y="8" width="15" height="15"/>
@@ -322,6 +330,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="btnComment" destination="BvC-tq-CWB" id="Ylv-yE-UEX"/>
+                <outlet property="btnImageVideo_Click" destination="dPQ-VC-GVb" id="hF9-bz-Dt2"/>
                 <outlet property="btnLike" destination="3QR-Ma-0OF" id="nlO-NK-uLr"/>
                 <outlet property="btnShare" destination="wEs-ne-oPK" id="PKo-8f-gIl"/>
                 <outlet property="btnUnlike" destination="Ddd-Rg-zkp" id="hW6-OI-GLi"/>
@@ -336,7 +345,7 @@
                 <outlet property="lblLike" destination="TWv-bm-Yyu" id="yEj-7r-Mng"/>
                 <outlet property="lblLike_Count" destination="950-7S-8nc" id="bI6-Ba-NLe"/>
                 <outlet property="lblLike_Count_Height" destination="ip6-f5-ylC" id="XKC-Sm-aU1"/>
-                <outlet property="lblPostDetail" destination="ocf-1u-0nI" id="Z0K-zM-c1Z"/>
+                <outlet property="lblPostDetailHTML" destination="ocf-1u-0nI" id="jZq-eH-NbA"/>
                 <outlet property="lblProfileDetail" destination="MJr-38-qDF" id="NQp-F5-A5f"/>
                 <outlet property="lblProfileName" destination="0lg-ze-2dr" id="gKw-Bj-q0M"/>
                 <outlet property="lblProfile_PostType" destination="DpA-ot-dSl" id="Q6E-hi-qkR"/>
@@ -353,7 +362,6 @@
         <image name="fb_like_gray" width="64" height="64"/>
         <image name="fb_share_gray" width="64" height="64"/>
         <image name="fb_unlike_gray" width="64" height="64"/>
-        <image name="no_img" width="300" height="300"/>
         <image name="user" width="64" height="64"/>
     </resources>
 </document>

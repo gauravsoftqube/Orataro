@@ -15,12 +15,17 @@
 
 - (IBAction)HomeBtnClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *HomeBtn;
-@property (weak, nonatomic) IBOutlet UIButton *DisplayPopupView;
+
 @property(strong,nonatomic)NSString *checkscreen;
+@property(strong,nonatomic)NSMutableDictionary *dicSelect_std_divi_sub;
+
+@property (weak, nonatomic) IBOutlet UILabel *lblNoWallDataAvailable;
 @property (weak, nonatomic) IBOutlet UIButton *MenuBtn;
 @property (weak, nonatomic) IBOutlet UILabel *lblheaderTitle;
 
 @property (weak, nonatomic) IBOutlet UITableView *aWallTableView;
+@property (weak, nonatomic) IBOutlet UIButton *btnWallMember;
+- (IBAction)btnWallMember:(id)sender;
 
 // tbl Header view
 @property (strong, nonatomic) IBOutlet UIView *aTableHeaderView;
@@ -49,6 +54,14 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnCheckAll_SpecialFriends;
 - (IBAction)btnCheckAll_SpecialFriends:(id)sender;
 @property (weak, nonatomic) IBOutlet UITableView *tblSpecialFriendsList;
+
+
+//view Wall Member
+@property (weak, nonatomic) IBOutlet UIView *viewWallMember;
+@property (weak, nonatomic) IBOutlet UIButton *btnBack_WallMember;
+- (IBAction)btnBack_WallMember:(id)sender;
+@property (weak, nonatomic) IBOutlet UITableView *tblWallMemberList;
+@property (weak, nonatomic) IBOutlet UILabel *lblHeaderTitle_WallMember;
 
 
 @end
