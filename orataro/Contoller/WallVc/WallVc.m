@@ -1958,6 +1958,7 @@ int c2= 0;
         
 #pragma mark - set Post Detail
         
+        
         NSString *strPostCommentNote=[dicResponce objectForKey:@"PostCommentNote"];
         strPostCommentNote =[strPostCommentNote stringByReplacingOccurrencesOfString:@"</br>" withString:@""];
         strPostCommentNote =[strPostCommentNote stringByReplacingOccurrencesOfString:@"<br>" withString:@""];

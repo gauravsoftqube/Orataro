@@ -644,11 +644,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "orataro/Contoller/WallVc/WallVc.m"
-            timestampString = "516116360.899494"
+            timestampString = "516118373.615282"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2144"
-            endingLineNumber = "2144"
+            startingLineNumber = "2145"
+            endingLineNumber = "2145"
             landmarkName = "-btnCellLike_Click:"
             landmarkType = "7">
          </BreakpointContent>
