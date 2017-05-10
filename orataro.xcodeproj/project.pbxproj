@@ -56,6 +56,9 @@
 		09F428D11E38E76400A80F0D /* LoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 09F428D01E38E76400A80F0D /* LoginVC.m */; };
 		C331B0891E4DB09F001C274D /* AboutUsVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C331B0881E4DB09F001C274D /* AboutUsVc.m */; };
 		C35120E81E827C5F00D7461B /* UIImage+ImageCompress.m in Sources */ = {isa = PBXBuildFile; fileRef = C35120E71E827C5F00D7461B /* UIImage+ImageCompress.m */; };
+		C359CAA51EBAE3CD00FBAD33 /* HealthRecordVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C359CAA41EBAE3CD00FBAD33 /* HealthRecordVc.m */; };
+		C359CAAA1EBB0ED900FBAD33 /* HealthCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C359CAA81EBB0ED900FBAD33 /* HealthCell.m */; };
+		C359CAAB1EBB0ED900FBAD33 /* HealthCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C359CAA91EBB0ED900FBAD33 /* HealthCell.xib */; };
 		C35C07271E4839F3004C55EB /* AttendanceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C35C07261E4839F3004C55EB /* AttendanceVC.m */; };
 		C35C07371E485346004C55EB /* ClassVcCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C35C07351E485346004C55EB /* ClassVcCell.m */; };
 		C35C07381E485346004C55EB /* ClassVcCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C35C07361E485346004C55EB /* ClassVcCell.xib */; };
@@ -65,6 +68,8 @@
 		C35C66551E5D97D7007EAF7D /* ChatVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C35C66541E5D97D7007EAF7D /* ChatVc.m */; };
 		C35C66591E5DAE7D007EAF7D /* NoteDecsVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C35C66581E5DAE7D007EAF7D /* NoteDecsVc.m */; };
 		C35C665D1E5DC26F007EAF7D /* ContactUsVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C35C665C1E5DC26F007EAF7D /* ContactUsVc.m */; };
+		C35DDF8E1EBC436000A85CC7 /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C35DDF8D1EBC436000A85CC7 /* HMSegmentedControl.m */; };
+		C35DDF921EBC43F500A85CC7 /* ParentProfileVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C35DDF911EBC43F500A85CC7 /* ParentProfileVc.m */; };
 		C35FB2E11E4C64F800466CA6 /* ParallaxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C35FB2E01E4C64F800466CA6 /* ParallaxViewController.m */; };
 		C35FB2E31E4C651800466CA6 /* ParallaxViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C35FB2E21E4C651800466CA6 /* ParallaxViewController.xib */; };
 		C360CD1F1E4AEF6200761ABE /* PollVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C360CD1E1E4AEF6200761ABE /* PollVc.m */; };
@@ -201,6 +206,8 @@
 		C381726B1E517DCD004AB189 /* SettingVcViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C381726A1E517DCD004AB189 /* SettingVcViewController.m */; };
 		C381726F1E518756004AB189 /* FAQvc.m in Sources */ = {isa = PBXBuildFile; fileRef = C381726E1E518756004AB189 /* FAQvc.m */; };
 		C382C0CE1EAA27E400AD8912 /* ProfileStudentLeaveVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C382C0CD1EAA27E300AD8912 /* ProfileStudentLeaveVc.m */; };
+		C389BCEE1EB8537B002F7A14 /* ProfilePhoneChainVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C389BCEC1EB8537B002F7A14 /* ProfilePhoneChainVc.m */; };
+		C389BCF11EB85806002F7A14 /* ProfilePhoneChainVc.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C389BCF01EB85806002F7A14 /* ProfilePhoneChainVc.storyboard */; };
 		C38ABFA81E487DF900689426 /* StudentListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C38ABFA71E487DF900689426 /* StudentListViewController.m */; };
 		C38ABFAC1E48936100689426 /* PTCommuniVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C38ABFAB1E48936100689426 /* PTCommuniVc.m */; };
 		C38ABFB01E48A65900689426 /* PostChatVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C38ABFAF1E48A65900689426 /* PostChatVc.m */; };
@@ -329,6 +336,11 @@
 		C331B0881E4DB09F001C274D /* AboutUsVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AboutUsVc.m; path = AboutUsVc/AboutUsVc.m; sourceTree = "<group>"; };
 		C35120E61E827C5F00D7461B /* UIImage+ImageCompress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageCompress.h"; sourceTree = "<group>"; };
 		C35120E71E827C5F00D7461B /* UIImage+ImageCompress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageCompress.m"; sourceTree = "<group>"; };
+		C359CAA31EBAE3CD00FBAD33 /* HealthRecordVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HealthRecordVc.h; sourceTree = "<group>"; };
+		C359CAA41EBAE3CD00FBAD33 /* HealthRecordVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HealthRecordVc.m; sourceTree = "<group>"; };
+		C359CAA71EBB0ED900FBAD33 /* HealthCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HealthCell.h; sourceTree = "<group>"; };
+		C359CAA81EBB0ED900FBAD33 /* HealthCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HealthCell.m; sourceTree = "<group>"; };
+		C359CAA91EBB0ED900FBAD33 /* HealthCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HealthCell.xib; sourceTree = "<group>"; };
 		C35C07251E4839F3004C55EB /* AttendanceVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendanceVC.h; sourceTree = "<group>"; };
 		C35C07261E4839F3004C55EB /* AttendanceVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendanceVC.m; sourceTree = "<group>"; };
 		C35C07341E485346004C55EB /* ClassVcCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassVcCell.h; sourceTree = "<group>"; };
@@ -345,6 +357,10 @@
 		C35C66581E5DAE7D007EAF7D /* NoteDecsVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteDecsVc.m; sourceTree = "<group>"; };
 		C35C665B1E5DC26F007EAF7D /* ContactUsVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactUsVc.h; sourceTree = "<group>"; };
 		C35C665C1E5DC26F007EAF7D /* ContactUsVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactUsVc.m; sourceTree = "<group>"; };
+		C35DDF8C1EBC436000A85CC7 /* HMSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMSegmentedControl.h; path = Hmsegment/HMSegmentedControl.h; sourceTree = "<group>"; };
+		C35DDF8D1EBC436000A85CC7 /* HMSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMSegmentedControl.m; path = Hmsegment/HMSegmentedControl.m; sourceTree = "<group>"; };
+		C35DDF901EBC43F500A85CC7 /* ParentProfileVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParentProfileVc.h; sourceTree = "<group>"; };
+		C35DDF911EBC43F500A85CC7 /* ParentProfileVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParentProfileVc.m; sourceTree = "<group>"; };
 		C35FB2DF1E4C64F800466CA6 /* ParallaxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParallaxViewController.h; sourceTree = "<group>"; };
 		C35FB2E01E4C64F800466CA6 /* ParallaxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParallaxViewController.m; sourceTree = "<group>"; };
 		C35FB2E21E4C651800466CA6 /* ParallaxViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ParallaxViewController.xib; sourceTree = "<group>"; };
@@ -600,6 +616,9 @@
 		C381726E1E518756004AB189 /* FAQvc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FAQvc.m; sourceTree = "<group>"; };
 		C382C0CC1EAA27E300AD8912 /* ProfileStudentLeaveVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileStudentLeaveVc.h; sourceTree = "<group>"; };
 		C382C0CD1EAA27E300AD8912 /* ProfileStudentLeaveVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileStudentLeaveVc.m; sourceTree = "<group>"; };
+		C389BCEB1EB8537B002F7A14 /* ProfilePhoneChainVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfilePhoneChainVc.h; sourceTree = "<group>"; };
+		C389BCEC1EB8537B002F7A14 /* ProfilePhoneChainVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilePhoneChainVc.m; sourceTree = "<group>"; };
+		C389BCF01EB85806002F7A14 /* ProfilePhoneChainVc.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ProfilePhoneChainVc.storyboard; sourceTree = "<group>"; };
 		C38ABFA61E487DF900689426 /* StudentListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StudentListViewController.h; sourceTree = "<group>"; };
 		C38ABFA71E487DF900689426 /* StudentListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StudentListViewController.m; sourceTree = "<group>"; };
 		C38ABFAA1E48936100689426 /* PTCommuniVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTCommuniVc.h; sourceTree = "<group>"; };
@@ -841,6 +860,8 @@
 		093227901E38794800138A2B /* Contoller */ = {
 			isa = PBXGroup;
 			children = (
+				C389BCE91EB850BA002F7A14 /* ProfileChain */,
+				C389BCF01EB85806002F7A14 /* ProfilePhoneChainVc.storyboard */,
 				C37A9A341E6EEB2200F1EAE0 /* SwitchAccountVC */,
 				C36BDAF81E67005900779C5B /* MenuController */,
 				C375B6331E6550B800E8D63D /* SchoolgroupVc */,
@@ -869,7 +890,6 @@
 				C369E6E11E5AFA3A0048D601 /* RegisterOtpVC */,
 				C364D91B1E56D93500CE72DC /* FriendVc */,
 				C364D9131E56C81D00CE72DC /* BlogVc */,
-				C36D39541E55D12C001A445E /* MessageVc */,
 				C38ABFB51E48B2A700689426 /* TimeTableVc */,
 				C3645AF81E5C6BA20012F4CF /* NotesVc */,
 				C365CCAD1E49A77A00A4ABAA /* HolidayVc */,
@@ -925,6 +945,7 @@
 		0949E9401E3B783600723301 /* thirdparty */ = {
 			isa = PBXGroup;
 			children = (
+				C35DDF8B1EBC434800A85CC7 /* Hmsegment */,
 				075667B61EB31CA60053380C /* RapidVoiceCommands */,
 				0757D4DC1EA0E45C00474F98 /* FBProgressView */,
 				074E42681E9DF92B00AE162C /* CMPopTipView */,
@@ -1078,6 +1099,32 @@
 			path = ImageCompress;
 			sourceTree = "<group>";
 		};
+		C359CAA21EBAE3A100FBAD33 /* HealthRecordVc */ = {
+			isa = PBXGroup;
+			children = (
+				C359CAA31EBAE3CD00FBAD33 /* HealthRecordVc.h */,
+				C359CAA41EBAE3CD00FBAD33 /* HealthRecordVc.m */,
+			);
+			name = HealthRecordVc;
+			sourceTree = "<group>";
+		};
+		C359CAA61EBB0CC200FBAD33 /* HealthCell */ = {
+			isa = PBXGroup;
+			children = (
+				C359CAA71EBB0ED900FBAD33 /* HealthCell.h */,
+				C359CAA81EBB0ED900FBAD33 /* HealthCell.m */,
+				C359CAA91EBB0ED900FBAD33 /* HealthCell.xib */,
+			);
+			name = HealthCell;
+			sourceTree = "<group>";
+		};
+		C359CAAD1EBB604E00FBAD33 /* ParentVc */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = ParentVc;
+			sourceTree = "<group>";
+		};
 		C35C07241E4839AD004C55EB /* AttendanceVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -1110,6 +1157,7 @@
 		C35C664F1E5D978F007EAF7D /* ChatVc */ = {
 			isa = PBXGroup;
 			children = (
+				C36D39541E55D12C001A445E /* MessageVc */,
 				C35C66531E5D97D7007EAF7D /* ChatVc.h */,
 				C35C66541E5D97D7007EAF7D /* ChatVc.m */,
 			);
@@ -1133,6 +1181,24 @@
 				C35C665C1E5DC26F007EAF7D /* ContactUsVc.m */,
 			);
 			path = ContactUsVc;
+			sourceTree = "<group>";
+		};
+		C35DDF8B1EBC434800A85CC7 /* Hmsegment */ = {
+			isa = PBXGroup;
+			children = (
+				C35DDF8C1EBC436000A85CC7 /* HMSegmentedControl.h */,
+				C35DDF8D1EBC436000A85CC7 /* HMSegmentedControl.m */,
+			);
+			name = Hmsegment;
+			sourceTree = "<group>";
+		};
+		C35DDF8F1EBC439F00A85CC7 /* ParentProfileVc */ = {
+			isa = PBXGroup;
+			children = (
+				C35DDF901EBC43F500A85CC7 /* ParentProfileVc.h */,
+				C35DDF911EBC43F500A85CC7 /* ParentProfileVc.m */,
+			);
+			name = ParentProfileVc;
 			sourceTree = "<group>";
 		};
 		C360CD1C1E4AEF2A00761ABE /* PollVc */ = {
@@ -1683,7 +1749,8 @@
 				C36D39551E55D52B001A445E /* MessageVc.h */,
 				C36D39561E55D52B001A445E /* MessageVc.m */,
 			);
-			path = MessageVc;
+			name = MessageVc;
+			path = ../MessageVc;
 			sourceTree = "<group>";
 		};
 		C36DD17D1E405D270011221E /* SAMTextview */ = {
@@ -1869,6 +1936,27 @@
 				C36724711E54374E007E9326 /* FAQCustomeCell.xib */,
 			);
 			path = FAQCell;
+			sourceTree = "<group>";
+		};
+		C389BCE91EB850BA002F7A14 /* ProfileChain */ = {
+			isa = PBXGroup;
+			children = (
+				C35DDF8F1EBC439F00A85CC7 /* ParentProfileVc */,
+				C359CAAD1EBB604E00FBAD33 /* ParentVc */,
+				C359CAA61EBB0CC200FBAD33 /* HealthCell */,
+				C359CAA21EBAE3A100FBAD33 /* HealthRecordVc */,
+				C389BCEA1EB8535D002F7A14 /* PhoneChain */,
+			);
+			name = ProfileChain;
+			sourceTree = "<group>";
+		};
+		C389BCEA1EB8535D002F7A14 /* PhoneChain */ = {
+			isa = PBXGroup;
+			children = (
+				C389BCEB1EB8537B002F7A14 /* ProfilePhoneChainVc.h */,
+				C389BCEC1EB8537B002F7A14 /* ProfilePhoneChainVc.m */,
+			);
+			name = PhoneChain;
 			sourceTree = "<group>";
 		};
 		C38ABFA51E487DB900689426 /* StudentListVc */ = {
@@ -2210,6 +2298,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C389BCF11EB85806002F7A14 /* ProfilePhoneChainVc.storyboard in Resources */,
 				073E55CD1E703D04008BF93B /* OrataroLoacal_DB.sqlite in Resources */,
 				C3645AEF1E5BFE980012F4CF /* Info.plist in Resources */,
 				093227891E38750D00138A2B /* LaunchScreen.storyboard in Resources */,
@@ -2230,6 +2319,7 @@
 				C36724731E54374E007E9326 /* FAQCustomeCell.xib in Resources */,
 				0718DC8D1E8924650099EC26 /* Assets.bundle in Resources */,
 				C36B58821E5EE82B00DE7464 /* ORGMasterViewController.xib in Resources */,
+				C359CAAB1EBB0ED900FBAD33 /* HealthCell.xib in Resources */,
 				09F428C41E38BC0B00A80F0D /* LICENSE in Resources */,
 				C36DD1B11E4086210011221E /* IQKeyboardManager.bundle in Resources */,
 				C38F8C791E3F36A300A67FBE /* RightCell.xib in Resources */,
@@ -2301,6 +2391,7 @@
 				C369E6E81E5B2A9B0048D601 /* CircularVc.m in Sources */,
 				C3666CCA1E726B4E0083AA34 /* UIImageView+HighlightedWebCache.m in Sources */,
 				C365CCB01E49A7B500A4ABAA /* HolidayVc.m in Sources */,
+				C359CAA51EBAE3CD00FBAD33 /* HealthRecordVc.m in Sources */,
 				C369E6E41E5AFACA0048D601 /* RegisterOtpVc.m in Sources */,
 				C391E4F31E40C33C007BE2EA /* AddClassWorkVc.m in Sources */,
 				C3645AE71E5BFE980012F4CF /* FSCalendarDelegationFactory.m in Sources */,
@@ -2357,6 +2448,7 @@
 				C35C07271E4839F3004C55EB /* AttendanceVC.m in Sources */,
 				C3666CC91E726B4E0083AA34 /* UIImage+WebP.m in Sources */,
 				C36B58671E5EE72D00DE7464 /* CreateProjectVc.m in Sources */,
+				C35DDF921EBC43F500A85CC7 /* ParentProfileVc.m in Sources */,
 				C381726B1E517DCD004AB189 /* SettingVcViewController.m in Sources */,
 				C38AF11D1E605C9300E4F40B /* ProfileFriendRequestVc.m in Sources */,
 				09F428BD1E38BC0B00A80F0D /* AFHTTPSessionManager.m in Sources */,
@@ -2378,6 +2470,7 @@
 				C36DD1B41E4086210011221E /* IQNSArray+Sort.m in Sources */,
 				C36724771E546CFB007E9326 /* MyProfileVc.m in Sources */,
 				C3666CCC1E726B4E0083AA34 /* UIView+WebCache.m in Sources */,
+				C359CAAA1EBB0ED900FBAD33 /* HealthCell.m in Sources */,
 				07801FC91E7FE2F400E34D36 /* UITextView+Placeholder.m in Sources */,
 				C36B589B1E5F163200DE7464 /* AlbumPhotoCell.m in Sources */,
 				C365CCCD1E4A0DF700A4ABAA /* ResultVc.m in Sources */,
@@ -2401,6 +2494,7 @@
 				C381726F1E518756004AB189 /* FAQvc.m in Sources */,
 				C3741FE01E4CAE6500BFFA23 /* HelpDeskVc.m in Sources */,
 				C3CF92211E979DA700A6BFBA /* AlbumPhotoVc.m in Sources */,
+				C35DDF8E1EBC436000A85CC7 /* HMSegmentedControl.m in Sources */,
 				C364D9161E56C8EF00CE72DC /* BlogVc.m in Sources */,
 				C375B62F1E65460F00E8D63D /* ProfileHappyGramListdetailListVc.m in Sources */,
 				C360CD1F1E4AEF6200761ABE /* PollVc.m in Sources */,
@@ -2410,6 +2504,7 @@
 				C35C665D1E5DC26F007EAF7D /* ContactUsVc.m in Sources */,
 				C38ABFA81E487DF900689426 /* StudentListViewController.m in Sources */,
 				C3645AEB1E5BFE980012F4CF /* FSCalendarScopeHandle.m in Sources */,
+				C389BCEE1EB8537B002F7A14 /* ProfilePhoneChainVc.m in Sources */,
 				0932277B1E38750D00138A2B /* main.m in Sources */,
 				09F428C71E38BC0B00A80F0D /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				C365CCC21E49E55400A4ABAA /* CalenderVc.m in Sources */,
