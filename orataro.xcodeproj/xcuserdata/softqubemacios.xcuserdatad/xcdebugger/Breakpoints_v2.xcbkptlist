@@ -537,7 +537,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1308"
             endingLineNumber = "1308"
-            landmarkName = "-UploadPic"
+            landmarkName = "-Api_GetProfileData"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
