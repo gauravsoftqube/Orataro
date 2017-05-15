@@ -54,7 +54,6 @@
     _imgCancel.image = [_imgCancel.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [_imgCancel setTintColor:[UIColor colorWithRed:40.0/255.0 green:49.0/255.0 blue:90.0/255.0 alpha:1.0]];
     
-    
     //alloc
     arrCollectionList  = [[NSMutableArray alloc]init];
     arrResponceImagePath = [[NSMutableArray alloc]init];
@@ -63,17 +62,43 @@
     [self.viewSTT_Poppup setHidden:YES];
     [self allocSTT];
     
-    //set Header Title
-    NSArray *arr=[[[Utility getCurrentUserDetail]objectForKey:@"FullName"] componentsSeparatedByString:@" "];
-    if (arr.count != 0) {
-        self.lblheaderTitle.text=[NSString stringWithFormat:@"Add Post (%@)",[arr objectAtIndex:0]];
-        [self getCurrentUserImage:[Utility getCurrentUserDetail]];
+    //set Edit Post Detail
+    if(self.dicSelect_Edit_Delete_Post != nil)
+    {
+        [self.txtView_PostText setText:[NSString stringWithFormat:@"%@",[self.dicSelect_Edit_Delete_Post objectForKey:@"PostCommentNote"]]];
+   
+        //
+        self.ViewTo_Height.constant=0;
+        self.viewAddPhotoVideo_Height.constant=0;
+        
+        //set Header Title
+        NSArray *arr=[[[Utility getCurrentUserDetail]objectForKey:@"FullName"] componentsSeparatedByString:@" "];
+        if (arr.count != 0) {
+            self.lblheaderTitle.text=[NSString stringWithFormat:@"Edit Post (%@)",[arr objectAtIndex:0]];
+            [self getCurrentUserImage:[Utility getCurrentUserDetail]];
+        }
+        else
+        {
+            self.lblheaderTitle.text=[NSString stringWithFormat:@"Edit Post"];
+        }
     }
     else
     {
-        self.lblheaderTitle.text=[NSString stringWithFormat:@"Add Post"];
+        //
+        self.ViewTo_Height.constant=40;
+        self.viewAddPhotoVideo_Height.constant=35;
+
+        //set Header Title
+        NSArray *arr=[[[Utility getCurrentUserDetail]objectForKey:@"FullName"] componentsSeparatedByString:@" "];
+        if (arr.count != 0) {
+            self.lblheaderTitle.text=[NSString stringWithFormat:@"Add Post (%@)",[arr objectAtIndex:0]];
+            [self getCurrentUserImage:[Utility getCurrentUserDetail]];
+        }
+        else
+        {
+            self.lblheaderTitle.text=[NSString stringWithFormat:@"Add Post"];
+        }
     }
-    
 }
 
 -(void)allocSTT
@@ -170,6 +195,10 @@
         [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]] forKey:@"WallID"];
     }
     else if ([_checkscreen isEqualToString:@"Subject"])
+    {
+        [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]] forKey:@"WallID"];
+    }
+    else if ([_checkscreen isEqualToString:@"MyWall"])
     {
         [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]] forKey:@"WallID"];
     }
@@ -399,6 +428,80 @@
     
 }
 
+#pragma mark - Edit post apiCall
+
+-(void)apiCallFor_editPostDetail:(NSString *)strInternet
+{
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_generalwall,apk_EditPostDetails_action];
+    
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelect_Edit_Delete_Post objectForKey:@"PostCommentID"]] forKey:@"PostID"];
+    [param setValue:[NSString stringWithFormat:@"%@",self.txtView_PostText.text] forKey:@"PostCommentNote"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
+    
+    if([strInternet isEqualToString:@"1"])
+    {
+        [ProgressHUB showHUDAddedTo:self.view];
+    }
+    
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         [ProgressHUB hideenHUDAddedTo:self.view];
+         if(!error)
+         {
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             
+             if([arrResponce count] != 0)
+             {
+                 NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                 NSString *strStatus=[dic objectForKey:@"message"];
+                 if([strStatus isEqualToString:@"No Data Found"])
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:strStatus delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                 }
+                 else  if([strStatus isEqualToString:@"Record update successfully"])
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:strStatus delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                     [self.navigationController popViewControllerAnimated:YES];
+                 }
+                 else
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:strStatus delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                     [self.navigationController popViewControllerAnimated:YES];
+                 }
+                 
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
+    
+}
+
+
 #pragma mark - set Local Databse post detail
 
 -(void)post_ImageIn_LocalDB
@@ -440,6 +543,10 @@
         WallID = [NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]];
     }
     else if ([_checkscreen isEqualToString:@"Subject"])
+    {
+        WallID = [NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]];
+    }
+    else if ([_checkscreen isEqualToString:@"MyWall"])
     {
         WallID = [NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]];
     }
@@ -500,6 +607,10 @@
     {
         WallID = [NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]];
     }
+    else if ([_checkscreen isEqualToString:@"MyWall"])
+    {
+        WallID = [NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]];
+    }
     else
     {
         WallID = [NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"WallID"]];
@@ -540,6 +651,10 @@
         WallID = [NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]];
     }
     else if ([_checkscreen isEqualToString:@"Subject"])
+    {
+        WallID = [NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]];
+    }
+    else if ([_checkscreen isEqualToString:@"MyWall"])
     {
         WallID = [NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]];
     }
@@ -756,53 +871,68 @@
 {
     [self.view endEditing:YES];
     
-    //image
-    NSArray *arrVideo=[arrCollectionList valueForKey:@"videoSelect"];
-    NSArray *arrImage=[arrCollectionList valueForKey:@"imageSelect"];
-    
-    NSNull *strNull=[[NSNull alloc]init];
-    if ([Utility isInterNetConnectionIsActive] == true)
+    if(self.dicSelect_Edit_Delete_Post == nil)
     {
-        if([arrCollectionList count] != 0)
+        //image
+        NSArray *arrVideo=[arrCollectionList valueForKey:@"videoSelect"];
+        NSArray *arrImage=[arrCollectionList valueForKey:@"imageSelect"];
+        
+        NSNull *strNull=[[NSNull alloc]init];
+        if ([Utility isInterNetConnectionIsActive] == true)
         {
-            if([arrVideo count] == 0 || [arrVideo containsObject:strNull])
+            if([arrCollectionList count] != 0)
             {
-                for (NSMutableDictionary *dic in arrCollectionList)
+                if([arrVideo count] == 0 || [arrVideo containsObject:strNull])
                 {
-                    UIImage *img=[dic objectForKey:@"imageSelect"];
-                    [self apiCallFor_UploadFile:@"1" FileType:@"IMAGE" FileName:[NSString stringWithFormat:@"%@.png",[Utility randomImageGenerator]] imageSelect:img videoURL:nil];
+                    for (NSMutableDictionary *dic in arrCollectionList)
+                    {
+                        UIImage *img=[dic objectForKey:@"imageSelect"];
+                        [self apiCallFor_UploadFile:@"1" FileType:@"IMAGE" FileName:[NSString stringWithFormat:@"%@.png",[Utility randomImageGenerator]] imageSelect:img videoURL:nil];
+                    }
+                }
+                else if([arrImage count] == 0 || [arrImage containsObject:strNull])
+                {
+                    for (NSMutableDictionary *dic in arrCollectionList)
+                    {
+                        NSString *strVideo=[dic objectForKey:@"videoSelect"];
+                        [self apiCallFor_UploadFile:@"1" FileType:@"VIDEO" FileName:[NSString stringWithFormat:@"%@.mp4",[Utility randomImageGenerator]] imageSelect:nil videoURL:strVideo];
+                    }
                 }
             }
-            else if([arrImage count] == 0 || [arrImage containsObject:strNull])
+            else if (![Utility validateBlankField:self.txtView_PostText.text])
             {
-                for (NSMutableDictionary *dic in arrCollectionList)
-                {
-                    NSString *strVideo=[dic objectForKey:@"videoSelect"];
-                    [self apiCallFor_UploadFile:@"1" FileType:@"VIDEO" FileName:[NSString stringWithFormat:@"%@.mp4",[Utility randomImageGenerator]] imageSelect:nil videoURL:strVideo];
-                }
+                [self apiCallFor_newPost:@"1" FileType:@"Text"];
             }
         }
-        else if (![Utility validateBlankField:self.txtView_PostText.text])
+        else
         {
-                [self apiCallFor_newPost:@"1" FileType:@"Text"];
+            if([arrCollectionList count] != 0)
+            {
+                if([arrVideo count] == 0 || [arrVideo containsObject:strNull])
+                {
+                    [self post_ImageIn_LocalDB];
+                }
+                else if([arrImage count] == 0 || [arrImage containsObject:strNull])
+                {
+                    [self post_VideoIn_LocalDB];
+                }
+            }
+            else if (![Utility validateBlankField:self.txtView_PostText.text])
+            {
+                [self post_TextIn_LocalDB];
+            }
         }
     }
     else
     {
-        if([arrCollectionList count] != 0)
+        if (![Utility validateBlankField:self.txtView_PostText.text])
         {
-            if([arrVideo count] == 0 || [arrVideo containsObject:strNull])
-            {
-                [self post_ImageIn_LocalDB];
-            }
-            else if([arrImage count] == 0 || [arrImage containsObject:strNull])
-            {
-                [self post_VideoIn_LocalDB];
-            }
+            [self apiCallFor_editPostDetail:@"1"];
         }
-        else if (![Utility validateBlankField:self.txtView_PostText.text])
+        else
         {
-            [self post_TextIn_LocalDB];
+            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Post_enter_detail delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alrt show];
         }
     }
 }
@@ -908,16 +1038,7 @@
             [alertController addAction:pickFromGallery];
             [alertController addAction:takeAPicture];
             [alertController addAction:cancel];
-            [self presentViewController:alertController animated:YES completion:nil];
-            
-            
-            
-            
-            
-            
-            
-            
-            
+            [self presentViewController:alertController animated:YES completion:nil];  
         }
         else
         {
@@ -1067,7 +1188,6 @@
 {
     [self.view endEditing:YES];
     [self.viewSTT_Poppup setHidden:NO];
-    
 }
 
 - (IBAction)btnBack_STT:(id)sender
@@ -1077,22 +1197,6 @@
 
 - (IBAction)btnSTT_Start_Stop:(id)sender
 {
-    //    UIButton *btn=(UIButton*)sender;
-    //    if (btn.selected)
-    //    {
-    //        [self.lblSTT_Status setText:@"Tap to speak"];
-    //        [self.btnSTT_Start_Stop setImage:[UIImage imageNamed:@"microphone_circle_white"] forState:UIControlStateNormal];
-    //        [self.viewSTT_Poppup setHidden:YES];
-    //        btn.selected=NO;
-    //    }
-    //    else
-    //    {
-    //
-    //        [self.lblSTT_Status setText:@"Speak now"];
-    //        [self.btnSTT_Start_Stop setImage:[UIImage imageNamed:@"microphone_circle"] forState:UIControlStateNormal];
-    //        btn.selected=YES;
-    //    }
-    
     if([audioEngine isRunning])
     {
         [audioEngine stop];
@@ -1104,23 +1208,13 @@
         [self.viewSTT_Poppup setHidden:YES];
         [self.lblSTT_Status setText:@"Tap to speak"];
         [self.btnSTT_Start_Stop setImage:[UIImage imageNamed:@"microphone_circle_white"] forState:UIControlStateNormal];
-        
-        
-        // self.btnSpeechToText.enabled=true;
-        //[_StartListeningButton setTitle:@"Start listening" forState:UIControlStateNormal];
     }
     else
     {
-        //[_StartListeningButton setTitle:@"Stop listening" forState:UIControlStateNormal];
-        // self.btnSpeechToText.enabled=false;
-        
-        
         [self startListening];
         [self.lblSTT_Status setText:@"Speak now"];
         [self.btnSTT_Start_Stop setImage:[UIImage imageNamed:@"microphone_circle"] forState:UIControlStateNormal];
         [self.viewSTT_Poppup setHidden:NO];
-        
     }
-    
 }
 @end

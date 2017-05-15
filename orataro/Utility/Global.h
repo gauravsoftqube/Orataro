@@ -49,6 +49,8 @@
 #pragma mark - Alert Message
 
 #define Post_share_successfully @"Post share successfully"
+#define Post_enter_detail @"Please enter post detail"
+
 #define Enter_Post_Comment @"Please Enter comment"
 #define Please_Select_Friend @"Please select at lest one friend"
 
@@ -228,6 +230,7 @@
 #import "HMSegmentedControl.h"
 
 #import "ParentProfileVc.h"
+#import "SingleWallVC.h"
 
 #pragma mark - YOUTube Video Key
 
@@ -256,6 +259,7 @@
 #define apk_UpdateUserPassword_action  @"UpdateUserPassword"
 #define apk_GetProjectType_action @"GetProjectType"
 #define apk_ChangePassword_action @"ChangePassword"
+#define apk_GetUserRoleRightList_action @"GetUserRoleRightList"
 
 #pragma mark - Image Url
 
@@ -263,13 +267,30 @@
 #define apk_ImageUrlFor_HomeworkDetail @"http://orataro.com"
 
 
+#pragma mark - GenaralWall and MyWall
+
+#define IS_ALLOW_SETTING @"YES"
+//
+//#define IS_USER_LIKE_WALL = "IsAllowPeopleToLikeAndDislikeCommentWall";
+//#define IS_USER_DISLIKE_WALL = "IsAllowPeopleToLikeAndDislikeCommentWall";
+//#define IS_USER_SHARE_WALL = "IsAllowPeopleToShareCommentWall";
+//#define IS_USER_COMMENT_WALL = "IsAllowPeoplePostCommentWall";
+//
+//#define IS_USER_LIKE = "IsAllowPeopleToLikeOrDislikeOnYourPost";
+//#define IS_USER_DISLIKE = "IsAllowPeopleToLikeOrDislikeOnYourPost";
+//#define IS_USER_COMMENT = "IsAllowPeopleToPostMessageOnYourWall";
+//#define IS_USER_SHARE = "IsAllowPeopleToShareYourPost";
+
+
 #pragma mark - Ganara Wall
 
 #define apk_generalwall  @"apk_generalwall.asmx"
 #define apk_GetGeneralWallData_action  @"GetGeneralWallData"
 #define apk_GetDynamicWallData_action  @"GetDynamicWallData"
+#define apk_GetMyWallData_action  @"GetMyWallData"
 #define apk_GetWallMember_action  @"GetWallMember"
-
+#define apk_DeletePost_action  @"DeletePost"
+#define apk_EditPostDetails_action  @"EditPostDetails"
 
 
 #define apk_post  @"apk_post.asmx"

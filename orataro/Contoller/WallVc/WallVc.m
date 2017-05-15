@@ -21,14 +21,27 @@
     long totalCountView,countResponce;
     
     NSMutableArray *arrPopup;
-    NSMutableDictionary *dicSelect_SharePopup;
+    NSMutableDictionary *dicSelect_SharePopup,*dicSelect_Edit_Delete_Post;
+    
+    NSIndexPath *indexPath_delete_edit_post;
+    
     NSTimer *timerLocalPostDB;
     
     NSMutableArray *arrPostLocalDB_ResponceImagePath;
     
     NSMutableArray *arrWallMemberList;
+    
+    NSMutableArray *arrDynamicWall_Setting,*arrDynamicWall_Admin_Setting;
+    
+    //login responce
+    NSString *currentDeviceId;
+    
+    
 }
 @end
+
+//login responce
+int _multipleUser = 0;
 
 @implementation WallVc
 @synthesize aWallTableView,aTableHeaderView;
@@ -83,13 +96,20 @@ int c2= 0;
     // arrGeneralWall = [[NSMutableArray alloc] init];
     totalCountView=1;
     
-    
     [self.viewSpecialFriends_Popup setHidden:YES];
     [self.viewWallMember setHidden:YES];
     [self.lblNoWallDataAvailable setHidden:YES];
     self.tblSpecialFriendsList.separatorStyle=UITableViewCellSeparatorStyleNone;
     self.tblWallMemberList.separatorStyle=UITableViewCellSeparatorStyleNone;
 
+    
+    //view Delete conf
+    [self.viewDelete_Conf setHidden:YES];
+    _viewSave.layer.cornerRadius = 30.0;
+    _viewInnerSave.layer.cornerRadius = 25.0;
+    _imgCancel.image = [_imgCancel.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [_imgCancel setTintColor:[UIColor colorWithRed:40.0/255.0 green:49.0/255.0 blue:90.0/255.0 alpha:1.0]];
+    
     //set search
     //[Utility SearchTextView:self.viewSearch_SpecialFriends];
     [self SearchTextView:self.viewSearch_SpecialFriends];
@@ -110,6 +130,12 @@ int c2= 0;
     
     [self.aWallTableView.refreshControl endRefreshing];
     [self.aWallTableView.tableFooterView setHidden:YES];
+    
+    //panding
+   // [self apiCallFor_GetUserRoleRightList:@"1"];
+    
+    //apiCall for login and responce update login localdb
+    [self apiCallLogin];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -175,6 +201,15 @@ int c2= 0;
             self.lblheaderTitle.text=[NSString stringWithFormat:@"Subject"];
         }
     }
+    else if ([_checkscreen isEqualToString:@"MyWall"])
+    {
+        [_MenuBtn setBackgroundImage:[UIImage imageNamed:@"downarrow"] forState:UIControlStateNormal];
+        [_HomeBtn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+        self.btnWallMember.hidden =YES;
+        
+        //set Header Title
+        self.lblheaderTitle.text=[NSString stringWithFormat:@"My Post"];
+    }
     else
     {
         [_MenuBtn setBackgroundImage:[UIImage imageNamed:@"ic_sort_white"] forState:UIControlStateNormal];
@@ -207,6 +242,8 @@ int c2= 0;
 
 -(void)apiCallMethod
 {
+    arrDynamicWall_Setting = [[NSMutableArray alloc]init];
+    arrDynamicWall_Admin_Setting  = [[NSMutableArray alloc]init];
     if ([Utility isInterNetConnectionIsActive] == false)
     {
         arrGeneralWall = [[NSMutableArray alloc]init];
@@ -232,6 +269,11 @@ int c2= 0;
         {
             NSString *strWallId=[NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]];
             arrGeneralWall = [DBOperation selectData:[NSString stringWithFormat:@"select * from SubjectWall where WallID ='%@'",strWallId]];
+            countResponce = [arrGeneralWall count];
+        }
+        else if ([_checkscreen isEqualToString:@"MyWall"])
+        {
+            arrGeneralWall = [DBOperation selectData:@"select * from MyWall"];
             countResponce = [arrGeneralWall count];
         }
         else
@@ -281,11 +323,17 @@ int c2= 0;
             arrGeneralWall = [DBOperation selectData:[NSString stringWithFormat:@"select * from SubjectWall where WallID ='%@'",strWallId]];
             countResponce = [arrGeneralWall count];
         }
+        else if ([_checkscreen isEqualToString:@"MyWall"])
+        {
+            arrGeneralWall = [DBOperation selectData:@"select * from MyWall"];
+            countResponce = [arrGeneralWall count];
+        }
         else
         {
             arrGeneralWall = [DBOperation selectData:@"select * from GeneralWall"];
             countResponce = [arrGeneralWall count];
         }
+        
         NSSortDescriptor *brandDescriptor = [[NSSortDescriptor alloc] initWithKey:@"TempDate" ascending:NO];
         NSArray *sortedArray3 = [arrGeneralWall sortedArrayUsingDescriptors:@[brandDescriptor]];
         arrGeneralWall=[[NSMutableArray alloc]init];
@@ -666,6 +714,357 @@ int c2= 0;
     
 }
 
+#pragma mark - apiCall Login update local db
+
+-(void)apiCallLogin
+{
+    NSMutableArray *arrSelectInstiUser = [[NSMutableArray alloc]init];
+    
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_login,apk_LoginWithGCM_action];
+    
+    currentDeviceId =[[NSUserDefaults standardUserDefaults]objectForKey:@"currentDeviceId"];
+    
+    [[NSUserDefaults standardUserDefaults]setObject:@"8d103a40eb95a3b95335ee64d2a5bf7a958fdffd3d029d6d3c0cc3dc6eca8298" forKey:@"DeviceToken"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+    
+    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"DeviceToken"];
+    
+    
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    [param setValue:[NSString stringWithFormat:@"%@",[[Utility getCurrentUserDetail]objectForKey:@"MobileNumber"]] forKey:@"UserName"];
+    [param setValue:[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"Password"]] forKey:@"Password"];
+    [param setValue:[NSString stringWithFormat:@"%@",token] forKey:@"GCMID"];
+    [param setValue:[NSString stringWithFormat:@"%@",currentDeviceId] forKey:@"DivRegistID"];
+    
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         if(!error)
+         {
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             if([arrResponce count] != 0)
+             {
+                 NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                 
+                 NSString *strStatus=[dic objectForKey:@"message"];
+                 if([strStatus isEqualToString:@"No Data Found"])
+                 {
+                 }
+                 else
+                 {
+                     [DBOperation executeSQL:[NSString stringWithFormat:@"delete from Login"]];
+                     
+                     if (arrResponce.count ==1)
+                     {
+                         [self checkMultipleUser:arrResponce];
+                     }
+                     else
+                     {
+                         for (NSMutableDictionary *dic in arrResponce)
+                         {
+                             if ([[dic objectForKey:@"DeviceIdentity"] isEqualToString:currentDeviceId])
+                             {
+                                 _multipleUser++;
+                             }
+                             else
+                             {
+                                 
+                             }
+                         }
+                         if (_multipleUser == 0)
+                         {
+                             if ([BypassLogin isEqualToString:@"NO"])
+                             {
+                                 NSArray *instituteID = @[
+                                                          @"4F4BBF0E-858A-46FA-A0A7-BF116F537653",
+                                                          @"4f4bbf0e-858a-46fa-a0a7-bf116f537653",
+                                                          @"3ccb88d9-f4bf-465d-b85a-5402871a0144",
+                                                          @"3CCB88D9-F4BF-465D-B85A-5402871A0144",
+                                                          ];
+                                 
+                                 for (NSMutableDictionary *dic in arrResponce)
+                                 {
+                                     
+                                     if ([instituteID containsObject:[dic objectForKey:@"InstituteID"]])
+                                     {
+                                         [arrSelectInstiUser addObject:dic];
+                                         
+                                     }
+                                     else if([[dic objectForKey:@"DeviceIdentity"] isEqualToString:currentDeviceId])
+                                     {
+                                         [arrSelectInstiUser addObject:dic];
+                                     }
+                                     
+                                 }
+                                 if (arrSelectInstiUser.count == 0)
+                                 {
+                                     [WToast showWithText:@"User not found"];
+                                 }
+                                 else
+                                 {
+                                     for (NSMutableDictionary *dic in arrSelectInstiUser)
+                                     {
+                                         NSString *getjsonstr = [Utility Convertjsontostring:dic];
+                                         
+                                         [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Login (dic_json_string,ActiveUser) VALUES ('%@','%@')",getjsonstr,@"0"]];
+                                     }
+                                     [[NSUserDefaults standardUserDefaults]setObject:[[Utility getCurrentUserDetail]objectForKey:@"MobileNumber"] forKey:@"MobileNumber"];
+                                     [[NSUserDefaults standardUserDefaults]setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"Password"] forKey:@"Password"];
+                                     [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
+                                     [[NSUserDefaults standardUserDefaults]synchronize];
+                                     
+                                 }
+                                 
+                             }
+                             else
+                             {
+                                 [WToast showWithText:@"User not found"];
+                             }
+                         }
+                         else if (_multipleUser == 1)
+                         {
+                             [self checkMultipleUser:arrResponce];
+                         }
+                         else
+                         {
+                             if ([BypassLogin isEqualToString:@"NO"])
+                             {
+                                 NSArray *instituteID = @[
+                                                          @"4F4BBF0E-858A-46FA-A0A7-BF116F537653",
+                                                          @"4f4bbf0e-858a-46fa-a0a7-bf116f537653",
+                                                          @"3ccb88d9-f4bf-465d-b85a-5402871a0144",
+                                                          @"3CCB88D9-F4BF-465D-B85A-5402871A0144",
+                                                          ];
+                                 
+                                 for (NSMutableDictionary *dic in arrResponce)
+                                 {
+                                     
+                                     if ([instituteID containsObject:[dic objectForKey:@"InstituteID"]])
+                                     {
+                                         [arrSelectInstiUser addObject:dic];
+                                         
+                                     }
+                                     else if([[dic objectForKey:@"DeviceIdentity"] isEqualToString:currentDeviceId])
+                                     {
+                                         [arrSelectInstiUser addObject:dic];
+                                     }
+                                     
+                                 }
+                                 if (arrSelectInstiUser.count == 0)
+                                 {
+                                     [WToast showWithText:@"User not found"];
+                                 }
+                                 else
+                                 {
+                                     for (NSMutableDictionary *dic in arrSelectInstiUser)
+                                     {
+                                         NSString *getjsonstr = [Utility Convertjsontostring:dic];
+                                         
+                                         [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Login (dic_json_string,ActiveUser) VALUES ('%@','%@')",getjsonstr,@"0"]];
+                                     }
+                                     [[NSUserDefaults standardUserDefaults]setObject:[[Utility getCurrentUserDetail]objectForKey:@"MobileNumber"] forKey:@"MobileNumber"];
+                                     [[NSUserDefaults standardUserDefaults]setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"Password"] forKey:@"Password"];
+                                     [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
+                                     [[NSUserDefaults standardUserDefaults]synchronize];
+                                     
+                                    
+                                 }
+                                 
+                                 
+                             }
+                             else
+                             {
+                                 for (NSMutableDictionary *dic in arrResponce)
+                                 {
+                                     NSString *getjsonstr = [Utility Convertjsontostring:dic];
+                                     
+                                     [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Login (dic_json_string,ActiveUser) VALUES ('%@','%@')",getjsonstr,@"0"]];
+                                 }
+                                 [[NSUserDefaults standardUserDefaults]setObject:[[Utility getCurrentUserDetail]objectForKey:@"MobileNumber"] forKey:@"MobileNumber"];
+                                 [[NSUserDefaults standardUserDefaults]setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"Password"] forKey:@"Password"];
+                                 [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
+                                 [[NSUserDefaults standardUserDefaults]synchronize];
+                                 
+                                
+                             }
+                             
+                         }
+                     }
+                }
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
+}
+
+-(void)checkMultipleUser : (NSMutableArray *)ary
+{
+    NSMutableDictionary *getDic = [ary objectAtIndex:0];
+    
+    NSArray *instituteID = @[
+                             @"4F4BBF0E-858A-46FA-A0A7-BF116F537653",
+                             @"4f4bbf0e-858a-46fa-a0a7-bf116f537653",
+                             @"3ccb88d9-f4bf-465d-b85a-5402871a0144",
+                             @"3CCB88D9-F4BF-465D-B85A-5402871A0144",
+                             ];
+    
+    if ([BypassLogin isEqualToString:@"NO"])
+    {
+        if ([instituteID containsObject:[getDic objectForKey:@"InstituteID"]])
+        {
+            for (NSMutableDictionary *dic in ary)
+            {
+                
+                NSString *getjsonstr = [Utility Convertjsontostring:dic];
+                [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Login (dic_json_string,ActiveUser) VALUES ('%@','%@')",getjsonstr,@"0"]];
+                
+                
+                [DBOperation executeSQL:@"delete from CurrentActiveUser"];
+                NSString *strJSon = [Utility Convertjsontostring:dic];
+                
+                [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO CurrentActiveUser (JsonStr) VALUES ('%@')",strJSon]];
+                
+            }
+            
+            [[NSUserDefaults standardUserDefaults]setObject:[[Utility getCurrentUserDetail]objectForKey:@"MobileNumber"] forKey:@"MobileNumber"];
+            [[NSUserDefaults standardUserDefaults]setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"Password"] forKey:@"Password"];
+            [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
+            [[NSUserDefaults standardUserDefaults]synchronize];
+            
+        }
+        else
+        {
+            if ([[getDic objectForKey:@"DeviceIdentity"] isEqualToString:currentDeviceId])
+            {
+                for (NSMutableDictionary *dic in ary)
+                {
+                    
+                    NSString *getjsonstr = [Utility Convertjsontostring:dic];
+                    [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Login (dic_json_string,ActiveUser) VALUES ('%@','%@')",getjsonstr,@"0"]];
+                    [DBOperation executeSQL:@"delete from CurrentActiveUser"];
+                    NSString *strJSon = [Utility Convertjsontostring:dic];
+                    
+                    [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO CurrentActiveUser (JsonStr) VALUES ('%@')",strJSon]];
+                    
+                }
+                
+                [[NSUserDefaults standardUserDefaults]setObject:[[Utility getCurrentUserDetail]objectForKey:@"MobileNumber"] forKey:@"MobileNumber"];
+                [[NSUserDefaults standardUserDefaults]setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"Password"] forKey:@"Password"];
+                [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
+                [[NSUserDefaults standardUserDefaults]synchronize];
+        
+            }
+            else
+            {
+                // show toast
+                [WToast showWithText:@"User not found"];
+            }
+        }
+    }
+    else
+    {
+        for (NSMutableDictionary *dic in ary)
+        {
+            
+            NSString *getjsonstr = [Utility Convertjsontostring:dic];
+            [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Login (dic_json_string,ActiveUser) VALUES ('%@','%@')",getjsonstr,@"0"]];
+            [DBOperation executeSQL:@"delete from CurrentActiveUser"];
+            NSString *strJSon = [Utility Convertjsontostring:dic];
+            
+            [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO CurrentActiveUser (JsonStr) VALUES ('%@')",strJSon]];
+        }
+        
+        [[NSUserDefaults standardUserDefaults]setObject:[[Utility getCurrentUserDetail]objectForKey:@"MobileNumber"] forKey:@"MobileNumber"];
+        [[NSUserDefaults standardUserDefaults]setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"Password"] forKey:@"Password"];
+        [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
+        [[NSUserDefaults standardUserDefaults]synchronize];
+    
+    }
+    
+}
+
+
+#pragma mark - apiCall GetUserRoleRightList
+
+-(void)apiCallFor_GetUserRoleRightList:(NSString *)strInternet
+{
+    if ([Utility isInterNetConnectionIsActive] == false) {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_login,apk_GetUserRoleRightList_action];
+    
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"RoleID"]] forKey:@"RoleID"];
+    
+    if([strInternet isEqualToString:@"1"])
+    {
+        [ProgressHUB showHUDAddedTo:self.view];
+    }
+    
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         [ProgressHUB hideenHUDAddedTo:self.view];
+         if(!error)
+         {
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             
+             if([arrResponce count] != 0)
+             {
+                 NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                 NSString *strStatus=[dic objectForKey:@"message"];
+                 if([strStatus isEqualToString:@"No Data Found"])
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                 }
+                 else
+                 {
+                 }
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
+}
+
+
 #pragma mark - apiCall GetWallMember
 
 -(void)apiCallFor_GetWallMember:(NSString *)strInternet
@@ -803,6 +1202,11 @@ int c2= 0;
         [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
         [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
     }
+    else if ([_checkscreen isEqualToString:@"MyWall"])
+    {
+        strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_generalwall,apk_GetMyWallData_action];
+        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"WallID"]] forKey:@"WallID"];
+    }
     else
     {
         strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_generalwall,apk_GetGeneralWallData_action];
@@ -839,6 +1243,17 @@ int c2= 0;
                      }
                      else
                      {
+                         //set DynamicWall Setting in array
+                         arrDynamicWall_Setting  = [dicResponce objectForKey:@"RoleData"];
+                         for (NSMutableDictionary *dic in arrDynamicWall_Setting)
+                         {
+                             NSString *IsAdmin=[dic objectForKey:@"IsAdmin"];
+                             if ([IsAdmin integerValue] == 1) {
+                                 arrDynamicWall_Admin_Setting  = [dicResponce objectForKey:@"WallRoleData"];
+                             }
+                         }
+                         
+                         //
                          countResponce = [arrResponce count];
                          NSArray *arrPostCommentID=[arrGeneralWall valueForKey:@"PostCommentID"];
                          for (NSMutableDictionary *dicWallID in arrResponce)
@@ -888,6 +1303,17 @@ int c2= 0;
                      }
                      else
                      {
+                         //set DynamicWall Setting in array
+                         arrDynamicWall_Setting  = [dicResponce objectForKey:@"RoleData"];
+                         for (NSMutableDictionary *dic in arrDynamicWall_Setting)
+                         {
+                             NSString *IsAdmin=[dic objectForKey:@"IsAdmin"];
+                             if ([IsAdmin integerValue] == 1) {
+                                 arrDynamicWall_Admin_Setting  = [dicResponce objectForKey:@"WallRoleData"];
+                             }
+                         }
+                         
+                         //
                          countResponce = [arrResponce count];
                          NSArray *arrPostCommentID=[arrGeneralWall valueForKey:@"PostCommentID"];
                          for (NSMutableDictionary *dicWallID in arrResponce)
@@ -906,6 +1332,54 @@ int c2= 0;
                                  [arrGeneralWall addObject:dicWallID];
                                  //insert localdb
                                  [self insert_std_Divi_Subj_Wall_localDB:dicWallID];
+                             }
+                         }
+                         NSSortDescriptor *brandDescriptor = [[NSSortDescriptor alloc] initWithKey:@"TempDate" ascending:NO];
+                         NSArray *sortedArray3 = [arrGeneralWall sortedArrayUsingDescriptors:@[brandDescriptor]];
+                         arrGeneralWall=[[NSMutableArray alloc]init];
+                         arrGeneralWall=[sortedArray3 mutableCopy];
+                         [self.aWallTableView reloadData];
+                     }
+                 }
+                 else
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                 }
+             }
+             else if ([_checkscreen isEqualToString:@"MyWall"])
+             {
+                 NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                 if([arrResponce count] != 0)
+                 {
+                     NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                     NSString *strStatus=[dic objectForKey:@"message"];
+                     if([strStatus isEqualToString:@"No Data Found"])
+                     {
+                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                         [alrt show];
+                     }
+                     else
+                     {
+                         countResponce = [arrResponce count];
+                         NSArray *arrPostCommentID=[arrGeneralWall valueForKey:@"PostCommentID"];
+                         for (NSMutableDictionary *dicWallID in arrResponce)
+                         {
+                             NSString *strPostCommentID=[dicWallID objectForKey:@"PostCommentID"];
+                             if ([arrPostCommentID containsObject:strPostCommentID])
+                             {
+                                 NSInteger anIndex=[arrPostCommentID indexOfObject:strPostCommentID];
+                                 [arrGeneralWall removeObjectAtIndex:anIndex];
+                                 [arrGeneralWall insertObject:dicWallID atIndex:anIndex];
+                                 
+                                 //update insert localdb
+                                 [self updateGeneralWall_MyWall_localDB:dicWallID];
+                             }
+                             else
+                             {
+                                 [arrGeneralWall addObject:dicWallID];
+                                 //insert localdb
+                                 [self insertGeneralWall_MyWall_localDB:dicWallID];
                              }
                          }
                          NSSortDescriptor *brandDescriptor = [[NSSortDescriptor alloc] initWithKey:@"TempDate" ascending:NO];
@@ -947,13 +1421,13 @@ int c2= 0;
                                  [arrGeneralWall insertObject:dicWallID atIndex:anIndex];
                                  
                                  //update insert localdb
-                                 [self updateGeneralWall_localDB:dicWallID];
+                                 [self updateGeneralWall_MyWall_localDB:dicWallID];
                              }
                              else
                              {
                                  [arrGeneralWall addObject:dicWallID];
                                  //insert localdb
-                                 [self insertGeneralWall_localDB:dicWallID];
+                                 [self insertGeneralWall_MyWall_localDB:dicWallID];
                              }
                          }
                          NSSortDescriptor *brandDescriptor = [[NSSortDescriptor alloc] initWithKey:@"TempDate" ascending:NO];
@@ -1239,51 +1713,82 @@ int c2= 0;
      }];
 }
 
-#pragma mark - Insert Update Wall Data In LocalDB
+#pragma mark - DELETE EDIT Post apiCall
 
--(void)insertGeneralWall_localDB:(NSMutableDictionary *)dicWallID
+-(void)apiCallFor_DeletePost:(NSString *)strInternet
 {
-    //insert loacl db
-    NSString *AssociationID=[dicWallID objectForKey:@"AssociationID"];
-    NSString *AssociationType=[dicWallID objectForKey:@"AssociationType"];
+    if ([Utility isInterNetConnectionIsActive] == false) {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
     
-    NSString *DateOfPost=[dicWallID objectForKey:@"DateOfPost"];
-    NSString *FileMimeType=[dicWallID objectForKey:@"FileMimeType"];
-    NSString *FileType=[dicWallID objectForKey:@"FileType"];
-    NSString *FullName=[dicWallID objectForKey:@"FullName"];
-    NSString *IsAllowPeoplePostCommentWall=[dicWallID objectForKey:@"IsAllowPeoplePostCommentWall"];
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_generalwall,apk_DeletePost_action];
     
-    NSString *IsAllowPeopleToLikeAndDislikeCommentWall=[dicWallID objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
-    NSString *IsAllowPeopleToLikeOrDislikeOnYourPost=[dicWallID objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
-    NSString *IsAllowPeopleToPostMessageOnYourWall=[dicWallID objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
-    NSString *IsAllowPeopleToShareCommentWall=[dicWallID objectForKey:@"IsAllowPeopleToShareCommentWall"];
-    NSString *IsAllowPeopleToShareYourPost=[dicWallID objectForKey:@"IsAllowPeopleToShareYourPost"];
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
     
-    NSString *IsDislike=[dicWallID objectForKey:@"IsDislike"];
-    NSString *IsLike=[dicWallID objectForKey:@"IsLike"];
-    NSString *MemberID=[dicWallID objectForKey:@"MemberID"];
-    NSString *Photo=[dicWallID objectForKey:@"Photo"];
-    NSString *PostCommentID=[dicWallID objectForKey:@"PostCommentID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
     
-    NSString *PostCommentNote=[dicWallID objectForKey:@"PostCommentNote"];
-    NSString *PostCommentTypesTerm=[dicWallID objectForKey:@"PostCommentTypesTerm"];
-    NSString *PostedOn=[dicWallID objectForKey:@"PostedOn"];
-    NSString *ProfilePicture=[dicWallID objectForKey:@"ProfilePicture"];
-    NSString *RowNo=[dicWallID objectForKey:@"RowNo"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
     
-    NSString *TempDate=[dicWallID objectForKey:@"TempDate"];
-    NSString *TotalComments=[dicWallID objectForKey:@"TotalComments"];
-    NSString *TotalDislike=[dicWallID objectForKey:@"TotalDislike"];
-    NSString *TotalLikes=[dicWallID objectForKey:@"TotalLikes"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicSelect_Edit_Delete_Post objectForKey:@"PostCommentID"]] forKey:@"PostID"];
     
-    NSString *WallID=[dicWallID objectForKey:@"WallID"];
-    NSString *WallTypeTerm=[dicWallID objectForKey:@"WallTypeTerm"];
+        if([strInternet isEqualToString:@"1"])
+        {
+            [ProgressHUB showHUDAddedTo:self.view];
+        }
     
-    
-    [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO GeneralWall (AssociationID,AssociationType,DateOfPost,FileMimeType,FileType,FullName,IsAllowPeoplePostCommentWall,IsAllowPeopleToLikeAndDislikeCommentWall,IsAllowPeopleToLikeOrDislikeOnYourPost,IsAllowPeopleToPostMessageOnYourWall,IsAllowPeopleToShareCommentWall,IsAllowPeopleToShareYourPost,IsDislike,IsLike,MemberID,Photo,PostCommentID,PostCommentNote,PostCommentTypesTerm,PostedOn,ProfilePicture,RowNo,TempDate,TotalComments,TotalDislike,TotalLikes,WallID,WallTypeTerm) VALUES ('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@')",AssociationID,AssociationType,DateOfPost,FileMimeType,FileType,FullName,IsAllowPeoplePostCommentWall,IsAllowPeopleToLikeAndDislikeCommentWall,IsAllowPeopleToLikeOrDislikeOnYourPost,IsAllowPeopleToPostMessageOnYourWall,IsAllowPeopleToShareCommentWall,IsAllowPeopleToShareYourPost,IsDislike,IsLike,MemberID,Photo,PostCommentID,PostCommentNote,PostCommentTypesTerm,PostedOn,ProfilePicture,RowNo,TempDate,TotalComments,TotalDislike,TotalLikes,WallID,WallTypeTerm]];
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         [ProgressHUB hideenHUDAddedTo:self.view];
+         if(!error)
+         {
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             
+             if([arrResponce count] != 0)
+             {
+                 NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                 NSString *strStatus=[dic objectForKey:@"message"];
+                 if([strStatus isEqualToString:@"No Data Found"])
+                 {
+                    UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alrt show];
+                 }
+                 else if([strStatus isEqualToString:@"Record deleted successfully"])
+                 {
+                     NSString *strPostCommentID=[dicSelect_Edit_Delete_Post objectForKey:@"PostCommentID"];
+                    
+                     //Delete
+                     [DBOperation executeSQL:[NSString stringWithFormat:@"delete from MyWall where PostCommentID='%@'",strPostCommentID]];
+                     
+                     [arrGeneralWall removeObject:dicSelect_Edit_Delete_Post];
+                     
+                     [self.aWallTableView beginUpdates];
+                     [self.aWallTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath_delete_edit_post] withRowAnimation:UITableViewRowAnimationFade];
+                     [self.aWallTableView endUpdates];
+                 }
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
 }
 
--(void)updateGeneralWall_localDB:(NSMutableDictionary *)dicWallID
+#pragma mark - Insert Update Wall Data In LocalDB
+
+-(void)insertGeneralWall_MyWall_localDB:(NSMutableDictionary *)dicWallID
 {
     //insert loacl db
     NSString *AssociationID=[dicWallID objectForKey:@"AssociationID"];
@@ -1321,8 +1826,62 @@ int c2= 0;
     NSString *WallID=[dicWallID objectForKey:@"WallID"];
     NSString *WallTypeTerm=[dicWallID objectForKey:@"WallTypeTerm"];
     
+    if ([_checkscreen isEqualToString:@"MyWall"])
+    {
+        [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO MyWall (AssociationID,AssociationType,DateOfPost,FileMimeType,FileType,FullName,IsAllowPeoplePostCommentWall,IsAllowPeopleToLikeAndDislikeCommentWall,IsAllowPeopleToLikeOrDislikeOnYourPost,IsAllowPeopleToPostMessageOnYourWall,IsAllowPeopleToShareCommentWall,IsAllowPeopleToShareYourPost,IsDislike,IsLike,MemberID,Photo,PostCommentID,PostCommentNote,PostCommentTypesTerm,PostedOn,ProfilePicture,RowNo,TempDate,TotalComments,TotalDislike,TotalLikes,WallID,WallTypeTerm) VALUES ('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@')",AssociationID,AssociationType,DateOfPost,FileMimeType,FileType,FullName,IsAllowPeoplePostCommentWall,IsAllowPeopleToLikeAndDislikeCommentWall,IsAllowPeopleToLikeOrDislikeOnYourPost,IsAllowPeopleToPostMessageOnYourWall,IsAllowPeopleToShareCommentWall,IsAllowPeopleToShareYourPost,IsDislike,IsLike,MemberID,Photo,PostCommentID,PostCommentNote,PostCommentTypesTerm,PostedOn,ProfilePicture,RowNo,TempDate,TotalComments,TotalDislike,TotalLikes,WallID,WallTypeTerm]];
+    }
+    else
+    {
+        [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO GeneralWall (AssociationID,AssociationType,DateOfPost,FileMimeType,FileType,FullName,IsAllowPeoplePostCommentWall,IsAllowPeopleToLikeAndDislikeCommentWall,IsAllowPeopleToLikeOrDislikeOnYourPost,IsAllowPeopleToPostMessageOnYourWall,IsAllowPeopleToShareCommentWall,IsAllowPeopleToShareYourPost,IsDislike,IsLike,MemberID,Photo,PostCommentID,PostCommentNote,PostCommentTypesTerm,PostedOn,ProfilePicture,RowNo,TempDate,TotalComments,TotalDislike,TotalLikes,WallID,WallTypeTerm) VALUES ('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@')",AssociationID,AssociationType,DateOfPost,FileMimeType,FileType,FullName,IsAllowPeoplePostCommentWall,IsAllowPeopleToLikeAndDislikeCommentWall,IsAllowPeopleToLikeOrDislikeOnYourPost,IsAllowPeopleToPostMessageOnYourWall,IsAllowPeopleToShareCommentWall,IsAllowPeopleToShareYourPost,IsDislike,IsLike,MemberID,Photo,PostCommentID,PostCommentNote,PostCommentTypesTerm,PostedOn,ProfilePicture,RowNo,TempDate,TotalComments,TotalDislike,TotalLikes,WallID,WallTypeTerm]];
+    }
+}
+
+-(void)updateGeneralWall_MyWall_localDB:(NSMutableDictionary *)dicWallID
+{
+    //insert loacl db
+    NSString *AssociationID=[dicWallID objectForKey:@"AssociationID"];
+    NSString *AssociationType=[dicWallID objectForKey:@"AssociationType"];
     
-    [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE GeneralWall SET AssociationID ='%@',AssociationType= '%@',DateOfPost='%@',FileMimeType= '%@',FileType= '%@',FullName= '%@',IsAllowPeoplePostCommentWall= '%@',IsAllowPeopleToLikeAndDislikeCommentWall= '%@',IsAllowPeopleToLikeOrDislikeOnYourPost= '%@',IsAllowPeopleToPostMessageOnYourWall= '%@',IsAllowPeopleToShareCommentWall= '%@',IsAllowPeopleToShareYourPost= '%@',IsDislike= '%@',IsLike= '%@',MemberID= '%@',Photo= '%@',PostCommentID= '%@',PostCommentNote= '%@',PostCommentTypesTerm= '%@',PostedOn= '%@',ProfilePicture= '%@',RowNo= '%@',TempDate= '%@',TotalComments= '%@',TotalDislike= '%@',TotalLikes= '%@',WallID= '%@',WallTypeTerm= '%@' WHERE PostCommentID= '%@'",AssociationID,AssociationType,DateOfPost,FileMimeType,FileType,FullName,IsAllowPeoplePostCommentWall,IsAllowPeopleToLikeAndDislikeCommentWall,IsAllowPeopleToLikeOrDislikeOnYourPost,IsAllowPeopleToPostMessageOnYourWall,IsAllowPeopleToShareCommentWall,IsAllowPeopleToShareYourPost,IsDislike,IsLike,MemberID,Photo,PostCommentID,PostCommentNote,PostCommentTypesTerm,PostedOn,ProfilePicture,RowNo,TempDate,TotalComments,TotalDislike,TotalLikes,WallID,WallTypeTerm,PostCommentID]];
+    NSString *DateOfPost=[dicWallID objectForKey:@"DateOfPost"];
+    NSString *FileMimeType=[dicWallID objectForKey:@"FileMimeType"];
+    NSString *FileType=[dicWallID objectForKey:@"FileType"];
+    NSString *FullName=[dicWallID objectForKey:@"FullName"];
+    NSString *IsAllowPeoplePostCommentWall=[dicWallID objectForKey:@"IsAllowPeoplePostCommentWall"];
+    
+    NSString *IsAllowPeopleToLikeAndDislikeCommentWall=[dicWallID objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
+    NSString *IsAllowPeopleToLikeOrDislikeOnYourPost=[dicWallID objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
+    NSString *IsAllowPeopleToPostMessageOnYourWall=[dicWallID objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
+    NSString *IsAllowPeopleToShareCommentWall=[dicWallID objectForKey:@"IsAllowPeopleToShareCommentWall"];
+    NSString *IsAllowPeopleToShareYourPost=[dicWallID objectForKey:@"IsAllowPeopleToShareYourPost"];
+    
+    NSString *IsDislike=[dicWallID objectForKey:@"IsDislike"];
+    NSString *IsLike=[dicWallID objectForKey:@"IsLike"];
+    NSString *MemberID=[dicWallID objectForKey:@"MemberID"];
+    NSString *Photo=[dicWallID objectForKey:@"Photo"];
+    NSString *PostCommentID=[dicWallID objectForKey:@"PostCommentID"];
+    
+    NSString *PostCommentNote=[dicWallID objectForKey:@"PostCommentNote"];
+    NSString *PostCommentTypesTerm=[dicWallID objectForKey:@"PostCommentTypesTerm"];
+    NSString *PostedOn=[dicWallID objectForKey:@"PostedOn"];
+    NSString *ProfilePicture=[dicWallID objectForKey:@"ProfilePicture"];
+    NSString *RowNo=[dicWallID objectForKey:@"RowNo"];
+    
+    NSString *TempDate=[dicWallID objectForKey:@"TempDate"];
+    NSString *TotalComments=[dicWallID objectForKey:@"TotalComments"];
+    NSString *TotalDislike=[dicWallID objectForKey:@"TotalDislike"];
+    NSString *TotalLikes=[dicWallID objectForKey:@"TotalLikes"];
+    
+    NSString *WallID=[dicWallID objectForKey:@"WallID"];
+    NSString *WallTypeTerm=[dicWallID objectForKey:@"WallTypeTerm"];
+    
+    if ([_checkscreen isEqualToString:@"MyWall"])
+    {
+        [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE MyWall SET AssociationID ='%@',AssociationType= '%@',DateOfPost='%@',FileMimeType= '%@',FileType= '%@',FullName= '%@',IsAllowPeoplePostCommentWall= '%@',IsAllowPeopleToLikeAndDislikeCommentWall= '%@',IsAllowPeopleToLikeOrDislikeOnYourPost= '%@',IsAllowPeopleToPostMessageOnYourWall= '%@',IsAllowPeopleToShareCommentWall= '%@',IsAllowPeopleToShareYourPost= '%@',IsDislike= '%@',IsLike= '%@',MemberID= '%@',Photo= '%@',PostCommentID= '%@',PostCommentNote= '%@',PostCommentTypesTerm= '%@',PostedOn= '%@',ProfilePicture= '%@',RowNo= '%@',TempDate= '%@',TotalComments= '%@',TotalDislike= '%@',TotalLikes= '%@',WallID= '%@',WallTypeTerm= '%@' WHERE PostCommentID= '%@'",AssociationID,AssociationType,DateOfPost,FileMimeType,FileType,FullName,IsAllowPeoplePostCommentWall,IsAllowPeopleToLikeAndDislikeCommentWall,IsAllowPeopleToLikeOrDislikeOnYourPost,IsAllowPeopleToPostMessageOnYourWall,IsAllowPeopleToShareCommentWall,IsAllowPeopleToShareYourPost,IsDislike,IsLike,MemberID,Photo,PostCommentID,PostCommentNote,PostCommentTypesTerm,PostedOn,ProfilePicture,RowNo,TempDate,TotalComments,TotalDislike,TotalLikes,WallID,WallTypeTerm,PostCommentID]];
+    }
+    else
+    {
+        [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE GeneralWall SET AssociationID ='%@',AssociationType= '%@',DateOfPost='%@',FileMimeType= '%@',FileType= '%@',FullName= '%@',IsAllowPeoplePostCommentWall= '%@',IsAllowPeopleToLikeAndDislikeCommentWall= '%@',IsAllowPeopleToLikeOrDislikeOnYourPost= '%@',IsAllowPeopleToPostMessageOnYourWall= '%@',IsAllowPeopleToShareCommentWall= '%@',IsAllowPeopleToShareYourPost= '%@',IsDislike= '%@',IsLike= '%@',MemberID= '%@',Photo= '%@',PostCommentID= '%@',PostCommentNote= '%@',PostCommentTypesTerm= '%@',PostedOn= '%@',ProfilePicture= '%@',RowNo= '%@',TempDate= '%@',TotalComments= '%@',TotalDislike= '%@',TotalLikes= '%@',WallID= '%@',WallTypeTerm= '%@' WHERE PostCommentID= '%@'",AssociationID,AssociationType,DateOfPost,FileMimeType,FileType,FullName,IsAllowPeoplePostCommentWall,IsAllowPeopleToLikeAndDislikeCommentWall,IsAllowPeopleToLikeOrDislikeOnYourPost,IsAllowPeopleToPostMessageOnYourWall,IsAllowPeopleToShareCommentWall,IsAllowPeopleToShareYourPost,IsDislike,IsLike,MemberID,Photo,PostCommentID,PostCommentNote,PostCommentTypesTerm,PostedOn,ProfilePicture,RowNo,TempDate,TotalComments,TotalDislike,TotalLikes,WallID,WallTypeTerm,PostCommentID]];
+    }
 }
 
 -(void)insertInstituteWall_localDB:(NSMutableDictionary *)dicWallID
@@ -1408,7 +1967,6 @@ int c2= 0;
     
     [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE InstituteWall SET AssociationID ='%@',AssociationType= '%@',DateOfPost='%@',FileMimeType= '%@',FileType= '%@',FullName= '%@',IsAllowPeoplePostCommentWall= '%@',IsAllowPeopleToLikeAndDislikeCommentWall= '%@',IsAllowPeopleToLikeOrDislikeOnYourPost= '%@',IsAllowPeopleToPostMessageOnYourWall= '%@',IsAllowPeopleToShareCommentWall= '%@',IsAllowPeopleToShareYourPost= '%@',IsDislike= '%@',IsLike= '%@',MemberID= '%@',Photo= '%@',PostCommentID= '%@',PostCommentNote= '%@',PostCommentTypesTerm= '%@',PostedOn= '%@',ProfilePicture= '%@',RowNo= '%@',TempDate= '%@',TotalComments= '%@',TotalDislike= '%@',TotalLikes= '%@',WallID= '%@',WallTypeTerm= '%@' WHERE PostCommentID= '%@'",AssociationID,AssociationType,DateOfPost,FileMimeType,FileType,FullName,IsAllowPeoplePostCommentWall,IsAllowPeopleToLikeAndDislikeCommentWall,IsAllowPeopleToLikeOrDislikeOnYourPost,IsAllowPeopleToPostMessageOnYourWall,IsAllowPeopleToShareCommentWall,IsAllowPeopleToShareYourPost,IsDislike,IsLike,MemberID,Photo,PostCommentID,PostCommentNote,PostCommentTypesTerm,PostedOn,ProfilePicture,RowNo,TempDate,TotalComments,TotalDislike,TotalLikes,WallID,WallTypeTerm,PostCommentID]];
 }
-
 
 -(void)insert_std_Divi_Subj_Wall_localDB:(NSMutableDictionary *)dicWallID
 {
@@ -1547,6 +2105,10 @@ int c2= 0;
     {
         [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]] forKey:@"WallID"];
     }
+    else if ([_checkscreen isEqualToString:@"MyWall"])
+    {
+        [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]] forKey:@"WallID"];
+    }
     else
     {
         [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"WallID"]] forKey:@"WallID"];
@@ -1612,7 +2174,6 @@ int c2= 0;
          }
      }];
 }
-
 
 
 -(void)apiCallFor_GetFriendList : (BOOL)checkProgress
@@ -1745,7 +2306,7 @@ int c2= 0;
     }
     else
     {
-#pragma mark - set Post Detail Height
+#pragma mark  set Post Detail Height
         NSMutableDictionary *dicResponce=[arrGeneralWall objectAtIndex:indexPath.row];
         NSString *strFileType=[dicResponce objectForKey:@"FileType"];
         if([strFileType isEqualToString:@"IMAGE"])
@@ -1765,11 +2326,197 @@ int c2= 0;
                    [TotalDislike integerValue]  == 0 &&
                    [TotalComments integerValue]  == 0)
                 {
-                    return 310 + 28;
+                    if([IS_ALLOW_SETTING isEqualToString:@"YES"])
+                    {
+                        //get setting login responce
+                        NSString *isIsAllowUserToLikeDislikes=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToLikeDislikes"];
+                        NSString *IsAllowUserToPostComment=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostComment"];
+                        NSString *IsAllowUserToSharePost=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToSharePost"];
+                        
+                        if([self.checkscreen isEqualToString:@"MyWall"] ||
+                           [self.checkscreen length] == 0)
+                        {
+                            //get setting wall responce
+                            NSString *IS_USER_LIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
+                            NSString *IS_USER_DISLIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
+                            NSString *IS_USER_SHARE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToShareCommentWall"];
+                            NSString *IS_USER_COMMENT_WALL=[dicResponce objectForKey:@"IsAllowPeoplePostCommentWall"];
+                            
+                            NSString *IS_USER_LIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
+                            NSString *IS_USER_DISLIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
+                            //NSString *IS_USER_COMMENT=[dicResponce objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
+                            NSString *IS_USER_SHARE=[dicResponce objectForKey:@"IsAllowPeopleToShareYourPost"];
+                            
+                            //[IS_USER_COMMENT integerValue] == 1 &&
+                            if ([IS_USER_LIKE_WALL integerValue] == 1 ||
+                                [IS_USER_LIKE integerValue] == 1 ||
+                                [IS_USER_DISLIKE_WALL integerValue] == 1 ||
+                                [IS_USER_DISLIKE integerValue] == 1 ||
+                                [IS_USER_COMMENT_WALL integerValue] == 1 ||
+                                [IS_USER_SHARE_WALL integerValue] == 1 ||
+                                [IS_USER_SHARE integerValue] == 1 ||
+                                [isIsAllowUserToLikeDislikes integerValue] == 1 ||
+                                [IsAllowUserToPostComment integerValue] == 1 ||
+                                [IsAllowUserToSharePost integerValue] == 1)
+                            {
+                                return 310 + 28;
+                            }
+                            else
+                            {
+                                //here minues setting height
+                                return 310 + 28 - 30;
+                            }
+                        }
+                        else
+                        {
+                            //get DynamicWall setting
+                            NSMutableDictionary *dicResponce_DynamicWall;
+                            if([arrDynamicWall_Setting count] != 0)
+                            {
+                                dicResponce_DynamicWall = [arrDynamicWall_Setting objectAtIndex:0];
+                            }
+                            
+                            NSString *IsAllowPeopleToLikeThisWall_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToLikeThisWall"];
+                            NSString *IsAllowPeoplePostComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeoplePostComment"];
+                            NSString *IsAllowPeopleToShareComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToShareComment"];
+                            
+                            //get setting wall responce
+                            NSString *IS_USER_LIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
+                            NSString *IS_USER_DISLIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
+                            NSString *IS_USER_SHARE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToShareCommentWall"];
+                            NSString *IS_USER_COMMENT_WALL=[dicResponce objectForKey:@"IsAllowPeoplePostCommentWall"];
+                            
+                            NSString *IS_USER_LIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
+                            NSString *IS_USER_DISLIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
+                            NSString *IS_USER_COMMENT=[dicResponce objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
+                            NSString *IS_USER_SHARE=[dicResponce objectForKey:@"IsAllowPeopleToShareYourPost"];
+                            
+                            if ([IS_USER_LIKE_WALL integerValue] == 1 ||
+                                [IS_USER_LIKE integerValue] == 1 ||
+                                [IS_USER_DISLIKE_WALL integerValue] == 1 ||
+                                [IS_USER_DISLIKE integerValue] == 1 ||
+                                [IS_USER_COMMENT_WALL integerValue] == 1 ||
+                                [IS_USER_COMMENT integerValue] == 1 ||
+                                [IS_USER_SHARE_WALL integerValue] == 1 ||
+                                [IS_USER_SHARE integerValue] == 1 ||
+                                [isIsAllowUserToLikeDislikes integerValue] == 1 ||
+                                [IsAllowUserToPostComment integerValue] == 1 ||
+                                [IsAllowUserToSharePost integerValue] == 1 ||
+                                [IsAllowPeopleToShareComment_Dynamic integerValue] == 1 ||
+                                [IsAllowPeopleToLikeThisWall_Dynamic integerValue] == 1 ||
+                                [IsAllowPeoplePostComment_Dynamic integerValue] == 1)
+                            {
+                                return 310 + 28;
+                            }
+                            else
+                            {
+                                //here minues setting height
+                                return 310 + 28 - 30;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        return 310 + 28;
+                    }
+                    
                 }
                 else
                 {
-                    return 325 + 28;
+                    if([IS_ALLOW_SETTING isEqualToString:@"YES"])
+                    {
+                        //get setting login responce
+                        NSString *isIsAllowUserToLikeDislikes=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToLikeDislikes"];
+                        NSString *IsAllowUserToPostComment=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostComment"];
+                        NSString *IsAllowUserToSharePost=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToSharePost"];
+                        
+                        if([self.checkscreen isEqualToString:@"MyWall"] ||
+                           [self.checkscreen length] == 0)
+                        {
+                            //get setting wall responce
+                            NSString *IS_USER_LIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
+                            NSString *IS_USER_DISLIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
+                            NSString *IS_USER_SHARE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToShareCommentWall"];
+                            NSString *IS_USER_COMMENT_WALL=[dicResponce objectForKey:@"IsAllowPeoplePostCommentWall"];
+                            
+                            NSString *IS_USER_LIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
+                            NSString *IS_USER_DISLIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
+                            //NSString *IS_USER_COMMENT=[dicResponce objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
+                            NSString *IS_USER_SHARE=[dicResponce objectForKey:@"IsAllowPeopleToShareYourPost"];
+                            //[IS_USER_COMMENT integerValue] == 1 &&
+                            if ([IS_USER_LIKE_WALL integerValue] == 1 ||
+                                [IS_USER_LIKE integerValue] == 1 ||
+                                [IS_USER_DISLIKE_WALL integerValue] == 1 ||
+                                [IS_USER_DISLIKE integerValue] == 1 ||
+                                [IS_USER_COMMENT_WALL integerValue] == 1 ||
+                                
+                                [IS_USER_SHARE_WALL integerValue] == 1 ||
+                                [IS_USER_SHARE integerValue] == 1 ||
+                                [isIsAllowUserToLikeDislikes integerValue] == 1 ||
+                                [IsAllowUserToPostComment integerValue] == 1 ||
+                                [IsAllowUserToSharePost integerValue] == 1)
+                            {
+                                return 325 + 28;
+                            }
+                            else
+                            {
+                                //here minues setting height
+                                return 325 + 28 - 30;
+                            }
+                        }
+                        else
+                        {
+                            //get DynamicWall setting
+                            NSMutableDictionary *dicResponce_DynamicWall;
+                            if([arrDynamicWall_Setting count] != 0)
+                            {
+                                dicResponce_DynamicWall = [arrDynamicWall_Setting objectAtIndex:0];
+                            }
+                            
+                            NSString *IsAllowPeopleToLikeThisWall_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToLikeThisWall"];
+                            NSString *IsAllowPeoplePostComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeoplePostComment"];
+                            NSString *IsAllowPeopleToShareComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToShareComment"];
+                            
+                            //get setting wall responce
+                            NSString *IS_USER_LIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
+                            NSString *IS_USER_DISLIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
+                            NSString *IS_USER_SHARE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToShareCommentWall"];
+                            NSString *IS_USER_COMMENT_WALL=[dicResponce objectForKey:@"IsAllowPeoplePostCommentWall"];
+                            
+                            NSString *IS_USER_LIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
+                            NSString *IS_USER_DISLIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
+                            NSString *IS_USER_COMMENT=[dicResponce objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
+                            NSString *IS_USER_SHARE=[dicResponce objectForKey:@"IsAllowPeopleToShareYourPost"];
+                            
+                            if ([IS_USER_LIKE_WALL integerValue] == 1 ||
+                                [IS_USER_LIKE integerValue] == 1 ||
+                                [IS_USER_DISLIKE_WALL integerValue] == 1 ||
+                                [IS_USER_DISLIKE integerValue] == 1 ||
+                                [IS_USER_COMMENT_WALL integerValue] == 1 ||
+                                [IS_USER_COMMENT integerValue] == 1 ||
+                                [IS_USER_SHARE_WALL integerValue] == 1 ||
+                                [IS_USER_SHARE integerValue] == 1 ||
+                                [isIsAllowUserToLikeDislikes integerValue] == 1 ||
+                                [IsAllowUserToPostComment integerValue] == 1 ||
+                                [IsAllowUserToSharePost integerValue] == 1 ||
+                                [IsAllowPeopleToShareComment_Dynamic integerValue] == 1 ||
+                                [IsAllowPeopleToLikeThisWall_Dynamic integerValue] == 1 ||
+                                [IsAllowPeoplePostComment_Dynamic integerValue] == 1)
+                            {
+                                return 325 + 28;
+                            }
+                            else
+                            {
+                                //here minues setting height
+                                return 325 + 28 - 30;
+                            }
+                        }
+                        
+                    }
+                    else
+                    {
+                        return 325 + 28;
+                    }
                 }
             }
             else
@@ -1781,7 +2528,7 @@ int c2= 0;
         {
             NSString *strPostCommentNote = [dicResponce objectForKey:@"PostCommentNote"];
             strPostCommentNote = [strPostCommentNote stringByReplacingOccurrencesOfString:@"</br> </br>" withString:@""];
-            
+            strPostCommentNote = [strPostCommentNote stringByReplacingOccurrencesOfString:@"</br>" withString:@""];
            // CGSize size = [[NSString stringWithFormat:@"%@",strPostCommentNote] sizeWithFont:[UIFont fontWithName:@"HelveticaNeueLTStd-Roman" size:14] constrainedToSize:CGSizeMake([[UIScreen mainScreen]bounds].size.width-16, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
             
             NSString *TotalLikes = [dicResponce objectForKey:@"TotalLikes"];
@@ -1791,11 +2538,200 @@ int c2= 0;
                [TotalDislike integerValue]  == 0 &&
                [TotalComments integerValue]  == 0)
             {
-                return 125+18;
+                if([IS_ALLOW_SETTING isEqualToString:@"YES"])
+                {
+                    //get setting login responce
+                    NSString *isIsAllowUserToLikeDislikes=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToLikeDislikes"];
+                    NSString *IsAllowUserToPostComment=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostComment"];
+                    NSString *IsAllowUserToSharePost=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToSharePost"];
+                    
+                    if([self.checkscreen isEqualToString:@"MyWall"] ||
+                       [self.checkscreen length] == 0)
+                    {
+                        //get setting wall responce
+                        NSString *IS_USER_LIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
+                        NSString *IS_USER_DISLIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
+                        NSString *IS_USER_SHARE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToShareCommentWall"];
+                        NSString *IS_USER_COMMENT_WALL=[dicResponce objectForKey:@"IsAllowPeoplePostCommentWall"];
+                        
+                        NSString *IS_USER_LIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
+                        NSString *IS_USER_DISLIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
+                        //NSString *IS_USER_COMMENT=[dicResponce objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
+                        NSString *IS_USER_SHARE=[dicResponce objectForKey:@"IsAllowPeopleToShareYourPost"];
+                        //[IS_USER_COMMENT integerValue] == 1 &&
+                        if ([IS_USER_LIKE_WALL integerValue] == 1 ||
+                            [IS_USER_LIKE integerValue] == 1 ||
+                            [IS_USER_DISLIKE_WALL integerValue] == 1 ||
+                            [IS_USER_DISLIKE integerValue] == 1 ||
+                            [IS_USER_COMMENT_WALL integerValue] == 1 ||
+                            [IS_USER_SHARE_WALL integerValue] == 1 ||
+                            [IS_USER_SHARE integerValue] == 1 ||
+                            [isIsAllowUserToLikeDislikes integerValue] == 1 ||
+                            [IsAllowUserToPostComment integerValue] == 1 ||
+                            [IsAllowUserToSharePost integerValue] == 1)
+                        {
+                            return 125 + 18;
+                        }
+                        else
+                        {
+                            //here minues setting height
+                            return 125 + 18 - 30;
+                        }
+                    }
+                    else
+                    {
+                        //get DynamicWall setting
+                        NSMutableDictionary *dicResponce_DynamicWall;
+                        if([arrDynamicWall_Setting count] != 0)
+                        {
+                            dicResponce_DynamicWall = [arrDynamicWall_Setting objectAtIndex:0];
+                        }
+                        
+                        NSString *IsAllowPeopleToLikeThisWall_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToLikeThisWall"];
+                        NSString *IsAllowPeoplePostComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeoplePostComment"];
+                        NSString *IsAllowPeopleToShareComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToShareComment"];
+                        
+                        //get setting wall responce
+                        NSString *IS_USER_LIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
+                        NSString *IS_USER_DISLIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
+                        NSString *IS_USER_SHARE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToShareCommentWall"];
+                        NSString *IS_USER_COMMENT_WALL=[dicResponce objectForKey:@"IsAllowPeoplePostCommentWall"];
+                        
+                        NSString *IS_USER_LIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
+                        NSString *IS_USER_DISLIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
+                        NSString *IS_USER_COMMENT=[dicResponce objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
+                        NSString *IS_USER_SHARE=[dicResponce objectForKey:@"IsAllowPeopleToShareYourPost"];
+                        
+                        if ([IS_USER_LIKE_WALL integerValue] == 1 ||
+                            [IS_USER_LIKE integerValue] == 1 ||
+                            [IS_USER_DISLIKE_WALL integerValue] == 1 ||
+                            [IS_USER_DISLIKE integerValue] == 1 ||
+                            [IS_USER_COMMENT_WALL integerValue] == 1 ||
+                            [IS_USER_COMMENT integerValue] == 1 ||
+                            [IS_USER_SHARE_WALL integerValue] == 1 ||
+                            [IS_USER_SHARE integerValue] == 1 ||
+                            [isIsAllowUserToLikeDislikes integerValue] == 1 ||
+                            [IsAllowUserToPostComment integerValue] == 1 ||
+                            [IsAllowUserToSharePost integerValue] == 1 ||
+                            [IsAllowPeopleToShareComment_Dynamic integerValue] == 1 ||
+                            [IsAllowPeopleToLikeThisWall_Dynamic integerValue] == 1 ||
+                            [IsAllowPeoplePostComment_Dynamic integerValue] == 1)
+                        {
+                            return 125 + 18;
+                        }
+                        else
+                        {
+                            //here minues setting height
+                            return 125 + 18 - 30;
+                        }
+                    }
+                   
+                }
+                else
+                {
+                   return 125 + 18;
+                }
+
+                
             }
             else
             {
-                return 139+18;
+                if([IS_ALLOW_SETTING isEqualToString:@"YES"])
+                {
+                    //get setting login responce
+                    NSString *isIsAllowUserToLikeDislikes=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToLikeDislikes"];
+                    NSString *IsAllowUserToPostComment=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostComment"];
+                    NSString *IsAllowUserToSharePost=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToSharePost"];
+                    
+                    if([self.checkscreen isEqualToString:@"MyWall"] ||
+                       [self.checkscreen length] == 0)
+                    {
+                        //get setting wall responce
+                        NSString *IS_USER_LIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
+                        NSString *IS_USER_DISLIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
+                        NSString *IS_USER_SHARE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToShareCommentWall"];
+                        NSString *IS_USER_COMMENT_WALL=[dicResponce objectForKey:@"IsAllowPeoplePostCommentWall"];
+                        
+                        NSString *IS_USER_LIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
+                        NSString *IS_USER_DISLIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
+                        //NSString *IS_USER_COMMENT=[dicResponce objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
+                        NSString *IS_USER_SHARE=[dicResponce objectForKey:@"IsAllowPeopleToShareYourPost"];
+                        //[IS_USER_COMMENT integerValue] == 1 &&
+                        if ([IS_USER_LIKE_WALL integerValue] == 1 ||
+                            [IS_USER_LIKE integerValue] == 1 ||
+                            [IS_USER_DISLIKE_WALL integerValue] == 1 ||
+                            [IS_USER_DISLIKE integerValue] == 1 ||
+                            [IS_USER_COMMENT_WALL integerValue] == 1 ||
+                            
+                            [IS_USER_SHARE_WALL integerValue] == 1 ||
+                            [IS_USER_SHARE integerValue] == 1 ||
+                            [isIsAllowUserToLikeDislikes integerValue] == 1 ||
+                            [IsAllowUserToPostComment integerValue] == 1 ||
+                            [IsAllowUserToSharePost integerValue] == 1)
+                        {
+                            return 139+18;
+                        }
+                        else
+                        {
+                            //here minues setting height
+                            return 139 + 18 - 30;
+                        }
+                    }
+                    else
+                    {
+                        //get DynamicWall setting
+                        NSMutableDictionary *dicResponce_DynamicWall;
+                        if([arrDynamicWall_Setting count] != 0)
+                        {
+                            dicResponce_DynamicWall = [arrDynamicWall_Setting objectAtIndex:0];
+                        }
+                        
+                        NSString *IsAllowPeopleToLikeThisWall_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToLikeThisWall"];
+                        NSString *IsAllowPeoplePostComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeoplePostComment"];
+                        NSString *IsAllowPeopleToShareComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToShareComment"];
+                        
+                        //get setting wall responce
+                        NSString *IS_USER_LIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
+                        NSString *IS_USER_DISLIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
+                        NSString *IS_USER_SHARE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToShareCommentWall"];
+                        NSString *IS_USER_COMMENT_WALL=[dicResponce objectForKey:@"IsAllowPeoplePostCommentWall"];
+                        
+                        NSString *IS_USER_LIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
+                        NSString *IS_USER_DISLIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
+                        NSString *IS_USER_COMMENT=[dicResponce objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
+                        NSString *IS_USER_SHARE=[dicResponce objectForKey:@"IsAllowPeopleToShareYourPost"];
+                        
+                        if ([IS_USER_LIKE_WALL integerValue] == 1 ||
+                            [IS_USER_LIKE integerValue] == 1 ||
+                            [IS_USER_DISLIKE_WALL integerValue] == 1 ||
+                            [IS_USER_DISLIKE integerValue] == 1 ||
+                            [IS_USER_COMMENT_WALL integerValue] == 1 ||
+                            [IS_USER_COMMENT integerValue] == 1 ||
+                            [IS_USER_SHARE_WALL integerValue] == 1 ||
+                            [IS_USER_SHARE integerValue] == 1 ||
+                            [isIsAllowUserToLikeDislikes integerValue] == 1 ||
+                            [IsAllowUserToPostComment integerValue] == 1 ||
+                            [IsAllowUserToSharePost integerValue] == 1 ||
+                            [IsAllowPeopleToShareComment_Dynamic integerValue] == 1 ||
+                            [IsAllowPeopleToLikeThisWall_Dynamic integerValue] == 1 ||
+                            [IsAllowPeoplePostComment_Dynamic integerValue] == 1)
+                        {
+                            return 139+18;
+                        }
+                        else
+                        {
+                            //here minues setting height
+                            return 139 + 18 - 30;
+                        }
+                    }
+                    
+                }
+                else
+                {
+                    return 139+18;
+                }
+
+                
             }
         }
         else if([strFileType isEqualToString:@"VIDEO"])
@@ -1811,17 +2747,301 @@ int c2= 0;
                [TotalDislike integerValue]  == 0 &&
                [TotalComments integerValue]  == 0)
             {
-                return 250 + 28;
+                if([IS_ALLOW_SETTING isEqualToString:@"YES"])
+                {
+                    //get setting login responce
+                    NSString *isIsAllowUserToLikeDislikes=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToLikeDislikes"];
+                    NSString *IsAllowUserToPostComment=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostComment"];
+                    NSString *IsAllowUserToSharePost=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToSharePost"];
+                    
+                    if([self.checkscreen isEqualToString:@"MyWall"] ||
+                       [self.checkscreen length] == 0)
+                    {
+                        //get setting wall responce
+                        NSString *IS_USER_LIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
+                        NSString *IS_USER_DISLIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
+                        NSString *IS_USER_SHARE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToShareCommentWall"];
+                        NSString *IS_USER_COMMENT_WALL=[dicResponce objectForKey:@"IsAllowPeoplePostCommentWall"];
+                        
+                        NSString *IS_USER_LIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
+                        NSString *IS_USER_DISLIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
+                       // NSString *IS_USER_COMMENT=[dicResponce objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
+                        NSString *IS_USER_SHARE=[dicResponce objectForKey:@"IsAllowPeopleToShareYourPost"];
+                        //[IS_USER_COMMENT integerValue] == 1 &&
+                        if ([IS_USER_LIKE_WALL integerValue] == 1 ||
+                            [IS_USER_LIKE integerValue] == 1 ||
+                            [IS_USER_DISLIKE_WALL integerValue] == 1 ||
+                            [IS_USER_DISLIKE integerValue] == 1 ||
+                            [IS_USER_COMMENT_WALL integerValue] == 1 ||
+                            [IS_USER_SHARE_WALL integerValue] == 1 ||
+                            [IS_USER_SHARE integerValue] == 1 ||
+                            [isIsAllowUserToLikeDislikes integerValue] == 1 ||
+                            [IsAllowUserToPostComment integerValue] == 1 ||
+                            [IsAllowUserToSharePost integerValue] == 1)
+                        {
+                             return 250 + 28;
+                        }
+                        else
+                        {
+                            //here minues setting height
+                             return 250 + 28 - 30;
+                        }
+                    }
+                    else
+                    {
+                        //get DynamicWall setting
+                        NSMutableDictionary *dicResponce_DynamicWall;
+                        if([arrDynamicWall_Setting count] != 0)
+                        {
+                            dicResponce_DynamicWall = [arrDynamicWall_Setting objectAtIndex:0];
+                        }
+                        
+                        NSString *IsAllowPeopleToLikeThisWall_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToLikeThisWall"];
+                        NSString *IsAllowPeoplePostComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeoplePostComment"];
+                        NSString *IsAllowPeopleToShareComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToShareComment"];
+                        
+                        //get setting wall responce
+                        NSString *IS_USER_LIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
+                        NSString *IS_USER_DISLIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
+                        NSString *IS_USER_SHARE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToShareCommentWall"];
+                        NSString *IS_USER_COMMENT_WALL=[dicResponce objectForKey:@"IsAllowPeoplePostCommentWall"];
+                        
+                        NSString *IS_USER_LIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
+                        NSString *IS_USER_DISLIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
+                        NSString *IS_USER_COMMENT=[dicResponce objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
+                        NSString *IS_USER_SHARE=[dicResponce objectForKey:@"IsAllowPeopleToShareYourPost"];
+                        
+                        if ([IS_USER_LIKE_WALL integerValue] == 1 ||
+                            [IS_USER_LIKE integerValue] == 1 ||
+                            [IS_USER_DISLIKE_WALL integerValue] == 1 ||
+                            [IS_USER_DISLIKE integerValue] == 1 ||
+                            [IS_USER_COMMENT_WALL integerValue] == 1 ||
+                            [IS_USER_COMMENT integerValue] == 1 ||
+                            [IS_USER_SHARE_WALL integerValue] == 1 ||
+                            [IS_USER_SHARE integerValue] == 1 ||
+                            [isIsAllowUserToLikeDislikes integerValue] == 1 ||
+                            [IsAllowUserToPostComment integerValue] == 1 ||
+                            [IsAllowUserToSharePost integerValue] == 1 ||
+                            [IsAllowPeopleToShareComment_Dynamic integerValue] == 1 ||
+                            [IsAllowPeopleToLikeThisWall_Dynamic integerValue] == 1 ||
+                            [IsAllowPeoplePostComment_Dynamic integerValue] == 1)
+                        {
+                            return 250 + 28;
+                        }
+                        else
+                        {
+                            //here minues setting height
+                            return 250 + 28 - 30;
+                        }
+                    }
+                    
+                }
+                else
+                {
+                    return 250 + 28;
+                }
+
+               
             }
             else
             {
-                return 260 + 28;
+                if([IS_ALLOW_SETTING isEqualToString:@"YES"])
+                {
+                    //get setting login responce
+                    NSString *isIsAllowUserToLikeDislikes=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToLikeDislikes"];
+                    NSString *IsAllowUserToPostComment=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostComment"];
+                    NSString *IsAllowUserToSharePost=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToSharePost"];
+                    
+                    if([self.checkscreen isEqualToString:@"MyWall"] ||
+                       [self.checkscreen length] == 0)
+                    {
+                        //get setting wall responce
+                        NSString *IS_USER_LIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
+                        NSString *IS_USER_DISLIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
+                        NSString *IS_USER_SHARE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToShareCommentWall"];
+                        NSString *IS_USER_COMMENT_WALL=[dicResponce objectForKey:@"IsAllowPeoplePostCommentWall"];
+                        
+                        NSString *IS_USER_LIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
+                        NSString *IS_USER_DISLIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
+                        //NSString *IS_USER_COMMENT=[dicResponce objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
+                        NSString *IS_USER_SHARE=[dicResponce objectForKey:@"IsAllowPeopleToShareYourPost"];
+                        //[IS_USER_COMMENT integerValue] == 1 &&
+                        if ([IS_USER_LIKE_WALL integerValue] == 1 ||
+                            [IS_USER_LIKE integerValue] == 1 ||
+                            [IS_USER_DISLIKE_WALL integerValue] == 1 ||
+                            [IS_USER_DISLIKE integerValue] == 1 ||
+                            [IS_USER_COMMENT_WALL integerValue] == 1 ||
+                            
+                            [IS_USER_SHARE_WALL integerValue] == 1 ||
+                            [IS_USER_SHARE integerValue] == 1 ||
+                            [isIsAllowUserToLikeDislikes integerValue] == 1 ||
+                            [IsAllowUserToPostComment integerValue] == 1 ||
+                            [IsAllowUserToSharePost integerValue] == 1)
+                        {
+                            return 260 + 28;
+                        }
+                        else
+                        {
+                            //here minues setting height
+                            return 260 + 28 - 30;
+                        }
+                    }
+                    else
+                    {
+                        //get DynamicWall setting
+                        NSMutableDictionary *dicResponce_DynamicWall;
+                        if([arrDynamicWall_Setting count] != 0)
+                        {
+                            dicResponce_DynamicWall = [arrDynamicWall_Setting objectAtIndex:0];
+                        }
+                        
+                        NSString *IsAllowPeopleToLikeThisWall_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToLikeThisWall"];
+                        NSString *IsAllowPeoplePostComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeoplePostComment"];
+                        NSString *IsAllowPeopleToShareComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToShareComment"];
+                        
+                        //get setting wall responce
+                        NSString *IS_USER_LIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
+                        NSString *IS_USER_DISLIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
+                        NSString *IS_USER_SHARE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToShareCommentWall"];
+                        NSString *IS_USER_COMMENT_WALL=[dicResponce objectForKey:@"IsAllowPeoplePostCommentWall"];
+                        
+                        NSString *IS_USER_LIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
+                        NSString *IS_USER_DISLIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
+                        NSString *IS_USER_COMMENT=[dicResponce objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
+                        NSString *IS_USER_SHARE=[dicResponce objectForKey:@"IsAllowPeopleToShareYourPost"];
+                        
+                        if ([IS_USER_LIKE_WALL integerValue] == 1 ||
+                            [IS_USER_LIKE integerValue] == 1 ||
+                            [IS_USER_DISLIKE_WALL integerValue] == 1 ||
+                            [IS_USER_DISLIKE integerValue] == 1 ||
+                            [IS_USER_COMMENT_WALL integerValue] == 1 ||
+                            [IS_USER_COMMENT integerValue] == 1 ||
+                            [IS_USER_SHARE_WALL integerValue] == 1 ||
+                            [IS_USER_SHARE integerValue] == 1 ||
+                            [isIsAllowUserToLikeDislikes integerValue] == 1 ||
+                            [IsAllowUserToPostComment integerValue] == 1 ||
+                            [IsAllowUserToSharePost integerValue] == 1 ||
+                            [IsAllowPeopleToShareComment_Dynamic integerValue] == 1 ||
+                            [IsAllowPeopleToLikeThisWall_Dynamic integerValue] == 1 ||
+                            [IsAllowPeoplePostComment_Dynamic integerValue] == 1)
+                        {
+                            return 260 + 28;
+                        }
+                        else
+                        {
+                            //here minues setting height
+                            return 260 + 28 - 30;
+                        }
+                    }
+                   
+                }
+                else
+                {
+                    return 260 + 28;
+                }
+
+                
             }
 
         }
         else if([strFileType isEqualToString:@"FILE"])
         {
-            return 220;
+            if([IS_ALLOW_SETTING isEqualToString:@"YES"])
+            {
+                //get setting login responce
+                NSString *isIsAllowUserToLikeDislikes=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToLikeDislikes"];
+                NSString *IsAllowUserToPostComment=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostComment"];
+                NSString *IsAllowUserToSharePost=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToSharePost"];
+                
+                if([self.checkscreen isEqualToString:@"MyWall"] ||
+                   [self.checkscreen length] == 0)
+                {
+                    //get setting wall responce
+                    NSString *IS_USER_LIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
+                    NSString *IS_USER_DISLIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
+                    NSString *IS_USER_SHARE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToShareCommentWall"];
+                    NSString *IS_USER_COMMENT_WALL=[dicResponce objectForKey:@"IsAllowPeoplePostCommentWall"];
+                    
+                    NSString *IS_USER_LIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
+                    NSString *IS_USER_DISLIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
+                    //NSString *IS_USER_COMMENT=[dicResponce objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
+                    NSString *IS_USER_SHARE=[dicResponce objectForKey:@"IsAllowPeopleToShareYourPost"];
+                    //[IS_USER_COMMENT integerValue] == 1 &&
+                    if ([IS_USER_LIKE_WALL integerValue] == 1 ||
+                        [IS_USER_LIKE integerValue] == 1 ||
+                        [IS_USER_DISLIKE_WALL integerValue] == 1 ||
+                        [IS_USER_DISLIKE integerValue] == 1 ||
+                        [IS_USER_COMMENT_WALL integerValue] == 1 ||
+                        
+                        [IS_USER_SHARE_WALL integerValue] == 1 ||
+                        [IS_USER_SHARE integerValue] == 1 ||
+                        [isIsAllowUserToLikeDislikes integerValue] == 1 ||
+                        [IsAllowUserToPostComment integerValue] == 1 ||
+                        [IsAllowUserToSharePost integerValue] == 1)
+                    {
+                        return 220;
+                    }
+                    else
+                    {
+                        //here minues setting height
+                        return 220 - 30;
+                    }
+                }
+                else
+                {
+                    //get DynamicWall setting
+                    NSMutableDictionary *dicResponce_DynamicWall;
+                    if([arrDynamicWall_Setting count] != 0)
+                    {
+                        dicResponce_DynamicWall = [arrDynamicWall_Setting objectAtIndex:0];
+                    }
+                    
+                    NSString *IsAllowPeopleToLikeThisWall_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToLikeThisWall"];
+                    NSString *IsAllowPeoplePostComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeoplePostComment"];
+                    NSString *IsAllowPeopleToShareComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToShareComment"];
+                    
+                    //get setting wall responce
+                    NSString *IS_USER_LIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
+                    NSString *IS_USER_DISLIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
+                    NSString *IS_USER_SHARE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToShareCommentWall"];
+                    NSString *IS_USER_COMMENT_WALL=[dicResponce objectForKey:@"IsAllowPeoplePostCommentWall"];
+                    
+                    NSString *IS_USER_LIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
+                    NSString *IS_USER_DISLIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
+                    NSString *IS_USER_COMMENT=[dicResponce objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
+                    NSString *IS_USER_SHARE=[dicResponce objectForKey:@"IsAllowPeopleToShareYourPost"];
+                    
+                    if ([IS_USER_LIKE_WALL integerValue] == 1 ||
+                        [IS_USER_LIKE integerValue] == 1 ||
+                        [IS_USER_DISLIKE_WALL integerValue] == 1 ||
+                        [IS_USER_DISLIKE integerValue] == 1 ||
+                        [IS_USER_COMMENT_WALL integerValue] == 1 ||
+                        [IS_USER_COMMENT integerValue] == 1 ||
+                        [IS_USER_SHARE_WALL integerValue] == 1 ||
+                        [IS_USER_SHARE integerValue] == 1 ||
+                        [isIsAllowUserToLikeDislikes integerValue] == 1 ||
+                        [IsAllowUserToPostComment integerValue] == 1 ||
+                        [IsAllowUserToSharePost integerValue] == 1 ||
+                        [IsAllowPeopleToShareComment_Dynamic integerValue] == 1 ||
+                        [IsAllowPeopleToLikeThisWall_Dynamic integerValue] == 1 ||
+                        [IsAllowPeoplePostComment_Dynamic integerValue] == 1)
+                    {
+                        return 220;
+                    }
+                    else
+                    {
+                        //here minues setting height
+                        return 220 - 30;
+                    }
+                }
+                
+            }
+            else
+            {
+                return 220;
+            }
+
+            
         }
         else
         {
@@ -1940,7 +3160,9 @@ int c2= 0;
         
         NSMutableDictionary *dicResponce=[arrGeneralWall objectAtIndex:indexPath.row];
         
-#pragma mark - set Header
+        
+        
+#pragma mark  set Header
         NSString *strProfilePic_url=[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[dicResponce objectForKey:@"ProfilePicture"]];
         
         [cell.imgProfilePic sd_setImageWithURL:[NSURL URLWithString:strProfilePic_url] placeholderImage:[UIImage imageNamed:@"user.png"]];
@@ -1955,9 +3177,16 @@ int c2= 0;
         NSString *strPostedOn=[dicResponce objectForKey:@"PostedOn"];
         [cell.lblProfile_PostType setText:[NSString stringWithFormat:@"%@",strPostedOn]];
         
-        
-#pragma mark - set Post Detail
-        
+        if([_checkscreen isEqualToString:@"MyWall"])
+        {
+            cell.btnEditDeletePost_Height.constant = 25;
+        }
+        else
+        {
+            cell.btnEditDeletePost_Height.constant = 0;
+        }
+
+#pragma mark  set Post Detail
         
         NSString *strPostCommentNote=[dicResponce objectForKey:@"PostCommentNote"];
         strPostCommentNote =[strPostCommentNote stringByReplacingOccurrencesOfString:@"</br>" withString:@""];
@@ -2001,7 +3230,8 @@ int c2= 0;
         {
             cell.imgPost.image = [UIImage imageNamed:@"no_img.png"];
         }
-#pragma mark - Like UnLike Comment COUNT
+        
+#pragma mark  Like UnLike Comment COUNT
         
         NSString *TotalLikes = [dicResponce objectForKey:@"TotalLikes"];
         NSString *TotalDislike = [dicResponce objectForKey:@"TotalDislike"];
@@ -2061,10 +3291,10 @@ int c2= 0;
             {
                 [cell.lblComment_Count setText:[NSString stringWithFormat:@" %@ Comment",TotalComments]];
             }
-            [cell layoutIfNeeded];
+            
         }
         
-#pragma mark - Like Unlike Comment Share
+#pragma mark  Like Unlike Comment Share
         
         NSString *str_IsLike=[dicResponce objectForKey:@"IsLike"];
         if([str_IsLike integerValue] == 0)
@@ -2092,12 +3322,282 @@ int c2= 0;
             [cell.lblUnlike setTextColor:[UIColor colorWithRed:34/255.0 green:49/255.0 blue:89/255.0 alpha:1.0]];
         }
         
+        
+#pragma mark set GenrallWall and MyWall setting
+        
+        //set Like DisLike Comment Share View Height
+        long tblWall_Width= self.aWallTableView.frame.size.width/4;
+        cell.viewLike_Width.constant=tblWall_Width;
+        cell.viewDisLike_Width.constant=tblWall_Width;
+        cell.viewComment_Width.constant=tblWall_Width;
+        cell.viewShare_Width.constant=tblWall_Width;
+        
+        if([IS_ALLOW_SETTING isEqualToString:@"YES"])
+        {
+            //get setting login responce
+            NSString *isIsAllowUserToLikeDislikes_Login=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToLikeDislikes"];
+            NSString *IsAllowUserToPostComment_Login=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostComment"];
+            NSString *IsAllowUserToSharePost_Login=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToSharePost"];
+
+            if([self.checkscreen isEqualToString:@"MyWall"] ||
+               [self.checkscreen length] == 0)
+            {
+                //get setting wall responce
+                NSString *IS_USER_LIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
+                NSString *IS_USER_DISLIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
+                NSString *IS_USER_SHARE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToShareCommentWall"];
+                NSString *IS_USER_COMMENT_WALL=[dicResponce objectForKey:@"IsAllowPeoplePostCommentWall"];
+                
+                NSString *IS_USER_LIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
+                NSString *IS_USER_DISLIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
+               // NSString *IS_USER_COMMENT=[dicResponce objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
+                NSString *IS_USER_SHARE=[dicResponce objectForKey:@"IsAllowPeopleToShareYourPost"];
+                
+                
+                //Like
+                if ([isIsAllowUserToLikeDislikes_Login integerValue] == 1)
+                {
+                    if([IS_USER_LIKE_WALL integerValue] == 1 &&
+                       [IS_USER_LIKE integerValue] == 1)
+                    {
+                        cell.viewLike_Width.constant=tblWall_Width;
+                        cell.imgLike_Width.constant=14;
+                    }
+                    else
+                    {
+                        cell.viewLike_Width.constant=0;
+                        cell.imgLike_Width.constant=0;
+                    }
+                }
+                else
+                {
+                    cell.viewLike_Width.constant=0;
+                    cell.imgLike_Width.constant=0;
+                }
+                
+                
+                //UnLike
+                if ([isIsAllowUserToLikeDislikes_Login integerValue] == 1)
+                {
+                    if([IS_USER_DISLIKE_WALL integerValue] == 1 &&
+                       [IS_USER_DISLIKE integerValue] == 1)
+                    {
+                        cell.viewDisLike_Width.constant=tblWall_Width;
+                        cell.imgDisLike_Width.constant=14;
+                    }
+                    else
+                    {
+                        cell.viewDisLike_Width.constant=0;
+                        cell.imgDisLike_Width.constant=0;
+                    }
+                }
+                else
+                {
+                    cell.viewDisLike_Width.constant=0;
+                    cell.imgDisLike_Width.constant=0;
+                }
+                
+                //Comment
+                if ([IsAllowUserToPostComment_Login integerValue] == 1)
+                {
+                    //&& [IS_USER_COMMENT integerValue] == 1
+                    if([IS_USER_COMMENT_WALL integerValue] == 1)
+                    {
+                        cell.viewComment_Width.constant=tblWall_Width;
+                        cell.imgComment_Width.constant=14;
+                    }
+                    else
+                    {
+                        cell.viewComment_Width.constant=0;
+                        cell.imgComment_Width.constant=0;
+                    }
+                }
+                else
+                {
+                    cell.viewComment_Width.constant=0;
+                    cell.imgComment_Width.constant=0;
+                }
+                
+                //Share
+                if ([IsAllowUserToSharePost_Login integerValue] == 1)
+                {
+                    if([IS_USER_SHARE_WALL integerValue] == 1 &&
+                       [IS_USER_SHARE integerValue] == 1)
+                    {
+                        cell.viewShare_Width.constant=tblWall_Width;
+                        cell.imgShare_Width.constant=14;
+                    }
+                    else
+                    {
+                        cell.viewShare_Width.constant=0;
+                        cell.imgShare_Width.constant=0;
+                    }
+                }
+                else
+                {
+                    cell.viewShare_Width.constant=0;
+                    cell.imgShare_Width.constant=0;
+                }
+            }
+            else
+            {
+                //get setting wall responce
+                NSString *IS_USER_LIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
+                NSString *IS_USER_DISLIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
+                NSString *IS_USER_SHARE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToShareCommentWall"];
+                NSString *IS_USER_COMMENT_WALL=[dicResponce objectForKey:@"IsAllowPeoplePostCommentWall"];
+                
+                NSString *IS_USER_LIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
+                NSString *IS_USER_DISLIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
+                NSString *IS_USER_COMMENT=[dicResponce objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
+                NSString *IS_USER_SHARE=[dicResponce objectForKey:@"IsAllowPeopleToShareYourPost"];
+                
+                //get DynamicWall setting
+                NSMutableDictionary *dicResponce_DynamicWall;
+                if([arrDynamicWall_Setting count] != 0)
+                {
+                    dicResponce_DynamicWall = [arrDynamicWall_Setting objectAtIndex:0];
+                }
+                
+                NSString *IsAllowPeopleToLikeThisWall_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToLikeThisWall"];
+                NSString *IsAllowPeoplePostComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeoplePostComment"];
+               // NSString *IsAllowPeopleToShareComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToShareComment"];
+                
+                //Like
+                if ([isIsAllowUserToLikeDislikes_Login integerValue] == 1)
+                {
+                    if([IS_USER_LIKE_WALL integerValue] == 1 &&
+                       [IS_USER_LIKE integerValue] == 1)
+                    {
+                        if([IsAllowPeopleToLikeThisWall_Dynamic integerValue] == 1)
+                        {
+                            cell.viewLike_Width.constant=tblWall_Width;
+                            cell.imgLike_Width.constant=14;
+                        }
+                        else
+                        {
+                            cell.viewLike_Width.constant=0;
+                            cell.imgLike_Width.constant=0;
+                        }
+                    }
+                    else
+                    {
+                        cell.viewLike_Width.constant=0;
+                        cell.imgLike_Width.constant=0;
+                    }
+                }
+                else
+                {
+                    cell.viewLike_Width.constant=0;
+                    cell.imgLike_Width.constant=0;
+                }
+                
+                
+                //UnLike
+                if ([isIsAllowUserToLikeDislikes_Login integerValue] == 1)
+                {
+                    if([IS_USER_DISLIKE_WALL integerValue] == 1 &&
+                       [IS_USER_DISLIKE integerValue] == 1)
+                    {
+                        //dynamic
+                        if ([IsAllowPeopleToLikeThisWall_Dynamic integerValue] == 1)
+                        {
+                            cell.viewDisLike_Width.constant=tblWall_Width;
+                            cell.imgDisLike_Width.constant=14;
+                        }
+                        else
+                        {
+                            cell.viewDisLike_Width.constant=0;
+                            cell.imgDisLike_Width.constant=0;
+                        }
+                    }
+                    else
+                    {
+                        cell.viewDisLike_Width.constant=0;
+                        cell.imgDisLike_Width.constant=0;
+                    }
+                }
+                else
+                {
+                    cell.viewDisLike_Width.constant=0;
+                    cell.imgDisLike_Width.constant=0;
+                }
+                
+                //Comment
+                if ([IsAllowUserToPostComment_Login integerValue] == 1)
+                {
+                    if([IS_USER_COMMENT_WALL integerValue] == 1 &&
+                       [IS_USER_COMMENT integerValue] == 1)
+                    {
+                        //Dynamic
+                        if([IsAllowPeoplePostComment_Dynamic integerValue] == 1)
+                        {
+                            cell.viewComment_Width.constant=tblWall_Width;
+                            cell.imgComment_Width.constant=14;
+                        }
+                        else
+                        {
+                            cell.viewComment_Width.constant=0;
+                            cell.imgComment_Width.constant=0;
+                        }
+                    }
+                    else
+                    {
+                        cell.viewComment_Width.constant=0;
+                        cell.imgComment_Width.constant=0;
+                    }
+                }
+                else
+                {
+                    cell.viewComment_Width.constant=0;
+                    cell.imgComment_Width.constant=0;
+                }
+                
+                //Share
+                if ([IsAllowUserToSharePost_Login integerValue] == 1)
+                {
+                    if([IS_USER_SHARE_WALL integerValue] == 1 &&
+                       [IS_USER_SHARE integerValue] == 1)
+                    {
+                        //Dynamic
+                        //if ([IsAllowPeopleToShareComment_Dynamic integerValue] == 1)
+                        //{
+                            cell.viewShare_Width.constant=tblWall_Width;
+                            cell.imgShare_Width.constant=14;
+                        //}
+                        //else
+                        //{
+                        //    cell.viewShare_Width.constant=0;
+                        //    cell.imgShare_Width.constant=0;
+                        //}
+                    }
+                    else
+                    {
+                        cell.viewShare_Width.constant=0;
+                        cell.imgShare_Width.constant=0;
+                    }
+                }
+                else
+                {
+                    cell.viewShare_Width.constant=0;
+                    cell.imgShare_Width.constant=0;
+                }
+            }
+        }
+        
+#pragma mark Button Action
+        
         [cell.btnLike addTarget:self action:@selector(btnCellLike_Click:) forControlEvents:UIControlEventTouchUpInside];
         [cell.btnUnlike addTarget:self action:@selector(btnCellUnLike_Click:) forControlEvents:UIControlEventTouchUpInside];
         [cell.btnComment addTarget:self action:@selector(btnCellComment_Click:) forControlEvents:UIControlEventTouchUpInside];
         [cell.btnShare addTarget:self action:@selector(btnCellShare_Click:) forControlEvents:UIControlEventTouchUpInside];
         [cell.btnImageVideo_Click addTarget:self action:@selector(btnImageVideo_Click:) forControlEvents:UIControlEventTouchUpInside];
-
+        [cell.btnPostDetailHTML addTarget:self action:@selector(btnPostDetailHTML_Click:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.btnEditDeletePost addTarget:self action:@selector(btnEditDeletePost_Click:) forControlEvents:UIControlEventTouchUpInside];
+        
+        
+        [cell layoutIfNeeded];
+        [cell updateConstraints];
         return cell;
     }
 }
@@ -2146,7 +3646,6 @@ int c2= 0;
 {
     if ([Utility isInterNetConnectionIsActive] == true)
     {
-        
         CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.aWallTableView];
         NSIndexPath *indexPath = [self.aWallTableView indexPathForRowAtPoint:buttonPosition];
         
@@ -2157,12 +3656,28 @@ int c2= 0;
         [cell.btnShare setUserInteractionEnabled:NO];
         
         NSMutableDictionary *dicResponce=[[arrGeneralWall objectAtIndex:indexPath.row]mutableCopy];
+        
         //call api Like
         [self apiCallFor_LikePost:@"0" dicselectedWall:dicResponce indexPath:indexPath];
         
         NSString *IsLike=[dicResponce objectForKey:@"IsLike"];
+        
+        NSString *IsDislike=[dicResponce objectForKey:@"IsDislike"];
+        NSString *TotalDislike=[dicResponce objectForKey:@"TotalDislike"];
+        
         NSString *TotalLikes=[dicResponce objectForKey:@"TotalLikes"];
         NSString *PostCommentID=[dicResponce objectForKey:@"PostCommentID"];
+        
+        //set IsDislike and TotalDislike
+        if([IsDislike integerValue] == 0)
+        {
+        }
+        else
+        {
+            IsDislike=@"0";
+            long TotalDislikeTemp = [TotalDislike integerValue] - 1;
+            TotalDislike = [NSString stringWithFormat:@"%ld",TotalDislikeTemp];
+        }
         
         //set IsLike and TotalLikes
         if([IsLike integerValue] == 0)
@@ -2183,15 +3698,24 @@ int c2= 0;
             //update
             [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE InstituteWall SET IsLike = '%@', TotalLikes = '%@' WHERE PostCommentID = '%@'",IsLike,TotalLikes,PostCommentID]];
             
+            {
+                //update
+                [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE InstituteWall SET IsDislike = '%@', TotalDislike = '%@' WHERE PostCommentID = '%@'",IsDislike,TotalDislike,PostCommentID]];
+            }
             //get update data localdb
             arrGeneralWall = [[NSMutableArray alloc]init];
             arrGeneralWall = [DBOperation selectData:@"select * from InstituteWall"];
+            
         }
         else if ([_checkscreen isEqualToString:@"Standard"])
         {
             //update
             [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE StandardWall SET IsLike = '%@', TotalLikes = '%@' WHERE PostCommentID = '%@'",IsLike,TotalLikes,PostCommentID]];
             
+            {
+                //update
+                [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE StandardWall SET IsDislike = '%@', TotalDislike = '%@' WHERE PostCommentID = '%@'",IsDislike,TotalDislike,PostCommentID]];
+            }
             //get update data localdb
             arrGeneralWall = [[NSMutableArray alloc]init];
             arrGeneralWall = [DBOperation selectData:@"select * from StandardWall"];
@@ -2201,6 +3725,11 @@ int c2= 0;
         {
             //update
             [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE DivisionWall SET IsLike = '%@', TotalLikes = '%@' WHERE PostCommentID = '%@'",IsLike,TotalLikes,PostCommentID]];
+            
+            {
+                //update
+                [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE DivisionWall SET IsDislike = '%@', TotalDislike = '%@' WHERE PostCommentID = '%@'",IsDislike,TotalDislike,PostCommentID]];
+            }
             
             //get update data localdb
             arrGeneralWall = [[NSMutableArray alloc]init];
@@ -2212,21 +3741,58 @@ int c2= 0;
             //update
             [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE SubjectWall SET IsLike = '%@', TotalLikes = '%@' WHERE PostCommentID = '%@'",IsLike,TotalLikes,PostCommentID]];
             
+            {
+                //update
+                [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE SubjectWall SET IsDislike = '%@', TotalDislike = '%@' WHERE PostCommentID = '%@'",IsDislike,TotalDislike,PostCommentID]];
+            }
+            
             //get update data localdb
             arrGeneralWall = [[NSMutableArray alloc]init];
             arrGeneralWall = [DBOperation selectData:@"select * from SubjectWall"];
+            
+        }
+        else if ([_checkscreen isEqualToString:@"MyWall"])
+        {
+            //update
+            [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE MyWall SET IsLike = '%@', TotalLikes = '%@' WHERE PostCommentID = '%@'",IsLike,TotalLikes,PostCommentID]];
+            
+            {
+                //update
+                [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE MyWall SET IsDislike = '%@', TotalDislike = '%@' WHERE PostCommentID = '%@'",IsDislike,TotalDislike,PostCommentID]];
+            }
+            
+            //get update data localdb
+            arrGeneralWall = [[NSMutableArray alloc]init];
+            arrGeneralWall = [DBOperation selectData:@"select * from MyWall"];
             
         }
         else
         {
             //update
             [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE GeneralWall SET IsLike = '%@', TotalLikes = '%@' WHERE PostCommentID = '%@'",IsLike,TotalLikes,PostCommentID]];
+            {
+                //update
+                [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE GeneralWall SET IsDislike = '%@', TotalDislike = '%@' WHERE PostCommentID = '%@'",IsDislike,TotalDislike,PostCommentID]];
+            }
             
             //get update data localdb
             arrGeneralWall = [[NSMutableArray alloc]init];
             arrGeneralWall = [DBOperation selectData:@"select * from GeneralWall"];
         }
         
+        //set color Unlike and unlike
+        if([IsDislike integerValue] == 0)
+        {
+            [cell.imgUnlike setImage:[UIImage imageNamed:@"fb_like_gray"]];
+            [cell.lblUnlike setTextColor:[UIColor darkGrayColor]];
+        }
+        else
+        {
+            cell.imgUnlike.image = [cell.imgUnlike.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            [cell.imgUnlike setTintColor:[UIColor colorWithRed:34/255.0 green:49/255.0 blue:89/255.0 alpha:1.0]];
+            [cell.lblUnlike setTextColor:[UIColor colorWithRed:34/255.0 green:49/255.0 blue:89/255.0 alpha:1.0]];
+        }
+
         //set color like and unlike
         if([IsLike integerValue] == 0)
         {
@@ -2241,14 +3807,12 @@ int c2= 0;
         }
         
         //set total count
-        NSString *TotalDislike = [dicResponce objectForKey:@"TotalDislike"];
         NSString *TotalComments = [dicResponce objectForKey:@"TotalComments"];
         if([TotalLikes integerValue]  == 0   &&
            [TotalDislike integerValue]  == 0 &&
            [TotalComments integerValue]  == 0)
         {
             cell.lblLike_Count_Height.constant=0;
-            
         }
         else
         {
@@ -2297,7 +3861,6 @@ int c2= 0;
             {
                 [cell.lblComment_Count setText:[NSString stringWithFormat:@" %@ Comment",TotalComments]];
             }
-            
         }
         [cell layoutIfNeeded];
     }
@@ -2325,12 +3888,25 @@ int c2= 0;
         //call api Like
         [self apiCallFor_UnLikePost:@"0" dicselectedWall:dicResponce indexPath:indexPath];
         
+        NSString *IsLike=[dicResponce objectForKey:@"IsLike"];
+        NSString *TotalLikes=[dicResponce objectForKey:@"TotalLikes"];
         
         NSString *IsDislike=[dicResponce objectForKey:@"IsDislike"];
         NSString *TotalDislike=[dicResponce objectForKey:@"TotalDislike"];
         NSString *PostCommentID=[dicResponce objectForKey:@"PostCommentID"];
         
         //set IsLike and TotalLikes
+        if([IsLike integerValue] == 0)
+        {
+        }
+        else
+        {
+            IsLike=@"0";
+            long TotalLikesTemp = [TotalLikes integerValue] - 1;
+            TotalLikes = [NSString stringWithFormat:@"%ld",TotalLikesTemp];
+        }
+        
+        //set IsDislike and TotalDislike
         if([IsDislike integerValue] == 0)
         {
             IsDislike=@"1";
@@ -2346,6 +3922,11 @@ int c2= 0;
         
         if ([_checkscreen isEqualToString:@"Institute"])
         {
+            {
+                //update
+                [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE InstituteWall SET IsLike = '%@', TotalLikes = '%@' WHERE PostCommentID = '%@'",IsLike,TotalLikes,PostCommentID]];
+            }
+            
             //update
             [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE InstituteWall SET IsDislike = '%@', TotalDislike = '%@' WHERE PostCommentID = '%@'",IsDislike,TotalDislike,PostCommentID]];
             
@@ -2355,6 +3936,10 @@ int c2= 0;
         }
         else if ([_checkscreen isEqualToString:@"Standard"])
         {
+            {
+                //update
+                [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE StandardWall SET IsLike = '%@', TotalLikes = '%@' WHERE PostCommentID = '%@'",IsLike,TotalLikes,PostCommentID]];
+            }
             //update
             [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE StandardWall SET IsDislike = '%@', TotalDislike = '%@' WHERE PostCommentID = '%@'",IsDislike,TotalDislike,PostCommentID]];
             
@@ -2364,6 +3949,10 @@ int c2= 0;
         }
         else if ([_checkscreen isEqualToString:@"Division"])
         {
+            {
+                //update
+                [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE DivisionWall SET IsLike = '%@', TotalLikes = '%@' WHERE PostCommentID = '%@'",IsLike,TotalLikes,PostCommentID]];
+            }
             //update
             [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE DivisionWall SET IsDislike = '%@', TotalDislike = '%@' WHERE PostCommentID = '%@'",IsDislike,TotalDislike,PostCommentID]];
             
@@ -2373,6 +3962,11 @@ int c2= 0;
         }
         else if ([_checkscreen isEqualToString:@"Subject"])
         {
+            {
+                //update
+                [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE SubjectWall SET IsLike = '%@', TotalLikes = '%@' WHERE PostCommentID = '%@'",IsLike,TotalLikes,PostCommentID]];
+            }
+
             //update
             [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE SubjectWall SET IsDislike = '%@', TotalDislike = '%@' WHERE PostCommentID = '%@'",IsDislike,TotalDislike,PostCommentID]];
             
@@ -2380,8 +3974,26 @@ int c2= 0;
             arrGeneralWall = [[NSMutableArray alloc]init];
             arrGeneralWall = [DBOperation selectData:@"select * from SubjectWall"];
         }
+        else if ([_checkscreen isEqualToString:@"MyWall"])
+        {
+            {
+                //update
+                [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE MyWall SET IsLike = '%@', TotalLikes = '%@' WHERE PostCommentID = '%@'",IsLike,TotalLikes,PostCommentID]];
+            }
+            
+            //update
+            [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE MyWall SET IsDislike = '%@', TotalDislike = '%@' WHERE PostCommentID = '%@'",IsDislike,TotalDislike,PostCommentID]];
+            
+            //get update data localdb
+            arrGeneralWall = [[NSMutableArray alloc]init];
+            arrGeneralWall = [DBOperation selectData:@"select * from MyWall"];
+        }
         else
         {
+            {
+                //update
+                [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE GeneralWall SET IsLike = '%@', TotalLikes = '%@' WHERE PostCommentID = '%@'",IsLike,TotalLikes,PostCommentID]];
+            }
             //update
             [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE GeneralWall SET IsDislike = '%@', TotalDislike = '%@' WHERE PostCommentID = '%@'",IsDislike,TotalDislike,PostCommentID]];
             
@@ -2390,8 +4002,21 @@ int c2= 0;
             arrGeneralWall = [DBOperation selectData:@"select * from GeneralWall"];
         }
         
+        //set color like
+        if([IsLike integerValue] == 0)
+        {
+            [cell.imgLike setImage:[UIImage imageNamed:@"fb_like_gray"]];
+            [cell.lblLike setTextColor:[UIColor darkGrayColor]];
+        }
+        else
+        {
+            cell.imgLike.image = [cell.imgLike.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            [cell.imgLike setTintColor:[UIColor colorWithRed:34/255.0 green:49/255.0 blue:89/255.0 alpha:1.0]];
+            [cell.lblLike setTextColor:[UIColor colorWithRed:34/255.0 green:49/255.0 blue:89/255.0 alpha:1.0]];
+        }
+
         
-        //set color like and unlike
+        //set color unlike
         if([IsDislike integerValue] == 0)
         {
             [cell.imgUnlike setImage:[UIImage imageNamed:@"fb_like_gray"]];
@@ -2405,7 +4030,6 @@ int c2= 0;
         }
         
         //set total count
-        NSString *TotalLikes = [dicResponce objectForKey:@"TotalLikes"];
         NSString *TotalComments = [dicResponce objectForKey:@"TotalComments"];
         if([TotalLikes integerValue]  == 0   &&
            [TotalDislike integerValue]  == 0 &&
@@ -2533,7 +4157,43 @@ int c2= 0;
                          completion:nil];
     }
 }
-- (UIViewController *) documentInteractionControllerViewControllerForPreview: (UIDocumentInteractionController *) controller {
+
+-(void)btnPostDetailHTML_Click:(UIButton*)sender
+{
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.aWallTableView];
+    NSIndexPath *indexPath = [self.aWallTableView indexPathForRowAtPoint:buttonPosition];
+    
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    else
+    {
+        SingleWallVC *b = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SingleWallVC"];
+        b.checkscreen=self.checkscreen;
+        b.dicSelectedPost_Comment = [arrGeneralWall objectAtIndex:indexPath.row];
+        b.dicSelect_std_divi_sub=[self.dicSelect_std_divi_sub mutableCopy];
+        b.arrDynamicWall_Setting=[arrDynamicWall_Setting mutableCopy];
+        [self.navigationController pushViewController:b animated:YES];
+    }
+
+}
+
+-(void)btnEditDeletePost_Click:(UIButton*)sender
+{
+    arrPopup = [[NSMutableArray alloc]init];
+    [arrPopup addObject:[Utility addCell_PopupView:self.viewEdit_Delete_Post ParentView:self.view sender:sender]];
+    
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.aWallTableView];
+    indexPath_delete_edit_post = [self.aWallTableView indexPathForRowAtPoint:buttonPosition];
+    dicSelect_Edit_Delete_Post= [[arrGeneralWall objectAtIndex:indexPath_delete_edit_post.row]mutableCopy];
+
+}
+
+- (UIViewController *) documentInteractionControllerViewControllerForPreview: (UIDocumentInteractionController *) controller
+{
     return self;
 }
 
@@ -2652,7 +4312,8 @@ int c2= 0;
     }
     else if ([_checkscreen isEqualToString:@"Standard"] ||
              [_checkscreen isEqualToString:@"Division"] ||
-             [_checkscreen isEqualToString:@"Subject"])
+             [_checkscreen isEqualToString:@"Subject"] ||
+             [_checkscreen isEqualToString:@"MyWall"])
     {
         [self apiCallFor_GetWallMember:@"1"];
     }
@@ -2701,6 +4362,13 @@ int c2= 0;
         wc.dicSelect_std_divi_sub=[self.dicSelect_std_divi_sub mutableCopy];
         [self.navigationController pushViewController:wc animated:YES];
     }
+    else if ([_checkscreen isEqualToString:@"MyWall"])
+    {
+        AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
+        wc.checkscreen=self.checkscreen;
+        wc.dicSelect_std_divi_sub=[self.dicSelect_std_divi_sub mutableCopy];
+        [self.navigationController pushViewController:wc animated:YES];
+    }
     else
     {
         AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
@@ -2727,6 +4395,10 @@ int c2= 0;
     {
         [self.navigationController popViewControllerAnimated:YES];
     }
+    else if ([_checkscreen isEqualToString:@"MyWall"])
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
     else
     {
         [self.frostedViewController hideMenuViewController];
@@ -2735,13 +4407,70 @@ int c2= 0;
     }
 }
 
-
 - (IBAction)btnBack_WallMember:(id)sender
 {
     [self.viewWallMember setHidden:YES];
 }
-- (IBAction)btnWallMember:(id)sender {
+
+- (IBAction)btnWallMember:(id)sender
+{
     [self apiCallFor_GetWallMember:@"1"];
-    
 }
+
+#pragma mark - UIButton Edit Delete Post Action
+
+- (IBAction)btnEdit_Post:(id)sender
+{
+    [self.view endEditing:YES];
+    [Utility dismissAllPopTipViews:arrPopup];
+
+    if ([_checkscreen isEqualToString:@"Institute"])
+    {
+        AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
+        wc.checkscreen=self.checkscreen;
+        [self.navigationController pushViewController:wc animated:YES];
+    }
+    else if([_checkscreen isEqualToString:@"Standard"] ||
+            [_checkscreen isEqualToString:@"Division"] ||
+            [_checkscreen isEqualToString:@"Subject"])
+    {
+        AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
+        wc.checkscreen=self.checkscreen;
+        wc.dicSelect_std_divi_sub=[self.dicSelect_std_divi_sub mutableCopy];
+        [self.navigationController pushViewController:wc animated:YES];
+    }
+    else if([_checkscreen isEqualToString:@"MyWall"])
+    {
+        AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
+        wc.checkscreen=self.checkscreen;
+        wc.dicSelect_Edit_Delete_Post=[dicSelect_Edit_Delete_Post mutableCopy];
+        [self.navigationController pushViewController:wc animated:YES];
+    }
+    else
+    {
+        AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
+        wc.checkscreen=self.checkscreen;
+        [self.navigationController pushViewController:wc animated:YES];
+    }
+}
+
+#pragma mark - Delete Conf UIButton Action
+
+- (IBAction)btnDelete_Post:(id)sender
+{
+    [Utility dismissAllPopTipViews:arrPopup];
+    [self.viewDelete_Conf setHidden:NO];
+}
+
+- (IBAction)btnDeleteConf_Cancel:(id)sender
+{
+    [self.viewDelete_Conf setHidden:YES];
+}
+
+- (IBAction)btnDeleteConf_Yes:(id)sender
+{
+    [self.viewDelete_Conf setHidden:YES];
+    [self apiCallFor_DeletePost:@"1"];
+}
+
 @end

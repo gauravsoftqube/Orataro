@@ -27,6 +27,15 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnWallMember;
 - (IBAction)btnWallMember:(id)sender;
 
+//view Post Edit Delete
+@property (strong, nonatomic) IBOutlet UIView *viewEdit_Delete_Post;
+@property (weak, nonatomic) IBOutlet UIButton *btnEdit_Post;
+- (IBAction)btnEdit_Post:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *btnDelete_Post;
+- (IBAction)btnDelete_Post:(id)sender;
+
+
+
 // tbl Header view
 @property (strong, nonatomic) IBOutlet UIView *aTableHeaderView;
 - (IBAction)WhatsyourmindBtnClicked:(id)sender;
@@ -63,5 +72,13 @@
 @property (weak, nonatomic) IBOutlet UITableView *tblWallMemberList;
 @property (weak, nonatomic) IBOutlet UILabel *lblHeaderTitle_WallMember;
 
-
+//popup Delete Conf
+@property (weak, nonatomic) IBOutlet UIView *viewDelete_Conf;
+@property (weak, nonatomic) IBOutlet UIButton *btnDeleteConf_Cancel;
+- (IBAction)btnDeleteConf_Cancel:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *btnDeleteConf_Yes;
+- (IBAction)btnDeleteConf_Yes:(id)sender;
+@property (weak, nonatomic) IBOutlet UIView *viewSave;
+@property (weak, nonatomic) IBOutlet UIView *viewInnerSave;
+@property (weak, nonatomic) IBOutlet UIImageView *imgCancel;
 @end

@@ -62,9 +62,20 @@
     
     aProfileTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    //next
     
-    // Do any additional setup after loading the view.
+    
+    //set Header Title
+    NSArray *arr=[[[Utility getCurrentUserDetail]objectForKey:@"FullName"] componentsSeparatedByString:@" "];
+    if (arr.count != 0)
+    {
+        self.aProfileNameLb.text=[NSString stringWithFormat:@"%@",[[Utility getCurrentUserDetail]objectForKey:@"FullName"]];
+        [self getCurrentUserImage:[Utility getCurrentUserDetail]];
+    }
+    else
+    {
+        self.aProfileNameLb.text=[NSString stringWithFormat:@""];
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -87,6 +98,19 @@
     }
 }
 
+-(void)getCurrentUserImage :(NSMutableDictionary *)dic
+{
+    if ([Utility isInterNetConnectionIsActive] == true)
+    {
+        NSString *strURLForTeacherProfilePicture=[NSString stringWithFormat:@"%@",[dic objectForKey:@"ProfilePicture"]];
+        if(![strURLForTeacherProfilePicture isKindOfClass:[NSNull class]])
+        {
+            strURLForTeacherProfilePicture=[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[dic objectForKey:@"ProfilePicture"]];
+            NSURL *imageURL = [NSURL URLWithString:strURLForTeacherProfilePicture];
+            [self.aProfileimageview sd_setImageWithURL:imageURL];
+        }
+    }
+}
 
 #pragma mark - tableview delegate
 
@@ -271,6 +295,13 @@
     }
 }
 #pragma mark - button action
+
+- (IBAction)btnGoToMyWall:(id)sender
+{
+    WallVc  *vc10 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
+    vc10.checkscreen = @"MyWall";
+    [self.navigationController pushViewController:vc10 animated:YES];
+}
 
 - (IBAction)MenuBtnClicked:(id)sender
 {

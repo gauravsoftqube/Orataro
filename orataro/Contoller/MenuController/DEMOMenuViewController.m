@@ -111,7 +111,6 @@
     {
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"RightCell" owner:self options:nil];
         cell = [nib objectAtIndex:0];
-        
     }
     
     if (indexPath.row % 2 ==0)

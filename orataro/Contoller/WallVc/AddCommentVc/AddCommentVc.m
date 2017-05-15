@@ -15,6 +15,7 @@
     NSMutableArray *arrCommentList;
 }
 @end
+static NSString *CellIdentifier = @"WallCustomeCell";
 
 @implementation AddCommentVc
 
@@ -34,7 +35,6 @@
     
     //
     self.tblCommentList.separatorStyle=UITableViewCellSeparatorStyleNone;
-    
     
     //alloc array
     arrCommentList = [[NSMutableArray alloc] init];
@@ -123,10 +123,10 @@
     
     [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelectedPost_Comment objectForKey:@"PostCommentID"]] forKey:@"PostID"];
     
-    if([strInternet isEqualToString:@"1"])
-    {
-        [ProgressHUB showHUDAddedTo:self.view];
-    }
+//    if([strInternet isEqualToString:@"1"])
+//    {
+//        [ProgressHUB showHUDAddedTo:self.view];
+//    }
     
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
@@ -173,6 +173,26 @@
                      {
                          //update
                          [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE InstituteWall SET TotalComments = '%lu' WHERE PostCommentID = '%@'",(unsigned long)[arrCommentList count],PostCommentID]];
+                     }
+                     else if([_checkscreen isEqualToString:@"Standard"])
+                     {
+                         //update
+                         [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE StandardWall SET TotalComments = '%lu' WHERE PostCommentID = '%@'",(unsigned long)[arrCommentList count],PostCommentID]];
+                     }
+                     else if ([_checkscreen isEqualToString:@"Division"])
+                     {
+                         //update
+                         [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE DivisionWall SET TotalComments = '%lu' WHERE PostCommentID = '%@'",(unsigned long)[arrCommentList count],PostCommentID]];
+                     }
+                     else if ([_checkscreen isEqualToString:@"Subject"])
+                     {
+                         //update
+                         [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE SubjectWall SET TotalComments = '%lu' WHERE PostCommentID = '%@'",(unsigned long)[arrCommentList count],PostCommentID]];
+                     }
+                     else if ([_checkscreen isEqualToString:@"MyWall"])
+                     {
+                         //update
+                         [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE MyWall SET TotalComments = '%lu' WHERE PostCommentID = '%@'",(unsigned long)[arrCommentList count],PostCommentID]];
                      }
                      else
                      {

@@ -25,6 +25,7 @@
 @interface AddpostVc : UIViewController<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
 //========
+@property(strong,nonatomic)NSMutableDictionary *dicSelect_Edit_Delete_Post;
 
 @property(strong,nonatomic)NSMutableDictionary *dicSelect_std_divi_sub;
 @property (strong, nonatomic) NSDictionary *rapidCommandsDictionary;
@@ -44,6 +45,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnTo;
 - (IBAction)btnTo:(id)sender;
 
+//
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewAddPhotoVideo_Height;
+
 
 //
 @property (weak, nonatomic) IBOutlet UIImageView *imgUser;
@@ -61,6 +65,9 @@
 - (IBAction)btnAddVideo:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionList_ImageAndVideo;
+
+
+
 
 
 //popup Delete Conf
