@@ -96,7 +96,8 @@
     NSString *token11 = [[deviceToken description] stringByTrimmingCharactersInSet: [NSCharacterSet characterSetWithCharactersInString:@"<>"]];
     token11 = [token11 stringByReplacingOccurrencesOfString:@" " withString:@""];
     NSLog(@"device token is >>>>>>>>%@ Devicetoken=%@", token11,deviceToken);
-    [[NSUserDefaults standardUserDefaults]setObject:@"8d103a40eb95a3b95335ee64d2a5bf7a958fdffd3d029d6d3c0cc3dc6eca8298" forKey:@"DeviceToken"];
+    //[[NSUserDefaults standardUserDefaults]setObject:@"8d103a40eb95a3b95335ee64d2a5bf7a958fdffd3d029d6d3c0cc3dc6eca8298" forKey:@"DeviceToken"];
+    [[NSUserDefaults standardUserDefaults]setObject:token11 forKey:@"DeviceToken"];
     [[NSUserDefaults standardUserDefaults]synchronize];
 }
 

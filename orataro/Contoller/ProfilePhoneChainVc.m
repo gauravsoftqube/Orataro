@@ -16,6 +16,7 @@
     NSMutableArray *arySelectType,*aryPriorityType;
     NSString *strAddEdit;
     NSMutableDictionary *dicGetPhoneBookEditData,*dicDeleteDic;
+
 }
 @end
 
@@ -498,6 +499,15 @@
     //<InstituteID>guid</InstituteID>
     //<UserID>guid</UserID>
     //<BeachID>guid</BeachID>
+    
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+
     
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_phonebook,apk_GetPhoneBook];
     

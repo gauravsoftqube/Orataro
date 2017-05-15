@@ -489,11 +489,29 @@
 #define apk_CreatePhoneBook @"CreatePhoneBook"
 #define apk_DeletePhoneBook @"DeletePhoneBook"
 
-#pragma mark - apk_CreateHealthRecord'
+#pragma mark - apk_CreateHealthRecord
 
 #define apk_healthrecord @"apk_healthrecord.asmx"
 #define apk_CreateHealthRecord @"CreateHealthRecord"
 #define apk_GetHealthRecord @"GetHealthRecord"
+
+
+#pragma mark - apk_parentprofile
+
+#define apk_parentprofile @"apk_parentprofile.asmx"
+#define apk_GetParentProfile @"GetParentProfile"
+#define apk_CreateParentProfile @"CreateParentProfile"
+
+
+#pragma mark - apk_profile.asmx
+
+#define apk_profile @"apk_profile.asmx"
+#define GetStudentProfileData @"GetStudentProfileData"
+#define UpdateStudentProfileData @"UpdateStudentProfileData"
+
+#pragma mark - Change Student Profile API
+
+#define apk_ChnageProfilePhotos @"ChnageProfilePhotos"
 
 
 #endif /* Global_h */

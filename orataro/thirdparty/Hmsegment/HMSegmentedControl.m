@@ -357,8 +357,13 @@
             CGFloat imageWidth = icon.size.width;
             CGFloat imageHeight = icon.size.height;
             CGFloat y = roundf(CGRectGetHeight(self.frame) - self.selectionIndicatorHeight) / 2 - imageHeight / 2 + ((self.selectionIndicatorLocation == HMSegmentedControlSelectionIndicatorLocationUp) ? self.selectionIndicatorHeight : 0);
-            CGFloat x = self.segmentWidth * idx + (self.segmentWidth - imageWidth)/2.0f;
-            CGRect rect = CGRectMake(x, y, imageWidth, imageHeight);
+            
+//            CGFloat x = self.segmentWidth * idx + (self.segmentWidth - imageWidth)/2.0f;
+//            CGRect rect = CGRectMake(x, y, imageWidth, imageHeight);
+            
+            CGFloat x = self.segmentWidth * idx + (self.segmentWidth - 30)/2.0f;
+            
+            CGRect rect = CGRectMake(x, 10, 30, 30);
             
             CALayer *imageLayer = [CALayer layer];
             imageLayer.frame = rect;

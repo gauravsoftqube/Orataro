@@ -286,12 +286,12 @@ int multipleUser = 0;
     
     currentDeviceId =[[NSUserDefaults standardUserDefaults]objectForKey:@"currentDeviceId"];
     
-    [[NSUserDefaults standardUserDefaults]setObject:@"8d103a40eb95a3b95335ee64d2a5bf7a958fdffd3d029d6d3c0cc3dc6eca8298" forKey:@"DeviceToken"];
-    [[NSUserDefaults standardUserDefaults]synchronize];
+    //[[NSUserDefaults standardUserDefaults]setObject:@"8d103a40eb95a3b95335ee64d2a5bf7a958fdffd3d029d6d3c0cc3dc6eca8298" forKey:@"DeviceToken"];
+    //[[NSUserDefaults standardUserDefaults]synchronize];
     
     NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"DeviceToken"];
     
-   // NSLog(@"token **********************=%@",token);
+   NSLog(@"token **********************=%@",token);
     
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
     
