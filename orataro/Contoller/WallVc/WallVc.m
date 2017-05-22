@@ -3198,6 +3198,7 @@ int c2= 0;
         cell.lblPostDetailHTML.text = strPostCommentNote;
         
         NSString *strFileType=[dicResponce objectForKey:@"FileType"];
+        NSString *strFileMimeType=[dicResponce objectForKey:@"FileMimeType"];
         if([strFileType isEqualToString:@"IMAGE"])
         {
             NSString *strPost_Photo=[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[dicResponce objectForKey:@"Photo"]];
@@ -3227,7 +3228,30 @@ int c2= 0;
         }
         else if([strFileType isEqualToString:@"FILE"])
         {
-            cell.imgPost.image = [UIImage imageNamed:@"pdf_blue.png"];
+            if([strFileMimeType isEqualToString:@"DOC"] || [strFileMimeType isEqualToString:@"WORD"]
+               )
+            {
+                cell.imgPost.image = [UIImage imageNamed:@"doc.png"];
+                cell.imgPost.image = [cell.imgPost.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                [cell.imgPost setTintColor:[UIColor colorWithRed:34/255.0 green:49/255.0 blue:89/255.0 alpha:1.0]];
+            }
+            else if([strFileMimeType isEqualToString:@"PDF"])
+            {
+                cell.imgPost.image = [UIImage imageNamed:@"pdf_blue.png"];
+            }
+            else if([strFileMimeType isEqualToString:@"TEXT"])
+            {
+                cell.imgPost.image = [UIImage imageNamed:@"txt.png"];
+                cell.imgPost.image = [cell.imgPost.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                [cell.imgPost setTintColor:[UIColor colorWithRed:34/255.0 green:49/255.0 blue:89/255.0 alpha:1.0]];
+            }
+            else
+            {
+                cell.imgPost.image = [UIImage imageNamed:@"edit_wall.png"];
+                cell.imgPost.image = [cell.imgPost.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                [cell.imgPost setTintColor:[UIColor colorWithRed:34/255.0 green:49/255.0 blue:89/255.0 alpha:1.0]];
+            }
+            
         }
         else
         {
@@ -4340,43 +4364,153 @@ int c2= 0;
 {
     if ([_checkscreen isEqualToString:@"Institute"])
     {
-        AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
-        wc.checkscreen=self.checkscreen;
-        [self.navigationController pushViewController:wc animated:YES];
+        NSString *IsAllowUserToPostStatus=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostStatus"];
+        NSString *IsAllowUserToPostPhoto=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostPhoto"];
+        NSString *IsAllowUserToPostVideo=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostVideo"];
+        
+        if([IsAllowUserToPostStatus integerValue] == 1 ||
+           [IsAllowUserToPostPhoto integerValue] == 1 ||
+           [IsAllowUserToPostVideo integerValue] == 1)
+        {
+            NSString *IsAdmin=[[arrDynamicWall_Setting objectAtIndex:0]objectForKey:@"IsAdmin"];
+            
+            if ([IsAdmin integerValue] == 1)
+            {
+                NSString *IsAllowPostStatus=[[arrDynamicWall_Admin_Setting objectAtIndex:0]objectForKey:@"IsAllowPostStatus"];
+                NSString *IsAllowPostPhoto=[[arrDynamicWall_Admin_Setting objectAtIndex:0]objectForKey:@"IsAllowPostPhoto"];
+                NSString *IsAllowPostVideo=[[arrDynamicWall_Admin_Setting objectAtIndex:0]objectForKey:@"IsAllowPostVideo"];
+                if([IsAllowPostStatus integerValue] == 1 ||
+                   [IsAllowPostPhoto integerValue] == 1 ||
+                   [IsAllowPostVideo integerValue] == 1)
+                {
+                    AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
+                    wc.checkscreen=self.checkscreen;
+                    [self.navigationController pushViewController:wc animated:YES];
+                }
+            }
+            else
+            {
+                NSString *IsAllowPeopleToPostStatus=[[arrDynamicWall_Setting objectAtIndex:0]objectForKey:@"IsAllowPeopleToPostStatus"];
+                NSString *IsAllowPeopleToUploadAlbum=[[arrDynamicWall_Setting objectAtIndex:0]objectForKey:@"IsAllowPeopleToUploadAlbum"];
+                NSString *IsAllowPeopleToPostVideos=[[arrDynamicWall_Setting objectAtIndex:0]objectForKey:@"IsAllowPeopleToPostVideos"];
+                if([IsAllowPeopleToPostStatus integerValue] == 1 ||
+                   [IsAllowPeopleToUploadAlbum integerValue] == 1 ||
+                   [IsAllowPeopleToPostVideos integerValue] == 1)
+                {
+                    AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
+                    wc.checkscreen=self.checkscreen;
+                    [self.navigationController pushViewController:wc animated:YES];
+                }
+            }
+        }
     }
-    else if([_checkscreen isEqualToString:@"Standard"])
+    else if([_checkscreen isEqualToString:@"Standard"]||
+            [_checkscreen isEqualToString:@"Division"]||
+            [_checkscreen isEqualToString:@"Subject"])
     {
-        AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
-        wc.checkscreen=self.checkscreen;
-        wc.dicSelect_std_divi_sub=[self.dicSelect_std_divi_sub mutableCopy];
-        [self.navigationController pushViewController:wc animated:YES];
-    }
-    else if ([_checkscreen isEqualToString:@"Division"])
-    {
-        AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
-        wc.checkscreen=self.checkscreen;
-        wc.dicSelect_std_divi_sub=[self.dicSelect_std_divi_sub mutableCopy];
-        [self.navigationController pushViewController:wc animated:YES];
-    }
-    else if ([_checkscreen isEqualToString:@"Subject"])
-    {
-        AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
-        wc.checkscreen=self.checkscreen;
-        wc.dicSelect_std_divi_sub=[self.dicSelect_std_divi_sub mutableCopy];
-        [self.navigationController pushViewController:wc animated:YES];
+        NSString *IsAllowUserToPostStatus=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostStatus"];
+        NSString *IsAllowUserToPostPhoto=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostPhoto"];
+        NSString *IsAllowUserToPostVideo=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostVideo"];
+        
+        if([IsAllowUserToPostStatus integerValue] == 1 ||
+           [IsAllowUserToPostPhoto integerValue] == 1 ||
+           [IsAllowUserToPostVideo integerValue] == 1)
+        {
+            NSString *IsAdmin=[[arrDynamicWall_Setting objectAtIndex:0]objectForKey:@"IsAdmin"];
+            
+            if ([IsAdmin integerValue] == 1)
+            {
+                NSString *IsAllowPostStatus=[[arrDynamicWall_Admin_Setting objectAtIndex:0]objectForKey:@"IsAllowPostStatus"];
+                NSString *IsAllowPostPhoto=[[arrDynamicWall_Admin_Setting objectAtIndex:0]objectForKey:@"IsAllowPostPhoto"];
+                NSString *IsAllowPostVideo=[[arrDynamicWall_Admin_Setting objectAtIndex:0]objectForKey:@"IsAllowPostVideo"];
+                if([IsAllowPostStatus integerValue] == 1 ||
+                   [IsAllowPostPhoto integerValue] == 1 ||
+                   [IsAllowPostVideo integerValue] == 1)
+                {
+                    AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
+                    wc.checkscreen=self.checkscreen;
+                    wc.dicSelect_std_divi_sub=[self.dicSelect_std_divi_sub mutableCopy];
+                    [self.navigationController pushViewController:wc animated:YES];
+                }
+            }
+            else
+            {
+                NSString *IsAllowPeopleToPostStatus=[[arrDynamicWall_Setting objectAtIndex:0]objectForKey:@"IsAllowPeopleToPostStatus"];
+                NSString *IsAllowPeopleToUploadAlbum=[[arrDynamicWall_Setting objectAtIndex:0]objectForKey:@"IsAllowPeopleToUploadAlbum"];
+                NSString *IsAllowPeopleToPostVideos=[[arrDynamicWall_Setting objectAtIndex:0]objectForKey:@"IsAllowPeopleToPostVideos"];
+                if([IsAllowPeopleToPostStatus integerValue] == 1 ||
+                   [IsAllowPeopleToUploadAlbum integerValue] == 1 ||
+                   [IsAllowPeopleToPostVideos integerValue] == 1)
+                {
+                    AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
+                    wc.checkscreen=self.checkscreen;
+                    wc.dicSelect_std_divi_sub=[self.dicSelect_std_divi_sub mutableCopy];
+                    [self.navigationController pushViewController:wc animated:YES];
+                }
+            }
+        }
     }
     else if ([_checkscreen isEqualToString:@"MyWall"])
     {
-        AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
-        wc.checkscreen=self.checkscreen;
-        wc.dicSelect_std_divi_sub=[self.dicSelect_std_divi_sub mutableCopy];
-        [self.navigationController pushViewController:wc animated:YES];
+        NSString *IsAllowUserToPostStatus=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostStatus"];
+        NSString *IsAllowUserToPostPhoto=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostPhoto"];
+        NSString *IsAllowUserToPostVideo=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostVideo"];
+        
+        if([IsAllowUserToPostStatus integerValue] == 1 ||
+           [IsAllowUserToPostPhoto integerValue] == 1 ||
+           [IsAllowUserToPostVideo integerValue] == 1)
+        {
+            NSString *IsAdmin=[[arrDynamicWall_Setting objectAtIndex:0]objectForKey:@"IsAdmin"];
+            
+            if ([IsAdmin integerValue] == 1)
+            {
+                NSString *IsAllowPostStatus=[[arrDynamicWall_Admin_Setting objectAtIndex:0]objectForKey:@"IsAllowPostStatus"];
+                NSString *IsAllowPostPhoto=[[arrDynamicWall_Admin_Setting objectAtIndex:0]objectForKey:@"IsAllowPostPhoto"];
+                NSString *IsAllowPostVideo=[[arrDynamicWall_Admin_Setting objectAtIndex:0]objectForKey:@"IsAllowPostVideo"];
+                if([IsAllowPostStatus integerValue] == 1 ||
+                   [IsAllowPostPhoto integerValue] == 1 ||
+                   [IsAllowPostVideo integerValue] == 1)
+                {
+                    AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
+                    wc.checkscreen=self.checkscreen;
+                    wc.dicSelect_std_divi_sub=[self.dicSelect_std_divi_sub mutableCopy];
+                    [self.navigationController pushViewController:wc animated:YES];
+                    
+                }
+            }
+            else
+            {
+                NSString *IsAllowPeopleToPostStatus=[[arrDynamicWall_Setting objectAtIndex:0]objectForKey:@"IsAllowPeopleToPostStatus"];
+                NSString *IsAllowPeopleToUploadAlbum=[[arrDynamicWall_Setting objectAtIndex:0]objectForKey:@"IsAllowPeopleToUploadAlbum"];
+                NSString *IsAllowPeopleToPostVideos=[[arrDynamicWall_Setting objectAtIndex:0]objectForKey:@"IsAllowPeopleToPostVideos"];
+                if([IsAllowPeopleToPostStatus integerValue] == 1 ||
+                   [IsAllowPeopleToUploadAlbum integerValue] == 1 ||
+                   [IsAllowPeopleToPostVideos integerValue] == 1)
+                {
+                    AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
+                    wc.checkscreen=self.checkscreen;
+                    wc.dicSelect_std_divi_sub=[self.dicSelect_std_divi_sub mutableCopy];
+                    [self.navigationController pushViewController:wc animated:YES];
+                }
+            }
+        }
+        
+        
     }
     else
     {
-        AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
-        wc.checkscreen=self.checkscreen;
-        [self.navigationController pushViewController:wc animated:YES];
+        NSString *IsAllowUserToPostStatus=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostStatus"];
+        NSString *IsAllowUserToPostPhoto=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostPhoto"];
+        NSString *IsAllowUserToPostVideo=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostVideo"];
+        
+        if([IsAllowUserToPostStatus integerValue] == 1 ||
+           [IsAllowUserToPostPhoto integerValue] == 1 ||
+           [IsAllowUserToPostVideo integerValue] == 1)
+        {
+            AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
+            wc.checkscreen=self.checkscreen;
+            [self.navigationController pushViewController:wc animated:YES];
+        }
     }
 }
 

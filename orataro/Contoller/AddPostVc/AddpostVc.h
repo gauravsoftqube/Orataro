@@ -30,7 +30,8 @@
 @property(strong,nonatomic)NSMutableDictionary *dicSelect_std_divi_sub;
 @property (strong, nonatomic) NSDictionary *rapidCommandsDictionary;
 @property(strong,nonatomic)NSString *checkscreen;
-
+@property(strong,nonatomic)NSMutableArray *arrDynamicWall_Setting;
+@property(strong,nonatomic)NSMutableArray *arrDynamicWall_Admin_Setting;
 //========
 
 
@@ -58,17 +59,23 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnSpeechToText;
 - (IBAction)btnSpeechToText:(id)sender;
 
+//view Add Text
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewAddText_Height;//50
+
+
 @property (weak, nonatomic) IBOutlet UIButton *btnAddPhoto;
 - (IBAction)btnAddPhoto:(id)sender;
+
+//
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewAddPhoto_width;
 
 @property (weak, nonatomic) IBOutlet UIButton *btnAddVideo;
 - (IBAction)btnAddVideo:(id)sender;
 
+//
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewAddVideo_Width;
+
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionList_ImageAndVideo;
-
-
-
-
 
 //popup Delete Conf
 @property (weak, nonatomic) IBOutlet UIView *viewDelete_Conf;

@@ -87,6 +87,190 @@
         //
         self.ViewTo_Height.constant=40;
         self.viewAddPhotoVideo_Height.constant=35;
+        
+        NSString *IsAllowUserToPostStatus=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostStatus"];
+        NSString *IsAllowUserToPostPhoto=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostPhoto"];
+        NSString *IsAllowUserToPostVideo=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostVideo"];
+        
+        
+        if ([_checkscreen isEqualToString:@"Institute"] ||
+            [_checkscreen isEqualToString:@"Standard"] ||
+            [_checkscreen isEqualToString:@"Division"] ||
+            [_checkscreen isEqualToString:@"Subject"])
+        {
+            if([IsAllowUserToPostStatus integerValue] == 1)
+            {
+                NSString *IsAdmin=[[self.arrDynamicWall_Setting objectAtIndex:0] objectForKey:@"IsAdmin"];
+                if ([IsAdmin integerValue] == 1)
+                {
+                    NSString *IsAllowPostStatus=[[self.arrDynamicWall_Admin_Setting objectAtIndex:0]objectForKey:@"IsAllowPostStatus"];
+                   
+                    if([IsAllowPostStatus integerValue] == 1)
+                    {
+                        self.viewAddText_Height.constant=50;
+                    }
+                    else
+                    {
+                        self.viewAddText_Height.constant=0;
+                    }
+                }
+                else
+                {
+                    NSString *IsAllowPeopleToPostStatus=[[self.arrDynamicWall_Setting objectAtIndex:0]objectForKey:@"IsAllowPeopleToPostStatus"];
+                   
+                    if([IsAllowPeopleToPostStatus integerValue] == 1)
+                    {
+                        self.viewAddText_Height.constant=50;
+                    }
+                    else
+                    {
+                        self.viewAddText_Height.constant=0;
+                    }
+                    
+                }
+            }
+            else
+            {
+                self.viewAddText_Height.constant=0;
+            }
+            
+            if([IsAllowUserToPostPhoto integerValue] == 1)
+            {
+                NSString *IsAdmin=[[self.arrDynamicWall_Setting objectAtIndex:0] objectForKey:@"IsAdmin"];
+                if ([IsAdmin integerValue] == 1)
+                {
+                  
+                    NSString *IsAllowPostPhoto=[[self.arrDynamicWall_Admin_Setting objectAtIndex:0]objectForKey:@"IsAllowPostPhoto"];
+                    
+                    long width=[[UIScreen mainScreen]bounds].size.width/2;
+                    if([IsAllowPostPhoto integerValue] == 1)
+                    {
+                        self.viewAddPhoto_width.constant=width;
+                    }
+                    else
+                    {
+                        self.viewAddPhoto_width.constant=0;
+                    }
+                }
+                else
+                {
+                    NSString *IsAllowPeopleToUploadAlbum=[[self.arrDynamicWall_Setting objectAtIndex:0]objectForKey:@"IsAllowPeopleToUploadAlbum"];
+                    long width=[[UIScreen mainScreen]bounds].size.width/2;
+                    if([IsAllowPeopleToUploadAlbum integerValue] == 1)
+                    {
+                        self.viewAddPhoto_width.constant=width;
+                    }
+                    else
+                    {
+                        self.viewAddPhoto_width.constant=0;
+                    }
+                }
+            }
+            else
+            {
+                self.viewAddText_Height.constant=0;
+            }
+            
+            if([IsAllowUserToPostVideo integerValue] == 1)
+            {
+                NSString *IsAdmin=[[self.arrDynamicWall_Setting objectAtIndex:0] objectForKey:@"IsAdmin"];
+                if ([IsAdmin integerValue] == 1)
+                {
+                    NSString *IsAllowPostVideo=[[self.arrDynamicWall_Admin_Setting objectAtIndex:0]objectForKey:@"IsAllowPostVideo"];
+                    
+                    long width=[[UIScreen mainScreen]bounds].size.width/2;
+                    
+                    if([IsAllowPostVideo integerValue] == 1)
+                    {
+                        self.viewAddVideo_Width.constant=width;
+                    }
+                    else
+                    {
+                        self.viewAddVideo_Width.constant=0;
+                    }
+                }
+                else
+                {
+                    NSString *IsAllowPeopleToPostVideos=[[self.arrDynamicWall_Setting objectAtIndex:0]objectForKey:@"IsAllowPeopleToPostVideos"];
+                    
+                    long width=[[UIScreen mainScreen]bounds].size.width/2;
+                    
+                    if([IsAllowPeopleToPostVideos integerValue] == 1)
+                    {
+                        self.viewAddVideo_Width.constant=width;
+                    }
+                    else
+                    {
+                        self.viewAddVideo_Width.constant=0;
+                    }
+                }
+            }
+            else
+            {
+                self.viewAddText_Height.constant=0;
+            }
+        }
+        else if ([_checkscreen isEqualToString:@"MyWall"])
+        {
+            if([IsAllowUserToPostStatus integerValue] == 1)
+            {
+                self.viewAddText_Height.constant=50;
+            }
+            else
+            {
+                self.viewAddText_Height.constant=0;
+            }
+            
+            long width=[[UIScreen mainScreen]bounds].size.width/2;
+            if([IsAllowUserToPostPhoto integerValue] == 1)
+            {
+                self.viewAddPhoto_width.constant=width;
+            }
+            else
+            {
+                self.viewAddPhoto_width.constant=0;
+            }
+            
+            if([IsAllowUserToPostVideo integerValue] == 1)
+            {
+                self.viewAddVideo_Width.constant=width;
+            }
+            else
+            {
+                self.viewAddVideo_Width.constant=0;
+            }
+
+        }
+        else
+        {
+            if([IsAllowUserToPostStatus integerValue] == 1)
+            {
+                self.viewAddText_Height.constant=50;
+            }
+            else
+            {
+                self.viewAddText_Height.constant=0;
+            }
+            
+            long width=[[UIScreen mainScreen]bounds].size.width/2;
+            if([IsAllowUserToPostPhoto integerValue] == 1)
+            {
+                self.viewAddPhoto_width.constant=width;
+            }
+            else
+            {
+                self.viewAddPhoto_width.constant=0;
+            }
+            
+            if([IsAllowUserToPostVideo integerValue] == 1)
+            {
+                self.viewAddVideo_Width.constant=width;
+            }
+            else
+            {
+                self.viewAddVideo_Width.constant=0;
+            }
+        }
 
         //set Header Title
         NSArray *arr=[[[Utility getCurrentUserDetail]objectForKey:@"FullName"] componentsSeparatedByString:@" "];
