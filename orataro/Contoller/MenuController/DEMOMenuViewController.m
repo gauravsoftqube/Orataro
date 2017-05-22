@@ -102,7 +102,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     dic = [[[NSUserDefaults standardUserDefaults]valueForKey:@"TotalCountofMember"]mutableCopy];
-    //NSLog(@"Dic=%@",dic);
+    NSLog(@"Dic=%@",dic);
 }
 #pragma mark UITableView Delegate
 
@@ -132,35 +132,43 @@
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    if (indexPath.row == 2)
+    if ([dic count] > 0)
     {
-        cell.aTextLb.hidden = YES;
-        cell.LbWall.hidden = NO;
-        cell.LbWallCount.layer.cornerRadius = 10.0;
-        cell.LbWallCount.clipsToBounds = YES;
-        cell.LbWall.text = @"Wall";
-        
-        NSMutableArray *ary = [dic objectForKey:@"Table"];
-        
-        NSString *s = [NSString stringWithFormat:@"%@",[[ary objectAtIndex:0]objectForKey:@"NotificationCount"]];
-        
-        if ([s isEqualToString:@"0"])
+        if (indexPath.row == 2)
         {
-            cell.LbWallCount.hidden = YES;
+            cell.aTextLb.hidden = YES;
+            cell.LbWall.hidden = NO;
+            cell.LbWallCount.layer.cornerRadius = 10.0;
+            cell.LbWallCount.clipsToBounds = YES;
+            cell.LbWall.text = @"Wall";
+            
+            NSMutableArray *ary = [dic objectForKey:@"Table"];
+            
+            
+            if (ary.count > 0)
+            {
+                NSString *s = [NSString stringWithFormat:@"%@",[[ary objectAtIndex:0]objectForKey:@"NotificationCount"]];
+                
+                if ([s isEqualToString:@"0"])
+                {
+                    cell.LbWallCount.hidden = YES;
+                }
+                else
+                {
+                    cell.LbWallCount.hidden = NO;
+                    cell.LbWallCount.text = [NSString stringWithFormat:@"%@",[[ary objectAtIndex:0]objectForKey:@"NotificationCount"]];
+                }
+            }
+            
         }
-       else
-       {
-            cell.LbWallCount.hidden = NO;
-           cell.LbWallCount.text = [NSString stringWithFormat:@"%@",[[ary objectAtIndex:0]objectForKey:@"NotificationCount"]];
-       }
-        
-    }
-    else
-    {
-        cell.aTextLb.hidden = NO;
-        cell.LbWallCount.hidden = YES;
-        cell.LbWall.hidden = YES;
-        cell.aTextLb.text = [menu objectAtIndex:indexPath.row];
+        else
+        {
+            cell.aTextLb.hidden = NO;
+            cell.LbWallCount.hidden = YES;
+            cell.LbWall.hidden = YES;
+            cell.aTextLb.text = [menu objectAtIndex:indexPath.row];
+            
+        }
 
     }
     cell.aImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",[imgary objectAtIndex:indexPath.row]]];

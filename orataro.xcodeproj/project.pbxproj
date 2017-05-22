@@ -194,6 +194,10 @@
 		C36CE4F01E71203F00DC3DC9 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C36CE4EF1E71203F00DC3DC9 /* libsqlite3.tbd */; };
 		C36D394B1E558C42001A445E /* PageVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C36D394A1E558C42001A445E /* PageVc.m */; };
 		C36D39571E55D52B001A445E /* MessageVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C36D39561E55D52B001A445E /* MessageVc.m */; };
+		C36D9AC71ED2B0100022E89D /* ReceiveMessege.m in Sources */ = {isa = PBXBuildFile; fileRef = C36D9AC21ED2B0100022E89D /* ReceiveMessege.m */; };
+		C36D9AC81ED2B0100022E89D /* ReceiveMessege.xib in Resources */ = {isa = PBXBuildFile; fileRef = C36D9AC31ED2B0100022E89D /* ReceiveMessege.xib */; };
+		C36D9AC91ED2B0100022E89D /* SenderMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = C36D9AC51ED2B0100022E89D /* SenderMessage.m */; };
+		C36D9ACA1ED2B0100022E89D /* SenderMessage.xib in Resources */ = {isa = PBXBuildFile; fileRef = C36D9AC61ED2B0100022E89D /* SenderMessage.xib */; };
 		C36DD1801E405D930011221E /* SAMTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = C36DD17F1E405D930011221E /* SAMTextView.m */; };
 		C36DD1B01E4086210011221E /* IQBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C36DD1941E4086210011221E /* IQBarButtonItem.m */; };
 		C36DD1B11E4086210011221E /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C36DD1951E4086210011221E /* IQKeyboardManager.bundle */; };
@@ -599,6 +603,12 @@
 		C36D394A1E558C42001A445E /* PageVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageVc.m; sourceTree = "<group>"; };
 		C36D39551E55D52B001A445E /* MessageVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageVc.h; sourceTree = "<group>"; };
 		C36D39561E55D52B001A445E /* MessageVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageVc.m; sourceTree = "<group>"; };
+		C36D9AC11ED2B0100022E89D /* ReceiveMessege.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiveMessege.h; sourceTree = "<group>"; };
+		C36D9AC21ED2B0100022E89D /* ReceiveMessege.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiveMessege.m; sourceTree = "<group>"; };
+		C36D9AC31ED2B0100022E89D /* ReceiveMessege.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceiveMessege.xib; sourceTree = "<group>"; };
+		C36D9AC41ED2B0100022E89D /* SenderMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SenderMessage.h; sourceTree = "<group>"; };
+		C36D9AC51ED2B0100022E89D /* SenderMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SenderMessage.m; sourceTree = "<group>"; };
+		C36D9AC61ED2B0100022E89D /* SenderMessage.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SenderMessage.xib; sourceTree = "<group>"; };
 		C36DD17E1E405D930011221E /* SAMTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SAMTextView.h; sourceTree = "<group>"; };
 		C36DD17F1E405D930011221E /* SAMTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SAMTextView.m; sourceTree = "<group>"; };
 		C36DD1931E4086210011221E /* IQBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQBarButtonItem.h; sourceTree = "<group>"; };
@@ -1019,6 +1029,7 @@
 		093227911E38794F00138A2B /* CustomeCell */ = {
 			isa = PBXGroup;
 			children = (
+				C36D9AC01ED2AF920022E89D /* ChatCell */,
 				C38172701E518E63004AB189 /* FAQCell */,
 				C365CCB11E49AABC00A4ABAA /* HolidayCell */,
 				C35C073E1E486BE9004C55EB /* AttendanceNEwCell */,
@@ -1849,6 +1860,19 @@
 			path = ../MessageVc;
 			sourceTree = "<group>";
 		};
+		C36D9AC01ED2AF920022E89D /* ChatCell */ = {
+			isa = PBXGroup;
+			children = (
+				C36D9AC11ED2B0100022E89D /* ReceiveMessege.h */,
+				C36D9AC21ED2B0100022E89D /* ReceiveMessege.m */,
+				C36D9AC31ED2B0100022E89D /* ReceiveMessege.xib */,
+				C36D9AC41ED2B0100022E89D /* SenderMessage.h */,
+				C36D9AC51ED2B0100022E89D /* SenderMessage.m */,
+				C36D9AC61ED2B0100022E89D /* SenderMessage.xib */,
+			);
+			path = ChatCell;
+			sourceTree = "<group>";
+		};
 		C36DD17D1E405D270011221E /* SAMTextview */ = {
 			isa = PBXGroup;
 			children = (
@@ -2424,9 +2448,11 @@
 				C3650D571EC5839800345414 /* mother@2x.png in Resources */,
 				093227861E38750D00138A2B /* Assets.xcassets in Resources */,
 				C36B589C1E5F163200DE7464 /* AlbumPhotoCell.xib in Resources */,
+				C36D9AC81ED2B0100022E89D /* ReceiveMessege.xib in Resources */,
 				C3650D451EC5837200345414 /* gaurdian.png in Resources */,
 				C3650D541EC5839800345414 /* gaurdian_show@2x.png in Resources */,
 				C36B58801E5EE82B00DE7464 /* ORGDetailViewController.xib in Resources */,
+				C36D9ACA1ED2B0100022E89D /* SenderMessage.xib in Resources */,
 				C3650D461EC5837200345414 /* mother_show.png in Resources */,
 				C3650D481EC5837200345414 /* profileico_show.png in Resources */,
 				C36B58881E5EEF4400DE7464 /* PhototableCell.xib in Resources */,
@@ -2500,6 +2526,7 @@
 				C3A2D7241E64210D00B91B54 /* PNTButton.m in Sources */,
 				C35FB2E11E4C64F800466CA6 /* ParallaxViewController.m in Sources */,
 				09F428C91E38BC0B00A80F0D /* UIButton+AFNetworking.m in Sources */,
+				C36D9AC71ED2B0100022E89D /* ReceiveMessege.m in Sources */,
 				C365CCCA1E4A0D3F00A4ABAA /* AddPollVc.m in Sources */,
 				C36BDAF61E66FFC900779C5B /* UIView+REFrostedViewController.m in Sources */,
 				C38AF1151E60424A00E4F40B /* ProfileLeaveDetailListVc.m in Sources */,
@@ -2625,6 +2652,7 @@
 				C3A2D72D1E64212D00B91B54 /* OBShapedButton.m in Sources */,
 				09F428C21E38BC0B00A80F0D /* AFURLResponseSerialization.m in Sources */,
 				C36DD1BA1E4086210011221E /* IQUIView+Hierarchy.m in Sources */,
+				C36D9AC91ED2B0100022E89D /* SenderMessage.m in Sources */,
 				C381726F1E518756004AB189 /* FAQvc.m in Sources */,
 				C3741FE01E4CAE6500BFFA23 /* HelpDeskVc.m in Sources */,
 				C3CF92211E979DA700A6BFBA /* AlbumPhotoVc.m in Sources */,
