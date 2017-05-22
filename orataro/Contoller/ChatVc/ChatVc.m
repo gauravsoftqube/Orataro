@@ -13,6 +13,7 @@
 
 @interface ChatVc ()
 {
+    
     NSMutableArray *aryChatMessage;
 }
 @end
