@@ -118,6 +118,18 @@
         return;
     }
     
+    /*
+    
+     <MemberType>string</MemberType>
+     <ClientID>guid</ClientID>
+     <InstituteID>guid</InstituteID>
+     <GradeID>guid</GradeID>
+     <DivisionID>guid</DivisionID>
+     <SubjectID>guid</SubjectID>
+     <TeacherMemberID>guid</TeacherMemberID>
+     <StudentMemberID>guid</StudentMemberID>
+     
+    */
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_ptcommunication,apk_GetPTCommunicationList_action];
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
@@ -245,23 +257,17 @@
          [ProgressHUB hideenHUDAddedTo:self.view];
          if(!error)
          {
-             NSString *strArrd=[dicResponce objectForKey:@"d"];
-             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
-             NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             NSLog(@"Dic=%@",dicResponce);
              
-             if([arrResponce count] != 0)
+             
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             
+             //NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+            // NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             
+             if([dicResponce count] != 0)
              {
-                 NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
-                 NSString *strStatus=[dic objectForKey:@"message"];
-                 if([strStatus isEqualToString:@"No Data Found"])
-                 {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     [alrt show];
-                 }
-                 else
-                 {
-                     
-                 }
+                    [self apiCallFor_getPTCommunicationList:@"1"];
              }
              else
              {
@@ -362,6 +368,8 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ChatVc  *c = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ChatVc"];
+    c.dicChatData = [arrCummunicationList objectAtIndex:indexPath.row];
+    
     [self.navigationController pushViewController:c animated:YES];
 }
 

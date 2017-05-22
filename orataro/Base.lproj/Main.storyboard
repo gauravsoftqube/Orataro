@@ -8805,6 +8805,14 @@
                                     <constraint firstItem="VhP-vO-ZaD" firstAttribute="top" secondItem="ZYQ-7f-BLl" secondAttribute="top" constant="25" id="oNF-M3-gi6"/>
                                 </constraints>
                             </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="w0G-QK-3ed">
+                                <rect key="frame" x="0.0" y="64" width="414" height="611"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="pBQ-83-8qI" id="0lI-Wo-7Hf"/>
+                                    <outlet property="delegate" destination="pBQ-83-8qI" id="A3j-gs-rni"/>
+                                </connections>
+                            </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WHi-yd-bSg">
                                 <rect key="frame" x="10" y="675" width="394" height="1"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -8820,6 +8828,9 @@
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="pBQ-83-8qI" id="ZmN-Tf-D5e"/>
+                                        </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u6G-Kh-qNe">
                                         <rect key="frame" x="374" y="15" width="30" height="30"/>
@@ -8827,6 +8838,9 @@
                                             <constraint firstAttribute="width" constant="30" id="V9q-cS-3hK"/>
                                         </constraints>
                                         <state key="normal" image="fb_post"/>
+                                        <connections>
+                                            <action selector="btnSendClicked:" destination="pBQ-83-8qI" eventType="touchUpInside" id="ooi-eI-20t"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -8841,10 +8855,6 @@
                                     <constraint firstItem="u6G-Kh-qNe" firstAttribute="leading" secondItem="dRQ-gD-sdf" secondAttribute="trailing" constant="8" id="xPU-We-CZt"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="w0G-QK-3ed">
-                                <rect key="frame" x="0.0" y="64" width="414" height="611"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -8863,6 +8873,12 @@
                             <constraint firstItem="w0G-QK-3ed" firstAttribute="leading" secondItem="P58-sE-oA0" secondAttribute="leading" id="xvA-ff-Dq6"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="lbHeaderTitle" destination="IXb-Cf-67W" id="XzX-km-d5O"/>
+                        <outlet property="tblChatMessage" destination="w0G-QK-3ed" id="Fmg-OZ-Mly"/>
+                        <outlet property="txtMessageText" destination="dRQ-gD-sdf" id="HxN-GW-Br8"/>
+                        <outlet property="viewChatMessage" destination="Tw9-Jh-aL1" id="cQ9-qk-tyH"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hZ1-7j-wOe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -14466,7 +14482,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Calender(Gaurav)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VBQ-Lg-uw3">
-                                        <rect key="frame" x="76" y="32" width="262" height="20"/>
+                                        <rect key="frame" x="76" y="35" width="262" height="17"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="17"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>

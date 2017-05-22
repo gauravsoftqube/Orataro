@@ -234,6 +234,8 @@
 
 #import "ProfileVideoDetailVc.h"
 
+#import "ChatVc.h"
+
 #pragma mark - YOUTube Video Key
 
 #define YouTubeVideo_Key  @"SII1LZqIAas"
@@ -383,6 +385,9 @@
 #define apk_CreateNewPTCommnunication_action @"CreateNewPTCommnunication"
 #define apk_GetPTCommunicationList_action @"GetPTCommunicationList"
 
+#define apk_PTCommunicationChatHistory_action @"PTCommunicationChatHistory"
+#define apk_PTCommunicationChatHistorySetViewFlag @"PTCommunicationChatHistorySetViewFlag"
+#define apk_WriteCommentsInPTCommnunication @"WriteCommentsInPTCommnunication"
 
 #pragma mark - PostedImage
 

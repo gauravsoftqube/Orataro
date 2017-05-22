@@ -8,7 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ChatVc : UIViewController
-- (IBAction)BackBtnClicked:(UIButton *)sender;
+@interface ChatVc : UIViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 
+- (IBAction)BackBtnClicked:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UILabel *lbHeaderTitle;
+@property (weak, nonatomic) IBOutlet UITableView *tblChatMessage;
+@property (weak, nonatomic) IBOutlet UITextField *txtMessageText;
+- (IBAction)btnSendClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UIView *viewChatMessage;
+@property (strong,nonatomic)NSMutableDictionary *dicChatData;
 @end

@@ -32,10 +32,7 @@
 {
     [super viewDidLoad];
     
-    
     _viewLogout.hidden = YES;
-    
-    
     _imgClose.image = [_imgClose.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [_imgClose setTintColor:[UIColor colorWithRed:40.0/255.0 green:49.0/255.0 blue:90.0/255.0 alpha:1.0]];
     _viewSaveOuter.layer.cornerRadius = 30.0;
@@ -126,8 +123,6 @@
     NSMutableArray *ary1 = [dic objectForKey:@"Table"];
     
    s  = [NSString stringWithFormat:@"%@",[[ary1 objectAtIndex:0]objectForKey:@"NotificationCount"]];
-
-
 }
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
