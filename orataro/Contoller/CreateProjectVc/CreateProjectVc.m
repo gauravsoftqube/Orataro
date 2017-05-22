@@ -41,6 +41,8 @@
     
     _tblDivision.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
     
+    
+    
     // Do any additional setup after loading the view.
     [self commonData];
     
@@ -81,7 +83,7 @@
     
     if ([_projectvar isEqualToString:@"Edit"])
     {
-        _aHeaderTitleLb.text =@"Edit Project (Name)";
+        _aHeaderTitleLb.text =[NSString stringWithFormat:@"Edit Project (%@)",[Utility getCurrentUserName]];
         
         _txtProjectTitle.text = [_dicCreateProject objectForKey:@"ProjectTitle"];
         _txtStartDate.text = [Utility convertMiliSecondtoDate:@"dd-MM-yyyy" date:[_dicCreateProject objectForKey:@"StartDate"]];
@@ -94,7 +96,8 @@
     else
     {
         self.tblEditProjectMemberList_Height.constant=0;
-        _aHeaderTitleLb.text =@"Create Project (Name)";
+        
+        _aHeaderTitleLb.text =[NSString stringWithFormat:@"Create Project (%@)",[Utility getCurrentUserName]];
     }
     
     

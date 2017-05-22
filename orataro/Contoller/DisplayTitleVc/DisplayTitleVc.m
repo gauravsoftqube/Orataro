@@ -37,21 +37,22 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     NSLog(@"dic=%@",_dicPageDetail);
-    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+   // NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
     
    // b.strCheckBlogPage = @"Page";
 
     // b.strCheckBlogPage = @"Blog";
     
+    
     if ([_strCheckBlogPage isEqualToString:@"Page"])
     {
-        _lbNavTitle.text = [NSString stringWithFormat:@"%@ (%@)",[_dicPageDetail objectForKey:@"PageTitle"],[dicCurrentUser objectForKey:@"FullName"]];
+        _lbNavTitle.text = [NSString stringWithFormat:@"%@ (%@)",[_dicPageDetail objectForKey:@"PageTitle"],[Utility getCurrentUserName]];
         
         [self apiCallFor_getPageDetail];
     }
     else
     {
-        _lbNavTitle.text = [NSString stringWithFormat:@"%@ (%@)",[_dicBlogDatail objectForKey:@"BlogTitle"],[dicCurrentUser objectForKey:@"FullName"]];
+        _lbNavTitle.text = [NSString stringWithFormat:@"%@ (%@)",[_dicBlogDatail objectForKey:@"BlogTitle"],[Utility getCurrentUserName]];
 
          [self apiCallFor_getBlogDetail];
     }

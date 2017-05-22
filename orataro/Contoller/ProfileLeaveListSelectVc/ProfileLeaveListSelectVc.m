@@ -25,6 +25,8 @@
     aryTempLeave = [[NSMutableArray alloc]init];
     arySaveDataLeave = [[NSMutableArray alloc]init];
     
+    _lbHeaderTitle.text = [NSString stringWithFormat:@"List Selection (%@)",[Utility getCurrentUserName]];
+    
     // Do any additional setup after loading the view.
     [self commonData];
 }
@@ -101,7 +103,10 @@
     lb.text = [[arySaveDataLeave objectAtIndex:indexPath.row]objectForKey:@"Grade"];
     
     UILabel *lb1 = (UILabel *)[cell.contentView viewWithTag:3];
-    lb1.text= [[arySaveDataLeave objectAtIndex:indexPath.row]objectForKey:@"Division"];
+    lb1.text= [[arySaveDataLeave objectAtIndex:indexPath.row]objectForKey:@"DivisionName"];
+    
+    UILabel *lb4 = (UILabel *)[cell.contentView viewWithTag:4];
+    lb4.text= [NSString stringWithFormat:@"%@",[[arySaveDataLeave objectAtIndex:indexPath.row]objectForKey:@"leaveCount"]];
     
     return cell;
 }
@@ -134,7 +139,12 @@
         return;
     }
     
-    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_gradedivisionsubject,apk_GetGradeDivisionSubjectbyTeacher_action];
+  //  NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_gradedivisionsubject,apk_GetGradeDivisionSubjectbyTeacher_action];
+    //apk_LeaveCountByGradeDivision
+    
+    // NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_gradedivisionsubject,apk_LeaveCountByGradeDivision];
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_leave,apk_LeaveCountByGradeDivision];
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
@@ -142,7 +152,7 @@
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
-    [param setValue:@"Teacher" forKey:@"Role"];
+    //[param setValue:@"Teacher" forKey:@"Role"];
     
     if (strInternet == YES)
     {
@@ -176,7 +186,10 @@
                      arySaveDataLeave = [arrResponce mutableCopy];
                      
                      NSLog(@"ary=%@",arySaveDataLeave);
-                     NSMutableArray *aryTmp = [[NSMutableArray alloc]initWithArray:arySaveDataLeave];
+                     
+                      [_tblListSelectionLeave reloadData];
+                     
+                    /* NSMutableArray *aryTmp = [[NSMutableArray alloc]initWithArray:arySaveDataLeave];
                      for (int i=0; i< aryTmp.count; i++)
                      {
                          NSMutableDictionary *d = [[aryTmp objectAtIndex:i] mutableCopy];
@@ -228,8 +241,8 @@
                          NSString *SubjectID=[dic objectForKey:@"SubjectID"];
                          
                          [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO SelectionList(Division,DivisionID,Grade,GradeID,Subject,SubjectID)values('%@','%@','%@','%@','%@','%@')",Division,DivisionID,Grade,GradeID,Subject,SubjectID]];
-                     }
-                     [_tblListSelectionLeave reloadData];
+                     }*/
+                    
                  }
              }
              else

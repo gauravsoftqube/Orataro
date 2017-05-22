@@ -45,11 +45,12 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    _lbHeaderTitle.text = [NSString stringWithFormat:@"Blogs (%@)",[Utility getCurrentUserName]];
+    
     NSArray *ary = [DBOperation selectData:@"select * from BlogDetail"];
     getdata = [Utility getLocalDetail:ary columnKey:@"BlogJsonStr"];
     [aBlogTable reloadData];
     //  dispatch_group_t group = dispatch_group_create();
-    
     
     if (getdata.count == 0)
     {

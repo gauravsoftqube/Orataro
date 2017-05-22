@@ -26,9 +26,9 @@ int d =0;
     
     aOuterView.hidden = YES;
     
+    //NSLog(@"image=%@",_imagename);
     
-    NSLog(@"image=%@",_imagename);
-
+    _lbHeaderTitle.text = [NSString stringWithFormat:@"Image (%@)",[Utility getCurrentUserName]];
     
     if([_strOfflineOnline isEqualToString:@"Offline"])
     {

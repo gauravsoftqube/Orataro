@@ -11,5 +11,7 @@
 @interface RightCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *aImageView;
 @property (weak, nonatomic) IBOutlet UILabel *aTextLb;
+@property (weak, nonatomic) IBOutlet UILabel *LbWall;
+@property (weak, nonatomic) IBOutlet UILabel *LbWallCount;
 
 @end

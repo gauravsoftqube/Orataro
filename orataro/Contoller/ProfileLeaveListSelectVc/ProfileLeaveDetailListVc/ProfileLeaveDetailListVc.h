@@ -15,5 +15,6 @@
 @property (weak, nonatomic) IBOutlet UITableView *tblListDetail;
 @property (weak, nonatomic) IBOutlet UIView *viewAddbtn;
 - (IBAction)btnAddClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *lbHeaderTitle;
 @property (strong,nonatomic)NSMutableDictionary *dicLeaveDetails;
 @end

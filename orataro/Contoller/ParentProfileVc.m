@@ -27,9 +27,9 @@
     
     NSString *strCheckImagesUpload;
     
-    NSString *isPicked,*isMotherPicked;
+    NSString *isPicked,*isMotherPicked,*isGuardianPicked;
     
-    NSString *strFatherEditId,*strMotherEditId,*strGuardianName;
+    NSString *strFatherEditId,*strMotherEditId,*strGuardianEditId,*strGuardianName;
 }
 @end
 
@@ -40,7 +40,7 @@
     [super viewDidLoad];
     
     strSelectedGender = @"Mr.";
-    strSelectedGender = @"Mr.";
+    strGuardianName = @"Mr.";
     
     aryPrefix = [NSMutableArray arrayWithObjects:
                  
@@ -60,7 +60,7 @@
                          [NSDictionary dictionaryWithObjectsAndKeys:@"Mrs.",@"Name",@"0",@"Value", nil],
                          [NSDictionary dictionaryWithObjectsAndKeys:@"Miss",@"Name",@"0",@"Value", nil],nil];
     
-    [_tblPrefixHeight setConstant:44*aryGuardianPrefix.count];
+    [_tblGuardianHeight setConstant:44*aryGuardianPrefix.count];
     _tblMotherPrefix.scrollEnabled = NO;
     
     
@@ -125,6 +125,8 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    strGuardianEditId =@"";
+    
     if ([strImg isEqualToString:@"FromImagePicker"])
     {
         
@@ -174,6 +176,8 @@
         CGFloat originWidth = [[UIScreen mainScreen]bounds].size.width;
         CGPoint offset = CGPointMake(originWidth*3, 0);
         [_scrAddFourView setContentOffset:offset animated:YES];
+        
+        [self api_GurdianGetData];
        
     }
 }
@@ -287,9 +291,17 @@
     [Utility setLeftViewInTextField:_txtGuradianFirstName imageName:@"" leftSpace:0 topSpace:0 size:5];
     [Utility setLeftViewInTextField:_txtGuradianLastName imageName:@"" leftSpace:0 topSpace:0 size:5];
     [Utility setLeftViewInTextField:_txtGuardianPhoneNumber imageName:@"" leftSpace:0 topSpace:0 size:5];
-    
+    [Utility setLeftViewInTextField:_btnGurdianBirthDate imageName:@"" leftSpace:0 topSpace:0 size:5];
+    [Utility setLeftViewInTextField:_txtGurdianAnnioversary imageName:@"" leftSpace:0 topSpace:0 size:5];
     [Utility setLeftViewInTextField:_txtGuardianEducationQualification imageName:@"" leftSpace:0 topSpace:0 size:5];
-    [Utility setLeftViewInTextField:_txtMotherDateofExpiry imageName:@"" leftSpace:0 topSpace:0 size:5];
+    [Utility setLeftViewInTextField:_txtGurdianOccupation imageName:@"" leftSpace:0 topSpace:0 size:5];
+    [Utility setLeftViewInTextField:_txtGurdianDesignation imageName:@"" leftSpace:0 topSpace:0 size:5];
+    [Utility setLeftViewInTextField:_txtQurdianEmail imageName:@"" leftSpace:0 topSpace:0 size:5];
+    [Utility setLeftViewInTextField:_txtGurdianOfficePhoneNumber imageName:@"" leftSpace:0 topSpace:0 size:5];
+    [Utility setLeftViewInTextField:_txtGurdianIdNo imageName:@"" leftSpace:0 topSpace:0 size:5];
+    [Utility setLeftViewInTextField:_txtGurdianIdType imageName:@"" leftSpace:0 topSpace:0 size:5];
+    [Utility setLeftViewInTextField:_txtGuardianDateofIssue imageName:@"" leftSpace:0 topSpace:0 size:5];
+    [Utility setLeftViewInTextField:_txtGurdianDateofExpiry imageName:@"" leftSpace:0 topSpace:0 size:5];
 }
 
 
@@ -760,6 +772,35 @@
 }
 - (IBAction)btnGurdianSaveClicked:(id)sender
 {
+    if ([Utility validateBlankField:_btnGurdianBirthDate.text])
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"Please Select Date of Birth" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    if ([Utility validateBlankField:_txtGurdianAnnioversary.text])
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"Please Select Anniversary Date" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    if ([Utility validateBlankField:_txtGuardianDateofIssue.text])
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"Please Select Date of Issue" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    if ([Utility validateBlankField:_txtGurdianDateofExpiry.text])
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"Please Select Date of Expiry" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    [self api_GurdianEditData];
 }
 
 - (IBAction)btnGuardianPrefixClicked:(id)sender
@@ -829,7 +870,16 @@
 
 - (IBAction)btnGurdianPickupDropClicked:(id)sender
 {
-    
+    if ([isGuardianPicked isEqualToString:@"0"])
+    {
+        [_btnGurdianPickupDrop setImage:[UIImage imageNamed:@"checkboxblue"] forState:UIControlStateNormal];
+        isGuardianPicked =@"1";
+    }
+    else
+    {
+        [_btnGurdianPickupDrop setImage:[UIImage imageNamed:@"checkboxunselected"] forState:UIControlStateNormal];
+        isGuardianPicked =@"0";
+    }
 }
 
 - (IBAction)btnGurdianProofClicked:(id)sender
@@ -2818,9 +2868,629 @@
 
 }
 
+
+#pragma mark - Guardian Get Profile
+
+-(void)api_GurdianGetData
+{
+    
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_parentprofile,apk_GetParentProfile];
+    
+    //#define apk_parentprofile @"apk_parentprofile.asmx"
+    //#define apk_GetParentProfile @"GetParentProfile"
+    //#define apk_CreateParentProfile @"CreateParentProfile"
+    
+    //    <ClientID>guid</ClientID>
+    //    <InstituteID>guid</InstituteID>
+    //    <MemberID>guid</MemberID>
+    //    <BeachID>guid</BeachID>
+    
+    
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"BatchID"]] forKey:@"BeachID"];
+    
+    // [ProgressHUB showHUDAddedTo:self.view];
+    
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         [ProgressHUB hideenHUDAddedTo:self.view];
+         if(!error)
+         {
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             
+             if([arrResponce count] != 0)
+             {
+                 NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                 NSString *strStatus=[dic objectForKey:@"message"];
+                 
+                 if([strStatus isEqualToString:@"No Data Found"])
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                 }
+                 else
+                 {
+                     
+                     NSLog(@"Dic=%@",dic);
+                     
+                     NSMutableArray *aryGurdian = [[NSMutableArray alloc]init];
+                     
+                    
+                     for (NSMutableDictionary *dic in arrResponce)
+                     {
+                         // NSLog(@"Dic=%@",dic);
+                         
+                         if ([[dic objectForKey:@"RelationTypeTerm"] isEqualToString:@"Guardian"])
+                         {
+                             [aryGurdian addObject:dic];
+                         }
+                     }
+                     
+                     NSLog(@"Father=%@",aryGurdian);
+                     
+                     
+                     if (aryGurdian.count > 0)
+                     {
+                         _txtGuardianFullName.text = [[aryGurdian objectAtIndex:0]objectForKey:@"FullName"];
+                         
+                         _txtGuradianFirstName.text = [[aryGurdian objectAtIndex:0]objectForKey:@"FirstName"];
+                         
+                         _txtGuradianLastName.text = [[aryGurdian objectAtIndex:0]objectForKey:@"LastName"];
+                         
+                         
+                         NSString *strDob3 = [NSString stringWithFormat:@"%@",[[aryGurdian objectAtIndex:0]objectForKey:@"MobileNo"]];
+                         
+                         if ([strDob3 isEqualToString:@"<null>"])
+                         {
+                             _txtGuardianPhoneNumber.text =@"";
+                         }
+                         else
+                         {
+                             _txtGuardianPhoneNumber.text = [[aryGurdian objectAtIndex:0]objectForKey:@"ContactNo"];
+                         }
+                         
+                         NSString *strDob = [NSString stringWithFormat:@"%@",[[aryGurdian objectAtIndex:0]objectForKey:@"DateOfBirth"]];
+                         
+                         //      NSLog(@"data=%@",strDob);
+                         
+                         if ([strDob isEqualToString:@"<null>"])
+                         {
+                             _btnGurdianBirthDate.text =@"";
+                         }
+                         else
+                         {
+                             // NSString *strEndDate = [Utility convertDateFtrToDtaeFtnslogr:@"dd-MM-yyyy" newDateFtr:@"MM-dd-yyyy" date:_txtEndDate.text];
+                             
+                             _btnGurdianBirthDate.text = [Utility convertDatetoSpecificDate:@"dd-MM-yyyy"  date:[[aryGurdian objectAtIndex:0]objectForKey:@"DateOfBirth"]];
+                             
+                             //[Utility convertDatetoSpecificDate:@"dd-MM-yyyy"  date:[[aryFather objectAtIndex:0]objectForKey:@"DateOfBirth"]];
+                         }
+                         
+                         
+                         NSString *strDob1 = [NSString stringWithFormat:@"%@",[[aryGurdian objectAtIndex:0]objectForKey:@"DateOfAnniversary"]];
+                         
+                         //      NSLog(@"data=%@",strDob1);
+                         
+                         if ([strDob1 isEqualToString:@"<null>"])
+                         {
+                             _txtGurdianAnnioversary.text =@"";
+                         }
+                         else
+                         {
+                             _txtGurdianAnnioversary.text = [Utility convertDatetoSpecificDate:@"dd-MM-yyyy"  date:[[aryGurdian objectAtIndex:0]objectForKey:@"DateOfAnniversary"]];
+                         }
+                         
+                         NSString *strDob4 = [NSString stringWithFormat:@"%@",[[aryGurdian objectAtIndex:0]objectForKey:@"HighestStudyTerm"]];
+                         
+                         // NSLog(@"data=%@",strDob4);
+                         
+                         if ([strDob4 isEqualToString:@"<null>"])
+                         {
+                             _txtGuardianEducationQualification.text =@"";
+                         }
+                         else
+                         {
+                             _txtGuardianEducationQualification.text = [[aryGurdian objectAtIndex:0]objectForKey:@"HighestStudyTerm"];
+                         }
+                         
+                         NSString *strDob5 = [NSString stringWithFormat:@"%@",[[aryGurdian objectAtIndex:0]objectForKey:@"OccupationTerm"]];
+                         
+                         // NSLog(@"data=%@",strDob5);
+                         
+                         if ([strDob5 isEqualToString:@"<null>"])
+                         {
+                             _txtGurdianOccupation.text =@"";
+                         }
+                         else
+                         {
+                             _txtGurdianOccupation.text = [[aryGurdian objectAtIndex:0]objectForKey:@"OccupationTerm"];
+                         }
+                         
+                         
+                         NSString *strDob6 = [NSString stringWithFormat:@"%@",[[aryGurdian objectAtIndex:0]objectForKey:@"DesignationOccupationTerm"]];
+                         
+                         //NSLog(@"data=%@",strDob6);
+                         
+                         if ([strDob6 isEqualToString:@"<null>"])
+                         {
+                             _txtGurdianDesignation.text =@"";
+                         }
+                         else
+                         {
+                             _txtGurdianDesignation.text = [[aryGurdian objectAtIndex:0]objectForKey:@"DesignationOccupationTerm"];
+                         }
+                         
+                         _txtQurdianEmail.text = [[aryGurdian objectAtIndex:0]objectForKey:@"EmailID"];
+                         
+                         NSString *strDob7 = [NSString stringWithFormat:@"%@",[[aryGurdian objectAtIndex:0]objectForKey:@"OccupationDetails"]];
+                         
+                         // NSLog(@"data=%@",strDob7);
+                         
+                         if ([strDob7 isEqualToString:@"<null>"])
+                         {
+                             _txtGurdianOccupationDetail.text =@"";
+                         }
+                         else
+                         {
+                             _txtGurdianOccupationDetail.text = [[aryGurdian objectAtIndex:0]objectForKey:@"OccupationDetails"];
+                         }
+                         
+                         
+                         NSString *strDob8 = [NSString stringWithFormat:@"%@",[[aryGurdian objectAtIndex:0]objectForKey:@"OfficeAddress"]];
+                         
+                         //NSLog(@"data=%@",strDob8);
+                         
+                         if ([strDob8 isEqualToString:@"<null>"])
+                         {
+                             _txtMotherOfficeNameAddress.text =@"";
+                         }
+                         else
+                         {
+                             _txtMotherOfficeNameAddress.text = [[aryGurdian objectAtIndex:0]objectForKey:@"OfficeAddress"];
+                         }
+                         
+                         
+                         NSString *strDob9 = [NSString stringWithFormat:@"%@",[[aryGurdian objectAtIndex:0]objectForKey:@"HomeAddress"]];
+                         
+                         // NSLog(@"data=%@",strDob9);
+                         
+                         if ([strDob9 isEqualToString:@"<null>"])
+                         {
+                             _txtGurdianHomeAddress.text =@"";
+                         }
+                         else
+                         {
+                             
+                             _txtGurdianHomeAddress.text = [[aryGurdian objectAtIndex:0]objectForKey:@"HomeAddress"];
+                         }
+                         
+                         
+                         NSString *strDob10 = [NSString stringWithFormat:@"%@",[[aryGurdian objectAtIndex:0]objectForKey:@"ContactNo"]];
+                         
+                         //NSLog(@"data=%@",strDob10);
+                         
+                         if ([strDob10 isEqualToString:@"<null>"])
+                         {
+                             _txtGurdianOfficePhoneNumber.text =@"";
+                         }
+                         else
+                         {
+                             
+                             _txtGurdianOfficePhoneNumber.text = [[aryGurdian objectAtIndex:0]objectForKey:@"ContactNo"];
+                         }
+                         
+                         
+                         
+                         NSString *strDob11 = [NSString stringWithFormat:@"%@",[[ aryGurdian objectAtIndex:0]objectForKey:@"IDNo"]];
+                         
+                         //NSLog(@"data=%@",strDob11);
+                         
+                         if ([strDob11 isEqualToString:@"<null>"])
+                         {
+                             _txtGurdianIdNo.text =@"";
+                         }
+                         else
+                         {
+                             
+                             _txtGurdianIdNo.text = [[aryGurdian objectAtIndex:0]objectForKey:@"IDNo"];
+                         }
+                         
+                         NSString *strDob12 = [NSString stringWithFormat:@"%@",[[aryGurdian objectAtIndex:0]objectForKey:@"IDTypeTerm"]];
+                         
+                         // NSLog(@"data=%@",strDob12);
+                         
+                         if ([strDob12 isEqualToString:@"<null>"])
+                         {
+                             _txtGurdianIdType.text =@"";
+                         }
+                         else
+                         {
+                             
+                             _txtGurdianIdType.text = [[aryGurdian objectAtIndex:0]objectForKey:@"IDTypeTerm"];
+                         }
+                         
+                         NSString *strDob13 = [NSString stringWithFormat:@"%@",[[aryGurdian objectAtIndex:0]objectForKey:@"DateOfIssue"]];
+                         
+                         //  NSLog(@"data=%@",strDob13);
+                         
+                         if ([strDob13 isEqualToString:@"<null>"])
+                         {
+                             _txtGuardianDateofIssue.text =@"";
+                         }
+                         else
+                         {
+                             _txtGuardianDateofIssue.text = [Utility convertDatetoSpecificDate:@"dd-MM-yyyy"  date:[[aryGurdian objectAtIndex:0]objectForKey:@"DateOfIssue"]];
+                             
+                         }
+                         
+                         
+                         NSString *strDob14 = [NSString stringWithFormat:@"%@",[[aryGurdian objectAtIndex:0]objectForKey:@"DateOfExpiry"]];
+                         
+                         //NSLog(@"data=%@",strDob14);
+                         
+                         if ([strDob14 isEqualToString:@"<null>"])
+                         {
+                             _txtGurdianDateofExpiry.text =@"";
+                         }
+                         else
+                         {
+                             _txtGurdianDateofExpiry.text = [Utility convertDatetoSpecificDate:@"dd-MM-yyyy"  date:[[aryGurdian objectAtIndex:0]objectForKey:@"DateOfExpiry"]];
+                         }
+                         
+                         //
+                         //isPicked
+                         
+                         NSString *strDob15 = [NSString stringWithFormat:@"%@",[[aryGurdian objectAtIndex:0]objectForKey:@"IsPickup"]];
+                         
+                         // NSLog(@"data=%@",strDob15);
+                         
+                         if ([strDob15 isEqualToString:@"<null>"])
+                         {
+                             isGuardianPicked = @"0";
+                             [_btnGurdianPickupDrop setImage:[UIImage imageNamed:@"checkboxunselected"] forState:UIControlStateNormal];
+                             
+                             //checkboxunselected
+                         }
+                         else if ([strDob15 isEqualToString:@"1"])
+                         {
+                             isGuardianPicked = @"1";
+                             [_btnGurdianPickupDrop setImage:[UIImage imageNamed:@"checkboxblue"] forState:UIControlStateNormal];
+                         }
+                         else if ([strDob15 isEqualToString:@"0"])
+                         {
+                             isGuardianPicked = @"0";
+                             [_btnGurdianPickupDrop setImage:[UIImage imageNamed:@"checkboxunselected"] forState:UIControlStateNormal];
+                         }
+                         else
+                         {
+                             isGuardianPicked = @"1";
+                             [_btnGurdianPickupDrop setImage:[UIImage imageNamed:@"checkboxblue"] forState:UIControlStateNormal];
+                         }
+                         
+                         //    _imgFatherIdProofImage.image = //IDProofAttached
+                         
+                         NSString *strDob16 = [NSString stringWithFormat:@"%@",[[aryGurdian objectAtIndex:0]objectForKey:@"IDProofAttached"]];
+                         
+                         // NSLog(@"data=%@",strDob16);
+                         
+                         if ([strDob16 isEqualToString:@"<null>"])
+                         {
+                             [_imgGurdianIDProof setImage:[UIImage imageNamed:@"no_img"]];
+                         }
+                         else
+                         {
+                             
+                             [_imgGurdianIDProof sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[[aryGurdian objectAtIndex:0]objectForKey:@"IDProofAttached"]]] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL)
+                              {
+                                  _imgMotherIDProof.image  = image;
+                              }];
+                             
+                             
+                         }
+                         
+                         ///////////// Images
+                         
+                         NSString *strDob18 = [NSString stringWithFormat:@"%@",[[aryGurdian objectAtIndex:0]objectForKey:@"Avtar"]];
+                         
+                         //  NSLog(@"data=%@",strDob18);
+                         
+                         if ([strDob18 isEqualToString:@"<null>"])
+                         {
+                             
+                             [_btnGuardianSelectPhoto setImage:[UIImage imageNamed:@"no_img"] forState:UIControlStateNormal];
+                         }
+                         else
+                         {
+                             UIImageView *img1 = [[UIImageView alloc]init];
+                             [img1 sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[[aryGurdian objectAtIndex:0]objectForKey:@"Avtar"]]] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL)
+                              {
+                                  NSLog(@"URL=%@",imageURL);
+                                  
+                                  [_btnGuardianSelectPhoto setImage:image forState:UIControlStateNormal];
+                              }];
+                         }
+                         
+                         
+                         //strFatherEditId
+                         
+                         NSString *strDob17 = [NSString stringWithFormat:@"%@",[[aryGurdian objectAtIndex:0]objectForKey:@"ParentProfileID"]];
+                         
+                         //  NSLog(@"data=%@",strDob17);
+                         
+                         if ([strDob17 isEqualToString:@"<null>"])
+                         {
+                             strGuardianEditId = @"";
+                         }
+                         else
+                         {
+                             strGuardianEditId = [[aryGurdian objectAtIndex:0]objectForKey:@"ParentProfileID"];
+                         }
+                         
+                     }
+                }
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
+
+    
+}
+
+#pragma mark - Gurdian Edit Profile
+
+-(void)api_GurdianEditData
+{
+    if ([Utility isInterNetConnectionIsActive] == false) {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        [ProgressHUB hideenHUDAddedTo:self.view];
+        return;
+    }
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_parentprofile,apk_CreateParentProfile];
+    //http://orataro.com/Services/apk_parentprofile.asmx/CreateParentProfile
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    //    <EditID>guid</EditID>
+    //    <MemberID>guid</MemberID>
+    //    <ClientID>guid</ClientID>
+    //    <InstituteID>guid</InstituteID>
+    //    <UserID>guid</UserID>
+    //    <BeachID>guid</BeachID>
+    //    <InitialTerm>string</InitialTerm>
+    //    <FirstName>string</FirstName>
+    //    <LastName>string</LastName>
+    //    <FullName>string</FullName>
+    //    <DateOfBirth>string</DateOfBirth>
+    //    <DateOfAnniversary>string</DateOfAnniversary>
+    //    <HighestStudy>string</HighestStudy>
+    //    <Relation>string</Relation>
+    //    <Occupation>string</Occupation>
+    //    <Designation>string</Designation>
+    //    <OccupationDetails>string</OccupationDetails>
+    //    <ContactNo>string</ContactNo>
+    //    <MobileNo>string</MobileNo>
+    //    <Email>string</Email>
+    //    <ProfileURL>string</ProfileURL>
+    //    <HomeAddress>string</HomeAddress>
+    //    <OfficeAddress>string</OfficeAddress>
+    //    <IDNo>string</IDNo>
+    //    <IDType>string</IDType>
+    //    <DateOfIssue>string</DateOfIssue>
+    //    <DateOfExpiry>string</DateOfExpiry>
+    //    <IDProofAttach>string</IDProofAttach>
+    //    <ParentPhoto>string</ParentPhoto>
+    //    <IsPickup>boolean</IsPickup>
+    //    <ParentFile>base64Binary</ParentFile>
+    //    <IDProofFile>base64Binary</IDProofFile>
+    
+    [param setValue:strGuardianEditId forKey:@"EditID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"BatchID"]] forKey:@"BeachID"];
+    [param setValue:strGuardianName forKey:@"InitialTerm"];
+    
+    [param setValue:_txtGuardianFullName.text forKey:@"FirstName"];
+    
+    [param setValue:_txtGuradianLastName.text forKey:@"LastName"];
+    
+    [param setValue:_txtGuradianFirstName.text forKey:@"FullName"];
+    
+    //  [param setValue:[Utility convertDatetoSpecificDate:@"MM-dd-yyyy"  date:_txtFatherBirthDate.text] forKey:@"DateOfBirth"];
+    
+    [param setValue:[Utility convertDateFtrToDtaeFtr:@"dd-MM-yyyy" newDateFtr:@"MM-dd-yyyy" date:_btnGurdianBirthDate.text] forKey:@"DateOfBirth"];
+    
+    // [param setValue:[Utility convertDatetoSpecificDate:@"MM-dd-yyyy"  date:_txtFatherAnniversaryDate.text] forKey:@"DateOfAnniversary"];
+    
+    [param setValue:[Utility convertDateFtrToDtaeFtr:@"dd-MM-yyyy" newDateFtr:@"MM-dd-yyyy" date:_txtGurdianAnnioversary.text] forKey:@"DateOfAnniversary"];
+    
+    [param setValue:_txtFatherEducationQualification.text forKey:@"HighestStudy"];
+    
+    [param setValue:@"Guardian" forKey:@"Relation"];
+    
+    [param setValue:_txtGurdianOccupation.text forKey:@"Occupation"];
+    
+    [param setValue:_txtGurdianDesignation.text forKey:@"Designation"];
+    
+    [param setValue:_txtGurdianOccupationDetail.text forKey:@"OccupationDetails"];
+    
+    [param setValue:_txtGurdianOfficePhoneNumber.text forKey:@"ContactNo"];
+    
+    [param setValue:_txtGuardianPhoneNumber.text forKey:@"MobileNo"];
+    
+    [param setValue:_txtQurdianEmail.text forKey:@"Email"];
+    
+    [param setValue:_txtGurdianHomeAddress.text forKey:@"HomeAddress"];
+    
+    [param setValue:_txtGuardianOfficeNameAddress.text forKey:@"OfficeAddress"];
+    
+    [param setValue:_txtGurdianIdNo.text forKey:@"IDNo"];
+    
+    [param setValue:_txtGurdianIdType.text forKey:@"IDType"];
+    
+    //  [param setValue:[Utility convertDatetoSpecificDate:@"MM-dd-yyyy"  date:_txtFatherDateofIssue.text] forKey:@"DateOfIssue"];
+    
+    [param setValue:[Utility convertDateFtrToDtaeFtr:@"dd-MM-yyyy" newDateFtr:@"MM-dd-yyyy" date:_txtGuardianDateofIssue.text] forKey:@"DateOfIssue"];
+    
+    //[param setValue:[Utility convertDatetoSpecificDate:@"MM-dd-yyyy"  date:_txtFatherDateofExpiry.text] forKey:@"DateOfExpiry"];
+    
+    [param setValue:[Utility convertDateFtrToDtaeFtr:@"dd-MM-yyyy" newDateFtr:@"MM-dd-yyyy" date:_txtGurdianDateofExpiry.text] forKey:@"DateOfExpiry"];
+    
+    if ([isGuardianPicked isEqualToString:@"0"])
+    {
+        [param setValue:@"false" forKey:@"IsPickup"];
+    }
+    else
+    {
+        [param setValue:@"true" forKey:@"IsPickup"];
+    }
+    
+    [param setValue:@"" forKey:@"ProfileURL"];
+    
+    //  [param setValue:_txtFatherDateofExpiry.text forKey:@"IDProofAttach"];
+    
+    //[param setValue:_txtFatherDateofExpiry.text forKey:@"ParentPhoto"];
+    
+    //  [param setValue:_txtFatherDateofExpiry.text forKey:@"ParentFile"];
+    
+    // [param setValue:_txtFatherDateofExpiry.text forKey:@"IDProofFile"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@.png",[Utility randomImageGenerator]] forKey:@"IDProofAttach"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@.png",[Utility randomImageGenerator]] forKey:@"ParentPhoto"];
+    
+    UIImage *org = _btnGuardianSelectPhoto.currentImage ;
+    
+    UIImage *imgCompressed = [self compressImage:org];
+    
+    //   NSData *dataImage = UIImageJPEGRepresentation(imgCompressed, 0.0);
+    
+    //  NSLog(@"Size of Image(bytes):%ld",(unsigned long)[dataImage length]);
+    
+    NSData *data = UIImagePNGRepresentation(imgCompressed);
+    const unsigned char *bytes = [data bytes];
+    NSUInteger length = [data length];
+    NSMutableArray *byteArray = [NSMutableArray array];
+    for (NSUInteger i = 0; i < length; i++)
+    {
+        [byteArray addObject:[NSNumber numberWithUnsignedChar:bytes[i]]];
+    }
+    [param setValue:byteArray forKey:@"ParentFile"];
+    
+    
+    UIImage *org1 = _imgGurdianIDProof.image ;
+    
+    UIImage *imgCompressed1 = [self compressImage:org1];
+    
+    //NSData *dataImage1 = UIImageJPEGRepresentation(imgCompressed1, 0.0);
+    
+    //NSLog(@"Size of Image(bytes):%ld",(unsigned long)[dataImage1 length]);
+    
+    NSData *data1 = UIImagePNGRepresentation(imgCompressed1);
+    const unsigned char *bytes1 = [data1 bytes];
+    NSUInteger length1 = [data1 length];
+    NSMutableArray *byteArray1 = [NSMutableArray array];
+    for (NSUInteger i = 0; i < length1; i++)
+    {
+        [byteArray1 addObject:[NSNumber numberWithUnsignedChar:bytes1[i]]];
+    }
+    [param setValue:byteArray1 forKey:@"IDProofFile"];
+    
+    
+    /* NSData *data = UIImagePNGRepresentation(_btnFatherSelectImage.currentImage);
+     const unsigned char *bytes = [data bytes];
+     NSUInteger length = [data length];
+     NSMutableArray *byteArray = [NSMutableArray array];
+     for (NSUInteger i = 0; i < length; i++)
+     {
+     [byteArray addObject:[NSNumber numberWithUnsignedChar:bytes[i]]];
+     }
+     [param setValue:byteArray forKey:@"ParentFile"];
+     
+     NSData *data1 = UIImagePNGRepresentation(_imgFatherIdProofImage.image);
+     const unsigned char *bytes1 = [data1 bytes];
+     NSUInteger length1 = [data1 length];
+     NSMutableArray *byteArray1 = [NSMutableArray array];
+     for (NSUInteger i = 0; i < length1; i++)
+     {
+     [byteArray1 addObject:[NSNumber numberWithUnsignedChar:bytes1[i]]];
+     }
+     [param setValue:byteArray1 forKey:@"IDProofFile"];*/
+    
+    
+    [ProgressHUB showHUDAddedTo:self.view];
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         //  [ProgressHUB hideenHUDAddedTo:self.view];
+         if(!error)
+         {
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             
+             if([arrResponce count] != 0)
+             {
+                 NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                 NSString *strStatus=[dic objectForKey:@"message"];
+                 if([strStatus isEqualToString:@"ParentProfile Created SuccessFully."])
+                 {
+                     [self api_GurdianGetData];
+                 }
+                 else if ([strStatus isEqualToString:@"ParentProfile Updated SuccessFully."])
+                 {
+                     [self api_GurdianGetData];
+                 }
+                 else
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                 }
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
+
+}
+
 #pragma mark - Image Compress
 
--(UIImage *)compressImage:(UIImage *)image{
+-(UIImage *)compressImage:(UIImage *)image
+{
     
     NSData *imgData = UIImagePNGRepresentation(image); //1 it represents the quality of the image.
    // NSLog(@"Size of Image(bytes):%ld",(unsigned long)[imgData length]);

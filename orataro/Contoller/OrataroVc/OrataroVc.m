@@ -20,6 +20,8 @@
     NSMutableArray *ary;
     NSMutableArray *aimageary,*imgary;
     AppDelegate *ap;
+    NSMutableDictionary *dic;
+    NSString *s;
 }
 @end
 
@@ -29,6 +31,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
+    _viewLogout.hidden = YES;
+    
+    
+    _imgClose.image = [_imgClose.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [_imgClose setTintColor:[UIColor colorWithRed:40.0/255.0 green:49.0/255.0 blue:90.0/255.0 alpha:1.0]];
+    _viewSaveOuter.layer.cornerRadius = 30.0;
+    _viewSaveInner.layer.cornerRadius = 25.0;
     
     ap = (AppDelegate *)[UIApplication sharedApplication].delegate;
     
@@ -106,6 +117,18 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    dic = [[[NSUserDefaults standardUserDefaults]valueForKey:@"TotalCountofMember"]mutableCopy];
+    
+    NSLog(@"Dic=%@",dic);
+    
+    NSMutableArray *ary1 = [dic objectForKey:@"Table"];
+    
+   s  = [NSString stringWithFormat:@"%@",[[ary1 objectAtIndex:0]objectForKey:@"NotificationCount"]];
+
+
+}
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     OrataroCell *cell = (OrataroCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"OrataroCell" forIndexPath:indexPath];
@@ -113,19 +136,20 @@
     cell.aLable.text = [ary objectAtIndex:indexPath.row];
     cell.aImageView.image = [UIImage imageNamed:[imgary objectAtIndex:indexPath.row]];
 
-    
     switch (indexPath.row)
     {
         case 0:
             
             //2D2079 ,45,32,121
             
+            cell.lbWallCount.hidden = YES;
             cell.aView.backgroundColor = [UIColor colorWithRed:45.0/255.0 green:32.0/255.0 blue:121.0/255.0 alpha:1.0];
             
             break;
         case 1:
             
             //582388 88,35,136
+            cell.lbWallCount.hidden = YES;
             
             cell.aView.backgroundColor = [UIColor colorWithRed:88.0/255.0 green:35.0/255.0 blue:136.0/255.0 alpha:1.0];
             
@@ -135,6 +159,19 @@
         case 2:
             
             //,116,26,135
+           // cell.lbWallCount.hidden = NO;
+            
+            cell.lbWallCount.layer.cornerRadius = 10.0;
+            
+            if ([s isEqualToString:@"0"])
+            {
+                cell.lbWallCount.hidden = YES;
+            }
+            else
+            {
+                cell.lbWallCount.hidden = NO;
+                cell.lbWallCount.text = [NSString stringWithFormat:@"%@",[[ary objectAtIndex:0]objectForKey:@"NotificationCount"]];
+            }
             
             cell.aView.backgroundColor = [UIColor colorWithRed:116.0/255.0 green:26.0/255.0 blue:135.0/255.0 alpha:1.0];
             
@@ -142,61 +179,61 @@
         case 3:
             
             //220,85,161
-            
+            cell.lbWallCount.hidden = YES;
             cell.aView.backgroundColor = [UIColor colorWithRed:220.0/255.0 green:85.0/255.0 blue:161.0/255.0 alpha:1.0];
             
             break;
         case 4:
             
             //45,40,138
-            
+            cell.lbWallCount.hidden = YES;
             cell.aView.backgroundColor = [UIColor colorWithRed:45.0/255.0 green:40.0/255.0 blue:138.0/255.0 alpha:1.0];
             
             break;
         case 5:
             
             //45,104,160
-            
+            cell.lbWallCount.hidden = YES;
             cell.aView.backgroundColor = [UIColor colorWithRed:45.0/255.0 green:104.0/255.0 blue:160.0/255.0 alpha:1.0];
             
             break;
         case 6:
             
             //110,100,158
-            
+            cell.lbWallCount.hidden = YES;
             cell.aView.backgroundColor = [UIColor colorWithRed:110.0/255.0 green:100.0/255.0 blue:158.0/255.0 alpha:1.0];
             
             break;
         case 7:
             
             //B089A9 176,137,169
-            
+            cell.lbWallCount.hidden = YES;
             cell.aView.backgroundColor = [UIColor colorWithRed:176.0/255.0 green:137.0/255.0 blue:169.0/255.0 alpha:1.0];
             
             break;
         case 8:
             
             //228,135,165
-            
+            cell.lbWallCount.hidden = YES;
             cell.aView.backgroundColor = [UIColor colorWithRed:228.0/255.0 green:135.0/255.0 blue:165.0/255.0 alpha:1.0];
             
             break;
         case 9:
             
             //64,173,159
-            
+            cell.lbWallCount.hidden = YES;
             cell.aView.backgroundColor = [UIColor colorWithRed:64.0/255.0 green:173.0/255.0 blue:159.0/255.0 alpha:1.0];
             
             break;
         case 10:
             
             //107,190,149
-            
+            cell.lbWallCount.hidden = YES;
             cell.aView.backgroundColor = [UIColor colorWithRed:107.0/255.0 green:190.0/255.0 blue:149.0/255.0 alpha:1.0];
             
             break;
         case 11:
-            
+            cell.lbWallCount.hidden = YES;
             //8835136
             cell.aView.backgroundColor = [UIColor colorWithRed:88.0/255.0 green:35.0/255.0 blue:136.0/255.0 alpha:1.0];
             
@@ -204,38 +241,38 @@
         case 12:
             
             //116,26,135
-            
+            cell.lbWallCount.hidden = YES;
             cell.aView.backgroundColor = [UIColor colorWithRed:116.0/255.0 green:26.0/255.0 blue:135.0/255.0 alpha:1.0];
             
             break;
         case 13:
-            
+            cell.lbWallCount.hidden = YES;
             //,228,135,165
             cell.aView.backgroundColor = [UIColor colorWithRed:228.0/255.0 green:135.0/255.0 blue:134.0/165.0 alpha:1.0];
             
             break;
         case 14:
             //,45,40,138
-            
+            cell.lbWallCount.hidden = YES;
             cell.aView.backgroundColor = [UIColor colorWithRed:45.0/255.0 green:40.0/255.0 blue:138.0/255.0 alpha:1.0];
             
             break;
         case 15:
             
             //,110,100,158
-            
+            cell.lbWallCount.hidden = YES;
             cell.aView.backgroundColor = [UIColor colorWithRed:110.0/255.0 green:100.0/255.0 blue:158.0/255.0 alpha:1.0];
             
             break;
         case 16:
             
             //220,85,161
-            
+            cell.lbWallCount.hidden = YES;
             cell.aView.backgroundColor = [UIColor colorWithRed:220.0/255.0 green:85.0/255.0 blue:161.0/255.0 alpha:1.0];
             
             break;
         case 17:
-            
+            cell.lbWallCount.hidden = YES;
             //741A87 116,26,135
             cell.aView.backgroundColor = [UIColor colorWithRed:116.0/255.0 green:26.0/255.0 blue:135.0/255.0 alpha:1.0];
             
@@ -435,10 +472,24 @@
 
 }
 
-- (IBAction)LogoutBtnClicked:(UIButton *)sender
+#pragma mark - button action
+
+- (IBAction)btnCancelClicked:(id)sender
 {
+    _viewLogout.hidden = YES;
+}
+- (IBAction)btnSaveClicked:(id)sender
+{
+    [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"TotalCountofMember"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+    
     UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"LoginVC"];
     [self.navigationController pushViewController:wc animated:YES];
+}
+- (IBAction)LogoutBtnClicked:(UIButton *)sender
+{
+    _viewLogout.hidden = NO;
+    [self.view bringSubviewToFront:_viewLogout];
 }
 
 /*
@@ -450,6 +501,7 @@
     // Pass the selected object to the new view controller.
 }
 */
+
 
 
 

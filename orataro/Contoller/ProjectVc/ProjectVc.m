@@ -84,6 +84,8 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    _lbHeaderTitle.text = [NSString stringWithFormat:@"Project (%@)",[Utility getCurrentUserName]];
+    
     //CREATE TABLE "ProjectList" ("id" INTEGER PRIMARY KEY  NOT NULL , "projectJsonStr" VARCHAR, "flag" VARCHAR, "imageStr" VARCHAR)
     
     [self api_getProjectList:YES];

@@ -42,6 +42,10 @@
 {
     //CREATE TABLE "TeacherDivisionList" ("id" INTEGER PRIMARY KEY  NOT NULL , "divJsonStr" VARCHAR)
     
+    //Division(Gaurav)
+    
+    _lbHeaderTitle.text = [NSString stringWithFormat:@"Division (%@)",[Utility getCurrentUserName]];
+    
     NSArray *ary = [DBOperation selectData:@"select * from TeacherDivisionList"];
     arySaveData = [Utility getLocalDetail:ary columnKey:@"divJsonStr"];
     [_tblDivisionList reloadData];

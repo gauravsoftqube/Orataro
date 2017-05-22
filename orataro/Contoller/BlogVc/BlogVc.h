@@ -15,5 +15,6 @@
 @property (weak, nonatomic) IBOutlet UIView *viewSearch;
 - (IBAction)btnSearchClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UITextField *txtSearchTextfield;
+@property (weak, nonatomic) IBOutlet UILabel *lbHeaderTitle;
 
 @end

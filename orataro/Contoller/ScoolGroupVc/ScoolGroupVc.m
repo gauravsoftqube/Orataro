@@ -24,9 +24,6 @@
 {
     [super viewDidLoad];
     
-    
-
-    
     _viewDeletePopup.hidden = YES;
     
     _imgCancel.image = [_imgCancel.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -65,6 +62,8 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    _lbHeaderTitle.text =  [NSString stringWithFormat:@"School Group (%@)",[Utility getCurrentUserName]];
+    
     //CREATE TABLE "SchoolGroupList" ("id" INTEGER PRIMARY KEY  NOT NULL , "jsonStr" VARCHAR, "ImageJsonstr" VARCHAR, "flag" VARCHAR)
     
     NSArray *ary = [DBOperation selectData:@"select * from SchoolGroupList"];

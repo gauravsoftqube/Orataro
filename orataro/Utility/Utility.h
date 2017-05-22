@@ -127,4 +127,8 @@
 
 + (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize isAspectRation:(BOOL)aspect;
 
++(NSString *)getCurrentUserName;
+
+
+
 @end

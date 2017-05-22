@@ -12,6 +12,7 @@
 
 @interface ProjectVc : UIViewController
 
+@property (weak, nonatomic) IBOutlet UILabel *lbHeaderTitle;
 @property (strong, nonatomic) ORGDetailViewController *detailViewController;
 @property (weak, nonatomic) IBOutlet UIView *AddBtn;
 @property (weak, nonatomic) IBOutlet UIView *viewDeletePopup;

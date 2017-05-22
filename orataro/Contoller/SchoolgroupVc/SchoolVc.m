@@ -15,9 +15,11 @@
 
 @implementation SchoolVc
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
+    _lbHeaderTitle.text = [NSString stringWithFormat:@"School Prayer (%@)",[Utility getCurrentUserName]];
 }
 
 - (void)didReceiveMemoryWarning {

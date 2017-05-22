@@ -24,6 +24,8 @@
     
     aryStatusAry = [[NSMutableArray alloc]initWithObjects:@"Approved",@"Reject",@"Pending", nil];
     
+    _lbHeaderTitle.text = [NSString stringWithFormat:@"Leave (%@)",[Utility getCurrentUserName]];
+    
     _viewLeaveStatus.hidden = YES;
     [self commonData];
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -56,7 +58,20 @@
     
     // NSString *StartDate=[Utility convertMiliSecondtoDate:@"MM-dd-yyyy" date:[dicPoll objectForKey:@"StartDate"]];
     
-    _lblApprovedOn.text = [Utility convertMiliSecondtoDate:@"dd-MM-yyyy" date:[_dicAddLeave objectForKey:@"ApprovedOn"]];
+    
+    
+    NSString *strDob3 = [NSString stringWithFormat:@"%@",[_dicAddLeave objectForKey:@"ApprovedOn"]];
+    
+    if ([strDob3 isEqualToString:@"<null>"])
+    {
+       _lblApprovedOn.text = @"";
+    }
+    else
+    {
+        _lblApprovedOn.text = [Utility convertMiliSecondtoDate:@"dd-MM-yyyy" date:[_dicAddLeave objectForKey:@"ApprovedOn"]];
+    }
+    
+   
     
     _lblStartDate.text = [Utility convertMiliSecondtoDate:@"dd-MM-yyyy" date:[_dicAddLeave objectForKey:@"StartDate"]];
     
@@ -82,6 +97,8 @@
     NSDate *date1 = [NSDate date];
     
     NSString *dateStr = [Utility convertMiliSecondtoDate:@"dd-MM-yyyy" date:[_dicAddLeave objectForKey:@"StartDate"]];
+    
+    _lblLeaveStatus.text = [_dicAddLeave objectForKey:@"ApplicationStatus_Term"];
     
     // Convert string to date object
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
@@ -187,12 +204,115 @@
 
 -(void)apk_saveLeave : (BOOL)checkProgress
 {
-    
-    
     //#define apk_SaveUpdateTodos_action  @"SaveUpdateTodos"
     //#define apk_leave @"apk_leave.asmx"
     
+    
     if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:                            nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    //#define apk_ChangeLeaveStatus @"ChangeLeaveStatus"
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_leave,apk_ChangeLeaveStatus];
+    
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    /*
+     <StudentLeaveNoteID>guid</StudentLeaveNoteID>
+     
+    <status>string</status>
+    <GradeID>guid</GradeID>
+    <DivisionID>guid</DivisionID>
+    <Note>string</Note>
+     
+    <InstituteID>guid</InstituteID>
+    <ClientID>guid</ClientID>
+    <UserID>guid</UserID>
+    <BeachID>guid</BeachID>*/
+    
+
+    [param setValue:[_dicAddLeave objectForKey:@"SchoolLeaveNoteID"] forKey:@"StudentLeaveNoteID"];
+     [param setValue:_lblLeaveStatus.text forKey:@"status"];
+    
+    if([[dicCurrentUser objectForKey:@"MemberType"] isEqualToString:@"Student"])
+    {
+        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"DivisionID"]] forKey:@"DivisionID"];
+        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"GradeID"]] forKey:@"GradeID"];
+    }
+    else
+    {
+        
+        [param setValue:[NSString stringWithFormat:@"%@",[_dicLeaveDetails objectForKey:@"DivisionID"]] forKey:@"DivisionID"];
+        
+        [param setValue:[NSString stringWithFormat:@"%@",[_dicLeaveDetails objectForKey:@"GradeID"]] forKey:@"GradeID"];
+    }
+    [param setValue:_txtViewNote.text forKey:@"Note"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"BatchID"]] forKey:@"BeachID"];
+  
+    if (checkProgress == YES)
+    {
+        [ProgressHUB showHUDAddedTo:self.view];
+    }
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         [ProgressHUB hideenHUDAddedTo:self.view];
+         if(!error)
+         {
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             
+             if([arrResponce count] != 0)
+             {
+                 NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                 NSString *strStatus=[dic objectForKey:@"message"];
+                 if([strStatus isEqualToString:@"Record update successfully"])
+                 {
+                     [self.navigationController popViewControllerAnimated:YES];
+                 }
+                 else
+                 {
+                     // UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     // [alrt show];
+                 }
+                 
+                 /* NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                  NSString *strStatus=[dic objectForKey:@"message"];
+                  if([strStatus isEqualToString:@"No Data Found"])
+                  {
+                  UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                  [alrt show];
+                  }
+                  else
+                  {
+                  }*/
+                  }
+                  else
+                  {
+                  UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                  [alrt show];
+                  }
+                  }
+                  else
+                  {
+                  UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                  [alrt show];
+                  }
+                  }];
+    
+                 
+    
+    /*if ([Utility isInterNetConnectionIsActive] == false)
     {
         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:                            nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alrt show];
@@ -240,18 +360,18 @@
         [param setValue:[NSString stringWithFormat:@"%@",[_dicLeaveDetails objectForKey:@"DivisionID"]] forKey:@"DivisionID"];
         
         [param setValue:[NSString stringWithFormat:@"%@",[_dicLeaveDetails objectForKey:@"GradeID"]] forKey:@"GradeID"];
-        
-        
     }
-    [param setValue:_lblStartDate.text forKey:@"StartDate"];
+    [param setValue:[Utility convertDateFtrToDtaeFtr:@"dd-MM-yyyy" newDateFtr:@"MM-dd-yyyy" date:_lblStartDate.text] forKey:@"StartDate"];
     
-    [param setValue:_lblEndDate.text forKey:@"EndDate"];
+    [param setValue:[Utility convertDateFtrToDtaeFtr:@"dd-MM-yyyy" newDateFtr:@"MM-dd-yyyy" date:_lblEndDate.text] forKey:@"EndDate"];
 
     [param setValue:[_dicAddLeave objectForKey:@"SchoolLeaveNoteID"] forKey:@"SchoolLeaveNoteID"];
     
     [param setValue:[dicCurrentUser objectForKey:@"PostByType"] forKey:@"PostByType"];
 
-     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"TeacherID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"TeacherID"];
+    
+    //[param setValue:[_dicAddLeave objectForKey:@"ApplicationToTeacherID"] forKey:@"TeacherID"];
     
     [param setValue:[NSNumber numberWithBool:strSetPreApplication] forKey:@"IsPreApplication"];
     
@@ -277,6 +397,18 @@
              {
                  NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
                  NSString *strStatus=[dic objectForKey:@"message"];
+                 if([strStatus isEqualToString:@"Record update successfully"])
+                 {
+                     [self.navigationController popViewControllerAnimated:YES];
+                 }
+                 else
+                 {
+                    // UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    // [alrt show];
+                 }
+
+                /* NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                 NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
                      UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -297,7 +429,7 @@
              UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
              [alrt show];
          }
-     }];
+     }];*/
     
     
 }

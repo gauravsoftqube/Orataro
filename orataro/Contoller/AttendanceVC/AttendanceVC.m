@@ -606,6 +606,40 @@ int cn =0;
                  {
                      arrResponce  = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
                      NSLog(@"Ary=%@",arrResponce);
+                     
+                     aryTable = [arrResponce objectForKey:@"Table"];
+                     
+                     if([aryTable count] == 0)
+                     {
+                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"No Data Found" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                         [alrt show];
+                         
+                         [arySaveTag removeAllObjects];
+                         [AttendanceTableView reloadData];
+                         
+                     }
+                     else
+                     {
+                         for (int i=0; i<aryTable.count; i++)
+                         {
+                             NSMutableDictionary *d = [[NSMutableDictionary alloc]init];
+                             
+                             [d setObject:[[aryTable objectAtIndex:i]objectForKey:@"MemberID"] forKey:@"MemberId"];
+                             [d setObject:[[aryTable objectAtIndex:i]objectForKey:@"FullName"]  forKey:@"Name"];
+                             [d setObject:@"1" forKey:@"Present"];
+                             [d setObject:@"0" forKey:@"Absent"];
+                             [d setObject:@"0" forKey:@"sick Leave"];
+                             [d setObject:@"0" forKey:@"Leave"];
+                             [d setObject:[[aryTable objectAtIndex:i]objectForKey:@"RollNo"] forKey:@"RollNo"];
+                             
+                             [arySaveTag addObject:d];
+                         }
+                         
+                         NSLog(@"Data=%@",arySaveTag);
+                         
+                         [AttendanceTableView reloadData];
+                     }
+
                  }
                 else
                 {
@@ -620,38 +654,6 @@ int cn =0;
                  
              }
                  
-             aryTable = [arrResponce objectForKey:@"Table"];
-             
-             if([aryTable count] == 0)
-             {
-                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"No Data Found" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                 [alrt show];
-                 
-                 [arySaveTag removeAllObjects];
-                 [AttendanceTableView reloadData];
-
-             }
-             else
-             {
-                 for (int i=0; i<aryTable.count; i++)
-                 {
-                     NSMutableDictionary *d = [[NSMutableDictionary alloc]init];
-                     
-                     [d setObject:[[aryTable objectAtIndex:i]objectForKey:@"MemberID"] forKey:@"MemberId"];
-                     [d setObject:[[aryTable objectAtIndex:i]objectForKey:@"FullName"]  forKey:@"Name"];
-                     [d setObject:@"1" forKey:@"Present"];
-                     [d setObject:@"0" forKey:@"Absent"];
-                     [d setObject:@"0" forKey:@"sick Leave"];
-                     [d setObject:@"0" forKey:@"Leave"];
-                     [d setObject:[[aryTable objectAtIndex:i]objectForKey:@"RollNo"] forKey:@"RollNo"];
-                     
-                     [arySaveTag addObject:d];
-                 }
-                 
-                 NSLog(@"Data=%@",arySaveTag);
-                 
-                 [AttendanceTableView reloadData];
-             }
         }
          else
          {
@@ -1089,7 +1091,5 @@ int cn =0;
  // Pass the selected object to the new view controller.
  }
  */
-
-
 
 @end

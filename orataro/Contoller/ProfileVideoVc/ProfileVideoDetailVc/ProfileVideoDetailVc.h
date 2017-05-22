@@ -7,9 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AVKit/AVKit.h>
+#import <AVFoundation/AVFoundation.h>
+
 
 @interface ProfileVideoDetailVc : UIViewController
 
+@property (weak, nonatomic) IBOutlet UILabel *lbHeaderTitle;
 @property (weak, nonatomic) IBOutlet UIButton *btnBackHeader;
 - (IBAction)btnBackHeader:(id)sender;
 
@@ -27,4 +31,5 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnSaveMenu;
 - (IBAction)btnSaveMenu:(id)sender;
 
+@property(strong,nonatomic)NSMutableDictionary *dicVideo;
 @end

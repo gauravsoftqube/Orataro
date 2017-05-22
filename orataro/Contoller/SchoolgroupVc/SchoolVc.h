@@ -12,5 +12,6 @@
 
 - (IBAction)BackBtnClicked:(UIButton *)sender;
 @property (weak, nonatomic) IBOutlet UIWebView *webview;
+@property (weak, nonatomic) IBOutlet UILabel *lbHeaderTitle;
 
 @end

@@ -135,8 +135,7 @@ int show =0;
                      [[NSUserDefaults standardUserDefaults]setObject:aPasswordTextField.text forKey:@"Password"];
                     [[NSUserDefaults standardUserDefaults]synchronize];
                     
-                    [self performSegueWithIdentifier:@"ShowWall" sender:self];
-                    
+                    [self api_getMemberCount];
                 }
                 else
                 {
@@ -159,6 +158,70 @@ int show =0;
     }];
 }
 
+#pragma mark - Member Count
+
+-(void)api_getMemberCount
+{
+    //#define apk_Notification @"apk_Notification.asmx"
+    //#define apk_MemberAllTypeOfCounts_action @"MemberAllTypeOfCounts"
+    
+    //    <MemberID>guid</MemberID>
+    //    <ClientID>guid</ClientID>
+    //    <InstituteID>guid</InstituteID>
+    
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_Notification,apk_MemberAllTypeOfCounts_action];
+    
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+    
+    
+    //[ProgressHUB showHUDAddedTo:self.view];
+    
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         // [ProgressHUB hideenHUDAddedTo:self.view];
+         if(!error)
+         {
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableDictionary *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             
+             if([arrResponce count] != 0)
+             {
+                 NSLog(@"arr=%@",arrResponce);
+                 
+                 [[NSUserDefaults standardUserDefaults]setObject:arrResponce forKey:@"TotalCountofMember"];
+                 [[NSUserDefaults standardUserDefaults]synchronize];
+                 
+                  [self performSegueWithIdentifier:@"ShowWall" sender:self];
+                 
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
+}
 
 /*
 #pragma mark - Navigation

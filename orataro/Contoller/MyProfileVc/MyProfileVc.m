@@ -28,6 +28,8 @@
 #import "ProfileLeaveListSelectVc.h"
 #import "DEMONavigationController.h"
 #import "Utility.h"
+#import "LeaveVc.h"
+#import "ProfileLeaveDetailListVc.h"
 
 @interface MyProfileVc ()<UIGestureRecognizerDelegate>
 {
@@ -35,6 +37,7 @@
     NSMutableArray *imgary,*textary;
     AppDelegate *aj;
     int c2;
+    NSMutableDictionary *dic;
 }
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
 @end
@@ -84,6 +87,10 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {
+     dic = [[[NSUserDefaults standardUserDefaults]valueForKey:@"TotalCountofMember"]mutableCopy];
+    
+    _lbHeaderTitle.text = [NSString stringWithFormat:@"My Profile (%@)",[Utility getCurrentUserName]];
+    
     if([[Utility getMemberType] isEqualToString:@"Student"])
     {
         _btnHealth.hidden = NO;
@@ -145,7 +152,50 @@
     
     //tag 2
     UILabel *lb = (UILabel *)[cell.contentView viewWithTag:2];
-    lb.text = [textary objectAtIndex:indexPath.row];
+    
+    
+    //tag 10
+    UILabel *lb1 = (UILabel *)[cell.contentView viewWithTag:10];
+    
+    //tag 20
+    UILabel *lb2 = (UILabel *)[cell.contentView viewWithTag:20];
+   
+    
+    if (indexPath.row == 14)
+    {
+        lb.hidden = YES;
+        lb1.hidden = NO;
+        //lb2.hidden = NO;
+        lb2.layer.cornerRadius = 10.0;
+        lb2.clipsToBounds = YES;
+        lb1.text = @"Leave";
+        NSMutableArray *ary = [dic objectForKey:@"Table2"];
+        [lb2 setBackgroundColor:[UIColor redColor]];
+        
+        NSString *s = [NSString stringWithFormat:@"%@",[[ary objectAtIndex:0]objectForKey:@"LeaveApplication"]];
+        
+        if ([s isEqualToString:@"0"])
+        {
+            lb.hidden = YES;
+        }
+        else
+        {
+            lb2.hidden = NO;
+             lb2.text = [NSString stringWithFormat:@"%@",[[ary objectAtIndex:0]objectForKey:@"LeaveApplication"]];
+        }
+
+        
+        // lb2.text = [textary objectAtIndex:indexPath.row];
+    }
+    else
+    {
+        lb.hidden = NO;
+        lb1.hidden = YES;
+        lb2.hidden = YES;
+        lb.text = [textary objectAtIndex:indexPath.row];
+    }
+
+    
     
     UIImageView *imageView;
     
@@ -202,6 +252,10 @@
     WallVc  *vc10 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
     
     ProfileLeaveListSelectVc *vc12 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfileLeaveListSelectVc"];
+    
+     ProfileLeaveDetailListVc *vc13 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfileLeaveDetailListVc"];
+    
+     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
     
     switch (indexPath.row)
     {
@@ -275,17 +329,25 @@
             
         case 13:
             
-            
             [self.navigationController pushViewController:p1 animated:YES];
             break;
             
         case 14:
             
-            [self.navigationController pushViewController:vc12 animated:YES];
+            if([[Utility getMemberType] isEqualToString:@"Student"])
+            {
+                 [self.navigationController pushViewController:vc13 animated:YES];
+            }
+            else
+            {
+                
+                [self.navigationController pushViewController:vc12 animated:YES];
+            }
+          
             break;
-        case 15:
             
-            [self.navigationController pushViewController:c animated:YES];
+        case 15:
+                 [self.navigationController pushViewController:c animated:YES];
             
             break;
             

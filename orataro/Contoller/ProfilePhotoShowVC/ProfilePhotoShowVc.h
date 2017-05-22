@@ -10,6 +10,7 @@
 
 @interface ProfilePhotoShowVc : UIViewController
 - (IBAction)BackBtnClicked:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UILabel *lbHeaderTitle;
 - (IBAction)SaveBtnClicked:(UIButton *)sender;
 @property (weak, nonatomic) IBOutlet UIView *aOuterView;
 @property (weak, nonatomic) IBOutlet UIView *aInnerView;

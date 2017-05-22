@@ -19,6 +19,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+   
+    _lbHeaderTitle.text = [NSString stringWithFormat:@"Add Homework (%@)",[Utility getCurrentUserName]];
+    
     // Do any additional setup after loading the view.
     [self commonData];
 }

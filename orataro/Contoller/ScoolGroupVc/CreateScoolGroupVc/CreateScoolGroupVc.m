@@ -67,6 +67,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    
     [self commonData];
 }
 -(void)commonData
@@ -82,12 +83,12 @@
     
     if (get.scoolgroup == 1)
     {
-        _aHeadreTitle.text = @"Create Group (kinjal)";
+        _aHeadreTitle.text = [NSString stringWithFormat:@"Create Group (%@)",[Utility getCurrentUserName]];
         self.tblMembrList_Height.constant=0;
     }
     else
     {
-        _aHeadreTitle.text = @"Edit Group (kinjal)";
+        _aHeadreTitle.text = [NSString stringWithFormat:@"Edit Group (%@)",[Utility getCurrentUserName]]; 
         // NSLog(@"Data=%@",_dicCreateSchoolGroup);
         
         

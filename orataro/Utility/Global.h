@@ -232,6 +232,8 @@
 #import "ParentProfileVc.h"
 #import "SingleWallVC.h"
 
+#import "ProfileVideoDetailVc.h"
+
 #pragma mark - YOUTube Video Key
 
 #define YouTubeVideo_Key  @"SII1LZqIAas"
@@ -316,6 +318,7 @@
 #define apk_gradedivisionsubject @"apk_gradedivisionsubject.asmx"
 #define apk_CreateCircularWithMulty_action @"CreateCircularWithMulty"
 #define apk_GetGradeDivisionSubjectbyTeacher_action @"GetGradeDivisionSubjectbyTeacher"
+#define apk_LeaveCountByGradeDivision @"LeaveCountByGradeDivision"
 
 #pragma mark - Homework
 
@@ -466,7 +469,7 @@
 
 #define apk_leave @"apk_leave.asmx"
 #define apk_LeaveAppList_action @"LeaveAppList"
-
+#define apk_ChangeLeaveStatus @"ChangeLeaveStatus"
 
 #pragma mark - apk_projects
 
@@ -513,6 +516,10 @@
 
 #define apk_ChnageProfilePhotos @"ChnageProfilePhotos"
 
+#pragma mark - Get Memmebr Count
+
+#define apk_Notification @"apk_Notification.asmx"
+#define apk_MemberAllTypeOfCounts_action @"MemberAllTypeOfCounts"
 
 #endif /* Global_h */
 

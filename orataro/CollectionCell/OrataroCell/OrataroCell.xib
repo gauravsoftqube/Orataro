@@ -42,14 +42,27 @@
                                     <constraint firstAttribute="height" constant="40" id="vrc-sw-yXj"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6nf-Uq-ILH">
+                                <rect key="frame" x="86" y="30" width="20" height="20"/>
+                                <color key="backgroundColor" red="0.8767089844" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="YrF-d6-of3"/>
+                                    <constraint firstAttribute="width" constant="20" id="yJw-FF-1fE"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.1764705882352941" green="0.14117647058823529" blue="0.46666666666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="nXZ-5K-BIx" secondAttribute="bottom" constant="15" id="0H5-mx-El5"/>
+                            <constraint firstItem="6nf-Uq-ILH" firstAttribute="leading" secondItem="Skc-9x-HuH" secondAttribute="trailing" id="5Ec-5b-uEz"/>
                             <constraint firstItem="nXZ-5K-BIx" firstAttribute="leading" secondItem="4zt-zF-tvT" secondAttribute="leading" id="YN4-vx-mSd"/>
                             <constraint firstAttribute="trailing" secondItem="nXZ-5K-BIx" secondAttribute="trailing" id="YcW-yG-STl"/>
                             <constraint firstItem="nXZ-5K-BIx" firstAttribute="top" secondItem="Skc-9x-HuH" secondAttribute="bottom" constant="8" id="kYa-bz-EcH"/>
                             <constraint firstItem="Skc-9x-HuH" firstAttribute="centerX" secondItem="4zt-zF-tvT" secondAttribute="centerX" id="qdS-xp-dDO"/>
+                            <constraint firstItem="6nf-Uq-ILH" firstAttribute="top" secondItem="4zt-zF-tvT" secondAttribute="top" constant="30" id="qf0-fp-Csz"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -65,6 +78,7 @@
                 <outlet property="aImageView" destination="Skc-9x-HuH" id="D1X-tY-Nyp"/>
                 <outlet property="aLable" destination="nXZ-5K-BIx" id="F66-ru-5h7"/>
                 <outlet property="aView" destination="4zt-zF-tvT" id="9AO-8u-s9U"/>
+                <outlet property="lbWallCount" destination="6nf-Uq-ILH" id="pJA-4U-EEr"/>
             </connections>
             <point key="canvasLocation" x="74.5" y="92.5"/>
         </collectionViewCell>

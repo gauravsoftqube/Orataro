@@ -729,6 +729,28 @@
     id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
     return json;
 }
+
++(NSString *)getCurrentUserName
+{
+    NSArray *jsonStr=[DBOperation selectData:[NSString stringWithFormat:@"select JsonStr from CurrentActiveUser"]];
+    NSData *data;
+    
+    if([jsonStr count] != 0)
+    {
+        data= [[[jsonStr objectAtIndex:0]objectForKey:@"JsonStr"]  dataUsingEncoding:NSUTF8StringEncoding];
+    }
+    
+    id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+    
+   // NSLog(@"Json=%@",json);
+    
+    NSString *strName = [json objectForKey:@"FullName"];
+    NSArray *aryName = [strName componentsSeparatedByString:@" "];
+    NSString *str = [aryName objectAtIndex:0];
+    
+    return str;
+}
+
 +(NSString *)getMemberType
 {
     NSArray *jsonStr=[DBOperation selectData:[NSString stringWithFormat:@"select JsonStr from CurrentActiveUser"]];

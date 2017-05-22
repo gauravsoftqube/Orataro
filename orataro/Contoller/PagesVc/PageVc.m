@@ -47,6 +47,9 @@
 {
     
     //   CREATE TABLE "ProfileInstitutePage" ("id" INTEGER PRIMARY KEY  NOT NULL , "JsonStr" VARCHAR)
+    //Pages (Gaurav)
+    
+    _lbHeaderTitle.text = [NSString stringWithFormat:@"Pages (%@)",[Utility getCurrentUserName]];
     
     NSArray *ary = [DBOperation selectData:@"select * from ProfileInstitutePage"];
     aryTitle = [Utility getLocalDetail:ary columnKey:@"JsonStr"];

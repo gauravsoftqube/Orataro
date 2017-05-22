@@ -14,6 +14,7 @@
 - (IBAction)btnBack:(id)sender;
 @property (weak, nonatomic) IBOutlet UITableView *tblLeaveStatus;
 - (IBAction)btnpendClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *lbHeaderTitle;
 
 @property (weak, nonatomic) IBOutlet UIView *viewLeaveStatus;
 @property (weak, nonatomic) IBOutlet UILabel *lblFullName;

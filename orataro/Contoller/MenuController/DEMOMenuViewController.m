@@ -54,6 +54,8 @@
     NSMutableArray *menu,*imgary;
     NSMutableArray *amenuary,*aimgary;
     AppDelegate *ag ;
+    NSString *WallCount;
+    NSMutableDictionary *dic;
 }
 @end
 
@@ -79,6 +81,8 @@
     _tblMenuTable.backgroundColor= [UIColor clearColor];
     _tblMenuTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     
+    //  [self api_getMemberCount];
+    
     //_tblMenuTable.frame = CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height);
  //   [_tblHeight setConstant:_tblMenuTable.frame.size.height+60];
     
@@ -95,7 +99,11 @@
     
 }
 
-
+-(void)viewWillAppear:(BOOL)animated
+{
+    dic = [[[NSUserDefaults standardUserDefaults]valueForKey:@"TotalCountofMember"]mutableCopy];
+    //NSLog(@"Dic=%@",dic);
+}
 #pragma mark UITableView Delegate
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -124,7 +132,37 @@
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    cell.aTextLb.text = [menu objectAtIndex:indexPath.row];
+    if (indexPath.row == 2)
+    {
+        cell.aTextLb.hidden = YES;
+        cell.LbWall.hidden = NO;
+        cell.LbWallCount.layer.cornerRadius = 10.0;
+        cell.LbWallCount.clipsToBounds = YES;
+        cell.LbWall.text = @"Wall";
+        
+        NSMutableArray *ary = [dic objectForKey:@"Table"];
+        
+        NSString *s = [NSString stringWithFormat:@"%@",[[ary objectAtIndex:0]objectForKey:@"NotificationCount"]];
+        
+        if ([s isEqualToString:@"0"])
+        {
+            cell.LbWallCount.hidden = YES;
+        }
+       else
+       {
+            cell.LbWallCount.hidden = NO;
+           cell.LbWallCount.text = [NSString stringWithFormat:@"%@",[[ary objectAtIndex:0]objectForKey:@"NotificationCount"]];
+       }
+        
+    }
+    else
+    {
+        cell.aTextLb.hidden = NO;
+        cell.LbWallCount.hidden = YES;
+        cell.LbWall.hidden = YES;
+        cell.aTextLb.text = [menu objectAtIndex:indexPath.row];
+
+    }
     cell.aImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",[imgary objectAtIndex:indexPath.row]]];
     
     cell.aImageView.image = [cell.aImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -196,6 +234,7 @@
         case 6:
         {
             ag.checkListelection = 1;
+            
             if([[Utility getMemberType] isEqualToString:@"Student"])
             {
                 StudentListViewController  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"StudentListViewController"];

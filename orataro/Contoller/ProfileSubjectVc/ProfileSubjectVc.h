@@ -13,5 +13,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnBack;
 - (IBAction)btnBack:(id)sender;
 @property (weak, nonatomic) IBOutlet UITableView *tblSubjectList;
+@property (weak, nonatomic) IBOutlet UILabel *lbHeaderTitle;
 
 @end

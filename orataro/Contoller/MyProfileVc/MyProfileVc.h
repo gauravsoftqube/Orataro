@@ -12,6 +12,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnPhoneChain;
 @property (weak, nonatomic) IBOutlet UIButton *btnHealth;
 @property (weak, nonatomic) IBOutlet UIButton *btnParent;
+@property (weak, nonatomic) IBOutlet UILabel *lbHeaderTitle;
 
 
 @property (weak, nonatomic) IBOutlet UITableView *aProfileTable;

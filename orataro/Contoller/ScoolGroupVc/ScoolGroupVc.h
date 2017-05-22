@@ -14,6 +14,7 @@
 - (IBAction)btnSaveClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIImageView *imgCancel;
 - (IBAction)btnSave1Clicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *lbHeaderTitle;
 
 - (IBAction)btnCancelClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *btnBackHeader;

@@ -80,6 +80,7 @@
         
         _txtUpdateAppreciation.text = [_dicUpdateList objectForKey:@"Appreciation"];
         _txtViewNote.text= [_dicUpdateList objectForKey:@"Note"];
+        strEmogies= [NSString stringWithFormat:@"%@",[_dicUpdateList objectForKey:@"Emotion"]];
         [_btnUpdateSmileRemove setImage:[UIImage imageNamed:[_dicUpdateList objectForKey:@"Emotion"]] forState:UIControlStateNormal];
         _imgUpdateCancel.hidden = NO;
         //update

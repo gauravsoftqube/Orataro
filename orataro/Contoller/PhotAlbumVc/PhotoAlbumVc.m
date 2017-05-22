@@ -25,14 +25,8 @@
 {
     [super viewDidLoad];
     
-    
     arySaveImage = [[NSMutableArray alloc]init];
     arySaveTempImage = [[NSMutableArray alloc]init];
-    
-    
-    
-    
-   
     
     //PhotosCell
     //AlbumCell
@@ -64,7 +58,8 @@
     
     //CREATE TABLE "PhotoAlbumList" ("id" INTEGER PRIMARY KEY  NOT NULL , "PhotoAlbumJsonStr" VARCHAR, "Flag" VARCHAR, "PhotoAlbumImageStr" VARCHAR)
     
-  
+    _lbHeaderTitle.text = [NSString stringWithFormat:@"PhotosAlbum (%@)",[Utility getCurrentUserName]];
+    
     aFirstBtn.tag = 1;
     aSecondBtn.tag = 0;
     

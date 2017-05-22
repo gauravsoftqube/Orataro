@@ -9,6 +9,7 @@
 #import "ProfileLeaveDetailListVc.h"
 #import "LeaveVc.h"
 #import "Global.h"
+#import "ProfileStudentLeaveVc.h"
 
 @interface ProfileLeaveDetailListVc ()
 {
@@ -26,6 +27,7 @@
     _tblListDetail.separatorStyle=UITableViewCellSeparatorStyleNone;
     _viewAddbtn.layer.cornerRadius = 30.0;
     
+    _lbHeaderTitle.text = [NSString stringWithFormat:@"Leave (%@)",[Utility getCurrentUserName]];
     // Do any additional setup after loading the view.
 }
 
@@ -151,7 +153,7 @@
     
     NSDictionary *d = [[[arrLeaveList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
     
-    //  NSLog(@"Dic=%@",d);
+      NSLog(@"Dic=%@",d);
     
     
     NSString *getdt = [d objectForKey:@"DateOfApplication"];
@@ -165,7 +167,20 @@
     UILabel *lblLeaveFor = (UILabel *)[cell.contentView viewWithTag:4];
     lblLeaveFor.text = [d objectForKey:@"ApplicationBY"];
     
-    UILabel *lblLeaveNot = (UILabel *)[cell.contentView viewWithTag:5];
+
+     UILabel *lblLeaveNot = (UILabel *)[cell.contentView viewWithTag:5];
+    
+  //  NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    
+//    if([[dicCurrentUser objectForKey:@"MemberType"] isEqualToString:@"Student"])
+//    {
+//        lblLeaveNot.text =@"";
+//    }
+//    else
+//    {
+//       
+//    }
+    
     lblLeaveNot.text = [d objectForKey:@"ReasonForLeave"];
     
     UILabel *lblLeaveStatus = (UILabel *)[cell.contentView viewWithTag:6];
@@ -176,12 +191,25 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //LeaveVc
-    LeaveVc *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"LeaveVc"];
-    vc.dicAddLeave = [[[arrLeaveList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
-    vc.dicLeaveDetails = _dicLeaveDetails;
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
     
-    [self.navigationController pushViewController:vc animated:YES];
+    if([[dicCurrentUser objectForKey:@"MemberType"] isEqualToString:@"Student"])
+    {
+        ProfileStudentLeaveVc *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"ProfileStudentLeaveVc"];
+        vc.dicStudentLeaveData = [[[arrLeaveList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
+        vc.strAddEdit = @"Edit";
+        [self.navigationController pushViewController:vc animated:YES];
+        
+    }
+    else
+    {
+        //LeaveVc
+        
+        LeaveVc *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"LeaveVc"];
+        vc.dicAddLeave = [[[arrLeaveList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
+        vc.dicLeaveDetails = _dicLeaveDetails;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 
@@ -235,7 +263,7 @@
         [param setValue:[NSString stringWithFormat:@"%@",[_dicLeaveDetails objectForKey:@"GradeID"]] forKey:@"GradeID"];
     }
     
-    [param setValue:@"Teacher" forKey:@"MemberType"];
+    [param setValue:[dicCurrentUser objectForKey:@"MemberType"] forKey:@"MemberType"];
     
     if (checkProgress == YES)
     {
@@ -395,6 +423,7 @@
 - (IBAction)btnAddClicked:(id)sender
 {
     ProfileStudentLeaveVc *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"ProfileStudentLeaveVc"];
+     vc.strAddEdit = @"Add";
     [self.navigationController pushViewController:vc animated:YES];
 }
 @end

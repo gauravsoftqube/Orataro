@@ -24,6 +24,8 @@
     arySaveStandard = [[NSMutableArray alloc]init];
     arySaveData = [[NSMutableArray alloc]init];
     
+    _lbHeaderTitle.text = [NSString stringWithFormat:@"Standard (%@)",[Utility getCurrentUserName]];
+    
     // Do any additional setup after loading the view.
     [self commonData];
 }

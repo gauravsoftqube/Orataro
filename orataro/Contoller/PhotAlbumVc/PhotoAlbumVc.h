@@ -12,6 +12,7 @@
 
 @property (weak, nonatomic) IBOutlet UICollectionView *aCollectionView;
 @property (weak, nonatomic) IBOutlet UIButton *aFirstBtn;
+@property (weak, nonatomic) IBOutlet UILabel *lbHeaderTitle;
 @property (weak, nonatomic) IBOutlet UIButton *AddBtn;
 - (IBAction)aFirstBtnClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *aSecondBtn;

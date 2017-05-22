@@ -12,5 +12,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *aImageView;
 @property (weak, nonatomic) IBOutlet UILabel *aLable;
 @property (weak, nonatomic) IBOutlet UIView *aView;
+@property (weak, nonatomic) IBOutlet UILabel *lbWallCount;
 
 @end

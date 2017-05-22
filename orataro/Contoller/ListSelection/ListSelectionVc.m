@@ -62,36 +62,38 @@
     //pt communication 1
     
     //happy gram 3
+    //_lbHeaderTitle.text = [NSString stringWithFormat:@"My Profile (%@)",[Utility getCurrentUserName]];
+    
     if (ad.checkListelection == 0)
     {
         [HomeBtn setBackgroundImage:[UIImage imageNamed:@"dash_home"] forState:UIControlStateNormal];
         aMenuBtn.hidden = NO;
-        [NavigationTitle setText:@"List Selection (Name)"];
+        [NavigationTitle setText:[NSString stringWithFormat:@"List Selection (%@)",[Utility getCurrentUserName]]];
+         
     }
     if (ad.checkListelection == 1)
     {
         [HomeBtn setBackgroundImage:[UIImage imageNamed:@"dash_home"] forState:UIControlStateNormal];
         aMenuBtn.hidden = NO;
-        [NavigationTitle setText:@"List Selection (Name)"];
+        [NavigationTitle setText:[NSString stringWithFormat:@"List Selection (%@)",[Utility getCurrentUserName]]];
     }
     if (ad.checkListelection == 2)
     {
         [HomeBtn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
         aMenuBtn.hidden = YES;
-        [NavigationTitle setText:@"List Selection (name)"];
+       [NavigationTitle setText:[NSString stringWithFormat:@"List Selection (%@)",[Utility getCurrentUserName]]];
         
     }
     if (ad.checkListelection == 3)
     {
         [HomeBtn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
         aMenuBtn.hidden = YES;
-        [NavigationTitle setText:@"List Selection (name)"];
-    }
+        [NavigationTitle setText:[NSString stringWithFormat:@"List Selection (%@)",[Utility getCurrentUserName]]];    }
     if (ad.checkListelection == 4)
     {
         [HomeBtn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
         aMenuBtn.hidden = YES;
-        [NavigationTitle setText:@"List Selection (name)"];
+        [NavigationTitle setText:[NSString stringWithFormat:@"List Selection (%@)",[Utility getCurrentUserName]]];
     }
 
     if ([Utility isInterNetConnectionIsActive] == false)
