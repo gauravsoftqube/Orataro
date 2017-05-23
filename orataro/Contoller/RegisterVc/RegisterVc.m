@@ -60,10 +60,12 @@
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_registration,apk_CheckUserMobileNumberForRegistration_action];
 
     NSString *currentDeviceId=[[NSUserDefaults standardUserDefaults]objectForKey:@"currentDeviceId"];
-   
+    NSLog(@"Current=%@",currentDeviceId);
+    
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
     [param setValue:[NSString stringWithFormat:@"%@",self.aMobTextField.text] forKey:@"MobileNumber"];
     [param setValue:[NSString stringWithFormat:@"%@",currentDeviceId] forKey:@"DivisRegID"];
+    
      [ProgressHUB showHUDAddedTo:self.view];
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
     {

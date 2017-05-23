@@ -37,13 +37,16 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-     [super viewWillAppear:animated];
+    [super viewWillAppear:animated];
+    
+    
+    NSLog(@"Dic=%@",_dicChatData);
     
     [[IQKeyboardManager sharedManager] setEnable:NO];
     [[IQKeyboardManager sharedManager] setEnableAutoToolbar:YES];
     
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-   // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
     [self api_getChatHistory];
 }
@@ -70,21 +73,29 @@
     return YES;
 }
 
+#pragma mark - keyboard hide show
 
 - (void)keyboardDidShow:(NSNotification *)notification
 {
     CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
     [_viewChatMessage setTransform: CGAffineTransformMakeTranslation(0, -1*keyboardSize.height)];
     
-    // Assign new frame to your view
-    //[self.viewChatMessage setFrame:CGRectMake(0,-110,self.view.frame.size.width,60)]; //here taken -110 for example i.e. your view will be scrolled to -110. change its value according to your requirement.
+    _tblChatMessage.contentInset = UIEdgeInsetsMake(0, 0, keyboardSize.height, 0);
     
+    if ([aryChatMessage count] > 0)
+    {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:aryChatMessage.count-1 inSection:0];
+        [_tblChatMessage scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        
+    }
 }
 
 -(void)keyboardDidHide:(NSNotification *)notification
 {
-     [_viewChatMessage setTransform: CGAffineTransformIdentity];
-   // [self.viewChatMessage setFrame:CGRectMake(0,0,self.view.frame.size.width,60)];
+    [_viewChatMessage setTransform: CGAffineTransformIdentity];
+     _tblChatMessage.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    
 }
 
 
@@ -98,7 +109,7 @@
 
 - (IBAction)btnSendClicked:(id)sender
 {
-    
+    [self api_sendMessage];
 }
 
 
@@ -110,14 +121,24 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-   // return messages.count;
-    return 5;
+    // return messages.count;
+    return aryChatMessage.count;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row%2!=0)
+    //tick
+    //double_tick_sky_blue
+    
+    
+    NSLog(@"aryresp=%@",aryChatMessage);
+    
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    
+    NSLog(@"sdsdsdsdsd=%@",[dicCurrentUser objectForKey:@"MemberID"]);
+    
+    if (![[[aryChatMessage objectAtIndex:indexPath.row]objectForKey:@"MemberID"] isEqualToString:[dicCurrentUser objectForKey:@"MemberID"]])
     {
         ReceiveMessege *cell = (ReceiveMessege *)[tableView dequeueReusableCellWithIdentifier:@"ReceiveCell"];
         if (cell == nil)
@@ -127,13 +148,14 @@
         }
         
         cell.aView.layer.cornerRadius = 2.0;
-
-        
-       /* cell.lbReceiverMessage.text = [messages objectAtIndex:indexPath.row];
-        cell.lbReceiverTime.text = [messages1 objectAtIndex:indexPath.row];
         
         
-        CGSize size = [self findHeightForText:[messages objectAtIndex:indexPath.row] havingWidth:([UIScreen mainScreen].bounds.size.width-65) andFont:[UIFont systemFontOfSize:15.0]];
+        cell.lbReceiverMessage.text = [[aryChatMessage objectAtIndex:indexPath.row]objectForKey:@"Details"];
+        cell.lbReceiverTime.text = [Utility convertMiliSecondtoDate:@"HH:mm a" date:[[aryChatMessage objectAtIndex:indexPath.row]objectForKey:@"CreatedOn"]];
+        
+      //  NSString *strMsg = [[aryChatMessage objectAtIndex:indexPath.row]objectForKey:@"Details"];
+        
+        CGSize size = [self findHeightForText:[[aryChatMessage objectAtIndex:indexPath.row]objectForKey:@"Details"] havingWidth:([UIScreen mainScreen].bounds.size.width-65) andFont:[UIFont systemFontOfSize:15.0]];
         
         if (size.width < 65)
         {
@@ -143,7 +165,7 @@
         {
             cell.trailingSpace.constant = [UIScreen mainScreen].bounds.size.width - (size.width+25);
         }
-        [cell layoutIfNeeded];*/
+        [cell layoutIfNeeded];
         
         return cell;
         
@@ -157,14 +179,14 @@
             cell = [xib objectAtIndex:0];
         }
         
-         cell.aView.layer.cornerRadius = 2.0;
+        cell.aView.layer.cornerRadius = 2.0;
         
-        /*cell.lbSenderMessage.text = [messages objectAtIndex:indexPath.row];
-        cell.lbSenderTime.text = [messages1 objectAtIndex:indexPath.row];
-       
+        cell.lbSenderMessage.text = [[aryChatMessage objectAtIndex:indexPath.row]objectForKey:@"Details"];
+        cell.lbSenderTime.text = [Utility convertMiliSecondtoDate:@"HH:mm a" date:[[aryChatMessage objectAtIndex:indexPath.row]objectForKey:@"CreatedOn"]];
         
         
-        CGSize size = [self findHeightForText:[messages objectAtIndex:indexPath.row] havingWidth:([UIScreen mainScreen].bounds.size.width-65) andFont:[UIFont systemFontOfSize:15.0]];
+        
+        CGSize size = [self findHeightForText:[[aryChatMessage objectAtIndex:indexPath.row]objectForKey:@"Details"] havingWidth:([UIScreen mainScreen].bounds.size.width-65) andFont:[UIFont systemFontOfSize:15.0]];
         
         if (size.width < 65)
         {
@@ -176,17 +198,82 @@
         }
         
         
-        [cell layoutIfNeeded];*/
+        [cell layoutIfNeeded];
         
         return cell;
         
     }
+    
+    /*  if (indexPath.row%2!=0)
+     {
+     ReceiveMessege *cell = (ReceiveMessege *)[tableView dequeueReusableCellWithIdentifier:@"ReceiveCell"];
+     if (cell == nil)
+     {
+     NSArray *xib = [[NSBundle mainBundle] loadNibNamed:@"ReceiveMessege" owner:self options:nil];
+     cell = [xib objectAtIndex:0];
+     }
+     
+     cell.aView.layer.cornerRadius = 2.0;
+     
+     
+     cell.lbReceiverMessage.text = [messages objectAtIndex:indexPath.row];
+     cell.lbReceiverTime.text = [messages1 objectAtIndex:indexPath.row];
+     
+     
+     CGSize size = [self findHeightForText:[messages objectAtIndex:indexPath.row] havingWidth:([UIScreen mainScreen].bounds.size.width-65) andFont:[UIFont systemFontOfSize:15.0]];
+     
+     if (size.width < 65)
+     {
+     cell.trailingSpace.constant = [UIScreen mainScreen].bounds.size.width - (size.width+65);
+     }
+     else
+     {
+     cell.trailingSpace.constant = [UIScreen mainScreen].bounds.size.width - (size.width+25);
+     }
+     [cell layoutIfNeeded];
+     
+     return cell;
+     
+     }
+     else
+     {
+     SenderMessage *cell = (SenderMessage *)[tableView dequeueReusableCellWithIdentifier:@"SenderCell"];
+     if (cell == nil)
+     {
+     NSArray *xib = [[NSBundle mainBundle] loadNibNamed:@"SenderMessage" owner:self options:nil];
+     cell = [xib objectAtIndex:0];
+     }
+     
+     cell.aView.layer.cornerRadius = 2.0;
+     
+     cell.lbSenderMessage.text = [messages objectAtIndex:indexPath.row];
+     cell.lbSenderTime.text = [messages1 objectAtIndex:indexPath.row];
+     
+     
+     
+     CGSize size = [self findHeightForText:[messages objectAtIndex:indexPath.row] havingWidth:([UIScreen mainScreen].bounds.size.width-65) andFont:[UIFont systemFontOfSize:15.0]];
+     
+     if (size.width < 65)
+     {
+     cell.leadingSpace.constant = [UIScreen mainScreen].bounds.size.width - (size.width+65);
+     }
+     else
+     {
+     cell.leadingSpace.constant = [UIScreen mainScreen].bounds.size.width - (size.width+10);
+     }
+     
+     
+     [cell layoutIfNeeded];
+     
+     return cell;
+     
+     }*/
     return nil;
 }
 
-/*- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGSize size = [self findHeightForText:[messages objectAtIndex:indexPath.row] havingWidth:([UIScreen mainScreen].bounds.size.width-70) andFont:[UIFont systemFontOfSize:15.0]];
+    CGSize size = [self findHeightForText:[[aryChatMessage objectAtIndex:indexPath.row]objectForKey:@"Details"] havingWidth:([UIScreen mainScreen].bounds.size.width-70) andFont:[UIFont systemFontOfSize:15.0]];
     
     //NSLog(@"Data=%f",size.height);
     
@@ -209,8 +296,15 @@
     }
     return size;
     
-}*/
-
+}
+-(void)tableViewScrollToBottomAnimated:(BOOL)animated
+{
+    NSInteger numberOfRows = [_tblChatMessage numberOfRowsInSection:0];
+    if (numberOfRows)
+    {
+        [_tblChatMessage scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:numberOfRows-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:animated];
+    }
+}
 
 #pragma mark - Get ChatData
 
@@ -219,9 +313,9 @@
     //#define apk_ptcommunication  @"apk_ptcommunication.asmx"
     //#define apk_PTCommunicationChatHistory_action @"PTCommunicationChatHistory"
     
-   // <ClientID>guid</ClientID>
-   // <InstituteID>guid</InstituteID>
-   // <PTCommunicationID>guid</PTCommunicationID>
+    // <ClientID>guid</ClientID>
+    // <InstituteID>guid</InstituteID>
+    // <PTCommunicationID>guid</PTCommunicationID>
     
     NSLog(@"Dic=%@",_dicChatData);
     
@@ -240,12 +334,12 @@
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
     
     [param setValue:[_dicChatData objectForKey:@"CommunicationID"] forKey:@"PTCommunicationID"];
-   
+    
     [ProgressHUB showHUDAddedTo:self.view];
     
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
-       //  [ProgressHUB hideenHUDAddedTo:self.view];
+         //  [ProgressHUB hideenHUDAddedTo:self.view];
          if(!error)
          {
              NSString *strArrd=[dicResponce objectForKey:@"d"];
@@ -266,6 +360,8 @@
                  }
                  else
                  {
+                     aryChatMessage = [[NSMutableArray alloc]initWithArray:arrResponce];
+                     
                      [self api_PTCommunicationChatHistorySetViewFlag:arrResponce];
                      
                  }
@@ -313,7 +409,7 @@
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
     [param setValue:[Utility getMemberType] forKey:@"MemberType"];
-
+    
     NSMutableArray *aryTempStoreID= [[NSMutableArray alloc]init];
     
     for (NSMutableDictionary *dic in arrResponse)
@@ -333,7 +429,7 @@
         }
         else
         {
-             NSString *isParent = [NSString stringWithFormat:@"%@",[dic objectForKey:@"IsParentRead"]];
+            NSString *isParent = [NSString stringWithFormat:@"%@",[dic objectForKey:@"IsParentRead"]];
             
             if ([isParent isEqualToString:@"0"])
             {
@@ -345,7 +441,7 @@
             }
         }
     }
-   
+    
     NSLog(@"Id=%@",aryTempStoreID);
     
     if (aryTempStoreID.count > 0)
@@ -354,11 +450,11 @@
         
         [param setValue:st forKey:@"PTCommunicationDetailIDByComma"];
         
-        [ProgressHUB showHUDAddedTo:self.view];
+        //  [ProgressHUB showHUDAddedTo:self.view];
         
         [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
          {
-             //  [ProgressHUB hideenHUDAddedTo:self.view];
+             [ProgressHUB hideenHUDAddedTo:self.view];
              if(!error)
              {
                  NSString *strArrd=[dicResponce objectForKey:@"d"];
@@ -391,10 +487,13 @@
                  [alrt show];
              }
          }];
-
+        
     }
     else{
         [ProgressHUB hideenHUDAddedTo:self.view];
+        
+        [_tblChatMessage reloadData];
+        
     }
     
 }
@@ -403,21 +502,111 @@
 
 -(void)api_sendMessage
 {
-    //WriteCommentsInPTCommnunication
+    NSLog(@"Dic =%@",_dicChatData);
+    NSLog(@"Dic=%@",aryChatMessage);
     
-   // apk_ptcommunication
-   // apk_WriteCommentsInPTCommnunication
+    //aryChatMessage
+    
+    
+    // apk_ptcommunication
+    // apk_WriteCommentsInPTCommnunication
+    
+    /*
+     
+     <InstituteID>guid</InstituteID>
+     <ClientID>guid</ClientID>
+     <UserID>guid</UserID>
+     <MemberID>guid</MemberID>
+     <MemberType>string</MemberType>
+     
+     <PTCommunicationDetailsID>guid</PTCommunicationDetailsID>
+     <Message>string</Message>
+     <PostByType>string</PostByType>
+     <PTCommunicationID>guid</PTCommunicationID>
+     
+     */
+    
+    if ([Utility isInterNetConnectionIsActive] == false) {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_ptcommunication,apk_WriteCommentsInPTCommnunication];
+    
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
+    [param setValue:[Utility getMemberType] forKey:@"MemberType"];
+    [param setValue:@"" forKey:@"PTCommunicationDetailsID"];
+    [param setValue:_txtMessageText.text forKey:@"Message"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"PostByType"]] forKey:@"PostByType"];
+    [param setValue:[_dicChatData objectForKey:@"CommunicationID"] forKey:@"PTCommunicationID"];
+    
+    [ProgressHUB showHUDAddedTo:self.view];
+    
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         [ProgressHUB hideenHUDAddedTo:self.view];
+         if(!error)
+         {
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             // NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             //NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             
+             
+             //             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             //             if([dicResponce count] != 0)
+             //             {
+             
+             if([dicResponce count] != 0)
+             {
+                 // NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                 NSString *strStatus=[dicResponce objectForKey:@"message"];
+                 if([strStatus isEqualToString:@"No Data Found"])
+                 {
+                     
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dicResponce objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                 }
+                 else
+                 {
+                     //aryChatMessage = [[NSMutableArray alloc]initWithArray:arrResponce];
+                     
+                     // [self api_PTCommunicationChatHistorySetViewFlag:arrResponce];
+                     _txtMessageText.text = @"";
+                     [self api_getChatHistory];
+                 }
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
+    
     
 }
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 
 

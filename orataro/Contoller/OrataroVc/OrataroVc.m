@@ -476,6 +476,9 @@
 - (IBAction)btnSaveClicked:(id)sender
 {
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"TotalCountofMember"];
+    [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"DeviceToken"];
+    [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"currentDeviceId"];
+    
     [[NSUserDefaults standardUserDefaults]synchronize];
     
     UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"LoginVC"];

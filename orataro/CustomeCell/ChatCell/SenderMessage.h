@@ -13,5 +13,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *lbSenderTime;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *leadingSpace;
 @property (weak, nonatomic) IBOutlet UIView *aView;
+@property (weak, nonatomic) IBOutlet UIImageView *imgReadUnread;
 
 @end

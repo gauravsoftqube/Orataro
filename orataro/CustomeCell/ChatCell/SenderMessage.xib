@@ -67,6 +67,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="aView" destination="7J6-Rx-bzd" id="Kq8-d8-E0y"/>
+                <outlet property="imgReadUnread" destination="XM7-Go-VDk" id="dv1-MO-kyO"/>
                 <outlet property="lbSenderMessage" destination="6iz-DA-8sS" id="Nfo-yk-gkX"/>
                 <outlet property="lbSenderTime" destination="sO5-xN-ZMl" id="JwD-gD-n0X"/>
                 <outlet property="leadingSpace" destination="7pW-PR-1ny" id="TfX-GG-iuW"/>

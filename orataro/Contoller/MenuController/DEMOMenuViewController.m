@@ -101,8 +101,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    dic = [[[NSUserDefaults standardUserDefaults]valueForKey:@"TotalCountofMember"]mutableCopy];
-    NSLog(@"Dic=%@",dic);
+    [self api_getMemberCount];
 }
 #pragma mark UITableView Delegate
 
@@ -132,8 +131,8 @@
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    if ([dic count] > 0)
-    {
+  //  if ([dic count] > 0)
+    //{
         if (indexPath.row == 2)
         {
             cell.aTextLb.hidden = YES;
@@ -170,7 +169,7 @@
             
         }
 
-    }
+   // }
     cell.aImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",[imgary objectAtIndex:indexPath.row]]];
     
     cell.aImageView.image = [cell.aImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -329,6 +328,76 @@
     [self.frostedViewController hideMenuViewController];
     
     //
+}
+
+#pragma mark - Member Count
+
+-(void)api_getMemberCount
+{
+    //#define apk_Notification @"apk_Notification.asmx"
+    //#define apk_MemberAllTypeOfCounts_action @"MemberAllTypeOfCounts"
+    
+    //    <MemberID>guid</MemberID>
+    //    <ClientID>guid</ClientID>
+    //    <InstituteID>guid</InstituteID>
+    
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_Notification,apk_MemberAllTypeOfCounts_action];
+    
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+    
+    
+    //[ProgressHUB showHUDAddedTo:self.view];
+    
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         // [ProgressHUB hideenHUDAddedTo:self.view];
+         if(!error)
+         {
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableDictionary *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             
+             if([arrResponce count] != 0)
+             {
+                 NSLog(@"arr=%@",arrResponce);
+                 
+                 [[NSUserDefaults standardUserDefaults]setObject:arrResponce forKey:@"TotalCountofMember"];
+                 [[NSUserDefaults standardUserDefaults]synchronize];
+                 
+                 dic = [[[NSUserDefaults standardUserDefaults]valueForKey:@"TotalCountofMember"]mutableCopy];
+                 NSLog(@"Dic=%@",dic);
+                 
+                 [_tblMenuTable reloadData];
+                 
+                 //[self performSegueWithIdentifier:@"ShowWall" sender:self];
+                 
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
 }
 
 @end
