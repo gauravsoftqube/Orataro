@@ -356,11 +356,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "orataro/Contoller/WallVc/WallVc.m"
-            timestampString = "516523832.79904"
+            timestampString = "517241546.020376"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "463"
-            endingLineNumber = "463"
+            startingLineNumber = "464"
+            endingLineNumber = "464"
             landmarkName = "-get_ImageIn_LocalDB:"
             landmarkType = "7">
          </BreakpointContent>
@@ -372,11 +372,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "orataro/Contoller/WallVc/WallVc.m"
-            timestampString = "516523832.79904"
+            timestampString = "517241546.020376"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "500"
-            endingLineNumber = "500"
+            startingLineNumber = "501"
+            endingLineNumber = "501"
             landmarkName = "-apiCallFor_UploadFile:FileType:FileName:imageSelect:arrPost_LocalDB:dicPost_LocalDB:videoURL:"
             landmarkType = "7">
          </BreakpointContent>
@@ -388,11 +388,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "orataro/Contoller/WallVc/WallVc.m"
-            timestampString = "516523832.79904"
+            timestampString = "517241546.020376"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "531"
-            endingLineNumber = "531"
+            startingLineNumber = "532"
+            endingLineNumber = "532"
             landmarkName = "-apiCallFor_UploadFile:FileType:FileName:imageSelect:arrPost_LocalDB:dicPost_LocalDB:videoURL:"
             landmarkType = "7">
          </BreakpointContent>
@@ -404,11 +404,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "orataro/Contoller/WallVc/WallVc.m"
-            timestampString = "516523832.79904"
+            timestampString = "517241546.020376"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "561"
-            endingLineNumber = "561"
+            startingLineNumber = "562"
+            endingLineNumber = "562"
             landmarkName = "-apiCallFor_UploadFile:FileType:FileName:imageSelect:arrPost_LocalDB:dicPost_LocalDB:videoURL:"
             landmarkType = "7">
          </BreakpointContent>
@@ -420,28 +420,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "orataro/Contoller/WallVc/WallVc.m"
-            timestampString = "516523832.79904"
+            timestampString = "517241546.020376"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "651"
-            endingLineNumber = "651"
+            startingLineNumber = "652"
+            endingLineNumber = "652"
             landmarkName = "-apiCallFor_newPost:FileType:dicPost_LocalDB:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "orataro/Contoller/ProfileStandardVc/ProfileStandardVc.m"
-            timestampString = "516082674.040784"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "111"
-            endingLineNumber = "111"
-            landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -484,28 +468,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "orataro/Contoller/WallVc/WallVc.m"
-            timestampString = "517217446.075048"
+            timestampString = "517241546.020376"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "4562"
-            endingLineNumber = "4562"
+            startingLineNumber = "4658"
+            endingLineNumber = "4658"
             landmarkName = "-btnCheckAll_SpecialFriends:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "orataro/Contoller/WallVc/WallVc.m"
-            timestampString = "517217446.075048"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2512"
-            endingLineNumber = "2512"
-            landmarkName = "-tableView:viewForHeaderInSection:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

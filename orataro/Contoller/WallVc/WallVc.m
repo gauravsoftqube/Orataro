@@ -38,7 +38,7 @@
     
     NSString *strDynaminWallMenuSelected;
     
-    NSMutableArray *arrDynamicWallMenu;
+    NSMutableArray *arrDynamicWallMenu,*arrDynamicWallMenuMain;
 }
 @end
 
@@ -346,6 +346,7 @@ int c2= 0;
         
         [self.aWallTableView reloadData];
         
+        [self.btnHeaderTitle setUserInteractionEnabled:NO];
         if(arrGeneralWall.count == 0)
         {
             [self apiCallFor_GetGeneralWallData:@"1"];
@@ -1227,6 +1228,7 @@ int c2= 0;
     
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
+         [self.btnHeaderTitle setUserInteractionEnabled:YES ];
          [self.aWallTableView.refreshControl endRefreshing];
          [self.aWallTableView.tableFooterView setHidden:YES];
          [ProgressHUB hideenHUDAddedTo:self.view];
@@ -1237,7 +1239,7 @@ int c2= 0;
              
              if ([_checkscreen isEqualToString:@"Institute"])
              {
-                 NSMutableDictionary  *dicResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                 NSMutableDictionary  *dicResponce = [[NSJSONSerialization JSONObjectWithData:data options:0 error:nil]mutableCopy];
                  if(dicResponce != nil)
                  {
                      NSMutableArray *arrResponce=[dicResponce objectForKey:@"PostData"];
@@ -1777,6 +1779,8 @@ int c2= 0;
                  else
                  {
                      arrDynamicWallMenu = [[NSMutableArray alloc]init];
+                     arrDynamicWallMenuMain = [[NSMutableArray alloc]init];
+                     
                      NSMutableArray *arrWall=[[NSMutableArray alloc]init];
                      NSMutableArray *arrMyWall=[[NSMutableArray alloc]init];
                      NSMutableArray *arrInstituteWall=[[NSMutableArray alloc]init];
@@ -1785,7 +1789,25 @@ int c2= 0;
                      NSMutableArray *arrSubjectWall=[[NSMutableArray alloc]init];
                      NSMutableArray *arrGroupWall=[[NSMutableArray alloc]init];
                      NSMutableArray *arrProjectWall=[[NSMutableArray alloc]init];
-                     
+                     {
+                         NSMutableArray *arrWall=[[NSMutableArray alloc]init];
+                         NSMutableArray *arrMyWall=[[NSMutableArray alloc]init];
+                         NSMutableArray *arrInstituteWall=[[NSMutableArray alloc]init];
+                         NSMutableArray *arrStandardWall=[[NSMutableArray alloc]init];
+                         NSMutableArray *arrDivisionWall=[[NSMutableArray alloc]init];
+                         NSMutableArray *arrSubjectWall=[[NSMutableArray alloc]init];
+                         NSMutableArray *arrGroupWall=[[NSMutableArray alloc]init];
+                         NSMutableArray *arrProjectWall=[[NSMutableArray alloc]init];
+                         [arrDynamicWallMenu addObject:arrWall];
+                         [arrDynamicWallMenu addObject:arrMyWall];
+                         [arrDynamicWallMenu addObject:arrInstituteWall];
+                         [arrDynamicWallMenu addObject:arrStandardWall];
+                         [arrDynamicWallMenu addObject:arrDivisionWall];
+                         [arrDynamicWallMenu addObject:arrSubjectWall];
+                         [arrDynamicWallMenu addObject:arrGroupWall];
+                         [arrDynamicWallMenu addObject:arrProjectWall];
+                         
+                     }
                      for (NSMutableDictionary *dic in arrResponce)
                      {
                          NSString *strAssociationType=[dic objectForKey:@"AssociationType"];
@@ -1820,14 +1842,14 @@ int c2= 0;
                              [arrProjectWall addObject:dic];
                          }
                      }
-                     [arrDynamicWallMenu addObject:arrWall];
-                     [arrDynamicWallMenu addObject:arrMyWall];
-                     [arrDynamicWallMenu addObject:arrInstituteWall];
-                     [arrDynamicWallMenu addObject:arrStandardWall];
-                     [arrDynamicWallMenu addObject:arrDivisionWall];
-                     [arrDynamicWallMenu addObject:arrSubjectWall];
-                     [arrDynamicWallMenu addObject:arrGroupWall];
-                     [arrDynamicWallMenu addObject:arrProjectWall];
+                     [arrDynamicWallMenuMain addObject:arrWall];
+                     [arrDynamicWallMenuMain addObject:arrMyWall];
+                     [arrDynamicWallMenuMain addObject:arrInstituteWall];
+                     [arrDynamicWallMenuMain addObject:arrStandardWall];
+                     [arrDynamicWallMenuMain addObject:arrDivisionWall];
+                     [arrDynamicWallMenuMain addObject:arrSubjectWall];
+                     [arrDynamicWallMenuMain addObject:arrGroupWall];
+                     [arrDynamicWallMenuMain addObject:arrProjectWall];
                      [self.viewDynamicWallMenuList reloadData];
                  }
                  
@@ -2507,6 +2529,9 @@ int c2= 0;
             [img setImage:[UIImage imageNamed:@"project.png"]];
             
         }
+        UIButton *btn=(UIButton*)[cell.contentView viewWithTag:4];
+        btn.tag=section;
+        
         return cell;
     }
     return nil;
@@ -4490,8 +4515,79 @@ int c2= 0;
 }
 
 
-- (IBAction)btnCell_DynamicWallMenu_Click:(id)sender {
+- (IBAction)btnCell_DynamicWallMenu_Click:(id)sender
+{
+    UIButton *button = (UIButton *)sender;
+    if(button.tag == 0)
+    {
+        _checkscreen=nil;
+        [self commonData];
+        [self viewWillAppear:YES];
+    }
+    else if(button.tag == 1)
+    {
+        _checkscreen=@"MyWall";
+        [self commonData];
+        [self viewWillAppear:YES];
+    }
+    else if(button.tag == 2)
+    {
+        _checkscreen=@"Institute";
+        [self commonData];
+        [self viewWillAppear:YES];
+    }
+    else
+    {
+        NSMutableArray *arrSelectSection=[[arrDynamicWallMenu objectAtIndex:button.tag]mutableCopy];
+        if([arrSelectSection count] != 0)
+        {
+            NSMutableArray *arrSelectSectionTemp=[[NSMutableArray alloc]init];
+            [arrDynamicWallMenu removeObjectAtIndex:button.tag];
+            [arrDynamicWallMenu insertObject:arrSelectSectionTemp atIndex:button.tag];
+        }
+        else
+        {
+            NSMutableArray *arrSelectSection_check=[[arrDynamicWallMenuMain objectAtIndex:button.tag]mutableCopy];
+            
+            [arrDynamicWallMenu removeObjectAtIndex:button.tag];
+            [arrDynamicWallMenu insertObject:arrSelectSection_check atIndex:button.tag];
+        }
+        [self.viewDynamicWallMenuList reloadData];
+    }
+}
+
+- (IBAction)btnCellRow_DynamicWallMenu_Click:(id)sender
+{
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.viewDynamicWallMenuList];
+    NSIndexPath *indexPath = [self.viewDynamicWallMenuList indexPathForRowAtPoint:buttonPosition];
+    self.dicSelect_std_divi_sub=[[arrDynamicWallMenuMain objectAtIndex:indexPath.section]objectAtIndex:indexPath.row];
     
+    if(indexPath.section == 3)
+    {
+        _checkscreen=@"Standard";
+        [self commonData];
+        [self viewWillAppear:YES];
+    }
+    if(indexPath.section == 4)
+    {
+        _checkscreen=@"Division";
+        [self commonData];
+        [self viewWillAppear:YES];
+    }
+    if(indexPath.section == 5)
+    {
+        _checkscreen=@"Subject";
+        [self commonData];
+        [self viewWillAppear:YES];
+    }
+    if(indexPath.section == 6)
+    {
+        _checkscreen=@"";
+    }
+    if(indexPath.section == 7)
+    {
+        _checkscreen=@"";
+    }
 }
 
 #pragma mark - CMPopTipViewDelegate methods

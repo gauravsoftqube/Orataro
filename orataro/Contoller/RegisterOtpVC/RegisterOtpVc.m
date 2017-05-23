@@ -233,8 +233,6 @@ int multipleUser1 = 0;
                  
                  //api_getMemberCount
                  // [self performSegueWithIdentifier:@"ShowWall" sender:self];
-                 
-                 
              }
              else
              {

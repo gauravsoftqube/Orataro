@@ -1912,7 +1912,7 @@
                                                                 <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xhT-KY-SUx">
                                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="30"/>
                                                                     <connections>
-                                                                        <action selector="btnCell_DynamicWallMenu_Click:" destination="1Sq-VF-urq" eventType="touchUpInside" id="T53-sq-bcc"/>
+                                                                        <action selector="btnCellRow_DynamicWallMenu_Click:" destination="1Sq-VF-urq" eventType="touchUpInside" id="Gnc-Or-Jnn"/>
                                                                     </connections>
                                                                 </button>
                                                             </subviews>
