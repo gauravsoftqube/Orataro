@@ -36,7 +36,9 @@
     //login responce
     NSString *currentDeviceId;
     
+    NSString *strDynaminWallMenuSelected;
     
+    NSMutableArray *arrDynamicWallMenu;
 }
 @end
 
@@ -93,15 +95,16 @@ int c2= 0;
 -(void)commonData
 {
     //alloc array
+    
     // arrGeneralWall = [[NSMutableArray alloc] init];
     totalCountView=1;
-    
+    self.viewDynamicWallMenu_Height.constant=0;
     [self.viewSpecialFriends_Popup setHidden:YES];
     [self.viewWallMember setHidden:YES];
     [self.lblNoWallDataAvailable setHidden:YES];
     self.tblSpecialFriendsList.separatorStyle=UITableViewCellSeparatorStyleNone;
     self.tblWallMemberList.separatorStyle=UITableViewCellSeparatorStyleNone;
-
+    self.viewDynamicWallMenuList.separatorStyle=UITableViewCellSeparatorStyleNone;
     
     //view Delete conf
     [self.viewDelete_Conf setHidden:YES];
@@ -132,7 +135,7 @@ int c2= 0;
     [self.aWallTableView.tableFooterView setHidden:YES];
     
     //panding
-   // [self apiCallFor_GetUserRoleRightList:@"1"];
+    // [self apiCallFor_GetUserRoleRightList:@"1"];
     
     //apiCall for login and responce update login localdb
     [self apiCallLogin];
@@ -157,7 +160,7 @@ int c2= 0;
         [_MenuBtn setBackgroundImage:[UIImage imageNamed:@"downarrow"] forState:UIControlStateNormal];
         [_HomeBtn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
         self.btnWallMember.hidden =YES;
-       
+        
         NSString *strWallName=[self.dicSelect_std_divi_sub objectForKey:@"WallName"];
         //set Header Title
         if ([strWallName length] != 0)
@@ -168,7 +171,7 @@ int c2= 0;
         {
             self.lblheaderTitle.text=[NSString stringWithFormat:@"Standard"];
         }
-
+        
     }
     else if ([_checkscreen isEqualToString:@"Division"])
     {
@@ -191,7 +194,7 @@ int c2= 0;
         [_MenuBtn setBackgroundImage:[UIImage imageNamed:@"downarrow"] forState:UIControlStateNormal];
         [_HomeBtn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
         self.btnWallMember.hidden =YES;
-       
+        
         NSString *strWallName=[self.dicSelect_std_divi_sub objectForKey:@"WallName"];
         //set Header Title
         if ([strWallName length] != 0)
@@ -398,25 +401,25 @@ int c2= 0;
             NSURL *imageURL = [NSURL URLWithString:strURLForTeacherProfilePicture];
             [self.imgUser_Tbl_HeaderView sd_setImageWithURL:imageURL];
             //[ProgressHUB showHUDAddedTo:self.view];
-           /* dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
-                           ^{
-                               dispatch_sync(dispatch_get_main_queue(), ^{
-                                //   [ProgressHUB hideenHUDAddedTo:self.view];
-                                   NSURL *imageURL = [NSURL URLWithString:strURLForTeacherProfilePicture];
-                                   NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
-                                   
-                                   UIImage *img = [UIImage imageWithData:imageData];
-                                   if (img != nil)
-                                   {
-                                       self.imgUser_Tbl_HeaderView.image = [UIImage imageWithData:imageData];
-                                   }
-                                   else
-                                   {
-                                       self.imgUser_Tbl_HeaderView.image = [UIImage imageNamed:@"user"];
-                                   }
-                                   
-                               });
-                           });*/
+            /* dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
+             ^{
+             dispatch_sync(dispatch_get_main_queue(), ^{
+             //   [ProgressHUB hideenHUDAddedTo:self.view];
+             NSURL *imageURL = [NSURL URLWithString:strURLForTeacherProfilePicture];
+             NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+             
+             UIImage *img = [UIImage imageWithData:imageData];
+             if (img != nil)
+             {
+             self.imgUser_Tbl_HeaderView.image = [UIImage imageWithData:imageData];
+             }
+             else
+             {
+             self.imgUser_Tbl_HeaderView.image = [UIImage imageNamed:@"user"];
+             }
+             
+             });
+             });*/
         }
     }
 }
@@ -479,7 +482,7 @@ int c2= 0;
     for (NSString *strImgName in arrImagePath)
     {
         NSString *fileName = [NSString stringWithFormat:@"%@",strImgName];
-       
+        
         [arrPost_LocalDB addObject:fileName];
     }
     
@@ -487,12 +490,12 @@ int c2= 0;
     {
         [self apiCallFor_UploadFile:@"1" FileType:@"VIDEO" FileName:[NSString stringWithFormat:@"%@.mp4",[Utility randomImageGenerator]] imageSelect:nil arrPost_LocalDB:arrPost_LocalDB dicPost_LocalDB:dicPost_LocalDB videoURL:strVideoName];
     }
-
+    
 }
 
 -(void)get_TextIn_LocalDB : (NSMutableDictionary *)dicPost_LocalDB
 {
-      [self apiCallFor_newPost:@"1" FileType:@"Text" dicPost_LocalDB:dicPost_LocalDB];
+    [self apiCallFor_newPost:@"1" FileType:@"Text" dicPost_LocalDB:dicPost_LocalDB];
 }
 
 -(void)apiCallFor_UploadFile:(NSString *)strInternet FileType:(NSString *)FileType FileName:(NSString *)FileName imageSelect:(UIImage*)imageSelect arrPost_LocalDB:(NSMutableArray *)arrPost_LocalDB dicPost_LocalDB:(NSMutableDictionary*)dicPost_LocalDB videoURL:(NSString *)strvideoURL
@@ -878,7 +881,7 @@ int c2= 0;
                                      [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
                                      [[NSUserDefaults standardUserDefaults]synchronize];
                                      
-                                    
+                                     
                                  }
                                  
                                  
@@ -896,12 +899,12 @@ int c2= 0;
                                  [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
                                  [[NSUserDefaults standardUserDefaults]synchronize];
                                  
-                                
+                                 
                              }
                              
                          }
                      }
-                }
+                 }
              }
              else
              {
@@ -972,7 +975,7 @@ int c2= 0;
                 [[NSUserDefaults standardUserDefaults]setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"Password"] forKey:@"Password"];
                 [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
                 [[NSUserDefaults standardUserDefaults]synchronize];
-        
+                
             }
             else
             {
@@ -998,7 +1001,7 @@ int c2= 0;
         [[NSUserDefaults standardUserDefaults]setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"Password"] forKey:@"Password"];
         [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
         [[NSUserDefaults standardUserDefaults]synchronize];
-    
+        
     }
     
 }
@@ -1082,7 +1085,7 @@ int c2= 0;
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
-  
+    
     if ([_checkscreen isEqualToString:@"Institute"])
     {
         [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstitutionWallID"]] forKey:@"WallID"];
@@ -1217,10 +1220,10 @@ int c2= 0;
         [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"WallID"]] forKey:@"WallID"];
     }
     
-//    if([strInternet isEqualToString:@"1"])
-//    {
-//        [ProgressHUB showHUDAddedTo:self.view];
-//    }
+    //    if([strInternet isEqualToString:@"1"])
+    //    {
+    //        [ProgressHUB showHUDAddedTo:self.view];
+    //    }
     
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
@@ -1231,7 +1234,7 @@ int c2= 0;
          {
              NSString *strArrd=[dicResponce objectForKey:@"d"];
              NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
-            
+             
              if ([_checkscreen isEqualToString:@"Institute"])
              {
                  NSMutableDictionary  *dicResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
@@ -1447,10 +1450,10 @@ int c2= 0;
                  }
              }
              
-            if([arrGeneralWall count] == 0)
-            {
-                [self.lblNoWallDataAvailable setHidden:NO];
-            }
+             if([arrGeneralWall count] == 0)
+             {
+                 [self.lblNoWallDataAvailable setHidden:NO];
+             }
              
          }
          else
@@ -1528,7 +1531,7 @@ int c2= 0;
                  {
                      NSString *TotalLikes=[dic objectForKey:@"TotalLikes"];
                      NSString *PostCommentID=[dic objectForKey:@"PostCommentID"];
-                    
+                     
                      if ([_checkscreen isEqualToString:@"Institute"])
                      {
                          //update
@@ -1773,8 +1776,61 @@ int c2= 0;
                  }
                  else
                  {
+                     arrDynamicWallMenu = [[NSMutableArray alloc]init];
+                     NSMutableArray *arrWall=[[NSMutableArray alloc]init];
+                     NSMutableArray *arrMyWall=[[NSMutableArray alloc]init];
+                     NSMutableArray *arrInstituteWall=[[NSMutableArray alloc]init];
+                     NSMutableArray *arrStandardWall=[[NSMutableArray alloc]init];
+                     NSMutableArray *arrDivisionWall=[[NSMutableArray alloc]init];
+                     NSMutableArray *arrSubjectWall=[[NSMutableArray alloc]init];
+                     NSMutableArray *arrGroupWall=[[NSMutableArray alloc]init];
+                     NSMutableArray *arrProjectWall=[[NSMutableArray alloc]init];
                      
+                     for (NSMutableDictionary *dic in arrResponce)
+                     {
+                         NSString *strAssociationType=[dic objectForKey:@"AssociationType"];
+                         
+                         if([strAssociationType isEqualToString:@"Wall"])
+                         {
+                         }
+                         else if([strAssociationType isEqualToString:@"MyWall"])
+                         {
+                         }
+                         else if([strAssociationType isEqualToString:@"Institute"])
+                         {
+                         }
+                         else if([strAssociationType isEqualToString:@"Grade"])
+                         {
+                             [arrStandardWall addObject:dic];
+                         }
+                         else if([strAssociationType isEqualToString:@"Division"])
+                         {
+                             [arrDivisionWall addObject:dic];
+                         }
+                         else if([strAssociationType isEqualToString:@"Subject"])
+                         {
+                             [arrSubjectWall addObject:dic];
+                         }
+                         else if([strAssociationType isEqualToString:@"Group"])
+                         {
+                             [arrGroupWall addObject:dic];
+                         }
+                         else if([strAssociationType isEqualToString:@"Project"])
+                         {
+                             [arrProjectWall addObject:dic];
+                         }
+                     }
+                     [arrDynamicWallMenu addObject:arrWall];
+                     [arrDynamicWallMenu addObject:arrMyWall];
+                     [arrDynamicWallMenu addObject:arrInstituteWall];
+                     [arrDynamicWallMenu addObject:arrStandardWall];
+                     [arrDynamicWallMenu addObject:arrDivisionWall];
+                     [arrDynamicWallMenu addObject:arrSubjectWall];
+                     [arrDynamicWallMenu addObject:arrGroupWall];
+                     [arrDynamicWallMenu addObject:arrProjectWall];
+                     [self.viewDynamicWallMenuList reloadData];
                  }
+                 
              }
              else
              {
@@ -1812,10 +1868,10 @@ int c2= 0;
     
     [param setValue:[NSString stringWithFormat:@"%@",[dicSelect_Edit_Delete_Post objectForKey:@"PostCommentID"]] forKey:@"PostID"];
     
-        if([strInternet isEqualToString:@"1"])
-        {
-            [ProgressHUB showHUDAddedTo:self.view];
-        }
+    if([strInternet isEqualToString:@"1"])
+    {
+        [ProgressHUB showHUDAddedTo:self.view];
+    }
     
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
@@ -1832,13 +1888,13 @@ int c2= 0;
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                    UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                    [alrt show];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
                  }
                  else if([strStatus isEqualToString:@"Record deleted successfully"])
                  {
                      NSString *strPostCommentID=[dicSelect_Edit_Delete_Post objectForKey:@"PostCommentID"];
-                    
+                     
                      //Delete
                      [DBOperation executeSQL:[NSString stringWithFormat:@"delete from MyWall where PostCommentID='%@'",strPostCommentID]];
                      
@@ -2142,12 +2198,12 @@ int c2= 0;
     else if ([_checkscreen isEqualToString:@"Division"])
     {
         [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE DivisionWall SET AssociationID ='%@',AssociationType= '%@',DateOfPost='%@',FileMimeType= '%@',FileType= '%@',FullName= '%@',IsAllowPeoplePostCommentWall= '%@',IsAllowPeopleToLikeAndDislikeCommentWall= '%@',IsAllowPeopleToLikeOrDislikeOnYourPost= '%@',IsAllowPeopleToPostMessageOnYourWall= '%@',IsAllowPeopleToShareCommentWall= '%@',IsAllowPeopleToShareYourPost= '%@',IsDislike= '%@',IsLike= '%@',MemberID= '%@',Photo= '%@',PostCommentID= '%@',PostCommentNote= '%@',PostCommentTypesTerm= '%@',PostedOn= '%@',ProfilePicture= '%@',RowNo= '%@',TempDate= '%@',TotalComments= '%@',TotalDislike= '%@',TotalLikes= '%@',WallID= '%@',WallTypeTerm= '%@' WHERE PostCommentID= '%@'",AssociationID,AssociationType,DateOfPost,FileMimeType,FileType,FullName,IsAllowPeoplePostCommentWall,IsAllowPeopleToLikeAndDislikeCommentWall,IsAllowPeopleToLikeOrDislikeOnYourPost,IsAllowPeopleToPostMessageOnYourWall,IsAllowPeopleToShareCommentWall,IsAllowPeopleToShareYourPost,IsDislike,IsLike,MemberID,Photo,PostCommentID,PostCommentNote,PostCommentTypesTerm,PostedOn,ProfilePicture,RowNo,TempDate,TotalComments,TotalDislike,TotalLikes,WallID,WallTypeTerm,PostCommentID]];
-
+        
     }
     else if ([_checkscreen isEqualToString:@"Subject"])
     {
         [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE SubjectWall SET AssociationID ='%@',AssociationType= '%@',DateOfPost='%@',FileMimeType= '%@',FileType= '%@',FullName= '%@',IsAllowPeoplePostCommentWall= '%@',IsAllowPeopleToLikeAndDislikeCommentWall= '%@',IsAllowPeopleToLikeOrDislikeOnYourPost= '%@',IsAllowPeopleToPostMessageOnYourWall= '%@',IsAllowPeopleToShareCommentWall= '%@',IsAllowPeopleToShareYourPost= '%@',IsDislike= '%@',IsLike= '%@',MemberID= '%@',Photo= '%@',PostCommentID= '%@',PostCommentNote= '%@',PostCommentTypesTerm= '%@',PostedOn= '%@',ProfilePicture= '%@',RowNo= '%@',TempDate= '%@',TotalComments= '%@',TotalDislike= '%@',TotalLikes= '%@',WallID= '%@',WallTypeTerm= '%@' WHERE PostCommentID= '%@'",AssociationID,AssociationType,DateOfPost,FileMimeType,FileType,FullName,IsAllowPeoplePostCommentWall,IsAllowPeopleToLikeAndDislikeCommentWall,IsAllowPeopleToLikeOrDislikeOnYourPost,IsAllowPeopleToPostMessageOnYourWall,IsAllowPeopleToShareCommentWall,IsAllowPeopleToShareYourPost,IsDislike,IsLike,MemberID,Photo,PostCommentID,PostCommentNote,PostCommentTypesTerm,PostedOn,ProfilePicture,RowNo,TempDate,TotalComments,TotalDislike,TotalLikes,WallID,WallTypeTerm,PostCommentID]];
-
+        
     }
 }
 
@@ -2371,6 +2427,92 @@ int c2= 0;
 
 #pragma mark - UITableview Delegate
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    if(tableView == self.viewDynamicWallMenuList)
+    {
+        return [arrDynamicWallMenu count];
+    }
+    return 1;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (tableView == self.viewDynamicWallMenuList)
+    {
+        return 31;
+    }
+    return 0;
+}
+- (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if (tableView == self.viewDynamicWallMenuList)
+    {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellSectionDynamicWallMenu"];
+        if (cell == nil)
+        {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellSectionDynamicWallMenu"];
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        UIImageView *img=(UIImageView*)[cell.contentView viewWithTag:2];
+        UILabel *lbl=(UILabel*)[cell.contentView viewWithTag:3];
+        
+        if(section == 0)
+        {
+            lbl.text=@"Wall";
+            [img setImage:[UIImage imageNamed:@"dash_fb_wall.png"]];
+            img.image = [img.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            [img setTintColor:[UIColor colorWithRed:34/255.0 green:49/255.0 blue:89/255.0 alpha:1.0]];
+        }
+        else if (section == 1)
+        {
+            lbl.text=@"My Wall";
+            [img setImage:[UIImage imageNamed:@"mywall.png"]];
+            img.image = [img.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            [img setTintColor:[UIColor colorWithRed:34/255.0 green:49/255.0 blue:89/255.0 alpha:1.0]];
+        }
+        else if (section == 2)
+        {
+            lbl.text=@"Institute Wall";
+            [img setImage:[UIImage imageNamed:@"dash_institute.png"]];
+           
+        }
+        else if (section == 3)
+        {
+            lbl.text=@"Standard Wall";
+            [img setImage:[UIImage imageNamed:@"fb_results.png"]];
+            img.image = [img.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            [img setTintColor:[UIColor colorWithRed:34/255.0 green:49/255.0 blue:89/255.0 alpha:1.0]];
+        }
+        else if (section == 4)
+        {
+            lbl.text=@"Division Wall";
+            [img setImage:[UIImage imageNamed:@"dash_division.png"]];
+        }
+        else if (section == 5)
+        {
+            lbl.text=@"Subjects Wall";
+            [img setImage:[UIImage imageNamed:@"dash_subject.png"]];
+           
+        }
+        else if (section == 6)
+        {
+            lbl.text=@"Group Wall";
+            [img setImage:[UIImage imageNamed:@"dash_school_group.png"]];
+            img.image = [img.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            [img setTintColor:[UIColor colorWithRed:34/255.0 green:49/255.0 blue:89/255.0 alpha:1.0]];
+        }
+        else if (section == 7)
+        {
+            lbl.text=@"Project Wall";
+            [img setImage:[UIImage imageNamed:@"project.png"]];
+            
+        }
+        return cell;
+    }
+    return nil;
+
+}
+
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(tableView == self.tblWallMemberList)
@@ -2380,6 +2522,10 @@ int c2= 0;
     else if(tableView == self.tblSpecialFriendsList)
     {
         return 51;
+    }
+    else if(tableView == self.viewDynamicWallMenuList)
+    {
+        return 31;
     }
     else
     {
@@ -2394,7 +2540,7 @@ int c2= 0;
                 strPostCommentNote =[strPostCommentNote stringByReplacingOccurrencesOfString:@"</br>" withString:@""];
                 strPostCommentNote =[strPostCommentNote stringByReplacingOccurrencesOfString:@"<br>" withString:@""];
                 
-               // CGSize size = [strPostCommentNote sizeWithFont:[UIFont fontWithName:@"HelveticaNeueLTStd-Roman" size:14] constrainedToSize:CGSizeMake([[UIScreen mainScreen]bounds].size.width-16, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
+                // CGSize size = [strPostCommentNote sizeWithFont:[UIFont fontWithName:@"HelveticaNeueLTStd-Roman" size:14] constrainedToSize:CGSizeMake([[UIScreen mainScreen]bounds].size.width-16, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
                 
                 NSString *TotalLikes = [dicResponce objectForKey:@"TotalLikes"];
                 NSString *TotalDislike = [dicResponce objectForKey:@"TotalDislike"];
@@ -2606,7 +2752,7 @@ int c2= 0;
             NSString *strPostCommentNote = [dicResponce objectForKey:@"PostCommentNote"];
             strPostCommentNote = [strPostCommentNote stringByReplacingOccurrencesOfString:@"</br> </br>" withString:@""];
             strPostCommentNote = [strPostCommentNote stringByReplacingOccurrencesOfString:@"</br>" withString:@""];
-           // CGSize size = [[NSString stringWithFormat:@"%@",strPostCommentNote] sizeWithFont:[UIFont fontWithName:@"HelveticaNeueLTStd-Roman" size:14] constrainedToSize:CGSizeMake([[UIScreen mainScreen]bounds].size.width-16, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
+            // CGSize size = [[NSString stringWithFormat:@"%@",strPostCommentNote] sizeWithFont:[UIFont fontWithName:@"HelveticaNeueLTStd-Roman" size:14] constrainedToSize:CGSizeMake([[UIScreen mainScreen]bounds].size.width-16, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
             
             NSString *TotalLikes = [dicResponce objectForKey:@"TotalLikes"];
             NSString *TotalDislike = [dicResponce objectForKey:@"TotalDislike"];
@@ -2702,13 +2848,13 @@ int c2= 0;
                             return 125 + 18 - 30;
                         }
                     }
-                   
+                    
                 }
                 else
                 {
-                   return 125 + 18;
+                    return 125 + 18;
                 }
-
+                
                 
             }
             else
@@ -2807,7 +2953,7 @@ int c2= 0;
                 {
                     return 139+18;
                 }
-
+                
                 
             }
         }
@@ -2815,7 +2961,7 @@ int c2= 0;
         {
             NSString *strPostCommentNote = [dicResponce objectForKey:@"PostCommentNote"];
             strPostCommentNote = [strPostCommentNote stringByReplacingOccurrencesOfString:@"</br> </br>" withString:@""];
-           // CGSize size = [[NSString stringWithFormat:@"%@",strPostCommentNote] sizeWithFont:[UIFont fontWithName:@"HelveticaNeueLTStd-Roman" size:14] constrainedToSize:CGSizeMake([[UIScreen mainScreen]bounds].size.width-16, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
+            // CGSize size = [[NSString stringWithFormat:@"%@",strPostCommentNote] sizeWithFont:[UIFont fontWithName:@"HelveticaNeueLTStd-Roman" size:14] constrainedToSize:CGSizeMake([[UIScreen mainScreen]bounds].size.width-16, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
             
             NSString *TotalLikes = [dicResponce objectForKey:@"TotalLikes"];
             NSString *TotalDislike = [dicResponce objectForKey:@"TotalDislike"];
@@ -2842,7 +2988,7 @@ int c2= 0;
                         
                         NSString *IS_USER_LIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
                         NSString *IS_USER_DISLIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
-                       // NSString *IS_USER_COMMENT=[dicResponce objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
+                        // NSString *IS_USER_COMMENT=[dicResponce objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
                         NSString *IS_USER_SHARE=[dicResponce objectForKey:@"IsAllowPeopleToShareYourPost"];
                         //[IS_USER_COMMENT integerValue] == 1 &&
                         if ([IS_USER_LIKE_WALL integerValue] == 1 ||
@@ -2856,12 +3002,12 @@ int c2= 0;
                             [IsAllowUserToPostComment integerValue] == 1 ||
                             [IsAllowUserToSharePost integerValue] == 1)
                         {
-                             return 250 + 28;
+                            return 250 + 28;
                         }
                         else
                         {
                             //here minues setting height
-                             return 250 + 28 - 30;
+                            return 250 + 28 - 30;
                         }
                     }
                     else
@@ -2917,8 +3063,8 @@ int c2= 0;
                 {
                     return 250 + 28;
                 }
-
-               
+                
+                
             }
             else
             {
@@ -3010,16 +3156,16 @@ int c2= 0;
                             return 260 + 28 - 30;
                         }
                     }
-                   
+                    
                 }
                 else
                 {
                     return 260 + 28;
                 }
-
+                
                 
             }
-
+            
         }
         else if([strFileType isEqualToString:@"FILE"])
         {
@@ -3117,7 +3263,7 @@ int c2= 0;
             {
                 return 220;
             }
-
+            
             
         }
         else
@@ -3136,6 +3282,10 @@ int c2= 0;
     else if(tableView == self.tblSpecialFriendsList)
     {
         return [arrSpecialFriendList count];
+    }
+    else if(tableView == self.viewDynamicWallMenuList)
+    {
+        return [[arrDynamicWallMenu objectAtIndex:section] count];
     }
     else
     {
@@ -3176,7 +3326,7 @@ int c2= 0;
         
         UILabel *lblUserName=(UILabel*)[cell.contentView viewWithTag:4];
         [lblUserName setText:[NSString stringWithFormat:@"%@",[dicResponce objectForKey:@"FullName"]]];
-
+        
         UILabel *lblMemberType=(UILabel*)[cell.contentView viewWithTag:5];
         [lblMemberType setText:[NSString stringWithFormat:@"%@",[dicResponce objectForKey:@"MemberType"]]];
         
@@ -3225,6 +3375,23 @@ int c2= 0;
         }
         return cell;
     }
+    else if(tableView == self.viewDynamicWallMenuList)
+    {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellRowDynamicWallMenu"];
+        if (cell == nil)
+        {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellRowDynamicWallMenu"];
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        NSMutableArray *arrRes=[arrDynamicWallMenu objectAtIndex:indexPath.section];
+        NSMutableDictionary *dic=[arrRes objectAtIndex:indexPath.row];
+        
+        UILabel *lbl=(UILabel *)[cell.contentView viewWithTag:2];
+        lbl.text=[dic objectForKey:@"WallName"];
+        
+        return cell;
+    }
     else
     {
         WallCustomeCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -3262,7 +3429,7 @@ int c2= 0;
         {
             cell.btnEditDeletePost_Height.constant = 0;
         }
-
+        
 #pragma mark  set Post Detail
         
         NSString *strPostCommentNote=[dicResponce objectForKey:@"PostCommentNote"];
@@ -3284,12 +3451,12 @@ int c2= 0;
                         theCell.imgPost.image=image;                    });
                 }];
                 
-//                [cell.imgPost sd_setImageWithURL:[NSURL URLWithString:strPost_Photo] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-//                    dispatch_async(dispatch_get_main_queue(), ^{
-//                        WallCustomeCell* theCell = (WallCustomeCell*)[tableView cellForRowAtIndexPath:indexPath];
-//                        theCell.imgPost.image=image;
-//                    });
-//                }];
+                //                [cell.imgPost sd_setImageWithURL:[NSURL URLWithString:strPost_Photo] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                //                    dispatch_async(dispatch_get_main_queue(), ^{
+                //                        WallCustomeCell* theCell = (WallCustomeCell*)[tableView cellForRowAtIndexPath:indexPath];
+                //                        theCell.imgPost.image=image;
+                //                    });
+                //                }];
             }
             else
             {
@@ -3439,7 +3606,7 @@ int c2= 0;
             NSString *isIsAllowUserToLikeDislikes_Login=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToLikeDislikes"];
             NSString *IsAllowUserToPostComment_Login=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostComment"];
             NSString *IsAllowUserToSharePost_Login=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToSharePost"];
-
+            
             if([self.checkscreen isEqualToString:@"MyWall"] ||
                [self.checkscreen length] == 0)
             {
@@ -3451,7 +3618,7 @@ int c2= 0;
                 
                 NSString *IS_USER_LIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
                 NSString *IS_USER_DISLIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
-               // NSString *IS_USER_COMMENT=[dicResponce objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
+                // NSString *IS_USER_COMMENT=[dicResponce objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
                 NSString *IS_USER_SHARE=[dicResponce objectForKey:@"IsAllowPeopleToShareYourPost"];
                 
                 
@@ -3562,7 +3729,7 @@ int c2= 0;
                 
                 NSString *IsAllowPeopleToLikeThisWall_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToLikeThisWall"];
                 NSString *IsAllowPeoplePostComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeoplePostComment"];
-               // NSString *IsAllowPeopleToShareComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToShareComment"];
+                // NSString *IsAllowPeopleToShareComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToShareComment"];
                 
                 //Like
                 if ([isIsAllowUserToLikeDislikes_Login integerValue] == 1)
@@ -3663,8 +3830,8 @@ int c2= 0;
                         //Dynamic
                         //if ([IsAllowPeopleToShareComment_Dynamic integerValue] == 1)
                         //{
-                            cell.viewShare_Width.constant=tblWall_Width;
-                            cell.imgShare_Width.constant=14;
+                        cell.viewShare_Width.constant=tblWall_Width;
+                        cell.imgShare_Width.constant=14;
                         //}
                         //else
                         //{
@@ -3711,6 +3878,9 @@ int c2= 0;
         
     }
     else if(tableView == self.tblSpecialFriendsList)
+    {
+    }
+    else if(tableView == self.viewDynamicWallMenuList)
     {
     }
     else
@@ -3820,7 +3990,7 @@ int c2= 0;
             //get update data localdb
             arrGeneralWall = [[NSMutableArray alloc]init];
             arrGeneralWall = [DBOperation selectData:@"select * from StandardWall"];
-
+            
         }
         else if ([_checkscreen isEqualToString:@"Division"])
         {
@@ -3893,7 +4063,7 @@ int c2= 0;
             [cell.imgUnlike setTintColor:[UIColor colorWithRed:34/255.0 green:49/255.0 blue:89/255.0 alpha:1.0]];
             [cell.lblUnlike setTextColor:[UIColor colorWithRed:34/255.0 green:49/255.0 blue:89/255.0 alpha:1.0]];
         }
-
+        
         //set color like and unlike
         if([IsLike integerValue] == 0)
         {
@@ -4067,7 +4237,7 @@ int c2= 0;
                 //update
                 [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE SubjectWall SET IsLike = '%@', TotalLikes = '%@' WHERE PostCommentID = '%@'",IsLike,TotalLikes,PostCommentID]];
             }
-
+            
             //update
             [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE SubjectWall SET IsDislike = '%@', TotalDislike = '%@' WHERE PostCommentID = '%@'",IsDislike,TotalDislike,PostCommentID]];
             
@@ -4115,7 +4285,7 @@ int c2= 0;
             [cell.imgLike setTintColor:[UIColor colorWithRed:34/255.0 green:49/255.0 blue:89/255.0 alpha:1.0]];
             [cell.lblLike setTextColor:[UIColor colorWithRed:34/255.0 green:49/255.0 blue:89/255.0 alpha:1.0]];
         }
-
+        
         
         //set color unlike
         if([IsDislike integerValue] == 0)
@@ -4234,7 +4404,7 @@ int c2= 0;
     
     NSString *strFileType=[dicResponce objectForKey:@"FileType"];
     if([strFileType isEqualToString:@"VIDEO"] ||
-     [strFileType isEqualToString:@"IMAGE"])
+       [strFileType isEqualToString:@"IMAGE"])
     {
         PostDetailVC *b = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"PostDetailVC"];
         b.dicPostDetail = [arrGeneralWall objectAtIndex:indexPath.row];
@@ -4243,12 +4413,12 @@ int c2= 0;
     else if([strFileType isEqualToString:@"FILE"])
     {
         NSString *strPost_Photo=[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[dicResponce objectForKey:@"Photo"]];
-
+        
         NSArray *activityItems = @[[NSURL fileURLWithPath:strPost_Photo]];
         
         UIActivityViewController *activityViewController =
         [[UIActivityViewController alloc] initWithActivityItems:activityItems
-                                          applicationActivities:nil];        
+                                          applicationActivities:nil];
         [activityViewController setCompletionHandler:^(NSString *activityType, BOOL completed) {
             [self dismissViewControllerAnimated:YES completion:nil];
         }];
@@ -4279,7 +4449,7 @@ int c2= 0;
         b.arrDynamicWall_Setting=[arrDynamicWall_Setting mutableCopy];
         [self.navigationController pushViewController:b animated:YES];
     }
-
+    
 }
 
 -(void)btnEditDeletePost_Click:(UIButton*)sender
@@ -4290,7 +4460,7 @@ int c2= 0;
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.aWallTableView];
     indexPath_delete_edit_post = [self.aWallTableView indexPathForRowAtPoint:buttonPosition];
     dicSelect_Edit_Delete_Post= [[arrGeneralWall objectAtIndex:indexPath_delete_edit_post.row]mutableCopy];
-
+    
 }
 
 - (UIViewController *) documentInteractionControllerViewControllerForPreview: (UIDocumentInteractionController *) controller
@@ -4300,7 +4470,7 @@ int c2= 0;
 
 - (void)documentInteractionControllerDidEndPreview:(UIDocumentInteractionController *)controller
 {
-   
+    
 }
 
 - (IBAction)btnCell_CheckBox_SpecialFriends:(id)sender
@@ -4317,6 +4487,11 @@ int c2= 0;
         [arrSelected_SpecialFriendList addObject:[arrSpecialFriendList objectAtIndex:indexPath.row]];
     }
     [self.tblSpecialFriendsList reloadData];
+}
+
+
+- (IBAction)btnCell_DynamicWallMenu_Click:(id)sender {
+    
 }
 
 #pragma mark - CMPopTipViewDelegate methods
@@ -4407,6 +4582,7 @@ int c2= 0;
 
 - (IBAction)MenuBtnClicked:(id)sender
 {
+    self.viewDynamicWallMenu_Height.constant=0;
     if ([_checkscreen isEqualToString:@"Institute"])
     {
         [self apiCallFor_GetWallMember:@"1"];
@@ -4590,7 +4766,7 @@ int c2= 0;
 
 - (IBAction)HomeBtnClicked:(id)sender
 {
-    NSLog(@"Check=%@",_checkscreen);
+    self.viewDynamicWallMenu_Height.constant=0;
     
     if ([_checkscreen isEqualToString:@"Institute"])
     {
@@ -4627,6 +4803,7 @@ int c2= 0;
 
 - (IBAction)btnWallMember:(id)sender
 {
+    self.viewDynamicWallMenu_Height.constant=0;
     [self apiCallFor_GetWallMember:@"1"];
 }
 
@@ -4636,7 +4813,7 @@ int c2= 0;
 {
     [self.view endEditing:YES];
     [Utility dismissAllPopTipViews:arrPopup];
-
+    
     if ([_checkscreen isEqualToString:@"Institute"])
     {
         AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
@@ -4751,5 +4928,22 @@ int c2= 0;
      }];
 }
 
+
+- (IBAction)btnHeaderTitle:(id)sender
+{
+    if([strDynaminWallMenuSelected isEqualToString:@"1"])
+    {
+        self.viewDynamicWallMenu_Height.constant=0;
+        strDynaminWallMenuSelected=@"0";
+    }
+    else
+    {
+        [UIView animateWithDuration:0.25 animations:^{
+            self.viewDynamicWallMenu_Height.constant=[[UIScreen mainScreen]bounds].size.height-64;
+            [self.view layoutIfNeeded];
+        }];
+        strDynaminWallMenuSelected=@"1";
+    }
+}
 
 @end

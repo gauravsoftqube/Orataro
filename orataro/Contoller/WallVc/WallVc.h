@@ -81,4 +81,13 @@
 @property (weak, nonatomic) IBOutlet UIView *viewSave;
 @property (weak, nonatomic) IBOutlet UIView *viewInnerSave;
 @property (weak, nonatomic) IBOutlet UIImageView *imgCancel;
+
+
+//viewDynamicWallMenu List
+@property (weak, nonatomic) IBOutlet UITableView *viewDynamicWallMenuList;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewDynamicWallMenu_Height;
+@property (weak, nonatomic) IBOutlet UIButton *btnHeaderTitle;
+- (IBAction)btnHeaderTitle:(id)sender;
+
 @end

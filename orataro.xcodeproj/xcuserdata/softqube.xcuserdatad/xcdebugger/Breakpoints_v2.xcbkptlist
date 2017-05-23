@@ -484,12 +484,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "orataro/Contoller/WallVc/WallVc.m"
-            timestampString = "517142473.934982"
+            timestampString = "517217446.075048"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "4441"
-            endingLineNumber = "4441"
-            landmarkName = "-WhatsyourmindBtnClicked:"
+            startingLineNumber = "4562"
+            endingLineNumber = "4562"
+            landmarkName = "-btnCheckAll_SpecialFriends:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -500,12 +500,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "orataro/Contoller/WallVc/WallVc.m"
-            timestampString = "517142188.186592"
+            timestampString = "517217446.075048"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1763"
-            endingLineNumber = "1763"
-            landmarkName = "-apiCallFor_GetUserDynamicMenuData:"
+            startingLineNumber = "2512"
+            endingLineNumber = "2512"
+            landmarkName = "-tableView:viewForHeaderInSection:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
