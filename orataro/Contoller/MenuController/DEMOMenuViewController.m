@@ -56,6 +56,7 @@
     AppDelegate *ag ;
     NSString *WallCount;
     NSMutableDictionary *dic;
+    NSMutableArray *getData;
 }
 @end
 
@@ -81,26 +82,31 @@
     _tblMenuTable.backgroundColor= [UIColor clearColor];
     _tblMenuTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     
+    
     //  [self api_getMemberCount];
     
     //_tblMenuTable.frame = CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height);
- //   [_tblHeight setConstant:_tblMenuTable.frame.size.height+60];
+    //   [_tblHeight setConstant:_tblMenuTable.frame.size.height+60];
     
-   // [_tblMenuTable reloadData];
+    // [_tblMenuTable reloadData];
     
     //Put this code where you want to reload your table view
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        [UIView transitionWithView:_tblMenuTable                          duration:0.1f
-//                           options:UIViewAnimationOptionCurveLinear
-//                        animations:^(void) {
-//                            [_tblMenuTable reloadData];
-//                        } completion:NULL];
-//    });
+    //    dispatch_async(dispatch_get_main_queue(), ^{
+    //        [UIView transitionWithView:_tblMenuTable                          duration:0.1f
+    //                           options:UIViewAnimationOptionCurveLinear
+    //                        animations:^(void) {
+    //                            [_tblMenuTable reloadData];
+    //                        } completion:NULL];
+    //    });
     
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    //NSLog(@"Getdata=%@",getData);
+    
+    [_tblMenuTable reloadData];
+    
     [self api_getMemberCount];
 }
 #pragma mark UITableView Delegate
@@ -131,45 +137,46 @@
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-  //  if ([dic count] > 0)
-    //{
-        if (indexPath.row == 2)
+    if (indexPath.row == 2)
+    {
+        cell.aTextLb.hidden = YES;
+        cell.LbWall.hidden = NO;
+        cell.LbWallCount.layer.cornerRadius = 10.0;
+        cell.LbWallCount.clipsToBounds = YES;
+        cell.LbWall.text = @"Wall";
+        
+        //NSLog(@"Ary=%@",getData);
+        
+        NSString *str = [NSString stringWithFormat:@"%@",[[getData objectAtIndex:0]objectForKey:@"NotificationCount"]];
+        
+       // NSLog(@"Data=%lu",(unsigned long)str.length);
+        
+        if (str == (id)[NSNull null] || str.length == 0 || [str isEqual: [NSNull null]] || [str isEqualToString:@"(null)"])
         {
-            cell.aTextLb.hidden = YES;
-            cell.LbWall.hidden = NO;
-            cell.LbWallCount.layer.cornerRadius = 10.0;
-            cell.LbWallCount.clipsToBounds = YES;
-            cell.LbWall.text = @"Wall";
-            
-            NSMutableArray *ary = [dic objectForKey:@"Table"];
-            
-            
-            if (ary.count > 0)
-            {
-                NSString *s = [NSString stringWithFormat:@"%@",[[ary objectAtIndex:0]objectForKey:@"NotificationCount"]];
-                
-                if ([s isEqualToString:@"0"])
-                {
-                    cell.LbWallCount.hidden = YES;
-                }
-                else
-                {
-                    cell.LbWallCount.hidden = NO;
-                    cell.LbWallCount.text = [NSString stringWithFormat:@"%@",[[ary objectAtIndex:0]objectForKey:@"NotificationCount"]];
-                }
-            }
-            
+            cell.LbWallCount.hidden = YES;
         }
         else
         {
-            cell.aTextLb.hidden = NO;
-            cell.LbWallCount.hidden = YES;
-            cell.LbWall.hidden = YES;
-            cell.aTextLb.text = [menu objectAtIndex:indexPath.row];
-            
+            if ([str isEqualToString:@"0"])
+            {
+                cell.LbWallCount.hidden = YES;
+            }
+            else
+            {
+                cell.LbWallCount.hidden = NO;
+                cell.LbWallCount.text = str;
+            }
+           
         }
-
-   // }
+    }
+    else
+    {
+        cell.aTextLb.hidden = NO;
+        cell.LbWallCount.hidden = YES;
+        cell.LbWall.hidden = YES;
+        cell.aTextLb.text = [menu objectAtIndex:indexPath.row];
+        
+    }
     cell.aImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",[imgary objectAtIndex:indexPath.row]]];
     
     cell.aImageView.image = [cell.aImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -181,7 +188,7 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-   // return self.view.frame.size.height/menu.count;
+    // return self.view.frame.size.height/menu.count;
     return 60;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -235,7 +242,7 @@
                 AttendanceVC  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AttendanceVC"];
                 navigationController.viewControllers = @[homeViewController];
             }
-
+            
             break;
         }
         case 6:
@@ -371,26 +378,35 @@
              NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
              NSMutableDictionary *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
              
-             if([arrResponce count] != 0)
+             @try
              {
                  NSLog(@"arr=%@",arrResponce);
+                
                  
                  [[NSUserDefaults standardUserDefaults]setObject:arrResponce forKey:@"TotalCountofMember"];
                  [[NSUserDefaults standardUserDefaults]synchronize];
                  
-                 dic = [[[NSUserDefaults standardUserDefaults]valueForKey:@"TotalCountofMember"]mutableCopy];
-                 NSLog(@"Dic=%@",dic);
+                 getData= [arrResponce objectForKey:@"Table"];
                  
                  [_tblMenuTable reloadData];
                  
-                 //[self performSegueWithIdentifier:@"ShowWall" sender:self];
-                 
+
              }
-             else
+             @catch (NSException *exception)
              {
                  UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                  [alrt show];
              }
+//             if([arrResponce count] != 0)
+//             {
+//                                 //[self performSegueWithIdentifier:@"ShowWall" sender:self];
+//                 
+//             }
+//             else
+//             {
+//                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//                 [alrt show];
+//             }
          }
          else
          {

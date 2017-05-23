@@ -15,6 +15,7 @@
 {
     
     NSMutableArray *aryChatMessage;
+    CGSize setsize;
 }
 @end
 
@@ -41,6 +42,11 @@
     
     
     NSLog(@"Dic=%@",_dicChatData);
+    
+   // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+   // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
+    
+    //[self.view endEditing:YES];
     
     [[IQKeyboardManager sharedManager] setEnable:NO];
     [[IQKeyboardManager sharedManager] setEnableAutoToolbar:YES];
@@ -79,9 +85,39 @@
 {
     CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
-    [_viewChatMessage setTransform: CGAffineTransformMakeTranslation(0, -1*keyboardSize.height)];
+      [_viewChatMessage setTransform: CGAffineTransformMakeTranslation(0, -1*keyboardSize.height)];
+
+    if ([aryChatMessage count] > 0)
+    {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:aryChatMessage.count-1 inSection:0];
+        [_tblChatMessage scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    }
+  _tblChatMessage.contentInset = UIEdgeInsetsMake(0, 0, keyboardSize.height, 0);
     
-    _tblChatMessage.contentInset = UIEdgeInsetsMake(0, 0, keyboardSize.height, 0);
+   // setsize = keyboardSize;
+    
+    // [self performSelector:@selector(ShowTable1) withObject:nil afterDelay:0.01];
+}
+-(void)ShowTable1
+{
+       _tblChatMessage.contentInset = UIEdgeInsetsMake(0, 0, setsize.height, 0);
+    
+     [self performSelector:@selector(ShowTable) withObject:nil afterDelay:0.1];
+}
+-(void)ShowTable
+{
+    [_viewChatMessage setTransform: CGAffineTransformMakeTranslation(0, -1*setsize.height)];
+    if ([aryChatMessage count] > 0)
+    {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:aryChatMessage.count-1 inSection:0];
+        [_tblChatMessage scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    }
+
+}
+-(void)keyboardDidHide:(NSNotification *)notification
+{
+    
+     _tblChatMessage.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
     
     if ([aryChatMessage count] > 0)
     {
@@ -89,13 +125,9 @@
         [_tblChatMessage scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
         
     }
-}
-
--(void)keyboardDidHide:(NSNotification *)notification
-{
-    [_viewChatMessage setTransform: CGAffineTransformIdentity];
-     _tblChatMessage.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
     
+    [_viewChatMessage setTransform: CGAffineTransformIdentity];
+
 }
 
 
@@ -125,7 +157,6 @@
     return aryChatMessage.count;
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //tick
@@ -147,8 +178,8 @@
             cell = [xib objectAtIndex:0];
         }
         
-        cell.aView.layer.cornerRadius = 2.0;
-        
+        cell.aView.layer.cornerRadius = 10.0;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         cell.lbReceiverMessage.text = [[aryChatMessage objectAtIndex:indexPath.row]objectForKey:@"Details"];
         cell.lbReceiverTime.text = [Utility convertMiliSecondtoDate:@"HH:mm a" date:[[aryChatMessage objectAtIndex:indexPath.row]objectForKey:@"CreatedOn"]];
@@ -160,10 +191,12 @@
         if (size.width < 65)
         {
             cell.trailingSpace.constant = [UIScreen mainScreen].bounds.size.width - (size.width+65);
+          //   cell.aView.layer.cornerRadius = size.width+62/2;
         }
         else
         {
             cell.trailingSpace.constant = [UIScreen mainScreen].bounds.size.width - (size.width+25);
+            //cell.aView.layer.cornerRadius = size.width+25/2;
         }
         [cell layoutIfNeeded];
         
@@ -179,22 +212,24 @@
             cell = [xib objectAtIndex:0];
         }
         
-        cell.aView.layer.cornerRadius = 2.0;
+        cell.aView.layer.cornerRadius = 10.0;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         cell.lbSenderMessage.text = [[aryChatMessage objectAtIndex:indexPath.row]objectForKey:@"Details"];
         cell.lbSenderTime.text = [Utility convertMiliSecondtoDate:@"HH:mm a" date:[[aryChatMessage objectAtIndex:indexPath.row]objectForKey:@"CreatedOn"]];
         
-        
-        
+
         CGSize size = [self findHeightForText:[[aryChatMessage objectAtIndex:indexPath.row]objectForKey:@"Details"] havingWidth:([UIScreen mainScreen].bounds.size.width-65) andFont:[UIFont systemFontOfSize:15.0]];
         
         if (size.width < 65)
         {
-            cell.leadingSpace.constant = [UIScreen mainScreen].bounds.size.width - (size.width+65);
+            cell.leadingSpace.constant = [UIScreen mainScreen].bounds.size.width - (size.width+70);
+            //cell.aView.layer.cornerRadius = size.width+65/2;
         }
         else
         {
             cell.leadingSpace.constant = [UIScreen mainScreen].bounds.size.width - (size.width+10);
+            //cell.aView.layer.cornerRadius = size.width+10/2;
         }
         
         
@@ -270,7 +305,6 @@
      }*/
     return nil;
 }
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGSize size = [self findHeightForText:[[aryChatMessage objectAtIndex:indexPath.row]objectForKey:@"Details"] havingWidth:([UIScreen mainScreen].bounds.size.width-70) andFont:[UIFont systemFontOfSize:15.0]];
@@ -494,6 +528,12 @@
         
         [_tblChatMessage reloadData];
         
+        if ([aryChatMessage count] > 0)
+        {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:aryChatMessage.count-1 inSection:0];
+            [_tblChatMessage scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            
+        }
     }
     
 }
