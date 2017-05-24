@@ -2,38 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSCameraUsageDescription</key>
-	<string>use to scan video</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>$(PRODUCT_NAME) uses photos</string>
-	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>Speech recognition will be used to determine which words you speak into this device&apos;s microphone.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Your microphone will be used to record your speech when you press the &quot;Start Recording&quot; button.</string>
-	<key>SpeechCognitiveServicesSecondaryKey</key>
-	<string>Add your key here!</string>
-	<key>SpeechCognitiveServicesPrimaryKey</key>
-	<string>Add your key here!</string>
-	<key>LuisAppId</key>
-	<string>Add your key here!</string>
-	<key>LuisSubscriptionId</key>
-	<string>Add your key here!</string>
-	<key>RapidCommandsDictionary</key>
-	<dict>
-		<key>orientate</key>
-		<string>Orientate</string>
-		<key>where am i</key>
-		<string>Location</string>
-		<key>what&apos;s around me</key>
-		<string>Orientate</string>
-	</dict>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>plus.google.com</string>
-		<string>linkedin</string>
-		<string>twitter</string>
-		<string>fb</string>
-	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -41,7 +9,7 @@
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.orataro.app</string>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -52,13 +20,59 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>Fabric</key>
+	<dict>
+		<key>APIKey</key>
+		<string>15232fcd2baf11f5f364f2bb28bc30bf54674009</string>
+		<key>Kits</key>
+		<array>
+			<dict>
+				<key>KitInfo</key>
+				<dict/>
+				<key>KitName</key>
+				<string>Crashlytics</string>
+			</dict>
+		</array>
+	</dict>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>plus.google.com</string>
+		<string>linkedin</string>
+		<string>twitter</string>
+		<string>fb</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>LuisAppId</key>
+	<string>Add your key here!</string>
+	<key>LuisSubscriptionId</key>
+	<string>Add your key here!</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>use to scan video</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Your microphone will be used to record your speech when you press the "Start Recording" button.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>$(PRODUCT_NAME) uses photos</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Speech recognition will be used to determine which words you speak into this device's microphone.</string>
+	<key>RapidCommandsDictionary</key>
+	<dict>
+		<key>orientate</key>
+		<string>Orientate</string>
+		<key>what's around me</key>
+		<string>Orientate</string>
+		<key>where am i</key>
+		<string>Location</string>
+	</dict>
+	<key>SpeechCognitiveServicesPrimaryKey</key>
+	<string>Add your key here!</string>
+	<key>SpeechCognitiveServicesSecondaryKey</key>
+	<string>Add your key here!</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>HelveticaNeueLTStd-Roman.ttf</string>

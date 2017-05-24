@@ -66,7 +66,8 @@
 #define PHONE_EMPTY @"Please Enter PhoneNumber"
 
 #define INTERNETVALIDATION @"No internet connection.."
-#define Api_Not_Response @"Please try again!"
+//#define Api_Not_Response @"Please try again!"
+#define Api_Not_Response @"Server not responding!"
 
 #define PASSWORD_EMPTY @"Please Enter Password"
 #define PASSWORD @"Password Must be greater than 5 Digit"
@@ -373,6 +374,8 @@
 
 #define apk_Photos @"apk_Photos.asmx"
 #define apk_GetPhotoList_action @"GetPhotoList"
+#define apk_AddPhotos @"AddPhotos"
+
 
 #pragma mark - apk_albums
 

@@ -37,7 +37,8 @@
     NSMutableArray *imgary,*textary;
     AppDelegate *aj;
     int c2;
-    NSMutableDictionary *dic;
+    NSMutableDictionary *dic2;
+    NSMutableArray *aryGetCount;
 }
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
 @end
@@ -65,8 +66,6 @@
     
     aProfileTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    
-    
     //set Header Title
     NSArray *arr=[[[Utility getCurrentUserDetail]objectForKey:@"FullName"] componentsSeparatedByString:@" "];
     if (arr.count != 0)
@@ -87,7 +86,11 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {
-     dic = [[[NSUserDefaults standardUserDefaults]valueForKey:@"TotalCountofMember"]mutableCopy];
+    //dic2 = [[[NSUserDefaults standardUserDefaults]valueForKey:@"TotalCountofMember"]mutableCopy];
+    
+    
+  //  NSLog(@"Dic Viewwill=%@",dic2);
+    
     
     _lbHeaderTitle.text = [NSString stringWithFormat:@"My Profile (%@)",[Utility getCurrentUserName]];
     
@@ -103,6 +106,10 @@
         _btnParent.hidden = YES;
         _btnPhoneChain.hidden = YES;
     }
+    
+    [self api_getMemberCount];
+
+   
 }
 
 -(void)getCurrentUserImage :(NSMutableDictionary *)dic
@@ -159,33 +166,78 @@
     
     //tag 20
     UILabel *lb2 = (UILabel *)[cell.contentView viewWithTag:20];
-   
+    
+  //  NSLog(@"Dic Cell=%@",dic2);
+    
+    /* if (indexPath.row == 14)
+     {
+     lb.hidden = YES;
+     lb1.hidden = NO;
+     //lb2.hidden = NO;
+     lb2.layer.cornerRadius = 10.0;
+     lb2.clipsToBounds = YES;
+     lb1.text = @"Leave";
+     NSMutableArray *ary = [dic2 objectForKey:@"Table2"];
+     [lb2 setBackgroundColor:[UIColor redColor]];
+     
+     NSString *s = [NSString stringWithFormat:@"%@",[[ary objectAtIndex:0]objectForKey:@"LeaveApplication"]];
+     
+     if ([s isEqualToString:@"0"])
+     {
+     lb.hidden = YES;
+     }
+     else
+     {
+     lb2.hidden = NO;
+     lb2.text = [NSString stringWithFormat:@"%@",[[ary objectAtIndex:0]objectForKey:@"LeaveApplication"]];
+     }
+     
+     
+     // lb2.text = [textary objectAtIndex:indexPath.row];
+     }*/
     
     if (indexPath.row == 14)
     {
         lb.hidden = YES;
         lb1.hidden = NO;
-        //lb2.hidden = NO;
         lb2.layer.cornerRadius = 10.0;
         lb2.clipsToBounds = YES;
         lb1.text = @"Leave";
-        NSMutableArray *ary = [dic objectForKey:@"Table2"];
         [lb2 setBackgroundColor:[UIColor redColor]];
+
         
-        NSString *s = [NSString stringWithFormat:@"%@",[[ary objectAtIndex:0]objectForKey:@"LeaveApplication"]];
+        NSLog(@"Ary=%@",aryGetCount);
         
-        if ([s isEqualToString:@"0"])
+        
+        if (aryGetCount.count > 0)
         {
-            lb.hidden = YES;
+            NSString *str = [NSString stringWithFormat:@"%@",[[aryGetCount objectAtIndex:0]objectForKey:@"LeaveApplication"]];
+            
+            // NSLog(@"Data=%lu",(unsigned long)str.length);
+            
+            if (str == (id)[NSNull null] || str.length == 0 || [str isEqual: [NSNull null]] || [str isEqualToString:@"(null)"])
+            {
+                lb2.hidden = YES;
+            }
+            else
+            {
+                if ([str isEqualToString:@"0"])
+                {
+                    lb2.hidden = YES;
+                }
+                else
+                {
+                    lb2.hidden = NO;
+                    lb2.text = str;
+                }
+                
+            }
+
         }
         else
         {
-            lb2.hidden = NO;
-             lb2.text = [NSString stringWithFormat:@"%@",[[ary objectAtIndex:0]objectForKey:@"LeaveApplication"]];
+            lb2.hidden = YES;
         }
-
-        
-        // lb2.text = [textary objectAtIndex:indexPath.row];
     }
     else
     {
@@ -194,7 +246,7 @@
         lb2.hidden = YES;
         lb.text = [textary objectAtIndex:indexPath.row];
     }
-
+    
     
     
     UIImageView *imageView;
@@ -253,9 +305,9 @@
     
     ProfileLeaveListSelectVc *vc12 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfileLeaveListSelectVc"];
     
-     ProfileLeaveDetailListVc *vc13 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfileLeaveDetailListVc"];
+    ProfileLeaveDetailListVc *vc13 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfileLeaveDetailListVc"];
     
-     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
     
     switch (indexPath.row)
     {
@@ -336,18 +388,18 @@
             
             if([[Utility getMemberType] isEqualToString:@"Student"])
             {
-                 [self.navigationController pushViewController:vc13 animated:YES];
+                [self.navigationController pushViewController:vc13 animated:YES];
             }
             else
             {
                 
                 [self.navigationController pushViewController:vc12 animated:YES];
             }
-          
+            
             break;
             
         case 15:
-                 [self.navigationController pushViewController:c animated:YES];
+            [self.navigationController pushViewController:c animated:YES];
             
             break;
             
@@ -412,6 +464,108 @@
     UIViewController *initViewController = [storyBoard instantiateViewControllerWithIdentifier:@"HealthRecordVc"];
     [self.navigationController pushViewController:initViewController animated:YES];
 }
+
+#pragma mark - Member Count
+
+-(void)api_getMemberCount
+{
+    //#define apk_Notification @"apk_Notification.asmx"
+    //#define apk_MemberAllTypeOfCounts_action @"MemberAllTypeOfCounts"
+    
+    //    <MemberID>guid</MemberID>
+    //    <ClientID>guid</ClientID>
+    //    <InstituteID>guid</InstituteID>
+    
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_Notification,apk_MemberAllTypeOfCounts_action];
+    
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+    
+    
+   // [ProgressHUB showHUDAddedTo:self.view];
+    
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         [ProgressHUB hideenHUDAddedTo:self.view];
+         if(!error)
+         {
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableDictionary *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             
+             if([arrResponce count] != 0)
+             {
+                 NSLog(@"arr=%@",arrResponce);
+                 
+                 @try
+                 {
+                     aryGetCount = [arrResponce objectForKey:@"Table2"];
+                     
+                     [[NSUserDefaults standardUserDefaults]setObject:arrResponce forKey:@"TotalCountofMember"];
+                     [[NSUserDefaults standardUserDefaults]synchronize];
+                     [aProfileTable reloadData];
+                     
+                 }
+                 @catch (NSException *exception)
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                 }
+                 
+                 
+                 // strCheckUser =@"SwitchAccount";
+                 //  strCheckUser =@"WallVc";
+                 
+                 // NSLog(@"Strcheck=%@",strCheckUser);
+                 //
+                 //                 if ([strCheckUser isEqualToString:@"SwitchAccount"])
+                 //                 {
+                 //                     UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SwitchAcoountVC"];
+                 //                     [self.navigationController pushViewController:wc animated:YES];
+                 //                 }
+                 //                 else
+                 //                 {
+                 //                     [self performSegueWithIdentifier:@"ShowWall" sender:self];
+                 //                 }
+                 //                 WallVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
+                 //                 vc.checkscreen = @"FromLogin";
+                 //                 app.checkview = 0;
+                 //
+                 //                 [self.navigationController pushViewController:vc animated:YES];
+                 
+                 
+                 
+                 //api_getMemberCount
+                 // [self performSegueWithIdentifier:@"ShowWall" sender:self];
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
+}
+
 
 /*
  #pragma mark - Navigation
