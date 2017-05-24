@@ -382,7 +382,6 @@
              {
                  NSLog(@"arr=%@",arrResponce);
                 
-                 
                  [[NSUserDefaults standardUserDefaults]setObject:arrResponce forKey:@"TotalCountofMember"];
                  [[NSUserDefaults standardUserDefaults]synchronize];
                  

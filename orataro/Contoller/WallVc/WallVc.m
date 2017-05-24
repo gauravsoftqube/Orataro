@@ -144,7 +144,8 @@ int c2= 0;
 -(void)viewWillAppear:(BOOL)animated
 {
    // [self api_getMemberCount];
-    [self apiCallFor_GetUserDynamicMenuData:YES];
+    
+    
     // downarrow
     if ([_checkscreen isEqualToString:@"Institute"])
     {
@@ -171,7 +172,6 @@ int c2= 0;
         {
             self.lblheaderTitle.text=[NSString stringWithFormat:@"Standard"];
         }
-        
     }
     else if ([_checkscreen isEqualToString:@"Division"])
     {
@@ -206,6 +206,40 @@ int c2= 0;
             self.lblheaderTitle.text=[NSString stringWithFormat:@"Subject"];
         }
     }
+    else if ([_checkscreen isEqualToString:@"Group"])
+    {
+        [_MenuBtn setBackgroundImage:[UIImage imageNamed:@"downarrow"] forState:UIControlStateNormal];
+        [_HomeBtn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+        self.btnWallMember.hidden =YES;
+        
+        NSString *strWallName=[self.dicSelect_std_divi_sub objectForKey:@"WallName"];
+        //set Header Title
+        if ([strWallName length] != 0)
+        {
+            self.lblheaderTitle.text=[NSString stringWithFormat:@"Group (%@)",strWallName];
+        }
+        else
+        {
+            self.lblheaderTitle.text=[NSString stringWithFormat:@"Group"];
+        }
+    }
+    else if ([_checkscreen isEqualToString:@"Project"])
+    {
+        [_MenuBtn setBackgroundImage:[UIImage imageNamed:@"downarrow"] forState:UIControlStateNormal];
+        [_HomeBtn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+        self.btnWallMember.hidden =YES;
+        
+        NSString *strWallName=[self.dicSelect_std_divi_sub objectForKey:@"WallName"];
+        //set Header Title
+        if ([strWallName length] != 0)
+        {
+            self.lblheaderTitle.text=[NSString stringWithFormat:@"Project (%@)",strWallName];
+        }
+        else
+        {
+            self.lblheaderTitle.text=[NSString stringWithFormat:@"Project"];
+        }
+    }
     else if ([_checkscreen isEqualToString:@"MyWall"])
     {
         [_MenuBtn setBackgroundImage:[UIImage imageNamed:@"downarrow"] forState:UIControlStateNormal];
@@ -238,11 +272,41 @@ int c2= 0;
     arrPostLocalDB_ResponceImagePath = [[NSMutableArray alloc]init];
     
     [self apiCallMethod];
+    [self apiCall_DynamicWallMenu];
 }
 
 -(void)refreshData
 {
     [self apiCallMethod];
+}
+
+-(void)apiCall_DynamicWallMenu
+{
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        NSMutableArray *arrGeneralWall_Temp = [DBOperation selectData:@"select * from DynamicWallMenuList"];
+        [self manageDynamicWallMenuList:arrGeneralWall_Temp];
+        if(arrGeneralWall_Temp.count == 0)
+        {
+            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alrt show];
+            return;
+        }
+    }
+    else
+    {
+        NSMutableArray *arrGeneralWall_Temp = [DBOperation selectData:@"select * from DynamicWallMenuList"];
+        [self manageDynamicWallMenuList:arrGeneralWall_Temp];
+        
+        if(arrGeneralWall_Temp.count == 0)
+        {
+            [self apiCallFor_GetUserDynamicMenuData:NO];
+        }
+        else
+        {
+            [self apiCallFor_GetUserDynamicMenuData:NO];
+        }
+    }
 }
 
 -(void)apiCallMethod
@@ -257,23 +321,15 @@ int c2= 0;
             arrGeneralWall = [DBOperation selectData:@"select * from InstituteWall"];
             countResponce = [arrGeneralWall count];
         }
-        else if ([_checkscreen isEqualToString:@"Standard"])
+        else if ([_checkscreen isEqualToString:@"Standard"] ||
+                 [_checkscreen isEqualToString:@"Division"] ||
+                 [_checkscreen isEqualToString:@"Subject"] ||
+                 [_checkscreen isEqualToString:@"Group"] ||
+                 [_checkscreen isEqualToString:@"Project"])
         {
             NSString *strWallId=[NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]];
             
-            arrGeneralWall = [DBOperation selectData:[NSString stringWithFormat:@"select * from StandardWall where WallID ='%@'",strWallId]];
-            countResponce = [arrGeneralWall count];
-        }
-        else if ([_checkscreen isEqualToString:@"Division"])
-        {
-            NSString *strWallId=[NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]];
-            arrGeneralWall = [DBOperation selectData:[NSString stringWithFormat:@"select * from DivisionWall where WallID ='%@'",strWallId]];
-            countResponce = [arrGeneralWall count];
-        }
-        else if ([_checkscreen isEqualToString:@"Subject"])
-        {
-            NSString *strWallId=[NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]];
-            arrGeneralWall = [DBOperation selectData:[NSString stringWithFormat:@"select * from SubjectWall where WallID ='%@'",strWallId]];
+            arrGeneralWall = [DBOperation selectData:[NSString stringWithFormat:@"select * from DynamicWall where WallID ='%@'",strWallId]];
             countResponce = [arrGeneralWall count];
         }
         else if ([_checkscreen isEqualToString:@"MyWall"])
@@ -309,23 +365,15 @@ int c2= 0;
             arrGeneralWall = [DBOperation selectData:@"select * from InstituteWall"];
             countResponce = [arrGeneralWall count];
         }
-        else if ([_checkscreen isEqualToString:@"Standard"])
+        else if ([_checkscreen isEqualToString:@"Standard"] ||
+                 [_checkscreen isEqualToString:@"Division"] ||
+                 [_checkscreen isEqualToString:@"Subject"] ||
+                 [_checkscreen isEqualToString:@"Group"] ||
+                 [_checkscreen isEqualToString:@"Project"])
         {
             NSString *strWallId=[NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]];
             
-            arrGeneralWall = [DBOperation selectData:[NSString stringWithFormat:@"select * from StandardWall where WallID ='%@'",strWallId]];
-            countResponce = [arrGeneralWall count];
-        }
-        else if ([_checkscreen isEqualToString:@"Division"])
-        {
-            NSString *strWallId=[NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]];
-            arrGeneralWall = [DBOperation selectData:[NSString stringWithFormat:@"select * from DivisionWall where WallID ='%@'",strWallId]];
-            countResponce = [arrGeneralWall count];
-        }
-        else if ([_checkscreen isEqualToString:@"Subject"])
-        {
-            NSString *strWallId=[NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]];
-            arrGeneralWall = [DBOperation selectData:[NSString stringWithFormat:@"select * from SubjectWall where WallID ='%@'",strWallId]];
+            arrGeneralWall = [DBOperation selectData:[NSString stringWithFormat:@"select * from DynamicWall where WallID ='%@'",strWallId]];
             countResponce = [arrGeneralWall count];
         }
         else if ([_checkscreen isEqualToString:@"MyWall"])
@@ -1091,15 +1139,11 @@ int c2= 0;
     {
         [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstitutionWallID"]] forKey:@"WallID"];
     }
-    else if ([_checkscreen isEqualToString:@"Standard"])
-    {
-        [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]] forKey:@"WallID"];
-    }
-    else if ([_checkscreen isEqualToString:@"Division"])
-    {
-        [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]] forKey:@"WallID"];
-    }
-    else if ([_checkscreen isEqualToString:@"Subject"])
+    else if ([_checkscreen isEqualToString:@"Standard"] ||
+             [_checkscreen isEqualToString:@"Division"] ||
+             [_checkscreen isEqualToString:@"Subject"] ||
+             [_checkscreen isEqualToString:@"Group"] ||
+             [_checkscreen isEqualToString:@"Project"])
     {
         [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]] forKey:@"WallID"];
     }
@@ -1185,23 +1229,11 @@ int c2= 0;
         [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
         [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
     }
-    else if ([_checkscreen isEqualToString:@"Standard"])
-    {
-        strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_generalwall,apk_GetDynamicWallData_action];
-        
-        [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]] forKey:@"WallID"];
-        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
-        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
-    }
-    else if ([_checkscreen isEqualToString:@"Division"])
-    {
-        strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_generalwall,apk_GetDynamicWallData_action];
-        
-        [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]] forKey:@"WallID"];
-        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
-        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
-    }
-    else if ([_checkscreen isEqualToString:@"Subject"])
+    else if ([_checkscreen isEqualToString:@"Standard"] ||
+             [_checkscreen isEqualToString:@"Division"] ||
+             [_checkscreen isEqualToString:@"Subject"] ||
+             [_checkscreen isEqualToString:@"Group"] ||
+             [_checkscreen isEqualToString:@"Project"])
     {
         strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_generalwall,apk_GetDynamicWallData_action];
         
@@ -1228,7 +1260,7 @@ int c2= 0;
     
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
-         [self.btnHeaderTitle setUserInteractionEnabled:YES ];
+         [self.btnHeaderTitle setUserInteractionEnabled:YES];
          [self.aWallTableView.refreshControl endRefreshing];
          [self.aWallTableView.tableFooterView setHidden:YES];
          [ProgressHUB hideenHUDAddedTo:self.view];
@@ -1246,8 +1278,8 @@ int c2= 0;
                      NSString *strStatus=[dicResponce objectForKey:@"message"];
                      if([strStatus isEqualToString:@"No Data Found"])
                      {
-                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dicResponce objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                         [alrt show];
+                         arrGeneralWall=[[NSMutableArray alloc]init];
+                         [self.aWallTableView reloadData];
                      }
                      else
                      {
@@ -1297,7 +1329,9 @@ int c2= 0;
              }
              else if ([_checkscreen isEqualToString:@"Standard"] ||
                       [_checkscreen isEqualToString:@"Division"] ||
-                      [_checkscreen isEqualToString:@"Subject"])
+                      [_checkscreen isEqualToString:@"Subject"] ||
+                      [_checkscreen isEqualToString:@"Group"] ||
+                      [_checkscreen isEqualToString:@"Project"])
              {
                  NSMutableDictionary  *dicResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
                  if(dicResponce != nil)
@@ -1306,8 +1340,8 @@ int c2= 0;
                      NSString *strStatus=[dicResponce objectForKey:@"message"];
                      if([strStatus isEqualToString:@"No Data Found"])
                      {
-                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dicResponce objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                         [alrt show];
+                         arrGeneralWall=[[NSMutableArray alloc]init];
+                         [self.aWallTableView reloadData];
                      }
                      else
                      {
@@ -1364,8 +1398,8 @@ int c2= 0;
                      NSString *strStatus=[dic objectForKey:@"message"];
                      if([strStatus isEqualToString:@"No Data Found"])
                      {
-                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                         [alrt show];
+                         arrGeneralWall=[[NSMutableArray alloc]init];
+                         [self.aWallTableView reloadData];
                      }
                      else
                      {
@@ -1412,8 +1446,8 @@ int c2= 0;
                      NSString *strStatus=[dic objectForKey:@"message"];
                      if([strStatus isEqualToString:@"No Data Found"])
                      {
-                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                         [alrt show];
+                         arrGeneralWall=[[NSMutableArray alloc]init];
+                         [self.aWallTableView reloadData];
                      }
                      else
                      {
@@ -1538,6 +1572,15 @@ int c2= 0;
                      {
                          //update
                          [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE InstituteWall SET TotalLikes = '%@' WHERE PostCommentID = '%@'",TotalLikes,PostCommentID]];
+                     }
+                     else if ([_checkscreen isEqualToString:@"Standard"] ||
+                              [_checkscreen isEqualToString:@"Division"] ||
+                              [_checkscreen isEqualToString:@"Subject"] ||
+                              [_checkscreen isEqualToString:@"Group"] ||
+                              [_checkscreen isEqualToString:@"Project"])
+                     {
+                         //update
+                         [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE DynamicWall SET TotalLikes = '%@' WHERE PostCommentID = '%@'",TotalLikes,PostCommentID]];
                      }
                      else
                      {
@@ -1666,6 +1709,15 @@ int c2= 0;
                          //update
                          [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE InstituteWall SET TotalDislike = '%@' WHERE PostCommentID = '%@'",TotalDislike,PostCommentID]];
                      }
+                     else if ([_checkscreen isEqualToString:@"Standard"] ||
+                              [_checkscreen isEqualToString:@"Division"] ||
+                              [_checkscreen isEqualToString:@"Subject"] ||
+                              [_checkscreen isEqualToString:@"Group"] ||
+                              [_checkscreen isEqualToString:@"Project"])
+                     {
+                         //update
+                         [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE InstituteWall SET TotalDislike = '%@' WHERE PostCommentID = '%@'",TotalDislike,PostCommentID]];
+                     }
                      else
                      {
                          //update
@@ -1778,81 +1830,9 @@ int c2= 0;
                  }
                  else
                  {
-                     arrDynamicWallMenu = [[NSMutableArray alloc]init];
-                     arrDynamicWallMenuMain = [[NSMutableArray alloc]init];
-                     
-                     NSMutableArray *arrWall=[[NSMutableArray alloc]init];
-                     NSMutableArray *arrMyWall=[[NSMutableArray alloc]init];
-                     NSMutableArray *arrInstituteWall=[[NSMutableArray alloc]init];
-                     NSMutableArray *arrStandardWall=[[NSMutableArray alloc]init];
-                     NSMutableArray *arrDivisionWall=[[NSMutableArray alloc]init];
-                     NSMutableArray *arrSubjectWall=[[NSMutableArray alloc]init];
-                     NSMutableArray *arrGroupWall=[[NSMutableArray alloc]init];
-                     NSMutableArray *arrProjectWall=[[NSMutableArray alloc]init];
-                     {
-                         NSMutableArray *arrWall=[[NSMutableArray alloc]init];
-                         NSMutableArray *arrMyWall=[[NSMutableArray alloc]init];
-                         NSMutableArray *arrInstituteWall=[[NSMutableArray alloc]init];
-                         NSMutableArray *arrStandardWall=[[NSMutableArray alloc]init];
-                         NSMutableArray *arrDivisionWall=[[NSMutableArray alloc]init];
-                         NSMutableArray *arrSubjectWall=[[NSMutableArray alloc]init];
-                         NSMutableArray *arrGroupWall=[[NSMutableArray alloc]init];
-                         NSMutableArray *arrProjectWall=[[NSMutableArray alloc]init];
-                         [arrDynamicWallMenu addObject:arrWall];
-                         [arrDynamicWallMenu addObject:arrMyWall];
-                         [arrDynamicWallMenu addObject:arrInstituteWall];
-                         [arrDynamicWallMenu addObject:arrStandardWall];
-                         [arrDynamicWallMenu addObject:arrDivisionWall];
-                         [arrDynamicWallMenu addObject:arrSubjectWall];
-                         [arrDynamicWallMenu addObject:arrGroupWall];
-                         [arrDynamicWallMenu addObject:arrProjectWall];
-                         
-                     }
-                     for (NSMutableDictionary *dic in arrResponce)
-                     {
-                         NSString *strAssociationType=[dic objectForKey:@"AssociationType"];
-                         
-                         if([strAssociationType isEqualToString:@"Wall"])
-                         {
-                         }
-                         else if([strAssociationType isEqualToString:@"MyWall"])
-                         {
-                         }
-                         else if([strAssociationType isEqualToString:@"Institute"])
-                         {
-                         }
-                         else if([strAssociationType isEqualToString:@"Grade"])
-                         {
-                             [arrStandardWall addObject:dic];
-                         }
-                         else if([strAssociationType isEqualToString:@"Division"])
-                         {
-                             [arrDivisionWall addObject:dic];
-                         }
-                         else if([strAssociationType isEqualToString:@"Subject"])
-                         {
-                             [arrSubjectWall addObject:dic];
-                         }
-                         else if([strAssociationType isEqualToString:@"Group"])
-                         {
-                             [arrGroupWall addObject:dic];
-                         }
-                         else if([strAssociationType isEqualToString:@"Project"])
-                         {
-                             [arrProjectWall addObject:dic];
-                         }
-                     }
-                     [arrDynamicWallMenuMain addObject:arrWall];
-                     [arrDynamicWallMenuMain addObject:arrMyWall];
-                     [arrDynamicWallMenuMain addObject:arrInstituteWall];
-                     [arrDynamicWallMenuMain addObject:arrStandardWall];
-                     [arrDynamicWallMenuMain addObject:arrDivisionWall];
-                     [arrDynamicWallMenuMain addObject:arrSubjectWall];
-                     [arrDynamicWallMenuMain addObject:arrGroupWall];
-                     [arrDynamicWallMenuMain addObject:arrProjectWall];
-                     [self.viewDynamicWallMenuList reloadData];
+                     [DBOperation executeSQL:[NSString stringWithFormat:@"DELETE FROM DynamicWallMenuList"]];
+                     [self manageDynamicWallMenuList:arrResponce];
                  }
-                 
              }
              else
              {
@@ -1866,6 +1846,84 @@ int c2= 0;
              [alrt show];
          }
      }];
+}
+
+-(void)manageDynamicWallMenuList:(NSMutableArray*)arrResponce
+{
+    arrDynamicWallMenu = [[NSMutableArray alloc]init];
+    arrDynamicWallMenuMain = [[NSMutableArray alloc]init];
+    
+    NSMutableArray *arrWall=[[NSMutableArray alloc]init];
+    NSMutableArray *arrMyWall=[[NSMutableArray alloc]init];
+    NSMutableArray *arrInstituteWall=[[NSMutableArray alloc]init];
+    NSMutableArray *arrStandardWall=[[NSMutableArray alloc]init];
+    NSMutableArray *arrDivisionWall=[[NSMutableArray alloc]init];
+    NSMutableArray *arrSubjectWall=[[NSMutableArray alloc]init];
+    NSMutableArray *arrGroupWall=[[NSMutableArray alloc]init];
+    NSMutableArray *arrProjectWall=[[NSMutableArray alloc]init];
+    {
+        NSMutableArray *arrWall=[[NSMutableArray alloc]init];
+        NSMutableArray *arrMyWall=[[NSMutableArray alloc]init];
+        NSMutableArray *arrInstituteWall=[[NSMutableArray alloc]init];
+        NSMutableArray *arrStandardWall=[[NSMutableArray alloc]init];
+        NSMutableArray *arrDivisionWall=[[NSMutableArray alloc]init];
+        NSMutableArray *arrSubjectWall=[[NSMutableArray alloc]init];
+        NSMutableArray *arrGroupWall=[[NSMutableArray alloc]init];
+        NSMutableArray *arrProjectWall=[[NSMutableArray alloc]init];
+        [arrDynamicWallMenu addObject:arrWall];
+        [arrDynamicWallMenu addObject:arrMyWall];
+        [arrDynamicWallMenu addObject:arrInstituteWall];
+        [arrDynamicWallMenu addObject:arrStandardWall];
+        [arrDynamicWallMenu addObject:arrDivisionWall];
+        [arrDynamicWallMenu addObject:arrSubjectWall];
+        [arrDynamicWallMenu addObject:arrGroupWall];
+        [arrDynamicWallMenu addObject:arrProjectWall];
+        
+    }
+    for (NSMutableDictionary *dic in arrResponce)
+    {
+        NSString *strAssociationType=[dic objectForKey:@"AssociationType"];
+        
+        if([strAssociationType isEqualToString:@"Wall"])
+        {
+        }
+        else if([strAssociationType isEqualToString:@"MyWall"])
+        {
+        }
+        else if([strAssociationType isEqualToString:@"Institute"])
+        {
+        }
+        else if([strAssociationType isEqualToString:@"Grade"])
+        {
+            [arrStandardWall addObject:dic];
+        }
+        else if([strAssociationType isEqualToString:@"Division"])
+        {
+            [arrDivisionWall addObject:dic];
+        }
+        else if([strAssociationType isEqualToString:@"Subject"])
+        {
+            [arrSubjectWall addObject:dic];
+        }
+        else if([strAssociationType isEqualToString:@"Group"])
+        {
+            [arrGroupWall addObject:dic];
+        }
+        else if([strAssociationType isEqualToString:@"Project"])
+        {
+            [arrProjectWall addObject:dic];
+        }
+    }
+    [arrDynamicWallMenuMain addObject:arrWall];
+    [arrDynamicWallMenuMain addObject:arrMyWall];
+    [arrDynamicWallMenuMain addObject:arrInstituteWall];
+    [arrDynamicWallMenuMain addObject:arrStandardWall];
+    [arrDynamicWallMenuMain addObject:arrDivisionWall];
+    [arrDynamicWallMenuMain addObject:arrSubjectWall];
+    [arrDynamicWallMenuMain addObject:arrGroupWall];
+    [arrDynamicWallMenuMain addObject:arrProjectWall];
+    
+    [self.viewDynamicWallMenuList reloadData];
 }
 
 #pragma mark - DELETE EDIT Post apiCall
@@ -2161,18 +2219,8 @@ int c2= 0;
     NSString *WallID=[dicWallID objectForKey:@"WallID"];
     NSString *WallTypeTerm=[dicWallID objectForKey:@"WallTypeTerm"];
     
-    if ([_checkscreen isEqualToString:@"Standard"])
-    {
-        [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO StandardWall (AssociationID,AssociationType,DateOfPost,FileMimeType,FileType,FullName,IsAllowPeoplePostCommentWall,IsAllowPeopleToLikeAndDislikeCommentWall,IsAllowPeopleToLikeOrDislikeOnYourPost,IsAllowPeopleToPostMessageOnYourWall,IsAllowPeopleToShareCommentWall,IsAllowPeopleToShareYourPost,IsDislike,IsLike,MemberID,Photo,PostCommentID,PostCommentNote,PostCommentTypesTerm,PostedOn,ProfilePicture,RowNo,TempDate,TotalComments,TotalDislike,TotalLikes,WallID,WallTypeTerm) VALUES ('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@')",AssociationID,AssociationType,DateOfPost,FileMimeType,FileType,FullName,IsAllowPeoplePostCommentWall,IsAllowPeopleToLikeAndDislikeCommentWall,IsAllowPeopleToLikeOrDislikeOnYourPost,IsAllowPeopleToPostMessageOnYourWall,IsAllowPeopleToShareCommentWall,IsAllowPeopleToShareYourPost,IsDislike,IsLike,MemberID,Photo,PostCommentID,PostCommentNote,PostCommentTypesTerm,PostedOn,ProfilePicture,RowNo,TempDate,TotalComments,TotalDislike,TotalLikes,WallID,WallTypeTerm]];
-    }
-    else if ([_checkscreen isEqualToString:@"Division"])
-    {
-        [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO DivisionWall (AssociationID,AssociationType,DateOfPost,FileMimeType,FileType,FullName,IsAllowPeoplePostCommentWall,IsAllowPeopleToLikeAndDislikeCommentWall,IsAllowPeopleToLikeOrDislikeOnYourPost,IsAllowPeopleToPostMessageOnYourWall,IsAllowPeopleToShareCommentWall,IsAllowPeopleToShareYourPost,IsDislike,IsLike,MemberID,Photo,PostCommentID,PostCommentNote,PostCommentTypesTerm,PostedOn,ProfilePicture,RowNo,TempDate,TotalComments,TotalDislike,TotalLikes,WallID,WallTypeTerm) VALUES ('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@')",AssociationID,AssociationType,DateOfPost,FileMimeType,FileType,FullName,IsAllowPeoplePostCommentWall,IsAllowPeopleToLikeAndDislikeCommentWall,IsAllowPeopleToLikeOrDislikeOnYourPost,IsAllowPeopleToPostMessageOnYourWall,IsAllowPeopleToShareCommentWall,IsAllowPeopleToShareYourPost,IsDislike,IsLike,MemberID,Photo,PostCommentID,PostCommentNote,PostCommentTypesTerm,PostedOn,ProfilePicture,RowNo,TempDate,TotalComments,TotalDislike,TotalLikes,WallID,WallTypeTerm]];
-    }
-    else if ([_checkscreen isEqualToString:@"Subject"])
-    {
-        [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO SubjectWall (AssociationID,AssociationType,DateOfPost,FileMimeType,FileType,FullName,IsAllowPeoplePostCommentWall,IsAllowPeopleToLikeAndDislikeCommentWall,IsAllowPeopleToLikeOrDislikeOnYourPost,IsAllowPeopleToPostMessageOnYourWall,IsAllowPeopleToShareCommentWall,IsAllowPeopleToShareYourPost,IsDislike,IsLike,MemberID,Photo,PostCommentID,PostCommentNote,PostCommentTypesTerm,PostedOn,ProfilePicture,RowNo,TempDate,TotalComments,TotalDislike,TotalLikes,WallID,WallTypeTerm) VALUES ('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@')",AssociationID,AssociationType,DateOfPost,FileMimeType,FileType,FullName,IsAllowPeoplePostCommentWall,IsAllowPeopleToLikeAndDislikeCommentWall,IsAllowPeopleToLikeOrDislikeOnYourPost,IsAllowPeopleToPostMessageOnYourWall,IsAllowPeopleToShareCommentWall,IsAllowPeopleToShareYourPost,IsDislike,IsLike,MemberID,Photo,PostCommentID,PostCommentNote,PostCommentTypesTerm,PostedOn,ProfilePicture,RowNo,TempDate,TotalComments,TotalDislike,TotalLikes,WallID,WallTypeTerm]];
-    }
+    [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO DynamicWall (AssociationID,AssociationType,DateOfPost,FileMimeType,FileType,FullName,IsAllowPeoplePostCommentWall,IsAllowPeopleToLikeAndDislikeCommentWall,IsAllowPeopleToLikeOrDislikeOnYourPost,IsAllowPeopleToPostMessageOnYourWall,IsAllowPeopleToShareCommentWall,IsAllowPeopleToShareYourPost,IsDislike,IsLike,MemberID,Photo,PostCommentID,PostCommentNote,PostCommentTypesTerm,PostedOn,ProfilePicture,RowNo,TempDate,TotalComments,TotalDislike,TotalLikes,WallID,WallTypeTerm) VALUES ('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@')",AssociationID,AssociationType,DateOfPost,FileMimeType,FileType,FullName,IsAllowPeoplePostCommentWall,IsAllowPeopleToLikeAndDislikeCommentWall,IsAllowPeopleToLikeOrDislikeOnYourPost,IsAllowPeopleToPostMessageOnYourWall,IsAllowPeopleToShareCommentWall,IsAllowPeopleToShareYourPost,IsDislike,IsLike,MemberID,Photo,PostCommentID,PostCommentNote,PostCommentTypesTerm,PostedOn,ProfilePicture,RowNo,TempDate,TotalComments,TotalDislike,TotalLikes,WallID,WallTypeTerm]];
+
 }
 
 -(void)update_std_Divi_Subj_Wall_localDB:(NSMutableDictionary *)dicWallID
@@ -2213,20 +2261,7 @@ int c2= 0;
     NSString *WallID=[dicWallID objectForKey:@"WallID"];
     NSString *WallTypeTerm=[dicWallID objectForKey:@"WallTypeTerm"];
     
-    if ([_checkscreen isEqualToString:@"Standard"])
-    {
-        [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE StandardWall SET AssociationID ='%@',AssociationType= '%@',DateOfPost='%@',FileMimeType= '%@',FileType= '%@',FullName= '%@',IsAllowPeoplePostCommentWall= '%@',IsAllowPeopleToLikeAndDislikeCommentWall= '%@',IsAllowPeopleToLikeOrDislikeOnYourPost= '%@',IsAllowPeopleToPostMessageOnYourWall= '%@',IsAllowPeopleToShareCommentWall= '%@',IsAllowPeopleToShareYourPost= '%@',IsDislike= '%@',IsLike= '%@',MemberID= '%@',Photo= '%@',PostCommentID= '%@',PostCommentNote= '%@',PostCommentTypesTerm= '%@',PostedOn= '%@',ProfilePicture= '%@',RowNo= '%@',TempDate= '%@',TotalComments= '%@',TotalDislike= '%@',TotalLikes= '%@',WallID= '%@',WallTypeTerm= '%@' WHERE PostCommentID= '%@'",AssociationID,AssociationType,DateOfPost,FileMimeType,FileType,FullName,IsAllowPeoplePostCommentWall,IsAllowPeopleToLikeAndDislikeCommentWall,IsAllowPeopleToLikeOrDislikeOnYourPost,IsAllowPeopleToPostMessageOnYourWall,IsAllowPeopleToShareCommentWall,IsAllowPeopleToShareYourPost,IsDislike,IsLike,MemberID,Photo,PostCommentID,PostCommentNote,PostCommentTypesTerm,PostedOn,ProfilePicture,RowNo,TempDate,TotalComments,TotalDislike,TotalLikes,WallID,WallTypeTerm,PostCommentID]];
-    }
-    else if ([_checkscreen isEqualToString:@"Division"])
-    {
-        [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE DivisionWall SET AssociationID ='%@',AssociationType= '%@',DateOfPost='%@',FileMimeType= '%@',FileType= '%@',FullName= '%@',IsAllowPeoplePostCommentWall= '%@',IsAllowPeopleToLikeAndDislikeCommentWall= '%@',IsAllowPeopleToLikeOrDislikeOnYourPost= '%@',IsAllowPeopleToPostMessageOnYourWall= '%@',IsAllowPeopleToShareCommentWall= '%@',IsAllowPeopleToShareYourPost= '%@',IsDislike= '%@',IsLike= '%@',MemberID= '%@',Photo= '%@',PostCommentID= '%@',PostCommentNote= '%@',PostCommentTypesTerm= '%@',PostedOn= '%@',ProfilePicture= '%@',RowNo= '%@',TempDate= '%@',TotalComments= '%@',TotalDislike= '%@',TotalLikes= '%@',WallID= '%@',WallTypeTerm= '%@' WHERE PostCommentID= '%@'",AssociationID,AssociationType,DateOfPost,FileMimeType,FileType,FullName,IsAllowPeoplePostCommentWall,IsAllowPeopleToLikeAndDislikeCommentWall,IsAllowPeopleToLikeOrDislikeOnYourPost,IsAllowPeopleToPostMessageOnYourWall,IsAllowPeopleToShareCommentWall,IsAllowPeopleToShareYourPost,IsDislike,IsLike,MemberID,Photo,PostCommentID,PostCommentNote,PostCommentTypesTerm,PostedOn,ProfilePicture,RowNo,TempDate,TotalComments,TotalDislike,TotalLikes,WallID,WallTypeTerm,PostCommentID]];
-        
-    }
-    else if ([_checkscreen isEqualToString:@"Subject"])
-    {
-        [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE SubjectWall SET AssociationID ='%@',AssociationType= '%@',DateOfPost='%@',FileMimeType= '%@',FileType= '%@',FullName= '%@',IsAllowPeoplePostCommentWall= '%@',IsAllowPeopleToLikeAndDislikeCommentWall= '%@',IsAllowPeopleToLikeOrDislikeOnYourPost= '%@',IsAllowPeopleToPostMessageOnYourWall= '%@',IsAllowPeopleToShareCommentWall= '%@',IsAllowPeopleToShareYourPost= '%@',IsDislike= '%@',IsLike= '%@',MemberID= '%@',Photo= '%@',PostCommentID= '%@',PostCommentNote= '%@',PostCommentTypesTerm= '%@',PostedOn= '%@',ProfilePicture= '%@',RowNo= '%@',TempDate= '%@',TotalComments= '%@',TotalDislike= '%@',TotalLikes= '%@',WallID= '%@',WallTypeTerm= '%@' WHERE PostCommentID= '%@'",AssociationID,AssociationType,DateOfPost,FileMimeType,FileType,FullName,IsAllowPeoplePostCommentWall,IsAllowPeopleToLikeAndDislikeCommentWall,IsAllowPeopleToLikeOrDislikeOnYourPost,IsAllowPeopleToPostMessageOnYourWall,IsAllowPeopleToShareCommentWall,IsAllowPeopleToShareYourPost,IsDislike,IsLike,MemberID,Photo,PostCommentID,PostCommentNote,PostCommentTypesTerm,PostedOn,ProfilePicture,RowNo,TempDate,TotalComments,TotalDislike,TotalLikes,WallID,WallTypeTerm,PostCommentID]];
-        
-    }
+    [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE DynamicWall SET AssociationID ='%@',AssociationType= '%@',DateOfPost='%@',FileMimeType= '%@',FileType= '%@',FullName= '%@',IsAllowPeoplePostCommentWall= '%@',IsAllowPeopleToLikeAndDislikeCommentWall= '%@',IsAllowPeopleToLikeOrDislikeOnYourPost= '%@',IsAllowPeopleToPostMessageOnYourWall= '%@',IsAllowPeopleToShareCommentWall= '%@',IsAllowPeopleToShareYourPost= '%@',IsDislike= '%@',IsLike= '%@',MemberID= '%@',Photo= '%@',PostCommentID= '%@',PostCommentNote= '%@',PostCommentTypesTerm= '%@',PostedOn= '%@',ProfilePicture= '%@',RowNo= '%@',TempDate= '%@',TotalComments= '%@',TotalDislike= '%@',TotalLikes= '%@',WallID= '%@',WallTypeTerm= '%@' WHERE PostCommentID= '%@'",AssociationID,AssociationType,DateOfPost,FileMimeType,FileType,FullName,IsAllowPeoplePostCommentWall,IsAllowPeopleToLikeAndDislikeCommentWall,IsAllowPeopleToLikeOrDislikeOnYourPost,IsAllowPeopleToPostMessageOnYourWall,IsAllowPeopleToShareCommentWall,IsAllowPeopleToShareYourPost,IsDislike,IsLike,MemberID,Photo,PostCommentID,PostCommentNote,PostCommentTypesTerm,PostedOn,ProfilePicture,RowNo,TempDate,TotalComments,TotalDislike,TotalLikes,WallID,WallTypeTerm,PostCommentID]];
 }
 
 #pragma mark - apiCall For Share Post
@@ -2248,15 +2283,11 @@ int c2= 0;
     {
         [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstitutionWallID"]] forKey:@"WallID"];
     }
-    else if([_checkscreen isEqualToString:@"Standard"])
-    {
-        [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]] forKey:@"WallID"];
-    }
-    else if ([_checkscreen isEqualToString:@"Division"])
-    {
-        [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]] forKey:@"WallID"];
-    }
-    else if ([_checkscreen isEqualToString:@"Subject"])
+    else if ([_checkscreen isEqualToString:@"Standard"] ||
+             [_checkscreen isEqualToString:@"Division"] ||
+             [_checkscreen isEqualToString:@"Subject"] ||
+             [_checkscreen isEqualToString:@"Group"] ||
+             [_checkscreen isEqualToString:@"Project"])
     {
         [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]] forKey:@"WallID"];
     }
@@ -3921,6 +3952,7 @@ int c2= 0;
                 if ([Utility isInterNetConnectionIsActive] == true)
                 {
                     [self.aWallTableView.tableFooterView setHidden:NO];
+                    [self.btnHeaderTitle setUserInteractionEnabled:NO];
                     [self apiCallFor_GetGeneralWallData:@"0"];
                 }
                 else
@@ -4003,48 +4035,18 @@ int c2= 0;
             arrGeneralWall = [DBOperation selectData:@"select * from InstituteWall"];
             
         }
-        else if ([_checkscreen isEqualToString:@"Standard"])
+        else if ([_checkscreen isEqualToString:@"Standard"] ||
+                 [_checkscreen isEqualToString:@"Division"] ||
+                 [_checkscreen isEqualToString:@"Subject"] ||
+                 [_checkscreen isEqualToString:@"Group"] ||
+                 [_checkscreen isEqualToString:@"Project"])
         {
             //update
-            [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE StandardWall SET IsLike = '%@', TotalLikes = '%@' WHERE PostCommentID = '%@'",IsLike,TotalLikes,PostCommentID]];
-            
-            {
-                //update
-                [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE StandardWall SET IsDislike = '%@', TotalDislike = '%@' WHERE PostCommentID = '%@'",IsDislike,TotalDislike,PostCommentID]];
-            }
-            //get update data localdb
-            arrGeneralWall = [[NSMutableArray alloc]init];
-            arrGeneralWall = [DBOperation selectData:@"select * from StandardWall"];
-            
-        }
-        else if ([_checkscreen isEqualToString:@"Division"])
-        {
-            //update
-            [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE DivisionWall SET IsLike = '%@', TotalLikes = '%@' WHERE PostCommentID = '%@'",IsLike,TotalLikes,PostCommentID]];
-            
-            {
-                //update
-                [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE DivisionWall SET IsDislike = '%@', TotalDislike = '%@' WHERE PostCommentID = '%@'",IsDislike,TotalDislike,PostCommentID]];
-            }
+            [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE DynamicWall SET IsLike = '%@', TotalLikes = '%@' IsDislike = '%@', TotalDislike = '%@' WHERE PostCommentID = '%@'",IsLike,TotalLikes,IsDislike,TotalDislike,PostCommentID]];
             
             //get update data localdb
             arrGeneralWall = [[NSMutableArray alloc]init];
-            arrGeneralWall = [DBOperation selectData:@"select * from DivisionWall"];
-            
-        }
-        else if ([_checkscreen isEqualToString:@"Subject"])
-        {
-            //update
-            [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE SubjectWall SET IsLike = '%@', TotalLikes = '%@' WHERE PostCommentID = '%@'",IsLike,TotalLikes,PostCommentID]];
-            
-            {
-                //update
-                [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE SubjectWall SET IsDislike = '%@', TotalDislike = '%@' WHERE PostCommentID = '%@'",IsDislike,TotalDislike,PostCommentID]];
-            }
-            
-            //get update data localdb
-            arrGeneralWall = [[NSMutableArray alloc]init];
-            arrGeneralWall = [DBOperation selectData:@"select * from SubjectWall"];
+            arrGeneralWall = [DBOperation selectData:@"select * from DynamicWall"];
             
         }
         else if ([_checkscreen isEqualToString:@"MyWall"])
@@ -4060,7 +4062,6 @@ int c2= 0;
             //get update data localdb
             arrGeneralWall = [[NSMutableArray alloc]init];
             arrGeneralWall = [DBOperation selectData:@"select * from MyWall"];
-            
         }
         else
         {
@@ -4230,45 +4231,18 @@ int c2= 0;
             arrGeneralWall = [[NSMutableArray alloc]init];
             arrGeneralWall = [DBOperation selectData:@"select * from InstituteWall"];
         }
-        else if ([_checkscreen isEqualToString:@"Standard"])
+        else if ([_checkscreen isEqualToString:@"Standard"] ||
+                 [_checkscreen isEqualToString:@"Division"] ||
+                 [_checkscreen isEqualToString:@"Subject"] ||
+                 [_checkscreen isEqualToString:@"Group"] ||
+                 [_checkscreen isEqualToString:@"Project"])
         {
-            {
-                //update
-                [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE StandardWall SET IsLike = '%@', TotalLikes = '%@' WHERE PostCommentID = '%@'",IsLike,TotalLikes,PostCommentID]];
-            }
             //update
-            [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE StandardWall SET IsDislike = '%@', TotalDislike = '%@' WHERE PostCommentID = '%@'",IsDislike,TotalDislike,PostCommentID]];
+            [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE DynamicWall SET IsLike = '%@', TotalLikes = '%@' IsDislike = '%@', TotalDislike = '%@' WHERE PostCommentID = '%@'",IsLike,TotalLikes,IsDislike,TotalDislike,PostCommentID]];
             
             //get update data localdb
             arrGeneralWall = [[NSMutableArray alloc]init];
-            arrGeneralWall = [DBOperation selectData:@"select * from StandardWall"];
-        }
-        else if ([_checkscreen isEqualToString:@"Division"])
-        {
-            {
-                //update
-                [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE DivisionWall SET IsLike = '%@', TotalLikes = '%@' WHERE PostCommentID = '%@'",IsLike,TotalLikes,PostCommentID]];
-            }
-            //update
-            [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE DivisionWall SET IsDislike = '%@', TotalDislike = '%@' WHERE PostCommentID = '%@'",IsDislike,TotalDislike,PostCommentID]];
-            
-            //get update data localdb
-            arrGeneralWall = [[NSMutableArray alloc]init];
-            arrGeneralWall = [DBOperation selectData:@"select * from DivisionWall"];
-        }
-        else if ([_checkscreen isEqualToString:@"Subject"])
-        {
-            {
-                //update
-                [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE SubjectWall SET IsLike = '%@', TotalLikes = '%@' WHERE PostCommentID = '%@'",IsLike,TotalLikes,PostCommentID]];
-            }
-            
-            //update
-            [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE SubjectWall SET IsDislike = '%@', TotalDislike = '%@' WHERE PostCommentID = '%@'",IsDislike,TotalDislike,PostCommentID]];
-            
-            //get update data localdb
-            arrGeneralWall = [[NSMutableArray alloc]init];
-            arrGeneralWall = [DBOperation selectData:@"select * from SubjectWall"];
+            arrGeneralWall = [DBOperation selectData:@"select * from DynamicWall"];
         }
         else if ([_checkscreen isEqualToString:@"MyWall"])
         {
@@ -4582,11 +4556,15 @@ int c2= 0;
     }
     if(indexPath.section == 6)
     {
-        _checkscreen=@"";
+        _checkscreen=@"Group";
+        [self commonData];
+        [self viewWillAppear:YES];
     }
     if(indexPath.section == 7)
     {
-        _checkscreen=@"";
+        _checkscreen=@"Project";
+        [self commonData];
+        [self viewWillAppear:YES];
     }
 }
 
@@ -4686,7 +4664,9 @@ int c2= 0;
     else if ([_checkscreen isEqualToString:@"Standard"] ||
              [_checkscreen isEqualToString:@"Division"] ||
              [_checkscreen isEqualToString:@"Subject"] ||
-             [_checkscreen isEqualToString:@"MyWall"])
+             [_checkscreen isEqualToString:@"MyWall"] ||
+             [_checkscreen isEqualToString:@"Group"] ||
+             [_checkscreen isEqualToString:@"Project"])
     {
         [self apiCallFor_GetWallMember:@"1"];
     }
@@ -4749,10 +4729,16 @@ int c2= 0;
                 }
             }
         }
+        else
+        {
+            [WToast showWithText:You_dont_have_permission];
+        }
     }
     else if([_checkscreen isEqualToString:@"Standard"]||
             [_checkscreen isEqualToString:@"Division"]||
-            [_checkscreen isEqualToString:@"Subject"])
+            [_checkscreen isEqualToString:@"Subject"] ||
+            [_checkscreen isEqualToString:@"Group"] ||
+            [_checkscreen isEqualToString:@"Project"])
     {
         NSString *IsAllowUserToPostStatus=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostStatus"];
         NSString *IsAllowUserToPostPhoto=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostPhoto"];
@@ -4778,6 +4764,10 @@ int c2= 0;
                     wc.dicSelect_std_divi_sub=[self.dicSelect_std_divi_sub mutableCopy];
                     [self.navigationController pushViewController:wc animated:YES];
                 }
+                else
+                {
+                    [WToast showWithText:You_dont_have_permission];
+                }
             }
             else
             {
@@ -4793,7 +4783,16 @@ int c2= 0;
                     wc.dicSelect_std_divi_sub=[self.dicSelect_std_divi_sub mutableCopy];
                     [self.navigationController pushViewController:wc animated:YES];
                 }
+                else
+                {
+                    [WToast showWithText:You_dont_have_permission];
+                }
             }
+            
+        }
+        else
+        {
+            [WToast showWithText:You_dont_have_permission];
         }
     }
     else if ([_checkscreen isEqualToString:@"MyWall"])
@@ -4823,6 +4822,10 @@ int c2= 0;
                     [self.navigationController pushViewController:wc animated:YES];
                     
                 }
+                else
+                {
+                    [WToast showWithText:You_dont_have_permission];
+                }
             }
             else
             {
@@ -4838,7 +4841,15 @@ int c2= 0;
                     wc.dicSelect_std_divi_sub=[self.dicSelect_std_divi_sub mutableCopy];
                     [self.navigationController pushViewController:wc animated:YES];
                 }
+                else
+                {
+                    [WToast showWithText:You_dont_have_permission];
+                }
             }
+        }
+        else
+        {
+            [WToast showWithText:You_dont_have_permission];
         }
         
         
@@ -4857,38 +4868,131 @@ int c2= 0;
             wc.checkscreen=self.checkscreen;
             [self.navigationController pushViewController:wc animated:YES];
         }
+        else
+        {
+            [WToast showWithText:You_dont_have_permission];
+        }
     }
 }
 
 - (IBAction)HomeBtnClicked:(id)sender
 {
     self.viewDynamicWallMenu_Height.constant=0;
+    bool flagPastVC = YES;
+    NSMutableArray *VCs = [NSMutableArray arrayWithArray: self.navigationController.viewControllers];
+   
+    if([VCs count] != 0)
+    {
+        UIViewController *vc = VCs[[VCs count] - 2];
+        if ([vc isKindOfClass: [LoginVC class]])
+        {
+            flagPastVC = NO;
+        }
+        else if ([vc isKindOfClass: [ViewController class]])
+        {
+            flagPastVC = NO;
+        }
+        else if ([vc isKindOfClass: [SwitchAcoountVC class]])
+        {
+            flagPastVC = NO;
+        }
+    }
     
+   
     if ([_checkscreen isEqualToString:@"Institute"])
     {
-        [self.navigationController popViewControllerAnimated:YES];
+        if(flagPastVC == NO)
+        {
+            _checkscreen=nil;
+            [self commonData];
+            [self viewWillAppear:YES];
+        }
+        else
+        {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        
     }
     else if([_checkscreen isEqualToString:@"Standard"])
     {
-        [self.navigationController popViewControllerAnimated:YES];
+        if(flagPastVC == NO)
+        {
+            _checkscreen=nil;
+            [self commonData];
+            [self viewWillAppear:YES];
+        }
+        else
+        {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
     }
     else if ([_checkscreen isEqualToString:@"Division"])
     {
-        [self.navigationController popViewControllerAnimated:YES];
+        if(flagPastVC == NO)
+        {
+            _checkscreen=nil;
+            [self commonData];
+            [self viewWillAppear:YES];
+        }
+        else
+        {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
     }
     else if ([_checkscreen isEqualToString:@"Subject"])
     {
-        [self.navigationController popViewControllerAnimated:YES];
+        if(flagPastVC == NO)
+        {
+            _checkscreen=nil;
+            [self commonData];
+            [self viewWillAppear:YES];
+        }
+        else
+        {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    }
+    else if([_checkscreen isEqualToString:@"Group"] ||
+            [_checkscreen isEqualToString:@"Project"])
+    {
+        if(flagPastVC == NO)
+        {
+            _checkscreen=nil;
+            [self commonData];
+            [self viewWillAppear:YES];
+        }
+        else
+        {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
     }
     else if ([_checkscreen isEqualToString:@"MyWall"])
     {
-        [self.navigationController popViewControllerAnimated:YES];
+        if(flagPastVC == NO)
+        {
+            _checkscreen=nil;
+            [self commonData];
+            [self viewWillAppear:YES];
+        }
+        else
+        {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
     }
     else
     {
-        [self.frostedViewController hideMenuViewController];
-        OrataroVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"OrataroVc"];
-        [self.navigationController pushViewController:wc animated:NO];
+        if(flagPastVC == NO)
+        {
+            _checkscreen=nil;
+            [self commonData];
+            [self viewWillAppear:YES];
+        }
+        else
+        {
+            [self.frostedViewController hideMenuViewController];
+            OrataroVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"OrataroVc"];
+            [self.navigationController pushViewController:wc animated:NO];
+        }
     }
 }
 
@@ -4918,7 +5022,9 @@ int c2= 0;
     }
     else if([_checkscreen isEqualToString:@"Standard"] ||
             [_checkscreen isEqualToString:@"Division"] ||
-            [_checkscreen isEqualToString:@"Subject"])
+            [_checkscreen isEqualToString:@"Subject"] ||
+            [_checkscreen isEqualToString:@"Group"] ||
+            [_checkscreen isEqualToString:@"Project"])
     {
         AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
         wc.checkscreen=self.checkscreen;
@@ -4958,8 +5064,6 @@ int c2= 0;
     [self.viewDelete_Conf setHidden:YES];
     [self apiCallFor_DeletePost:@"1"];
 }
-
-
 
 - (IBAction)btnHeaderTitle:(id)sender
 {

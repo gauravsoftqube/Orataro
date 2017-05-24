@@ -202,11 +202,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "orataro/Contoller/WallVc/AddCommentVc/AddCommentVc.m"
-            timestampString = "516273693.647259"
+            timestampString = "517327160.827744"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "268"
-            endingLineNumber = "268"
+            startingLineNumber = "262"
+            endingLineNumber = "262"
             landmarkName = "-apiCallFor_AddComments:"
             landmarkType = "7">
          </BreakpointContent>
@@ -228,11 +228,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "orataro/Contoller/AddPostVc/AddpostVc.m"
-            timestampString = "517130969.561569"
+            timestampString = "517327160.827744"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "442"
-            endingLineNumber = "442"
+            startingLineNumber = "440"
+            endingLineNumber = "440"
             landmarkName = "-apiCallFor_newPost:FileType:"
             landmarkType = "7">
          </BreakpointContent>
@@ -244,11 +244,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "orataro/Contoller/AddPostVc/AddpostVc.m"
-            timestampString = "517130969.561569"
+            timestampString = "517327160.827744"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "758"
-            endingLineNumber = "758"
+            startingLineNumber = "752"
+            endingLineNumber = "752"
             landmarkName = "-postNew_Image_LocalDB:"
             landmarkType = "7">
          </BreakpointContent>
@@ -260,11 +260,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "orataro/Contoller/AddPostVc/AddpostVc.m"
-            timestampString = "517130969.561569"
+            timestampString = "517327160.827744"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "551"
-            endingLineNumber = "551"
+            startingLineNumber = "549"
+            endingLineNumber = "549"
             landmarkName = "-apiCallFor_UploadFile:FileType:FileName:imageSelect:videoURL:"
             landmarkType = "7">
          </BreakpointContent>
@@ -276,11 +276,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "orataro/Contoller/AddPostVc/AddpostVc.m"
-            timestampString = "517130969.561569"
+            timestampString = "517327160.827744"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "542"
-            endingLineNumber = "542"
+            startingLineNumber = "540"
+            endingLineNumber = "540"
             landmarkName = "-apiCallFor_UploadFile:FileType:FileName:imageSelect:videoURL:"
             landmarkType = "7">
          </BreakpointContent>
@@ -292,11 +292,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "orataro/Contoller/AddPostVc/AddpostVc.m"
-            timestampString = "517130969.561569"
+            timestampString = "517327160.827744"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "716"
-            endingLineNumber = "716"
+            startingLineNumber = "714"
+            endingLineNumber = "714"
             landmarkName = "-postNew_Image_LocalDB:"
             landmarkType = "7">
          </BreakpointContent>
@@ -308,11 +308,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "orataro/Contoller/AddPostVc/AddpostVc.m"
-            timestampString = "517130969.561569"
+            timestampString = "517327160.827744"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "758"
-            endingLineNumber = "758"
+            startingLineNumber = "752"
+            endingLineNumber = "752"
             landmarkName = "-postNew_Image_LocalDB:"
             landmarkType = "7">
          </BreakpointContent>
@@ -324,11 +324,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "orataro/Contoller/AddPostVc/AddpostVc.m"
-            timestampString = "517130969.561569"
+            timestampString = "517327160.827744"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "452"
-            endingLineNumber = "452"
+            startingLineNumber = "450"
+            endingLineNumber = "450"
             landmarkName = "-apiCallFor_newPost:FileType:"
             landmarkType = "7">
          </BreakpointContent>
@@ -340,11 +340,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "orataro/Contoller/AddPostVc/AddpostVc.m"
-            timestampString = "517130969.561569"
+            timestampString = "517327160.827744"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "563"
-            endingLineNumber = "563"
+            startingLineNumber = "561"
+            endingLineNumber = "561"
             landmarkName = "-apiCallFor_UploadFile:FileType:FileName:imageSelect:videoURL:"
             landmarkType = "7">
          </BreakpointContent>
@@ -356,11 +356,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "orataro/Contoller/WallVc/WallVc.m"
-            timestampString = "517241546.020376"
+            timestampString = "517327160.827744"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "464"
-            endingLineNumber = "464"
+            startingLineNumber = "512"
+            endingLineNumber = "512"
             landmarkName = "-get_ImageIn_LocalDB:"
             landmarkType = "7">
          </BreakpointContent>
@@ -372,11 +372,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "orataro/Contoller/WallVc/WallVc.m"
-            timestampString = "517241546.020376"
+            timestampString = "517327160.827744"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "501"
-            endingLineNumber = "501"
+            startingLineNumber = "549"
+            endingLineNumber = "549"
             landmarkName = "-apiCallFor_UploadFile:FileType:FileName:imageSelect:arrPost_LocalDB:dicPost_LocalDB:videoURL:"
             landmarkType = "7">
          </BreakpointContent>
@@ -388,11 +388,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "orataro/Contoller/WallVc/WallVc.m"
-            timestampString = "517241546.020376"
+            timestampString = "517327160.827744"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "532"
-            endingLineNumber = "532"
+            startingLineNumber = "580"
+            endingLineNumber = "580"
             landmarkName = "-apiCallFor_UploadFile:FileType:FileName:imageSelect:arrPost_LocalDB:dicPost_LocalDB:videoURL:"
             landmarkType = "7">
          </BreakpointContent>
@@ -404,11 +404,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "orataro/Contoller/WallVc/WallVc.m"
-            timestampString = "517241546.020376"
+            timestampString = "517327160.827744"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "562"
-            endingLineNumber = "562"
+            startingLineNumber = "610"
+            endingLineNumber = "610"
             landmarkName = "-apiCallFor_UploadFile:FileType:FileName:imageSelect:arrPost_LocalDB:dicPost_LocalDB:videoURL:"
             landmarkType = "7">
          </BreakpointContent>
@@ -420,11 +420,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "orataro/Contoller/WallVc/WallVc.m"
-            timestampString = "517241546.020376"
+            timestampString = "517327160.827744"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "652"
-            endingLineNumber = "652"
+            startingLineNumber = "700"
+            endingLineNumber = "700"
             landmarkName = "-apiCallFor_newPost:FileType:dicPost_LocalDB:"
             landmarkType = "7">
          </BreakpointContent>
@@ -436,11 +436,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "orataro/Contoller/AddPostVc/AddpostVc.m"
-            timestampString = "517130969.561569"
+            timestampString = "517327160.827744"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1114"
-            endingLineNumber = "1114"
+            startingLineNumber = "1100"
+            endingLineNumber = "1100"
             landmarkName = "-SaveBtnClicked:"
             landmarkType = "7">
          </BreakpointContent>
@@ -452,11 +452,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "orataro/Contoller/AddPostVc/AddpostVc.m"
-            timestampString = "517130969.561569"
+            timestampString = "517327160.827744"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "640"
-            endingLineNumber = "640"
+            startingLineNumber = "638"
+            endingLineNumber = "638"
             landmarkName = "-apiCallFor_editPostDetail:"
             landmarkType = "7">
          </BreakpointContent>
@@ -468,11 +468,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "orataro/Contoller/WallVc/WallVc.m"
-            timestampString = "517241546.020376"
+            timestampString = "517327160.827744"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "4658"
-            endingLineNumber = "4658"
+            startingLineNumber = "4636"
+            endingLineNumber = "4636"
             landmarkName = "-btnCheckAll_SpecialFriends:"
             landmarkType = "7">
          </BreakpointContent>

@@ -351,20 +351,14 @@ static NSString *CellIdentifier = @"WallCustomeCell";
                          //update
                          [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE InstituteWall SET TotalLikes = '%@' WHERE PostCommentID = '%@'",TotalLikes,PostCommentID]];
                      }
-                     else if([_checkscreen isEqualToString:@"Standard"])
+                     else if ([_checkscreen isEqualToString:@"Standard"] ||
+                              [_checkscreen isEqualToString:@"Division"] ||
+                              [_checkscreen isEqualToString:@"Subject"] ||
+                              [_checkscreen isEqualToString:@"Group"] ||
+                              [_checkscreen isEqualToString:@"Project"])
                      {
                          //update
-                         [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE StandardWall SET TotalLikes = '%@' WHERE PostCommentID = '%@'",TotalLikes,PostCommentID]];
-                     }
-                     else if ([_checkscreen isEqualToString:@"Division"])
-                     {
-                         //update
-                         [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE DivisionWall SET TotalLikes = '%@' WHERE PostCommentID = '%@'",TotalLikes,PostCommentID]];
-                     }
-                     else if ([_checkscreen isEqualToString:@"Subject"])
-                     {
-                         //update
-                         [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE SubjectWall SET TotalLikes = '%@' WHERE PostCommentID = '%@'",TotalLikes,PostCommentID]];
+                         [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE DynamicWall SET TotalLikes = '%@' WHERE PostCommentID = '%@'",TotalLikes,PostCommentID]];
                      }
                      else if ([_checkscreen isEqualToString:@"MyWall"])
                      {
@@ -459,20 +453,14 @@ static NSString *CellIdentifier = @"WallCustomeCell";
                          //update
                          [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE InstituteWall SET TotalDislike = '%@' WHERE PostCommentID = '%@'",TotalDislike,PostCommentID]];
                      }
-                     else if([_checkscreen isEqualToString:@"Standard"])
+                     else if ([_checkscreen isEqualToString:@"Standard"] ||
+                              [_checkscreen isEqualToString:@"Division"] ||
+                              [_checkscreen isEqualToString:@"Subject"] ||
+                              [_checkscreen isEqualToString:@"Group"] ||
+                              [_checkscreen isEqualToString:@"Project"])
                      {
                          //update
-                         [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE StandardWall SET TotalDislike = '%@' WHERE PostCommentID = '%@'",TotalDislike,PostCommentID]];
-                     }
-                     else if ([_checkscreen isEqualToString:@"Division"])
-                     {
-                         //update
-                         [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE DivisionWall SET TotalDislike = '%@' WHERE PostCommentID = '%@'",TotalDislike,PostCommentID]];
-                     }
-                     else if ([_checkscreen isEqualToString:@"Subject"])
-                     {
-                         //update
-                         [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE SubjectWall SET TotalDislike = '%@' WHERE PostCommentID = '%@'",TotalDislike,PostCommentID]];
+                         [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE DynamicWall SET TotalDislike = '%@' WHERE PostCommentID = '%@'",TotalDislike,PostCommentID]];
                      }
                      else if ([_checkscreen isEqualToString:@"MyWall"])
                      {
@@ -519,15 +507,11 @@ static NSString *CellIdentifier = @"WallCustomeCell";
     {
         [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstitutionWallID"]] forKey:@"WallID"];
     }
-    else if([_checkscreen isEqualToString:@"Standard"])
-    {
-        [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]] forKey:@"WallID"];
-    }
-    else if ([_checkscreen isEqualToString:@"Division"])
-    {
-        [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]] forKey:@"WallID"];
-    }
-    else if ([_checkscreen isEqualToString:@"Subject"])
+    else if ([_checkscreen isEqualToString:@"Standard"] ||
+             [_checkscreen isEqualToString:@"Division"] ||
+             [_checkscreen isEqualToString:@"Subject"] ||
+             [_checkscreen isEqualToString:@"Group"] ||
+             [_checkscreen isEqualToString:@"Project"])
     {
         [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]] forKey:@"WallID"];
     }
@@ -1569,32 +1553,15 @@ static NSString *CellIdentifier = @"WallCustomeCell";
             //update
             [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE InstituteWall SET IsLike = '%@', TotalLikes = '%@' WHERE PostCommentID = '%@'",IsLike,TotalLikes,PostCommentID]];
         }
-        else if ([_checkscreen isEqualToString:@"Standard"])
+        else if ([_checkscreen isEqualToString:@"Standard"] ||
+                 [_checkscreen isEqualToString:@"Division"] ||
+                 [_checkscreen isEqualToString:@"Subject"] ||
+                 [_checkscreen isEqualToString:@"Group"] ||
+                 [_checkscreen isEqualToString:@"Project"])
         {
-            {
-                //update IsDislike TotalDislike
-                [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE StandardWall SET IsDislike = '%@', TotalDislike = '%@' WHERE PostCommentID = '%@'",IsDislike,TotalDislike,PostCommentID]];
-            }
-            //update
-            [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE StandardWall SET IsLike = '%@', TotalLikes = '%@' WHERE PostCommentID = '%@'",IsLike,TotalLikes,PostCommentID]];
-        }
-        else if ([_checkscreen isEqualToString:@"Division"])
-        {
-            {
-                //update IsDislike TotalDislike
-                [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE DivisionWall SET IsDislike = '%@', TotalDislike = '%@' WHERE PostCommentID = '%@'",IsDislike,TotalDislike,PostCommentID]];
-            }
-            //update
-            [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE DivisionWall SET IsLike = '%@', TotalLikes = '%@' WHERE PostCommentID = '%@'",IsLike,TotalLikes,PostCommentID]];
-        }
-        else if ([_checkscreen isEqualToString:@"Subject"])
-        {
-            {
-                //update IsDislike TotalDislike
-                [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE SubjectWall SET IsDislike = '%@', TotalDislike = '%@' WHERE PostCommentID = '%@'",IsDislike,TotalDislike,PostCommentID]];
-            }
-            //update
-            [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE SubjectWall SET IsLike = '%@', TotalLikes = '%@' WHERE PostCommentID = '%@'",IsLike,TotalLikes,PostCommentID]];
+            //update IsDislike TotalDislike
+            [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE DynamicWall SET IsDislike = '%@', TotalDislike = '%@' IsLike = '%@', TotalLikes = '%@' WHERE PostCommentID = '%@'",IsDislike,TotalDislike,IsLike,TotalLikes,PostCommentID]];
+            
         }
         else if ([_checkscreen isEqualToString:@"MyWall"])
         {
@@ -1712,35 +1679,14 @@ static NSString *CellIdentifier = @"WallCustomeCell";
             //update IsDislike TotalDislike
             [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE InstituteWall SET IsDislike = '%@', TotalDislike = '%@' WHERE PostCommentID = '%@'",IsDislike,TotalDislike,PostCommentID]];
         }
-        else if ([_checkscreen isEqualToString:@"Standard"])
+        else if ([_checkscreen isEqualToString:@"Standard"] ||
+                 [_checkscreen isEqualToString:@"Division"] ||
+                 [_checkscreen isEqualToString:@"Subject"] ||
+                 [_checkscreen isEqualToString:@"Group"] ||
+                 [_checkscreen isEqualToString:@"Project"])
         {
-            {
-                //update IsLike TotalLikes
-                [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE StandardWall SET IsLike = '%@', TotalLikes = '%@' WHERE PostCommentID = '%@'",IsLike,TotalLikes,PostCommentID]];
-            }
-
-            //update IsDislike TotalDislike
-            [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE StandardWall SET IsDislike = '%@', TotalDislike = '%@' WHERE PostCommentID = '%@'",IsDislike,TotalDislike,PostCommentID]];
-        }
-        else if ([_checkscreen isEqualToString:@"Division"])
-        {
-            {
-                //update IsLike TotalLikes
-                [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE DivisionWall SET IsLike = '%@', TotalLikes = '%@' WHERE PostCommentID = '%@'",IsLike,TotalLikes,PostCommentID]];
-            }
-
-            //update IsDislike TotalDislike
-            [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE DivisionWall SET IsDislike = '%@', TotalDislike = '%@' WHERE PostCommentID = '%@'",IsDislike,TotalDislike,PostCommentID]];
-        }
-        else if ([_checkscreen isEqualToString:@"Subject"])
-        {
-            {
-                //update IsLike TotalLikes
-                [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE SubjectWall SET IsLike = '%@', TotalLikes = '%@' WHERE PostCommentID = '%@'",IsLike,TotalLikes,PostCommentID]];
-            }
-
-            //update IsDislike TotalDislike
-            [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE SubjectWall SET IsDislike = '%@', TotalDislike = '%@' WHERE PostCommentID = '%@'",IsDislike,TotalDislike,PostCommentID]];
+            //update IsLike TotalLikes
+            [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE DynamicWall SET IsLike = '%@', TotalLikes = '%@' IsDislike = '%@', TotalDislike = '%@' WHERE PostCommentID = '%@'",IsLike,TotalLikes,IsDislike,TotalDislike,PostCommentID]];
         }
         else if ([_checkscreen isEqualToString:@"MyWall"])
         {

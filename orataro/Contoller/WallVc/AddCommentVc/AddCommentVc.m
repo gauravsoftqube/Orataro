@@ -174,20 +174,14 @@ static NSString *CellIdentifier = @"WallCustomeCell";
                          //update
                          [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE InstituteWall SET TotalComments = '%lu' WHERE PostCommentID = '%@'",(unsigned long)[arrCommentList count],PostCommentID]];
                      }
-                     else if([_checkscreen isEqualToString:@"Standard"])
+                     else if ([_checkscreen isEqualToString:@"Standard"] ||
+                              [_checkscreen isEqualToString:@"Division"] ||
+                              [_checkscreen isEqualToString:@"Subject"] ||
+                              [_checkscreen isEqualToString:@"Group"] ||
+                              [_checkscreen isEqualToString:@"Project"])
                      {
                          //update
-                         [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE StandardWall SET TotalComments = '%lu' WHERE PostCommentID = '%@'",(unsigned long)[arrCommentList count],PostCommentID]];
-                     }
-                     else if ([_checkscreen isEqualToString:@"Division"])
-                     {
-                         //update
-                         [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE DivisionWall SET TotalComments = '%lu' WHERE PostCommentID = '%@'",(unsigned long)[arrCommentList count],PostCommentID]];
-                     }
-                     else if ([_checkscreen isEqualToString:@"Subject"])
-                     {
-                         //update
-                         [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE SubjectWall SET TotalComments = '%lu' WHERE PostCommentID = '%@'",(unsigned long)[arrCommentList count],PostCommentID]];
+                         [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE DynamicWall SET TotalComments = '%lu' WHERE PostCommentID = '%@'",(unsigned long)[arrCommentList count],PostCommentID]];
                      }
                      else if ([_checkscreen isEqualToString:@"MyWall"])
                      {

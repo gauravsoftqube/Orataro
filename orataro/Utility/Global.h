@@ -48,6 +48,9 @@
 
 #pragma mark - Alert Message
 
+#define You_dont_have_permission @"You don\'t have permission."
+#define No_Data_Available @"No Data Available."
+
 #define Post_share_successfully @"Post share successfully"
 #define Post_enter_detail @"Please enter post detail"
 
@@ -224,7 +227,7 @@
 #import "HTMLLabel.h"
 #import "WallCustomeCell.h"
 #import "PostDetailVC.h"
-
+#import "ViewController.h"
 
 #import "HealthRecordVc.h"
 #import "HMSegmentedControl.h"

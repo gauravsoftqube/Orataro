@@ -96,7 +96,9 @@
         if ([_checkscreen isEqualToString:@"Institute"] ||
             [_checkscreen isEqualToString:@"Standard"] ||
             [_checkscreen isEqualToString:@"Division"] ||
-            [_checkscreen isEqualToString:@"Subject"])
+            [_checkscreen isEqualToString:@"Subject"] ||
+            [_checkscreen isEqualToString:@"Group"] ||
+            [_checkscreen isEqualToString:@"Project"])
         {
             if([IsAllowUserToPostStatus integerValue] == 1)
             {
@@ -370,17 +372,13 @@
     {
         [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstitutionWallID"]] forKey:@"WallID"];
     }
-    else if([_checkscreen isEqualToString:@"Standard"])
+    else if ([_checkscreen isEqualToString:@"Standard"] ||
+             [_checkscreen isEqualToString:@"Division"] ||
+             [_checkscreen isEqualToString:@"Subject"] ||
+             [_checkscreen isEqualToString:@"Group"] ||
+             [_checkscreen isEqualToString:@"Project"])
     {
          [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]] forKey:@"WallID"];
-    }
-    else if ([_checkscreen isEqualToString:@"Division"])
-    {
-        [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]] forKey:@"WallID"];
-    }
-    else if ([_checkscreen isEqualToString:@"Subject"])
-    {
-        [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]] forKey:@"WallID"];
     }
     else if ([_checkscreen isEqualToString:@"MyWall"])
     {
@@ -718,15 +716,11 @@
     {
         WallID = [NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstitutionWallID"]];
     }
-    else if([_checkscreen isEqualToString:@"Standard"])
-    {
-        WallID = [NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]];
-    }
-    else if ([_checkscreen isEqualToString:@"Division"])
-    {
-        WallID = [NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]];
-    }
-    else if ([_checkscreen isEqualToString:@"Subject"])
+    else if ([_checkscreen isEqualToString:@"Standard"] ||
+             [_checkscreen isEqualToString:@"Division"] ||
+             [_checkscreen isEqualToString:@"Subject"] ||
+             [_checkscreen isEqualToString:@"Group"] ||
+             [_checkscreen isEqualToString:@"Project"])
     {
         WallID = [NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]];
     }
@@ -779,15 +773,11 @@
     {
         WallID = [NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstitutionWallID"]];
     }
-    else if([_checkscreen isEqualToString:@"Standard"])
-    {
-        WallID = [NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]];
-    }
-    else if ([_checkscreen isEqualToString:@"Division"])
-    {
-        WallID = [NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]];
-    }
-    else if ([_checkscreen isEqualToString:@"Subject"])
+    else if ([_checkscreen isEqualToString:@"Standard"] ||
+             [_checkscreen isEqualToString:@"Division"] ||
+             [_checkscreen isEqualToString:@"Subject"] ||
+             [_checkscreen isEqualToString:@"Group"] ||
+             [_checkscreen isEqualToString:@"Project"])
     {
         WallID = [NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]];
     }
@@ -826,15 +816,11 @@
     {
         WallID = [NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstitutionWallID"]];
     }
-    else if([_checkscreen isEqualToString:@"Standard"])
-    {
-        WallID = [NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]];
-    }
-    else if ([_checkscreen isEqualToString:@"Division"])
-    {
-        WallID = [NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]];
-    }
-    else if ([_checkscreen isEqualToString:@"Subject"])
+    else if ([_checkscreen isEqualToString:@"Standard"] ||
+             [_checkscreen isEqualToString:@"Division"] ||
+             [_checkscreen isEqualToString:@"Subject"] ||
+             [_checkscreen isEqualToString:@"Group"] ||
+             [_checkscreen isEqualToString:@"Project"])
     {
         WallID = [NSString stringWithFormat:@"%@",[self.dicSelect_std_divi_sub objectForKey:@"WallID"]];
     }

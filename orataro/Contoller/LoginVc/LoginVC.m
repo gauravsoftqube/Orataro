@@ -526,7 +526,7 @@ int multipleUser = 0;
             [[NSUserDefaults standardUserDefaults]synchronize];
             
             WallVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
-            vc.checkscreen = @"FromLogin";
+            vc.checkscreen = @"";
             app.checkview = 0;
             
             [self.navigationController pushViewController:vc animated:YES];
@@ -553,7 +553,7 @@ int multipleUser = 0;
                 [[NSUserDefaults standardUserDefaults]synchronize];
                 
                 WallVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
-                vc.checkscreen = @"FromLogin";
+                vc.checkscreen = @"";
                 app.checkview = 0;
                 [self.navigationController pushViewController:vc animated:YES];
             }
@@ -583,7 +583,7 @@ int multipleUser = 0;
         [[NSUserDefaults standardUserDefaults]synchronize];
         
         WallVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
-        vc.checkscreen = @"FromLogin";
+        vc.checkscreen = @"";
         app.checkview = 0;
         [self.navigationController pushViewController:vc animated:YES];
     }

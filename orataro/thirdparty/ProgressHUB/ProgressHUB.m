@@ -9,7 +9,9 @@
 #import "ProgressHUB.h"
 
 @interface ProgressHUB ()
-
+{
+    UITapGestureRecognizer *tapGestureRecognizer;
+}
 @end
 
 @implementation ProgressHUB
@@ -47,6 +49,7 @@
 //    
 //    [self.view addSubview:view1];
 //    [animationImageView startAnimating];
+    
 
 }
 
@@ -65,7 +68,7 @@
         }
         
         // Normal Animation
-        UIView *view1=[[UIView alloc]initWithFrame:CGRectMake([UIScreen mainScreen].bounds.origin.x, [UIScreen mainScreen].bounds.origin.y,[UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
+        UIView *view1=[[UIView alloc]initWithFrame:CGRectMake([UIScreen mainScreen].bounds.origin.x, [UIScreen mainScreen].bounds.origin.y + 60,[UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height-60)];
         
         view1.backgroundColor=[UIColor colorWithRed:0/255.0f green:0/255.0f blue:0/255.0f alpha:0.5f];
         view1.tag=1010;
@@ -95,7 +98,9 @@
     [viewAddSubView removeFromSuperview];
     return view;
 }
-- (void)didReceiveMemoryWarning {
+
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
