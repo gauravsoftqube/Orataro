@@ -59,6 +59,7 @@
 		09F428CC1E38BC0B00A80F0D /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 09F428B81E38BC0B00A80F0D /* UIRefreshControl+AFNetworking.m */; };
 		09F428CD1E38BC0B00A80F0D /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 09F428BA1E38BC0B00A80F0D /* UIWebView+AFNetworking.m */; };
 		09F428D11E38E76400A80F0D /* LoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 09F428D01E38E76400A80F0D /* LoginVC.m */; };
+		4E5196BE04CE1B11FFB87A29 /* libPods-orataro.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A0C6ED01C0E658BC8615B3C /* libPods-orataro.a */; };
 		C331B0891E4DB09F001C274D /* AboutUsVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C331B0881E4DB09F001C274D /* AboutUsVc.m */; };
 		C35120E81E827C5F00D7461B /* UIImage+ImageCompress.m in Sources */ = {isa = PBXBuildFile; fileRef = C35120E71E827C5F00D7461B /* UIImage+ImageCompress.m */; };
 		C359CAA51EBAE3CD00FBAD33 /* HealthRecordVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C359CAA41EBAE3CD00FBAD33 /* HealthRecordVc.m */; };
@@ -367,6 +368,9 @@
 		09F428BA1E38BC0B00A80F0D /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
 		09F428CF1E38E76400A80F0D /* LoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginVC.h; sourceTree = "<group>"; };
 		09F428D01E38E76400A80F0D /* LoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginVC.m; sourceTree = "<group>"; };
+		490D0936F09128979715E28B /* Pods-orataro.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-orataro.debug.xcconfig"; path = "Pods/Target Support Files/Pods-orataro/Pods-orataro.debug.xcconfig"; sourceTree = "<group>"; };
+		6B8785E475C90FC8B6457081 /* Pods-orataro.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-orataro.release.xcconfig"; path = "Pods/Target Support Files/Pods-orataro/Pods-orataro.release.xcconfig"; sourceTree = "<group>"; };
+		7A0C6ED01C0E658BC8615B3C /* libPods-orataro.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-orataro.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C331B0871E4DB09F001C274D /* AboutUsVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AboutUsVc.h; path = AboutUsVc/AboutUsVc.h; sourceTree = "<group>"; };
 		C331B0881E4DB09F001C274D /* AboutUsVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AboutUsVc.m; path = AboutUsVc/AboutUsVc.m; sourceTree = "<group>"; };
 		C35120E61E827C5F00D7461B /* UIImage+ImageCompress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageCompress.h"; sourceTree = "<group>"; };
@@ -752,6 +756,7 @@
 				C360CD3E1E4B480C00761ABE /* CoreGraphics.framework in Frameworks */,
 				C360CD3C1E4B480500761ABE /* Foundation.framework in Frameworks */,
 				C360CD3A1E4B47FE00761ABE /* UIKit.framework in Frameworks */,
+				4E5196BE04CE1B11FFB87A29 /* libPods-orataro.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -898,6 +903,7 @@
 			children = (
 				093227781E38750D00138A2B /* orataro */,
 				C360CD381E4B47FD00761ABE /* Frameworks */,
+				1CB1AA870340D9BCD8C0C1D0 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1193,6 +1199,15 @@
 			path = LoginVc;
 			sourceTree = "<group>";
 		};
+		1CB1AA870340D9BCD8C0C1D0 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				490D0936F09128979715E28B /* Pods-orataro.debug.xcconfig */,
+				6B8785E475C90FC8B6457081 /* Pods-orataro.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		C331B0861E4DB05B001C274D /* AboutUsVc */ = {
 			isa = PBXGroup;
 			children = (
@@ -1375,6 +1390,7 @@
 				C360CD3D1E4B480C00761ABE /* CoreGraphics.framework */,
 				C360CD3B1E4B480500761ABE /* Foundation.framework */,
 				C360CD391E4B47FE00761ABE /* UIKit.framework */,
+				7A0C6ED01C0E658BC8615B3C /* libPods-orataro.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2379,9 +2395,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0932278D1E38750D00138A2B /* Build configuration list for PBXNativeTarget "orataro" */;
 			buildPhases = (
+				9F5EBA9C8D43ECCCED6101DA /* [CP] Check Pods Manifest.lock */,
 				093227721E38750D00138A2B /* Sources */,
 				093227731E38750D00138A2B /* Frameworks */,
 				093227741E38750D00138A2B /* Resources */,
+				0C49F19FF88EDF8A49759EF0 /* [CP] Embed Pods Frameworks */,
+				A6F67E293DF78515F3F728AF /* [CP] Copy Pods Resources */,
+				C328DEDA1ED57EF000C03A1F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -2486,6 +2506,67 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0C49F19FF88EDF8A49759EF0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-orataro/Pods-orataro-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9F5EBA9C8D43ECCCED6101DA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A6F67E293DF78515F3F728AF /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-orataro/Pods-orataro-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C328DEDA1ED57EF000C03A1F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 15232fcd2baf11f5f364f2bb28bc30bf54674009 204419b3c03044044ca57645957633c6d00e7bbf9e78590e05814135515fc3ca";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		093227721E38750D00138A2B /* Sources */ = {
@@ -2811,6 +2892,7 @@
 		};
 		0932278E1E38750D00138A2B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 490D0936F09128979715E28B /* Pods-orataro.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-3";
@@ -2818,16 +2900,21 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = M4946NB5UK;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/orataro",
+				);
 				INFOPLIST_FILE = orataro/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.orataro.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.edusunsoft.orataro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
 		0932278F1E38750D00138A2B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6B8785E475C90FC8B6457081 /* Pods-orataro.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-3";
@@ -2835,10 +2922,14 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = M4946NB5UK;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/orataro",
+				);
 				INFOPLIST_FILE = orataro/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.orataro.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.edusunsoft.orataro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
