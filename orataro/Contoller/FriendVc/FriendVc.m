@@ -408,12 +408,13 @@ int s =0 ;
                       [DBOperation executeSQL:@"delete from FriendList"];
                      [nameary removeAllObjects];
                      [friendTableView reloadData];
-                     
+                     _viewSearch.hidden = YES;
                      UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
                  {
+                     _viewSearch.hidden = NO;
                      [self ManageCircularList:arrResponce];
                      
                      
