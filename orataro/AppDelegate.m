@@ -166,5 +166,40 @@
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    
+    NSLog(@"info %@", userInfo);
+}
+
+- (void)application:(UIApplication* )application didReceiveRemoteNotification:(NSDictionary * )userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    
+    if(application.applicationState == UIApplicationStateInactive) {
+        
+        NSLog(@"Inactive");
+        
+        //Show the view with the content of the push
+        
+        completionHandler(UIBackgroundFetchResultNewData);
+        
+    } else if (application.applicationState == UIApplicationStateBackground) {
+        
+        NSLog(@"Background");
+        
+        NSString *info = [[userInfo valueForKey:@"aps"]valueForKey:@"alert"];
+        
+        completionHandler(UIBackgroundFetchResultNewData);
+        
+    } else {
+        
+        NSLog(@"Active");
+        
+        //Show an in-app banner
+        
+        completionHandler(UIBackgroundFetchResultNewData);
+        
+    }
+}
+
 
 @end

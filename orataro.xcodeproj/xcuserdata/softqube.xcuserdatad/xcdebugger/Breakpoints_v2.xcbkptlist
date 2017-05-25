@@ -468,11 +468,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "orataro/Contoller/WallVc/WallVc.m"
-            timestampString = "517327160.827744"
+            timestampString = "517388567.833591"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "4636"
-            endingLineNumber = "4636"
+            startingLineNumber = "5310"
+            endingLineNumber = "5310"
             landmarkName = "-btnCheckAll_SpecialFriends:"
             landmarkType = "7">
          </BreakpointContent>

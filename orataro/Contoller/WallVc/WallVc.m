@@ -2590,6 +2590,12 @@ int c2= 0;
 #pragma mark  set Post Detail Height
         NSMutableDictionary *dicResponce=[arrGeneralWall objectAtIndex:indexPath.row];
         NSString *strFileType=[dicResponce objectForKey:@"FileType"];
+        
+        //get setting login responce
+        NSString *isIsAllowUserToLikeDislikes_Login=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToLikeDislikes"];
+        NSString *IsAllowUserToPostComment_Login=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostComment"];
+        NSString *IsAllowUserToSharePost_Login=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToSharePost"];
+        
         if([strFileType isEqualToString:@"IMAGE"])
         {
             if([[dicResponce objectForKey:@"Photo"] length] != 0)
@@ -2609,11 +2615,6 @@ int c2= 0;
                 {
                     if([IS_ALLOW_SETTING isEqualToString:@"YES"])
                     {
-                        //get setting login responce
-                        NSString *isIsAllowUserToLikeDislikes=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToLikeDislikes"];
-                        NSString *IsAllowUserToPostComment=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostComment"];
-                        NSString *IsAllowUserToSharePost=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToSharePost"];
-                        
                         if([self.checkscreen isEqualToString:@"MyWall"] ||
                            [self.checkscreen length] == 0)
                         {
@@ -2628,25 +2629,45 @@ int c2= 0;
                             //NSString *IS_USER_COMMENT=[dicResponce objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
                             NSString *IS_USER_SHARE=[dicResponce objectForKey:@"IsAllowPeopleToShareYourPost"];
                             
-                            //[IS_USER_COMMENT integerValue] == 1 &&
-                            if ([IS_USER_LIKE_WALL integerValue] == 1 ||
-                                [IS_USER_LIKE integerValue] == 1 ||
-                                [IS_USER_DISLIKE_WALL integerValue] == 1 ||
-                                [IS_USER_DISLIKE integerValue] == 1 ||
-                                [IS_USER_COMMENT_WALL integerValue] == 1 ||
-                                [IS_USER_SHARE_WALL integerValue] == 1 ||
-                                [IS_USER_SHARE integerValue] == 1 ||
-                                [isIsAllowUserToLikeDislikes integerValue] == 1 ||
-                                [IsAllowUserToPostComment integerValue] == 1 ||
-                                [IsAllowUserToSharePost integerValue] == 1)
+                           
+                            if ([isIsAllowUserToLikeDislikes_Login integerValue] == 0 ||
+                                [IS_USER_LIKE_WALL integerValue] == 0 ||
+                                [IS_USER_LIKE integerValue] == 0 )
                             {
-                                return 310 + 28;
+                                if([isIsAllowUserToLikeDislikes_Login integerValue] == 0 ||
+                                   [IS_USER_DISLIKE_WALL integerValue] == 0 ||
+                                   [IS_USER_DISLIKE integerValue] == 0)
+                                {
+                                    if([IsAllowUserToPostComment_Login integerValue] == 0 ||
+                                       [IS_USER_COMMENT_WALL integerValue] == 0)
+                                    {
+                                        if([IsAllowUserToSharePost_Login integerValue] == 0 ||
+                                           [IS_USER_SHARE_WALL integerValue] == 0 ||
+                                           [IS_USER_SHARE integerValue] == 0)
+                                        {
+                                            //here minues setting height
+                                            return 310 + 28 - 30;
+                                        }
+                                        else
+                                        {
+                                            return 310 + 28;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        return 310 + 28;
+                                    }
+                                }
+                                else
+                                {
+                                    return 310 + 28;
+                                }
                             }
                             else
                             {
-                                //here minues setting height
-                                return 310 + 28 - 30;
+                                return 310 + 28;
                             }
+                            
                         }
                         else
                         {
@@ -2659,7 +2680,7 @@ int c2= 0;
                             
                             NSString *IsAllowPeopleToLikeThisWall_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToLikeThisWall"];
                             NSString *IsAllowPeoplePostComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeoplePostComment"];
-                            NSString *IsAllowPeopleToShareComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToShareComment"];
+                           // NSString *IsAllowPeopleToShareComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToShareComment"];
                             
                             //get setting wall responce
                             NSString *IS_USER_LIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
@@ -2672,27 +2693,94 @@ int c2= 0;
                             NSString *IS_USER_COMMENT=[dicResponce objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
                             NSString *IS_USER_SHARE=[dicResponce objectForKey:@"IsAllowPeopleToShareYourPost"];
                             
-                            if ([IS_USER_LIKE_WALL integerValue] == 1 ||
-                                [IS_USER_LIKE integerValue] == 1 ||
-                                [IS_USER_DISLIKE_WALL integerValue] == 1 ||
-                                [IS_USER_DISLIKE integerValue] == 1 ||
-                                [IS_USER_COMMENT_WALL integerValue] == 1 ||
-                                [IS_USER_COMMENT integerValue] == 1 ||
-                                [IS_USER_SHARE_WALL integerValue] == 1 ||
-                                [IS_USER_SHARE integerValue] == 1 ||
-                                [isIsAllowUserToLikeDislikes integerValue] == 1 ||
-                                [IsAllowUserToPostComment integerValue] == 1 ||
-                                [IsAllowUserToSharePost integerValue] == 1 ||
-                                [IsAllowPeopleToShareComment_Dynamic integerValue] == 1 ||
-                                [IsAllowPeopleToLikeThisWall_Dynamic integerValue] == 1 ||
-                                [IsAllowPeoplePostComment_Dynamic integerValue] == 1)
+                            //Like
+                            if ([isIsAllowUserToLikeDislikes_Login integerValue] == 1)
                             {
-                                return 310 + 28;
+                                if([IS_USER_LIKE_WALL integerValue] == 1 &&
+                                   [IS_USER_LIKE integerValue] == 1)
+                                {
+                                    if([IsAllowPeopleToLikeThisWall_Dynamic integerValue] == 1)
+                                    {
+                                        //UnLike
+                                        if ([isIsAllowUserToLikeDislikes_Login integerValue] == 1)
+                                        {
+                                            if([IS_USER_DISLIKE_WALL integerValue] == 1 &&
+                                               [IS_USER_DISLIKE integerValue] == 1)
+                                            {
+                                                //dynamic
+                                                if ([IsAllowPeopleToLikeThisWall_Dynamic integerValue] == 1)
+                                                {
+                                                    //Comment
+                                                    if ([IsAllowUserToPostComment_Login integerValue] == 1)
+                                                    {
+                                                        if([IS_USER_COMMENT_WALL integerValue] == 1 &&
+                                                           [IS_USER_COMMENT integerValue] == 1)
+                                                        {
+                                                            //Dynamic
+                                                            if([IsAllowPeoplePostComment_Dynamic integerValue] == 1)
+                                                            {
+                                                                //Share
+                                                                if ([IsAllowUserToSharePost_Login integerValue] == 1)
+                                                                {
+                                                                    if([IS_USER_SHARE_WALL integerValue] == 1 &&
+                                                                       [IS_USER_SHARE integerValue] == 1)
+                                                                    {
+                                                                        //here minues setting height
+                                                                        return 310 + 28 - 30;
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        return 310 + 28;
+                                                                    }
+                                                                }
+                                                                else
+                                                                {
+                                                                    return 310 + 28;
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                return 310 + 28;
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            return 310 + 28;
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        return 310 + 28;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    return 310 + 28;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                return 310 + 28;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            return 310 + 28;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        return 310 + 28;
+                                    }
+                                }
+                                else
+                                {
+                                    return 310 + 28;
+                                }
                             }
                             else
                             {
-                                //here minues setting height
-                                return 310 + 28 - 30;
+                                return 310 + 28;
                             }
                         }
                     }
@@ -2724,26 +2812,46 @@ int c2= 0;
                             NSString *IS_USER_DISLIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
                             //NSString *IS_USER_COMMENT=[dicResponce objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
                             NSString *IS_USER_SHARE=[dicResponce objectForKey:@"IsAllowPeopleToShareYourPost"];
-                            //[IS_USER_COMMENT integerValue] == 1 &&
-                            if ([IS_USER_LIKE_WALL integerValue] == 1 ||
-                                [IS_USER_LIKE integerValue] == 1 ||
-                                [IS_USER_DISLIKE_WALL integerValue] == 1 ||
-                                [IS_USER_DISLIKE integerValue] == 1 ||
-                                [IS_USER_COMMENT_WALL integerValue] == 1 ||
-                                
-                                [IS_USER_SHARE_WALL integerValue] == 1 ||
-                                [IS_USER_SHARE integerValue] == 1 ||
-                                [isIsAllowUserToLikeDislikes integerValue] == 1 ||
-                                [IsAllowUserToPostComment integerValue] == 1 ||
-                                [IsAllowUserToSharePost integerValue] == 1)
+                            
+                            
+                            if ([isIsAllowUserToLikeDislikes_Login integerValue] == 0 ||
+                                [IS_USER_LIKE_WALL integerValue] == 0 ||
+                                [IS_USER_LIKE integerValue] == 0 )
                             {
-                                return 325 + 28;
+                                if([isIsAllowUserToLikeDislikes_Login integerValue] == 0 ||
+                                   [IS_USER_DISLIKE_WALL integerValue] == 0 ||
+                                   [IS_USER_DISLIKE integerValue] == 0)
+                                {
+                                    if([IsAllowUserToPostComment_Login integerValue] == 0 ||
+                                       [IS_USER_COMMENT_WALL integerValue] == 0)
+                                    {
+                                        if([IsAllowUserToSharePost_Login integerValue] == 0 ||
+                                           [IS_USER_SHARE_WALL integerValue] == 0 ||
+                                           [IS_USER_SHARE integerValue] == 0)
+                                        {
+                                            //here minues setting height
+                                            return 325 + 28 - 30;
+                                        }
+                                        else
+                                        {
+                                            return 325 + 28;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        return 325 + 28;
+                                    }
+                                }
+                                else
+                                {
+                                    return 325 + 28;
+                                }
                             }
                             else
                             {
-                                //here minues setting height
-                                return 325 + 28 - 30;
+                                return 325 + 28;
                             }
+                            
                         }
                         else
                         {
@@ -2756,7 +2864,7 @@ int c2= 0;
                             
                             NSString *IsAllowPeopleToLikeThisWall_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToLikeThisWall"];
                             NSString *IsAllowPeoplePostComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeoplePostComment"];
-                            NSString *IsAllowPeopleToShareComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToShareComment"];
+                            // NSString *IsAllowPeopleToShareComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToShareComment"];
                             
                             //get setting wall responce
                             NSString *IS_USER_LIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
@@ -2769,27 +2877,94 @@ int c2= 0;
                             NSString *IS_USER_COMMENT=[dicResponce objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
                             NSString *IS_USER_SHARE=[dicResponce objectForKey:@"IsAllowPeopleToShareYourPost"];
                             
-                            if ([IS_USER_LIKE_WALL integerValue] == 1 ||
-                                [IS_USER_LIKE integerValue] == 1 ||
-                                [IS_USER_DISLIKE_WALL integerValue] == 1 ||
-                                [IS_USER_DISLIKE integerValue] == 1 ||
-                                [IS_USER_COMMENT_WALL integerValue] == 1 ||
-                                [IS_USER_COMMENT integerValue] == 1 ||
-                                [IS_USER_SHARE_WALL integerValue] == 1 ||
-                                [IS_USER_SHARE integerValue] == 1 ||
-                                [isIsAllowUserToLikeDislikes integerValue] == 1 ||
-                                [IsAllowUserToPostComment integerValue] == 1 ||
-                                [IsAllowUserToSharePost integerValue] == 1 ||
-                                [IsAllowPeopleToShareComment_Dynamic integerValue] == 1 ||
-                                [IsAllowPeopleToLikeThisWall_Dynamic integerValue] == 1 ||
-                                [IsAllowPeoplePostComment_Dynamic integerValue] == 1)
+                            //Like
+                            if ([isIsAllowUserToLikeDislikes_Login integerValue] == 1)
                             {
-                                return 325 + 28;
+                                if([IS_USER_LIKE_WALL integerValue] == 1 &&
+                                   [IS_USER_LIKE integerValue] == 1)
+                                {
+                                    if([IsAllowPeopleToLikeThisWall_Dynamic integerValue] == 1)
+                                    {
+                                        //UnLike
+                                        if ([isIsAllowUserToLikeDislikes_Login integerValue] == 1)
+                                        {
+                                            if([IS_USER_DISLIKE_WALL integerValue] == 1 &&
+                                               [IS_USER_DISLIKE integerValue] == 1)
+                                            {
+                                                //dynamic
+                                                if ([IsAllowPeopleToLikeThisWall_Dynamic integerValue] == 1)
+                                                {
+                                                    //Comment
+                                                    if ([IsAllowUserToPostComment_Login integerValue] == 1)
+                                                    {
+                                                        if([IS_USER_COMMENT_WALL integerValue] == 1 &&
+                                                           [IS_USER_COMMENT integerValue] == 1)
+                                                        {
+                                                            //Dynamic
+                                                            if([IsAllowPeoplePostComment_Dynamic integerValue] == 1)
+                                                            {
+                                                                //Share
+                                                                if ([IsAllowUserToSharePost_Login integerValue] == 1)
+                                                                {
+                                                                    if([IS_USER_SHARE_WALL integerValue] == 1 &&
+                                                                       [IS_USER_SHARE integerValue] == 1)
+                                                                    {
+                                                                        //here minues setting height
+                                                                        return 325 + 28 - 30;
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        return 325 + 28;
+                                                                    }
+                                                                }
+                                                                else
+                                                                {
+                                                                    return 325 + 28;
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                return 325 + 28;
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            return 325 + 28;
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        return 325 + 28;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    return 325 + 28;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                return 325 + 28;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            return 325 + 28;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        return 325 + 28;
+                                    }
+                                }
+                                else
+                                {
+                                    return 325 + 28;
+                                }
                             }
                             else
                             {
-                                //here minues setting height
-                                return 325 + 28 - 30;
+                                return 325 + 28;
                             }
                         }
                         
@@ -2839,25 +3014,46 @@ int c2= 0;
                         NSString *IS_USER_DISLIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
                         //NSString *IS_USER_COMMENT=[dicResponce objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
                         NSString *IS_USER_SHARE=[dicResponce objectForKey:@"IsAllowPeopleToShareYourPost"];
-                        //[IS_USER_COMMENT integerValue] == 1 &&
-                        if ([IS_USER_LIKE_WALL integerValue] == 1 ||
-                            [IS_USER_LIKE integerValue] == 1 ||
-                            [IS_USER_DISLIKE_WALL integerValue] == 1 ||
-                            [IS_USER_DISLIKE integerValue] == 1 ||
-                            [IS_USER_COMMENT_WALL integerValue] == 1 ||
-                            [IS_USER_SHARE_WALL integerValue] == 1 ||
-                            [IS_USER_SHARE integerValue] == 1 ||
-                            [isIsAllowUserToLikeDislikes integerValue] == 1 ||
-                            [IsAllowUserToPostComment integerValue] == 1 ||
-                            [IsAllowUserToSharePost integerValue] == 1)
+                        
+                        
+                        if ([isIsAllowUserToLikeDislikes_Login integerValue] == 0 ||
+                            [IS_USER_LIKE_WALL integerValue] == 0 ||
+                            [IS_USER_LIKE integerValue] == 0 )
                         {
-                            return 125 + 18;
+                            if([isIsAllowUserToLikeDislikes_Login integerValue] == 0 ||
+                               [IS_USER_DISLIKE_WALL integerValue] == 0 ||
+                               [IS_USER_DISLIKE integerValue] == 0)
+                            {
+                                if([IsAllowUserToPostComment_Login integerValue] == 0 ||
+                                   [IS_USER_COMMENT_WALL integerValue] == 0)
+                                {
+                                    if([IsAllowUserToSharePost_Login integerValue] == 0 ||
+                                       [IS_USER_SHARE_WALL integerValue] == 0 ||
+                                       [IS_USER_SHARE integerValue] == 0)
+                                    {
+                                        //here minues setting height
+                                        return 125 + 18 - 30;
+                                    }
+                                    else
+                                    {
+                                        return 125 + 18;
+                                    }
+                                }
+                                else
+                                {
+                                    return 125 + 18;
+                                }
+                            }
+                            else
+                            {
+                                return 125 + 18;
+                            }
                         }
                         else
                         {
-                            //here minues setting height
-                            return 125 + 18 - 30;
+                            return 125 + 18;
                         }
+                        
                     }
                     else
                     {
@@ -2870,7 +3066,7 @@ int c2= 0;
                         
                         NSString *IsAllowPeopleToLikeThisWall_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToLikeThisWall"];
                         NSString *IsAllowPeoplePostComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeoplePostComment"];
-                        NSString *IsAllowPeopleToShareComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToShareComment"];
+                        // NSString *IsAllowPeopleToShareComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToShareComment"];
                         
                         //get setting wall responce
                         NSString *IS_USER_LIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
@@ -2883,27 +3079,94 @@ int c2= 0;
                         NSString *IS_USER_COMMENT=[dicResponce objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
                         NSString *IS_USER_SHARE=[dicResponce objectForKey:@"IsAllowPeopleToShareYourPost"];
                         
-                        if ([IS_USER_LIKE_WALL integerValue] == 1 ||
-                            [IS_USER_LIKE integerValue] == 1 ||
-                            [IS_USER_DISLIKE_WALL integerValue] == 1 ||
-                            [IS_USER_DISLIKE integerValue] == 1 ||
-                            [IS_USER_COMMENT_WALL integerValue] == 1 ||
-                            [IS_USER_COMMENT integerValue] == 1 ||
-                            [IS_USER_SHARE_WALL integerValue] == 1 ||
-                            [IS_USER_SHARE integerValue] == 1 ||
-                            [isIsAllowUserToLikeDislikes integerValue] == 1 ||
-                            [IsAllowUserToPostComment integerValue] == 1 ||
-                            [IsAllowUserToSharePost integerValue] == 1 ||
-                            [IsAllowPeopleToShareComment_Dynamic integerValue] == 1 ||
-                            [IsAllowPeopleToLikeThisWall_Dynamic integerValue] == 1 ||
-                            [IsAllowPeoplePostComment_Dynamic integerValue] == 1)
+                        //Like
+                        if ([isIsAllowUserToLikeDislikes_Login integerValue] == 1)
                         {
-                            return 125 + 18;
+                            if([IS_USER_LIKE_WALL integerValue] == 1 &&
+                               [IS_USER_LIKE integerValue] == 1)
+                            {
+                                if([IsAllowPeopleToLikeThisWall_Dynamic integerValue] == 1)
+                                {
+                                    //UnLike
+                                    if ([isIsAllowUserToLikeDislikes_Login integerValue] == 1)
+                                    {
+                                        if([IS_USER_DISLIKE_WALL integerValue] == 1 &&
+                                           [IS_USER_DISLIKE integerValue] == 1)
+                                        {
+                                            //dynamic
+                                            if ([IsAllowPeopleToLikeThisWall_Dynamic integerValue] == 1)
+                                            {
+                                                //Comment
+                                                if ([IsAllowUserToPostComment_Login integerValue] == 1)
+                                                {
+                                                    if([IS_USER_COMMENT_WALL integerValue] == 1 &&
+                                                       [IS_USER_COMMENT integerValue] == 1)
+                                                    {
+                                                        //Dynamic
+                                                        if([IsAllowPeoplePostComment_Dynamic integerValue] == 1)
+                                                        {
+                                                            //Share
+                                                            if ([IsAllowUserToSharePost_Login integerValue] == 1)
+                                                            {
+                                                                if([IS_USER_SHARE_WALL integerValue] == 1 &&
+                                                                   [IS_USER_SHARE integerValue] == 1)
+                                                                {
+                                                                    //here minues setting height
+                                                                    return 125 + 18 - 30;
+                                                                }
+                                                                else
+                                                                {
+                                                                    return 125 + 18;
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                return 125 + 18;
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            return 125 + 18;
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        return 125 + 18;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    return 125 + 18;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                return 125 + 18;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            return 125 + 18;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        return 125 + 18;
+                                    }
+                                }
+                                else
+                                {
+                                    return 125 + 18;
+                                }
+                            }
+                            else
+                            {
+                                return 125 + 18;
+                            }
                         }
                         else
                         {
-                            //here minues setting height
-                            return 125 + 18 - 30;
+                            return 125 + 18;
                         }
                     }
                     
@@ -2937,26 +3200,46 @@ int c2= 0;
                         NSString *IS_USER_DISLIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
                         //NSString *IS_USER_COMMENT=[dicResponce objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
                         NSString *IS_USER_SHARE=[dicResponce objectForKey:@"IsAllowPeopleToShareYourPost"];
-                        //[IS_USER_COMMENT integerValue] == 1 &&
-                        if ([IS_USER_LIKE_WALL integerValue] == 1 ||
-                            [IS_USER_LIKE integerValue] == 1 ||
-                            [IS_USER_DISLIKE_WALL integerValue] == 1 ||
-                            [IS_USER_DISLIKE integerValue] == 1 ||
-                            [IS_USER_COMMENT_WALL integerValue] == 1 ||
-                            
-                            [IS_USER_SHARE_WALL integerValue] == 1 ||
-                            [IS_USER_SHARE integerValue] == 1 ||
-                            [isIsAllowUserToLikeDislikes integerValue] == 1 ||
-                            [IsAllowUserToPostComment integerValue] == 1 ||
-                            [IsAllowUserToSharePost integerValue] == 1)
+                        
+                        
+                        if ([isIsAllowUserToLikeDislikes_Login integerValue] == 0 ||
+                            [IS_USER_LIKE_WALL integerValue] == 0 ||
+                            [IS_USER_LIKE integerValue] == 0 )
                         {
-                            return 139+18;
+                            if([isIsAllowUserToLikeDislikes_Login integerValue] == 0 ||
+                               [IS_USER_DISLIKE_WALL integerValue] == 0 ||
+                               [IS_USER_DISLIKE integerValue] == 0)
+                            {
+                                if([IsAllowUserToPostComment_Login integerValue] == 0 ||
+                                   [IS_USER_COMMENT_WALL integerValue] == 0)
+                                {
+                                    if([IsAllowUserToSharePost_Login integerValue] == 0 ||
+                                       [IS_USER_SHARE_WALL integerValue] == 0 ||
+                                       [IS_USER_SHARE integerValue] == 0)
+                                    {
+                                        //here minues setting height
+                                        return 139 + 18 - 30;
+                                    }
+                                    else
+                                    {
+                                        return 139 + 18;
+                                    }
+                                }
+                                else
+                                {
+                                    return 139 + 18;
+                                }
+                            }
+                            else
+                            {
+                                return 139 + 18;
+                            }
                         }
                         else
                         {
-                            //here minues setting height
-                            return 139 + 18 - 30;
+                            return 139 + 18;
                         }
+                        
                     }
                     else
                     {
@@ -2969,7 +3252,7 @@ int c2= 0;
                         
                         NSString *IsAllowPeopleToLikeThisWall_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToLikeThisWall"];
                         NSString *IsAllowPeoplePostComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeoplePostComment"];
-                        NSString *IsAllowPeopleToShareComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToShareComment"];
+                        // NSString *IsAllowPeopleToShareComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToShareComment"];
                         
                         //get setting wall responce
                         NSString *IS_USER_LIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
@@ -2982,27 +3265,94 @@ int c2= 0;
                         NSString *IS_USER_COMMENT=[dicResponce objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
                         NSString *IS_USER_SHARE=[dicResponce objectForKey:@"IsAllowPeopleToShareYourPost"];
                         
-                        if ([IS_USER_LIKE_WALL integerValue] == 1 ||
-                            [IS_USER_LIKE integerValue] == 1 ||
-                            [IS_USER_DISLIKE_WALL integerValue] == 1 ||
-                            [IS_USER_DISLIKE integerValue] == 1 ||
-                            [IS_USER_COMMENT_WALL integerValue] == 1 ||
-                            [IS_USER_COMMENT integerValue] == 1 ||
-                            [IS_USER_SHARE_WALL integerValue] == 1 ||
-                            [IS_USER_SHARE integerValue] == 1 ||
-                            [isIsAllowUserToLikeDislikes integerValue] == 1 ||
-                            [IsAllowUserToPostComment integerValue] == 1 ||
-                            [IsAllowUserToSharePost integerValue] == 1 ||
-                            [IsAllowPeopleToShareComment_Dynamic integerValue] == 1 ||
-                            [IsAllowPeopleToLikeThisWall_Dynamic integerValue] == 1 ||
-                            [IsAllowPeoplePostComment_Dynamic integerValue] == 1)
+                        //Like
+                        if ([isIsAllowUserToLikeDislikes_Login integerValue] == 1)
                         {
-                            return 139+18;
+                            if([IS_USER_LIKE_WALL integerValue] == 1 &&
+                               [IS_USER_LIKE integerValue] == 1)
+                            {
+                                if([IsAllowPeopleToLikeThisWall_Dynamic integerValue] == 1)
+                                {
+                                    //UnLike
+                                    if ([isIsAllowUserToLikeDislikes_Login integerValue] == 1)
+                                    {
+                                        if([IS_USER_DISLIKE_WALL integerValue] == 1 &&
+                                           [IS_USER_DISLIKE integerValue] == 1)
+                                        {
+                                            //dynamic
+                                            if ([IsAllowPeopleToLikeThisWall_Dynamic integerValue] == 1)
+                                            {
+                                                //Comment
+                                                if ([IsAllowUserToPostComment_Login integerValue] == 1)
+                                                {
+                                                    if([IS_USER_COMMENT_WALL integerValue] == 1 &&
+                                                       [IS_USER_COMMENT integerValue] == 1)
+                                                    {
+                                                        //Dynamic
+                                                        if([IsAllowPeoplePostComment_Dynamic integerValue] == 1)
+                                                        {
+                                                            //Share
+                                                            if ([IsAllowUserToSharePost_Login integerValue] == 1)
+                                                            {
+                                                                if([IS_USER_SHARE_WALL integerValue] == 1 &&
+                                                                   [IS_USER_SHARE integerValue] == 1)
+                                                                {
+                                                                    //here minues setting height
+                                                                    return 139 + 18 - 30;
+                                                                }
+                                                                else
+                                                                {
+                                                                    return 139 + 18;
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                return 139 + 18;
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            return 139 + 18;
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        return 139 + 18;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    return 139 + 18;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                return 139 + 18;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            return 139 + 18;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        return 139 + 18;
+                                    }
+                                }
+                                else
+                                {
+                                    return 139 + 18;
+                                }
+                            }
+                            else
+                            {
+                                return 139 + 18;
+                            }
                         }
                         else
                         {
-                            //here minues setting height
-                            return 139 + 18 - 30;
+                            return 139 + 18;
                         }
                     }
                     
@@ -3046,27 +3396,48 @@ int c2= 0;
                         
                         NSString *IS_USER_LIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
                         NSString *IS_USER_DISLIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
-                        // NSString *IS_USER_COMMENT=[dicResponce objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
+                        //NSString *IS_USER_COMMENT=[dicResponce objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
                         NSString *IS_USER_SHARE=[dicResponce objectForKey:@"IsAllowPeopleToShareYourPost"];
-                        //[IS_USER_COMMENT integerValue] == 1 &&
-                        if ([IS_USER_LIKE_WALL integerValue] == 1 ||
-                            [IS_USER_LIKE integerValue] == 1 ||
-                            [IS_USER_DISLIKE_WALL integerValue] == 1 ||
-                            [IS_USER_DISLIKE integerValue] == 1 ||
-                            [IS_USER_COMMENT_WALL integerValue] == 1 ||
-                            [IS_USER_SHARE_WALL integerValue] == 1 ||
-                            [IS_USER_SHARE integerValue] == 1 ||
-                            [isIsAllowUserToLikeDislikes integerValue] == 1 ||
-                            [IsAllowUserToPostComment integerValue] == 1 ||
-                            [IsAllowUserToSharePost integerValue] == 1)
+                        
+                        
+                        if ([isIsAllowUserToLikeDislikes_Login integerValue] == 0 ||
+                            [IS_USER_LIKE_WALL integerValue] == 0 ||
+                            [IS_USER_LIKE integerValue] == 0 )
                         {
-                            return 250 + 28;
+                            if([isIsAllowUserToLikeDislikes_Login integerValue] == 0 ||
+                               [IS_USER_DISLIKE_WALL integerValue] == 0 ||
+                               [IS_USER_DISLIKE integerValue] == 0)
+                            {
+                                if([IsAllowUserToPostComment_Login integerValue] == 0 ||
+                                   [IS_USER_COMMENT_WALL integerValue] == 0)
+                                {
+                                    if([IsAllowUserToSharePost_Login integerValue] == 0 ||
+                                       [IS_USER_SHARE_WALL integerValue] == 0 ||
+                                       [IS_USER_SHARE integerValue] == 0)
+                                    {
+                                        //here minues setting height
+                                        return 250 + 28 - 30;
+                                    }
+                                    else
+                                    {
+                                        return 250 + 28;
+                                    }
+                                }
+                                else
+                                {
+                                    return 250 + 28;
+                                }
+                            }
+                            else
+                            {
+                                return 250 + 28;
+                            }
                         }
                         else
                         {
-                            //here minues setting height
-                            return 250 + 28 - 30;
+                            return 250 + 28;
                         }
+                        
                     }
                     else
                     {
@@ -3079,7 +3450,7 @@ int c2= 0;
                         
                         NSString *IsAllowPeopleToLikeThisWall_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToLikeThisWall"];
                         NSString *IsAllowPeoplePostComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeoplePostComment"];
-                        NSString *IsAllowPeopleToShareComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToShareComment"];
+                        // NSString *IsAllowPeopleToShareComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToShareComment"];
                         
                         //get setting wall responce
                         NSString *IS_USER_LIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
@@ -3092,27 +3463,94 @@ int c2= 0;
                         NSString *IS_USER_COMMENT=[dicResponce objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
                         NSString *IS_USER_SHARE=[dicResponce objectForKey:@"IsAllowPeopleToShareYourPost"];
                         
-                        if ([IS_USER_LIKE_WALL integerValue] == 1 ||
-                            [IS_USER_LIKE integerValue] == 1 ||
-                            [IS_USER_DISLIKE_WALL integerValue] == 1 ||
-                            [IS_USER_DISLIKE integerValue] == 1 ||
-                            [IS_USER_COMMENT_WALL integerValue] == 1 ||
-                            [IS_USER_COMMENT integerValue] == 1 ||
-                            [IS_USER_SHARE_WALL integerValue] == 1 ||
-                            [IS_USER_SHARE integerValue] == 1 ||
-                            [isIsAllowUserToLikeDislikes integerValue] == 1 ||
-                            [IsAllowUserToPostComment integerValue] == 1 ||
-                            [IsAllowUserToSharePost integerValue] == 1 ||
-                            [IsAllowPeopleToShareComment_Dynamic integerValue] == 1 ||
-                            [IsAllowPeopleToLikeThisWall_Dynamic integerValue] == 1 ||
-                            [IsAllowPeoplePostComment_Dynamic integerValue] == 1)
+                        //Like
+                        if ([isIsAllowUserToLikeDislikes_Login integerValue] == 1)
                         {
-                            return 250 + 28;
+                            if([IS_USER_LIKE_WALL integerValue] == 1 &&
+                               [IS_USER_LIKE integerValue] == 1)
+                            {
+                                if([IsAllowPeopleToLikeThisWall_Dynamic integerValue] == 1)
+                                {
+                                    //UnLike
+                                    if ([isIsAllowUserToLikeDislikes_Login integerValue] == 1)
+                                    {
+                                        if([IS_USER_DISLIKE_WALL integerValue] == 1 &&
+                                           [IS_USER_DISLIKE integerValue] == 1)
+                                        {
+                                            //dynamic
+                                            if ([IsAllowPeopleToLikeThisWall_Dynamic integerValue] == 1)
+                                            {
+                                                //Comment
+                                                if ([IsAllowUserToPostComment_Login integerValue] == 1)
+                                                {
+                                                    if([IS_USER_COMMENT_WALL integerValue] == 1 &&
+                                                       [IS_USER_COMMENT integerValue] == 1)
+                                                    {
+                                                        //Dynamic
+                                                        if([IsAllowPeoplePostComment_Dynamic integerValue] == 1)
+                                                        {
+                                                            //Share
+                                                            if ([IsAllowUserToSharePost_Login integerValue] == 1)
+                                                            {
+                                                                if([IS_USER_SHARE_WALL integerValue] == 1 &&
+                                                                   [IS_USER_SHARE integerValue] == 1)
+                                                                {
+                                                                    //here minues setting height
+                                                                    return 250 + 28 - 30;
+                                                                }
+                                                                else
+                                                                {
+                                                                    return 250 + 28;
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                return 250 + 28;
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            return 250 + 28;
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        return 250 + 28;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    return 250 + 28;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                return 250 + 28;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            return 250 + 28;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        return 250 + 28;
+                                    }
+                                }
+                                else
+                                {
+                                    return 250 + 28;
+                                }
+                            }
+                            else
+                            {
+                                return 250 + 28;
+                            }
                         }
                         else
                         {
-                            //here minues setting height
-                            return 250 + 28 - 30;
+                            return 250 + 28;
                         }
                     }
                     
@@ -3146,26 +3584,46 @@ int c2= 0;
                         NSString *IS_USER_DISLIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
                         //NSString *IS_USER_COMMENT=[dicResponce objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
                         NSString *IS_USER_SHARE=[dicResponce objectForKey:@"IsAllowPeopleToShareYourPost"];
-                        //[IS_USER_COMMENT integerValue] == 1 &&
-                        if ([IS_USER_LIKE_WALL integerValue] == 1 ||
-                            [IS_USER_LIKE integerValue] == 1 ||
-                            [IS_USER_DISLIKE_WALL integerValue] == 1 ||
-                            [IS_USER_DISLIKE integerValue] == 1 ||
-                            [IS_USER_COMMENT_WALL integerValue] == 1 ||
-                            
-                            [IS_USER_SHARE_WALL integerValue] == 1 ||
-                            [IS_USER_SHARE integerValue] == 1 ||
-                            [isIsAllowUserToLikeDislikes integerValue] == 1 ||
-                            [IsAllowUserToPostComment integerValue] == 1 ||
-                            [IsAllowUserToSharePost integerValue] == 1)
+                        
+                        
+                        if ([isIsAllowUserToLikeDislikes_Login integerValue] == 0 ||
+                            [IS_USER_LIKE_WALL integerValue] == 0 ||
+                            [IS_USER_LIKE integerValue] == 0 )
                         {
-                            return 260 + 28;
+                            if([isIsAllowUserToLikeDislikes_Login integerValue] == 0 ||
+                               [IS_USER_DISLIKE_WALL integerValue] == 0 ||
+                               [IS_USER_DISLIKE integerValue] == 0)
+                            {
+                                if([IsAllowUserToPostComment_Login integerValue] == 0 ||
+                                   [IS_USER_COMMENT_WALL integerValue] == 0)
+                                {
+                                    if([IsAllowUserToSharePost_Login integerValue] == 0 ||
+                                       [IS_USER_SHARE_WALL integerValue] == 0 ||
+                                       [IS_USER_SHARE integerValue] == 0)
+                                    {
+                                        //here minues setting height
+                                        return 260 + 28 - 30;
+                                    }
+                                    else
+                                    {
+                                        return 260 + 28;
+                                    }
+                                }
+                                else
+                                {
+                                    return 260 + 28;
+                                }
+                            }
+                            else
+                            {
+                                return 260 + 28;
+                            }
                         }
                         else
                         {
-                            //here minues setting height
-                            return 260 + 28 - 30;
+                            return 260 + 28;
                         }
+                        
                     }
                     else
                     {
@@ -3178,7 +3636,7 @@ int c2= 0;
                         
                         NSString *IsAllowPeopleToLikeThisWall_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToLikeThisWall"];
                         NSString *IsAllowPeoplePostComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeoplePostComment"];
-                        NSString *IsAllowPeopleToShareComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToShareComment"];
+                        // NSString *IsAllowPeopleToShareComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToShareComment"];
                         
                         //get setting wall responce
                         NSString *IS_USER_LIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
@@ -3191,39 +3649,102 @@ int c2= 0;
                         NSString *IS_USER_COMMENT=[dicResponce objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
                         NSString *IS_USER_SHARE=[dicResponce objectForKey:@"IsAllowPeopleToShareYourPost"];
                         
-                        if ([IS_USER_LIKE_WALL integerValue] == 1 ||
-                            [IS_USER_LIKE integerValue] == 1 ||
-                            [IS_USER_DISLIKE_WALL integerValue] == 1 ||
-                            [IS_USER_DISLIKE integerValue] == 1 ||
-                            [IS_USER_COMMENT_WALL integerValue] == 1 ||
-                            [IS_USER_COMMENT integerValue] == 1 ||
-                            [IS_USER_SHARE_WALL integerValue] == 1 ||
-                            [IS_USER_SHARE integerValue] == 1 ||
-                            [isIsAllowUserToLikeDislikes integerValue] == 1 ||
-                            [IsAllowUserToPostComment integerValue] == 1 ||
-                            [IsAllowUserToSharePost integerValue] == 1 ||
-                            [IsAllowPeopleToShareComment_Dynamic integerValue] == 1 ||
-                            [IsAllowPeopleToLikeThisWall_Dynamic integerValue] == 1 ||
-                            [IsAllowPeoplePostComment_Dynamic integerValue] == 1)
+                        //Like
+                        if ([isIsAllowUserToLikeDislikes_Login integerValue] == 1)
                         {
-                            return 260 + 28;
+                            if([IS_USER_LIKE_WALL integerValue] == 1 &&
+                               [IS_USER_LIKE integerValue] == 1)
+                            {
+                                if([IsAllowPeopleToLikeThisWall_Dynamic integerValue] == 1)
+                                {
+                                    //UnLike
+                                    if ([isIsAllowUserToLikeDislikes_Login integerValue] == 1)
+                                    {
+                                        if([IS_USER_DISLIKE_WALL integerValue] == 1 &&
+                                           [IS_USER_DISLIKE integerValue] == 1)
+                                        {
+                                            //dynamic
+                                            if ([IsAllowPeopleToLikeThisWall_Dynamic integerValue] == 1)
+                                            {
+                                                //Comment
+                                                if ([IsAllowUserToPostComment_Login integerValue] == 1)
+                                                {
+                                                    if([IS_USER_COMMENT_WALL integerValue] == 1 &&
+                                                       [IS_USER_COMMENT integerValue] == 1)
+                                                    {
+                                                        //Dynamic
+                                                        if([IsAllowPeoplePostComment_Dynamic integerValue] == 1)
+                                                        {
+                                                            //Share
+                                                            if ([IsAllowUserToSharePost_Login integerValue] == 1)
+                                                            {
+                                                                if([IS_USER_SHARE_WALL integerValue] == 1 &&
+                                                                   [IS_USER_SHARE integerValue] == 1)
+                                                                {
+                                                                    //here minues setting height
+                                                                    return 260 + 28 - 30;
+                                                                }
+                                                                else
+                                                                {
+                                                                    return 260 + 28;
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                return 260 + 28;
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            return 260 + 28;
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        return 260 + 28;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    return 260 + 28;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                return 260 + 28;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            return 260 + 28;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        return 260 + 28;
+                                    }
+                                }
+                                else
+                                {
+                                    return 260 + 28;
+                                }
+                            }
+                            else
+                            {
+                                return 260 + 28;
+                            }
                         }
                         else
                         {
-                            //here minues setting height
-                            return 260 + 28 - 30;
+                            return 260 + 28;
                         }
                     }
-                    
                 }
                 else
                 {
                     return 260 + 28;
                 }
-                
-                
             }
-            
         }
         else if([strFileType isEqualToString:@"FILE"])
         {
@@ -3247,26 +3768,46 @@ int c2= 0;
                     NSString *IS_USER_DISLIKE=[dicResponce objectForKey:@"IsAllowPeopleToLikeOrDislikeOnYourPost"];
                     //NSString *IS_USER_COMMENT=[dicResponce objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
                     NSString *IS_USER_SHARE=[dicResponce objectForKey:@"IsAllowPeopleToShareYourPost"];
-                    //[IS_USER_COMMENT integerValue] == 1 &&
-                    if ([IS_USER_LIKE_WALL integerValue] == 1 ||
-                        [IS_USER_LIKE integerValue] == 1 ||
-                        [IS_USER_DISLIKE_WALL integerValue] == 1 ||
-                        [IS_USER_DISLIKE integerValue] == 1 ||
-                        [IS_USER_COMMENT_WALL integerValue] == 1 ||
-                        
-                        [IS_USER_SHARE_WALL integerValue] == 1 ||
-                        [IS_USER_SHARE integerValue] == 1 ||
-                        [isIsAllowUserToLikeDislikes integerValue] == 1 ||
-                        [IsAllowUserToPostComment integerValue] == 1 ||
-                        [IsAllowUserToSharePost integerValue] == 1)
+                    
+                    
+                    if ([isIsAllowUserToLikeDislikes_Login integerValue] == 0 ||
+                        [IS_USER_LIKE_WALL integerValue] == 0 ||
+                        [IS_USER_LIKE integerValue] == 0 )
                     {
-                        return 220;
+                        if([isIsAllowUserToLikeDislikes_Login integerValue] == 0 ||
+                           [IS_USER_DISLIKE_WALL integerValue] == 0 ||
+                           [IS_USER_DISLIKE integerValue] == 0)
+                        {
+                            if([IsAllowUserToPostComment_Login integerValue] == 0 ||
+                               [IS_USER_COMMENT_WALL integerValue] == 0)
+                            {
+                                if([IsAllowUserToSharePost_Login integerValue] == 0 ||
+                                   [IS_USER_SHARE_WALL integerValue] == 0 ||
+                                   [IS_USER_SHARE integerValue] == 0)
+                                {
+                                    //here minues setting height
+                                    return 220 - 30;
+                                }
+                                else
+                                {
+                                    return 220;
+                                }
+                            }
+                            else
+                            {
+                                return 220;
+                            }
+                        }
+                        else
+                        {
+                            return 220;
+                        }
                     }
                     else
                     {
-                        //here minues setting height
-                        return 220 - 30;
+                        return 220;
                     }
+                    
                 }
                 else
                 {
@@ -3279,7 +3820,7 @@ int c2= 0;
                     
                     NSString *IsAllowPeopleToLikeThisWall_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToLikeThisWall"];
                     NSString *IsAllowPeoplePostComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeoplePostComment"];
-                    NSString *IsAllowPeopleToShareComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToShareComment"];
+                    // NSString *IsAllowPeopleToShareComment_Dynamic=[dicResponce_DynamicWall objectForKey:@"IsAllowPeopleToShareComment"];
                     
                     //get setting wall responce
                     NSString *IS_USER_LIKE_WALL=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeCommentWall"];
@@ -3292,27 +3833,94 @@ int c2= 0;
                     NSString *IS_USER_COMMENT=[dicResponce objectForKey:@"IsAllowPeopleToPostMessageOnYourWall"];
                     NSString *IS_USER_SHARE=[dicResponce objectForKey:@"IsAllowPeopleToShareYourPost"];
                     
-                    if ([IS_USER_LIKE_WALL integerValue] == 1 ||
-                        [IS_USER_LIKE integerValue] == 1 ||
-                        [IS_USER_DISLIKE_WALL integerValue] == 1 ||
-                        [IS_USER_DISLIKE integerValue] == 1 ||
-                        [IS_USER_COMMENT_WALL integerValue] == 1 ||
-                        [IS_USER_COMMENT integerValue] == 1 ||
-                        [IS_USER_SHARE_WALL integerValue] == 1 ||
-                        [IS_USER_SHARE integerValue] == 1 ||
-                        [isIsAllowUserToLikeDislikes integerValue] == 1 ||
-                        [IsAllowUserToPostComment integerValue] == 1 ||
-                        [IsAllowUserToSharePost integerValue] == 1 ||
-                        [IsAllowPeopleToShareComment_Dynamic integerValue] == 1 ||
-                        [IsAllowPeopleToLikeThisWall_Dynamic integerValue] == 1 ||
-                        [IsAllowPeoplePostComment_Dynamic integerValue] == 1)
+                    //Like
+                    if ([isIsAllowUserToLikeDislikes_Login integerValue] == 1)
                     {
-                        return 220;
+                        if([IS_USER_LIKE_WALL integerValue] == 1 &&
+                           [IS_USER_LIKE integerValue] == 1)
+                        {
+                            if([IsAllowPeopleToLikeThisWall_Dynamic integerValue] == 1)
+                            {
+                                //UnLike
+                                if ([isIsAllowUserToLikeDislikes_Login integerValue] == 1)
+                                {
+                                    if([IS_USER_DISLIKE_WALL integerValue] == 1 &&
+                                       [IS_USER_DISLIKE integerValue] == 1)
+                                    {
+                                        //dynamic
+                                        if ([IsAllowPeopleToLikeThisWall_Dynamic integerValue] == 1)
+                                        {
+                                            //Comment
+                                            if ([IsAllowUserToPostComment_Login integerValue] == 1)
+                                            {
+                                                if([IS_USER_COMMENT_WALL integerValue] == 1 &&
+                                                   [IS_USER_COMMENT integerValue] == 1)
+                                                {
+                                                    //Dynamic
+                                                    if([IsAllowPeoplePostComment_Dynamic integerValue] == 1)
+                                                    {
+                                                        //Share
+                                                        if ([IsAllowUserToSharePost_Login integerValue] == 1)
+                                                        {
+                                                            if([IS_USER_SHARE_WALL integerValue] == 1 &&
+                                                               [IS_USER_SHARE integerValue] == 1)
+                                                            {
+                                                                //here minues setting height
+                                                                return 220 - 30;
+                                                            }
+                                                            else
+                                                            {
+                                                                return 220;
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            return 220;
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        return 220;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    return 220;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                return 220;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            return 220;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        return 220;
+                                    }
+                                }
+                                else
+                                {
+                                    return 220;
+                                }
+                            }
+                            else
+                            {
+                                return 220;
+                            }
+                        }
+                        else
+                        {
+                            return 220;
+                        }
                     }
                     else
                     {
-                        //here minues setting height
-                        return 220 - 30;
+                        return 220;
                     }
                 }
                 
@@ -3764,6 +4372,27 @@ int c2= 0;
                     cell.viewShare_Width.constant=0;
                     cell.imgShare_Width.constant=0;
                 }
+                
+                if ([isIsAllowUserToLikeDislikes_Login integerValue] == 0 ||
+                    [IS_USER_LIKE_WALL integerValue] == 0 ||
+                    [IS_USER_LIKE integerValue] == 0 )
+                {
+                    if([isIsAllowUserToLikeDislikes_Login integerValue] == 0 ||
+                       [IS_USER_DISLIKE_WALL integerValue] == 0 ||
+                       [IS_USER_DISLIKE integerValue] == 0)
+                    {
+                        if([IsAllowUserToPostComment_Login integerValue] == 0 ||
+                           [IS_USER_COMMENT_WALL integerValue] == 0)
+                        {
+                            if([IsAllowUserToSharePost_Login integerValue] == 0 ||
+                               [IS_USER_SHARE_WALL integerValue] == 0 ||
+                               [IS_USER_SHARE integerValue] == 0)
+                            {
+                                cell.viewLike_Height.constant=0;
+                            }
+                        }
+                    }
+                }
             }
             else
             {
@@ -3907,6 +4536,51 @@ int c2= 0;
                 {
                     cell.viewShare_Width.constant=0;
                     cell.imgShare_Width.constant=0;
+                }
+                
+                //Like
+                if ([isIsAllowUserToLikeDislikes_Login integerValue] == 1)
+                {
+                    if([IS_USER_LIKE_WALL integerValue] == 1 &&
+                       [IS_USER_LIKE integerValue] == 1)
+                    {
+                        if([IsAllowPeopleToLikeThisWall_Dynamic integerValue] == 1)
+                        {
+                            //UnLike
+                            if ([isIsAllowUserToLikeDislikes_Login integerValue] == 1)
+                            {
+                                if([IS_USER_DISLIKE_WALL integerValue] == 1 &&
+                                   [IS_USER_DISLIKE integerValue] == 1)
+                                {
+                                    //dynamic
+                                    if ([IsAllowPeopleToLikeThisWall_Dynamic integerValue] == 1)
+                                    {
+                                        //Comment
+                                        if ([IsAllowUserToPostComment_Login integerValue] == 1)
+                                        {
+                                            if([IS_USER_COMMENT_WALL integerValue] == 1 &&
+                                               [IS_USER_COMMENT integerValue] == 1)
+                                            {
+                                                //Dynamic
+                                                if([IsAllowPeoplePostComment_Dynamic integerValue] == 1)
+                                                {
+                                                    //Share
+                                                    if ([IsAllowUserToSharePost_Login integerValue] == 1)
+                                                    {
+                                                        if([IS_USER_SHARE_WALL integerValue] == 1 &&
+                                                           [IS_USER_SHARE integerValue] == 1)
+                                                        {
+                                                            cell.viewLike_Height.constant=0;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -4983,18 +5657,9 @@ int c2= 0;
     }
     else
     {
-        if(flagPastVC == NO)
-        {
-            _checkscreen=nil;
-            [self commonData];
-            [self viewWillAppear:YES];
-        }
-        else
-        {
-            [self.frostedViewController hideMenuViewController];
-            OrataroVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"OrataroVc"];
-            [self.navigationController pushViewController:wc animated:NO];
-        }
+        [self.frostedViewController hideMenuViewController];
+        OrataroVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"OrataroVc"];
+        [self.navigationController pushViewController:wc animated:NO];
     }
 }
 
