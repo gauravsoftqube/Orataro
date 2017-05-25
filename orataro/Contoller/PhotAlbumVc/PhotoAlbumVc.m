@@ -14,6 +14,7 @@
 {
     NSString *str ;
     NSMutableArray *arySaveImage,*arySaveTempImage,*arySaveAlbum,*arySaveTempAlbum;
+    NSString *checkImage;
     //UIActivityIndicatorView *activityIndicator;
 }
 @end
@@ -70,6 +71,13 @@
     
     NSLog(@"Values of Album=%@",str);
     
+    
+    if ([checkImage isEqualToString:@"FromImagePicker"])
+    {
+        
+    }
+    else
+    {
     if ([str isEqualToString:@"Second"])
     {
         NSArray *ary = [DBOperation selectData:@"select * from PhotoMultipleAlbumList"];
@@ -148,7 +156,7 @@
         }
 
     }
-   
+    }
     
     
 }
@@ -712,7 +720,6 @@
         p7.strSetView = @"Back";
         [self.navigationController pushViewController:p7 animated:YES];
     }
-    
 }
 
 - (NSInteger)numberOfSectionsInCollectionView: (UICollectionView *)collectionVie
@@ -769,15 +776,15 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     
-    //  [self dismissModalViewControllerAnimated:true];
+    //[self dismissModalViewControllerAnimated:true];
     
     [self dismissViewControllerAnimated:YES completion:^{
-        
+    
     }];
     
+    checkImage = @"FromImagePicker";
     UIImage * img = [info valueForKey:UIImagePickerControllerEditedImage];
-    
-    //  PostImageView.image = img;
+    [self api_AddPhotos:img];
 }
 
 
@@ -802,7 +809,6 @@
     
     // [self apiCallFor_GetPhotoList:YES :@"Photo"];
     // [self apiCallFor_GetPhotoList:NO :@"Photo"];
-    
     
     if ([strPhotoOrAlbum isEqualToString:@"Photo"])
     {
@@ -1009,7 +1015,81 @@
 }
 
 
+#pragma mark - Add Photo api 
 
+-(void)api_AddPhotos : (UIImage *)img
+{
+    //#define apk_Photos @"apk_Photos.asmx"
+    //#define apk_GetPhotoList_action @"GetPhotoList"
+    //#define apk_AddPhotos @"AddPhotos"
+    
+    //    <AddPhotos xmlns="http://tempuri.org/">
+    //    <InstituteID>guid</InstituteID>
+    //    <ClientID>guid</ClientID>
+    //    <WallID>guid</WallID>
+    //    <MemberID>guid</MemberID>
+    //    <UserID>guid</UserID>
+    //    <BeachID>guid</BeachID>
+    
+    
+    //    <PostShareType>string</PostShareType>
+    //    <ImagePath>string</ImagePath>
+    //    <FileType>string</FileType>
+    //    <FileMineType>string</FileMineType>
+    
+    //  PostImageView.image = img;
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_Photos,apk_AddPhotos];
+    
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"WallID"]] forKey:@"WallID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"BatchID"]] forKey:@"BeachID"];
+    
+    [ProgressHUB showHUDAddedTo:self.view];
+    
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         [ProgressHUB hideenHUDAddedTo:self.view];
+         if(!error)
+         {
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             
+             if([arrResponce count] != 0)
+             {
+                 NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                 NSString *strStatus=[dic objectForKey:@"message"];
+                 if([strStatus isEqualToString:@"No Data Found"])
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                 }
+                 else
+                 {
+                     NSLog(@"Arr=%@",arrResponce);
+                 }
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
+
+}
 /*
  #pragma mark - Navigation
  

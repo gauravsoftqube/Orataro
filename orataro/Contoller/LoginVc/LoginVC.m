@@ -292,14 +292,15 @@ int multipleUser = 0;
     
     NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"DeviceToken"];
     
-   NSLog(@"token **********************=%@",token);
+ //  NSLog(@"token **********************=%@",token);
     
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
     
     [param setValue:[NSString stringWithFormat:@"%@",self.aPhonenumberTextField.text] forKey:@"UserName"];
     
     [param setValue:[NSString stringWithFormat:@"%@",self.aPasswordTextField.text] forKey:@"Password"];                                                                      
-    [param setValue:[NSString stringWithFormat:@"%@",token] forKey:@"GCMID"];
+   // [param setValue:@"" forKey:@"GCMID"];
+    [param setValue:@"" forKey:@"GCMID"];
     [param setValue:[NSString stringWithFormat:@"%@",currentDeviceId] forKey:@"DivRegistID"];
     
     NSLog(@"Param=%@",param);
@@ -313,15 +314,17 @@ int multipleUser = 0;
              NSString *strArrd=[dicResponce objectForKey:@"d"];
              NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
              NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-             NSLog(@"%@",arrResponce);
+            // NSLog(@"%@",arrResponce);
+             
              if([arrResponce count] != 0)
              {
                  NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
                  
                  NSString *strStatus=[dic objectForKey:@"message"];
+                 
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"Userid or password wrong" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else

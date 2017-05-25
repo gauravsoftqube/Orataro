@@ -10,6 +10,8 @@
 #import "Reachability.h"
 #import "Global.h"
 #import "REFrostedViewController.h"
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
 
 #define APPDELEGATE (AppDelegate *)[[UIApplication sharedApplication] delegate]
 
@@ -25,6 +27,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    [Fabric with:@[[Crashlytics class]]];
     
     [DBOperation checkCreateDB];
     REFrostedViewController *rf = [[REFrostedViewController alloc]init];

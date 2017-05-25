@@ -109,7 +109,7 @@ int s =0 ;
     
     UIImageView *img = (UIImageView *)[cell.contentView viewWithTag:1];
     
-    NSLog(@"get ary=%@",arygetIdflag);
+  //  NSLog(@"get ary=%@",arygetIdflag);
     
       NSString *documentDirectory=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     
@@ -405,6 +405,10 @@ int s =0 ;
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
+                      [DBOperation executeSQL:@"delete from FriendList"];
+                     [nameary removeAllObjects];
+                     [friendTableView reloadData];
+                     
                      UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }

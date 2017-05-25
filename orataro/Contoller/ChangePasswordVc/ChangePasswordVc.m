@@ -73,6 +73,9 @@
 
 - (IBAction)btnChangePassword:(id)sender
 {
+    
+    NSString *stroldPassword = [[NSUserDefaults standardUserDefaults]valueForKey:@"Password"];
+    
     if([Utility validateBlankField:_txtOldPassword.text])
     {
         [WToast showWithText:@"Please enter oldpassword"];
@@ -88,11 +91,27 @@
         [WToast showWithText:@"Please enter confirmpassword"];
         return;
     }
+    if (![stroldPassword isEqualToString:self.txtOldPassword.text])
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"Old password wrong" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+
+    }
+    if (![self.txtNewPassword.text isEqualToString:self.txtConformPassword.text])
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Password_Conf_Not_Match delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+        
+    }
+    
     [self api_ChangePassword];
     
 }
 
-- (IBAction)btnOldPwdShowHidden:(id)sender {
+- (IBAction)btnOldPwdShowHidden:(id)sender
+    {
     if(OldpwdHS)
     {
         [self.btnOldPwdShowHidden setImage:[UIImage imageNamed:@"hide_pass"] forState:UIControlStateNormal];
