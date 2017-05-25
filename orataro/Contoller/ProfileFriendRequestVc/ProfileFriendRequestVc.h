@@ -16,5 +16,6 @@
 @property (weak, nonatomic) IBOutlet UIView *viewSearch;
 - (IBAction)btnSearchClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UITextField *txtSearchText;
+@property (weak, nonatomic) IBOutlet UILabel *lbNoFriendRequest;
 
 @end

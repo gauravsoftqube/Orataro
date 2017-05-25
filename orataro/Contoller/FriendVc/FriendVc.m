@@ -48,6 +48,8 @@ int s =0 ;
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    _lbNoFriendList.hidden = YES;
+    
     NSArray *ary = [DBOperation selectData:@"select * from FriendList"];
     nameary = [Utility getLocalDetail:ary columnKey:@"FriendJsonStr"];
     
@@ -409,12 +411,14 @@ int s =0 ;
                      [nameary removeAllObjects];
                      [friendTableView reloadData];
                      _viewSearch.hidden = YES;
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     [alrt show];
+                     _lbNoFriendList.hidden = NO;
+//                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//                     [alrt show];
                  }
                  else
                  {
                      _viewSearch.hidden = NO;
+                     _lbNoFriendList.hidden = YES;
                      [self ManageCircularList:arrResponce];
                      
                      

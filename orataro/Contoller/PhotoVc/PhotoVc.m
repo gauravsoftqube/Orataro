@@ -8,7 +8,8 @@
 
 #import "PhotoVc.h"
 #import "Global.h"
-
+#import "MBProgressHUD.h"
+#import "ALAssetsLibrary+CustomPhotoAlbum.h"
 
 @interface PhotoVc ()
 {
@@ -158,9 +159,13 @@ int lastvalue = 0;
                  [cell2.activityIndicator stopAnimating];
                  [cell2.activityIndicator removeFromSuperview];
                  
-                 [DBOperation selectData:[NSString stringWithFormat:@"update PhotoList set flag='1' where id=%@",[[aryTempGetData objectAtIndex:indexPath.row]objectForKey:@"id"]]];
-                 
-                 
+                 @try {
+                      [DBOperation selectData:[NSString stringWithFormat:@"update PhotoList set flag='1' where id=%@",[[aryTempGetData objectAtIndex:indexPath.row]objectForKey:@"id"]]];
+                 } @catch (NSException *exception)
+                 {
+                     
+                 }
+                
                  //no_img
                  
                  NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -180,12 +185,12 @@ int lastvalue = 0;
                  
                  if (![imageData writeToFile:imagePath atomically:NO])
                  {
-                    // NSLog(@"Failed to cache image data to disk");
+                     // NSLog(@"Failed to cache image data to disk");
                  }
                  else
                  {
                      [imageData writeToFile:imagePath atomically:NO];
-                    // NSLog(@"the cachedImagedPath is %@",imagePath);
+                     // NSLog(@"the cachedImagedPath is %@",imagePath);
                  }
                  
                  // NSLog(@"image Saperator=%@",[strSaveImg componentsSeparatedByString:@"."]);
@@ -377,32 +382,55 @@ int lastvalue = 0;
     
     if ([Utility isInterNetConnectionIsActive] == false)
     {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.label.text = NSLocalizedString(@"Downloading....", @"");
+        
         if (aryPhotoGet.count > 0)
         {
             // from local
+            
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.label.text = NSLocalizedString(@"Downloading....", @"");
             
             NSString *setImage = [NSString stringWithFormat:@"%@",[[aryTempGetData objectAtIndex:btn.tag]objectForKey:@"PhotoImageStr"]];
             //NSLog(@"image=%@",setImage);
             NSArray *ary = [setImage componentsSeparatedByString:@"/"];
             NSString *strSaveImg = [ary lastObject];
             NSString *imagePath=[documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",strSaveImg]];
+            
+            
             UIImage *image=[UIImage imageWithContentsOfFile:imagePath];
+            NSData *imageData = UIImagePNGRepresentation(image);
+            [imageData writeToFile:imagePath atomically:NO];
             
             ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-            [library writeImageToSavedPhotosAlbum:[image CGImage] orientation:(ALAssetOrientation)[image imageOrientation] completionBlock:^(NSURL *assetURL, NSError *error)
+            
+            [library saveImage:image toAlbum:@"Orataro" completion:^(NSURL *assetURL, NSError *error)
+            {
+                 [hud hideAnimated:YES];
+                NSLog(@"Success");
+            } failure:^(NSError *error) {
+                NSLog(@"Not handle");
+                 [hud hideAnimated:YES];
+            }];
+            
+            
+           /* [library writeImageToSavedPhotosAlbum:[image CGImage] orientation:(ALAssetOrientation)[image imageOrientation] completionBlock:^(NSURL *assetURL, NSError *error)
              {
                  if (error)
                  {
                      // TODO: error handling
                      //  NSLog(@"Not handle");
+                     [hud hideAnimated:YES];
                  }
                  else
                  {
                      // TODO: success handling
                      // NSLog(@"Success");
+                     [hud hideAnimated:YES];
                      
                  }
-             }];
+             }];*/
             
             
         }
@@ -415,29 +443,114 @@ int lastvalue = 0;
     }
     else
     {
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[aryPhotoGet objectAtIndex:btn.tag]objectForKey:@"Photo"]]];
+        NSString *setImage = [NSString stringWithFormat:@"%@",[[aryTempGetData objectAtIndex:btn.tag]objectForKey:@"PhotoImageStr"]];
+        //NSLog(@"image=%@",setImage);
+        NSArray *ary = [setImage componentsSeparatedByString:@"/"];
+        NSString *strSaveImg = [ary lastObject];
         
-        NSData *data = [[NSData alloc] initWithContentsOfURL:url];
+        NSLog(@"Image=%@",strSaveImg);
+        //   NSString *imagePath=[documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",strSaveImg]];
         
-        UIImage *tmpImage = [[UIImage alloc] initWithData:data];
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsDirectory = [paths objectAtIndex:0];
+        NSString *path = [documentsDirectory stringByAppendingPathComponent:strSaveImg];
         
-        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
         
-        [library writeImageToSavedPhotosAlbum:[tmpImage CGImage] orientation:(ALAssetOrientation)[tmpImage imageOrientation] completionBlock:^(NSURL *assetURL, NSError *error)
-         {
-             if (error)
+        if (![fileManager fileExistsAtPath: path])
+        {
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.label.text = NSLocalizedString(@"Downloading....", @"");
+            
+            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[aryPhotoGet objectAtIndex:btn.tag]objectForKey:@"Photo"]]];
+            
+            NSData *data = [[NSData alloc] initWithContentsOfURL:url];
+            
+            UIImage *tmpImage = [[UIImage alloc] initWithData:data];
+            
+            
+            //  MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            //  hud.label.text = NSLocalizedString(@"Downloading....", @"");
+            
+            ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+            
+            [library saveImage:tmpImage toAlbum:@"Orataro" completion:^(NSURL *assetURL, NSError *error)
              {
-                 // TODO: error handling
-                 //  NSLog(@"Not handle");
-             }
-             else
+                 [hud hideAnimated:YES];
+                 NSLog(@"Success");
+             } failure:^(NSError *error) {
+                 NSLog(@"Not handle");
+                 [hud hideAnimated:YES];
+             }];
+            
+            
+          /*  [library writeImageToSavedPhotosAlbum:[tmpImage CGImage] orientation:(ALAssetOrientation)[tmpImage imageOrientation] completionBlock:^(NSURL *assetURL, NSError *error)
              {
-                 // TODO: success handling
-                 //   NSLog(@"Success");
+                 MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                 hud.label.text = NSLocalizedString(@"Downloading....", @"");
                  
-             }
-         }];
-        
+                 if (error)
+                 {
+                     // TODO: error handling
+                     NSLog(@"Not handle");
+                     [hud hideAnimated:YES];
+                 }
+                 else
+                 {
+                     // TODO: success handling
+                     NSLog(@"Success");
+                     [hud hideAnimated:YES];
+                     
+                 }
+             }];*/
+            
+        }
+        else
+        {
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.label.text = NSLocalizedString(@"Downloading....", @"");
+            
+            NSString *setImage = [NSString stringWithFormat:@"%@",[[aryTempGetData objectAtIndex:btn.tag]objectForKey:@"PhotoImageStr"]];
+            
+            NSArray *ary = [setImage componentsSeparatedByString:@"/"];
+            NSString *strSaveImg = [ary lastObject];
+            
+            NSLog(@"Image=%@",strSaveImg);
+            
+            NSString *imagePath=[documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",strSaveImg]];
+            UIImage *image=[UIImage imageWithContentsOfFile:imagePath];
+            
+            ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+            
+            [library saveImage:image toAlbum:@"Orataro" completion:^(NSURL *assetURL, NSError *error)
+             {
+                 [hud hideAnimated:YES];
+                 NSLog(@"Success");
+             } failure:^(NSError *error) {
+                 NSLog(@"Not handle");
+                 [hud hideAnimated:YES];
+             }];
+
+            
+           /* [library writeImageToSavedPhotosAlbum:[image CGImage] orientation:(ALAssetOrientation)[image imageOrientation] completionBlock:^(NSURL *assetURL, NSError *error)
+             {
+                 if (error)
+                 {
+                     // TODO: error handling
+                     //  NSLog(@"Not handle");
+                     [hud hideAnimated:YES];
+                 }
+                 else
+                 {
+                     // TODO: success handling
+                     // NSLog(@"Success");
+                     [hud hideAnimated:YES];
+                     
+                 }
+             }];*/
+            
+            
+        }
         
     }
     

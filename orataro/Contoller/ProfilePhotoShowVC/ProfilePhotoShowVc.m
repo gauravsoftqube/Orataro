@@ -8,7 +8,8 @@
 
 #import "ProfilePhotoShowVc.h"
 #import "Global.h"
-
+#import "ALAssetsLibrary+CustomPhotoAlbum.h"
+#import "MBProgressHUD.h"
 
 @interface ProfilePhotoShowVc ()
 
@@ -105,9 +106,25 @@ int d =0;
 - (IBAction)OnSaveClicked:(UIButton *)sender
 {
     aOuterView.hidden = YES;
-    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+  //  ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
     
-    [library writeImageToSavedPhotosAlbum:[_imgView.image CGImage] orientation:(ALAssetOrientation)[_imgView.image imageOrientation] completionBlock:^(NSURL *assetURL, NSError *error)
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.label.text = NSLocalizedString(@"Downloading....", @"");
+    
+    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+    [library saveImage:_imgView.image toAlbum:@"Orataro" completion:^(NSURL *assetURL, NSError *error)
+     {
+         [hud hideAnimated:YES];
+         NSLog(@"Success");
+     } failure:^(NSError *error) {
+         NSLog(@"Not handle");
+         [hud hideAnimated:YES];
+     }];
+    
+
+    
+  /*  [library writeImageToSavedPhotosAlbum:[_imgView.image CGImage] orientation:(ALAssetOrientation)[_imgView.image imageOrientation] completionBlock:^(NSURL *assetURL, NSError *error)
      {
          if (error)
          {
@@ -120,7 +137,7 @@ int d =0;
              //   NSLog(@"Success");
              
          }
-     }];
+     }];*/
 
     
 }

@@ -318,6 +318,9 @@ int videocount = 1;
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
+                     [aryVideoData removeAllObjects];
+                     [_collectionVideolist reloadData];
+                     
                      UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }

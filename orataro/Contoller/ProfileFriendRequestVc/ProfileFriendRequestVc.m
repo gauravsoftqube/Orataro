@@ -22,6 +22,7 @@
     [super viewDidLoad];
     
     // Do any additional setup after loading the view.
+    _lbNoFriendRequest.hidden = YES;
     
     aryFriendRequest = [[NSMutableArray alloc]init];
     aryTemp = [[NSMutableArray alloc]init];
@@ -376,12 +377,14 @@
                      [aryFriendRequest removeAllObjects];
                      [_tblFriendList reloadData];
                      
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     [alrt show];
+                     _lbNoFriendRequest.hidden = NO;
+                    // UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    // [alrt show];
                      
                  }
                  else
                  {
+                     _lbNoFriendRequest.hidden = YES;
                      _viewSearch.hidden = NO;
                      [self ManageCircularList:arrResponce];
                      

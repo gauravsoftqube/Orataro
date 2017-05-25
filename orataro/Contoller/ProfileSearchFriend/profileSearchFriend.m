@@ -31,6 +31,7 @@
     
     [Utility SearchTextView:aSerchview];
     
+    _lbNoDataFound.hidden = YES;
     
     // Do any additional setup after loading the view.
 }
@@ -87,13 +88,9 @@
     //tag 70
     
     UIButton *bt = (UIButton *)[cell.contentView viewWithTag:70];
-    bt.tag = indexPath.row;
+   // bt.tag = indexPath.row;
     
-    
-    NSString *CheckFriend = [NSString stringWithFormat:@"%@",[[nameary objectAtIndex:indexPath.row]objectForKey:@"IsFriend"]];
-    
-    NSLog(@"Friend=%@",CheckFriend);
-    
+
     //tag 6
     UIView *view1 = (UIView *)[cell.contentView viewWithTag:6];
     view1.layer.cornerRadius =3.0;
@@ -103,7 +100,13 @@
     
     UILabel *lb6= (UILabel *)[cell.contentView viewWithTag:30];
     
+    NSString *CheckFriend = [NSString stringWithFormat:@"%@",[[nameary objectAtIndex:indexPath.row]objectForKey:@"IsFriend"]];
+    
+    NSLog(@"Friend=%@",CheckFriend);
+    
     NSString *CheckFriend1 = [NSString stringWithFormat:@"%@",[[nameary objectAtIndex:indexPath.row]objectForKey:@"IsRequested"]];
+    
+     NSLog(@"Friend=%@",CheckFriend1);
     
     if ([CheckFriend isEqualToString:@"1"])
     {
@@ -121,6 +124,7 @@
             img1.hidden = YES;
             bt.hidden = YES;
             view1.hidden = YES;
+            //view1.hidden = NO;
             lb4.hidden = YES;
         }
         else
@@ -128,9 +132,7 @@
             lb6.text = @"";
             img1.image = [UIImage imageNamed:@"fb_req_frnd_white"];
             img1.image = [img1.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-            
             [img1 setTintColor:[UIColor colorWithRed:39.0/255.0 green:48.0/255.0 blue:91.0/255.0 alpha:1.0]];
-            
             [lb4 setTextColor:[UIColor colorWithRed:39.0/255.0 green:48.0/255.0 blue:91.0/255.0 alpha:1.0]];
             lb4.text = @"Add Friend";
         }
@@ -277,6 +279,8 @@
     //  InstituteID=4f4bbf0e-858a-46fa-a0a7-bf116f537653
     //ClientID=d79901a7-f9f7-4d47-8e3b-198ede7c9f58
     
+   // [nameary removeAllObjects];
+    
     if ([Utility isInterNetConnectionIsActive] == false)
     {
         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -302,31 +306,46 @@
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
          [ProgressHUB hideenHUDAddedTo:self.view];
+         
          if(!error)
          {
-             NSMutableDictionary *dic= [Utility ConvertStringtoJSON:[NSString stringWithFormat:@"%@",[dicResponce objectForKey:@"d"]]];
              
-             nameary =(NSMutableArray *) dic;
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
              
-             //[[NSMutableArray alloc]initWithObjects:dic, nil];
+             NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
              
-             if([nameary count] != 0)
+             if([arrResponce count] != 0)
              {
-                 //NSMutableDictionary *dic=[nameary objectAtIndex:0];
-                 //NSString *strStatus=[dic objectForKey:@"message"];
-                 if(nameary.count>0)
+                 NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                 NSString *strStatus=[dic objectForKey:@"message"];
+                 if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     
-                     [aTableView reloadData];
+                     _lbNoDataFound.hidden = NO;
+                   // UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     //[alrt show];
                  }
                  else
                  {
+                     _lbNoDataFound.hidden = YES;
+                     NSMutableDictionary *dic= [Utility ConvertStringtoJSON:[NSString stringWithFormat:@"%@",[dicResponce objectForKey:@"d"]]];
                      
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     [alrt show];
+                     NSLog(@"dic=%@",dic);
+                     nameary =(NSMutableArray *) dic;
                      
-                     
-                     
+                     if(nameary.count>0)
+                     {
+                         [aTableView reloadData];
+                     }
+                     else
+                     {
+                         
+                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                         [alrt show];
+                         
+                         
+                         
+                     }
                  }
              }
              else
@@ -402,9 +421,11 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"Friend Request Send SuccessFully."])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     alrt.tag = 500;
-                     [alrt show];
+                     //UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    // alrt.tag = 500;
+                    // [alrt show];
+                     
+                     [self apk_searchFriendList:YES];
                      
                 }
                  else

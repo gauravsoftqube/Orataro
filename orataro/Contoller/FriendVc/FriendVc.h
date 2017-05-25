@@ -11,6 +11,7 @@
 @interface FriendVc : UIViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 
 - (IBAction)BackBtnClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *lbNoFriendList;
 - (IBAction)TxtValueChanged:(UITextField *)sender;
 - (IBAction)FriendRequestBtnClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *aFirstBtn;

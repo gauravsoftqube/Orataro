@@ -12,6 +12,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *aSerchview;
 @property (weak, nonatomic) IBOutlet UITableView *aTableView;
+@property (weak, nonatomic) IBOutlet UILabel *lbNoDataFound;
 - (IBAction)BackBtnClicked:(UIButton *)sender;
 - (IBAction)btnSearchClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UITextField *txtSearchTextfield;

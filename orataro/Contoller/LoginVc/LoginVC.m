@@ -59,6 +59,8 @@ int multipleUser = 0;
     NSString *getPhoneNumber = [[NSUserDefaults standardUserDefaults]valueForKey:@"MobileNumber"];
     NSString *getPassword = [[NSUserDefaults standardUserDefaults]valueForKey:@"Password"];
     
+    NSLog(@"Data=%@",[[NSUserDefaults standardUserDefaults]valueForKey:@"RememberMe"]);
+    
     if (getPhoneNumber.length != 0 && getPassword.length != 0)
     {
         _aPhonenumberTextField.text = getPhoneNumber;

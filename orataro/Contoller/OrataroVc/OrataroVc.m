@@ -622,7 +622,7 @@
         [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"TotalCountofMember"];
         [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"DeviceToken"];
         [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"currentDeviceId"];
-        [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"Password"];
+       // [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"Password"];
         
         [[NSUserDefaults standardUserDefaults]synchronize];
         

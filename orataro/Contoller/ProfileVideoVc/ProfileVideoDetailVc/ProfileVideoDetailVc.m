@@ -73,8 +73,6 @@
         NSData *urlData = [NSData dataWithContentsOfURL:url];
         if ( urlData )
         {
-            
-            
             // [ProgressHUB showHUDAddedTo:self.view];
             
             [hud1 hideAnimated:YES];
