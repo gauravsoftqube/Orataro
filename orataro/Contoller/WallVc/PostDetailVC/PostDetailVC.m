@@ -258,6 +258,8 @@
         if([strPhoto_url length] != 0)
         {
             [WToast showWithText:Start_Downloding];
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+
             //
             NSURL *url = [NSURL URLWithString:strPhoto_url];
             NSData *data = [NSData dataWithContentsOfURL:url];
@@ -267,13 +269,19 @@
             [data writeToFile:path atomically:YES];
             
             ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-            [library writeVideoAtPathToSavedPhotosAlbum:[NSURL fileURLWithPath:path] completionBlock:^(NSURL *assetURL, NSError *error) {
-                if (error) {
+            [library writeVideoAtPathToSavedPhotosAlbum:[NSURL fileURLWithPath:path] completionBlock:^(NSURL *assetURL, NSError *error)
+             {
+                if (error)
+                {
                     NSLog(@"%@", error.description);
-                }else {
+                }
+                else
+                {
                     [WToast showWithText:Complete_Downloding];
                 }
             }];
+                
+                });
         }
     }
 }
