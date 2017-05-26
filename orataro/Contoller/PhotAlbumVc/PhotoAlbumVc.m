@@ -353,6 +353,9 @@
   // str = @"first";
     //if (aFirstBtn.tag ==1)
     //{
+    
+    NSLog(@"Str is =%@",str);
+    
     if ([str isEqualToString:@"first"])
     {
         [aCollectionView registerNib:[UINib nibWithNibName:@"PhotoalbumCell" bundle:nil] forCellWithReuseIdentifier:@"PhotosCell"];
@@ -525,10 +528,11 @@
         return cell2;
         
     }
-    if([str isEqualToString:@"Second"])
+ else
     {
-        //aSecondBtn.tag ==1
-        //Second
+        //   if([str isEqualToString:@"Second"])
+        
+    
         [aCollectionView registerNib:[UINib nibWithNibName:@"AlbumPhotoCell" bundle:nil] forCellWithReuseIdentifier:@"AlbumCell"];
         
         AlbumPhotoCell *cell2 = (AlbumPhotoCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"AlbumCell" forIndexPath:indexPath];
@@ -1098,7 +1102,7 @@
 
 #pragma mark - Add Photo api 
 
--(void)api_AddPhotos : (NSString *)imagename
+-(void)api_AddPhotos1 : (NSString *)imagename
 {
     //#define apk_Photos @"apk_Photos.asmx"
     //#define apk_GetPhotoList_action @"GetPhotoList"
@@ -1139,7 +1143,7 @@
     [param setValue:@"" forKey:@"FileMineType"];
     
     
-    //[ProgressHUB showHUDAddedTo:self.view];
+    [ProgressHUB showHUDAddedTo:self.view];
     
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
@@ -1161,8 +1165,11 @@
                  }
                  else
                  {
+                     [self apiCallFor_GetPhotoList:NO :@"Photo"];
+
                      UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
+                     
                  }
              }
              else
@@ -1259,7 +1266,7 @@
                      NSArray *ary1 = [str2 componentsSeparatedByString:@" "];
                      NSString *secondObject = [ary1 objectAtIndex:1];
                      
-                     [self api_AddPhotos : secondObject];
+                     [self api_AddPhotos1 : secondObject];
                  }
              }
              else

@@ -36,12 +36,19 @@
 {
     //alloc
     arrImagelist=[[NSMutableArray alloc]init];
+    arrPopup = [[NSMutableArray alloc]init];
     playerViewController = [[AVPlayerViewController alloc] init];
     
     [self.viewVideomain setHidden:YES];
     [self.tblImageList setHidden:YES];
     [self.btnMenu setHidden:YES];
+    [self.viewSingleImage setHidden:YES];
+    
     self.tblImageList.separatorStyle=UITableViewCellSeparatorStyleNone;
+    
+    self.scroll_SingleImage.minimumZoomScale = 1.0;
+    self.scroll_SingleImage.maximumZoomScale = 2.0;
+    
     
     NSString *FileType=[self.dicPostDetail objectForKey:@"FileType"];
     if([FileType isEqualToString:@"IMAGE"])
@@ -51,6 +58,7 @@
         NSArray *arr=[[[Utility getCurrentUserDetail]objectForKey:@"FullName"] componentsSeparatedByString:@" "];
         if (arr.count != 0) {
             self.lblHeaderTitle.text=[NSString stringWithFormat:@"Post Images (%@)",[arr objectAtIndex:0]];
+            self.lblHeaderTitle_SingleImage.text=[NSString stringWithFormat:@"%@ (%@)",[self.dicPostDetail objectForKey:@"FullName"],[arr objectAtIndex:0]];
         }
         else
         {
@@ -200,13 +208,28 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellpostdetail"];
+     UITableViewCell *cell = (UITableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
+     UIImageView *img=(UIImageView*)[cell.contentView viewWithTag:2];
+    self.img_singleimage.image=img.image;
+    
+    [self.viewSingleImage setHidden:NO];
+}
+
+#pragma mark - UIScrollView Delegate
+
+- (UIView *)viewForZoomingInScrollView:(UIScrollView* )scrollView{
+    return self.img_singleimage;
+}
+
 #pragma mark - CMPopTipViewDelegate methods
 
 - (void)popTipViewWasDismissedByUser:(CMPopTipView *)popTipView
 {
     [arrPopup removeObject:popTipView];
 }
-
 
 #pragma mark - UIButton Action
 - (IBAction)btnBack:(id)sender
@@ -222,34 +245,53 @@
 - (IBAction)btnSave:(id)sender
 {
     [Utility dismissAllPopTipViews:arrPopup];
-    NSString *strPhoto_url=[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[self.dicPostDetail objectForKey:@"Photo"]];
-    if([strPhoto_url length] != 0)
+    
+    NSString *FileType=[self.dicPostDetail objectForKey:@"FileType"];
+    if([FileType isEqualToString:@"IMAGE"])
     {
-        [WToast showWithText:@"Start Downloding"];
-        //
-        NSURL *url = [NSURL URLWithString:strPhoto_url];
-        NSData *data = [NSData dataWithContentsOfURL:url];
-        
-        // Write it to cache directory
-        NSString *path = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"file.mov"];
-        [data writeToFile:path atomically:YES];
-        
-        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-        [library writeVideoAtPathToSavedPhotosAlbum:[NSURL fileURLWithPath:path] completionBlock:^(NSURL *assetURL, NSError *error) {
+        [WToast showWithText:Start_Downloding];
+        UIImageWriteToSavedPhotosAlbum(self.img_singleimage.image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    }
+    else
+    {
+        NSString *strPhoto_url=[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[self.dicPostDetail objectForKey:@"Photo"]];
+        if([strPhoto_url length] != 0)
+        {
+            [WToast showWithText:Start_Downloding];
+            //
+            NSURL *url = [NSURL URLWithString:strPhoto_url];
+            NSData *data = [NSData dataWithContentsOfURL:url];
             
-            if (error) {
-                NSLog(@"%@", error.description);
-            }else {
-                NSLog(@"Done :)");
-            }
+            // Write it to cache directory
+            NSString *path = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"file.mov"];
+            [data writeToFile:path atomically:YES];
             
-        }];
+            ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+            [library writeVideoAtPathToSavedPhotosAlbum:[NSURL fileURLWithPath:path] completionBlock:^(NSURL *assetURL, NSError *error) {
+                if (error) {
+                    NSLog(@"%@", error.description);
+                }else {
+                    [WToast showWithText:Complete_Downloding];
+                }
+            }];
+        }
     }
 }
+
+- (void) image:(UIImage*)image didFinishSavingWithError:(NSError *)error contextInfo:(NSDictionary*)info
+{
+    [WToast showWithText:Complete_Downloding];
+}
+
 - (NSURL*)grabFileURL:(NSString *)fileName
 {
     NSURL *documentsURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
     documentsURL = [documentsURL URLByAppendingPathComponent:fileName];
     return documentsURL;
+}
+
+- (IBAction)btnBack_SingleImage:(id)sender
+{
+    [self.viewSingleImage setHidden:YES];
 }
 @end

@@ -243,18 +243,35 @@ int videocount = 1;
    
     if([strPhoto_url length] != 0)
     {
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.label.text = NSLocalizedString(@"Downloading....", @"Downloading");
-        [_collectionVideolist bringSubviewToFront:hud];
+        [WToast showWithText:Start_Downloding];
+        //
+        NSURL *url = [NSURL URLWithString:strPhoto_url];
+        NSData *data = [NSData dataWithContentsOfURL:url];
         
-       // [WToast showWithText:@"Start Downloding"];
+        // Write it to cache directory
+        NSString *path = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"file.mov"];
+        [data writeToFile:path atomically:YES];
+        
+        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+        [library writeVideoAtPathToSavedPhotosAlbum:[NSURL fileURLWithPath:path] completionBlock:^(NSURL* assetURL, NSError* error)
+         {
+             if (error)
+             {
+                 NSLog(@"%@", error.description);
+             }
+             else
+             {
+                 [WToast showWithText:Complete_Downloding];
+             }
+         }];
+
+        
+        /*[WToast showWithText:@"Start Downloding"];
        
-        
-        
+
        // [self performSelector:@selector(startPro) withObject:nil afterDelay:0.1];
         
         
-     
         NSURL* url =[NSURL URLWithString:strPhoto_url];
         //[WToast showWithText:@"Start Downloding"];
        
@@ -272,13 +289,13 @@ int videocount = 1;
         [library saveVideo:[NSURL fileURLWithPath:path] toAlbum:@"Orataro" completion:^(NSURL *assetURL, NSError *error)
          {
              NSLog(@"Completed...........");
-             [hud hideAnimated:YES];
+             // [hud hideAnimated:YES];
              
          } failure:^(NSError *error)
          {
              NSLog(@"Error=%@",error.description);
              
-         }];
+         }];*/
         //[WToast showWithText:@"Start Downloding"];
     }
     

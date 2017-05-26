@@ -48,6 +48,9 @@
 
 #pragma mark - Alert Message
 
+#define Start_Downloding @"Start Downloding"
+#define Complete_Downloding @"Complete Downloding"
+
 #define You_dont_have_permission @"You don\'t have permission."
 #define No_Data_Available @"No Data Available."
 

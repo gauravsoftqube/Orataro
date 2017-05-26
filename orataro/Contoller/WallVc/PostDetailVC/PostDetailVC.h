@@ -39,4 +39,14 @@
 - (IBAction)btnSave:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *btnSave;
 
+//single image view
+@property (weak, nonatomic) IBOutlet UIView *viewSingleImage;
+@property (weak, nonatomic) IBOutlet UILabel *lblHeaderTitle_SingleImage;
+@property (weak, nonatomic) IBOutlet UIButton *btnBack_SingleImage;
+- (IBAction)btnBack_SingleImage:(id)sender;
+@property (weak, nonatomic) IBOutlet UIScrollView *scroll_SingleImage;
+@property (weak, nonatomic) IBOutlet UIImageView *img_singleimage;
+
+
+
 @end

@@ -149,25 +149,29 @@
         
         NSString *str = [NSString stringWithFormat:@"%@",[[getData objectAtIndex:0]objectForKey:@"NotificationCount"]];
         
-       // NSLog(@"Data=%lu",(unsigned long)str.length);
+        // NSLog(@"Data=%lu",(unsigned long)str.length);
         
-        if (str == (id)[NSNull null] || str.length == 0 || [str isEqual: [NSNull null]] || [str isEqualToString:@"(null)"])
+        if (getData.count > 0)
         {
-            cell.LbWallCount.hidden = YES;
-        }
-        else
-        {
-            if ([str isEqualToString:@"0"])
+            if (str == (id)[NSNull null] || str.length == 0 || [str isEqual: [NSNull null]] || [str isEqualToString:@"(null)"])
             {
                 cell.LbWallCount.hidden = YES;
             }
             else
             {
-                cell.LbWallCount.hidden = NO;
-                cell.LbWallCount.text = str;
+                if ([str isEqualToString:@"0"])
+                {
+                    cell.LbWallCount.hidden = YES;
+                }
+                else
+                {
+                    cell.LbWallCount.hidden = NO;
+                    cell.LbWallCount.text = str;
+                }
+                
             }
-           
         }
+        
     }
     else
     {
@@ -393,19 +397,39 @@
              }
              @catch (NSException *exception)
              {
-                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                 [alrt show];
+                 
              }
-//             if([arrResponce count] != 0)
-//             {
-//                                 //[self performSegueWithIdentifier:@"ShowWall" sender:self];
-//                 
-//             }
-//             else
-//             {
-//                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-//                 [alrt show];
-//             }
+             if([arrResponce count] != 0)
+             {
+                 @try
+                 {
+                     NSLog(@"arr=%@",arrResponce);
+                     
+                     //  [[NSUserDefaults standardUserDefaults]setObject:arrResponce forKey:@"TotalCountofMember"];
+                     // [[NSUserDefaults standardUserDefaults]synchronize];
+                     
+                     getData= [arrResponce objectForKey:@"Table"];
+                     
+                     [_tblMenuTable reloadData];
+                     
+                     
+                 }
+                 @catch (NSException *exception)
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                 }
+             }
+             //             if([arrResponce count] != 0)
+             //             {
+             //                                 //[self performSegueWithIdentifier:@"ShowWall" sender:self];
+             //
+             //             }
+             //             else
+             //             {
+             //                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             //                 [alrt show];
+             //             }
          }
          else
          {
