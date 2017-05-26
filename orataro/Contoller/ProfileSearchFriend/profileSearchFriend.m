@@ -322,8 +322,8 @@
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
                      _lbNoDataFound.hidden = NO;
-                   // UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     //[alrt show];
+                   // UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"search result not found" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                   //  [alrt show];
                  }
                  else
                  {

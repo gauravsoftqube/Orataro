@@ -382,8 +382,8 @@
              {
                  NSLog(@"arr=%@",arrResponce);
                 
-                 [[NSUserDefaults standardUserDefaults]setObject:arrResponce forKey:@"TotalCountofMember"];
-                 [[NSUserDefaults standardUserDefaults]synchronize];
+               //  [[NSUserDefaults standardUserDefaults]setObject:arrResponce forKey:@"TotalCountofMember"];
+               //  [[NSUserDefaults standardUserDefaults]synchronize];
                  
                  getData= [arrResponce objectForKey:@"Table"];
                  

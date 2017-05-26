@@ -87,6 +87,43 @@
         
         NSLog(@"ary=%@",arySaveTempImage);
         
+        
+        [aCollectionView reloadData];
+        
+        if (arySaveTempImage.count == 0)
+        {
+            if ([Utility isInterNetConnectionIsActive] == false)
+            {
+                UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alrt show];
+                return;
+            }
+            else
+            {
+                [self apiCallFor_GetPhotoList:YES :@"Album"];
+            }
+        }
+        else
+        {
+            if ([Utility isInterNetConnectionIsActive] == true)
+            {
+                [self apiCallFor_GetPhotoList:NO :@"Album"];
+            }
+            else
+            {
+                
+            }
+            
+        }
+        
+
+      /*  NSArray *ary = [DBOperation selectData:@"select * from PhotoMultipleAlbumList"];
+        arySaveImage = [Utility getLocalDetail:ary columnKey:@"PhotoAlbumJsonStr"];
+        
+        arySaveTempImage = [DBOperation selectData:@"select id,flag,PhotoAlbumImageStr from PhotoMultipleAlbumList"];
+        
+        NSLog(@"ary=%@",arySaveTempImage);
+        
         [aCollectionView reloadData];
 
         
@@ -114,7 +151,7 @@
                 
             }
             
-        }
+        }*/
 
     }
     else
@@ -223,7 +260,6 @@
     aFirstBtn.tag = 0;
     aSecondBtn.tag = 1;
     str = @"Second";
-    
    
     
     // arySaveImage =
@@ -310,10 +346,14 @@
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
- //   NSLog(@"tag=%ld",(long)aFirstBtn.tag);
-  //  NSLog(@"Secon=%ld",(long)aSecondBtn.tag);
+    NSLog(@"tag=%ld",(long)aFirstBtn.tag);
+    NSLog(@"Secon=%ld",(long)aSecondBtn.tag);
     
-    if (aFirstBtn.tag ==1)
+    //str = @"Second";
+  // str = @"first";
+    //if (aFirstBtn.tag ==1)
+    //{
+    if ([str isEqualToString:@"first"])
     {
         [aCollectionView registerNib:[UINib nibWithNibName:@"PhotoalbumCell" bundle:nil] forCellWithReuseIdentifier:@"PhotosCell"];
         
@@ -348,7 +388,18 @@
                      [cell2.activityIndicator stopAnimating];
                      cell2.activityIndicator.hidden = YES;
                      
-                     [DBOperation selectData:[NSString stringWithFormat:@"update PhotoAlbumList set Flag='1' where id=%@",[[arySaveTempImage objectAtIndex:indexPath.row]objectForKey:@"id"]]];
+                     @try
+                     {
+                          [DBOperation selectData:[NSString stringWithFormat:@"update PhotoAlbumList set Flag='1' where id=%@",[[arySaveTempImage objectAtIndex:indexPath.row]objectForKey:@"id"]]];
+                         
+                     } @catch (NSException *exception)
+                     {
+                         
+                     } @finally
+                     {
+                         
+                     }
+                    
                      
                      //no_img
                      
@@ -474,8 +525,10 @@
         return cell2;
         
     }
-    if (aSecondBtn.tag ==1)
+    if([str isEqualToString:@"Second"])
     {
+        //aSecondBtn.tag ==1
+        //Second
         [aCollectionView registerNib:[UINib nibWithNibName:@"AlbumPhotoCell" bundle:nil] forCellWithReuseIdentifier:@"AlbumCell"];
         
         AlbumPhotoCell *cell2 = (AlbumPhotoCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"AlbumCell" forIndexPath:indexPath];
@@ -525,7 +578,18 @@
                          
                          // CREATE TABLE "PhotoMultipleAlbumList" ("id" INTEGER PRIMARY KEY  NOT NULL , "PhotoAlbumJsonStr" VARCHAR, "PhotoAlbumImageStr" VARCHAR, "flag" VARCHAR)
                          
-                         [DBOperation selectData:[NSString stringWithFormat:@"update PhotoMultipleAlbumList set flag='1' where id=%@",[[arySaveTempImage objectAtIndex:indexPath.row]objectForKey:@"id"]]];
+                         @try
+                         {
+                              [DBOperation selectData:[NSString stringWithFormat:@"update PhotoMultipleAlbumList set flag='1' where id=%@",[[arySaveTempImage objectAtIndex:indexPath.row]objectForKey:@"id"]]];
+                             
+                         } @catch (NSException *exception)
+                         {
+                            
+                         } @finally
+                         {
+                             
+                         }
+                        
                          
                          //no_img
                          
@@ -679,6 +743,8 @@
                 NSString *strSaveImg = [ary lastObject];
                 NSString *imagePath=[documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",strSaveImg]];
                 
+                aFirstBtn.tag = 1;
+                aSecondBtn.tag = 0;
                 ProfilePhotoShowVc *p7 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfilePhotoShowVc"];
                 p7.imagename = imagePath;
                 p7.strOfflineOnline = @"Offline";
@@ -701,6 +767,8 @@
                 return;
             }
             
+             aFirstBtn.tag = 1;
+            aSecondBtn.tag = 0;
             NSString *str3 = [NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[arySaveImage objectAtIndex:indexPath.row]objectForKey:@"Photo"]];
             ProfilePhotoShowVc *p7 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfilePhotoShowVc"];
             p7.imagename = str3;
@@ -715,6 +783,8 @@
         NSLog(@"data=%@",arySaveImage);
         NSLog(@"temp=%@",arySaveTempImage);
         
+         aFirstBtn.tag = 0;
+        aSecondBtn.tag =1;
         AlbumPhotoVc *p7 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AlbumPhotoVc"];
         p7.strAlbumId = [[arySaveImage objectAtIndex:indexPath.row]objectForKey:@"AlbumID"];
         p7.strSetView = @"Back";
@@ -783,8 +853,19 @@
     }];
     
     checkImage = @"FromImagePicker";
-    UIImage * img = [info valueForKey:UIImagePickerControllerEditedImage];
-    [self api_AddPhotos:img];
+    
+   // str isEqualToString:@"first"
+    //str isEqualToString:@"Second"
+    
+    if([str isEqualToString:@"first"])
+    {
+        UIImage * img = [info valueForKey:UIImagePickerControllerEditedImage];
+        [self UploadPhoto:img];
+    }
+   else
+   {
+       
+   }
 }
 
 
@@ -1017,7 +1098,7 @@
 
 #pragma mark - Add Photo api 
 
--(void)api_AddPhotos : (UIImage *)img
+-(void)api_AddPhotos : (NSString *)imagename
 {
     //#define apk_Photos @"apk_Photos.asmx"
     //#define apk_GetPhotoList_action @"GetPhotoList"
@@ -1051,7 +1132,14 @@
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"BatchID"]] forKey:@"BeachID"];
     
-    [ProgressHUB showHUDAddedTo:self.view];
+    
+    [param setValue:@"PUBLIC" forKey:@"PostShareType"];
+    [param setValue:imagename forKey:@"ImagePath"];
+    [param setValue:@"IMAGE" forKey:@"FileType"];
+    [param setValue:@"" forKey:@"FileMineType"];
+    
+    
+    //[ProgressHUB showHUDAddedTo:self.view];
     
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
@@ -1073,7 +1161,8 @@
                  }
                  else
                  {
-                     NSLog(@"Arr=%@",arrResponce);
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
                  }
              }
              else
@@ -1089,6 +1178,104 @@
          }
      }];
 
+}
+
+
+#pragma mark - UploadPhoto
+
+-(void)UploadPhoto : (UIImage *)img
+{
+      //[self api_AddPhotos:img];
+    
+    //UploadFile
+    ////apk_UploadFile
+    
+    //apk_post
+    
+//    <FileName>string</FileName>
+//    <File>base64Binary</File>
+    
+//    <InstituteID>guid</InstituteID>
+//    <ClientID>guid</ClientID>
+//    <MemberID>guid</MemberID>
+    
+//    <FileType>string</FileType>
+    
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_post,apk_UploadFile];
+    
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    NSString *strFileName = [NSString stringWithFormat:@"%@.png",[Utility randomImageGenerator]];
+    
+    [param setValue:strFileName forKey:@"FileName"];
+    NSData *data = UIImagePNGRepresentation(img);
+    const unsigned char *bytes = [data bytes];
+    NSUInteger length = [data length];
+    NSMutableArray *byteArray = [NSMutableArray array];
+    for (NSUInteger i = 0; i < length; i++)
+    {
+        [byteArray addObject:[NSNumber numberWithUnsignedChar:bytes[i]]];
+    }
+    [param setValue:byteArray forKey:@"File"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
+    
+    [param setValue:@"IMAGE" forKey:@"FileType"];
+    //IMAGE
+    [ProgressHUB showHUDAddedTo:self.view];
+   
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+        // [ProgressHUB hideenHUDAddedTo:self.view];
+         if(!error)
+         {
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             
+             if([arrResponce count] != 0)
+             {
+                 NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                 NSString *strStatus=[dic objectForKey:@"message"];
+                 if([strStatus isEqualToString:@"No Data Found"])
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                 }
+                 else
+                 {
+                     NSLog(@"Arr=%@",arrResponce);
+                     
+                     NSString *str2 = [[arrResponce objectAtIndex:0]objectForKey:@"message"];
+                     NSArray *ary1 = [str2 componentsSeparatedByString:@" "];
+                     NSString *secondObject = [ary1 objectAtIndex:1];
+                     
+                     [self api_AddPhotos : secondObject];
+                 }
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
+
+    
 }
 /*
  #pragma mark - Navigation

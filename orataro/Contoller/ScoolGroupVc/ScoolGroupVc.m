@@ -187,11 +187,12 @@
                 
                 // [cell2 setContentMode:UIViewContentModeScaleAspectFit];
                 
-                NSLog(@"url=%@",[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"GroupImage"]]]);
+                NSLog(@"url=%@",[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"GroupImage"]]]);
                 
                 [img sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"GroupImage"]]] placeholderImage:[UIImage imageNamed:@"no_img"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL)
                  {
                      // CREATE TABLE "SchoolGroupList" ("id" INTEGER PRIMARY KEY  NOT NULL , "jsonStr" VARCHAR, "ImageJsonstr" VARCHAR, "flag" VARCHAR)
+                     img.image = image;
                      
                      [DBOperation selectData:[NSString stringWithFormat:@"update SchoolGroupList set flag='1' where id=%@",[[aryTempStoreData objectAtIndex:indexPath.row]objectForKey:@"id"]]];
                      
@@ -219,7 +220,7 @@
                          NSArray *getExtension = [strSaveImg componentsSeparatedByString:@"."];
                          
                          if ([[getExtension objectAtIndex:1] isEqualToString:@"jpg"] || [[getExtension objectAtIndex:1] isEqualToString:@"JPG"] ||
-                             [[getExtension objectAtIndex:1] isEqualToString:@"jpeg"] )
+                             [[getExtension objectAtIndex:1] isEqualToString:@"jpeg"] || [[getExtension objectAtIndex:1] isEqualToString:@"png"] )
                          {
                              NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
                              [imageData writeToFile:imagePath atomically:NO];

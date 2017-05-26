@@ -91,7 +91,7 @@
                      }
                      else
                      {
-                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"Wrong Password" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                          [alrt show];
                          
                      }
@@ -147,7 +147,8 @@
     
 }
     
-- (IBAction)btnFinish:(id)sender {
+- (IBAction)btnFinish:(id)sender
+{
     if ([Utility validateBlankField:_txtPassword.text])
     {
         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:PASSWORD_EMPTY delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];

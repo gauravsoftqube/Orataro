@@ -16,6 +16,7 @@
     BOOL isValid;
     AppDelegate *app;
     NSString *currentDeviceId;
+    NSString *strCheckUserSwitch;
     
 }
 @end
@@ -310,7 +311,7 @@ int multipleUser = 0;
     [ProgressHUB showHUDAddedTo:self.view];
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
-         [ProgressHUB hideenHUDAddedTo:self.view];
+        // [ProgressHUB hideenHUDAddedTo:self.view];
          if(!error)
          {
              NSString *strArrd=[dicResponce objectForKey:@"d"];
@@ -392,8 +393,10 @@ int multipleUser = 0;
                                      [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
                                      [[NSUserDefaults standardUserDefaults]synchronize];
                                      
-                                     UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SwitchAcoountVC"];
-                                     [self.navigationController pushViewController:wc animated:YES];
+                                     strCheckUserSwitch = @"SwitchAccount";
+                                     [self api_changeGCMID];
+//                                     UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SwitchAcoountVC"];
+//                                     [self.navigationController pushViewController:wc animated:YES];
                                  }
 
                              }
@@ -448,8 +451,12 @@ int multipleUser = 0;
                                      [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
                                      [[NSUserDefaults standardUserDefaults]synchronize];
                                      
-                                     UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SwitchAcoountVC"];
-                                     [self.navigationController pushViewController:wc animated:YES];
+                                      strCheckUserSwitch = @"SwitchAccount";
+                                     
+                                     [self api_changeGCMID];
+
+//                                     UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SwitchAcoountVC"];
+//                                     [self.navigationController pushViewController:wc animated:YES];
                                  }
                                 
                                  
@@ -467,8 +474,11 @@ int multipleUser = 0;
                                  [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
                                  [[NSUserDefaults standardUserDefaults]synchronize];
                                  
-                                 UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SwitchAcoountVC"];
-                                 [self.navigationController pushViewController:wc animated:YES];
+                                  strCheckUserSwitch = @"SwitchAccount";
+                                 [self api_changeGCMID];
+
+//                                 UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SwitchAcoountVC"];
+//                                 [self.navigationController pushViewController:wc animated:YES];
                              }
                             
                          }
@@ -530,11 +540,14 @@ int multipleUser = 0;
             [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
             [[NSUserDefaults standardUserDefaults]synchronize];
             
-            WallVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
-            vc.checkscreen = @"";
-            app.checkview = 0;
-            
-            [self.navigationController pushViewController:vc animated:YES];
+            strCheckUserSwitch = @"Wall";
+            [self api_changeGCMID];
+
+//            WallVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
+//            vc.checkscreen = @"";
+//            app.checkview = 0;
+//            
+//            [self.navigationController pushViewController:vc animated:YES];
         }
         else
         {
@@ -557,10 +570,14 @@ int multipleUser = 0;
                 [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
                 [[NSUserDefaults standardUserDefaults]synchronize];
                 
-                WallVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
-                vc.checkscreen = @"";
-                app.checkview = 0;
-                [self.navigationController pushViewController:vc animated:YES];
+                strCheckUserSwitch = @"Wall";
+
+                [self api_changeGCMID];
+
+//                WallVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
+//                vc.checkscreen = @"";
+//                app.checkview = 0;
+//                [self.navigationController pushViewController:vc animated:YES];
             }
             else
             {
@@ -586,15 +603,119 @@ int multipleUser = 0;
         [[NSUserDefaults standardUserDefaults]setObject:_aPasswordTextField.text forKey:@"Password"];
         [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
         [[NSUserDefaults standardUserDefaults]synchronize];
+
+        strCheckUserSwitch = @"Wall";
+        [self api_changeGCMID];
+
         
-        WallVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
-        vc.checkscreen = @"";
-        app.checkview = 0;
-        [self.navigationController pushViewController:vc animated:YES];
+//        WallVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
+//        vc.checkscreen = @"";
+//        app.checkview = 0;
+//        [self.navigationController pushViewController:vc animated:YES];
     }
     
 }
 
+#pragma mark - Change GCMID
 
+-(void)api_changeGCMID
+{
+    //apk_ChangeGCMID
+    //apk_login
+    
+    //<UserID>guid</UserID>
+    //<GCMID>string</GCMID>
+    
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    //#define apk_InstitutePage @"apk_cmspage.asmx"
+    //#define apk_GetCmsPages_action @"GetCmsPages"
+    //InstituteID=4f4bbf0e-858a-46fa-a0a7-bf116f537653
+    //ClientID=d79901a7-f9f7-4d47-8e3b-198ede7c9f58
+    //UserID=30032284-31d1-4ba6-8ef4-54edb8e223aa
+    //BeachID=null
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_login,apk_ChangeGCMID];
+    
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"DeviceToken"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
+    
+    if (token.length == 0)
+    {
+        [param setValue:@"" forKey:@"GCMID"];
+
+    }
+    else
+    {
+        [param setValue:token forKey:@"GCMID"];
+
+    }
+   // [param setValue:token forKey:@"GCMID"];
+
+    
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         [ProgressHUB hideenHUDAddedTo:self.view];
+         if(!error)
+         {
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             
+             if([arrResponce count] != 0)
+             {
+                 NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                 NSString *strStatus=[dic objectForKey:@"message"];
+                 if([strStatus isEqualToString:@"No Data Found"])
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                 }
+                 else
+                 {
+                     
+                    // strCheckUserSwitch = @"SwitchAccount";
+                    // strCheckUserSwitch = @"Wall";
+
+                     NSLog(@"Str=%@",strCheckUserSwitch);
+                     
+                     if ([strCheckUserSwitch isEqualToString:@"SwitchAccount"])
+                     {
+                         UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SwitchAcoountVC"];
+                         [self.navigationController pushViewController:wc animated:YES];
+                     }
+                     else
+                     {
+                         WallVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
+                         vc.checkscreen = @"";
+                         app.checkview = 0;
+                         
+                         [self.navigationController pushViewController:vc animated:YES];
+                     }
+                    // NSLog(@"arr response=%@",arrResponce);
+                 }
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
+
+}
 
 @end

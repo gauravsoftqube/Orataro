@@ -19,7 +19,7 @@
     NSMutableArray *aryStudentNameTemp;
     NSMutableArray *aryTemp;
     NSMutableArray *aryStudentEdit;
-    
+    NSString *strFromImagepicker;
     int  btnMember,btnPost,btnAlbum,btnAttachment,btnPoll;
     
     NSString *strCheckStudentTeacher;
@@ -72,7 +72,18 @@
 }
 -(void)commonData
 {
-    [self apiCallFor_getCircularType];
+    
+   // strFromImagepicker =@"FromimagePicker";
+    
+    if ([strFromImagepicker isEqualToString:@"FromimagePicker"])
+    {
+        
+    }
+    else
+    {
+         [self apiCallFor_getCircularType];
+    }
+   
     
     [Utility setLeftViewInTextField:self.txtGroupTitle imageName:@"" leftSpace:0 topSpace:0 size:5];
     [Utility setLeftViewInTextField:self.txtGroupSubject imageName:@"" leftSpace:0 topSpace:0 size:5];
@@ -334,8 +345,10 @@
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
+
     UIImage *selectImage = info[UIImagePickerControllerOriginalImage];
     [_btnTackeImage setBackgroundImage:selectImage forState:UIControlStateNormal];
+    strFromImagepicker =@"FromimagePicker";
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 

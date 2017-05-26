@@ -268,6 +268,7 @@
 #define apk_GetProjectType_action @"GetProjectType"
 #define apk_ChangePassword_action @"ChangePassword"
 #define apk_GetUserRoleRightList_action @"GetUserRoleRightList"
+#define apk_ChangeGCMID @"ChangeGCMID"
 
 #pragma mark - Image Url
 
@@ -308,6 +309,7 @@
 #define apk_UploadFile_action  @"UploadFile"
 #define apk_Post_action  @"Post"
 #define apk_GetPostedPics_action  @"GetPostedPics"
+#define apk_UploadFile @"UploadFile"
 
 #pragma mark - apk_getwallpostcomment
 

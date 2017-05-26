@@ -28,7 +28,7 @@
     
     _lbHeaderTitle.text = [NSString stringWithFormat:@"Video (%@)",[Utility getCurrentUserName]];
     
-    playerViewController = [[AVPlayerViewController alloc] init];
+   
     
     // Do any additional setup after loading the view.
     [self commonData];
@@ -44,33 +44,46 @@
 {
     //NSLog(@"Dic=%@",_dicVideo);
     
+     playerViewController = [[AVPlayerViewController alloc] init];
+    
     if ([Utility isInterNetConnectionIsActive] == false)
     {
         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alrt show];
         return;
     }
-    MBProgressHUD *hud1 = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+   
     
-    // Set the label text.
-    hud1.label.text = NSLocalizedString(@"loading....", @"");
+    //NSString *strPhoto_url=[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[self.dicPostDetail objectForKey:@"Photo"]];
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        //  NSLog(@"Downloading Started");
-        
-        
-        //  MBProgressHUD *hud2 = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    NSString *urlToDownload = [NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[_dicVideo objectForKey:@"Photo"]];
+
+    
+    if([urlToDownload length] != 0)
+    {
+        //MBProgressHUD *hud1 = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         
         // Set the label text.
-        // hud2.label.text = NSLocalizedString(@"Downloading....", @"");
+       // hud1.label.text = NSLocalizedString(@"loading....", @"");
         
-        
+        NSURL *url = [NSURL URLWithString:urlToDownload];
+        AVURLAsset *asset = [AVURLAsset assetWithURL: url];
+        AVPlayerItem *item = [AVPlayerItem playerItemWithAsset: asset];
+        AVPlayer * player = [[AVPlayer alloc] initWithPlayerItem: item];
+        playerViewController.player = player;
+        [playerViewController.view setFrame:CGRectMake(0, 115, self.view.bounds.size.width, self.view.bounds.size.width)];
+        playerViewController.showsPlaybackControls = YES;
+        [self.view addSubview:playerViewController.view];
+        [player play];
+    }
+    
+   /* dispatch_async(dispatch_get_main_queue(), ^{
         
         NSString *urlToDownload = [NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[_dicVideo objectForKey:@"Photo"]];
         
         NSURL  *url = [NSURL URLWithString:urlToDownload];
         NSData *urlData = [NSData dataWithContentsOfURL:url];
+        
         if ( urlData )
         {
             // [ProgressHUB showHUDAddedTo:self.view];
@@ -89,23 +102,75 @@
             
             [self.view addSubview:playerViewController.view];
             
-            
             [player play];
             
             
         }
-        //[ProgressHUB showHUDAddedTo:self.view];
-        // MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    });*/
+    
+    
+    /*NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    
+    NSString *urlToDownload = [NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[_dicVideo objectForKey:@"Photo"]];
+    NSURL  *url = [NSURL URLWithString:urlToDownload];
+
+    NSURL *URL = [NSURL URLWithString:urlToDownload];
+    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+    
+    NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response)
+    {
+        NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
+        NSLog(@"Docume=%@",documentsDirectoryURL);
+        return [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
         
-        // Set the label text.
-        //hud.label.text = NSLocalizedString(@"Downloading....", @"");
-    });
+//        AVURLAsset *asset = [AVURLAsset assetWithURL: documentsDirectoryURL];
+//        AVPlayerItem *item = [AVPlayerItem playerItemWithAsset: asset];
+//        
+//        AVPlayer * player = [[AVPlayer alloc] initWithPlayerItem: item];
+//        playerViewController.player = player;
+//        
+//        [playerViewController.view setFrame:CGRectMake(0, 115, self.view.bounds.size.width, self.view.bounds.size.width)];
+//        
+//        playerViewController.showsPlaybackControls = YES;
+//        
+//        [self.view addSubview:playerViewController.view];
+//        
+//        [player play];
+        
+    } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
+        NSLog(@"File downloaded to: %@", filePath);
+    }];
+    [downloadTask resume];*/
     
-    // });
     
     
-    ///////////////////////
-    
+    //////////// ********* /////////
+   /* dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSLog(@"Downloading Started");
+        NSString *urlToDownload = [NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[_dicVideo objectForKey:@"Photo"]];
+        NSURL  *url = [NSURL URLWithString:urlToDownload];
+      
+     //   NSData *urlData = [NSData dataWithContentsOfURL:url];
+        
+        //if ( urlData )
+        //{
+            AVURLAsset *asset = [AVURLAsset assetWithURL: url];
+            AVPlayerItem *item = [AVPlayerItem playerItemWithAsset: asset];
+            
+            AVPlayer * player = [[AVPlayer alloc] initWithPlayerItem: item];
+            playerViewController.player = player;
+            
+            [playerViewController.view setFrame:CGRectMake(0, 115, self.view.bounds.size.width, self.view.bounds.size.width)];
+            
+            playerViewController.showsPlaybackControls = YES;
+            
+            [self.view addSubview:playerViewController.view];
+            
+            [player play];
+        //}
+        
+    });*/
     
     
 }
@@ -146,8 +211,6 @@
 }
 - (IBAction)btnSaveMenu:(id)sender
 {
-    //NSLog(@"Download");
-    
     [self PopupHidden];
     
     if ([Utility isInterNetConnectionIsActive] == false)
@@ -157,17 +220,65 @@
         return;
     }
     
+   NSString *strPhoto_url = [NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[_dicVideo objectForKey:@"Photo"]];
     
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.label.text = NSLocalizedString(@"Downloading....", @"");
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
+    if([strPhoto_url length] != 0)
+    {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.label.text = NSLocalizedString(@"Downloading....", @"Downloading");
+        //
+        NSURL *url = [NSURL URLWithString:strPhoto_url];
+        NSData *data = [NSData dataWithContentsOfURL:url];
         
-        NSString *urlToDownload = [NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[_dicVideo objectForKey:@"Photo"]];
+        // Write it to cache directory
+        NSString *path = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"file2.mov"];
+        [data writeToFile:path atomically:YES];
+        
+        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+        [library writeVideoAtPathToSavedPhotosAlbum:[NSURL fileURLWithPath:path] completionBlock:^(NSURL *assetURL, NSError *error) {
+            
+            if (error) {
+                NSLog(@"%@", error.description);
+            }else {
+                NSLog(@"Done :)");
+            }
+            
+        }];
+    }
+
+    
+    
+   // MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+   // hud.label.text = NSLocalizedString(@"Downloading....", @"");
+   
+    //dispatch_async(dispatch_get_main_queue(), ^{
+        
+       /* NSString *urlToDownload = [NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[_dicVideo objectForKey:@"Photo"]];
         
         if([urlToDownload length] != 0)
         {
-            NSURL* url =[NSURL URLWithString:urlToDownload];
+            [WToast showWithText:@"Start Downloding"];
+            //
+            NSURL *url = [NSURL URLWithString:urlToDownload];
+            NSData *data = [NSData dataWithContentsOfURL:url];
+            
+            // Write it to cache directory
+            NSString *path = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"file.mov"];
+            [data writeToFile:path atomically:YES];
+            
+            ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+            [library writeVideoAtPathToSavedPhotosAlbum:[NSURL fileURLWithPath:path] completionBlock:^(NSURL *assetURL, NSError *error) {
+                
+                if (error) {
+                    NSLog(@"%@", error.description);
+                }else {
+                    NSLog(@"Done :)");
+                }
+                
+            }];
+
+            
+           /* NSURL* url =[NSURL URLWithString:urlToDownload];
             NSData *data = [NSData dataWithContentsOfURL:url];
             
             // Write it to cache directory
@@ -186,9 +297,9 @@
                  NSLog(@"Error=%@",error.description);
                  
              }];
-        }
-        
-    });
+    }*/
+
+    //});
     
    
 }
