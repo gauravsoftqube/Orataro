@@ -17,7 +17,7 @@
     NSMutableArray *arrPopup;
     
     NSMutableArray *arrSpecialFriendList,*arrSelected_SpecialFriendList,*arrSpecialFriendListMain;
-
+    
 }
 @end
 static NSString *CellIdentifier = @"WallCustomeCell";
@@ -91,7 +91,7 @@ static NSString *CellIdentifier = @"WallCustomeCell";
 {
     //
     [self apiCallFor_GetWallPostComments:@"1"];
-
+    
 }
 
 -(void)SearchTextView: (UIView *)viewSearch
@@ -693,6 +693,7 @@ static NSString *CellIdentifier = @"WallCustomeCell";
         {
             NSString *strPostCommentNote = [dicResponce objectForKey:@"PostCommentNote"];
             strPostCommentNote = [strPostCommentNote stringByReplacingOccurrencesOfString:@"</br> </br>" withString:@""];
+            strPostCommentNote = [strPostCommentNote stringByReplacingOccurrencesOfString:@"\n" withString:@""];
             
             CGSize size = [[NSString stringWithFormat:@"%@",strPostCommentNote] sizeWithFont:[UIFont fontWithName:@"HelveticaNeueLTStd-Roman" size:14] constrainedToSize:CGSizeMake([[UIScreen mainScreen]bounds].size.width-16, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
             
@@ -1032,6 +1033,28 @@ static NSString *CellIdentifier = @"WallCustomeCell";
                     self.viewShare_Width.constant=0;
                     self.imgShare_Width.constant=0;
                 }
+                
+                if ([isIsAllowUserToLikeDislikes_Login integerValue] == 0 ||
+                    [IS_USER_LIKE_WALL integerValue] == 0 ||
+                    [IS_USER_LIKE integerValue] == 0 )
+                {
+                    if([isIsAllowUserToLikeDislikes_Login integerValue] == 0 ||
+                       [IS_USER_DISLIKE_WALL integerValue] == 0 ||
+                       [IS_USER_DISLIKE integerValue] == 0)
+                    {
+                        if([IsAllowUserToPostComment_Login integerValue] == 0 ||
+                           [IS_USER_COMMENT_WALL integerValue] == 0)
+                        {
+                            if([IsAllowUserToSharePost_Login integerValue] == 0 ||
+                               [IS_USER_SHARE_WALL integerValue] == 0 ||
+                               [IS_USER_SHARE integerValue] == 0)
+                            {
+                                self.viewLike_Height.constant=0;
+                            }
+                        }
+                    }
+                }
+                
             }
             else
             {
@@ -1176,9 +1199,37 @@ static NSString *CellIdentifier = @"WallCustomeCell";
                     self.viewShare_Width.constant=0;
                     self.imgShare_Width.constant=0;
                 }
+                
+                //Like
+                if ([isIsAllowUserToLikeDislikes_Login integerValue] == 0 ||[IS_USER_LIKE_WALL integerValue] == 0 ||
+                    [IS_USER_LIKE integerValue] == 0 ||
+                    [IsAllowPeopleToLikeThisWall_Dynamic integerValue] == 0)
+                {
+                    //UnLike
+                    if ([isIsAllowUserToLikeDislikes_Login integerValue] == 0 ||[IS_USER_DISLIKE_WALL integerValue] == 0 ||
+                        [IS_USER_DISLIKE integerValue] == 0 ||
+                        [IsAllowPeopleToLikeThisWall_Dynamic integerValue] == 0)
+                    {
+                        //Comment
+                        if ([IsAllowUserToPostComment_Login integerValue] == 0 ||
+                            [IS_USER_COMMENT_WALL integerValue] == 0 ||
+                            [IS_USER_COMMENT integerValue] == 0 ||
+                            [IsAllowPeoplePostComment_Dynamic integerValue] == 0)
+                        {
+                            //Share
+                            if ([IsAllowUserToSharePost_Login integerValue] == 0 ||
+                                [IS_USER_SHARE_WALL integerValue] == 0 ||
+                                [IS_USER_SHARE integerValue] == 0)
+                            {
+                                self.viewLike_Height.constant=0;
+                            }
+                        }
+                    }
+                }
+
             }
         }
-
+        
         
         
         [cell.btnImageVideo_Click addTarget:self action:@selector(btnImageVideo_Click:) forControlEvents:UIControlEventTouchUpInside];
@@ -1333,7 +1384,7 @@ static NSString *CellIdentifier = @"WallCustomeCell";
 -(void)btnImageVideo_Click:(UIButton*)sender
 {
     [self.view endEditing:YES];
-   
+    
     NSMutableDictionary *dicResponce=[self.dicSelectedPost_Comment mutableCopy];
     
     NSString *strFileType=[dicResponce objectForKey:@"FileType"];
@@ -1529,7 +1580,7 @@ static NSString *CellIdentifier = @"WallCustomeCell";
             [self.imgUnlike setTintColor:[UIColor colorWithRed:34/255.0 green:49/255.0 blue:89/255.0 alpha:1.0]];
             [self.lblUnlike setTextColor:[UIColor colorWithRed:34/255.0 green:49/255.0 blue:89/255.0 alpha:1.0]];
         }
-
+        
         //set color like
         if([IsLike integerValue] == 0)
         {
@@ -1549,7 +1600,7 @@ static NSString *CellIdentifier = @"WallCustomeCell";
                 //update IsDislike TotalDislike
                 [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE InstituteWall SET IsDislike = '%@', TotalDislike = '%@' WHERE PostCommentID = '%@'",IsDislike,TotalDislike,PostCommentID]];
             }
-
+            
             //update
             [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE InstituteWall SET IsLike = '%@', TotalLikes = '%@' WHERE PostCommentID = '%@'",IsLike,TotalLikes,PostCommentID]];
         }
@@ -1620,7 +1671,7 @@ static NSString *CellIdentifier = @"WallCustomeCell";
             long TotalLikesTemp = [TotalLikes integerValue] - 1;
             TotalLikes = [NSString stringWithFormat:@"%ld",TotalLikesTemp];
         }
-
+        
         //set  IsDislike TotalDislike
         if([IsDislike integerValue] == 0)
         {
@@ -1638,7 +1689,7 @@ static NSString *CellIdentifier = @"WallCustomeCell";
         //update dictinary TotalLikes IsLike
         [dicResponce setValue:[NSString stringWithFormat:@"%@",TotalLikes] forKey:@"TotalLikes"];
         [dicResponce setValue:[NSString stringWithFormat:@"%@",IsLike] forKey:@"IsLike"];
-
+        
         //update dictinary TotalDislike IsDislike
         [dicResponce setValue:[NSString stringWithFormat:@"%@",TotalDislike] forKey:@"TotalDislike"];
         [dicResponce setValue:[NSString stringWithFormat:@"%@",IsDislike] forKey:@"IsDislike"];
@@ -1656,7 +1707,7 @@ static NSString *CellIdentifier = @"WallCustomeCell";
             [self.imgLike setTintColor:[UIColor colorWithRed:34/255.0 green:49/255.0 blue:89/255.0 alpha:1.0]];
             [self.lblLike setTextColor:[UIColor colorWithRed:34/255.0 green:49/255.0 blue:89/255.0 alpha:1.0]];
         }
-
+        
         //set color unlike
         if([IsDislike integerValue] == 0)
         {
@@ -1704,7 +1755,7 @@ static NSString *CellIdentifier = @"WallCustomeCell";
                 //update IsLike TotalLikes
                 [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE GeneralWall SET IsLike = '%@', TotalLikes = '%@' WHERE PostCommentID = '%@'",IsLike,TotalLikes,PostCommentID]];
             }
-
+            
             //update IsDislike TotalDislike
             [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE GeneralWall SET IsDislike = '%@', TotalDislike = '%@' WHERE PostCommentID = '%@'",IsDislike,TotalDislike,PostCommentID]];
         }

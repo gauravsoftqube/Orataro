@@ -250,6 +250,15 @@
     arySaveData = [Utility getLocalDetail:ary columnKey:@"divJsonStr"];
     
     [_tblDivisionList reloadData];
+    
+    if([arySaveData count] == 1)
+    {
+        WallVc  *vc10 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
+        vc10.checkscreen = @"Division";
+        vc10.dicSelect_std_divi_sub=[arySaveData objectAtIndex:1];
+        [self.navigationController pushViewController:vc10 animated:YES];
+
+    }
 }
 
 @end
