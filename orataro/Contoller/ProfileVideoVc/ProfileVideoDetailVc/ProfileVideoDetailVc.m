@@ -224,9 +224,12 @@
     
     if([strPhoto_url length] != 0)
     {
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.label.text = NSLocalizedString(@"Downloading....", @"Downloading");
+       // MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+       // hud.label.text = NSLocalizedString(@"Downloading....", @"Downloading");
         //
+        
+         [WToast showWithText:Start_Downloding];
+         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         NSURL *url = [NSURL URLWithString:strPhoto_url];
         NSData *data = [NSData dataWithContentsOfURL:url];
         
@@ -239,11 +242,17 @@
             
             if (error) {
                 NSLog(@"%@", error.description);
+                //[hud hideAnimated:YES];
+                [WToast showWithText:Complete_Downloding];
+
             }else {
                 NSLog(@"Done :)");
+                //[hud hideAnimated:YES];
+                [WToast showWithText:Complete_Downloding];
             }
             
         }];
+             });
     }
 
     

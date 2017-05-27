@@ -62,6 +62,54 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    
+    NSDate *today = [NSDate date];
+    NSDateFormatter *formatterYear = [[NSDateFormatter alloc] init];
+    
+    [formatterYear setDateFormat:@"yyyy"];
+    NSDateFormatter *formatterMonth = [[NSDateFormatter alloc] init];
+    [formatterMonth setDateFormat:@"MM"];
+    [formatterMonth setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
+    NSString *yearString = [formatterYear stringFromDate:today];
+    NSString *monthString = [formatterMonth stringFromDate:today];
+    NSInteger month,year;
+    
+    
+    if ([monthString integerValue] == 1) {
+        year = [yearString integerValue] -1;
+        month = 12;
+    } else
+    {
+        year = [yearString integerValue];
+        month = [monthString integerValue]-1;
+        
+    }
+    NSDateFormatter *exitFormatter = [[NSDateFormatter alloc] init];
+    [exitFormatter setDateFormat:@"yyyy-MM-dd"];
+    [exitFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
+    NSString *stringDate;
+    if (month > 10) {
+        stringDate = [NSString stringWithFormat:@"%ld-0%ld-01",(long)year,(long)month];
+    } else {
+        stringDate = [NSString stringWithFormat:@"%ld-%ld-01",(long)year,(long)month];
+    }
+    NSDate *firstDatePreviousMonth = [exitFormatter dateFromString:stringDate];
+    
+    NSLog(@"View the date: %@",[firstDatePreviousMonth description]);
+    
+    
+        
+//        if([[arr lastObject] isEqual:[currentDate dateByAddingTimeInterval:-60*60*24*1]])
+//        {
+//            NSLog(@"%lu",(unsigned long)arr.count);
+//            NSLog(@"Arr=%@",arr);
+//            break;
+//            
+//            
+//        }
+        // Do something with date like add it to an array, etc.
+  //  }
+    
     _lbHeaderTitle.text =  [NSString stringWithFormat:@"School Group (%@)",[Utility getCurrentUserName]];
     
     //CREATE TABLE "SchoolGroupList" ("id" INTEGER PRIMARY KEY  NOT NULL , "jsonStr" VARCHAR, "ImageJsonstr" VARCHAR, "flag" VARCHAR)
@@ -73,7 +121,7 @@
     
     NSLog(@"ary=%@",aryTempStoreData);
     
-    [_tblScoolGroupList reloadData];
+    //[_tblScoolGroupList reloadData];
     
     if (aryTempStoreData.count == 0)
     {
@@ -192,7 +240,7 @@
                 [img sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"GroupImage"]]] placeholderImage:[UIImage imageNamed:@"no_img"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL)
                  {
                      // CREATE TABLE "SchoolGroupList" ("id" INTEGER PRIMARY KEY  NOT NULL , "jsonStr" VARCHAR, "ImageJsonstr" VARCHAR, "flag" VARCHAR)
-                     img.image = image;
+                    // img.image = image;
                      
                      [DBOperation selectData:[NSString stringWithFormat:@"update SchoolGroupList set flag='1' where id=%@",[[aryTempStoreData objectAtIndex:indexPath.row]objectForKey:@"id"]]];
                      

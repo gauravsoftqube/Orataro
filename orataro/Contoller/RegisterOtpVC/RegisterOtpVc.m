@@ -214,7 +214,17 @@ int multipleUser1 = 0;
                  
                 // NSLog(@"Strcheck=%@",strCheckUser);
                  
-                 [self api_changeGCMID];
+               //  [self api_changeGCMID];
+                 
+                 if ([strCheckUser isEqualToString:@"SwitchAccount"])
+                 {
+                     UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SwitchAcoountVC"];
+                     [self.navigationController pushViewController:wc animated:YES];
+                 }
+                 else
+                 {
+                     [self performSegueWithIdentifier:@"ShowWall" sender:self];
+                 }
                  
                  
                  //                 WallVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
@@ -624,8 +634,8 @@ int multipleUser1 = 0;
     
     if (token.length == 0)
     {
-        [param setValue:@"" forKey:@"GCMID"];
-        
+      //  [param setValue:@"" forKey:@"GCMID"];
+        [self api_changeGCMID];
     }
     else
     {

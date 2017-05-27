@@ -50,41 +50,41 @@ int videocount = 1;
     //select id,flag,VideoNameStr from VideoList
     
     /*NSArray *ary = [DBOperation selectData:@"select * from VideoList"];
-    aryVideoData = [Utility getLocalDetail:ary columnKey:@"VideoJsonStr"];
-    
-    aryTempVideo = [DBOperation selectData:@"select id,flag,VideoNameStr from VideoList"];
-    
-    NSLog(@"ary=%@",aryTempVideo);
-    
-    [_collectionVideolist reloadData];
-    
-    if (aryTempVideo.count == 0)
-    {
-        if ([Utility isInterNetConnectionIsActive] == false)
-        {
-            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alrt show];
-            return;
-        }
-        else
-        {
-            [self apiCallFor_GetVideoList:YES];
-            
-        }
-    }
-    else
-    {
-        if ([Utility isInterNetConnectionIsActive] == true)
-        {
-            [self apiCallFor_GetVideoList:NO];
-        }
-        else
-        {
-            
-        }
-        
-        
-    }*/
+     aryVideoData = [Utility getLocalDetail:ary columnKey:@"VideoJsonStr"];
+     
+     aryTempVideo = [DBOperation selectData:@"select id,flag,VideoNameStr from VideoList"];
+     
+     NSLog(@"ary=%@",aryTempVideo);
+     
+     [_collectionVideolist reloadData];
+     
+     if (aryTempVideo.count == 0)
+     {
+     if ([Utility isInterNetConnectionIsActive] == false)
+     {
+     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+     [alrt show];
+     return;
+     }
+     else
+     {
+     [self apiCallFor_GetVideoList:YES];
+     
+     }
+     }
+     else
+     {
+     if ([Utility isInterNetConnectionIsActive] == true)
+     {
+     [self apiCallFor_GetVideoList:NO];
+     }
+     else
+     {
+     
+     }
+     
+     
+     }*/
     
     [self apiCallFor_GetVideoList];
     
@@ -125,10 +125,10 @@ int videocount = 1;
     [view.layer setCornerRadius:4];
     view.clipsToBounds=YES;
     
-   // NSDate *todayDate = [NSDate date]; //Get todays date
-   // NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init]; // here we create NSDateFormatter object for change the Format of date.
-   // [dateFormatter setDateFormat:@"dd-MM-yyyy"]; //Here we can set the format which we need
-   // NSString *convertedDateString = [dateFormatter stringFromDate:todayDate];// Here convert date in NSString
+    // NSDate *todayDate = [NSDate date]; //Get todays date
+    // NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init]; // here we create NSDateFormatter object for change the Format of date.
+    // [dateFormatter setDateFormat:@"dd-MM-yyyy"]; //Here we can set the format which we need
+    // NSString *convertedDateString = [dateFormatter stringFromDate:todayDate];// Here convert date in NSString
     
     /*
      
@@ -157,29 +157,29 @@ int videocount = 1;
     
     //CREATE TABLE "VideoList" ("id" INTEGER PRIMARY KEY  NOT NULL , "VideoJsonStr" VARCHAR, "flag" VARCHAR, "VideoThumbStr" VARCHAR, "VideoNameStr" VARCHAR)
     
-   /* if ([[[aryTempVideo objectAtIndex:indexPath.row]objectForKey:@"flag"] isEqualToString:@"0"])
-    {
-        if ([Utility isInterNetConnectionIsActive] == true)
-        {
-             [DBOperation selectData:[NSString stringWithFormat:@"update VideoList set flag='1' where id=%@",[[aryTempVideo objectAtIndex:indexPath.row]objectForKey:@"id"]]];
-        }
-    }
-    else
-    {
-        NSLog(@"Temp=%@",aryTempVideo);
-        
-        NSLog(@"count=%lu",(unsigned long)aryTempVideo.count);
-        
-        NSArray       *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString  *documentsDirectory = [paths objectAtIndex:0];
-        
-        NSString *setImage = [NSString stringWithFormat:@"%@",[[aryTempVideo objectAtIndex:indexPath.row]objectForKey:@"VideoNameStr"]];
-        NSLog(@"image=%@",setImage);
-        NSArray *ary = [setImage componentsSeparatedByString:@"/"];
-        NSString *strSaveImg = [ary lastObject];
-        NSString *imagePath=[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",strSaveImg]];
-        
-    }*/
+    /* if ([[[aryTempVideo objectAtIndex:indexPath.row]objectForKey:@"flag"] isEqualToString:@"0"])
+     {
+     if ([Utility isInterNetConnectionIsActive] == true)
+     {
+     [DBOperation selectData:[NSString stringWithFormat:@"update VideoList set flag='1' where id=%@",[[aryTempVideo objectAtIndex:indexPath.row]objectForKey:@"id"]]];
+     }
+     }
+     else
+     {
+     NSLog(@"Temp=%@",aryTempVideo);
+     
+     NSLog(@"count=%lu",(unsigned long)aryTempVideo.count);
+     
+     NSArray       *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+     NSString  *documentsDirectory = [paths objectAtIndex:0];
+     
+     NSString *setImage = [NSString stringWithFormat:@"%@",[[aryTempVideo objectAtIndex:indexPath.row]objectForKey:@"VideoNameStr"]];
+     NSLog(@"image=%@",setImage);
+     NSArray *ary = [setImage componentsSeparatedByString:@"/"];
+     NSString *strSaveImg = [ary lastObject];
+     NSString *imagePath=[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",strSaveImg]];
+     
+     }*/
     
     return cell;
     
@@ -201,7 +201,7 @@ int videocount = 1;
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:_collectionVideolist];
     NSIndexPath *indexPath = [_collectionVideolist indexPathForItemAtPoint:buttonPosition];
     
-   
+    
     
     NSLog(@"row=%ld",(long)indexPath.row);
     
@@ -217,15 +217,15 @@ int videocount = 1;
 
 - (IBAction)btnDownloadVideo:(id)sender
 {
-   // MBProgressHUD *hud3 = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-   // hud3.label.text = NSLocalizedString(@"Downloading....", @"");
+    // MBProgressHUD *hud3 = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    // hud3.label.text = NSLocalizedString(@"Downloading....", @"");
     
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:_collectionVideolist];
     NSIndexPath *indexPath = [_collectionVideolist indexPathForItemAtPoint:buttonPosition];
     
-   // NSLog(@"Data= %@",[aryVideoData objectAtIndex:indexPath.row]);
+    // NSLog(@"Data= %@",[aryVideoData objectAtIndex:indexPath.row]);
     
-   
+    
     if ([Utility isInterNetConnectionIsActive] == false)
     {
         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -233,244 +233,248 @@ int videocount = 1;
         return;
     }
     
-  
     
-   // MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-   // hud.label.text = NSLocalizedString(@"Downloading....", @"Downloading");
     
-   NSString *strPhoto_url = [NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[aryVideoData objectAtIndex:indexPath.row]objectForKey:@"Photo"]];
-
-   
+    // MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    // hud.label.text = NSLocalizedString(@"Downloading....", @"Downloading");
+    
+    NSString *strPhoto_url = [NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[aryVideoData objectAtIndex:indexPath.row]objectForKey:@"Photo"]];
+    
+    
     if([strPhoto_url length] != 0)
     {
         [WToast showWithText:Start_Downloding];
-        //
-        NSURL *url = [NSURL URLWithString:strPhoto_url];
-        NSData *data = [NSData dataWithContentsOfURL:url];
         
-        // Write it to cache directory
-        NSString *path = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"file.mov"];
-        [data writeToFile:path atomically:YES];
-        
-        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-        [library writeVideoAtPathToSavedPhotosAlbum:[NSURL fileURLWithPath:path] completionBlock:^(NSURL* assetURL, NSError* error)
-         {
-             if (error)
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            
+            //
+            NSURL *url = [NSURL URLWithString:strPhoto_url];
+            NSData *data = [NSData dataWithContentsOfURL:url];
+            
+            // Write it to cache directory
+            NSString *path = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"file.mov"];
+            [data writeToFile:path atomically:YES];
+            
+            ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+            [library writeVideoAtPathToSavedPhotosAlbum:[NSURL fileURLWithPath:path] completionBlock:^(NSURL* assetURL, NSError* error)
              {
-                 NSLog(@"%@", error.description);
-             }
-             else
-             {
-                 [WToast showWithText:Complete_Downloding];
-             }
-         }];
-
+                 if (error)
+                 {
+                     NSLog(@"%@", error.description);
+                     [WToast showWithText:Complete_Downloding];
+                 }
+                 else
+                 {
+                     [WToast showWithText:Complete_Downloding];
+                 }
+             }];
+        });
         
         /*[WToast showWithText:@"Start Downloding"];
-       
-
-       // [self performSelector:@selector(startPro) withObject:nil afterDelay:0.1];
-        
-        
-        NSURL* url =[NSURL URLWithString:strPhoto_url];
-        //[WToast showWithText:@"Start Downloding"];
-       
-        
-        NSData *data = [NSData dataWithContentsOfURL:url];
-        
-       
-        
-        // Write it to cache directory
-        NSString *path = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"file1.mov"];
-        [data writeToFile:path atomically:YES];
-        //
-        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-        
-        [library saveVideo:[NSURL fileURLWithPath:path] toAlbum:@"Orataro" completion:^(NSURL *assetURL, NSError *error)
+         
+         
+         // [self performSelector:@selector(startPro) withObject:nil afterDelay:0.1];
+         
+         
+         NSURL* url =[NSURL URLWithString:strPhoto_url];
+         //[WToast showWithText:@"Start Downloding"];
+         
+         
+         NSData *data = [NSData dataWithContentsOfURL:url];
+         
+         
+         
+         // Write it to cache directory
+         NSString *path = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"file1.mov"];
+         [data writeToFile:path atomically:YES];
+         //
+         ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+         
+         [library saveVideo:[NSURL fileURLWithPath:path] toAlbum:@"Orataro" completion:^(NSURL *assetURL, NSError *error)
          {
-             NSLog(@"Completed...........");
-             // [hud hideAnimated:YES];
-             
+         NSLog(@"Completed...........");
+         // [hud hideAnimated:YES];
+         
          } failure:^(NSError *error)
          {
-             NSLog(@"Error=%@",error.description);
-             
+         NSLog(@"Error=%@",error.description);
+         
          }];*/
         //[WToast showWithText:@"Start Downloding"];
     }
     
-
-
-   /*NSURL *srcURL = [NSURL URLWithString:strPhoto_url];
-    
-    NSLog(@"srcURL: %@", srcURL);
-   
-   // NSString *finalFileName=[NSString stringWithFormat:@"Documents/video.mov"];
-    NSString *videoOutputPath = [NSHomeDirectory()
-                                 stringByAppendingPathComponent:strPhoto_url];
-    
-    NSString* webStringURL = [videoOutputPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSURL* url =[NSURL URLWithString:webStringURL];
-    
-    ALAssetsLibrary* library = [[ALAssetsLibrary alloc]init];
-    
-    [library writeVideoAtPathToSavedPhotosAlbum:url completionBlock:^(NSURL *assetURL, NSError *error)
-    {
-        NSLog(@"%@", error.description);
-
-    }];*/
-    
-//    [library saveVideo:url toAlbum:@"Orataro" completion:^(NSURL *assetURL, NSError *error)
-//     {
-//         NSLog(@"Error");
-//
-//    } failure:^(NSError *error)
-//    {
-//        NSLog(@"%@", error.description);
-//
-//    }];
     
     
-  /*  if([strPhoto_url length] != 0)
-    {
-      //  [WToast showWithText:@"Start Downloding"];
-        
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.label.text = NSLocalizedString(@"Downloading....", @"");
-        //
-       NSURL *url = [NSURL URLWithString:strPhoto_url];
-       // NSData *data = [NSData dataWithContentsOfURL:url];
-        
-        // Write it to cache directory
-       // NSString *path = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"file.mov"];
-       // [data writeToFile:path atomically:YES];
-        //[NSURL fileURLWithPath:path]
-        
-      //  MBProgressHUD *hud1 = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-      //  hud1.label.text = NSLocalizedString(@"Downloading....", @"");
-        
-        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-        
-       [library saveVideo:url toAlbum:@"Orataro" completion:^(NSURL *assetURL, NSError *error)
-        {
-           [hud hideAnimated:YES];
-       } failure:^(NSError *error)
-        {
-           NSLog(@"%@", error.description);
-             [hud hideAnimated:YES];
-       }];*/
-//        [library writeVideoAtPathToSavedPhotosAlbum:[NSURL URLWithString:strPhoto_url]completionBlock:^(NSURL *assetURL, NSError *error) {
-//            
-//            if (error)
-//            {
-//                NSLog(@"%@", error.description);
-//            }else
-//            {
-//                NSLog(@"Done :)");
-//                [hud hideAnimated:YES];
-//            }
-//            
-//          
-//        }];
-
+    /*NSURL *srcURL = [NSURL URLWithString:strPhoto_url];
+     
+     NSLog(@"srcURL: %@", srcURL);
+     
+     // NSString *finalFileName=[NSString stringWithFormat:@"Documents/video.mov"];
+     NSString *videoOutputPath = [NSHomeDirectory()
+     stringByAppendingPathComponent:strPhoto_url];
+     
+     NSString* webStringURL = [videoOutputPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+     NSURL* url =[NSURL URLWithString:webStringURL];
+     
+     ALAssetsLibrary* library = [[ALAssetsLibrary alloc]init];
+     
+     [library writeVideoAtPathToSavedPhotosAlbum:url completionBlock:^(NSURL *assetURL, NSError *error)
+     {
+     NSLog(@"%@", error.description);
+     
+     }];*/
+    
+    //    [library saveVideo:url toAlbum:@"Orataro" completion:^(NSURL *assetURL, NSError *error)
+    //     {
+    //         NSLog(@"Error");
+    //
+    //    } failure:^(NSError *error)
+    //    {
+    //        NSLog(@"%@", error.description);
+    //
+    //    }];
     
     
-   // dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+    /*  if([strPhoto_url length] != 0)
+     {
+     //  [WToast showWithText:@"Start Downloding"];
+     
+     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+     hud.label.text = NSLocalizedString(@"Downloading....", @"");
+     //
+     NSURL *url = [NSURL URLWithString:strPhoto_url];
+     // NSData *data = [NSData dataWithContentsOfURL:url];
+     
+     // Write it to cache directory
+     // NSString *path = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"file.mov"];
+     // [data writeToFile:path atomically:YES];
+     //[NSURL fileURLWithPath:path]
+     
+     //  MBProgressHUD *hud1 = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+     //  hud1.label.text = NSLocalizedString(@"Downloading....", @"");
+     
+     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+     
+     [library saveVideo:url toAlbum:@"Orataro" completion:^(NSURL *assetURL, NSError *error)
+     {
+     [hud hideAnimated:YES];
+     } failure:^(NSError *error)
+     {
+     NSLog(@"%@", error.description);
+     [hud hideAnimated:YES];
+     }];*/
+    //        [library writeVideoAtPathToSavedPhotosAlbum:[NSURL URLWithString:strPhoto_url]completionBlock:^(NSURL *assetURL, NSError *error) {
+    //
+    //            if (error)
+    //            {
+    //                NSLog(@"%@", error.description);
+    //            }else
+    //            {
+    //                NSLog(@"Done :)");
+    //                [hud hideAnimated:YES];
+    //            }
+    //
+    //
+    //        }];
     
-   // MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    
+    // dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+    
+    // MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     //hud.label.text = NSLocalizedString(@"Downloading....", @"");
     
-      /*  NSString *urlToDownload = [NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[aryVideoData objectAtIndex:indexPath.row]objectForKey:@"Photo"]];
-        
-        if([urlToDownload length] != 0)
-        {
-            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-            hud.label.text = NSLocalizedString(@"Downloading....", @"");            //
-            NSURL *url = [NSURL URLWithString:urlToDownload];
-            NSData *data = [NSData dataWithContentsOfURL:url];
-            
-            // Write it to cache directory
-            NSString *path = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"file.mov"];
-            [data writeToFile:path atomically:YES];
-            
-            ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-            [library writeVideoAtPathToSavedPhotosAlbum:[NSURL fileURLWithPath:path] completionBlock:^(NSURL *assetURL, NSError *error) {
-                
-                if (error) {
-                    NSLog(@"%@", error.description);
-                }else {
-                    NSLog(@"Done :)");
-                      [hud hideAnimated:YES];
-                }
-                
-            }];*/
-
-            
-           /* MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-            hud.label.text = NSLocalizedString(@"Downloading....", @"");
-            
-            NSURL* url =[NSURL URLWithString:urlToDownload];
-            NSData *data = [NSData dataWithContentsOfURL:url];
-            
-            // Write it to cache directory
-            NSString *path = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"file.mov"];
-            [data writeToFile:path atomically:YES];
-            
-            ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-            
-            [library saveVideo:[NSURL fileURLWithPath:path] toAlbum:@"Orataro" completion:^(NSURL *assetURL, NSError *error)
-             {
-                 //NSLog(@"Completed...........");
-                 [hud hideAnimated:YES];
-                 
-             } failure:^(NSError *error)
-             {
-                 NSLog(@"Error=%@",error.description);
-                 
-             }];*/
-        //}
-
-        //Background Thread
-       // dispatch_async(dispatch_get_main_queue(), ^(void){
-            //Run UI Updates
-          //  NSLog(@"inner");
-
-        //});
+    /*  NSString *urlToDownload = [NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[aryVideoData objectAtIndex:indexPath.row]objectForKey:@"Photo"]];
+     
+     if([urlToDownload length] != 0)
+     {
+     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+     hud.label.text = NSLocalizedString(@"Downloading....", @"");            //
+     NSURL *url = [NSURL URLWithString:urlToDownload];
+     NSData *data = [NSData dataWithContentsOfURL:url];
+     
+     // Write it to cache directory
+     NSString *path = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"file.mov"];
+     [data writeToFile:path atomically:YES];
+     
+     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+     [library writeVideoAtPathToSavedPhotosAlbum:[NSURL fileURLWithPath:path] completionBlock:^(NSURL *assetURL, NSError *error) {
+     
+     if (error) {
+     NSLog(@"%@", error.description);
+     }else {
+     NSLog(@"Done :)");
+     [hud hideAnimated:YES];
+     }
+     
+     }];*/
+    
+    
+    /* MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+     hud.label.text = NSLocalizedString(@"Downloading....", @"");
+     
+     NSURL* url =[NSURL URLWithString:urlToDownload];
+     NSData *data = [NSData dataWithContentsOfURL:url];
+     
+     // Write it to cache directory
+     NSString *path = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"file.mov"];
+     [data writeToFile:path atomically:YES];
+     
+     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+     
+     [library saveVideo:[NSURL fileURLWithPath:path] toAlbum:@"Orataro" completion:^(NSURL *assetURL, NSError *error)
+     {
+     //NSLog(@"Completed...........");
+     [hud hideAnimated:YES];
+     
+     } failure:^(NSError *error)
+     {
+     NSLog(@"Error=%@",error.description);
+     
+     }];*/
+    //}
+    
+    //Background Thread
+    // dispatch_async(dispatch_get_main_queue(), ^(void){
+    //Run UI Updates
+    //  NSLog(@"inner");
+    
+    //});
     //});
     
     
     /*dispatch_async(dispatch_get_main_queue(), ^{
-        
-        NSString *urlToDownload = [NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[aryVideoData objectAtIndex:indexPath.row]objectForKey:@"Photo"]];
-        
-        if([urlToDownload length] != 0)
-        {
-            NSURL* url =[NSURL URLWithString:urlToDownload];
-            NSData *data = [NSData dataWithContentsOfURL:url];
-            
-            // Write it to cache directory
-            NSString *path = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"file.mov"];
-            [data writeToFile:path atomically:YES];
-            
-            ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-        
-            [library saveVideo:[NSURL fileURLWithPath:path] toAlbum:@"Orataro" completion:^(NSURL *assetURL, NSError *error)
-             {
-                 //NSLog(@"Completed...........");
-                 [hud hideAnimated:YES];
-                 
-             } failure:^(NSError *error)
-             {
-                 NSLog(@"Error=%@",error.description);
-                 
-             }];
-        }
-        
-    });*/
+     
+     NSString *urlToDownload = [NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[aryVideoData objectAtIndex:indexPath.row]objectForKey:@"Photo"]];
+     
+     if([urlToDownload length] != 0)
+     {
+     NSURL* url =[NSURL URLWithString:urlToDownload];
+     NSData *data = [NSData dataWithContentsOfURL:url];
+     
+     // Write it to cache directory
+     NSString *path = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"file.mov"];
+     [data writeToFile:path atomically:YES];
+     
+     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+     
+     [library saveVideo:[NSURL fileURLWithPath:path] toAlbum:@"Orataro" completion:^(NSURL *assetURL, NSError *error)
+     {
+     //NSLog(@"Completed...........");
+     [hud hideAnimated:YES];
+     
+     } failure:^(NSError *error)
+     {
+     NSLog(@"Error=%@",error.description);
+     
+     }];
+     }
+     
+     });*/
     
-
+    
     /// download video
-
+    
 }
 
 - (IBAction)btnBack:(id)sender
@@ -512,10 +516,10 @@ int videocount = 1;
     [param setValue:[NSString stringWithFormat:@"%d",videocount] forKey:@"Count"];
     [param setValue:@"VIDEO" forKey:@"PostFilterType"];
     
- //   if (checkvalue == YES)
-   // {
-       // [_ActivityIndicator startAnimating];
-         [ProgressHUB showHUDAddedTo:self.view];
+    //   if (checkvalue == YES)
+    // {
+    // [_ActivityIndicator startAnimating];
+    [ProgressHUB showHUDAddedTo:self.view];
     //}
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
@@ -546,31 +550,31 @@ int videocount = 1;
                      [_collectionVideolist reloadData];
                      
                      //[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[aryVideoData objectAtIndex:indexPath.row]objectForKey:@"Photo"]];
-                  /*   for (int i=0; i<aryVideoData.count; i++)
-                     {
-                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                             NSLog(@"Downloading Started");
-                             NSString *urlToDownload = [NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[aryVideoData objectAtIndex:i]objectForKey:@"Photo"]];
-                             
-                             NSURL  *url = [NSURL URLWithString:urlToDownload];
-                             NSData *urlData = [NSData dataWithContentsOfURL:url];
-                             if ( urlData )
-                             {
-                                 NSArray       *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-                                 NSString  *documentsDirectory = [paths objectAtIndex:0];
-                                 
-                                 NSString  *filePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory,@"thefile.mp4"];
-                                 
-                                 //saving is done on main thread
-                                 dispatch_async(dispatch_get_main_queue(), ^{
-                                     [urlData writeToFile:filePath atomically:YES];
-                                     NSLog(@"File Saved !");
-                                 });
-                             }
-                             
-                         });
-
-                     }*/
+                     /*   for (int i=0; i<aryVideoData.count; i++)
+                      {
+                      dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                      NSLog(@"Downloading Started");
+                      NSString *urlToDownload = [NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[aryVideoData objectAtIndex:i]objectForKey:@"Photo"]];
+                      
+                      NSURL  *url = [NSURL URLWithString:urlToDownload];
+                      NSData *urlData = [NSData dataWithContentsOfURL:url];
+                      if ( urlData )
+                      {
+                      NSArray       *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                      NSString  *documentsDirectory = [paths objectAtIndex:0];
+                      
+                      NSString  *filePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory,@"thefile.mp4"];
+                      
+                      //saving is done on main thread
+                      dispatch_async(dispatch_get_main_queue(), ^{
+                      [urlData writeToFile:filePath atomically:YES];
+                      NSLog(@"File Saved !");
+                      });
+                      }
+                      
+                      });
+                      
+                      }*/
                      
                      
                      //[self ManageCircularList:arrResponce];
@@ -619,33 +623,33 @@ int videocount = 1;
     for (NSMutableDictionary *dic in arrResponce)
     {
         
-       /* NSString *setImage = [NSString stringWithFormat:@"%@",[dic objectForKey:@"Photo"]];
+        /* NSString *setImage = [NSString stringWithFormat:@"%@",[dic objectForKey:@"Photo"]];
+         
+         NSArray *ary = [setImage componentsSeparatedByString:@"/"];
+         
+         NSString *strSaveImg = [ary lastObject];
+         
+         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[dic objectForKey:@"Photo"]]]];
+         
+         AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+         
+         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+         NSString *documentsDirectory = [paths objectAtIndex:0];
+         NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:strSaveImg];
+         
+         operation.outputStream = [NSOutputStream outputStreamToFileAtPath:dataPath append:NO];
+         
+         [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+         NSLog(@"Successfully downloaded file to %@", dataPath);
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         NSLog(@"Error: %@", error);
+         }];
+         
+         [operation start];*/
         
-        NSArray *ary = [setImage componentsSeparatedByString:@"/"];
         
-        NSString *strSaveImg = [ary lastObject];
         
-        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[dic objectForKey:@"Photo"]]]];
-        
-        AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-        
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsDirectory = [paths objectAtIndex:0];
-        NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:strSaveImg];
-        
-        operation.outputStream = [NSOutputStream outputStreamToFileAtPath:dataPath append:NO];
-        
-        [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"Successfully downloaded file to %@", dataPath);
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"Error: %@", error);
-        }];
-        
-        [operation start];*/
-        
-  
-    
-       NSString *setImage = [NSString stringWithFormat:@"%@",[dic objectForKey:@"Photo"]];
+        NSString *setImage = [NSString stringWithFormat:@"%@",[dic objectForKey:@"Photo"]];
         
         NSArray *ary = [setImage componentsSeparatedByString:@"/"];
         
