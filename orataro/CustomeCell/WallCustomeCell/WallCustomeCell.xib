@@ -20,7 +20,7 @@
             <rect key="frame" x="0.0" y="0.0" width="350" height="350"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="350" height="349.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="350" height="349"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B55-Rw-bwI">
@@ -131,6 +131,9 @@
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="DEl-RN-wxc">
+                                        <rect key="frame" x="165" y="121" width="20" height="20"/>
+                                    </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -142,6 +145,7 @@
                                     <constraint firstItem="dPQ-VC-GVb" firstAttribute="trailing" secondItem="ZSF-wA-3bv" secondAttribute="trailing" id="9vp-B4-WZQ"/>
                                     <constraint firstItem="T5m-Dq-alJ" firstAttribute="top" secondItem="ocf-1u-0nI" secondAttribute="top" id="Aid-Kw-w25"/>
                                     <constraint firstItem="of9-K4-o5l" firstAttribute="height" secondItem="950-7S-8nc" secondAttribute="height" id="C4w-p1-isc"/>
+                                    <constraint firstItem="DEl-RN-wxc" firstAttribute="centerX" secondItem="ZSF-wA-3bv" secondAttribute="centerX" id="CJW-CM-dY1"/>
                                     <constraint firstAttribute="bottom" secondItem="950-7S-8nc" secondAttribute="bottom" constant="1" id="J2R-B6-bkA"/>
                                     <constraint firstItem="of9-K4-o5l" firstAttribute="leading" secondItem="950-7S-8nc" secondAttribute="trailing" id="JTW-xQ-Cs8"/>
                                     <constraint firstItem="T5m-Dq-alJ" firstAttribute="leading" secondItem="ocf-1u-0nI" secondAttribute="leading" id="N6o-d3-Hfo"/>
@@ -151,6 +155,7 @@
                                     <constraint firstItem="950-7S-8nc" firstAttribute="leading" secondItem="dP8-jf-Tj0" secondAttribute="leading" constant="8" id="XRL-vD-8OQ"/>
                                     <constraint firstAttribute="trailing" secondItem="ocf-1u-0nI" secondAttribute="trailing" constant="8" id="Xg2-Wj-F0v"/>
                                     <constraint firstItem="T5m-Dq-alJ" firstAttribute="bottom" secondItem="ocf-1u-0nI" secondAttribute="bottom" id="ZKt-vV-xtx"/>
+                                    <constraint firstItem="DEl-RN-wxc" firstAttribute="centerY" secondItem="ZSF-wA-3bv" secondAttribute="centerY" id="bbe-t8-ka5"/>
                                     <constraint firstAttribute="bottom" secondItem="of9-K4-o5l" secondAttribute="bottom" constant="1" id="cKv-Fi-L60"/>
                                     <constraint firstItem="ZSF-wA-3bv" firstAttribute="leading" secondItem="dP8-jf-Tj0" secondAttribute="leading" constant="8" id="lnn-5o-zWk"/>
                                     <constraint firstAttribute="bottom" secondItem="OCo-vb-GWF" secondAttribute="bottom" constant="1" id="mFf-iS-y8K"/>
@@ -167,7 +172,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="spZ-g9-4dc">
-                                <rect key="frame" x="10" y="309" width="82.5" height="30"/>
+                                <rect key="frame" x="10" y="309" width="83" height="30"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fb_like_gray" translatesAutoresizingMaskIntoConstraints="NO" id="sUs-s7-AYH">
                                         <rect key="frame" x="5" y="8" width="14" height="14"/>
@@ -177,13 +182,13 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Like" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TWv-bm-Yyu">
-                                        <rect key="frame" x="23" y="0.0" width="57.5" height="30"/>
+                                        <rect key="frame" x="23" y="0.0" width="58" height="30"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="11"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3QR-Ma-0OF">
-                                        <rect key="frame" x="0.0" y="0.0" width="82.5" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="83" height="30"/>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -203,7 +208,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lAB-qz-6L9">
-                                <rect key="frame" x="92.5" y="309" width="82.5" height="30"/>
+                                <rect key="frame" x="93" y="309" width="82" height="30"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fb_unlike_gray" translatesAutoresizingMaskIntoConstraints="NO" id="yvZ-uM-5Fh">
                                         <rect key="frame" x="5" y="8" width="14" height="14"/>
@@ -213,13 +218,13 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unlike" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rSG-zR-SI1">
-                                        <rect key="frame" x="23" y="0.0" width="57.5" height="30"/>
+                                        <rect key="frame" x="23" y="0.0" width="57" height="30"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="11"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ddd-Rg-zkp">
-                                        <rect key="frame" x="0.0" y="0.0" width="82.5" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="82" height="30"/>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -238,7 +243,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3F4-Hk-Ph1">
-                                <rect key="frame" x="175" y="309" width="82.5" height="30"/>
+                                <rect key="frame" x="175" y="309" width="83" height="30"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fb_comments_gry" translatesAutoresizingMaskIntoConstraints="NO" id="IZa-nM-wQd">
                                         <rect key="frame" x="5" y="8" width="14" height="14"/>
@@ -248,13 +253,13 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Comment" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0jo-cb-Udv">
-                                        <rect key="frame" x="23" y="0.0" width="57.5" height="30"/>
+                                        <rect key="frame" x="23" y="0.0" width="58" height="30"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="11"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BvC-tq-CWB">
-                                        <rect key="frame" x="0.0" y="0.0" width="82.5" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="83" height="30"/>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -273,7 +278,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vsO-dH-i26">
-                                <rect key="frame" x="257.5" y="309" width="82.5" height="30"/>
+                                <rect key="frame" x="258" y="309" width="82" height="30"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fb_share_gray" translatesAutoresizingMaskIntoConstraints="NO" id="VSR-Id-3OB">
                                         <rect key="frame" x="5" y="8" width="14" height="14"/>
@@ -283,13 +288,13 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Share" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2vM-RP-YaA">
-                                        <rect key="frame" x="23" y="0.0" width="57.5" height="30"/>
+                                        <rect key="frame" x="23" y="0.0" width="57" height="30"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="11"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wEs-ne-oPK">
-                                        <rect key="frame" x="0.0" y="0.0" width="82.5" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="82" height="30"/>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -346,6 +351,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="activityIndicator_ImageVideo_Download" destination="DEl-RN-wxc" id="9Z4-yr-LTa"/>
                 <outlet property="btnComment" destination="BvC-tq-CWB" id="Ylv-yE-UEX"/>
                 <outlet property="btnEditDeletePost" destination="iOA-Y0-YKa" id="EbI-oU-Zdc"/>
                 <outlet property="btnEditDeletePost_Height" destination="yNv-J4-r3a" id="cJM-RC-F2Z"/>

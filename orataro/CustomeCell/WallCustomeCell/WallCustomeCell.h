@@ -94,4 +94,9 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imgShare_Height;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewShare_Width;
 
+
+//
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator_ImageVideo_Download;
+
+
 @end

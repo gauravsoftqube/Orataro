@@ -1013,14 +1013,12 @@ int c2= 0;
             {
                 for (NSMutableDictionary *dic in ary)
                 {
-                    
                     NSString *getjsonstr = [Utility Convertjsontostring:dic];
                     [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Login (dic_json_string,ActiveUser) VALUES ('%@','%@')",getjsonstr,@"0"]];
                     [DBOperation executeSQL:@"delete from CurrentActiveUser"];
                     NSString *strJSon = [Utility Convertjsontostring:dic];
                     
                     [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO CurrentActiveUser (JsonStr) VALUES ('%@')",strJSon]];
-                    
                 }
                 
                 [[NSUserDefaults standardUserDefaults]setObject:[[Utility getCurrentUserDetail]objectForKey:@"MobileNumber"] forKey:@"MobileNumber"];
@@ -3861,15 +3859,26 @@ int c2= 0;
         
         NSString *strFileType=[dicResponce objectForKey:@"FileType"];
         NSString *strFileMimeType=[dicResponce objectForKey:@"FileMimeType"];
+        
+        [cell.activityIndicator_ImageVideo_Download setHidden:YES];
+        [cell.activityIndicator_ImageVideo_Download stopAnimating];
         if([strFileType isEqualToString:@"IMAGE"])
         {
             NSString *strPost_Photo=[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[dicResponce objectForKey:@"Photo"]];
             if([[dicResponce objectForKey:@"Photo"] length] != 0)
             {
-                [cell.imgPost sd_setImageWithURL:[NSURL URLWithString:strPost_Photo] placeholderImage:[UIImage imageNamed:@"no_img.png"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                [cell.activityIndicator_ImageVideo_Download setHidden:NO];
+                [cell.activityIndicator_ImageVideo_Download startAnimating];
+                [cell.imgPost sd_setImageWithURL:[NSURL URLWithString:strPost_Photo] placeholderImage:[UIImage imageNamed:@"no_img.png"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL)
+                {
                     dispatch_async(dispatch_get_main_queue(), ^{
+                       
                         WallCustomeCell* theCell = (WallCustomeCell*)[tableView cellForRowAtIndexPath:indexPath];
-                        theCell.imgPost.image=image;                    });
+                        theCell.imgPost.image=image;
+                    
+                        [theCell.activityIndicator_ImageVideo_Download setHidden:YES];
+                        [theCell.activityIndicator_ImageVideo_Download stopAnimating];
+                    });
                 }];
                 
                 //                [cell.imgPost sd_setImageWithURL:[NSURL URLWithString:strPost_Photo] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
