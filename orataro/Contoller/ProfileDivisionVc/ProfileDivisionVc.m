@@ -235,17 +235,14 @@
 {
      //CREATE TABLE "TeacherDivisionList" ("id" INTEGER PRIMARY KEY  NOT NULL , "divJsonStr" VARCHAR)
     
-    NSLog(@"Ary=%@",arrResponce);
     [DBOperation executeSQL:@"delete from TeacherDivisionList"];
-    
-    NSLog(@"ary Response=%@",arrResponce);
-    
     for (NSMutableDictionary *dic in arrResponce)
     {
         NSString *getjsonstr = [Utility Convertjsontostring:dic];
         [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO TeacherDivisionList (divJsonStr) VALUES ('%@')",getjsonstr]];
     }
     
+    arySaveData= [[NSMutableArray alloc]init];
     NSArray *ary = [DBOperation selectData:@"select * from TeacherDivisionList"];
     arySaveData = [Utility getLocalDetail:ary columnKey:@"divJsonStr"];
     
@@ -255,7 +252,7 @@
     {
         WallVc  *vc10 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
         vc10.checkscreen = @"Division";
-        vc10.dicSelect_std_divi_sub=[arySaveData objectAtIndex:1];
+        vc10.dicSelect_std_divi_sub=[arySaveData objectAtIndex:0];
         [self.navigationController pushViewController:vc10 animated:YES];
 
     }

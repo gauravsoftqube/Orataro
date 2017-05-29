@@ -234,17 +234,14 @@
 {
      //CREATE TABLE "TeacherSubjectList" ("id" INTEGER PRIMARY KEY  NOT NULL , "subjectJsonStr" VARCHAR)
     
-   // NSLog(@"Ary=%@",arrResponce);
     [DBOperation executeSQL:@"delete from TeacherSubjectList"];
-    
-    NSLog(@"ary Response=%@",arrResponce);
-    
     for (NSMutableDictionary *dic in arrResponce)
     {
         NSString *getjsonstr = [Utility Convertjsontostring:dic];
         [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO TeacherSubjectList (subjectJsonStr) VALUES ('%@')",getjsonstr]];
     }
     
+    arySaveData= [[NSMutableArray alloc]init];
     NSArray *ary = [DBOperation selectData:@"select * from TeacherSubjectList"];
     arySaveData = [Utility getLocalDetail:ary columnKey:@"subjectJsonStr"];
     
@@ -254,7 +251,7 @@
     {
         WallVc  *vc10 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
         vc10.checkscreen = @"Subject";
-        vc10.dicSelect_std_divi_sub=[arySaveData objectAtIndex:1];
+        vc10.dicSelect_std_divi_sub=[arySaveData objectAtIndex:0];
         [self.navigationController pushViewController:vc10 animated:YES];
     }
 }

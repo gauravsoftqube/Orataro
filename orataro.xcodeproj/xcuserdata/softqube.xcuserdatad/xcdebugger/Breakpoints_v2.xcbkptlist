@@ -441,7 +441,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "4993"
             endingLineNumber = "4993"
-            landmarkName = "-btnCheckAll_SpecialFriends:"
+            landmarkName = "-btnCellRow_DynamicWallMenu_Click:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

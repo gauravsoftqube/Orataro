@@ -228,17 +228,15 @@
 -(void)ManageCircularList:(NSMutableArray *)arrResponce
 {
     //CREATE TABLE "TeacherStandardList" ("id" INTEGER PRIMARY KEY  NOT NULL , "TeacherStandardJsonStr" VARCHAR)
-    NSLog(@"Ary=%@",arrResponce);
+   
     [DBOperation executeSQL:@"delete from TeacherStandardList"];
-    
-    NSLog(@"ary Response=%@",arrResponce);
-    
     for (NSMutableDictionary *dic in arrResponce)
     {
         NSString *getjsonstr = [Utility Convertjsontostring:dic];
         [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO TeacherStandardList (TeacherStandardJsonStr) VALUES ('%@')",getjsonstr]];
     }
     
+    arySaveData= [[NSMutableArray alloc]init];
     NSArray *ary = [DBOperation selectData:@"select * from TeacherStandardList"];
     arySaveData = [Utility getLocalDetail:ary columnKey:@"TeacherStandardJsonStr"];
     
@@ -248,7 +246,7 @@
     {
         WallVc *vc10 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
         vc10.checkscreen = @"Standard";
-        vc10.dicSelect_std_divi_sub=[arySaveData objectAtIndex:1];
+        vc10.dicSelect_std_divi_sub=[arySaveData objectAtIndex:0];
         [self.navigationController pushViewController:vc10 animated:YES];
     }
 }
