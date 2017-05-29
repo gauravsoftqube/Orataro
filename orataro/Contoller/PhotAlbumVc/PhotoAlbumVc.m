@@ -322,7 +322,9 @@
     }
     if ([str isEqualToString:@"Second"])
     {
-        
+        //AddAlbumVCViewController
+        AddAlbumVCViewController *p7 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddAlbumVCViewController"];
+        [self.navigationController pushViewController:p7 animated:YES];
     }
 }
 

@@ -242,6 +242,7 @@
 #import "ProfileVideoDetailVc.h"
 
 #import "ChatVc.h"
+#import "AddAlbumVCViewController.h"
 
 #pragma mark - YOUTube Video Key
 
