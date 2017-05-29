@@ -60,6 +60,7 @@
 		09F428CD1E38BC0B00A80F0D /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 09F428BA1E38BC0B00A80F0D /* UIWebView+AFNetworking.m */; };
 		09F428D11E38E76400A80F0D /* LoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 09F428D01E38E76400A80F0D /* LoginVC.m */; };
 		4E5196BE04CE1B11FFB87A29 /* libPods-orataro.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A0C6ED01C0E658BC8615B3C /* libPods-orataro.a */; };
+		C30F6D5E1ED9540100F10DD1 /* AddAlbumVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C30F6D5D1ED9540100F10DD1 /* AddAlbumVCViewController.m */; };
 		C331B0891E4DB09F001C274D /* AboutUsVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C331B0881E4DB09F001C274D /* AboutUsVc.m */; };
 		C35120E81E827C5F00D7461B /* UIImage+ImageCompress.m in Sources */ = {isa = PBXBuildFile; fileRef = C35120E71E827C5F00D7461B /* UIImage+ImageCompress.m */; };
 		C359CAA51EBAE3CD00FBAD33 /* HealthRecordVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C359CAA41EBAE3CD00FBAD33 /* HealthRecordVc.m */; };
@@ -371,6 +372,8 @@
 		490D0936F09128979715E28B /* Pods-orataro.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-orataro.debug.xcconfig"; path = "Pods/Target Support Files/Pods-orataro/Pods-orataro.debug.xcconfig"; sourceTree = "<group>"; };
 		6B8785E475C90FC8B6457081 /* Pods-orataro.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-orataro.release.xcconfig"; path = "Pods/Target Support Files/Pods-orataro/Pods-orataro.release.xcconfig"; sourceTree = "<group>"; };
 		7A0C6ED01C0E658BC8615B3C /* libPods-orataro.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-orataro.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C30F6D5C1ED9540100F10DD1 /* AddAlbumVCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddAlbumVCViewController.h; sourceTree = "<group>"; };
+		C30F6D5D1ED9540100F10DD1 /* AddAlbumVCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddAlbumVCViewController.m; sourceTree = "<group>"; };
 		C331B0871E4DB09F001C274D /* AboutUsVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AboutUsVc.h; path = AboutUsVc/AboutUsVc.h; sourceTree = "<group>"; };
 		C331B0881E4DB09F001C274D /* AboutUsVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AboutUsVc.m; path = AboutUsVc/AboutUsVc.m; sourceTree = "<group>"; };
 		C35120E61E827C5F00D7461B /* UIImage+ImageCompress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageCompress.h"; sourceTree = "<group>"; };
@@ -1208,6 +1211,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		C30F6D5B1ED9537B00F10DD1 /* AddAlbum */ = {
+			isa = PBXGroup;
+			children = (
+				C30F6D5C1ED9540100F10DD1 /* AddAlbumVCViewController.h */,
+				C30F6D5D1ED9540100F10DD1 /* AddAlbumVCViewController.m */,
+			);
+			path = AddAlbum;
+			sourceTree = "<group>";
+		};
 		C331B0861E4DB05B001C274D /* AboutUsVc */ = {
 			isa = PBXGroup;
 			children = (
@@ -1786,6 +1798,7 @@
 		C36B588D1E5F096C00DE7464 /* PhotAlbumVc */ = {
 			isa = PBXGroup;
 			children = (
+				C30F6D5B1ED9537B00F10DD1 /* AddAlbum */,
 				C3CF921E1E979D5200A6BFBA /* AlbumPhotosVc */,
 				C36B588E1E5F09A800DE7464 /* PhotoAlbumVc.h */,
 				C36B588F1E5F09A800DE7464 /* PhotoAlbumVc.m */,
@@ -2641,6 +2654,7 @@
 				C35C07371E485346004C55EB /* ClassVcCell.m in Sources */,
 				0757D4DB1EA0D4FC00474F98 /* ResultAddPageVc.m in Sources */,
 				C36B587C1E5EE82B00DE7464 /* ORGContainerCell.m in Sources */,
+				C30F6D5E1ED9540100F10DD1 /* AddAlbumVCViewController.m in Sources */,
 				C36B586A1E5EE75400DE7464 /* ProjectVc.m in Sources */,
 				C3666CBF1E726B4E0083AA34 /* SDImageCacheConfig.m in Sources */,
 				C36DD1C11E4097980011221E /* CircularDetailVc.m in Sources */,
