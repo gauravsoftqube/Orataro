@@ -62,54 +62,6 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    
-    NSDate *today = [NSDate date];
-    NSDateFormatter *formatterYear = [[NSDateFormatter alloc] init];
-    
-    [formatterYear setDateFormat:@"yyyy"];
-    NSDateFormatter *formatterMonth = [[NSDateFormatter alloc] init];
-    [formatterMonth setDateFormat:@"MM"];
-    [formatterMonth setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
-    NSString *yearString = [formatterYear stringFromDate:today];
-    NSString *monthString = [formatterMonth stringFromDate:today];
-    NSInteger month,year;
-    
-    
-    if ([monthString integerValue] == 1) {
-        year = [yearString integerValue] -1;
-        month = 12;
-    } else
-    {
-        year = [yearString integerValue];
-        month = [monthString integerValue]-1;
-        
-    }
-    NSDateFormatter *exitFormatter = [[NSDateFormatter alloc] init];
-    [exitFormatter setDateFormat:@"yyyy-MM-dd"];
-    [exitFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
-    NSString *stringDate;
-    if (month > 10) {
-        stringDate = [NSString stringWithFormat:@"%ld-0%ld-01",(long)year,(long)month];
-    } else {
-        stringDate = [NSString stringWithFormat:@"%ld-%ld-01",(long)year,(long)month];
-    }
-    NSDate *firstDatePreviousMonth = [exitFormatter dateFromString:stringDate];
-    
-    NSLog(@"View the date: %@",[firstDatePreviousMonth description]);
-    
-    
-        
-//        if([[arr lastObject] isEqual:[currentDate dateByAddingTimeInterval:-60*60*24*1]])
-//        {
-//            NSLog(@"%lu",(unsigned long)arr.count);
-//            NSLog(@"Arr=%@",arr);
-//            break;
-//            
-//            
-//        }
-        // Do something with date like add it to an array, etc.
-  //  }
-    
     _lbHeaderTitle.text =  [NSString stringWithFormat:@"School Group (%@)",[Utility getCurrentUserName]];
     
     //CREATE TABLE "SchoolGroupList" ("id" INTEGER PRIMARY KEY  NOT NULL , "jsonStr" VARCHAR, "ImageJsonstr" VARCHAR, "flag" VARCHAR)
