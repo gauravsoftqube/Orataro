@@ -307,7 +307,7 @@
     
     ProfileLeaveDetailListVc *vc13 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfileLeaveDetailListVc"];
     
-    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+  //  NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
     
     switch (indexPath.row)
     {
@@ -392,7 +392,6 @@
             }
             else
             {
-                
                 [self.navigationController pushViewController:vc12 animated:YES];
             }
             
@@ -522,8 +521,8 @@
                  }
                  @catch (NSException *exception)
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     [alrt show];
+                    // UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                   //  [alrt show];
                  }
                  
                  

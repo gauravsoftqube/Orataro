@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface PhotoAlbumVc : UIViewController<UICollectionViewDataSource,UICollectionViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate>
+@property (weak, nonatomic) IBOutlet UIView *viewadd;
 
+@property (weak, nonatomic) IBOutlet UIView *addBtn;
 @property (weak, nonatomic) IBOutlet UICollectionView *aCollectionView;
 @property (weak, nonatomic) IBOutlet UIButton *aFirstBtn;
 @property (weak, nonatomic) IBOutlet UILabel *lbHeaderTitle;
@@ -21,7 +23,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *FirstImageView;
 @property (weak, nonatomic) IBOutlet UIView *aFirstBottomView;
 @property (weak, nonatomic) IBOutlet UIView *aSecondBottomView;
-@property (weak, nonatomic) IBOutlet UIView *addBtn;
+//@property (weak, nonatomic) IBOutlet UIView *addBtn;
 - (IBAction)addBtnClicked:(id)sender;
 - (IBAction)BackBtnClicked:(UIButton *)sender;
 

@@ -405,6 +405,7 @@
 
 #define apk_apk_Post @"apk_Post.asmx"
 #define apk_GetPosted_FileImgaeVideos @"GetPosted_FileImgaeVideos"
+#define apk_AddAlbum @"AddAlbum"
 
 #pragma mark -  Timetable
 

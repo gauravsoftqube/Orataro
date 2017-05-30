@@ -44,7 +44,7 @@
 {
     NSArray *ary = [DBOperation selectData:@"select * from ProfileHappyGramList"];
     aryGetHappyGramList = [Utility getLocalDetail:ary columnKey:@"happyGramJsonStr"];
-    [_tblDetailList reloadData];
+   // [_tblDetailList reloadData];
     
     if (aryGetHappyGramList.count == 0)
     {
@@ -56,21 +56,25 @@
         }
         else
         {
+             [DBOperation executeSQL:@"delete from ProfileHappyGramList"];
+            [_tblDetailList reloadData];
+            
             [self apiCallFor_getHappygramList:YES];
             
         }
     }
     else
     {
-        aryGetHappyGramList = [Utility getLocalDetail:ary columnKey:@"happyGramJsonStr"];
-        [_tblDetailList reloadData];
-        
         if ([Utility isInterNetConnectionIsActive] == false)
         {
-            
+            aryGetHappyGramList = [Utility getLocalDetail:ary columnKey:@"happyGramJsonStr"];
+            [_tblDetailList reloadData];
         }
         else
         {
+            [DBOperation executeSQL:@"delete from ProfileHappyGramList"];
+            [_tblDetailList reloadData];
+            
             [self apiCallFor_getHappygramList:NO];
         }
     }
@@ -191,6 +195,8 @@
 
 -(void)apiCallFor_getHappygramList: (BOOL)strCheckVal
 {
+   // [aryGetHappyGramList removeAllObjects];
+    
     if ([Utility isInterNetConnectionIsActive] == false)
     {
         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -240,12 +246,12 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     
-                     
+                     [aryGetHappyGramList removeAllObjects];
+                     [DBOperation executeSQL:@"delete from ProfileHappyGramList"];
+                     [_tblDetailList reloadData];
                      UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
-                     [aryGetHappyGramList removeAllObjects];
-                     [_tblDetailList reloadData];
+                    
                  }
                  else
                  {
