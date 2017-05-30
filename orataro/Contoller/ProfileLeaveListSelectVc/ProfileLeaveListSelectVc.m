@@ -23,7 +23,7 @@
     [super viewDidLoad];
     
     aryTempLeave = [[NSMutableArray alloc]init];
-    arySaveDataLeave = [[NSMutableArray alloc]init];
+   // arySaveDataLeave = [[NSMutableArray alloc]init];
     
     _lbHeaderTitle.text = [NSString stringWithFormat:@"List Selection (%@)",[Utility getCurrentUserName]];
     
