@@ -117,7 +117,7 @@ int multipleUser1 = 0;
     
     [ProgressHUB showHUDAddedTo:self.view];
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error) {
-       // [ProgressHUB hideenHUDAddedTo:self.view];
+        // [ProgressHUB hideenHUDAddedTo:self.view];
         if(!error)
         {
             NSString *strArrd=[dicResponce objectForKey:@"d"];
@@ -195,7 +195,7 @@ int multipleUser1 = 0;
     
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
-        // [ProgressHUB hideenHUDAddedTo:self.view];
+         // [ProgressHUB hideenHUDAddedTo:self.view];
          if(!error)
          {
              NSString *strArrd=[dicResponce objectForKey:@"d"];
@@ -206,15 +206,15 @@ int multipleUser1 = 0;
              {
                  NSLog(@"arr=%@",arrResponce);
                  
-              //   [[NSUserDefaults standardUserDefaults]setObject:arrResponce forKey:@"TotalCountofMember"];
-               //  [[NSUserDefaults standardUserDefaults]synchronize];
+                 //   [[NSUserDefaults standardUserDefaults]setObject:arrResponce forKey:@"TotalCountofMember"];
+                 //  [[NSUserDefaults standardUserDefaults]synchronize];
                  
                  // strCheckUser =@"SwitchAccount";
                  //  strCheckUser =@"WallVc";
                  
-                // NSLog(@"Strcheck=%@",strCheckUser);
+                 // NSLog(@"Strcheck=%@",strCheckUser);
                  
-               //  [self api_changeGCMID];
+                 //  [self api_changeGCMID];
                  
                  if ([strCheckUser isEqualToString:@"SwitchAccount"])
                  {
@@ -327,7 +327,6 @@ int multipleUser1 = 0;
                              }
                              else
                              {
-                                 
                              }
                          }
                          if (multipleUser1 == 0)
@@ -361,12 +360,30 @@ int multipleUser1 = 0;
                                  }
                                  else
                                  {
-                                     for (NSMutableDictionary *dic in arrSelectInstiUser)
+                                     for (int i=0; i< [arrSelectInstiUser count]; i++)
                                      {
-                                         NSString *getjsonstr = [Utility Convertjsontostring:dic];
+                                         NSMutableDictionary *dic=[[arrSelectInstiUser objectAtIndex:i]mutableCopy];
+                                         NSString *getjsonstr = [[Utility Convertjsontostring:dic]mutableCopy];
                                          
+                                         //Insert Login
                                          [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Login (dic_json_string,ActiveUser) VALUES ('%@','%@')",getjsonstr,@"0"]];
+                                         
+                                         //Insert CurrentActiveUser
+                                         NSString *MemberType=[[dic objectForKey:@"MemberType"]mutableCopy];
+                                         if([MemberType rangeOfString:@"Teacher" options:NSCaseInsensitiveSearch].location == NSNotFound)
+                                         {
+                                             [dic setObject:@"Student" forKey:@"MemberType"];
+                                         }
+                                         else
+                                         {
+                                             [dic setObject:@"Teacher" forKey:@"MemberType"];
+                                         }
+                                         
+                                         NSString *strJSon = [Utility Convertjsontostring:dic];
+                                         [DBOperation executeSQL:@"delete from CurrentActiveUser"];
+                                         [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO CurrentActiveUser (JsonStr,userType_responce) VALUES ('%@','%@')",strJSon,MemberType]];
                                      }
+
                                      [[NSUserDefaults standardUserDefaults]setObject:[[NSUserDefaults standardUserDefaults]valueForKey:@"MobileNumber"] forKey:@"MobileNumber"];
                                      [[NSUserDefaults standardUserDefaults]setObject:aPasswordTextField.text forKey:@"Password"];
                                      [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
@@ -424,11 +441,28 @@ int multipleUser1 = 0;
                                  }
                                  else
                                  {
-                                     for (NSMutableDictionary *dic in arrSelectInstiUser)
+                                     for (int i=0; i< [arrSelectInstiUser count]; i++)
                                      {
-                                         NSString *getjsonstr = [Utility Convertjsontostring:dic];
+                                         NSMutableDictionary *dic=[[arrSelectInstiUser objectAtIndex:i]mutableCopy];
+                                         NSString *getjsonstr = [[Utility Convertjsontostring:dic]mutableCopy];
                                          
+                                         //Insert Login
                                          [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Login (dic_json_string,ActiveUser) VALUES ('%@','%@')",getjsonstr,@"0"]];
+                                         
+                                         //Insert CurrentActiveUser
+                                         NSString *MemberType=[[dic objectForKey:@"MemberType"]mutableCopy];
+                                         if([MemberType rangeOfString:@"Teacher" options:NSCaseInsensitiveSearch].location == NSNotFound)
+                                         {
+                                             [dic setObject:@"Student" forKey:@"MemberType"];
+                                         }
+                                         else
+                                         {
+                                             [dic setObject:@"Teacher" forKey:@"MemberType"];
+                                         }
+                                         
+                                         NSString *strJSon = [Utility Convertjsontostring:dic];
+                                         [DBOperation executeSQL:@"delete from CurrentActiveUser"];
+                                         [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO CurrentActiveUser (JsonStr,userType_responce) VALUES ('%@','%@')",strJSon,MemberType]];
                                      }
                                      [[NSUserDefaults standardUserDefaults]setObject:[[NSUserDefaults standardUserDefaults]valueForKey:@"MobileNumber"] forKey:@"MobileNumber"];
                                      [[NSUserDefaults standardUserDefaults]setObject:aPasswordTextField.text forKey:@"Password"];
@@ -436,23 +470,38 @@ int multipleUser1 = 0;
                                      [[NSUserDefaults standardUserDefaults]synchronize];
                                      
                                      strCheckUser =@"SwitchAccount";
-                                     
                                      [self api_getMemberCount];
                                      //
                                      //                                     UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SwitchAcoountVC"];
                                      //                                     [self.navigationController pushViewController:wc animated:YES];
                                  }
-                                 
-                                 
                              }
                              else
                              {
-                                 for (NSMutableDictionary *dic in arrResponce)
+                                 for (int i=0; i< [arrResponce count]; i++)
                                  {
-                                     NSString *getjsonstr = [Utility Convertjsontostring:dic];
+                                     NSMutableDictionary *dic=[[arrResponce objectAtIndex:i]mutableCopy];
+                                     NSString *getjsonstr = [[Utility Convertjsontostring:dic]mutableCopy];
                                      
+                                     //Insert Login
                                      [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Login (dic_json_string,ActiveUser) VALUES ('%@','%@')",getjsonstr,@"0"]];
+                                     
+                                     //Insert CurrentActiveUser
+                                     NSString *MemberType=[[dic objectForKey:@"MemberType"]mutableCopy];
+                                     if([MemberType rangeOfString:@"Teacher" options:NSCaseInsensitiveSearch].location == NSNotFound)
+                                     {
+                                         [dic setObject:@"Student" forKey:@"MemberType"];
+                                     }
+                                     else
+                                     {
+                                         [dic setObject:@"Teacher" forKey:@"MemberType"];
+                                     }
+                                     
+                                     NSString *strJSon = [Utility Convertjsontostring:dic];
+                                     [DBOperation executeSQL:@"delete from CurrentActiveUser"];
+                                     [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO CurrentActiveUser (JsonStr,userType_responce) VALUES ('%@','%@')",strJSon,MemberType]];
                                  }
+                                 
                                  [[NSUserDefaults standardUserDefaults]setObject:[[NSUserDefaults standardUserDefaults]valueForKey:@"MobileNumber"] forKey:@"MobileNumber"];
                                  [[NSUserDefaults standardUserDefaults]setObject:aPasswordTextField.text forKey:@"Password"];
                                  [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
@@ -464,7 +513,6 @@ int multipleUser1 = 0;
                                  //                                 UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SwitchAcoountVC"];
                                  //                                 [self.navigationController pushViewController:wc animated:YES];
                              }
-                             
                          }
                      }
                      // [[NSUserDefaults standardUserDefaults]setObject:[NSString stringWithFormat:@"%d",cnt] forKey:@"RememberMe"];
@@ -504,18 +552,28 @@ int multipleUser1 = 0;
     {
         if ([instituteID containsObject:[getDic objectForKey:@"InstituteID"]])
         {
-            for (NSMutableDictionary *dic in ary)
+            for (int i=0; i< [ary count]; i++)
             {
+                NSMutableDictionary *dic=[[ary objectAtIndex:i]mutableCopy];
+                NSString *getjsonstr = [[Utility Convertjsontostring:dic]mutableCopy];
                 
-                NSString *getjsonstr = [Utility Convertjsontostring:dic];
+                //Insert Login
                 [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Login (dic_json_string,ActiveUser) VALUES ('%@','%@')",getjsonstr,@"0"]];
                 
+                //Insert CurrentActiveUser
+                NSString *MemberType=[[dic objectForKey:@"MemberType"]mutableCopy];
+                if([MemberType rangeOfString:@"Teacher" options:NSCaseInsensitiveSearch].location == NSNotFound)
+                {
+                    [dic setObject:@"Student" forKey:@"MemberType"];
+                }
+                else
+                {
+                    [dic setObject:@"Teacher" forKey:@"MemberType"];
+                }
                 
-                [DBOperation executeSQL:@"delete from CurrentActiveUser"];
                 NSString *strJSon = [Utility Convertjsontostring:dic];
-                
-                [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO CurrentActiveUser (JsonStr) VALUES ('%@')",strJSon]];
-                
+                [DBOperation executeSQL:@"delete from CurrentActiveUser"];
+                [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO CurrentActiveUser (JsonStr,userType_responce) VALUES ('%@','%@')",strJSon,MemberType]];
             }
             
             [[NSUserDefaults standardUserDefaults]setObject:[[NSUserDefaults standardUserDefaults]valueForKey:@"MobileNumber"] forKey:@"MobileNumber"];
@@ -526,12 +584,6 @@ int multipleUser1 = 0;
             strCheckUser =@"WallVc";
             
             [self api_getMemberCount];
-            
-            //            WallVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
-            //            vc.checkscreen = @"FromLogin";
-            //            app.checkview = 0;
-            //
-            //            [self.navigationController pushViewController:vc animated:YES];
         }
         else
         {
@@ -539,17 +591,30 @@ int multipleUser1 = 0;
             
             if ([[getDic objectForKey:@"DeviceIdentity"] isEqualToString:currentDeviceId])
             {
-                for (NSMutableDictionary *dic in ary)
+                for (int i=0; i< [ary count]; i++)
                 {
+                    NSMutableDictionary *dic=[[ary objectAtIndex:i]mutableCopy];
+                    NSString *getjsonstr = [[Utility Convertjsontostring:dic]mutableCopy];
                     
-                    NSString *getjsonstr = [Utility Convertjsontostring:dic];
+                    //Insert Login
                     [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Login (dic_json_string,ActiveUser) VALUES ('%@','%@')",getjsonstr,@"0"]];
-                    [DBOperation executeSQL:@"delete from CurrentActiveUser"];
+                    
+                    //Insert CurrentActiveUser
+                    NSString *MemberType=[[dic objectForKey:@"MemberType"]mutableCopy];
+                    if([MemberType rangeOfString:@"Teacher" options:NSCaseInsensitiveSearch].location == NSNotFound)
+                    {
+                        [dic setObject:@"Student" forKey:@"MemberType"];
+                    }
+                    else
+                    {
+                        [dic setObject:@"Teacher" forKey:@"MemberType"];
+                    }
+                    
                     NSString *strJSon = [Utility Convertjsontostring:dic];
-                    
-                    [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO CurrentActiveUser (JsonStr) VALUES ('%@')",strJSon]];
-                    
+                    [DBOperation executeSQL:@"delete from CurrentActiveUser"];
+                    [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO CurrentActiveUser (JsonStr,userType_responce) VALUES ('%@','%@')",strJSon,MemberType]];
                 }
+
                 
                 [[NSUserDefaults standardUserDefaults]setObject:[[NSUserDefaults standardUserDefaults]valueForKey:@"MobileNumber"] forKey:@"MobileNumber"];
                 [[NSUserDefaults standardUserDefaults]setObject:aPasswordTextField.text forKey:@"Password"];
@@ -573,15 +638,28 @@ int multipleUser1 = 0;
     }
     else
     {
-        for (NSMutableDictionary *dic in ary)
+        for (int i=0; i< [ary count]; i++)
         {
+            NSMutableDictionary *dic=[[ary objectAtIndex:i]mutableCopy];
+            NSString *getjsonstr = [[Utility Convertjsontostring:dic]mutableCopy];
             
-            NSString *getjsonstr = [Utility Convertjsontostring:dic];
+            //Insert Login
             [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Login (dic_json_string,ActiveUser) VALUES ('%@','%@')",getjsonstr,@"0"]];
-            [DBOperation executeSQL:@"delete from CurrentActiveUser"];
-            NSString *strJSon = [Utility Convertjsontostring:dic];
             
-            [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO CurrentActiveUser (JsonStr) VALUES ('%@')",strJSon]];
+            //Insert CurrentActiveUser
+            NSString *MemberType=[[dic objectForKey:@"MemberType"]mutableCopy];
+            if([MemberType rangeOfString:@"Teacher" options:NSCaseInsensitiveSearch].location == NSNotFound)
+            {
+                [dic setObject:@"Student" forKey:@"MemberType"];
+            }
+            else
+            {
+                [dic setObject:@"Teacher" forKey:@"MemberType"];
+            }
+            
+            NSString *strJSon = [Utility Convertjsontostring:dic];
+            [DBOperation executeSQL:@"delete from CurrentActiveUser"];
+            [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO CurrentActiveUser (JsonStr,userType_responce) VALUES ('%@','%@')",strJSon,MemberType]];
         }
         
         [[NSUserDefaults standardUserDefaults]setObject:[[NSUserDefaults standardUserDefaults]valueForKey:@"MobileNumber"] forKey:@"MobileNumber"];
@@ -607,8 +685,8 @@ int multipleUser1 = 0;
     //apk_ChangeGCMID
     //apk_login
     
-    //<UserID>guid</UserID>
-    //<GCMID>string</GCMID>
+    ///<>guid</UserID>
+    ///<>string</GCMID>
     
     if ([Utility isInterNetConnectionIsActive] == false)
     {
@@ -634,16 +712,76 @@ int multipleUser1 = 0;
     
     if (token.length == 0)
     {
-      //  [param setValue:@"" forKey:@"GCMID"];
+        //  [param setValue:@"" forKey:@"GCMID"];
         [self api_changeGCMID];
     }
     else
     {
         [param setValue:token forKey:@"GCMID"];
-        
     }
     // [param setValue:token forKey:@"GCMID"];
     
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         [ProgressHUB hideenHUDAddedTo:self.view];
+         
+         if(!error)
+         {
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             if([arrResponce count] != 0)
+             {
+                 NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                 NSString *strStatus=[dic objectForKey:@"message"];
+                 if([strStatus isEqualToString:@"No Data Found"])
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                 }
+                 else
+                 {
+                     // strCheckUserSwitch = @"SwitchAccount";
+                     // strCheckUserSwitch = @"Wall";
+                     
+                   
+                     // NSLog(@"arr response=%@",arrResponce);
+                 }
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+             [self apiCallFor_GetUserRoleRightList:@"1"];
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
+}
+
+#pragma mark - apiCall GetUserRoleRightList
+
+-(void)apiCallFor_GetUserRoleRightList:(NSString *)strInternet
+{
+    if ([Utility isInterNetConnectionIsActive] == false) {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_login,apk_GetUserRoleRightList_action];
+    
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"RoleID"]] forKey:@"RoleID"];
     
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
@@ -665,19 +803,18 @@ int multipleUser1 = 0;
                  }
                  else
                  {
-                     
-                     // strCheckUserSwitch = @"SwitchAccount";
-                     // strCheckUserSwitch = @"Wall";
-                     
-                     if ([strCheckUser isEqualToString:@"SwitchAccount"])
+                     [DBOperation executeSQL:[NSString stringWithFormat:@"delete from GetUserRoleRightList"]];
+                     for (NSMutableDictionary *dic  in arrResponce)
                      {
-                         UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SwitchAcoountVC"];
-                         [self.navigationController pushViewController:wc animated:YES];
+                         NSString *IsCreate=[dic objectForKey:@"IsCreate"];
+                         NSString *IsDelete=[dic objectForKey:@"IsDelete"];
+                         NSString *IsEdit=[dic objectForKey:@"IsEdit"];
+                         NSString *IsView=[dic objectForKey:@"IsView"];
+                         NSString *RightID=[dic objectForKey:@"RightID"];
+                         NSString *RightName=[dic objectForKey:@"RightName"];
+                         
+                         [DBOperation executeSQL:[NSString stringWithFormat:@"insert into GetUserRoleRightList(IsCreate,IsDelete,IsEdit,IsView,RightID,RightName)values('%@','%@','%@','%@','%@','%@')",IsCreate,IsDelete,IsEdit,IsView,RightID,RightName]];
                      }
-                     else
-                     {
-                         [self performSegueWithIdentifier:@"ShowWall" sender:self];
-                     }                     // NSLog(@"arr response=%@",arrResponce);
                  }
              }
              else
@@ -691,21 +828,47 @@ int multipleUser1 = 0;
              UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
              [alrt show];
          }
+         [self apiCallFor_SaveLoginLog:@"0"];
      }];
-    
 }
 
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
-
-
+-(void)apiCallFor_SaveLoginLog:(NSString *)strInternet
+{
+    if ([Utility isInterNetConnectionIsActive] == false) {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_login,apk_SaveLoginLog_action];
+    
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
+    
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         
+         if(!error)
+         {
+         }
+         else
+         {
+         }
+         if ([strCheckUser isEqualToString:@"SwitchAccount"])
+         {
+             UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SwitchAcoountVC"];
+             [self.navigationController pushViewController:wc animated:YES];
+         }
+         else
+         {
+             [self performSegueWithIdentifier:@"ShowWall" sender:self];
+         }
+     }];
+}
 
 @end

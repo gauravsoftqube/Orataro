@@ -46,7 +46,7 @@
     }
     else
     {
-         self.lblHeaderTitle.text=[NSString stringWithFormat:@"Notes"];
+        self.lblHeaderTitle.text=[NSString stringWithFormat:@"Notes"];
     }
     [self commonData];
 }
@@ -64,7 +64,7 @@
     _viewInnerSave.layer.cornerRadius = 25.0;
     _imgCancel.image = [_imgCancel.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [_imgCancel setTintColor:[UIColor colorWithRed:40.0/255.0 green:49.0/255.0 blue:90.0/255.0 alpha:1.0]];
-
+    
     //
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refreshData) forControlEvents:UIControlEventValueChanged];
@@ -90,7 +90,7 @@
     {
         [self.aView1 setHidden:NO];
     }
-
+    
     [self apiCallMethod];
 }
 
@@ -510,14 +510,59 @@
 - (IBAction)btnDeleteCell_Popup:(id)sender
 {
     [Utility dismissAllPopTipViews:arrPopup];
-    
-    if ([Utility isInterNetConnectionIsActive] == false)
+    if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
     {
-        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alrt show];
-        return;
+        if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
+        {
+            if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Parent"] )
+            {
+                if([[Utility getUserRoleRightList:@"Note" settingType:@"IsDelete"] integerValue] == 1)
+                {
+                    if ([Utility isInterNetConnectionIsActive] == false)
+                    {
+                        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                        [alrt show];
+                        return;
+                    }
+                    [self.viewDelete_Conf setHidden:NO];
+                }
+                else
+                {
+                    [WToast showWithText:You_dont_have_permission];
+                }
+            }
+            else
+            {
+                if ([Utility isInterNetConnectionIsActive] == false)
+                {
+                    UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alrt show];
+                    return;
+                }
+                [self.viewDelete_Conf setHidden:NO];
+            }
+        }
+        else
+        {
+            if ([Utility isInterNetConnectionIsActive] == false)
+            {
+                UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alrt show];
+                return;
+            }
+            [self.viewDelete_Conf setHidden:NO];
+        }
     }
-    [self.viewDelete_Conf setHidden:NO];
+    else
+    {
+        if ([Utility isInterNetConnectionIsActive] == false)
+        {
+            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alrt show];
+            return;
+        }
+        [self.viewDelete_Conf setHidden:NO];
+    }
 }
 
 #pragma mark - button action
@@ -543,13 +588,44 @@
 
 - (IBAction)CreateNoteBtnClicked:(id)sender
 {
-    AddNoteVc *a = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddNoteVc"];
-    [self.navigationController pushViewController:a animated:YES];
+    if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
+    {
+        if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
+        {
+            if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Parent"] )
+            {
+                if([[Utility getUserRoleRightList:@"Note" settingType:@"IsCreate"] integerValue] == 1)
+                {
+                    AddNoteVc *a = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddNoteVc"];
+                    [self.navigationController pushViewController:a animated:YES];
+                }
+                else
+                {
+                    [WToast showWithText:You_dont_have_permission];
+                }
+            }
+            else
+            {
+                AddNoteVc *a = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddNoteVc"];
+                [self.navigationController pushViewController:a animated:YES];
+            }
+        }
+        else
+        {
+            AddNoteVc *a = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddNoteVc"];
+            [self.navigationController pushViewController:a animated:YES];
+        }
+    }
+    else
+    {
+        AddNoteVc *a = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddNoteVc"];
+        [self.navigationController pushViewController:a animated:YES];
+    }
 }
 
 - (IBAction)btnHomeClicked:(id)sender
 {
-     [self.frostedViewController hideMenuViewController];
+    [self.frostedViewController hideMenuViewController];
     UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"OrataroVc"];
     
     [self.navigationController pushViewController:wc animated:NO];

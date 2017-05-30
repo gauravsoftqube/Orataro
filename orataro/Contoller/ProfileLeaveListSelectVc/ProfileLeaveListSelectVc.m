@@ -114,10 +114,49 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //ProfileLeaveDetailListVc
-    ProfileLeaveDetailListVc  *vc10 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfileLeaveDetailListVc"];
-    vc10.dicLeaveDetails = [arySaveDataLeave objectAtIndex:indexPath.row];
-    [self.navigationController pushViewController:vc10 animated:YES];
+    if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
+    {
+        if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
+        {
+            if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Parent"] )
+            {
+                if([[Utility getUserRoleRightList:@"Leave Application" settingType:@"IsEdit"] integerValue] == 1)
+                {
+                    //ProfileLeaveDetailListVc
+                    ProfileLeaveDetailListVc  *vc10 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfileLeaveDetailListVc"];
+                    vc10.dicLeaveDetails = [arySaveDataLeave objectAtIndex:indexPath.row];
+                    [self.navigationController pushViewController:vc10 animated:YES];
+                }
+                else
+                {
+                    [WToast showWithText:You_dont_have_permission];
+                }
+            }
+            else
+            {
+                //ProfileLeaveDetailListVc
+                ProfileLeaveDetailListVc  *vc10 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfileLeaveDetailListVc"];
+                vc10.dicLeaveDetails = [arySaveDataLeave objectAtIndex:indexPath.row];
+                [self.navigationController pushViewController:vc10 animated:YES];
+            }
+        }
+        else
+        {
+            //ProfileLeaveDetailListVc
+            ProfileLeaveDetailListVc  *vc10 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfileLeaveDetailListVc"];
+            vc10.dicLeaveDetails = [arySaveDataLeave objectAtIndex:indexPath.row];
+            [self.navigationController pushViewController:vc10 animated:YES];
+        }
+    }
+    else
+    {
+        //ProfileLeaveDetailListVc
+        ProfileLeaveDetailListVc  *vc10 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfileLeaveDetailListVc"];
+        vc10.dicLeaveDetails = [arySaveDataLeave objectAtIndex:indexPath.row];
+        [self.navigationController pushViewController:vc10 animated:YES];
+    }
+
+   
     
 }
 

@@ -207,63 +207,302 @@
         {
             MyProfileVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MyProfileVc"];
             navigationController.viewControllers = @[homeViewController];
+            self.frostedViewController.contentViewController = navigationController;
             break;
         }
         case 1:
         {
-            CircularVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CircularVc"];
-            navigationController.viewControllers = @[homeViewController];
+            if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"] )
+            {
+                if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
+                {
+                    if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Parent"] )
+                    {
+                        if([[Utility getUserRoleRightList:@"Circular" settingType:@"IsView"] integerValue] == 1)
+                        {
+                            CircularVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CircularVc"];
+                            navigationController.viewControllers = @[homeViewController];
+                            self.frostedViewController.contentViewController = navigationController;
+                        }
+                        else
+                        {
+                            [WToast showWithText:You_dont_have_permission];
+                        }
+                    }
+                    else
+                    {
+                        CircularVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CircularVc"];
+                        navigationController.viewControllers = @[homeViewController];
+                        self.frostedViewController.contentViewController = navigationController;
+                    }
+                }
+                else
+                {
+                    CircularVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CircularVc"];
+                    navigationController.viewControllers = @[homeViewController];
+                    self.frostedViewController.contentViewController = navigationController;
+                }
+            }
+            else
+            {
+                CircularVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CircularVc"];
+                navigationController.viewControllers = @[homeViewController];
+                self.frostedViewController.contentViewController = navigationController;
+            }
             break;
         }
         case 2:
         {
             WallVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"WallVc"];
             navigationController.viewControllers = @[homeViewController];
+            self.frostedViewController.contentViewController = navigationController;
             break;
         }
         case 3:
         {
-            HomeWrokVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"HomeWrokVc"];
-            navigationController.viewControllers = @[homeViewController];
+            if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
+            {
+                if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
+                {
+                    if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Parent"] )
+                    {
+                        if([[Utility getUserRoleRightList:@"Home Work" settingType:@"IsView"] integerValue] == 1)
+                        {
+                            HomeWrokVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"HomeWrokVc"];
+                            navigationController.viewControllers = @[homeViewController];
+                            self.frostedViewController.contentViewController = navigationController;
+                        }
+                        else
+                        {
+                            [WToast showWithText:You_dont_have_permission];
+                        }
+                    }
+                    else
+                    {
+                        HomeWrokVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"HomeWrokVc"];
+                        navigationController.viewControllers = @[homeViewController];
+                        self.frostedViewController.contentViewController = navigationController;
+                    }
+                }
+                else
+                {
+                    HomeWrokVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"HomeWrokVc"];
+                    navigationController.viewControllers = @[homeViewController];
+                    self.frostedViewController.contentViewController = navigationController;
+                }
+            }
+            else
+            {
+                HomeWrokVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"HomeWrokVc"];
+                navigationController.viewControllers = @[homeViewController];
+                self.frostedViewController.contentViewController = navigationController;
+            }
             break;
         }
         case 4:
         {
-            ClassworkVC  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ClassworkVC"];
-            navigationController.viewControllers = @[homeViewController];
+            if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
+            {
+                if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
+                {
+                    if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Parent"] )
+                    {
+                        if([[Utility getUserRoleRightList:@"Class Work" settingType:@"IsView"] integerValue] == 1)
+                        {
+                            ClassworkVC  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ClassworkVC"];
+                            navigationController.viewControllers = @[homeViewController];
+                            self.frostedViewController.contentViewController = navigationController;
+                        }
+                        else
+                        {
+                            [WToast showWithText:You_dont_have_permission];
+                        }
+                    }
+                    else
+                    {
+                        ClassworkVC  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ClassworkVC"];
+                        navigationController.viewControllers = @[homeViewController];
+                        self.frostedViewController.contentViewController = navigationController;
+                    }
+                }
+                else
+                {
+                    ClassworkVC  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ClassworkVC"];
+                    navigationController.viewControllers = @[homeViewController];
+                    self.frostedViewController.contentViewController = navigationController;
+                }
+            }
+            else
+            {
+                ClassworkVC  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ClassworkVC"];
+                navigationController.viewControllers = @[homeViewController];
+                self.frostedViewController.contentViewController = navigationController;
+            }
             break;
         }
         case 5:
         {
-            if ([Utility isInterNetConnectionIsActive] == false)
+            if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
             {
-                UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                [alrt show];
-                [ProgressHUB hideenHUDAddedTo:self.view];
-                return;
+                if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
+                {
+                    if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Parent"] )
+                    {
+                        if([[Utility getUserRoleRightList:@"Attendance" settingType:@"IsView"] integerValue] == 1)
+                        {
+                            if ([Utility isInterNetConnectionIsActive] == false)
+                            {
+                                UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                                [alrt show];
+                                [ProgressHUB hideenHUDAddedTo:self.view];
+                                return;
+                            }
+                            else
+                            {
+                                AttendanceVC  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AttendanceVC"];
+                                navigationController.viewControllers = @[homeViewController];
+                                self.frostedViewController.contentViewController = navigationController;
+                            }
+                        }
+                        else
+                        {
+                            [WToast showWithText:You_dont_have_permission];
+                        }
+                    }
+                    else
+                    {
+                        if ([Utility isInterNetConnectionIsActive] == false)
+                        {
+                            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                            [alrt show];
+                            [ProgressHUB hideenHUDAddedTo:self.view];
+                            return;
+                        }
+                        else
+                        {
+                            AttendanceVC  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AttendanceVC"];
+                            navigationController.viewControllers = @[homeViewController];
+                            self.frostedViewController.contentViewController = navigationController;
+                        }
+                    }
+                }
+                else
+                {
+                    if ([Utility isInterNetConnectionIsActive] == false)
+                    {
+                        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                        [alrt show];
+                        [ProgressHUB hideenHUDAddedTo:self.view];
+                        return;
+                    }
+                    else
+                    {
+                        AttendanceVC  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AttendanceVC"];
+                        navigationController.viewControllers = @[homeViewController];
+                        self.frostedViewController.contentViewController = navigationController;
+                    }
+                }
             }
             else
             {
-                AttendanceVC  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AttendanceVC"];
-                navigationController.viewControllers = @[homeViewController];
+                if ([Utility isInterNetConnectionIsActive] == false)
+                {
+                    UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alrt show];
+                    [ProgressHUB hideenHUDAddedTo:self.view];
+                    return;
+                }
+                else
+                {
+                    AttendanceVC  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AttendanceVC"];
+                    navigationController.viewControllers = @[homeViewController];
+                    self.frostedViewController.contentViewController = navigationController;
+                }
             }
-            
             break;
         }
         case 6:
         {
-            ag.checkListelection = 1;
-            
-            if([[Utility getMemberType] isEqualToString:@"Student"])
+            if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
             {
-                StudentListViewController  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"StudentListViewController"];
-                navigationController.viewControllers = @[homeViewController];
-                
+                if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
+                {
+                    if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Parent"] )
+                    {
+                        if([[Utility getUserRoleRightList:@"PT Communicatoin" settingType:@"IsView"] integerValue] == 1)
+                        {
+                            ag.checkListelection = 1;
+                            if([[Utility getMemberType] isEqualToString:@"Student"])
+                            {
+                                StudentListViewController  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"StudentListViewController"];
+                                navigationController.viewControllers = @[homeViewController];
+                                self.frostedViewController.contentViewController = navigationController;
+                            }
+                            else
+                            {
+                                ListSelectionVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
+                                navigationController.viewControllers = @[homeViewController];
+                                self.frostedViewController.contentViewController = navigationController;
+                            }
+
+                        }
+                        else
+                        {
+                            [WToast showWithText:You_dont_have_permission];
+                        }
+                    }
+                    else
+                    {
+                        ag.checkListelection = 1;
+                        if([[Utility getMemberType] isEqualToString:@"Student"])
+                        {
+                            StudentListViewController  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"StudentListViewController"];
+                            navigationController.viewControllers = @[homeViewController];
+                            self.frostedViewController.contentViewController = navigationController;
+                        }
+                        else
+                        {
+                            ListSelectionVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
+                            navigationController.viewControllers = @[homeViewController];
+                            self.frostedViewController.contentViewController = navigationController;
+                        }
+
+                    }
+                }
+                else
+                {
+                    ag.checkListelection = 1;
+                    if([[Utility getMemberType] isEqualToString:@"Student"])
+                    {
+                        StudentListViewController  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"StudentListViewController"];
+                        navigationController.viewControllers = @[homeViewController];
+                        self.frostedViewController.contentViewController = navigationController;
+                    }
+                    else
+                    {
+                        ListSelectionVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
+                        navigationController.viewControllers = @[homeViewController];
+                        self.frostedViewController.contentViewController = navigationController;
+                    }
+
+                }
             }
             else
             {
-                ListSelectionVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
-                navigationController.viewControllers = @[homeViewController];
+                ag.checkListelection = 1;
+                if([[Utility getMemberType] isEqualToString:@"Student"])
+                {
+                    StudentListViewController  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"StudentListViewController"];
+                    navigationController.viewControllers = @[homeViewController];
+                    self.frostedViewController.contentViewController = navigationController;
+                }
+                else
+                {
+                    ListSelectionVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
+                    navigationController.viewControllers = @[homeViewController];
+                    self.frostedViewController.contentViewController = navigationController;
+                }
+
             }
             break;
         }
@@ -271,74 +510,222 @@
         {
             MessageVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MessageVc"];
             navigationController.viewControllers = @[homeViewController];
+            self.frostedViewController.contentViewController = navigationController;
             break;
         }
         case 8:
         {
             TimeTableVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"TimeTableVc"];
             navigationController.viewControllers = @[homeViewController];
+            self.frostedViewController.contentViewController = navigationController;
             break;
         }
         case 9:
         {
-            NoteVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NoteVc"];
-            navigationController.viewControllers = @[homeViewController];
+            if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
+            {
+                if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
+                {
+                    if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Parent"] )
+                    {
+                        if([[Utility getUserRoleRightList:@"Note" settingType:@"IsView"] integerValue] == 1)
+                        {
+                            NoteVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NoteVc"];
+                            navigationController.viewControllers = @[homeViewController];
+                            self.frostedViewController.contentViewController = navigationController;
+                        }
+                        else
+                        {
+                            [WToast showWithText:You_dont_have_permission];
+                        }
+                    }
+                    else
+                    {
+                        NoteVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NoteVc"];
+                        navigationController.viewControllers = @[homeViewController];
+                        self.frostedViewController.contentViewController = navigationController;
+                    }
+                }
+                else
+                {
+                    NoteVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NoteVc"];
+                    navigationController.viewControllers = @[homeViewController];
+                    self.frostedViewController.contentViewController = navigationController;
+                }
+            }
+            else
+            {
+                NoteVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NoteVc"];
+                navigationController.viewControllers = @[homeViewController];
+                self.frostedViewController.contentViewController = navigationController;
+            }
             break;
         }
         case 10:
         {
-            HolidayVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"HolidayVc"];
-            navigationController.viewControllers = @[homeViewController];
+            if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
+            {
+                if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
+                {
+                    if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Parent"] )
+                    {
+                        if([[Utility getUserRoleRightList:@"Holiday" settingType:@"IsView"] integerValue] == 1)
+                        {
+                            HolidayVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"HolidayVc"];
+                            navigationController.viewControllers = @[homeViewController];
+                            self.frostedViewController.contentViewController = navigationController;
+                        }
+                        else
+                        {
+                            [WToast showWithText:You_dont_have_permission];
+                        }
+                    }
+                    else
+                    {
+                        HolidayVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"HolidayVc"];
+                        navigationController.viewControllers = @[homeViewController];
+                        self.frostedViewController.contentViewController = navigationController;
+                    }
+                }
+                else
+                {
+                    HolidayVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"HolidayVc"];
+                    navigationController.viewControllers = @[homeViewController];
+                    self.frostedViewController.contentViewController = navigationController;
+                }
+            }
+            else
+            {
+                HolidayVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"HolidayVc"];
+                navigationController.viewControllers = @[homeViewController];
+                self.frostedViewController.contentViewController = navigationController;
+            }
             break;
         }
         case 11:
         {
             CalenderVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CalenderVc"];
             navigationController.viewControllers = @[homeViewController];
+            self.frostedViewController.contentViewController = navigationController;
             break;
         }
         case 12:
         {
-            PollVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PollVc"];
-            navigationController.viewControllers = @[homeViewController];
+            if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
+            {
+                if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
+                {
+                    if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Parent"] )
+                    {
+                        if([[Utility getUserRoleRightList:@"Poll" settingType:@"IsView"] integerValue] == 1)
+                        {
+                            PollVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PollVc"];
+                            navigationController.viewControllers = @[homeViewController];
+                            self.frostedViewController.contentViewController = navigationController;
+                        }
+                        else
+                        {
+                            [WToast showWithText:You_dont_have_permission];
+                        }
+                    }
+                    else
+                    {
+                        PollVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PollVc"];
+                        navigationController.viewControllers = @[homeViewController];
+                        self.frostedViewController.contentViewController = navigationController;
+                    }
+                }
+                else
+                {
+                    PollVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PollVc"];
+                    navigationController.viewControllers = @[homeViewController];
+                    self.frostedViewController.contentViewController = navigationController;
+                }
+            }
+            else
+            {
+                PollVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PollVc"];
+                navigationController.viewControllers = @[homeViewController];
+                self.frostedViewController.contentViewController = navigationController;
+            }
             break;
         }
         case 13:
         {
             NotificationVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NotificationVc"];
             navigationController.viewControllers = @[homeViewController];
+            self.frostedViewController.contentViewController = navigationController;
             break;
         }
         case 14:
         {
-            CreateReminderVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CreateReminderVc"];
-            navigationController.viewControllers = @[homeViewController];
+            if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
+            {
+                if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
+                {
+                    if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Parent"] )
+                    {
+                        if([[Utility getUserRoleRightList:@"Reminders" settingType:@"IsView"] integerValue] == 1)
+                        {
+                            CreateReminderVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CreateReminderVc"];
+                            navigationController.viewControllers = @[homeViewController];
+                            self.frostedViewController.contentViewController = navigationController;
+                        }
+                        else
+                        {
+                            [WToast showWithText:You_dont_have_permission];
+                        }
+                    }
+                    else
+                    {
+                        CreateReminderVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CreateReminderVc"];
+                        navigationController.viewControllers = @[homeViewController];
+                        self.frostedViewController.contentViewController = navigationController;
+                    }
+                }
+                else
+                {
+                    CreateReminderVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CreateReminderVc"];
+                    navigationController.viewControllers = @[homeViewController];
+                    self.frostedViewController.contentViewController = navigationController;
+                }
+            }
+            else
+            {
+                CreateReminderVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CreateReminderVc"];
+                navigationController.viewControllers = @[homeViewController];
+                self.frostedViewController.contentViewController = navigationController;
+            }
+            
             break;
         }
         case 15:
         {
             AboutOrataroVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AboutOrataroVc"];
             navigationController.viewControllers = @[homeViewController];
+            self.frostedViewController.contentViewController = navigationController;
             break;
         }
         case 16:
         {
             SettingVcViewController  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SettingVcViewController"];
             navigationController.viewControllers = @[homeViewController];
+            self.frostedViewController.contentViewController = navigationController;
             break;
         }
         case 17:
         {
             FAQvc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"FAQvc"];
             navigationController.viewControllers = @[homeViewController];
+            self.frostedViewController.contentViewController = navigationController;
             break;
         }
         default:
             break;
     }
-    self.frostedViewController.contentViewController = navigationController;
+    //self.frostedViewController.contentViewController = navigationController;
+    // [self.frostedViewController hideMenuViewController];
     [self.frostedViewController hideMenuViewController];
-    
     //
 }
 
@@ -386,15 +773,15 @@
              @try
              {
                  NSLog(@"arr=%@",arrResponce);
-                
-               //  [[NSUserDefaults standardUserDefaults]setObject:arrResponce forKey:@"TotalCountofMember"];
-               //  [[NSUserDefaults standardUserDefaults]synchronize];
+                 
+                 //  [[NSUserDefaults standardUserDefaults]setObject:arrResponce forKey:@"TotalCountofMember"];
+                 //  [[NSUserDefaults standardUserDefaults]synchronize];
                  
                  getData= [arrResponce objectForKey:@"Table"];
                  
                  [_tblMenuTable reloadData];
                  
-
+                 
              }
              @catch (NSException *exception)
              {
