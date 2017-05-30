@@ -46,7 +46,7 @@
 {
     arySaveDataLeave=[DBOperation selectData:[NSString stringWithFormat:@"select * from SelectionList"]];
     
-    [_tblListSelectionLeave reloadData];
+    //[_tblListSelectionLeave reloadData];
     
     if (arySaveDataLeave.count == 0)
     {
@@ -66,7 +66,9 @@
     {
         if ([Utility isInterNetConnectionIsActive] == false)
         {
+            arySaveDataLeave=[DBOperation selectData:[NSString stringWithFormat:@"select * from SelectionList"]];
             
+            [_tblListSelectionLeave reloadData];
         }
         else
         {

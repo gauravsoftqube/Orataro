@@ -692,8 +692,8 @@
                      }
                      @catch (NSException *exception)
                      {
-                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                         [alrt show];
+                         //UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                         //[alrt show];
                      }
                      
                      

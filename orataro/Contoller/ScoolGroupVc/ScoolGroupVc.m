@@ -15,6 +15,7 @@
 {
     AppDelegate *p;
     NSMutableArray *aryFetchData,*aryTempStoreData;
+    NSMutableDictionary *DicDeleteData;
 }
 @end
 
@@ -93,7 +94,7 @@
     {
         if ([Utility isInterNetConnectionIsActive] == true)
         {
-            [self apiCallFor_GetGroupList:NO];
+            [self apiCallFor_GetGroupList:YES];
         }
         else
         {
@@ -183,16 +184,16 @@
         {
             if ([Utility isInterNetConnectionIsActive] == true)
             {
-                NSLog(@"data=%@",[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"GroupImage"]]);
+               // NSLog(@"data=%@",[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"GroupImage"]]);
                 
                 // [cell2 setContentMode:UIViewContentModeScaleAspectFit];
                 
-                NSLog(@"url=%@",[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"GroupImage"]]]);
+               // NSLog(@"url=%@",[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"GroupImage"]]]);
                 
                 [img sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"GroupImage"]]] placeholderImage:[UIImage imageNamed:@"no_img"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL)
                  {
                      // CREATE TABLE "SchoolGroupList" ("id" INTEGER PRIMARY KEY  NOT NULL , "jsonStr" VARCHAR, "ImageJsonstr" VARCHAR, "flag" VARCHAR)
-                    // img.image = image;
+                     img.image = image;
                      
                      [DBOperation selectData:[NSString stringWithFormat:@"update SchoolGroupList set flag='1' where id=%@",[[aryTempStoreData objectAtIndex:indexPath.row]objectForKey:@"id"]]];
                      
@@ -217,7 +218,21 @@
                      }
                      else
                      {
-                         NSArray *getExtension = [strSaveImg componentsSeparatedByString:@"."];
+                         NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
+                         [imageData writeToFile:imagePath atomically:NO];
+                         
+                         if (![imageData writeToFile:imagePath atomically:NO])
+                         {
+                             NSLog(@"Failed to cache image data to disk");
+                         }
+                         else
+                         {
+                             [imageData writeToFile:imagePath atomically:NO];
+                             NSLog(@"the cachedImagedPath is %@",imagePath);
+                         }
+
+                         
+                        /* NSArray *getExtension = [strSaveImg componentsSeparatedByString:@"."];
                          
                          if ([[getExtension objectAtIndex:1] isEqualToString:@"jpg"] || [[getExtension objectAtIndex:1] isEqualToString:@"JPG"] ||
                              [[getExtension objectAtIndex:1] isEqualToString:@"jpeg"] || [[getExtension objectAtIndex:1] isEqualToString:@"png"] )
@@ -250,7 +265,7 @@
                                  NSLog(@"the cachedImagedPath is %@",imagePath);
                              }
                              
-                         }
+                         }*/
                          //jpg
                          
                      }
@@ -407,8 +422,17 @@
     else
     {
           _viewDeletePopup.hidden = YES;
-        NSLog(@"Fetch=%@",[[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"GropuID"]);
         
+
+        
+        NSLog(@"Data=%@",DicDeleteData);
+        
+      //  NSLog(@"Data=%@",[aryFetchData objectAtIndex:indexPath.row]);
+        
+       // NSLog(@"Fetch=%@",[[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"GropuID"]);
+        
+        [self apiCallFor_DeleteGroupList:[DicDeleteData objectForKey:@"GropuID"] row:[[NSString stringWithFormat:@"%ld",btn.tag] intValue]];
+
         [self apiCallFor_DeleteGroupList:[[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"GropuID"] row:[[NSString stringWithFormat:@"%ld",(long)btn.tag] intValue]];
     }
 
@@ -421,6 +445,20 @@
 
 - (IBAction)DeleteBtnClicked:(id)sender
 {
+
+    _viewDeletePopup.hidden = NO;
+    [self.view bringSubviewToFront:_viewDeletePopup];
+    
+   // UIButton *btn = (UIButton *)sender;
+    
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tblScoolGroupList];
+    NSIndexPath *indexPath = [self.tblScoolGroupList indexPathForRowAtPoint:buttonPosition];
+    
+    
+    DicDeleteData = [aryFetchData objectAtIndex:indexPath.row];
+    //DicDeleteData
+    
+
     if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
     {
         if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
@@ -454,6 +492,7 @@
         _viewDeletePopup.hidden = NO;
         [self.view bringSubviewToFront:_viewDeletePopup];
     }
+
 }
 
 - (IBAction)btnBackHeader:(id)sender
@@ -639,6 +678,7 @@
         // CREATE TABLE "SchoolGroupList" ("id" INTEGER PRIMARY KEY  NOT NULL , "jsonStr" VARCHAR, "ImageJsonstr" VARCHAR, "flag" VARCHAR)
         
         NSString *getjsonstr = [Utility Convertjsontostring:dic];
+        
         [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO SchoolGroupList (jsonStr,ImageJsonstr,flag) VALUES ('%@','%@','0')",getjsonstr,strSaveImg]];
     }
     NSArray *ary = [DBOperation selectData:@"select * from SchoolGroupList"];
@@ -663,6 +703,7 @@
     //GroupID=4321a357-1c4a-429e-b803-fe4989abf59c
     
     NSLog(@"Row=%d",row);
+    NSLog(@"Group id=%@",groupId);
     
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_group,apk_Remove_Group_action];
     
@@ -691,12 +732,8 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"Group Removed"])
                  {
-                    // UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     //[alrt show];
-                   //  if (aryFetchData.count > 0)
-                   //  {
-                         [self apiCallFor_GetGroupList:YES];
-                    // }
+                        [self apiCallFor_GetGroupList:YES];
+                     
                  }
                  else
                  {

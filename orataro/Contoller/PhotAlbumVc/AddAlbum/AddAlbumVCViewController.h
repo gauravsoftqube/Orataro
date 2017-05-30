@@ -8,12 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AddAlbumVCViewController : UIViewController
+@interface AddAlbumVCViewController : UIViewController<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate>
+
 @property (weak, nonatomic) IBOutlet UIImageView *imgFriend;
 @property (weak, nonatomic) IBOutlet UIView *viewAddOuter;
 - (IBAction)btnAddClicked:(id)sender;
 - (IBAction)btnBackClicked:(id)sender;
 - (IBAction)btnSaveClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UITextField *txtAlbumName;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @end

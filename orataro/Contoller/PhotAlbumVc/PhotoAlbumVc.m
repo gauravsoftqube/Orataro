@@ -40,7 +40,21 @@
     
     [aCollectionView registerNib:[UINib nibWithNibName:@"PhotoalbumCell" bundle:nil] forCellWithReuseIdentifier:@"PhotosCell"];
     
-    addBtn.layer.cornerRadius  = 30.0;
+    NSLog(@"Current=%@",[Utility getCurrentUserDetail]);
+    
+    NSMutableDictionary *dic =[Utility getCurrentUserDetail];
+    NSString *strCheckVal = [NSString stringWithFormat:@"%@",[dic objectForKey:@"IsAllowUserToPostPhoto"]];
+    if([strCheckVal isEqualToString:@"1"])
+    {
+        _viewadd.hidden = NO;
+    }
+    else
+    {
+        _viewadd.hidden = YES;
+    }
+    
+   // addBtn.layer.cornerRadius  = 30.0;
+    _viewadd.layer.cornerRadius  = 30.0;
     aSecondBottomView.hidden = YES;
     aFirstBottomView.hidden = NO;
     
@@ -59,7 +73,7 @@
     
     //CREATE TABLE "PhotoAlbumList" ("id" INTEGER PRIMARY KEY  NOT NULL , "PhotoAlbumJsonStr" VARCHAR, "Flag" VARCHAR, "PhotoAlbumImageStr" VARCHAR)
     
-    _lbHeaderTitle.text = [NSString stringWithFormat:@"PhotosAlbum (%@)",[Utility getCurrentUserName]];
+       _lbHeaderTitle.text = [NSString stringWithFormat:@"PhotosAlbum (%@)",[Utility getCurrentUserName]];
     
     aFirstBtn.tag = 1;
     aSecondBtn.tag = 0;
