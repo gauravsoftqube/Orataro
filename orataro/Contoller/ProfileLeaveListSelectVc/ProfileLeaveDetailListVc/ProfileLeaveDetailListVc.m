@@ -191,24 +191,99 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
-    
-    if([[dicCurrentUser objectForKey:@"MemberType"] isEqualToString:@"Student"])
+    if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
     {
-        ProfileStudentLeaveVc *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"ProfileStudentLeaveVc"];
-        vc.dicStudentLeaveData = [[[arrLeaveList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
-        vc.strAddEdit = @"Edit";
-        [self.navigationController pushViewController:vc animated:YES];
+        if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
+        {
+            if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Parent"] )
+            {
+                if([[Utility getUserRoleRightList:@"Leave Application" settingType:@"IsEdit"] integerValue] == 1)
+                {
+                    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+                    if([[dicCurrentUser objectForKey:@"MemberType"] isEqualToString:@"Student"])
+                    {
+                        ProfileStudentLeaveVc *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"ProfileStudentLeaveVc"];
+                        vc.dicStudentLeaveData = [[[arrLeaveList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
+                        vc.strAddEdit = @"Edit";
+                        [self.navigationController pushViewController:vc animated:YES];
+                    }
+                    else
+                    {
+                        //LeaveVc
+                        LeaveVc *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"LeaveVc"];
+                        vc.dicAddLeave = [[[arrLeaveList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
+                        vc.dicLeaveDetails = _dicLeaveDetails;
+                        [self.navigationController pushViewController:vc animated:YES];
+                    }
+
+                }
+                else
+                {
+                    [WToast showWithText:You_dont_have_permission];
+                }
+            }
+            else
+            {
+                NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+                if([[dicCurrentUser objectForKey:@"MemberType"] isEqualToString:@"Student"])
+                {
+                    ProfileStudentLeaveVc *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"ProfileStudentLeaveVc"];
+                    vc.dicStudentLeaveData = [[[arrLeaveList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
+                    vc.strAddEdit = @"Edit";
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+                else
+                {
+                    //LeaveVc
+                    LeaveVc *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"LeaveVc"];
+                    vc.dicAddLeave = [[[arrLeaveList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
+                    vc.dicLeaveDetails = _dicLeaveDetails;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+
+            }
+        }
+        else
+        {
+            NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+            if([[dicCurrentUser objectForKey:@"MemberType"] isEqualToString:@"Student"])
+            {
+                ProfileStudentLeaveVc *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"ProfileStudentLeaveVc"];
+                vc.dicStudentLeaveData = [[[arrLeaveList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
+                vc.strAddEdit = @"Edit";
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            else
+            {
+                //LeaveVc
+                LeaveVc *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"LeaveVc"];
+                vc.dicAddLeave = [[[arrLeaveList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
+                vc.dicLeaveDetails = _dicLeaveDetails;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+
+        }
         
     }
     else
     {
-        //LeaveVc
-        
-        LeaveVc *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"LeaveVc"];
-        vc.dicAddLeave = [[[arrLeaveList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
-        vc.dicLeaveDetails = _dicLeaveDetails;
-        [self.navigationController pushViewController:vc animated:YES];
+        NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+        if([[dicCurrentUser objectForKey:@"MemberType"] isEqualToString:@"Student"])
+        {
+            ProfileStudentLeaveVc *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"ProfileStudentLeaveVc"];
+            vc.dicStudentLeaveData = [[[arrLeaveList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
+            vc.strAddEdit = @"Edit";
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        else
+        {
+            //LeaveVc
+            LeaveVc *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"LeaveVc"];
+            vc.dicAddLeave = [[[arrLeaveList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
+            vc.dicLeaveDetails = _dicLeaveDetails;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+
     }
 }
 
@@ -422,8 +497,42 @@
 
 - (IBAction)btnAddClicked:(id)sender
 {
-    ProfileStudentLeaveVc *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"ProfileStudentLeaveVc"];
-     vc.strAddEdit = @"Add";
-    [self.navigationController pushViewController:vc animated:YES];
+    if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
+    {
+        if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
+        {
+            if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Parent"] )
+            {
+                if([[Utility getUserRoleRightList:@"Leave Application" settingType:@"IsCreate"] integerValue] == 1)
+                {
+                    ProfileStudentLeaveVc *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"ProfileStudentLeaveVc"];
+                    vc.strAddEdit = @"Add";
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+                else
+                {
+                    [WToast showWithText:You_dont_have_permission];
+                }
+            }
+            else
+            {
+                ProfileStudentLeaveVc *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"ProfileStudentLeaveVc"];
+                vc.strAddEdit = @"Add";
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        }
+        else
+        {
+            ProfileStudentLeaveVc *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"ProfileStudentLeaveVc"];
+            vc.strAddEdit = @"Add";
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }
+    else
+    {
+        ProfileStudentLeaveVc *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"ProfileStudentLeaveVc"];
+        vc.strAddEdit = @"Add";
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 @end

@@ -156,12 +156,59 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ProfileAddUpdateListDetailListVc *l = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfileAddUpdateListDetailListVc"];
-    l.strVctoNavigate =@"Edit";
-    
-    l.dicUpdateList = [[[aryGetHappyGramList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];;
-    l.dicHappygramDetails = _dicHappyGrameList;
-    [self.navigationController pushViewController:l animated:YES];
+    if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
+    {
+        if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
+        {
+            if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Parent"] )
+            {
+                if([[Utility getUserRoleRightList:@"Happy Gram" settingType:@"IsEdit"] integerValue] == 1)
+                {
+                    ProfileAddUpdateListDetailListVc *l = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfileAddUpdateListDetailListVc"];
+                    l.strVctoNavigate =@"Edit";
+                    
+                    l.dicUpdateList = [[[aryGetHappyGramList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];;
+                    l.dicHappygramDetails = _dicHappyGrameList;
+                    [self.navigationController pushViewController:l animated:YES];
+
+                }
+                else
+                {
+                    [WToast showWithText:You_dont_have_permission];
+                }
+            }
+            else
+            {
+                ProfileAddUpdateListDetailListVc *l = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfileAddUpdateListDetailListVc"];
+                l.strVctoNavigate =@"Edit";
+                
+                l.dicUpdateList = [[[aryGetHappyGramList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];;
+                l.dicHappygramDetails = _dicHappyGrameList;
+                [self.navigationController pushViewController:l animated:YES];
+
+            }
+        }
+        else
+        {
+            ProfileAddUpdateListDetailListVc *l = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfileAddUpdateListDetailListVc"];
+            l.strVctoNavigate =@"Edit";
+            
+            l.dicUpdateList = [[[aryGetHappyGramList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];;
+            l.dicHappygramDetails = _dicHappyGrameList;
+            [self.navigationController pushViewController:l animated:YES];
+
+        }
+    }
+    else
+    {
+        ProfileAddUpdateListDetailListVc *l = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfileAddUpdateListDetailListVc"];
+        l.strVctoNavigate =@"Edit";
+        
+        l.dicUpdateList = [[[aryGetHappyGramList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];;
+        l.dicHappygramDetails = _dicHappyGrameList;
+        [self.navigationController pushViewController:l animated:YES];
+
+    }
     
 }
 
@@ -173,17 +220,79 @@
 }
 - (IBAction)btnAddNew:(id)sender
 {
-    if ([Utility isInterNetConnectionIsActive] == false)
+    if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
     {
-        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alrt show];
-        return;
+        if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
+        {
+            if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Parent"] )
+            {
+                if([[Utility getUserRoleRightList:@"Happy Gram" settingType:@"IsCreate"] integerValue] == 1)
+                {
+                    if ([Utility isInterNetConnectionIsActive] == false)
+                    {
+                        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                        [alrt show];
+                        return;
+                    }
+                    ProfileAddUpdateListDetailListVc *l = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfileAddUpdateListDetailListVc"];
+                    l.strVctoNavigate =@"Add";
+                    l.dicHappygramDetails = _dicHappyGrameList;
+                    
+                    [self.navigationController pushViewController:l animated:YES];
+
+                }
+                else
+                {
+                    [WToast showWithText:You_dont_have_permission];
+                }
+            }
+            else
+            {
+                if ([Utility isInterNetConnectionIsActive] == false)
+                {
+                    UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alrt show];
+                    return;
+                }
+                ProfileAddUpdateListDetailListVc *l = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfileAddUpdateListDetailListVc"];
+                l.strVctoNavigate =@"Add";
+                l.dicHappygramDetails = _dicHappyGrameList;
+                
+                [self.navigationController pushViewController:l animated:YES];
+
+            }
+        }
+        else
+        {
+            if ([Utility isInterNetConnectionIsActive] == false)
+            {
+                UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alrt show];
+                return;
+            }
+            ProfileAddUpdateListDetailListVc *l = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfileAddUpdateListDetailListVc"];
+            l.strVctoNavigate =@"Add";
+            l.dicHappygramDetails = _dicHappyGrameList;
+            
+            [self.navigationController pushViewController:l animated:YES];
+
+        }
     }
-    ProfileAddUpdateListDetailListVc *l = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfileAddUpdateListDetailListVc"];
-    l.strVctoNavigate =@"Add";
-    l.dicHappygramDetails = _dicHappyGrameList;
-    
-    [self.navigationController pushViewController:l animated:YES];
+    else
+    {
+        if ([Utility isInterNetConnectionIsActive] == false)
+        {
+            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alrt show];
+            return;
+        }
+        ProfileAddUpdateListDetailListVc *l = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfileAddUpdateListDetailListVc"];
+        l.strVctoNavigate =@"Add";
+        l.dicHappygramDetails = _dicHappyGrameList;
+        
+        [self.navigationController pushViewController:l animated:YES];
+
+    }
 }
 
 

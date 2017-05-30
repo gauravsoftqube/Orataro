@@ -369,7 +369,6 @@
 {
     ChatVc  *c = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ChatVc"];
     c.dicChatData = [arrCummunicationList objectAtIndex:indexPath.row];
-    
     [self.navigationController pushViewController:c animated:YES];
 }
 
@@ -384,10 +383,40 @@
 }
 - (IBAction)AddBtnClicked:(id)sender
 {
-    aPopupMainView.hidden = NO;
-    [self.view bringSubviewToFront:aPopupMainView];
+    if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
+    {
+        if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
+        {
+            if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Parent"] )
+            {
+                if([[Utility getUserRoleRightList:@"PT Communicatoin" settingType:@"IsCreate"] integerValue] == 1)
+                {
+                    aPopupMainView.hidden = NO;
+                    [self.view bringSubviewToFront:aPopupMainView];
+                }
+                else
+                {
+                    [WToast showWithText:You_dont_have_permission];
+                }
+            }
+            else
+            {
+                aPopupMainView.hidden = NO;
+                [self.view bringSubviewToFront:aPopupMainView];
+            }
+        }
+        else
+        {
+            aPopupMainView.hidden = NO;
+            [self.view bringSubviewToFront:aPopupMainView];
+        }
+    }
+    else
+    {
+        aPopupMainView.hidden = NO;
+        [self.view bringSubviewToFront:aPopupMainView];
+    }
 }
-
 
 - (IBAction)BackBtnClicked:(UIButton *)sender
 {

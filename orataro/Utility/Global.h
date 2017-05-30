@@ -273,6 +273,7 @@
 #define apk_ChangePassword_action @"ChangePassword"
 #define apk_GetUserRoleRightList_action @"GetUserRoleRightList"
 #define apk_ChangeGCMID @"ChangeGCMID"
+#define apk_SaveLoginLog_action @"SaveLoginLog"
 
 #pragma mark - Image Url
 

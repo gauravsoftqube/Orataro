@@ -211,35 +211,122 @@
 
 - (IBAction)addBtnClicked:(id)sender
 {
-    if ([Utility isInterNetConnectionIsActive] == false)
+    if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
     {
-        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alrt show];
-        return;
+        if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
+        {
+            if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Parent"] )
+            {
+                if([[Utility getUserRoleRightList:@"Project" settingType:@"IsCreate"] integerValue] == 1)
+                {
+                    if ([Utility isInterNetConnectionIsActive] == false)
+                    {
+                        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                        [alrt show];
+                        return;
+                    }
+                    CreateProjectVc *s = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"CreateProjectVc"];
+                    s.projectvar = @"Create";
+                    [self.navigationController pushViewController:s animated:YES];
+                }
+                else
+                {
+                    [WToast showWithText:You_dont_have_permission];
+                }
+            }
+            else
+            {
+                if ([Utility isInterNetConnectionIsActive] == false)
+                {
+                    UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alrt show];
+                    return;
+                }
+                CreateProjectVc *s = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"CreateProjectVc"];
+                s.projectvar = @"Create";
+                [self.navigationController pushViewController:s animated:YES];
+            }
+        }
+        else
+        {
+            if ([Utility isInterNetConnectionIsActive] == false)
+            {
+                UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alrt show];
+                return;
+            }
+            CreateProjectVc *s = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"CreateProjectVc"];
+            s.projectvar = @"Create";
+            [self.navigationController pushViewController:s animated:YES];
+        }
     }
-    CreateProjectVc *s = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"CreateProjectVc"];
-    s.projectvar = @"Create";
+    else
+    {
+        if ([Utility isInterNetConnectionIsActive] == false)
+        {
+            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alrt show];
+            return;
+        }
+        CreateProjectVc *s = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"CreateProjectVc"];
+        s.projectvar = @"Create";
+        [self.navigationController pushViewController:s animated:YES];
+    }
     
-    [self.navigationController pushViewController:s animated:YES];
 }
 
 
 - (IBAction)btnDeleteClicked:(id)sender
 {
-    _viewDeletePopup.hidden = NO;
-    [self.view bringSubviewToFront:_viewDeletePopup];
-    
-    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:_tblProjectList];
-    NSIndexPath *indexPath = [_tblProjectList indexPathForRowAtPoint:buttonPosition];
-    
-    //  NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:btn.tag];
-    
-    //  NSLog(@"Tag=%@",[aryProjectData objectAtIndex:indexPath.row]);
-    
-    NSLog(@"Tag=%ld",indexPath.row);
-    NSLog(@"Section=%ld",(long)indexPath.section);
-    dicDelProject = [aryProjectData objectAtIndex:indexPath.section];
-   // _btnSave.tag = indexPath.section;
+    if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
+    {
+        if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
+        {
+            if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Parent"] )
+            {
+                if([[Utility getUserRoleRightList:@"Project" settingType:@"IsDelete"] integerValue] == 1)
+                {
+                    _viewDeletePopup.hidden = NO;
+                    [self.view bringSubviewToFront:_viewDeletePopup];
+                    
+                    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:_tblProjectList];
+                    NSIndexPath *indexPath = [_tblProjectList indexPathForRowAtPoint:buttonPosition];
+                    dicDelProject = [aryProjectData objectAtIndex:indexPath.section];
+                }
+                else
+                {
+                    [WToast showWithText:You_dont_have_permission];
+                }
+            }
+            else
+            {
+                _viewDeletePopup.hidden = NO;
+                [self.view bringSubviewToFront:_viewDeletePopup];
+                
+                CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:_tblProjectList];
+                NSIndexPath *indexPath = [_tblProjectList indexPathForRowAtPoint:buttonPosition];
+                dicDelProject = [aryProjectData objectAtIndex:indexPath.section];
+            }
+        }
+        else
+        {
+            _viewDeletePopup.hidden = NO;
+            [self.view bringSubviewToFront:_viewDeletePopup];
+            
+            CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:_tblProjectList];
+            NSIndexPath *indexPath = [_tblProjectList indexPathForRowAtPoint:buttonPosition];
+            dicDelProject = [aryProjectData objectAtIndex:indexPath.section];
+        }
+    }
+    else
+    {
+        _viewDeletePopup.hidden = NO;
+        [self.view bringSubviewToFront:_viewDeletePopup];
+        
+        CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:_tblProjectList];
+        NSIndexPath *indexPath = [_tblProjectList indexPathForRowAtPoint:buttonPosition];
+        dicDelProject = [aryProjectData objectAtIndex:indexPath.section];
+    }
     
 }
 - (IBAction)btnSaveClicked:(id)sender
@@ -251,7 +338,6 @@
 {
     _viewDeletePopup.hidden = YES;
 }
-
 
 #pragma mark - Get Project List Api
 

@@ -318,14 +318,72 @@ int cn =0;
 
 - (IBAction)btnSaveClicked:(id)sender
 {
-    if (cn == 0)
+    if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
     {
-        [self SaveAttendance:YES];
+        if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
+        {
+            if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Parent"] )
+            {
+                if([[Utility getUserRoleRightList:@"Attendance" settingType:@"IsCreate"] integerValue] == 1)
+                {
+                    if (cn == 0)
+                    {
+                        [self SaveAttendance:YES];
+                    }
+                    else
+                    {
+                        
+                        [self SaveAttendance:NO];
+                    }
+                    
+                }
+                else
+                {
+                    [WToast showWithText:You_dont_have_permission];
+                }
+            }
+            else
+            {
+                if (cn == 0)
+                {
+                    [self SaveAttendance:YES];
+                }
+                else
+                {
+                    
+                    [self SaveAttendance:NO];
+                }
+                
+            }
+            
+        }
+        else
+        {
+            if (cn == 0)
+            {
+                [self SaveAttendance:YES];
+            }
+            else
+            {
+                
+                [self SaveAttendance:NO];
+            }
+            
+        }
+        
     }
     else
     {
+        if (cn == 0)
+        {
+            [self SaveAttendance:YES];
+        }
+        else
+        {
+            
+            [self SaveAttendance:NO];
+        }
         
-        [self SaveAttendance:NO];
     }
 }
 
@@ -400,15 +458,71 @@ int cn =0;
 {
     if (cn==0)
     {
-        [NormalBtn setTitle:@"Quick" forState:UIControlStateNormal];
-        cn =1;
-        AttendanceTableView.hidden = YES;
-        aTextfield3.hidden = NO;
-        aTextField2.hidden = NO;
-        aTextfield1.hidden = NO;
-        [self.view bringSubviewToFront:aTextfield1];
-        [self.view bringSubviewToFront:aTextField2];
-        [self.view bringSubviewToFront:aTextfield3];
+        if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
+        {
+            if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
+            {
+                if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Parent"] )
+                {
+                    if([[Utility getUserRoleRightList:@"Attendance" settingType:@"IsCreate"] integerValue] == 1)
+                    {
+                        [NormalBtn setTitle:@"Quick" forState:UIControlStateNormal];
+                        cn =1;
+                        AttendanceTableView.hidden = YES;
+                        aTextfield3.hidden = NO;
+                        aTextField2.hidden = NO;
+                        aTextfield1.hidden = NO;
+                        [self.view bringSubviewToFront:aTextfield1];
+                        [self.view bringSubviewToFront:aTextField2];
+                        [self.view bringSubviewToFront:aTextfield3];
+                        
+                    }
+                    else
+                    {
+                        [WToast showWithText:You_dont_have_permission];
+                    }
+                }
+                else
+                {
+                    [NormalBtn setTitle:@"Quick" forState:UIControlStateNormal];
+                    cn =1;
+                    AttendanceTableView.hidden = YES;
+                    aTextfield3.hidden = NO;
+                    aTextField2.hidden = NO;
+                    aTextfield1.hidden = NO;
+                    [self.view bringSubviewToFront:aTextfield1];
+                    [self.view bringSubviewToFront:aTextField2];
+                    [self.view bringSubviewToFront:aTextfield3];
+                }
+                
+            }
+            else
+            {
+                [NormalBtn setTitle:@"Quick" forState:UIControlStateNormal];
+                cn =1;
+                AttendanceTableView.hidden = YES;
+                aTextfield3.hidden = NO;
+                aTextField2.hidden = NO;
+                aTextfield1.hidden = NO;
+                [self.view bringSubviewToFront:aTextfield1];
+                [self.view bringSubviewToFront:aTextField2];
+                [self.view bringSubviewToFront:aTextfield3];
+            }
+            
+        }
+        else
+        {
+            [NormalBtn setTitle:@"Quick" forState:UIControlStateNormal];
+            cn =1;
+            AttendanceTableView.hidden = YES;
+            aTextfield3.hidden = NO;
+            aTextField2.hidden = NO;
+            aTextfield1.hidden = NO;
+            [self.view bringSubviewToFront:aTextfield1];
+            [self.view bringSubviewToFront:aTextField2];
+            [self.view bringSubviewToFront:aTextfield3];
+        }
+        
     }
     else
     {
@@ -639,13 +753,13 @@ int cn =0;
                          
                          [AttendanceTableView reloadData];
                      }
-
+                     
                  }
-                else
-                {
-                    UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"Please try again" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                    [alrt show];
-                }
+                 else
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"Please try again" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                 }
                  
              } @catch (NSException *exception)
              {
@@ -653,8 +767,8 @@ int cn =0;
                  [alrt show];
                  
              }
-                 
-        }
+             
+         }
          else
          {
              UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -815,16 +929,16 @@ int cn =0;
                  [alrt show];
              }
          }];
-
+        
     }
     else
     {
         NSMutableArray *aryabsent; //= [[NSMutableArray alloc]init];
         NSMutableArray *aryleave; //= [[NSMutableArray alloc]init];
         NSMutableArray *aryseakleave;// = [[NSMutableArray alloc]init];
-       
         
-
+        
+        
         if ([Utility validateBlankField:aTextfield1.text])
         {
             
@@ -882,7 +996,7 @@ int cn =0;
                 }
             }
         }
-       if(aryleave.count > 0)
+        if(aryleave.count > 0)
         {
             for (int i=0; i<arySaveTag.count; i++)
             {
@@ -922,7 +1036,7 @@ int cn =0;
                 }
             }
         }
-
+        
         for (int i=0; i<arySaveTag.count; i++)
         {
             NSString *getval = [NSString stringWithFormat:@"%@",[[arySaveTag objectAtIndex:i]objectForKey:@"RollNo"]];
@@ -947,7 +1061,7 @@ int cn =0;
         }
         
     }
-
+    
     NSMutableArray *array = [NSMutableArray array];
     [array addObjectsFromArray:aryStudentData];
     [array addObjectsFromArray:tmpary];
@@ -1078,7 +1192,7 @@ int cn =0;
              [alrt show];
          }
      }];
-
+    
     
     
 }

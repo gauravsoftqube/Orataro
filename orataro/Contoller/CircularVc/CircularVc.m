@@ -78,7 +78,7 @@
     {
         self.lblCircularHeaderTitle.text=[NSString stringWithFormat:@"Circular"];
     }
-
+    
     //
     [self.viewDelete_Conf setHidden:YES];
     
@@ -483,7 +483,7 @@
     NSMutableDictionary *dicAddpage = [[[arrCircularList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
     strdelete_selecteid=[dicAddpage objectForKey:@"CircularID"];
     [self.lblDeleteConf_Detail setText:[NSString stringWithFormat:@"%@",[dicAddpage objectForKey:@"CircularTitle"]]];
-
+    
 }
 
 - (IBAction)btnDeleteConf_Cancel:(id)sender
@@ -515,7 +515,7 @@
     {
         [self apiCallFor_Delete:NO deleteId:strdelete_selecteid];
     }
-
+    
 }
 
 #pragma mark - CMPopTipViewDelegate methods
@@ -528,13 +528,60 @@
 - (IBAction)btnDelete_popup:(id)sender
 {
     [Utility dismissAllPopTipViews:arrPopup];
-    if ([Utility isInterNetConnectionIsActive] == false)
+    if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
     {
-        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alrt show];
-        return;
+        if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
+        {
+            if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Parent"] )
+            {
+                if([[Utility getUserRoleRightList:@"Circular" settingType:@"IsDelete"] integerValue] == 1)
+                {
+                    if ([Utility isInterNetConnectionIsActive] == false)
+                    {
+                        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                        [alrt show];
+                        return;
+                    }
+                    [self.viewDelete_Conf setHidden:NO];
+                }
+                else
+                {
+                    [WToast showWithText:You_dont_have_permission];
+                }
+            }
+            else
+            {
+                if ([Utility isInterNetConnectionIsActive] == false)
+                {
+                    UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alrt show];
+                    return;
+                }
+                [self.viewDelete_Conf setHidden:NO];
+            }
+        }
+        else
+        {
+            if ([Utility isInterNetConnectionIsActive] == false)
+            {
+                UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alrt show];
+                return;
+            }
+            [self.viewDelete_Conf setHidden:NO];
+        }
     }
-    [self.viewDelete_Conf setHidden:NO];
+    else
+    {
+        if ([Utility isInterNetConnectionIsActive] == false)
+        {
+            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alrt show];
+            return;
+        }
+        [self.viewDelete_Conf setHidden:NO];
+    }
+    
 }
 
 #pragma mark - button action
@@ -557,16 +604,75 @@
 
 - (IBAction)AddBtnClicked:(UIButton *)sender
 {
-    if ([Utility isInterNetConnectionIsActive] == false)
+    
+    if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
     {
-        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alrt show];
-        return;
+        if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
+        {
+            if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Parent"] )
+            {
+                if([[Utility getUserRoleRightList:@"Circular" settingType:@"IsCreate"] integerValue] == 1)
+                {
+                    if ([Utility isInterNetConnectionIsActive] == false)
+                    {
+                        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                        [alrt show];
+                        return;
+                    }
+                    else
+                    {
+                        AddCircularVc *p = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddCircularVc"];
+                        [self.navigationController pushViewController:p animated:YES];
+                    }
+                }
+                else
+                {
+                    [WToast showWithText:You_dont_have_permission];
+                }
+            }
+            else
+            {
+                if ([Utility isInterNetConnectionIsActive] == false)
+                {
+                    UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alrt show];
+                    return;
+                }
+                else
+                {
+                    AddCircularVc *p = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddCircularVc"];
+                    [self.navigationController pushViewController:p animated:YES];
+                }
+            }
+        }
+        else
+        {
+            if ([Utility isInterNetConnectionIsActive] == false)
+            {
+                UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alrt show];
+                return;
+            }
+            else
+            {
+                AddCircularVc *p = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddCircularVc"];
+                [self.navigationController pushViewController:p animated:YES];
+            }
+        }
     }
     else
     {
-        AddCircularVc *p = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddCircularVc"];
-        [self.navigationController pushViewController:p animated:YES];
+        if ([Utility isInterNetConnectionIsActive] == false)
+        {
+            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alrt show];
+            return;
+        }
+        else
+        {
+            AddCircularVc *p = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddCircularVc"];
+            [self.navigationController pushViewController:p animated:YES];
+        }
     }
 }
 

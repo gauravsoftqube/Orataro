@@ -38,7 +38,7 @@
     aCalenderView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     
     aView1.layer.cornerRadius = 20;
-   
+    
     
     [self commonData];
 }
@@ -63,7 +63,7 @@
     UITableViewController *tableViewController = [[UITableViewController alloc] init];
     tableViewController.tableView = self.tblClassworkList;
     tableViewController.refreshControl = refreshControl;
-
+    
     //
     [self.viewDelete_Conf setHidden:YES];
     _viewSave.layer.cornerRadius = 30.0;
@@ -526,7 +526,7 @@
     {
         [self apiCallFor_Delete:NO deleteId:strdelete_selecteid];
     }
-
+    
 }
 
 #pragma mark - CMPopTipViewDelegate methods
@@ -540,13 +540,60 @@
 {
     [Utility dismissAllPopTipViews:arrPopup];
     
-    if ([Utility isInterNetConnectionIsActive] == false)
+    if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
     {
-        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alrt show];
-        return;
+        if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
+        {
+            if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Parent"] )
+            {
+                if([[Utility getUserRoleRightList:@"Class Work" settingType:@"IsDelete"] integerValue] == 1)
+                {
+                    if ([Utility isInterNetConnectionIsActive] == false)
+                    {
+                        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                        [alrt show];
+                        return;
+                    }
+                    [self.viewDelete_Conf setHidden:NO];
+                }
+                else
+                {
+                    [WToast showWithText:You_dont_have_permission];
+                }
+            }
+            else
+            {
+                if ([Utility isInterNetConnectionIsActive] == false)
+                {
+                    UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alrt show];
+                    return;
+                }
+                [self.viewDelete_Conf setHidden:NO];
+            }
+            
+        }
+        else
+        {
+            if ([Utility isInterNetConnectionIsActive] == false)
+            {
+                UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alrt show];
+                return;
+            }
+            [self.viewDelete_Conf setHidden:NO];
+        }
     }
-    [self.viewDelete_Conf setHidden:NO];
+    else
+    {
+        if ([Utility isInterNetConnectionIsActive] == false)
+        {
+            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alrt show];
+            return;
+        }
+        [self.viewDelete_Conf setHidden:NO];
+    }
 }
 
 #pragma mark - UIButton Action
@@ -570,19 +617,76 @@
 
 - (IBAction)btnAddClicked:(id)sender
 {
-    if ([Utility isInterNetConnectionIsActive] == false) {
-        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alrt show];
-        return;
+    if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
+    {
+        if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
+        {
+            if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Parent"] )
+            {
+                if([[Utility getUserRoleRightList:@"Class Work" settingType:@"IsCreate"] integerValue] == 1)
+                {
+                    if ([Utility isInterNetConnectionIsActive] == false)
+                    {
+                        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                        [alrt show];
+                        return;
+                    }
+                    else
+                    {
+                        gh.checkListelection = 4;
+                        ListSelectionVc *l = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
+                        [self.navigationController pushViewController:l animated:YES];
+                    }
+                }
+                else
+                {
+                    [WToast showWithText:You_dont_have_permission];
+                }
+            }
+            else
+            {
+                if ([Utility isInterNetConnectionIsActive] == false) {
+                    UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alrt show];
+                    return;
+                }
+                else
+                {
+                    gh.checkListelection = 4;
+                    ListSelectionVc *l = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
+                    [self.navigationController pushViewController:l animated:YES];
+                }
+            }
+        }
+        else
+        {
+            if ([Utility isInterNetConnectionIsActive] == false) {
+                UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alrt show];
+                return;
+            }
+            else
+            {
+                gh.checkListelection = 4;
+                ListSelectionVc *l = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
+                [self.navigationController pushViewController:l animated:YES];
+            }
+        }
     }
     else
     {
-        gh.checkListelection = 4;
-        ListSelectionVc *l = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
-        [self.navigationController pushViewController:l animated:YES];
+        if ([Utility isInterNetConnectionIsActive] == false) {
+            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alrt show];
+            return;
+        }
+        else
+        {
+            gh.checkListelection = 4;
+            ListSelectionVc *l = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
+            [self.navigationController pushViewController:l animated:YES];
+        }
     }
-    
-    
 }
 
 - (IBAction)btnHomeClicked:(id)sender

@@ -317,10 +317,38 @@
             break;
             
         case 1:
-            
-            [self.navigationController pushViewController:b animated:YES];
+        {
+            if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
+            {
+                if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
+                {
+                    if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Parent"] )
+                    {
+                        if([[Utility getUserRoleRightList:@"Blog" settingType:@"IsView"] integerValue] == 1)
+                        {
+                            [self.navigationController pushViewController:b animated:YES];
+                        }
+                        else
+                        {
+                            [WToast showWithText:You_dont_have_permission];
+                        }
+                    }
+                    else
+                    {
+                        [self.navigationController pushViewController:b animated:YES];
+                    }
+                }
+                else
+                {
+                    [self.navigationController pushViewController:b animated:YES];
+                }
+            }
+            else
+            {
+                [self.navigationController pushViewController:b animated:YES];
+            }
+        }
             break;
-            
         case 2:
             
             [self.navigationController pushViewController:f animated:YES];
@@ -342,17 +370,75 @@
             break;
             
         case 6:
-            
-            [self.navigationController pushViewController:s animated:YES];
+        {
+            if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
+            {
+                if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
+                {
+                    if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Parent"] )
+                    {
+                        if([[Utility getUserRoleRightList:@"Group" settingType:@"IsView"] integerValue] == 1)
+                        {
+                            [self.navigationController pushViewController:s animated:YES];
+                        }
+                        else
+                        {
+                            [WToast showWithText:You_dont_have_permission];
+                        }
+                    }
+                    else
+                    {
+                        [self.navigationController pushViewController:s animated:YES];
+                    }
+                }
+                else
+                {
+                    [self.navigationController pushViewController:s animated:YES];
+                }
+            }
+            else
+            {
+                [self.navigationController pushViewController:s animated:YES];
+            }
+        }
             break;
-            
         case 7:
-            
-            aj.checkListelection = 3;
-            [self.navigationController pushViewController:vc6 animated:YES];
-            
+        {
+            if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
+            {
+                if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
+                {
+                    if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Parent"] )
+                    {
+                        if([[Utility getUserRoleRightList:@"Happy Gram" settingType:@"IsView"] integerValue] == 1)
+                        {
+                            aj.checkListelection = 3;
+                            [self.navigationController pushViewController:vc6 animated:YES];
+                        }
+                        else
+                        {
+                            [WToast showWithText:You_dont_have_permission];
+                        }
+                    }
+                    else
+                    {
+                        aj.checkListelection = 3;
+                        [self.navigationController pushViewController:vc6 animated:YES];
+                    }
+                }
+                else
+                {
+                    aj.checkListelection = 3;
+                    [self.navigationController pushViewController:vc6 animated:YES];
+                }
+            }
+            else
+            {
+                aj.checkListelection = 3;
+                [self.navigationController pushViewController:vc6 animated:YES];
+            }
+        }
             break;
-            
         case 8:
             //SchoolVc
             [self.navigationController pushViewController:vc9 animated:YES];
@@ -380,22 +466,107 @@
             break;
             
         case 13:
-            
-            [self.navigationController pushViewController:p1 animated:YES];
-            break;
-            
-        case 14:
-            
-            if([[Utility getMemberType] isEqualToString:@"Student"])
+        {
+            if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
             {
-                [self.navigationController pushViewController:vc13 animated:YES];
+                if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
+                {
+                    if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Parent"] )
+                    {
+                        if([[Utility getUserRoleRightList:@"Project" settingType:@"IsView"] integerValue] == 1)
+                        {
+                             [self.navigationController pushViewController:p1 animated:YES];
+                        }
+                        else
+                        {
+                            [WToast showWithText:You_dont_have_permission];
+                        }
+                    }
+                    else
+                    {
+                         [self.navigationController pushViewController:p1 animated:YES];
+                    }
+                }
+                else
+                {
+                     [self.navigationController pushViewController:p1 animated:YES];
+                }
             }
             else
             {
-                
-                [self.navigationController pushViewController:vc12 animated:YES];
+                 [self.navigationController pushViewController:p1 animated:YES];
             }
+
+           
+        }
+            break;
             
+        case 14:
+        {
+            if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
+            {
+                if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
+                {
+                    if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Parent"] )
+                    {
+                        if([[Utility getUserRoleRightList:@"Leave Application" settingType:@"IsView"] integerValue] == 1)
+                        {
+                            if([[Utility getMemberType] isEqualToString:@"Student"])
+                            {
+                                [self.navigationController pushViewController:vc13 animated:YES];
+                            }
+                            else
+                            {
+                                
+                                [self.navigationController pushViewController:vc12 animated:YES];
+                            }
+                        }
+                        else
+                        {
+                            [WToast showWithText:You_dont_have_permission];
+                        }
+                    }
+                    else
+                    {
+                        if([[Utility getMemberType] isEqualToString:@"Student"])
+                        {
+                            [self.navigationController pushViewController:vc13 animated:YES];
+                        }
+                        else
+                        {
+                            
+                            [self.navigationController pushViewController:vc12 animated:YES];
+                        }
+                    }
+                }
+                else
+                {
+                    if([[Utility getMemberType] isEqualToString:@"Student"])
+                    {
+                        [self.navigationController pushViewController:vc13 animated:YES];
+                    }
+                    else
+                    {
+                        
+                        [self.navigationController pushViewController:vc12 animated:YES];
+                    }
+                }
+            }
+            else
+            {
+                if([[Utility getMemberType] isEqualToString:@"Student"])
+                {
+                    [self.navigationController pushViewController:vc13 animated:YES];
+                }
+                else
+                {
+                    
+                    [self.navigationController pushViewController:vc12 animated:YES];
+                }
+            }
+
+            
+        }
             break;
             
         case 15:

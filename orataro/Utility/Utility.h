@@ -104,6 +104,8 @@
 
 +(NSMutableArray *)getLocalDetail : (NSArray *)jsonstr columnKey:(NSString *)columnKey;
 +(NSString *)getMemberType;
++(NSString *)getCurrentUserType;
++(NSString *)getUserRoleRightList :(NSString *)strRightName settingType:(NSString *)strSettingType;
 +(NSString *)randomImageGenerator;
 +(void)SaveImageDocumentDirectory :(NSMutableDictionary *)dicImg :(NSString *)url;
 +(void)RemoveImageDocumentDirectory;

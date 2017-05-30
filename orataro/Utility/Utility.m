@@ -724,10 +724,13 @@
     if([jsonStr count] != 0)
     {
         data= [[[jsonStr objectAtIndex:0]objectForKey:@"JsonStr"]  dataUsingEncoding:NSUTF8StringEncoding];
+    
+        id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        return json;
     }
     
-    id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-    return json;
+    NSMutableDictionary *dic=[[NSMutableDictionary alloc]init];
+    return dic;
 }
 
 +(NSString *)getCurrentUserName
@@ -741,9 +744,7 @@
     }
     
     id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-    
-   // NSLog(@"Json=%@",json);
-    
+        
     NSString *strName = [json objectForKey:@"FullName"];
     NSArray *aryName = [strName componentsSeparatedByString:@" "];
     NSString *str = [aryName objectAtIndex:0];
@@ -768,14 +769,34 @@
     return getMemberType;
 }
 
++(NSString *)getCurrentUserType
+{
+    NSArray *jsonStr=[DBOperation selectData:[NSString stringWithFormat:@"select userType_responce from CurrentActiveUser"]];
+    NSString *strUserType;
+    
+    if([jsonStr count] != 0)
+    {
+        strUserType = [[jsonStr objectAtIndex:0]objectForKey:@"userType_responce"];
+    }
+    
+    return strUserType;
+}
+
++(NSString *)getUserRoleRightList :(NSString *)strRightName settingType:(NSString *)strSettingType
+{
+    NSMutableArray *arrGetUserRoleRightList = [DBOperation selectData:[NSString stringWithFormat:@"select %@ from GetUserRoleRightList where RightName = '%@'",strSettingType,strRightName]];
+    if ([arrGetUserRoleRightList count] != 0)
+    {
+        NSString *IsSetting=[[arrGetUserRoleRightList objectAtIndex:0]objectForKey:strSettingType];
+        return IsSetting;
+    }
+    return @"1";
+}
+
 +(NSMutableArray *)getLocalDetail : (NSArray *)jsonstr columnKey:(NSString *)columnKey
 {
     NSData *data;
     NSMutableArray *json = [[NSMutableArray alloc]init];
-    
-    //  NSLog(@"data=%@ column=%@",jsonstr,columnKey);
-    
-    // NSLog(@"json count=%lu",(unsigned long)jsonstr.count);
     
     if([jsonstr count] != 0)
     {

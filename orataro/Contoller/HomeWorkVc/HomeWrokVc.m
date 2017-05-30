@@ -48,7 +48,7 @@
     {
         self.lblHeaderTitle.text=[NSString stringWithFormat:@"Homework"];
     }
-
+    
     //
     [self commonData];
 }
@@ -77,7 +77,7 @@
     _viewInnerSave.layer.cornerRadius = 25.0;
     _imgCancel.image = [_imgCancel.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [_imgCancel setTintColor:[UIColor colorWithRed:40.0/255.0 green:49.0/255.0 blue:90.0/255.0 alpha:1.0]];
-
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -114,7 +114,7 @@
         }
         else
         {
-             [self ManageHomeworkList:arrListTemp];
+            [self ManageHomeworkList:arrListTemp];
         }
     }
     else
@@ -140,9 +140,9 @@
 {
     if ([Utility isInterNetConnectionIsActive] == false)
     {
-            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alrt show];
-            return;
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
     }
     
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_homework,apk_GetHomework_action];
@@ -212,7 +212,7 @@
              UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
              [alrt show];
          }
-     }]; 
+     }];
 }
 
 -(void)ManageHomeworkList:(NSMutableArray *)arrResponce
@@ -280,8 +280,8 @@
     }
     arrHomeworkList = [[[arrHomeworkList reverseObjectEnumerator]allObjects]mutableCopy];
     
-   // NSArray *ary = [DBOperation selectData:@"select * from HomeWorkList"];
-   // arrHomeworkList = [Utility getLocalDetail:ary columnKey:@"dicHomeWorkList"];
+    // NSArray *ary = [DBOperation selectData:@"select * from HomeWorkList"];
+    // arrHomeworkList = [Utility getLocalDetail:ary columnKey:@"dicHomeWorkList"];
     
     [_HomeworkTableView reloadData];
 }
@@ -308,7 +308,7 @@
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
-
+    
     
     if (checkProgress == YES)
     {
@@ -335,8 +335,8 @@
                  }
                  else
                  {
-//                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dicResponce objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-//                     [alrt show];
+                     //                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dicResponce objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     //                     [alrt show];
                  }
                  
              }
@@ -470,7 +470,7 @@
         [btnDelete setHidden:YES];
         [btnDelete setFrame:CGRectMake(btnDelete.frame.origin.x, btnDelete.frame.origin.y, 0, btnDelete.frame.size.height)];
     }
-
+    
     return cell;
 }
 
@@ -494,7 +494,7 @@
     NSMutableDictionary *dicAddpage = [[[arrHomeworkList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
     strdelete_selecteid=[dicAddpage objectForKey:@"AssignmentID"];
     [self.lblDeleteConf_Detail setText:[NSString stringWithFormat:@"%@",[dicAddpage objectForKey:@"SubjectName"]]];
-
+    
 }
 
 - (IBAction)btnDeleteConf_Cancel:(id)sender
@@ -538,14 +538,66 @@
 - (IBAction)btnDelete_popup:(id)sender
 {
     [Utility dismissAllPopTipViews:arrPopup];
-    
-    if ([Utility isInterNetConnectionIsActive] == false)
+    if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
     {
-        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alrt show];
-        return;
+        if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
+        {
+            if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Parent"] )
+            {
+                if([[Utility getUserRoleRightList:@"Home Work" settingType:@"IsDelete"] integerValue] == 1)
+                {
+                    if ([Utility isInterNetConnectionIsActive] == false)
+                    {
+                        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                        [alrt show];
+                        return;
+                    }
+                    [self.viewDelete_Conf setHidden:NO];
+                    
+                }
+                else
+                {
+                    [WToast showWithText:You_dont_have_permission];
+                }
+            }
+            else
+            {
+                if ([Utility isInterNetConnectionIsActive] == false)
+                {
+                    UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alrt show];
+                    return;
+                }
+                [self.viewDelete_Conf setHidden:NO];
+                
+            }
+            
+        }
+        else
+        {
+            if ([Utility isInterNetConnectionIsActive] == false)
+            {
+                UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alrt show];
+                return;
+            }
+            [self.viewDelete_Conf setHidden:NO];
+            
+        }
+        
     }
-    [self.viewDelete_Conf setHidden:NO];
+    else
+    {
+        if ([Utility isInterNetConnectionIsActive] == false)
+        {
+            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alrt show];
+            return;
+        }
+        [self.viewDelete_Conf setHidden:NO];
+        
+    }
+    
 }
 
 #pragma mark - button action
@@ -576,17 +628,84 @@
 
 - (IBAction)AddBtn1Clicked:(id)sender
 {
-    if ([Utility isInterNetConnectionIsActive] == false)
+    if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
     {
-        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alrt show];
-        return;
+        if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
+        {
+            if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Parent"] )
+            {
+                if([[Utility getUserRoleRightList:@"Home Work" settingType:@"IsCreate"] integerValue] == 1)
+                {
+                    if ([Utility isInterNetConnectionIsActive] == false)
+                    {
+                        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                        [alrt show];
+                        return;
+                    }
+                    else
+                    {
+                        ah.checkListelection = 2;
+                        ListSelectionVc *l = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
+                        [self.navigationController pushViewController:l animated:YES];
+                    }
+                    
+                }
+                else
+                {
+                    [WToast showWithText:You_dont_have_permission];
+                }
+            }
+            else
+            {
+                if ([Utility isInterNetConnectionIsActive] == false)
+                {
+                    UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alrt show];
+                    return;
+                }
+                else
+                {
+                    ah.checkListelection = 2;
+                    ListSelectionVc *l = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
+                    [self.navigationController pushViewController:l animated:YES];
+                }
+                
+            }
+            
+        }
+        else
+        {
+            if ([Utility isInterNetConnectionIsActive] == false)
+            {
+                UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alrt show];
+                return;
+            }
+            else
+            {
+                ah.checkListelection = 2;
+                ListSelectionVc *l = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
+                [self.navigationController pushViewController:l animated:YES];
+            }
+            
+        }
+        
     }
     else
     {
-        ah.checkListelection = 2;
-        ListSelectionVc *l = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
-        [self.navigationController pushViewController:l animated:YES];
+        if ([Utility isInterNetConnectionIsActive] == false)
+        {
+            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alrt show];
+            return;
+        }
+        else
+        {
+            ah.checkListelection = 2;
+            ListSelectionVc *l = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
+            [self.navigationController pushViewController:l animated:YES];
+        }
+        
     }
 }
 

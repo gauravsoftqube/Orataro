@@ -308,17 +308,71 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([Utility isInterNetConnectionIsActive] == false)
+    if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
     {
-        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alrt show];
-        return;
+        if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
+        {
+            if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Parent"] )
+            {
+                if([[Utility getUserRoleRightList:@"Group" settingType:@"IsEdit"] integerValue] == 1)
+                {
+                    if ([Utility isInterNetConnectionIsActive] == false)
+                    {
+                        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                        [alrt show];
+                        return;
+                    }
+                    p.scoolgroup = 2;
+                    CreateScoolGroupVc *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"CreateScoolGroupVc"];
+                    vc.dicCreateSchoolGroup = [aryFetchData objectAtIndex:indexPath.row];
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+                else
+                {
+                    [WToast showWithText:You_dont_have_permission];
+                }
+            }
+            else
+            {
+                if ([Utility isInterNetConnectionIsActive] == false)
+                {
+                    UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alrt show];
+                    return;
+                }
+                p.scoolgroup = 2;
+                CreateScoolGroupVc *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"CreateScoolGroupVc"];
+                vc.dicCreateSchoolGroup = [aryFetchData objectAtIndex:indexPath.row];
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        }
+        else
+        {
+            if ([Utility isInterNetConnectionIsActive] == false)
+            {
+                UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alrt show];
+                return;
+            }
+            p.scoolgroup = 2;
+            CreateScoolGroupVc *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"CreateScoolGroupVc"];
+            vc.dicCreateSchoolGroup = [aryFetchData objectAtIndex:indexPath.row];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
     }
-    
-    p.scoolgroup = 2;
-    CreateScoolGroupVc *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"CreateScoolGroupVc"];
-    vc.dicCreateSchoolGroup = [aryFetchData objectAtIndex:indexPath.row];
-    [self.navigationController pushViewController:vc animated:YES];
+    else
+    {
+        if ([Utility isInterNetConnectionIsActive] == false)
+        {
+            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alrt show];
+            return;
+        }
+        p.scoolgroup = 2;
+        CreateScoolGroupVc *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"CreateScoolGroupVc"];
+        vc.dicCreateSchoolGroup = [aryFetchData objectAtIndex:indexPath.row];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 - (IBAction)btnDeleteGroup:(id)sender
@@ -355,7 +409,7 @@
           _viewDeletePopup.hidden = YES;
         NSLog(@"Fetch=%@",[[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"GropuID"]);
         
-        [self apiCallFor_DeleteGroupList:[[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"GropuID"] row:[[NSString stringWithFormat:@"%ld",btn.tag] intValue]];
+        [self apiCallFor_DeleteGroupList:[[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"GropuID"] row:[[NSString stringWithFormat:@"%ld",(long)btn.tag] intValue]];
     }
 
 }
@@ -367,9 +421,39 @@
 
 - (IBAction)DeleteBtnClicked:(id)sender
 {
-    _viewDeletePopup.hidden = NO;
-    [self.view bringSubviewToFront:_viewDeletePopup];
-    
+    if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
+    {
+        if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
+        {
+            if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Parent"] )
+            {
+                if([[Utility getUserRoleRightList:@"Group" settingType:@"IsDelete"] integerValue] == 1)
+                {
+                    _viewDeletePopup.hidden = NO;
+                    [self.view bringSubviewToFront:_viewDeletePopup];
+                }
+                else
+                {
+                    [WToast showWithText:You_dont_have_permission];
+                }
+            }
+            else
+            {
+                _viewDeletePopup.hidden = NO;
+                [self.view bringSubviewToFront:_viewDeletePopup];
+            }
+        }
+        else
+        {
+            _viewDeletePopup.hidden = NO;
+            [self.view bringSubviewToFront:_viewDeletePopup];
+        }
+    }
+    else
+    {
+        _viewDeletePopup.hidden = NO;
+        [self.view bringSubviewToFront:_viewDeletePopup];
+    }
 }
 
 - (IBAction)btnBackHeader:(id)sender
@@ -381,17 +465,67 @@
 
 - (IBAction)AddBtnClicked:(UIButton *)sender
 {
-    if ([Utility isInterNetConnectionIsActive] == false)
+    if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
     {
-        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alrt show];
-        return;
+        if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
+        {
+            if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Parent"] )
+            {
+                if([[Utility getUserRoleRightList:@"Group" settingType:@"IsCreate"] integerValue] == 1)
+                {
+                    if ([Utility isInterNetConnectionIsActive] == false)
+                    {
+                        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                        [alrt show];
+                        return;
+                    }
+                    p.scoolgroup = 1;
+                    CreateScoolGroupVc *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"CreateScoolGroupVc"];
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+                else
+                {
+                    [WToast showWithText:You_dont_have_permission];
+                }
+            }
+            else
+            {
+                if ([Utility isInterNetConnectionIsActive] == false)
+                {
+                    UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alrt show];
+                    return;
+                }
+                p.scoolgroup = 1;
+                CreateScoolGroupVc *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"CreateScoolGroupVc"];
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        }
+        else
+        {
+            if ([Utility isInterNetConnectionIsActive] == false)
+            {
+                UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alrt show];
+                return;
+            }
+            p.scoolgroup = 1;
+            CreateScoolGroupVc *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"CreateScoolGroupVc"];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
     }
-    
-    p.scoolgroup = 1;
-    
-    CreateScoolGroupVc *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"CreateScoolGroupVc"];
-    [self.navigationController pushViewController:vc animated:YES];
+    else
+    {
+        if ([Utility isInterNetConnectionIsActive] == false)
+        {
+            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alrt show];
+            return;
+        }
+        p.scoolgroup = 1;
+        CreateScoolGroupVc *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"CreateScoolGroupVc"];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 #pragma mark -API Call Get Group data
