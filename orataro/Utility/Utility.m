@@ -1,4 +1,4 @@
- //
+//
 //  Utility.m
 
 //
@@ -724,7 +724,7 @@
     if([jsonStr count] != 0)
     {
         data= [[[jsonStr objectAtIndex:0]objectForKey:@"JsonStr"]  dataUsingEncoding:NSUTF8StringEncoding];
-    
+        
         id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
         return json;
     }
@@ -744,7 +744,7 @@
     }
     
     id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-        
+    
     NSString *strName = [json objectForKey:@"FullName"];
     NSArray *aryName = [strName componentsSeparatedByString:@" "];
     NSString *str = [aryName objectAtIndex:0];
@@ -858,27 +858,27 @@
     return newImage;
 }
 /*+(void)SaveImageDocumentDirectory :(NSMutableDictionary *)dicImg :(NSString *)url
-{
-    NSLog(@"dic=%@",dicImg);
-    NSData *data ;
-    
-    NSURL *url1 = [NSURL URLWithString:[[NSString stringWithFormat:@"%@/%@",url,[dicImg objectForKey:@"ProfilePicture"]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    NSLog(@"url:%@",url1);
-    
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSLog(@"Directory :%@",documentsDirectory);
-    
-    NSString *savedImagePath = [documentsDirectory stringByAppendingPathComponent:[dicImg objectForKey:@"ProfilePicture"]];
-    UIImage *image = imageView.image; // imageView is my image from camera
-    NSData *imageData = UIImagePNGRepresentation(image);
-    [imageData writeToFile:savedImagePath atomically:NO];
-    
-    [data writeToURL:url1 atomically:YES];
-    
-   // [data writeToFile:[documentsDirectory stringByAppendingPathComponent:[NSString str]] atomically:YES];
-    
-}*/
+ {
+ NSLog(@"dic=%@",dicImg);
+ NSData *data ;
+ 
+ NSURL *url1 = [NSURL URLWithString:[[NSString stringWithFormat:@"%@/%@",url,[dicImg objectForKey:@"ProfilePicture"]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+ NSLog(@"url:%@",url1);
+ 
+ NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+ NSString *documentsDirectory = [paths objectAtIndex:0];
+ NSLog(@"Directory :%@",documentsDirectory);
+ 
+ NSString *savedImagePath = [documentsDirectory stringByAppendingPathComponent:[dicImg objectForKey:@"ProfilePicture"]];
+ UIImage *image = imageView.image; // imageView is my image from camera
+ NSData *imageData = UIImagePNGRepresentation(image);
+ [imageData writeToFile:savedImagePath atomically:NO];
+ 
+ [data writeToURL:url1 atomically:YES];
+ 
+ // [data writeToFile:[documentsDirectory stringByAppendingPathComponent:[NSString str]] atomically:YES];
+ 
+ }*/
 
 +(void)SearchTextView: (UIView *)viewSearch
 {
@@ -946,5 +946,127 @@
     [viewSearch.layer addSublayer:rightBorder];
 }
 
++(void)removeUserDefaults1
+{
+    NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary * dict = [userDefaults dictionaryRepresentation];
+    
+    
+    
+    for (id key in dict)
+    {
+        NSLog(@"ALL keys=%@",key);
+        
+        
+        if ([key isEqualToString:@"Password"])
+        {
+            
+        }
+        else if ([key isEqualToString:@"MobileNumber"])
+        {
+            
+        }
+        else
+        {
+            [userDefaults removeObjectForKey:key];
+        }
+        
+    }
+    [userDefaults synchronize];
+    
+    /* [[NSUserDefaults standardUserDefaults]setObject:_aPhonenumberTextField.text forKey:@"MobileNumber"];
+     [[NSUserDefaults standardUserDefaults]setObject:_aPasswordTextField.text forKey:@"Password"];*/
+    
+}
+
++(void)DeleteAllSqliteTable
+{
+    [DBOperation executeSQL:@"delete from BlogDetail"];
+    
+    [DBOperation executeSQL:@"delete from CircularList"];
+    
+    [DBOperation executeSQL:@"delete from ClassWorkList"];
+    
+    [DBOperation executeSQL:@"delete from CurrentActiveUser"];
+    
+    [DBOperation executeSQL:@"delete from DynamicWall"];
+    
+    [DBOperation executeSQL:@"delete from DynamicWallMenuList"];
+    
+    [DBOperation executeSQL:@"delete from FriendList"];
+    
+    [DBOperation executeSQL:@"delete from FriendRequestList"];
+    
+    [DBOperation executeSQL:@"delete from GeneralWall"];
+    
+    [DBOperation executeSQL:@"delete from GetUserRoleRightList"];
+    
+    [DBOperation executeSQL:@"delete from HomeWorkList"];
+    
+    [DBOperation executeSQL:@"delete from InstituteWall"];
+    
+    [DBOperation executeSQL:@"delete from LeaveDetailList"];
+    
+    [DBOperation executeSQL:@"delete from Login"];
+    
+    [DBOperation executeSQL:@"delete from MyWall"];
+    
+    [DBOperation executeSQL:@"delete from PTCommunicationList"];
+    
+    [DBOperation executeSQL:@"delete from PhotoAlbumList"];
+    
+    [DBOperation executeSQL:@"delete from PhotoAlbumSaveMultipleImage"];
+    
+    [DBOperation executeSQL:@"delete from PhotoList"];
+    
+    [DBOperation executeSQL:@"delete from PhotoMultipleAlbumList"];
+    
+    [DBOperation executeSQL:@"delete from PollAddPage"];
+    
+    [DBOperation executeSQL:@"delete from PollParticipantPage"];
+    
+    [DBOperation executeSQL:@"delete from PollParticipantPage_Votelist"];
+    
+    [DBOperation executeSQL:@"delete from ProfileHappyGramList"];
+    
+    [DBOperation executeSQL:@"delete from ProfileInstitutePage"];
+    
+    [DBOperation executeSQL:@"delete from ProfileLeaveList"];
+    
+    [DBOperation executeSQL:@"delete from ProjectList"];
+    
+    [DBOperation executeSQL:@"delete from SchoolGroupList"];
+    
+    [DBOperation executeSQL:@"delete from SelectionList"];
+    
+    [DBOperation executeSQL:@"delete from Setting"];
+    
+    [DBOperation executeSQL:@"delete from StudentList"];
+    
+    [DBOperation executeSQL:@"delete from TeacherDivisionList"];
+    
+    [DBOperation executeSQL:@"delete from TeacherList"];
+    
+    [DBOperation executeSQL:@"delete from TeacherStandardList"];
+    
+    [DBOperation executeSQL:@"delete from TeacherSubjectList"];
+    
+    [DBOperation executeSQL:@"delete from VideoList"];
+    
+    [DBOperation executeSQL:@"delete from newPost"];
+    
+    [DBOperation executeSQL:@"delete from NotificationList"];
+    
+    [DBOperation executeSQL:@"delete from ExamTiming"];
+    
+    [DBOperation executeSQL:@"delete from TimeTable"];
+    
+    [DBOperation executeSQL:@"delete from NotList"];
+    
+    [DBOperation executeSQL:@"delete from Holiday"];
+    
+    [DBOperation executeSQL:@"delete from CalenderList"];
+    
+}
 
 @end

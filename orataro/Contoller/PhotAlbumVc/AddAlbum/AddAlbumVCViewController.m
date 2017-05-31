@@ -32,7 +32,7 @@
     [_imgFriend setTintColor:[UIColor colorWithRed:40.0/255.0 green:49.0/255.0 blue:90.0/255.0 alpha:1.0]];
     _imgFriend.contentMode = UIViewContentModeScaleAspectFit;
     
-    _viewAddOuter.layer.cornerRadius = 30.0;
+    _viewAddOuter.layer.cornerRadius = 20.0;
     _viewAddOuter.clipsToBounds = YES;
     
     _txtAlbumName.layer.cornerRadius = 3.0;

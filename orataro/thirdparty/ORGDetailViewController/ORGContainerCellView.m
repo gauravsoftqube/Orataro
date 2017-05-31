@@ -19,7 +19,7 @@
 
 - (void)awakeFromNib {
     
-    self.collectionView.backgroundColor = [UIColor colorWithRed:39.0/255.0 green:48.0/255.0 blue:48.0/255.0 alpha:1.0];
+   // self.collectionView.backgroundColor = [UIColor colorWithRed:39.0/255.0 green:48.0/255.0 blue:48.0/255.0 alpha:1.0];
      // cell.contentView.backgroundColor = [UIColor colorWithRed:39.0/255.0 green:48.0/255.0 blue:48.0/255.0 alpha:1.0];
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;

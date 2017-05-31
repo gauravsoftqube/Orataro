@@ -18,18 +18,26 @@
                 <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="13">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y1D-qt-fUW">
                         <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
+                        <color key="backgroundColor" red="0.15294117647058825" green="0.18823529411764706" blue="0.35686274509803922" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="13">
+                        <rect key="frame" x="5" y="5" width="60" height="60"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </imageView>
                 </subviews>
             </view>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="13" firstAttribute="top" secondItem="3" secondAttribute="top" id="U5H-Df-oio"/>
-                <constraint firstAttribute="trailing" secondItem="13" secondAttribute="trailing" id="esV-cm-VTn"/>
-                <constraint firstAttribute="bottom" secondItem="13" secondAttribute="bottom" id="etd-Sy-vha"/>
-                <constraint firstItem="13" firstAttribute="leading" secondItem="3" secondAttribute="leading" id="gKA-7q-aw2"/>
+                <constraint firstItem="y1D-qt-fUW" firstAttribute="leading" secondItem="3" secondAttribute="leading" id="5tY-FC-LNw"/>
+                <constraint firstItem="y1D-qt-fUW" firstAttribute="top" secondItem="3" secondAttribute="top" id="OLe-8n-x6r"/>
+                <constraint firstAttribute="bottom" secondItem="y1D-qt-fUW" secondAttribute="bottom" id="TaN-VV-CmF"/>
+                <constraint firstItem="13" firstAttribute="top" secondItem="3" secondAttribute="top" constant="5" id="U5H-Df-oio"/>
+                <constraint firstAttribute="trailing" secondItem="13" secondAttribute="trailing" constant="5" id="esV-cm-VTn"/>
+                <constraint firstAttribute="bottom" secondItem="13" secondAttribute="bottom" constant="5" id="etd-Sy-vha"/>
+                <constraint firstItem="13" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="5" id="gKA-7q-aw2"/>
+                <constraint firstAttribute="trailing" secondItem="y1D-qt-fUW" secondAttribute="trailing" id="vv6-We-fpd"/>
             </constraints>
             <size key="customSize" width="70" height="71"/>
             <connections>

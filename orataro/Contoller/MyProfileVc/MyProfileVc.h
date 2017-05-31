@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MyProfileVc : UIViewController<UITableViewDelegate,UITableViewDataSource>
+@interface MyProfileVc : UIViewController<UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *btnPhoneChain;
 @property (weak, nonatomic) IBOutlet UIButton *btnHealth;
 @property (weak, nonatomic) IBOutlet UIButton *btnParent;
 @property (weak, nonatomic) IBOutlet UILabel *lbHeaderTitle;
+- (IBAction)btnChangePhotoClicked:(id)sender;
 
 
 @property (weak, nonatomic) IBOutlet UITableView *aProfileTable;

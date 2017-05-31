@@ -13,6 +13,7 @@
 #import "REFrostedViewController.h"
 #import "DEMONavigationController.h"
 #import "Global.h"
+#import "Utility.h"
 
 @interface OrataroVc ()<UIScrollViewDelegate>
 {
@@ -32,6 +33,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
+    ParallaxViewController *pr = [[ParallaxViewController alloc]init];
+    
+    
+    NSMutableDictionary *dicgetdata = [Utility getCurrentUserDetail];
+    
+    pr.headerImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[dicgetdata objectForKey:@"InstitutionWallImage"]]];
+    
+    // _headerImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[dic objectForKey:@"InstitutionWallImage"]]];
+    
     
     _viewLogout.hidden = YES;
     _imgClose.image = [_imgClose.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -80,6 +92,7 @@
     
     coll = [[UICollectionView alloc]initWithFrame:CGRectMake(0,0, self.view.frame.size.width, [UIScreen mainScreen].bounds.size.height) collectionViewLayout:layout];
     
+    
     CGFloat f = coll.frame.size.width/3;
     
     NSLog(@"data=%f",f);
@@ -102,6 +115,32 @@
     
     [coll registerClass:[OrataroCell class] forCellWithReuseIdentifier:@"OrataroCell"];
     [coll setBackgroundColor:[UIColor clearColor]];
+    
+    
+    
+    //    CGFloat f2 = coll.frame.size.width/3;
+    //
+    //    NSLog(@"data=%f",f);
+    //
+    //    CGFloat cal = (f2 * ary.count/3);
+    //
+    //    NSLog(@"data=%f",cal);
+    //
+    //    NSLog(@"data=%f",(f2*ary.count));
+    
+    
+    //    self.contentViewHeight.constant = (f*ary.count)/3;
+    //    [coll setFrame:CGRectMake(0, 0, self.view.frame.size.width, f*ary.count/3)];
+    //
+    //    [coll setScrollEnabled:NO];
+    //    [coll setBounces:NO];
+    //
+    //    [coll setDataSource:self];
+    //    [coll setDelegate:self];
+    //
+    //    [coll registerClass:[OrataroCell class] forCellWithReuseIdentifier:@"OrataroCell"];
+    //    [coll setBackgroundColor:[UIColor clearColor]];
+    
     
     [coll registerNib:[UINib nibWithNibName:@"OrataroCell" bundle:nil] forCellWithReuseIdentifier:@"OrataroCell"];
     
@@ -142,11 +181,21 @@
         cell.lbWallCount.clipsToBounds = YES;
         cell.aLable.text = @"Wall";
         
+        
+        //NSLog(@"Ary=%@",getData);
+        
+        // NSString *str = [NSString stringWithFormat:@"%@",[[aryGetMemberCount objectAtIndex:0]objectForKey:@"NotificationCount"]];
+        
+        // NSLog(@"Data=%lu",(unsigned long)str.length);
+        
+        
+        
         //NSLog(@"Ary=%@",getData);
         
         NSString *str = [NSString stringWithFormat:@"%@",[[aryGetMemberCount objectAtIndex:0]objectForKey:@"NotificationCount"]];
         
         // NSLog(@"Data=%lu",(unsigned long)str.length);
+        
         
         if (str == (id)[NSNull null] || str.length == 0 || [str isEqual: [NSNull null]] || [str isEqualToString:@"(null)"])
         {
@@ -434,9 +483,17 @@
 {
     CGFloat f = coll.frame.size.width/3;
     
+    
     //  self.contentViewHeight.constant = f*ary.count;
     
     NSLog(@"ary count=%lu",(unsigned long)ary.count);
+    
+    
+    
+    //  self.contentViewHeight.constant = f*ary.count;
+    
+    NSLog(@"ary count=%lu",(unsigned long)ary.count);
+    
     
     NSLog(@"view width=%f",f);
     
@@ -590,6 +647,7 @@
             
         case 16:
             
+            
         {
             UIViewController  *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SettingVcViewController"];
             [self.navigationController pushViewController:vc animated:YES];            break;
@@ -597,6 +655,7 @@
         case 17:
             
         {
+            
             UIViewController  *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"FAQvc"];
             [self.navigationController pushViewController:vc animated:YES];
             break;
@@ -617,12 +676,17 @@
 }
 - (IBAction)btnSaveClicked:(id)sender
 {
+    
+    [Utility removeUserDefaults1];
+    [Utility DeleteAllSqliteTable];
+    
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"TotalCountofMember"];
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"DeviceToken"];
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"currentDeviceId"];
     // [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"Password"];
     
     [[NSUserDefaults standardUserDefaults]synchronize];
+    
     
     UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"LoginVC"];
     [self.navigationController pushViewController:wc animated:YES];
@@ -651,7 +715,11 @@
         return;
     }
     
+    
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_notifications,apk_MemberAllTypeOfCounts_action];
+    
+    // NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_notifications,apk_MemberAllTypeOfCounts_action];
+    
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
     
@@ -672,14 +740,19 @@
          if(!error)
          {
              NSString *strArrd=[dicResponce objectForKey:@"d"];
-             if([strArrd length] != 0)
+             
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableDictionary *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             
+             if([arrResponce count] != 0)
              {
-                 NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
-                 NSMutableDictionary *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                 NSLog(@"arr=%@",arrResponce);
                  
-                 if([arrResponce count] != 0)
+                 if([strArrd length] != 0)
                  {
-                     NSLog(@"arr=%@",arrResponce);
+                     NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+                     NSMutableDictionary *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                     
                      
                      @try
                      {
@@ -689,6 +762,10 @@
                          [[NSUserDefaults standardUserDefaults]synchronize];
                          [aCollectionView reloadData];
                          
+                         
+                         //api_getMemberCount
+                         // [self performSegueWithIdentifier:@"ShowWall" sender:self];
+                         
                      }
                      @catch (NSException *exception)
                      {
@@ -696,44 +773,21 @@
                          //[alrt show];
                      }
                      
-                     
-                     // strCheckUser =@"SwitchAccount";
-                     //  strCheckUser =@"WallVc";
-                     
-                     // NSLog(@"Strcheck=%@",strCheckUser);
-                     //
-                     //                 if ([strCheckUser isEqualToString:@"SwitchAccount"])
-                     //                 {
-                     //                     UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SwitchAcoountVC"];
-                     //                     [self.navigationController pushViewController:wc animated:YES];
-                     //                 }
-                     //                 else
-                     //                 {
-                     //                     [self performSegueWithIdentifier:@"ShowWall" sender:self];
-                     //                 }
-                     //                 WallVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
-                     //                 vc.checkscreen = @"FromLogin";
-                     //                 app.checkview = 0;
-                     //
-                     //                 [self.navigationController pushViewController:vc animated:YES];
-                     
-                     
-                     
-                     //api_getMemberCount
-                     // [self performSegueWithIdentifier:@"ShowWall" sender:self];
-                     
                  }
+                 
                  else
                  {
                      UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
+                 
              }
-         }
-         else
-         {
-             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-             [alrt show];
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+             
          }
      }];
 }

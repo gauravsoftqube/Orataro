@@ -244,6 +244,8 @@
 #import "ChatVc.h"
 #import "AddAlbumVCViewController.h"
 
+#import "ParallaxViewController.h"
+
 #pragma mark - YOUTube Video Key
 
 #define YouTubeVideo_Key  @"SII1LZqIAas"

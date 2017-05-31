@@ -25,7 +25,7 @@
     
     // _tblListDetail.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
     _tblListDetail.separatorStyle=UITableViewCellSeparatorStyleNone;
-    _viewAddbtn.layer.cornerRadius = 30.0;
+    _viewAddbtn.layer.cornerRadius = 20.0;
     
     _lbHeaderTitle.text = [NSString stringWithFormat:@"Leave (%@)",[Utility getCurrentUserName]];
     // Do any additional setup after loading the view.
