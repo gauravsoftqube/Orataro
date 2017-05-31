@@ -7,7 +7,7 @@
 //
 
 #import "ParallaxViewController.h"
-
+#import "Global.h"
 
 #define HEADER_IMAGE_HEIGHT  100;
 
@@ -73,6 +73,19 @@
     self.headerImageViewHeight.constant = HEADER_IMAGE_HEIGHT;
     self.bottomViewTopConstraint.constant = self.headerImageViewHeight.constant;
     self.contentViewHeight.constant = [UIScreen mainScreen].bounds.size.height - HEADER_IMAGE_HEIGHT;
+    
+    NSMutableDictionary *dic = [Utility getCurrentUserDetail];
+    
+    NSLog(@"Dic=%@",[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[dic objectForKey:@"InstitutionWallImage"]]);
+    
+   // _headerImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[dic objectForKey:@"InstitutionWallImage"]]];
+
+    
+//#define apk_ImageUrl @"http://orataro.com/DataFiles"
+//#define apk_ImageUrlFor_HomeworkDetail @"http://orataro.com"
+
+    
+    //_headerImageView.image =
 
 }
 

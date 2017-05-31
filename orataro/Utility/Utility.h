@@ -131,6 +131,10 @@
 
 +(NSString *)getCurrentUserName;
 
++ (void)removeUserDefaults1;
+
++(void)DeleteAllSqliteTable;
+
 
 
 @end

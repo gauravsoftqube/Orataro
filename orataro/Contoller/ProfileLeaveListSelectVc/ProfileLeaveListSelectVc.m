@@ -58,6 +58,12 @@
         }
         else
         {
+            //[arySaveDataLeave removeAllObjects];
+            //[DBOperation executeSQL:@"delete from arySaveDataLeave"];
+            
+        //    [_tblListSelectionLeave reloadData];
+
+            
             [self apiCallFor_getList:YES];
             
         }
@@ -66,13 +72,18 @@
     {
         if ([Utility isInterNetConnectionIsActive] == false)
         {
-            arySaveDataLeave=[DBOperation selectData:[NSString stringWithFormat:@"select * from SelectionList"]];
+            arySaveDataLeave=[DBOperation selectData:[NSString stringWithFormat:@"select * from arySaveDataLeave"]];
             
             [_tblListSelectionLeave reloadData];
         }
         else
         {
-            [self apiCallFor_getList:NO];
+           // [arySaveDataLeave removeAllObjects];
+           //  [DBOperation executeSQL:@"delete from arySaveDataLeave"];
+            
+          //  [_tblListSelectionLeave reloadData];
+            
+            [self apiCallFor_getList:YES];
         }
     }
     
@@ -173,6 +184,8 @@
 
 -(void)apiCallFor_getList:(BOOL)strInternet
 {
+     arySaveDataLeave = [[NSMutableArray alloc]init];
+    
     if ([Utility isInterNetConnectionIsActive] == false)
     {
         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -223,7 +236,7 @@
                      //  aryTempLeave = [[NSMutableArray alloc]init];
                      //  arySaveDataLeave = [[NSMutableArray alloc]init];
                      
-                     arySaveDataLeave = [[NSMutableArray alloc]init];
+                    
                      arySaveDataLeave = [arrResponce mutableCopy];
                      
                      NSLog(@"ary=%@",arySaveDataLeave);

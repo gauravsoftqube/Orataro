@@ -39,6 +39,7 @@
     int c2;
     NSMutableDictionary *dic2;
     NSMutableArray *aryGetCount;
+    NSString *fromImagepicker;
 }
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
 @end
@@ -67,16 +68,7 @@
     aProfileTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     //set Header Title
-    NSArray *arr=[[[Utility getCurrentUserDetail]objectForKey:@"FullName"] componentsSeparatedByString:@" "];
-    if (arr.count != 0)
-    {
-        self.aProfileNameLb.text=[NSString stringWithFormat:@"%@",[[Utility getCurrentUserDetail]objectForKey:@"FullName"]];
-        [self getCurrentUserImage:[Utility getCurrentUserDetail]];
-    }
-    else
-    {
-        self.aProfileNameLb.text=[NSString stringWithFormat:@""];
-    }
+    
     
 }
 
@@ -92,7 +84,29 @@
   //  NSLog(@"Dic Viewwill=%@",dic2);
     
     
+    
     _lbHeaderTitle.text = [NSString stringWithFormat:@"My Profile (%@)",[Utility getCurrentUserName]];
+    
+    if ([fromImagepicker isEqualToString:@"Check"])
+    {
+        
+    }
+    else
+    {
+        NSArray *arr=[[[Utility getCurrentUserDetail]objectForKey:@"FullName"] componentsSeparatedByString:@" "];
+        if (arr.count != 0)
+        {
+            self.aProfileNameLb.text=[NSString stringWithFormat:@"%@",[[Utility getCurrentUserDetail]objectForKey:@"FullName"]];
+            [self getCurrentUserImage:[Utility getCurrentUserDetail]];
+        }
+        else
+        {
+            self.aProfileNameLb.text=[NSString stringWithFormat:@""];
+        }
+
+        
+           [self api_getMemberCount];
+    }
     
     if([[Utility getMemberType] isEqualToString:@"Student"])
     {
@@ -107,7 +121,7 @@
         _btnPhoneChain.hidden = YES;
     }
     
-    [self api_getMemberCount];
+ 
 
    
 }
@@ -117,11 +131,24 @@
     if ([Utility isInterNetConnectionIsActive] == true)
     {
         NSString *strURLForTeacherProfilePicture=[NSString stringWithFormat:@"%@",[dic objectForKey:@"ProfilePicture"]];
+        
         if(![strURLForTeacherProfilePicture isKindOfClass:[NSNull class]])
         {
             strURLForTeacherProfilePicture=[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[dic objectForKey:@"ProfilePicture"]];
+            
+           // NSLog(@"Str=%@",strURLForTeacherProfilePicture);
+            
             NSURL *imageURL = [NSURL URLWithString:strURLForTeacherProfilePicture];
-            [self.aProfileimageview sd_setImageWithURL:imageURL];
+            
+            // [self.aProfileimageview sd_setImageWithURL:imageURL];
+            
+            //[aProfileimageview sd]
+            [aProfileimageview sd_setImageWithURL:imageURL completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL)
+            {
+                [ProgressHUB hideenHUDAddedTo:self.view];
+                aProfileimageview.image = image;
+            }];
+           
         }
     }
 }
@@ -268,7 +295,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // as per content
-    return 60;
+    return 50;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -640,6 +667,77 @@
     [self.navigationController pushViewController:initViewController animated:YES];
 }
 
+- (IBAction)btnChangePhotoClicked:(id)sender
+{
+    UIActionSheet *action = [[UIActionSheet alloc] initWithTitle:@"Add Photo!" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Take Photo",@"Choose from Liabrary", nil];
+    
+    [action showInView:self.view];
+    
+}
+
+#pragma mark - ActionSheet delegates
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if( buttonIndex == 0 )
+    {
+        
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+        {
+            UIImagePickerController *pickerView =[[UIImagePickerController alloc]init];
+            pickerView.allowsEditing = YES;
+            pickerView.delegate = self;
+            pickerView.sourceType = UIImagePickerControllerSourceTypeCamera;
+            [self presentModalViewController:pickerView animated:true];
+        }
+        
+    }
+    else if( buttonIndex == 1)
+    {
+        
+        UIImagePickerController *pickerView = [[UIImagePickerController alloc] init];
+        pickerView.allowsEditing = YES;
+        pickerView.delegate = self;
+        [pickerView setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+        [self presentModalViewController:pickerView animated:YES];
+        
+    }
+}
+
+#pragma mark - PickerDelegates
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    
+    //[self dismissModalViewControllerAnimated:true];
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+    
+    //checkImage = @"FromImagePicker";
+    
+    // str isEqualToString:@"first"
+    //str isEqualToString:@"Second"
+    
+    UIImage * img = [info valueForKey:UIImagePickerControllerEditedImage];
+    [aProfileimageview  setImage:img];
+    
+    fromImagepicker =@"Check";
+    [self UploadPic:img];
+    
+   // if([str isEqualToString:@"first"])
+    //{
+      //  UIImage * img = [info valueForKey:UIImagePickerControllerEditedImage];
+      //  [self UploadPhoto:img];
+    //}
+    //else
+    //{
+        
+    //}
+}
+
+
 #pragma mark - Member Count
 
 -(void)api_getMemberCount
@@ -742,6 +840,129 @@
 }
 
 
+#pragma mark - upload profile picture
+
+-(void)UploadPic : (UIImage *)img1
+{
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_parentprofile,apk_ChnageProfilePhotos];
+    
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    [param setValue:[NSString stringWithFormat:@"%@.png",[Utility randomImageGenerator]] forKey:@"NamePhoto"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+    
+    NSData *data = UIImagePNGRepresentation(img1);
+    const unsigned char *bytes = [data bytes];
+    NSUInteger length = [data length];
+    NSMutableArray *byteArray = [NSMutableArray array];
+    for (NSUInteger i = 0; i < length; i++)
+    {
+        [byteArray addObject:[NSNumber numberWithUnsignedChar:bytes[i]]];
+    }
+    [param setValue:byteArray forKey:@"PhotoFile"];
+    
+    [ProgressHUB showHUDAddedTo:self.view];
+    
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+          //[ProgressHUB showHUDAddedTo:self.view];
+         
+         if(!error)
+         {
+             
+             
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             
+             if([arrResponce count] != 0)
+             {
+                 NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                 NSString *strStatus=[dic objectForKey:@"message"];
+                 
+                 NSArray *ary = [strStatus componentsSeparatedByString:@","];
+                 
+                 if([[ary objectAtIndex:1] isEqualToString:@"Image Update SuccessFully."])
+                 {
+                     //apk_ImageUrlFor_HomeworkDetail
+                     
+                   //  UIImageView *img = [[UIImageView alloc]init];
+                     NSLog(@"Data=%@",[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[ary objectAtIndex:0]]);
+                     
+                     NSMutableDictionary *dicEdit = [[Utility getCurrentUserDetail]mutableCopy];
+                     
+                     [dicEdit setObject:[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[ary objectAtIndex:0]] forKey:@"ProfilePicture"];
+                     
+                     NSString *getjsonstr = [Utility Convertjsontostring:dicEdit];
+                     
+                     [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE CurrentActiveUser SET id = '0' WHERE JsonStr = '%@'",getjsonstr]];
+                     
+                     [self getCurrentUserImage:dicEdit];
+                     
+                     [aProfileimageview sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[ary objectAtIndex:0]]] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL)
+                      {
+                          aProfileimageview.image = image;
+                      }];
+                    // [self viewWillAppear:YES];
+                     
+                   /*  [aProfileimageview sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[ary objectAtIndex:0]]] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL)
+                      {
+                     
+                          
+                        //  NSLog(@"Dic=%@",[Utility getCurrentUserDetail]);
+                          
+                          NSMutableDictionary *dicEdit = [[Utility getCurrentUserDetail]mutableCopy];
+                          
+                         [dicEdit setObject:[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[ary objectAtIndex:0]] forKey:@"ProfilePicture"];
+                     
+                          
+                           NSString *getjsonstr = [Utility Convertjsontostring:dicEdit];
+                          
+                           [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE CurrentActiveUser SET id = '0' WHERE JsonStr = '%@'",getjsonstr]];
+                          
+                          //NSLog(@"Edit=%@",dicEdit);
+                          
+                         [self getCurrentUserImage:dicEdit];
+                          
+                      }];*/
+                     
+                 
+                 }
+                 else
+                 {
+                     //   _viewDelete.hidden = NO;
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                 }
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
+    
+    
+    
+}
+
+
 /*
  #pragma mark - Navigation
  
@@ -751,6 +972,7 @@
  // Pass the selected object to the new view controller.
  }
  */
+
 
 
 @end

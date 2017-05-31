@@ -487,6 +487,7 @@
 - (IBAction)btntblDeleteHomework:(id)sender
 {
     arrPopup = [[NSMutableArray alloc]init];
+    
     [arrPopup addObject:[Utility addCell_PopupView:self.viewAddPage ParentView:self.view sender:sender]];
     
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.HomeworkTableView];

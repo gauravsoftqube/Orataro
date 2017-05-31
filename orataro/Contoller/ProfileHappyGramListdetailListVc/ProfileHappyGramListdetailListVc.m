@@ -23,7 +23,7 @@
 {
     [super viewDidLoad];
     
-    _addView.layer.cornerRadius = 30.0;
+    _addView.layer.cornerRadius = 20.0;
     
     // Do any additional setup after loading the view.
     [self commonData];
@@ -56,8 +56,8 @@
         }
         else
         {
-             [DBOperation executeSQL:@"delete from ProfileHappyGramList"];
-            [_tblDetailList reloadData];
+            [aryGetHappyGramList removeAllObjects];
+            [DBOperation executeSQL:@"delete from ProfileHappyGramList"];
             
             [self apiCallFor_getHappygramList:YES];
             
@@ -72,8 +72,9 @@
         }
         else
         {
+            [aryGetHappyGramList removeAllObjects];
             [DBOperation executeSQL:@"delete from ProfileHappyGramList"];
-            [_tblDetailList reloadData];
+            //[_tblDetailList reloadData];
             
             [self apiCallFor_getHappygramList:NO];
         }
@@ -306,6 +307,9 @@
 {
    // [aryGetHappyGramList removeAllObjects];
     
+    
+   // NSLog(@"Data=%@",aryGetHappyGramList);
+    
     if ([Utility isInterNetConnectionIsActive] == false)
     {
         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -355,9 +359,9 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     [aryGetHappyGramList removeAllObjects];
-                     [DBOperation executeSQL:@"delete from ProfileHappyGramList"];
-                     [_tblDetailList reloadData];
+                    // [aryGetHappyGramList removeAllObjects];
+                    // [DBOperation executeSQL:@"delete from ProfileHappyGramList"];
+                    [_tblDetailList reloadData];
                      UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                     

@@ -28,7 +28,7 @@
     
     //  aryProjectData = [[NSMutableArray alloc]init];
     
-    _AddBtn.layer.cornerRadius = 30.0;
+    _AddBtn.layer.cornerRadius = 20.0;
     
     
     _viewDeletePopup.hidden = YES;
@@ -118,9 +118,6 @@
 {
     ORGContainerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ORGContainerCell"];
     NSDictionary *cellData = [aryProjectData objectAtIndex:[indexPath section]];
-    
-   
-    
     NSArray *articleData=  [cellData objectForKey:@"aryImages"];
     [cell setCollectionData:articleData];
     cell.selectionStyle =UITableViewCellSelectionStyleNone;

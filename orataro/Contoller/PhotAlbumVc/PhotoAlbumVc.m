@@ -54,7 +54,7 @@
     }
     
    // addBtn.layer.cornerRadius  = 30.0;
-    _viewadd.layer.cornerRadius  = 30.0;
+    _viewadd.layer.cornerRadius  = 20.0;
     aSecondBottomView.hidden = YES;
     aFirstBottomView.hidden = NO;
     

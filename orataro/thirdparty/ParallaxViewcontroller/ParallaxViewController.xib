@@ -15,7 +15,7 @@
                 <outlet property="bottomScroll" destination="gu4-0t-jA0" id="x1o-wS-C4Q"/>
                 <outlet property="contentView" destination="yZI-mc-ump" id="Ddb-pz-U8U"/>
                 <outlet property="contentViewHeight" destination="NG2-xt-2Le" id="WMN-ii-QjP"/>
-                <outlet property="headerImageView" destination="OnB-eT-ybV" id="McL-Ut-JJM"/>
+                <outlet property="headerImageView" destination="OnB-eT-ybV" id="NjK-oJ-7gA"/>
                 <outlet property="topScroll" destination="FwZ-g7-1Sa" id="DHC-pB-0fR"/>
             </connections>
         </placeholder>

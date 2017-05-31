@@ -32,7 +32,7 @@
     
     p = (AppDelegate *)[UIApplication sharedApplication].delegate;
     
-    _AddBtn.layer.cornerRadius = 30.0;
+    _AddBtn.layer.cornerRadius = 20.0;
     
     _DeleteImageview.image = [_DeleteImageview.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [_DeleteImageview setTintColor:[UIColor colorWithRed:40.0/255.0 green:49.0/255.0 blue:90.0/255.0 alpha:1.0]];

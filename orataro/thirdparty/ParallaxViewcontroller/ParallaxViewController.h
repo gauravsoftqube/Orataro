@@ -25,7 +25,7 @@
  @description showing header image view for the post
  */
 @property (weak, nonatomic) IBOutlet UILabel *aLabel;
-@property(nonatomic, weak) IBOutlet UIImageView *headerImageView;
+@property(strong, nonatomic) IBOutlet UIImageView *headerImageView;
 
 /**
  @property contentView
