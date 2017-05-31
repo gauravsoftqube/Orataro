@@ -749,7 +749,6 @@
                      NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
                      NSMutableDictionary *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
                      
-                     
                      @try
                      {
                          aryGetMemberCount = [arrResponce objectForKey:@"Table"];
