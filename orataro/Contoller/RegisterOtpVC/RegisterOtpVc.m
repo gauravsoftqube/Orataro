@@ -199,49 +199,52 @@ int multipleUser1 = 0;
          if(!error)
          {
              NSString *strArrd=[dicResponce objectForKey:@"d"];
-             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
-             NSMutableDictionary *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-             
-             if([arrResponce count] != 0)
+             if([strArrd length] != 0)
              {
-                 NSLog(@"arr=%@",arrResponce);
+                 NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+                 NSMutableDictionary *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
                  
-                 //   [[NSUserDefaults standardUserDefaults]setObject:arrResponce forKey:@"TotalCountofMember"];
-                 //  [[NSUserDefaults standardUserDefaults]synchronize];
-                 
-                 // strCheckUser =@"SwitchAccount";
-                 //  strCheckUser =@"WallVc";
-                 
-                 // NSLog(@"Strcheck=%@",strCheckUser);
-                 
-                 //  [self api_changeGCMID];
-                 
-                 if ([strCheckUser isEqualToString:@"SwitchAccount"])
+                 if([arrResponce count] != 0)
                  {
-                     UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SwitchAcoountVC"];
-                     [self.navigationController pushViewController:wc animated:YES];
+                     NSLog(@"arr=%@",arrResponce);
+                     
+                     //   [[NSUserDefaults standardUserDefaults]setObject:arrResponce forKey:@"TotalCountofMember"];
+                     //  [[NSUserDefaults standardUserDefaults]synchronize];
+                     
+                     // strCheckUser =@"SwitchAccount";
+                     //  strCheckUser =@"WallVc";
+                     
+                     // NSLog(@"Strcheck=%@",strCheckUser);
+                     
+                     //  [self api_changeGCMID];
+                     
+                     if ([strCheckUser isEqualToString:@"SwitchAccount"])
+                     {
+                         UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SwitchAcoountVC"];
+                         [self.navigationController pushViewController:wc animated:YES];
+                     }
+                     else
+                     {
+                         [self performSegueWithIdentifier:@"ShowWall" sender:self];
+                     }
+                     
+                     
+                     //                 WallVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
+                     //                 vc.checkscreen = @"FromLogin";
+                     //                 app.checkview = 0;
+                     //
+                     //                 [self.navigationController pushViewController:vc animated:YES];
+                     
+                     
+                     
+                     //api_getMemberCount
+                     // [self performSegueWithIdentifier:@"ShowWall" sender:self];
                  }
                  else
                  {
-                     [self performSegueWithIdentifier:@"ShowWall" sender:self];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
                  }
-                 
-                 
-                 //                 WallVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
-                 //                 vc.checkscreen = @"FromLogin";
-                 //                 app.checkview = 0;
-                 //
-                 //                 [self.navigationController pushViewController:vc animated:YES];
-                 
-                 
-                 
-                 //api_getMemberCount
-                 // [self performSegueWithIdentifier:@"ShowWall" sender:self];
-             }
-             else
-             {
-                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                 [alrt show];
              }
          }
          else

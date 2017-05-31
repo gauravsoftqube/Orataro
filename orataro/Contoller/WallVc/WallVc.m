@@ -1154,7 +1154,6 @@ int c2= 0;
         [alrt show];
         return;
     }
-    
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_login,apk_ChangeGCMID];
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
@@ -1163,45 +1162,9 @@ int c2= 0;
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
     [param setValue:token forKey:@"GCMID"];
     
-    [ProgressHUB showHUDAddedTo:self.view];
-    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
-     {
-         [ProgressHUB hideenHUDAddedTo:self.view];
-         
-         //
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error){
          [self apiCallFor_GetUserRoleRightList:@"1"];
-         if(!error)
-         {
-             NSString *strArrd=[dicResponce objectForKey:@"d"];
-             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
-             NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-             
-             if([arrResponce count] != 0)
-             {
-                 NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
-                 NSString *strStatus=[dic objectForKey:@"message"];
-                 if([strStatus isEqualToString:@"No Data Found"])
-                 {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     [alrt show];
-                 }
-                 else
-                 {
-                     
-                 }
-             }
-             else
-             {
-                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                 [alrt show];
-             }
-         }
-         else
-         {
-             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-             [alrt show];
-         }
-     }];
+    }];
 }
 
 -(void)apiCallFor_GetUserRoleRightList:(NSString *)strInternet
@@ -1222,14 +1185,8 @@ int c2= 0;
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"RoleID"]] forKey:@"RoleID"];
     
-    //    if([strInternet isEqualToString:@"1"])
-    //    {
-    //        [ProgressHUB showHUDAddedTo:self.view];
-    //    }
-    
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
-         [ProgressHUB hideenHUDAddedTo:self.view];
          if(!error)
          {
              NSString *strArrd=[dicResponce objectForKey:@"d"];
@@ -1242,8 +1199,6 @@ int c2= 0;
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     [alrt show];
                  }
                  else
                  {
@@ -1261,16 +1216,6 @@ int c2= 0;
                      }
                  }
              }
-             else
-             {
-                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                 [alrt show];
-             }
-         }
-         else
-         {
-             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-             [alrt show];
          }
          [self apiCallFor_SaveLoginLog:@"0"];
      }];
@@ -1294,18 +1239,9 @@ int c2= 0;
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
     
-    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
-     {
-         
-         if(!error)
-         {
-         }
-         else
-         {
-         }
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error){
      }];
 }
-
 
 #pragma mark - apiCall GetWallMember
 
