@@ -666,8 +666,6 @@
     }
     // self.frostedViewController.contentViewController = navigationController;
     // [self.frostedViewController hideMenuViewController];
-    
-    
 }
 
 #pragma mark - button action
