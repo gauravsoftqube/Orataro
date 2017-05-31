@@ -34,7 +34,7 @@
 {
     [super viewDidLoad];
     
-<<<<<<< HEAD
+    
     ParallaxViewController *pr = [[ParallaxViewController alloc]init];
     
     
@@ -44,8 +44,7 @@
     
     // _headerImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[dic objectForKey:@"InstitutionWallImage"]]];
     
-=======
->>>>>>> master/master
+    
     _viewLogout.hidden = YES;
     _imgClose.image = [_imgClose.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [_imgClose setTintColor:[UIColor colorWithRed:40.0/255.0 green:49.0/255.0 blue:90.0/255.0 alpha:1.0]];
@@ -92,7 +91,7 @@
     [layout setMinimumInteritemSpacing:0];
     
     coll = [[UICollectionView alloc]initWithFrame:CGRectMake(0,0, self.view.frame.size.width, [UIScreen mainScreen].bounds.size.height) collectionViewLayout:layout];
-<<<<<<< HEAD
+    
     
     CGFloat f = coll.frame.size.width/3;
     
@@ -117,32 +116,32 @@
     [coll registerClass:[OrataroCell class] forCellWithReuseIdentifier:@"OrataroCell"];
     [coll setBackgroundColor:[UIColor clearColor]];
     
-=======
-    
-    CGFloat f = coll.frame.size.width/3;
-    
-    NSLog(@"data=%f",f);
-    
-    CGFloat cal = (f * ary.count/3);
-    
-    NSLog(@"data=%f",cal);
-    
-    NSLog(@"data=%f",(f*ary.count));
     
     
-    self.contentViewHeight.constant = (f*ary.count)/3;
-    [coll setFrame:CGRectMake(0, 0, self.view.frame.size.width, f*ary.count/3)];
+    //    CGFloat f2 = coll.frame.size.width/3;
+    //
+    //    NSLog(@"data=%f",f);
+    //
+    //    CGFloat cal = (f2 * ary.count/3);
+    //
+    //    NSLog(@"data=%f",cal);
+    //
+    //    NSLog(@"data=%f",(f2*ary.count));
     
-    [coll setScrollEnabled:NO];
-    [coll setBounces:NO];
     
-    [coll setDataSource:self];
-    [coll setDelegate:self];
+    //    self.contentViewHeight.constant = (f*ary.count)/3;
+    //    [coll setFrame:CGRectMake(0, 0, self.view.frame.size.width, f*ary.count/3)];
+    //
+    //    [coll setScrollEnabled:NO];
+    //    [coll setBounces:NO];
+    //
+    //    [coll setDataSource:self];
+    //    [coll setDelegate:self];
+    //
+    //    [coll registerClass:[OrataroCell class] forCellWithReuseIdentifier:@"OrataroCell"];
+    //    [coll setBackgroundColor:[UIColor clearColor]];
     
-    [coll registerClass:[OrataroCell class] forCellWithReuseIdentifier:@"OrataroCell"];
-    [coll setBackgroundColor:[UIColor clearColor]];
     
->>>>>>> master/master
     [coll registerNib:[UINib nibWithNibName:@"OrataroCell" bundle:nil] forCellWithReuseIdentifier:@"OrataroCell"];
     
     [self.contentView addSubview:coll];;
@@ -181,7 +180,15 @@
         cell.lbWallCount.layer.cornerRadius = 10.0;
         cell.lbWallCount.clipsToBounds = YES;
         cell.aLable.text = @"Wall";
-<<<<<<< HEAD
+        
+        
+        //NSLog(@"Ary=%@",getData);
+        
+        // NSString *str = [NSString stringWithFormat:@"%@",[[aryGetMemberCount objectAtIndex:0]objectForKey:@"NotificationCount"]];
+        
+        // NSLog(@"Data=%lu",(unsigned long)str.length);
+        
+        
         
         //NSLog(@"Ary=%@",getData);
         
@@ -189,15 +196,7 @@
         
         // NSLog(@"Data=%lu",(unsigned long)str.length);
         
-=======
         
-        //NSLog(@"Ary=%@",getData);
-        
-        NSString *str = [NSString stringWithFormat:@"%@",[[aryGetMemberCount objectAtIndex:0]objectForKey:@"NotificationCount"]];
-        
-        // NSLog(@"Data=%lu",(unsigned long)str.length);
-        
->>>>>>> master/master
         if (str == (id)[NSNull null] || str.length == 0 || [str isEqual: [NSNull null]] || [str isEqualToString:@"(null)"])
         {
             cell.lbWallCount.hidden = YES;
@@ -483,19 +482,19 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat f = coll.frame.size.width/3;
-<<<<<<< HEAD
+    
     
     //  self.contentViewHeight.constant = f*ary.count;
     
     NSLog(@"ary count=%lu",(unsigned long)ary.count);
     
-=======
+    
     
     //  self.contentViewHeight.constant = f*ary.count;
     
     NSLog(@"ary count=%lu",(unsigned long)ary.count);
     
->>>>>>> master/master
+    
     NSLog(@"view width=%f",f);
     
     return CGSizeMake(f, f);
@@ -647,7 +646,7 @@
         }
             
         case 16:
-<<<<<<< HEAD
+            
             
         {
             UIViewController  *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SettingVcViewController"];
@@ -656,16 +655,7 @@
         case 17:
             
         {
-=======
             
-        {
-            UIViewController  *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SettingVcViewController"];
-            [self.navigationController pushViewController:vc animated:YES];            break;
-        }
-        case 17:
-            
-        {
->>>>>>> master/master
             UIViewController  *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"FAQvc"];
             [self.navigationController pushViewController:vc animated:YES];
             break;
@@ -688,17 +678,17 @@
 }
 - (IBAction)btnSaveClicked:(id)sender
 {
-<<<<<<< HEAD
+    
     [Utility removeUserDefaults1];
     [Utility DeleteAllSqliteTable];
-=======
+    
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"TotalCountofMember"];
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"DeviceToken"];
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"currentDeviceId"];
     // [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"Password"];
     
     [[NSUserDefaults standardUserDefaults]synchronize];
->>>>>>> master/master
+    
     
     UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"LoginVC"];
     [self.navigationController pushViewController:wc animated:YES];
@@ -727,11 +717,11 @@
         return;
     }
     
-<<<<<<< HEAD
-    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_Notification,apk_MemberAllTypeOfCounts_action];
-=======
+    
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_notifications,apk_MemberAllTypeOfCounts_action];
->>>>>>> master/master
+    
+    // NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_notifications,apk_MemberAllTypeOfCounts_action];
+    
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
     
@@ -752,81 +742,54 @@
          if(!error)
          {
              NSString *strArrd=[dicResponce objectForKey:@"d"];
-<<<<<<< HEAD
+             
              NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
              NSMutableDictionary *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
              
              if([arrResponce count] != 0)
              {
                  NSLog(@"arr=%@",arrResponce);
-=======
-             if([strArrd length] != 0)
-             {
-                 NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
-                 NSMutableDictionary *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
->>>>>>> master/master
                  
-                 @try
+                 if([strArrd length] != 0)
                  {
-                     aryGetMemberCount = [arrResponce objectForKey:@"Table"];
+                     NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+                     NSMutableDictionary *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
                      
-                     [[NSUserDefaults standardUserDefaults]setObject:arrResponce forKey:@"TotalCountofMember"];
-                     [[NSUserDefaults standardUserDefaults]synchronize];
-                     [aCollectionView reloadData];
                      
-<<<<<<< HEAD
-=======
+                     @try
+                     {
+                         aryGetMemberCount = [arrResponce objectForKey:@"Table"];
+                         
+                         [[NSUserDefaults standardUserDefaults]setObject:arrResponce forKey:@"TotalCountofMember"];
+                         [[NSUserDefaults standardUserDefaults]synchronize];
+                         [aCollectionView reloadData];
+                         
+                         
+                         //api_getMemberCount
+                         // [self performSegueWithIdentifier:@"ShowWall" sender:self];
+                         
+                     }
+                     @catch (NSException *exception)
+                     {
+                         //UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                         //[alrt show];
+                     }
                      
-                     //api_getMemberCount
-                     // [self performSegueWithIdentifier:@"ShowWall" sender:self];
-                     
->>>>>>> master/master
                  }
-                 @catch (NSException *exception)
+                 
+                 else
                  {
-                     //UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     //[alrt show];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
                  }
                  
-                 
-                 // strCheckUser =@"SwitchAccount";
-                 //  strCheckUser =@"WallVc";
-                 
-                 // NSLog(@"Strcheck=%@",strCheckUser);
-                 //
-                 //                 if ([strCheckUser isEqualToString:@"SwitchAccount"])
-                 //                 {
-                 //                     UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SwitchAcoountVC"];
-                 //                     [self.navigationController pushViewController:wc animated:YES];
-                 //                 }
-                 //                 else
-                 //                 {
-                 //                     [self performSegueWithIdentifier:@"ShowWall" sender:self];
-                 //                 }
-                 //                 WallVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
-                 //                 vc.checkscreen = @"FromLogin";
-                 //                 app.checkview = 0;
-                 //
-                 //                 [self.navigationController pushViewController:vc animated:YES];
-                 
-                 
-                 
-                 //api_getMemberCount
-                 // [self performSegueWithIdentifier:@"ShowWall" sender:self];
              }
-<<<<<<< HEAD
              else
              {
                  UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                  [alrt show];
              }
-=======
->>>>>>> master/master
-         }
-         else
-         {
-             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-             [alrt show];
+             
          }
      }];
 }
