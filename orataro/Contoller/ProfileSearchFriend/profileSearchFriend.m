@@ -88,9 +88,9 @@
     //tag 70
     
     UIButton *bt = (UIButton *)[cell.contentView viewWithTag:70];
-   // bt.tag = indexPath.row;
+    // bt.tag = indexPath.row;
     
-
+    
     //tag 6
     UIView *view1 = (UIView *)[cell.contentView viewWithTag:6];
     view1.layer.cornerRadius =3.0;
@@ -106,7 +106,7 @@
     
     NSString *CheckFriend1 = [NSString stringWithFormat:@"%@",[[nameary objectAtIndex:indexPath.row]objectForKey:@"IsRequested"]];
     
-     NSLog(@"Friend=%@",CheckFriend1);
+    NSLog(@"Friend=%@",CheckFriend1);
     
     if ([CheckFriend isEqualToString:@"1"])
     {
@@ -187,10 +187,6 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // as per content
-    
-    NSLog(@"ary=%@",nameary);
-    
     NSString *str = [NSString stringWithFormat:@"%@",[[nameary objectAtIndex:indexPath.row]objectForKey:@"FullName"]];
     CGSize size = [str sizeWithFont:[UIFont fontWithName:@"HelveticaNeueLTStd-Roman" size:14] constrainedToSize:CGSizeMake([[UIScreen mainScreen]bounds].size.width-252, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
     
@@ -220,7 +216,6 @@
     
     if ([CheckFriend1 isEqualToString:@"1"])
     {
-        
     }
     else
     {
@@ -266,21 +261,6 @@
 
 -(void)apk_searchFriendList:(BOOL)CheckVal
 {
-    //SearchFriendCell
-    
-    // nameary = [[NSMutableArray alloc]initWithObjects:@"mangroliya dhara",@"Patel Diya",@"patel nilam" ,@"patel ridhhi",nil];
-    
-    //apk_friends.asmx
-    //Searchfriend
-    
-    
-    //SearchName=a
-    //MemberID=f1a6d89d-37dc-499a-9476-cb83f0aba0f2
-    //  InstituteID=4f4bbf0e-858a-46fa-a0a7-bf116f537653
-    //ClientID=d79901a7-f9f7-4d47-8e3b-198ede7c9f58
-    
-   // [nameary removeAllObjects];
-    
     if ([Utility isInterNetConnectionIsActive] == false)
     {
         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -306,13 +286,10 @@
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
          [ProgressHUB hideenHUDAddedTo:self.view];
-         
          if(!error)
          {
-             
              NSString *strArrd=[dicResponce objectForKey:@"d"];
              NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
-             
              NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
              
              if([arrResponce count] != 0)
@@ -322,8 +299,6 @@
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
                      _lbNoDataFound.hidden = NO;
-                   // UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"search result not found" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                   //  [alrt show];
                  }
                  else
                  {
@@ -339,12 +314,8 @@
                      }
                      else
                      {
-                         
                          UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                          [alrt show];
-                         
-                         
-                         
                      }
                  }
              }
@@ -360,8 +331,6 @@
              [alrt show];
          }
      }];
-    
-    
 }
 
 #pragma mark - add Friend
@@ -374,19 +343,6 @@
         [alrt show];
         return;
     }
-    
-    //#define apk_friends @"apk_friends.asmx"
-    //#define apk_SendFriendRequest_action @"SendFriendRequest"
-    //
-    //    <ToMemberID>guid</ToMemberID>
-    //    <ByMemberID>guid</ByMemberID>
-    //    <InstituteID>guid</InstituteID>
-    //    <ClientID>guid</ClientID>
-    //    <WallID>guid</WallID>
-    //    <BeachID>guid</BeachID>
-    //    <UserID>guid</UserID>
-    
-    NSLog(@"Dic=%@",dic);
     
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_friends,apk_SendFriendRequest_action];
     
@@ -421,13 +377,8 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"Friend Request Send SuccessFully."])
                  {
-                     //UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                    // alrt.tag = 500;
-                    // [alrt show];
-                     
-                     [self apk_searchFriendList:YES];
-                     
-                }
+                     [self apiCallFor_SendPushNotification];
+                 }
                  else
                  {
                      UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -446,20 +397,21 @@
              [alrt show];
          }
      }];
-    
-    
 }
 
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
-
-
+-(void)apiCallFor_SendPushNotification
+{
+    if ([Utility isInterNetConnectionIsActive] == false){
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_notifications,apk_SendPushNotification_action];
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    [ProgressHUB showHUDAddedTo:self.view];
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error){
+        [ProgressHUB hideenHUDAddedTo:self.view];
+        [self apk_searchFriendList:YES];
+    }];
+}
 @end

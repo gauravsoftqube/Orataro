@@ -519,39 +519,19 @@
 
 -(void)apiCallFor_AcceptFriendList : (BOOL)checkProgress :(NSMutableDictionary *)dic
 {
-    NSLog(@"Dic=%@",dic);
-    
-    //#define apk_friends @"apk_friends.asmx"
-    //#define apk_ApproveRequest_action @"ApproveRequest"
-    //#define apk_DeleteRequest_action @"DeleteRequest"
-    
-    //    <FriendListID>guid</FriendListID>
-    //    <RequestID>guid</RequestID>
-    //    <RequestWallID>guid</RequestWallID>
-    
-    //    <InstituteID>guid</InstituteID>
-    //    <ClientID>guid</ClientID>
-    //    <MemberID>guid</MemberID>
-    //    <WallID>guid</WallID>
-    //    <UserID>guid</UserID>
-    
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_friends,apk_ApproveRequest_action];
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
     
     [param setValue:[NSString stringWithFormat:@"%@",[dic objectForKey:@"FriendListID"]] forKey:@"FriendListID"];
-    
     [param setValue:[NSString stringWithFormat:@"%@",[dic objectForKey:@"RequestID"]] forKey:@"RequestID"];
-    
     [param setValue:[NSString stringWithFormat:@"%@",[dic objectForKey:@"RequestWallID"]] forKey:@"RequestWallID"];
-    
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"WallID"]] forKey:@"WallID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
-    
     
     if (checkProgress == YES)
     {
@@ -579,12 +559,7 @@
                  }
                  else
                  {
-                   //  UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                    //   alrt.tag = 500;
-                    // [alrt show];
-                     
-                    [self.navigationController popViewControllerAnimated:YES];
-                     
+                     [self apiCallFor_SendPushNotification];
                  }
              }
              else
@@ -599,46 +574,25 @@
              [alrt show];
          }
      }];
-    
 }
 
 #pragma mark - api for Decline
 
 -(void)apiCallFor_DeclineFriendList : (BOOL)checkProgress :(NSMutableDictionary *)dic
 {
-    NSLog(@"Dic=%@",dic);
-    
-    //#define apk_friends @"apk_friends.asmx"
-    //#define apk_ApproveRequest_action @"ApproveRequest"
-    //#define apk_DeleteRequest_action @"DeleteRequest"
-    
-    //    <FriendListID>guid</FriendListID>
-    //    <RequestID>guid</RequestID>
-    //    <RequestWallID>guid</RequestWallID>
-    
-    //    <InstituteID>guid</InstituteID>
-    //    <ClientID>guid</ClientID>
-    //    <MemberID>guid</MemberID>
-    //    <WallID>guid</WallID>
-    //    <UserID>guid</UserID>
-    
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_friends,apk_DeleteRequest_action];
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
     
     [param setValue:[NSString stringWithFormat:@"%@",[dic objectForKey:@"FriendListID"]] forKey:@"FriendListID"];
-    
     [param setValue:[NSString stringWithFormat:@"%@",[dic objectForKey:@"RequestID"]] forKey:@"RequestID"];
-    
     [param setValue:[NSString stringWithFormat:@"%@",[dic objectForKey:@"RequestWallID"]] forKey:@"RequestWallID"];
-    
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"WallID"]] forKey:@"WallID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
-    
     
     if (checkProgress == YES)
     {
@@ -666,13 +620,7 @@
                  }
                  else
                  {
-                     
-                      [self.navigationController popViewControllerAnimated:YES];
-//                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-//                     alrt.tag = 400;
-//                     [alrt show];
-                     
-                     
+                     [self.navigationController popViewControllerAnimated:YES];
                  }
              }
              else
@@ -687,8 +635,22 @@
              [alrt show];
          }
      }];
+}
 
-    
+-(void)apiCallFor_SendPushNotification
+{
+    if ([Utility isInterNetConnectionIsActive] == false){
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_notifications,apk_SendPushNotification_action];
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    [ProgressHUB showHUDAddedTo:self.view];
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error){
+        [ProgressHUB hideenHUDAddedTo:self.view];
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
 }
 
 @end

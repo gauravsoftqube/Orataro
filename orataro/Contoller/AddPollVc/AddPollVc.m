@@ -259,13 +259,13 @@
                  {
                      UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
-                     [self.navigationController popViewControllerAnimated:YES];
+                     [self apiCallFor_SendPushNotification];
                  }
                  else if([strStatus isEqualToString:@"Record update successfully"])
                  {
                      UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
-                     [self.navigationController popViewControllerAnimated:YES];
+                     [self apiCallFor_SendPushNotification];
                  }
                  else
                  {
@@ -287,6 +287,22 @@
      }];
 }
 
+-(void)apiCallFor_SendPushNotification
+{
+    if ([Utility isInterNetConnectionIsActive] == false){
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_notifications,apk_SendPushNotification_action];
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    [ProgressHUB showHUDAddedTo:self.view];
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error){
+        [ProgressHUB hideenHUDAddedTo:self.view];
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
+}
+
 -(void)apiCallFor_GetPollForEdit : (BOOL)checkProgress
 {
     if ([Utility isInterNetConnectionIsActive] == false)
@@ -299,7 +315,6 @@
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_poll,apk_GetPollForEdit_action];
     
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
-    
     [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelected_AddPage objectForKey:@"PollID"]] forKey:@"PollID"];
     
     if (checkProgress == YES)

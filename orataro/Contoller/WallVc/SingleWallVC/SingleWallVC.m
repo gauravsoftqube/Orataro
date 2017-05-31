@@ -801,6 +801,8 @@ static NSString *CellIdentifier = @"WallCustomeCell";
         cell.lblPostDetailHTML.text = strPostCommentNote;
         
         NSString *strFileType=[self.dicSelectedPost_Comment objectForKey:@"FileType"];
+        [cell.activityIndicator_ImageVideo_Download setHidden:YES];
+        [cell.activityIndicator_ImageVideo_Download stopAnimating];
         if([strFileType isEqualToString:@"IMAGE"])
         {
             NSString *strPost_Photo=[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[self.dicSelectedPost_Comment objectForKey:@"Photo"]];

@@ -44,7 +44,7 @@
     [aPopupMainView addGestureRecognizer:tap];
     
     aPopupMainView.hidden = YES;
-     
+    
     CALayer *bottomBorder = [CALayer layer];
     bottomBorder.frame = CGRectMake(5, aTextField.frame.size.height - 1, aTextField.frame.size.width-50, 1.0f);
     bottomBorder.backgroundColor = [UIColor lightGrayColor].CGColor;
@@ -89,7 +89,7 @@
         }
         else
         {
-           NSArray *Arr=[DBOperation selectData:[NSString stringWithFormat:@"SELECT * FROM PTCommunicationList"]];
+            NSArray *Arr=[DBOperation selectData:[NSString stringWithFormat:@"SELECT * FROM PTCommunicationList"]];
             
             if(Arr.count != 0)
             {
@@ -97,7 +97,7 @@
             }
             else
             {
-               [self apiCallFor_getPTCommunicationList:@"1"];
+                [self apiCallFor_getPTCommunicationList:@"1"];
             }
         }
     }
@@ -105,7 +105,6 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - apiCall
@@ -118,18 +117,6 @@
         return;
     }
     
-    /*
-    
-     <MemberType>string</MemberType>
-     <ClientID>guid</ClientID>
-     <InstituteID>guid</InstituteID>
-     <GradeID>guid</GradeID>
-     <DivisionID>guid</DivisionID>
-     <SubjectID>guid</SubjectID>
-     <TeacherMemberID>guid</TeacherMemberID>
-     <StudentMemberID>guid</StudentMemberID>
-     
-    */
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_ptcommunication,apk_GetPTCommunicationList_action];
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
@@ -246,7 +233,6 @@
     [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelectedList objectForKey:@"GradeID"]] forKey:@"GradeID"];
     [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelectedList objectForKey:@"SubjectID"]] forKey:@"SujbectID"];
     [param setValue:@"" forKey:@"BeachID"];
-    //[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"BatchID"]]
     if([strInternet isEqualToString:@"1"])
     {
         [ProgressHUB showHUDAddedTo:self.view];
@@ -257,17 +243,10 @@
          [ProgressHUB hideenHUDAddedTo:self.view];
          if(!error)
          {
-             NSLog(@"Dic=%@",dicResponce);
-             
-             
-             NSString *strArrd=[dicResponce objectForKey:@"d"];
-             
-             //NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
-            // NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-             
              if([dicResponce count] != 0)
              {
-                    [self apiCallFor_getPTCommunicationList:@"1"];
+                 [self apiCallFor_SendPushNotification];
+                 
              }
              else
              {
@@ -281,6 +260,22 @@
              [alrt show];
          }
      }];
+}
+
+-(void)apiCallFor_SendPushNotification
+{
+    if ([Utility isInterNetConnectionIsActive] == false){
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_notifications,apk_SendPushNotification_action];
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    [ProgressHUB showHUDAddedTo:self.view];
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error){
+        [ProgressHUB hideenHUDAddedTo:self.view];
+        [self apiCallFor_getPTCommunicationList:@"1"];
+    }];
 }
 
 #pragma mark - UITextField Delegate
@@ -352,7 +347,7 @@
     
     UILabel *lblUserName=(UILabel*)[cell.contentView viewWithTag:12];
     [lblUserName setText:[NSString stringWithFormat:@"%@",[arrCummunicationList[indexPath.row] objectForKey:@"UserName"]]];
-
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
@@ -424,7 +419,7 @@
 }
 - (IBAction)CloseBtnClicked:(id)sender
 {
-     aPopupMainView.hidden = YES;
+    aPopupMainView.hidden = YES;
 }
 
 @end

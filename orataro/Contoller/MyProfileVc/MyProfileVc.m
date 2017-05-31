@@ -83,8 +83,7 @@
     
   //  NSLog(@"Dic Viewwill=%@",dic2);
     
-    
-    
+
     _lbHeaderTitle.text = [NSString stringWithFormat:@"My Profile (%@)",[Utility getCurrentUserName]];
     
     if ([fromImagepicker isEqualToString:@"Check"])
@@ -93,6 +92,8 @@
     }
     else
     {
+          [self api_getMemberCount];
+        
         NSArray *arr=[[[Utility getCurrentUserDetail]objectForKey:@"FullName"] componentsSeparatedByString:@" "];
         if (arr.count != 0)
         {
@@ -104,8 +105,6 @@
             self.aProfileNameLb.text=[NSString stringWithFormat:@""];
         }
 
-        
-           [self api_getMemberCount];
     }
     
     if([[Utility getMemberType] isEqualToString:@"Student"])
@@ -756,7 +755,7 @@
         return;
     }
     
-    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_Notification,apk_MemberAllTypeOfCounts_action];
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_notifications,apk_MemberAllTypeOfCounts_action];
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
     

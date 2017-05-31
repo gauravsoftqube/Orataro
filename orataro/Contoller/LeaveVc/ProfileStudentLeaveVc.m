@@ -519,11 +519,11 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"Record save successfully"])
                  {
-                     [self.navigationController popViewControllerAnimated:YES];
+                     [self apiCallFor_SendPushNotification];
                  }
                  else if([strStatus isEqualToString:@"Record update successfully"])
                  {
-                     [self.navigationController popViewControllerAnimated:YES];
+                     [self apiCallFor_SendPushNotification];
                  }
                  else
                  {
@@ -555,20 +555,24 @@
          }
      }];
     
-    
 }
 
 
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+-(void)apiCallFor_SendPushNotification
+{
+    if ([Utility isInterNetConnectionIsActive] == false){
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_notifications,apk_SendPushNotification_action];
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    [ProgressHUB showHUDAddedTo:self.view];
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error){
+        [ProgressHUB hideenHUDAddedTo:self.view];
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
+}
 
 
 @end

@@ -305,6 +305,7 @@
                  {
                      //                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dicResponce objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      //                     [alrt show];
+                     [self apiCallFor_SendPushNotification];
                  }
                  
              }
@@ -322,7 +323,22 @@
      }];
 }
 
--(void)apiCallFor_Edit
+-(void)apiCallFor_SendPushNotification
+{
+    if ([Utility isInterNetConnectionIsActive] == false){
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_notifications,apk_SendPushNotification_action];
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    [ProgressHUB showHUDAddedTo:self.view];
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error){
+        [ProgressHUB hideenHUDAddedTo:self.view];
+    }];
+}
+
+-(void)apiCallFor_Complete
 {
     if ([Utility isInterNetConnectionIsActive] == false)
     {
@@ -616,15 +632,50 @@
 - (IBAction)btnEditCell:(id)sender
 {
     [Utility dismissAllPopTipViews:arrPopup];
-    ReminderVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ReminderVc"];
-    vc.dicSelected=[dicSelected_Reminder mutableCopy];
-    [self.navigationController pushViewController:vc animated:YES];
+    
+    if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
+    {
+        if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )
+        {
+            if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Parent"] )
+            {
+                if([[Utility getUserRoleRightList:@"Reminders" settingType:@"IsEdit"] integerValue] == 1)
+                {
+                    ReminderVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ReminderVc"];
+                    vc.dicSelected=[dicSelected_Reminder mutableCopy];
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+                else
+                {
+                    [WToast showWithText:You_dont_have_permission];
+                }
+            }
+            else
+            {
+                ReminderVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ReminderVc"];
+                vc.dicSelected=[dicSelected_Reminder mutableCopy];
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        }
+        else
+        {
+            ReminderVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ReminderVc"];
+            vc.dicSelected=[dicSelected_Reminder mutableCopy];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }
+    else
+    {
+        ReminderVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ReminderVc"];
+        vc.dicSelected=[dicSelected_Reminder mutableCopy];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 - (IBAction)btnCompleteCell_popup:(id)sender
 {
     [Utility dismissAllPopTipViews:arrPopup];
-    [self apiCallFor_Edit];
+    [self apiCallFor_Complete];
 }
 
 #pragma mark - UIButton action
