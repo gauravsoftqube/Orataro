@@ -741,15 +741,17 @@
          {
              NSString *strArrd=[dicResponce objectForKey:@"d"];
              
+             if([strArrd length] != 0)
+             {
+                 
              NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
              NSMutableDictionary *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
              
              if([arrResponce count] != 0)
              {
-                 NSLog(@"arr=%@",arrResponce);
+                // NSLog(@"arr=%@",arrResponce);
                  
-                 if([strArrd length] != 0)
-                 {
+                
                      NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
                      NSMutableDictionary *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
                      
@@ -777,15 +779,15 @@
                  
                  else
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     [alrt show];
+                   //  UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                  //   [alrt show];
                  }
                  
              }
              else
              {
-                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                 [alrt show];
+                // UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                // [alrt show];
              }
              
          }

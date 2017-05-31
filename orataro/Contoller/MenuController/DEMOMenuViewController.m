@@ -767,6 +767,7 @@
          if(!error)
          {
              NSString *strArrd=[dicResponce objectForKey:@"d"];
+             
              if([strArrd length] != 0)
              {
                  NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
@@ -814,8 +815,8 @@
          }
          else
          {
-             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-             [alrt show];
+            // UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             //[alrt show];
          }
      }];
 }

@@ -30,6 +30,7 @@
     
     [Fabric with:@[[Crashlytics class]]];
     
+   
     [DBOperation checkCreateDB];
     REFrostedViewController *rf = [[REFrostedViewController alloc]init];
     

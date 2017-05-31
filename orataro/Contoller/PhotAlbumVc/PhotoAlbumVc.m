@@ -347,15 +347,23 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    if (aFirstBtn.tag == 1)
+//    if (aFirstBtn.tag == 1)
+//    {
+//        return  arySaveImage.count;
+//
+//    }
+//    else
+//    {
+//        return  arySaveImage.count;
+//
+//    }
+    if([str isEqualToString:@"first"])
     {
         return  arySaveImage.count;
-
     }
     else
     {
         return  arySaveImage.count;
-
     }
     return 0;
 }
@@ -544,7 +552,7 @@
         return cell2;
         
     }
- else
+    else
     {
         //   if([str isEqualToString:@"Second"])
         
