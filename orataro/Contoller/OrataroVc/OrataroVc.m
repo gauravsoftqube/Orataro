@@ -630,30 +630,23 @@
             [self.navigationController pushViewController:vc animated:YES];            break;
         }
         case 14:
-            
         {
             UIViewController  *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"CreateReminderVc"];
             [self.navigationController pushViewController:vc animated:YES];
             break;
         }
-            
         case 15:
-            
         {
             UIViewController  *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AboutOrataroVc"];
             [self.navigationController pushViewController:vc animated:YES];
             break;
         }
-            
         case 16:
-            
-            
         {
             UIViewController  *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SettingVcViewController"];
             [self.navigationController pushViewController:vc animated:YES];            break;
         }
         case 17:
-            
         {
             
             UIViewController  *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"FAQvc"];
@@ -749,9 +742,10 @@
              
              if([arrResponce count] != 0)
              {
+
                 // NSLog(@"arr=%@",arrResponce);
+
                  
-                
                      NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
                      NSMutableDictionary *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
                      
