@@ -269,10 +269,7 @@ static NSString *CellIdentifier = @"WallCustomeCell";
                  else if([strStatus isEqualToString:@"Comment Added successfully."])
                  {
                      [self.txtPostComment setText:@""];
-                     [self apiCallFor_GetWallPostComments:@"1"];
-                 }
-                 else
-                 {
+                     [self apiCallFor_SendPushNotification];
                  }
              }
              else
@@ -289,6 +286,21 @@ static NSString *CellIdentifier = @"WallCustomeCell";
      }];
 }
 
+-(void)apiCallFor_SendPushNotification
+{
+    if ([Utility isInterNetConnectionIsActive] == false){
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_notifications,apk_SendPushNotification_action];
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    [ProgressHUB showHUDAddedTo:self.view];
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error){
+        [ProgressHUB hideenHUDAddedTo:self.view];
+        [self apiCallFor_GetWallPostComments:@"1"];
+    }];
+}
 
 #pragma mark - UITableview Delegate
 

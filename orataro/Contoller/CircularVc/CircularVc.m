@@ -240,9 +240,7 @@
         NSString *DateOfCircular=[Utility convertMiliSecondtoDate:@"MM/yyyy" date:[NSString stringWithFormat:@"%@",[[mutableArray objectAtIndex:i]objectForKey:@"DateOfCircular"]]];
         
         [d setObject:DateOfCircular forKey:@"Group"];
-        
         [mutableArray replaceObjectAtIndex:i withObject:d];
-        
         arrResponce = mutableArray;
     }
     
@@ -311,17 +309,14 @@
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_notes,apk_AssociationDelete_action];
     
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
-    
     [param setValue:[NSString stringWithFormat:@"%@",deleteID] forKey:@"PrimaryID"];
-    
     [param setValue:[NSString stringWithFormat:@"Circular"] forKey:@"AssociationType"];
-    
+   
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
-    
     
     if (checkProgress == YES)
     {
@@ -331,6 +326,7 @@
      {
          [self.CircularTableView.refreshControl endRefreshing];
          [ProgressHUB hideenHUDAddedTo:self.view];
+         
          if(!error)
          {
              NSString *strArrd=[dicResponce objectForKey:@"d"];
@@ -348,10 +344,8 @@
                  }
                  else
                  {
-                     //                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dicResponce objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     //                     [alrt show];
+                     [self apiCallFor_SendPushNotification];
                  }
-                 
              }
              else
              {
@@ -364,7 +358,23 @@
              UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
              [alrt show];
          }
+         
      }];
+}
+
+-(void)apiCallFor_SendPushNotification
+{
+    if ([Utility isInterNetConnectionIsActive] == false){
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_notifications,apk_SendPushNotification_action];
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    [ProgressHUB showHUDAddedTo:self.view];
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error){
+        [ProgressHUB hideenHUDAddedTo:self.view];
+    }];
 }
 
 #pragma mark - UITableView
@@ -372,12 +382,10 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return [arrCircularList count];
-    
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSInteger rows = [[[arrCircularList objectAtIndex:section] objectForKey:@"items"] count];
-    
     return rows;
 }
 
@@ -402,7 +410,6 @@
     NSString *getMilisecond = [Utility convertMiliSecondtoDate:@"dd/MM/yyyy" date:getdt];
     UILabel *lbHeaderDt = (UILabel *)[cell.contentView viewWithTag:3];
     
-    
     NSString *getfrmt = [Utility convertDateFtrToDtaeFtr:@"dd/MM/yyyy" newDateFtr:@"dd EEE" date:getMilisecond];
     lbHeaderDt.text = getfrmt;
     
@@ -416,7 +423,6 @@
     {
         [img setImage:[UIImage imageNamed:@"tick_sky_blue"]];
     }
-    
     
     UILabel *lbTitle = (UILabel *)[cell.contentView viewWithTag:4];
     lbTitle.text = [[d objectForKey:@"CircularTitle"] capitalizedString];
@@ -461,8 +467,6 @@
     return cell;
 }
 
-
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CircularDetailVc *vc=[self.storyboard instantiateViewControllerWithIdentifier:@"CircularDetailVc"];
@@ -475,7 +479,6 @@
 - (IBAction)btnCell_DeleteRow:(id)sender
 {
     arrPopup = [[NSMutableArray alloc]init];
-    
     [arrPopup addObject:[Utility addCell_PopupView:self.viewAddPage ParentView:self.view sender:sender]];
     
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.CircularTableView];
@@ -483,7 +486,6 @@
     NSMutableDictionary *dicAddpage = [[[arrCircularList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
     strdelete_selecteid=[dicAddpage objectForKey:@"CircularID"];
     [self.lblDeleteConf_Detail setText:[NSString stringWithFormat:@"%@",[dicAddpage objectForKey:@"CircularTitle"]]];
-    
 }
 
 - (IBAction)btnDeleteConf_Cancel:(id)sender
@@ -509,7 +511,6 @@
     }
     
     [self ManageCircularList:arrTemp];
-    
     
     if([strdelete_selecteid length] != 0)
     {
@@ -604,7 +605,6 @@
 
 - (IBAction)AddBtnClicked:(UIButton *)sender
 {
-    
     if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Teacher"])
     {
         if(![[Utility getCurrentUserType] caseInsensitiveCompare:@"Student"] )

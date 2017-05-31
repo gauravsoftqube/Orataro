@@ -9,44 +9,12 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "orataro/Contoller/PTCommunication/PTCommuniVc.m"
-            timestampString = "512657324.035844"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "252"
-            endingLineNumber = "252"
-            landmarkName = "-apiCallFor_CreateNewPTCommnunication:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "orataro/Contoller/PTCommunication/PTCommuniVc.m"
-            timestampString = "512657324.035844"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "238"
-            endingLineNumber = "238"
-            landmarkName = "-apiCallFor_CreateNewPTCommnunication:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "orataro/Contoller/PollVc/PollVc.m"
-            timestampString = "514363870.13765"
+            timestampString = "517843715.540453"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "931"
-            endingLineNumber = "931"
+            startingLineNumber = "947"
+            endingLineNumber = "947"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
@@ -57,45 +25,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "orataro/Contoller/AddHomeworkVc/AddHomeworkVc.m"
-            timestampString = "514113139.351526"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "127"
-            endingLineNumber = "127"
-            landmarkName = "-apiCallFor_createHomework"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "orataro/Contoller/CircularVc/CircularVc.m"
-            timestampString = "514362344.911238"
+            timestampString = "517843715.540453"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "330"
-            endingLineNumber = "330"
+            startingLineNumber = "325"
+            endingLineNumber = "325"
             landmarkName = "-apiCallFor_Delete:deleteId:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "orataro/Contoller/AddCircular/AddCircularVc.m"
-            timestampString = "514193210.168174"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "613"
-            endingLineNumber = "613"
-            landmarkName = "-apiCallFor_SaveCircular"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -127,8 +63,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "386"
             endingLineNumber = "386"
-            landmarkName = "@implementation ScoolGroupVc"
-            landmarkType = "3">
+            landmarkName = "-tableView:didSelectRowAtIndexPath:"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -138,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "orataro/Contoller/AddNoteVc/AddNoteVc.m"
-            timestampString = "514278188.818739"
+            timestampString = "517843715.540453"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "318"
-            endingLineNumber = "318"
+            startingLineNumber = "316"
+            endingLineNumber = "316"
             landmarkName = "-apiCallFor_CreateNotesWithMulty"
             landmarkType = "7">
          </BreakpointContent>
@@ -436,11 +372,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "orataro/Contoller/WallVc/WallVc.m"
-            timestampString = "517755325.056245"
+            timestampString = "517899559.931088"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "5088"
-            endingLineNumber = "5088"
+            startingLineNumber = "5093"
+            endingLineNumber = "5093"
             landmarkName = "-btnCellRow_DynamicWallMenu_Click:"
             landmarkType = "7">
          </BreakpointContent>

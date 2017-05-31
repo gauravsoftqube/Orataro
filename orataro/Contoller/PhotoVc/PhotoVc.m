@@ -6,7 +6,7 @@
 //  Copyright © 2017 Softqube. All rights reserved.
 //
 
-#import "PhotoVc.h"
+#import "PhotoVc.h" 
 #import "Global.h"
 #import "MBProgressHUD.h"
 #import "ALAssetsLibrary+CustomPhotoAlbum.h"

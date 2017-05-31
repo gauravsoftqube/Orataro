@@ -288,11 +288,8 @@
     }
     
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_notes,apk_AssociationDelete_action];
-    
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
-    
     [param setValue:[NSString stringWithFormat:@"%@",deleteID] forKey:@"PrimaryID"];
-    
     [param setValue:[NSString stringWithFormat:@"Note"] forKey:@"AssociationType"];
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
@@ -301,14 +298,12 @@
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
     
-    
     if (checkProgress == YES)
     {
         [ProgressHUB showHUDAddedTo:self.view];
     }
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
-         
          [ProgressHUB hideenHUDAddedTo:self.view];
          if(!error)
          {
@@ -329,6 +324,8 @@
                  {
                      //                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dicResponce objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      //                     [alrt show];
+                     
+                     [self apiCallFor_SendPushNotification];
                  }
                  
              }
@@ -344,6 +341,21 @@
              [alrt show];
          }
      }];
+}
+
+-(void)apiCallFor_SendPushNotification
+{
+    if ([Utility isInterNetConnectionIsActive] == false){
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_notifications,apk_SendPushNotification_action];
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    [ProgressHUB showHUDAddedTo:self.view];
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error){
+        [ProgressHUB hideenHUDAddedTo:self.view];
+    }];
 }
 
 #pragma mark - UITableView

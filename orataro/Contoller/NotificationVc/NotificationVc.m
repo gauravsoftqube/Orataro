@@ -53,7 +53,6 @@
     tableViewController.tableView = self.aTableview;
     tableViewController.refreshControl = refreshControl;
     
-    
     UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     [spinner startAnimating];
     spinner.frame = CGRectMake(0, 0, [[UIScreen mainScreen]bounds].size.width, 44);
@@ -203,7 +202,7 @@
     
     if (checkProgress == YES)
     {
-        [ProgressHUB showHUDAddedTo:self.view];
+       // [ProgressHUB showHUDAddedTo:self.view];
     }
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
@@ -213,54 +212,58 @@
          if(!error)
          {
              NSString *strArrd=[dicResponce objectForKey:@"d"];
-             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
-             NSMutableArray *arrResponce = [[NSJSONSerialization JSONObjectWithData:data options:0 error:nil]mutableCopy];
-             
-             if([arrResponce count] != 0)
+             if([strArrd length] != 0)
              {
-                 NSMutableDictionary *dic=[[arrResponce objectAtIndex:0]mutableCopy];
-                 NSString *strStatus=[[dic objectForKey:@"message"]mutableCopy];
-                 if([strStatus isEqualToString:@"No Data Found"])
+                 NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+                 NSMutableArray *arrResponce = [[NSJSONSerialization JSONObjectWithData:data options:0 error:nil]mutableCopy];
+                 
+                 if([arrResponce count] != 0)
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     [alrt show];
+                     NSMutableDictionary *dic=[[arrResponce objectAtIndex:0]mutableCopy];
+                     NSString *strStatus=[[dic objectForKey:@"message"]mutableCopy];
+                     if([strStatus isEqualToString:@"No Data Found"])
+                     {
+                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                         [alrt show];
+                     }
+                     else
+                     {
+                         countResponce = [arrResponce count];
+                         for (NSMutableDictionary *dic in arrResponce) {
+                             if([[arrNotificationList valueForKey:@"NotificationID"] containsObject:[dic objectForKey:@"NotificationID"]])
+                             {
+                                 [arrNotificationList removeObject:dic];
+                                 [arrNotificationList addObject:dic];
+                             }
+                             else
+                             {
+                                 [arrNotificationList addObject:dic];
+                             }
+                         }
+                         
+                         [arrNotificationList addObjectsFromArray:arrResponce];
+                         
+                         [DBOperation executeSQL:@"delete from NotificationList"];
+                         for (NSMutableDictionary *dic in arrNotificationList)
+                         {
+                             NSString *getjsonstr = [Utility Convertjsontostring:dic];
+                             [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO NotificationList (dic_json) VALUES ('%@')",getjsonstr]];
+                         }
+                         
+                         NSMutableArray *ArrNotifId=[arrResponce valueForKey:@"NotificationID"];
+                         if ([Utility isInterNetConnectionIsActive] == true)
+                         {
+                             [self apiCallFor_SetViewFlageOnNotification:ArrNotifId];
+                         }
+                         [self.aTableview reloadData];
+                     }
+                     
                  }
                  else
                  {
-                     countResponce = [arrResponce count];
-                     for (NSMutableDictionary *dic in arrResponce) {
-                         if([[arrNotificationList valueForKey:@"NotificationID"] containsObject:[dic objectForKey:@"NotificationID"]])
-                         {
-                             [arrNotificationList removeObject:dic];
-                             [arrNotificationList addObject:dic];
-                         }
-                         else
-                         {
-                             [arrNotificationList addObject:dic];
-                         }
-                     }
-                     
-                     [arrNotificationList addObjectsFromArray:arrResponce];
-                     
-                     [DBOperation executeSQL:@"delete from NotificationList"];
-                     for (NSMutableDictionary *dic in arrNotificationList)
-                     {
-                         NSString *getjsonstr = [Utility Convertjsontostring:dic];
-                         [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO NotificationList (dic_json) VALUES ('%@')",getjsonstr]];
-                     }
-                     
-                     NSMutableArray *ArrNotifId=[arrResponce valueForKey:@"NotificationID"];
-                     if ([Utility isInterNetConnectionIsActive] == true)
-                     {
-                         [self apiCallFor_SetViewFlageOnNotification:ArrNotifId];
-                     }
-                     [self.aTableview reloadData];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
                  }
-             }
-             else
-             {
-                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                 [alrt show];
              }
          }
          else

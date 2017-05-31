@@ -135,16 +135,7 @@
                  {
                      UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
-                     for (UIViewController *controller in self.navigationController.viewControllers)
-                     {
-                         if ([controller isKindOfClass:[HomeWrokVc class]])
-                         {
-                             [self.navigationController popToViewController:controller animated:YES];
-                             
-                             break;
-                         }
-                     }
-
+                     [self apiCallFor_SendPushNotification];
                  }
                  else
                  {
@@ -164,6 +155,29 @@
              [alrt show];
          }
      }];
+}
+
+-(void)apiCallFor_SendPushNotification
+{
+    if ([Utility isInterNetConnectionIsActive] == false){
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_notifications,apk_SendPushNotification_action];
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    [ProgressHUB showHUDAddedTo:self.view];
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error){
+        [ProgressHUB hideenHUDAddedTo:self.view];
+        for (UIViewController *controller in self.navigationController.viewControllers)
+        {
+            if ([controller isKindOfClass:[HomeWrokVc class]])
+            {
+                [self.navigationController popToViewController:controller animated:YES];
+                break;
+            }
+        }
+    }];
 }
 
 #pragma mark -  Date Picker Delegate

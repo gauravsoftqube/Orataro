@@ -453,6 +453,8 @@
 #define apk_notifications  @"apk_notifications.asmx"
 #define apk_NotificationGetList_action  @"NotificationGetList"
 #define apk_SetViewFlageOnNotification_action  @"SetViewFlageOnNotification"
+#define apk_SendPushNotification_action  @"SendPushNotification"
+#define apk_MemberAllTypeOfCounts_action @"MemberAllTypeOfCounts"
 
 #pragma mark - apk_poll
 
@@ -535,10 +537,7 @@
 
 #define apk_ChnageProfilePhotos @"ChnageProfilePhotos"
 
-#pragma mark - Get Memmebr Count
 
-#define apk_Notification @"apk_Notification.asmx"
-#define apk_MemberAllTypeOfCounts_action @"MemberAllTypeOfCounts"
 
 #endif /* Global_h */
 

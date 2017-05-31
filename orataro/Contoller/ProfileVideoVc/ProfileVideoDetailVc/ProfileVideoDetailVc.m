@@ -287,7 +287,7 @@
             }];
 
             
-           /* NSURL* url =[NSURL URLWithString:urlToDownload];
+            NSURL* url =[NSURL URLWithString:urlToDownload];
             NSData *data = [NSData dataWithContentsOfURL:url];
             
             // Write it to cache directory

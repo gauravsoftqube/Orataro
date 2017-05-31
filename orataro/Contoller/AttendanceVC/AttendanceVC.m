@@ -719,7 +719,6 @@ int cn =0;
                  if (data != nil)
                  {
                      arrResponce  = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-                     NSLog(@"Ary=%@",arrResponce);
                      
                      aryTable = [arrResponce objectForKey:@"Table"];
                      
@@ -748,12 +747,8 @@ int cn =0;
                              
                              [arySaveTag addObject:d];
                          }
-                         
-                         NSLog(@"Data=%@",arySaveTag);
-                         
                          [AttendanceTableView reloadData];
                      }
-                     
                  }
                  else
                  {
@@ -765,9 +760,7 @@ int cn =0;
              {
                  UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"Please try again" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                  [alrt show];
-                 
              }
-             
          }
          else
          {
@@ -775,8 +768,6 @@ int cn =0;
              [alrt show];
          }
      }];
-    
-    
 }
 
 #pragma mark - Save Attendance List
@@ -1161,7 +1152,6 @@ int cn =0;
              NSString *strArrd=[dicResponce objectForKey:@"d"];
              NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
              NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-             
              if([arrResponce count] != 0)
              {
                  NSString *strMsg = [[arrResponce objectAtIndex:0]objectForKey:@"message"];
@@ -1172,6 +1162,7 @@ int cn =0;
                  {
                      UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:strStatus delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
+                     [self apiCallFor_SendPushNotification];
                  }
                  else
                  {
@@ -1183,7 +1174,6 @@ int cn =0;
              {
                  UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"No Data Found" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                  [alrt show];
-                 
              }
          }
          else
@@ -1192,18 +1182,21 @@ int cn =0;
              [alrt show];
          }
      }];
-    
-    
-    
 }
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+
+-(void)apiCallFor_SendPushNotification
+{
+    if ([Utility isInterNetConnectionIsActive] == false){
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_notifications,apk_SendPushNotification_action];
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    [ProgressHUB showHUDAddedTo:self.view];
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error){
+        [ProgressHUB hideenHUDAddedTo:self.view];
+    }];
+}
 
 @end

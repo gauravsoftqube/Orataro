@@ -178,7 +178,7 @@ int multipleUser1 = 0;
         return;
     }
     
-    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_Notification,apk_MemberAllTypeOfCounts_action];
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_notifications,apk_MemberAllTypeOfCounts_action];
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
     

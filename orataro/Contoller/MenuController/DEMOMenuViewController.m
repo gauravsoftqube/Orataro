@@ -747,7 +747,7 @@
         return;
     }
     
-    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_Notification,apk_MemberAllTypeOfCounts_action];
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_notifications,apk_MemberAllTypeOfCounts_action];
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
@@ -767,34 +767,17 @@
          if(!error)
          {
              NSString *strArrd=[dicResponce objectForKey:@"d"];
-             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
-             NSMutableDictionary *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-             
-             @try
+             if([strArrd length] != 0)
              {
-                 NSLog(@"arr=%@",arrResponce);
+                 NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+                 NSMutableDictionary *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
                  
-                 //  [[NSUserDefaults standardUserDefaults]setObject:arrResponce forKey:@"TotalCountofMember"];
-                 //  [[NSUserDefaults standardUserDefaults]synchronize];
-                 
-                 getData= [arrResponce objectForKey:@"Table"];
-                 
-                 [_tblMenuTable reloadData];
-                 
-                 
-             }
-             @catch (NSException *exception)
-             {
-                 
-             }
-             if([arrResponce count] != 0)
-             {
                  @try
                  {
                      NSLog(@"arr=%@",arrResponce);
                      
                      //  [[NSUserDefaults standardUserDefaults]setObject:arrResponce forKey:@"TotalCountofMember"];
-                     // [[NSUserDefaults standardUserDefaults]synchronize];
+                     //  [[NSUserDefaults standardUserDefaults]synchronize];
                      
                      getData= [arrResponce objectForKey:@"Table"];
                      
@@ -804,20 +787,30 @@
                  }
                  @catch (NSException *exception)
                  {
-                   //  UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                   //  [alrt show];
+                     
+                 }
+                 if([arrResponce count] != 0)
+                 {
+                     @try
+                     {
+                         NSLog(@"arr=%@",arrResponce);
+                         
+                         //  [[NSUserDefaults standardUserDefaults]setObject:arrResponce forKey:@"TotalCountofMember"];
+                         // [[NSUserDefaults standardUserDefaults]synchronize];
+                         
+                         getData= [arrResponce objectForKey:@"Table"];
+                         
+                         [_tblMenuTable reloadData];
+                         
+                         
+                     }
+                     @catch (NSException *exception)
+                     {
+                         //  UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                         //  [alrt show];
+                     }
                  }
              }
-             //             if([arrResponce count] != 0)
-             //             {
-             //                                 //[self performSegueWithIdentifier:@"ShowWall" sender:self];
-             //
-             //             }
-             //             else
-             //             {
-             //                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-             //                 [alrt show];
-             //             }
          }
          else
          {
