@@ -460,8 +460,27 @@
     {
         [lblSubjectName setText:[NSString stringWithFormat:@"%@",SubjectName]];
     }
+    
+//    NSString *strDob3 = [NSString stringWithFormat:@"%@",[[aryFather objectAtIndex:0]objectForKey:@"MobileNo"]];
+//    
+//    if ([strDob3 isEqualToString:@"<null>"])
+//    {
+    
+    
+  //  NSLog(@"Date=%@",DateOfFinish);
     UILabel *lblDateOfFinish = (UILabel *)[cell.contentView viewWithTag:5];
-    [lblDateOfFinish setText:[NSString stringWithFormat:@"End Date: %@",DateOfFinish]];
+    
+    if ([DateOfFinish isEqualToString:@"<null>"])
+    {
+        [lblDateOfFinish setText:@"End Date:"];
+        lblDateOfFinish.textAlignment  = NSTextAlignmentRight;
+    }
+    else
+    {
+        
+        [lblDateOfFinish setText:[NSString stringWithFormat:@"End Date: %@",DateOfFinish]];
+    }
+    
     
     UILabel *lblTitle = (UILabel *)[cell.contentView viewWithTag:6];
     [lblTitle setText:[NSString stringWithFormat:@"%@",Title]];

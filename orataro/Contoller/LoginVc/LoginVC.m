@@ -579,11 +579,14 @@ int multipleUser = 0;
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [ProgressHUB hideenHUDAddedTo:self.view];
+                     
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"No roll list found" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
                  {
+                     
                      [DBOperation executeSQL:[NSString stringWithFormat:@"delete from GetUserRoleRightList"]];
                      for (NSMutableDictionary *dic  in arrResponce)
                      {

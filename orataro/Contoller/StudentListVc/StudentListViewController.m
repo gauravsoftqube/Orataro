@@ -39,6 +39,67 @@
     [self.btnBack setHidden:YES];
     [self.btnHome setHidden:YES];
     [self.btnMenu setHidden:YES];
+    
+    /* if([[Utility getMemberType] isEqualToString:@"Student"])
+     {
+     
+     [self.btnBack setHidden:NO];
+     [_lblHeaderTitle setText:@"Student List"];
+     
+     NSString *strGradeID = [self.dicSelectedList objectForKey:@"GradeID"];
+     NSString *strDivisionID = [self.dicSelectedList objectForKey:@"DivisionID"];
+     NSString *strSubjectID = [self.dicSelectedList objectForKey:@"SubjectID"];
+     if ([Utility isInterNetConnectionIsActive] == false)
+     {
+     arrStudentList=[DBOperation selectData:[NSString stringWithFormat:@"SELECT * FROM StudentList WHERE GradeID = '%@' AND DivisionID = '%@' AND SubjectID = '%@'",strGradeID,strDivisionID,strSubjectID]];
+     
+     [self.aStudentTable reloadData];
+     }
+     else
+     {
+     NSArray *arrt=[DBOperation selectData:[NSString stringWithFormat:@"SELECT * FROM StudentList WHERE GradeID = '%@' AND DivisionID = '%@' AND SubjectID = '%@'",strGradeID,strDivisionID,strSubjectID]];
+     
+     if(arrt.count != 0)
+     {
+     [self apiCallFor_getStudentList:@"0"];
+     }
+     else
+     {
+     [self apiCallFor_getStudentList:@"1"];
+     }
+     }
+     
+     }
+     else
+     {
+     [self.btnHome setHidden:NO];
+     [self.btnMenu setHidden:NO];
+     [self.lblHeaderTitle setText:@"Teacher List"];
+     
+     if ([Utility isInterNetConnectionIsActive] == false)
+     {
+     arrStudentList=[DBOperation selectData:[NSString stringWithFormat:@"SELECT * FROM TeacherList"]];
+     
+     [self.aStudentTable reloadData];
+     }
+     else
+     {
+     NSArray *arrt=[DBOperation selectData:[NSString stringWithFormat:@"SELECT * FROM TeacherList"]];
+     
+     if(arrt.count != 0)
+     {
+     [self apiCallFor_getTeacherList:@"0"];
+     }
+     else
+     {
+     [self apiCallFor_getTeacherList:@"1"];
+     }
+     }
+     
+     
+     ////
+     }*/
+    
     if([[Utility getMemberType] isEqualToString:@"Student"])
     {
         [self.btnHome setHidden:NO];
@@ -64,7 +125,7 @@
                 [self apiCallFor_getTeacherList:@"1"];
             }
         }
-
+        
         
     }
     else
@@ -162,7 +223,7 @@
                          NSString *str=[dic objectForKey:@"id"];
                          [DBOperation executeSQL:[NSString stringWithFormat:@"DELETE FROM StudentList WHERE id = %@",str]];
                      }
-                    
+                     
                      for (NSMutableDictionary *dic in arrStudentList)
                      {
                          NSString *FullName = [dic objectForKey:@"FullName"];
@@ -324,7 +385,7 @@
         vc.strSelectMemberID=[arrStudentList[indexPath.row]objectForKey:@"MemberID"];
         [self.navigationController pushViewController:vc animated:YES];
     }
-   
+    
 }
 
 #pragma mark - button action

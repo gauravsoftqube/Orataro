@@ -120,17 +120,24 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"cellRow"];
-    cell.selectionStyle=UITableViewCellSelectionStyleNone;
-    UIView *viewBackgroundCell=(UIView *)[cell.contentView viewWithTag:1];
-    if(indexPath.row % 2)
+   
+    UIView *viewBackgroundCell=(UIView *)[cell.contentView viewWithTag:11];
+    
+    if(indexPath.row % 2 == 0)
     {
         [viewBackgroundCell setBackgroundColor:[UIColor colorWithRed:255/255.0f green:255/255.0f blue:255/255.0f alpha:1.0f]];
+     //  [cell setBackgroundColor:[UIColor colorWithRed:255/255.0f green:255/255.0f blue:255/255.0f alpha:1.0f]];
         
     }
     else
     {
+       // [cell setBackgroundColor:[UIColor colorWithRed:242/255.0f green:242/255.0f blue:242/255.0f alpha:1.0f]];
+
+        
         [viewBackgroundCell setBackgroundColor:[UIColor colorWithRed:242/255.0f green:242/255.0f blue:242/255.0f alpha:1.0f]];
     }
+    
+    cell.selectionStyle=UITableViewCellSelectionStyleNone;
     
     UIImageView *img1 = (UIImageView *)[cell.contentView viewWithTag:12];
     img1.image = [img1.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];

@@ -25,6 +25,10 @@
     
     _addView.layer.cornerRadius = 20.0;
     
+    _lblTitleHeader.text = [NSString stringWithFormat:@"%@ %@ %@",[_dicHappyGrameList objectForKey:@"Grade"],[_dicHappyGrameList objectForKey:@"Division"],[_dicHappyGrameList objectForKey:@"Subject"]];
+    
+    //NSLog(@"Data=%@",_dicHappyGrameList);
+    
     // Do any additional setup after loading the view.
     [self commonData];
 }

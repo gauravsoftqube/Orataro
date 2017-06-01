@@ -451,7 +451,7 @@ int s =0 ;
         
         NSString *strSaveImg = [ary lastObject];
         
-        NSLog(@"data=%@",setImage);
+       // NSLog(@"data=%@",setImage);
         
         NSString *getjsonstr = [Utility Convertjsontostring:dic];
         [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO FriendList (FriendJsonStr,ImageStr,flag) VALUES ('%@','%@','0')",getjsonstr,strSaveImg]];

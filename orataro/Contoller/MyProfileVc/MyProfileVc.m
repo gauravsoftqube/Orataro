@@ -879,12 +879,10 @@
     
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
-         //[ProgressHUB showHUDAddedTo:self.view];
+        
          
          if(!error)
          {
-             
-             
              NSString *strArrd=[dicResponce objectForKey:@"d"];
              NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
              NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
@@ -901,7 +899,7 @@
                      //apk_ImageUrlFor_HomeworkDetail
                      
                      //  UIImageView *img = [[UIImageView alloc]init];
-                     NSLog(@"Data=%@",[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[ary objectAtIndex:0]]);
+                                          NSLog(@"Data=%@",[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[ary objectAtIndex:0]]);
                      
                      NSMutableDictionary *dicEdit = [[Utility getCurrentUserDetail]mutableCopy];
                      
@@ -911,12 +909,18 @@
                      
                      [DBOperation executeSQL:[NSString stringWithFormat:@"UPDATE CurrentActiveUser SET id = '0' WHERE JsonStr = '%@'",getjsonstr]];
                      
-                     [self getCurrentUserImage:dicEdit];
                      
                      [aProfileimageview sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[ary objectAtIndex:0]]] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL)
                       {
+                             [ProgressHUB hideenHUDAddedTo:self.view];
                           aProfileimageview.image = image;
+                          
                       }];
+                     
+                     //[self getCurrentUserImage:dicEdit];
+                     
+                     
+                     
                      // [self viewWillAppear:YES];
                      
                      /*  [aProfileimageview sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[ary objectAtIndex:0]]] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL)

@@ -85,10 +85,18 @@ int cn =0;
     alert.tag = 2;
     [alert setValue:datePicker forKey:@"accessoryView"];
     
+    /*
+     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+     [dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'"];
+     NSDate *originalDate = [dateFormatter dateFromString:originalDateString];
+     [dateFormatter setDateFormat:@"MM' 'DD','yyyy"];
+     NSString *formattedDateString = [dateFormatter stringFromDate:originalDate];
+     */
+    
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"dd-MM-yyyy"];
-    NSString *theDate = [dateFormat stringFromDate:[NSDate date]];
-    _lbDate.text = theDate;
+    [dateFormat setDateFormat:@"dd-MMM-yyyy"];
+    NSString *theDate = [[dateFormat stringFromDate:[NSDate date]]uppercaseString];
+    _lbDate.text = [theDate uppercaseString];
     
     [self hideTextfield];
     
@@ -103,7 +111,7 @@ int cn =0;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-    [self apiCallFor_getSubDiv];
+    
 }
 
 #pragma mark - tabelview delegate
@@ -250,6 +258,8 @@ int cn =0;
     }
     if (tableView == aClasstableView)
     {
+          aClassMAinView.hidden = YES;
+        
         _lbSubDivision.text = [NSString stringWithFormat:@"%@ %@",[[subAry objectAtIndex:indexPath.row] objectForKey:@"Grade"],[[subAry objectAtIndex:indexPath.row] objectForKey:@"Division"]];
         
         strDivId = [[subAry objectAtIndex:indexPath.row] objectForKey:@"DivisionID"];
@@ -260,7 +270,7 @@ int cn =0;
         
         [self getAttendanceList:strDivId :strGradeId :strMonth :strYear];
         
-        aClassMAinView.hidden = YES;
+      
     }
 }
 
@@ -394,8 +404,9 @@ int cn =0;
 
 - (IBAction)ClassBtnClicked:(id)sender
 {
-    aClassMAinView.hidden = NO;
-    [self.view bringSubviewToFront:aClassMAinView];
+    [self apiCallFor_getSubDiv];
+    
+    
 }
 - (IBAction)MenuBtnClicked:(id)sender
 {
@@ -441,7 +452,7 @@ int cn =0;
         if (buttonIndex == 0)
         {
             NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-            [dateFormat setDateFormat:@"dd-MM-yyyy"];
+            [dateFormat setDateFormat:@"dd-MON-yyyy"];
             NSString *theDate = [dateFormat stringFromDate:[datePicker date]];
             _lbDate.text = theDate;
             
@@ -589,11 +600,14 @@ int cn =0;
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"subject and division not found" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
                  {
+                     aClassMAinView.hidden = NO;
+                     [self.view bringSubviewToFront:aClassMAinView];
+                     
                      [self ManageSubjectList:arrResponce];
                  }
              }

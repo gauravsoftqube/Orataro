@@ -79,7 +79,7 @@
     alert.tag=111;
     [alert setValue:datePicker forKey:@"accessoryView"];
     
-    [self apiCallFor_getStandard];
+    
     
     if ([_projectvar isEqualToString:@"Edit"])
     {
@@ -232,9 +232,7 @@
         strStudentTeacher = @"Student";
         
         _viewSelectDivision.hidden = YES;
-        _viewStudentGroupMember.hidden = NO;
         
-        [self.view bringSubviewToFront:_viewStudentGroupMember];
         
         [self apiCallFor_getStudentGroup:[aryDivision objectAtIndex:indexPath.row] :tempStoreDivision];
         
@@ -431,17 +429,16 @@
     strStudentTeacher = @"Teacher";
     [aryStudentList removeAllObjects];
     _viewSelectDivision.hidden = YES;
-    _viewStudentGroupMember.hidden = NO;
-    
-    [self.view bringSubviewToFront:_viewStudentGroupMember];
+   
     [self api_getTeacherList];
     
 }
 
 - (IBAction)btnSelectStudentMember:(id)sender
 {
-    _viewSelectStandard.hidden = NO;
-    [self.view bringSubviewToFront:_viewSelectStandard];
+    [self apiCallFor_getStandard];
+    
+    
 }
 
 - (IBAction)btnSumbit:(id)sender
@@ -565,11 +562,14 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"project not sucessfully create." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
                  {
+                     _viewSelectStandard.hidden = NO;
+                     [self.view bringSubviewToFront:_viewSelectStandard];
+                     
                      aryStandard = [[NSMutableArray alloc]initWithArray:arrResponce];
                      [_tblStandard reloadData];
                  }
@@ -655,7 +655,7 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"division list not available" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
@@ -735,11 +735,15 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"student group not available" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
                  {
+                     _viewStudentGroupMember.hidden = NO;
+                     
+                     [self.view bringSubviewToFront:_viewStudentGroupMember];
+                     
                      aryStudentList = [[NSMutableArray alloc]initWithArray:arrResponce];
                      
                      NSMutableArray *aryTempSave = [[NSMutableArray alloc]init];
@@ -817,11 +821,15 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"teacher list not available" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
                  {
+                     _viewStudentGroupMember.hidden = NO;
+                     
+                     [self.view bringSubviewToFront:_viewStudentGroupMember];
+                     
                      aryStudentList = [[NSMutableArray alloc]initWithArray:arrResponce];
                      
                      NSMutableArray *aryTempSave = [[NSMutableArray alloc]init];
@@ -980,7 +988,7 @@
                  }
                  else
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"project not create" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
              }
@@ -1135,7 +1143,7 @@
                  }
                  else
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"record not delete" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
              }
