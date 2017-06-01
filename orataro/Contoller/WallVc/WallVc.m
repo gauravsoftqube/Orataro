@@ -317,6 +317,16 @@ int c2= 0;
         {
             arrGeneralWall = [DBOperation selectData:@"select * from InstituteWall"];
             countResponce = [arrGeneralWall count];
+            
+            arrDynamicWall_Setting = [DBOperation selectData:@"select * from DynamicWall_Setting"];
+            for (NSMutableDictionary *dic in arrDynamicWall_Setting)
+            {
+                NSString *IsAdmin=[dic objectForKey:@"IsAdmin"];
+                if ([IsAdmin integerValue] == 1)
+                {
+                    arrDynamicWall_Admin_Setting  = [DBOperation selectData:@"select * from DynamicWall_Admin_Setting"];
+                }
+            }
         }
         else if ([_checkscreen isEqualToString:@"Standard"] ||
                  [_checkscreen isEqualToString:@"Division"] ||
@@ -328,6 +338,17 @@ int c2= 0;
             
             arrGeneralWall = [DBOperation selectData:[NSString stringWithFormat:@"select * from DynamicWall where WallID ='%@'",strWallId]];
             countResponce = [arrGeneralWall count];
+            
+            arrDynamicWall_Setting = [DBOperation selectData:@"select * from DynamicWall_Setting"];
+            for (NSMutableDictionary *dic in arrDynamicWall_Setting)
+            {
+                NSString *IsAdmin=[dic objectForKey:@"IsAdmin"];
+                if ([IsAdmin integerValue] == 1)
+                {
+                    arrDynamicWall_Admin_Setting  = [DBOperation selectData:@"select * from DynamicWall_Admin_Setting"];
+                }
+            }
+
         }
         else if ([_checkscreen isEqualToString:@"MyWall"])
         {
@@ -1405,11 +1426,21 @@ int c2= 0;
                      {
                          //set DynamicWall Setting in array
                          arrDynamicWall_Setting  = [dicResponce objectForKey:@"RoleData"];
+                         
                          for (NSMutableDictionary *dic in arrDynamicWall_Setting)
                          {
                              NSString *IsAdmin=[dic objectForKey:@"IsAdmin"];
-                             if ([IsAdmin integerValue] == 1) {
+                             if ([IsAdmin integerValue] == 1)
+                             {
                                  arrDynamicWall_Admin_Setting  = [dicResponce objectForKey:@"WallRoleData"];
+                                 if([arrDynamicWall_Admin_Setting count] != 0)
+                                 {
+                                     [self DynamicWall_Setting:[arrDynamicWall_Admin_Setting objectAtIndex:0]];
+                                 }
+                             }
+                             else
+                             {
+                                 [self DynamicWall_Setting:dic];
                              }
                          }
                          
@@ -1470,8 +1501,17 @@ int c2= 0;
                          for (NSMutableDictionary *dic in arrDynamicWall_Setting)
                          {
                              NSString *IsAdmin=[dic objectForKey:@"IsAdmin"];
-                             if ([IsAdmin integerValue] == 1) {
+                             if ([IsAdmin integerValue] == 1)
+                             {
                                  arrDynamicWall_Admin_Setting  = [dicResponce objectForKey:@"WallRoleData"];
+                                 if([arrDynamicWall_Admin_Setting count] != 0)
+                                 {
+                                     [self DynamicWall_Setting:[arrDynamicWall_Admin_Setting objectAtIndex:0]];
+                                 }
+                             }
+                             else
+                             {
+                                 [self DynamicWall_Setting:dic];
                              }
                          }
                          
@@ -1908,6 +1948,56 @@ int c2= 0;
             [self apiCallMethod];
         }
     }];
+}
+
+
+-(void)DynamicWall_Setting:(NSMutableDictionary*)dicResponce
+{
+    NSString *IsAdmin=[dicResponce objectForKey:@"IsAdmin"];
+    NSString *IsAllowPeoplePostComment=[dicResponce objectForKey:@"IsAllowPeoplePostComment"];
+    NSString *IsAllowPeopleToCreatePoll=[dicResponce objectForKey:@"IsAllowPeopleToCreatePoll"];
+    NSString *IsAllowPeopleToInviteOtherPeople=[dicResponce objectForKey:@"IsAllowPeopleToInviteOtherPeople"];
+    NSString *IsAllowPeopleToLikeAndDislikeComment=[dicResponce objectForKey:@"IsAllowPeopleToLikeAndDislikeComment"];
+    NSString *IsAllowPeopleToLikeThisWall=[dicResponce objectForKey:@"IsAllowPeopleToLikeThisWall"];
+    NSString *IsAllowPeopleToParticipateInPoll=[dicResponce objectForKey:@"IsAllowPeopleToParticipateInPoll"];
+    NSString *IsAllowPeopleToPostDocument=[dicResponce objectForKey:@"IsAllowPeopleToPostDocument"];
+    NSString *IsAllowPeopleToPostStatus=[dicResponce objectForKey:@"IsAllowPeopleToPostStatus"];
+    NSString *IsAllowPeopleToPostVideos=[dicResponce objectForKey:@"IsAllowPeopleToPostVideos"];
+    NSString *IsAllowPeopleToPutGeoLocationOnPost=[dicResponce objectForKey:@"IsAllowPeopleToPutGeoLocationOnPost"];
+    NSString *IsAllowPeopleToShareComment=[dicResponce objectForKey:@"IsAllowPeopleToShareComment"];
+    NSString *IsAllowPeopleToTagOnPost=[dicResponce objectForKey:@"IsAllowPeopleToTagOnPost"];
+    NSString *IsAllowPeopleToUploadAlbum=[dicResponce objectForKey:@"IsAllowPeopleToUploadAlbum"];
+    NSString *IsAutoApproveAlbume=[dicResponce objectForKey:@"IsAutoApproveAlbume"];
+    NSString *IsAutoApproveDocument=[dicResponce objectForKey:@"IsAutoApproveDocument"];
+    NSString *IsAutoApprovePoll=[dicResponce objectForKey:@"IsAutoApprovePoll"];
+    NSString *IsAutoApprovePost=[dicResponce objectForKey:@"IsAutoApprovePost"];
+    NSString *IsAutoApprovePostStatus=[dicResponce objectForKey:@"IsAutoApprovePostStatus"];
+    NSString *IsAutoApproveVideos=[dicResponce objectForKey:@"IsAutoApproveVideos"];
+    NSString *WallID=[dicResponce objectForKey:@"WallID"];
+    NSString *WallImage=[dicResponce objectForKey:@"WallImage"];
+    NSString *WallName=[dicResponce objectForKey:@"WallName"];
+    
+    [DBOperation executeSQL:[NSString stringWithFormat:@"DELETE FROM DynamicWall_Setting WHERE WallID='%@'",WallID]];
+    
+    [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO DynamicWall_Setting(IsAdmin,IsAllowPeoplePostComment,IsAllowPeopleToCreatePoll,IsAllowPeopleToInviteOtherPeople,IsAllowPeopleToLikeAndDislikeComment,IsAllowPeopleToLikeThisWall,IsAllowPeopleToParticipateInPoll,IsAllowPeopleToPostDocument,IsAllowPeopleToPostStatus,IsAllowPeopleToPostVideos,IsAllowPeopleToPutGeoLocationOnPost,IsAllowPeopleToShareComment,IsAllowPeopleToTagOnPost,IsAllowPeopleToUploadAlbum,IsAutoApproveAlbume,IsAutoApproveDocument,IsAutoApprovePoll,IsAutoApprovePost,IsAutoApprovePostStatus,IsAutoApproveVideos,WallID,WallImage,WallName)values('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@')",IsAdmin,IsAllowPeoplePostComment,IsAllowPeopleToCreatePoll,IsAllowPeopleToInviteOtherPeople,IsAllowPeopleToLikeAndDislikeComment,IsAllowPeopleToLikeThisWall,IsAllowPeopleToParticipateInPoll,IsAllowPeopleToPostDocument,IsAllowPeopleToPostStatus,IsAllowPeopleToPostVideos,IsAllowPeopleToPutGeoLocationOnPost,IsAllowPeopleToShareComment,IsAllowPeopleToTagOnPost,IsAllowPeopleToUploadAlbum,IsAutoApproveAlbume,IsAutoApproveDocument,IsAutoApprovePoll,IsAutoApprovePost,IsAutoApprovePostStatus,IsAutoApproveVideos,WallID,WallImage,WallName]];
+}
+
+-(void)DynamicWall_Admin_Setting:(NSMutableDictionary*)dicResponce
+{
+    NSString *IsAllowPostAlbum=[dicResponce objectForKey:@"IsAllowPostAlbum"];
+    NSString *IsAllowPostComment=[dicResponce objectForKey:@"IsAllowPostComment"];
+    NSString *IsAllowPostFile=[dicResponce objectForKey:@"IsAllowPostFile"];
+    NSString *IsAllowPostPhoto=[dicResponce objectForKey:@"IsAllowPostPhoto"];
+    NSString *IsAllowPostStatus=[dicResponce objectForKey:@"IsAllowPostStatus"];
+    NSString *IsAllowPostVideo=[dicResponce objectForKey:@"IsAllowPostVideo"];
+    NSString *IsApproveorDisApprove=[dicResponce objectForKey:@"IsApproveorDisApprove"];
+    NSString *IsDeletePoll=[dicResponce objectForKey:@"IsDeletePoll"];
+    NSString *IsWallMemberManagement=[dicResponce objectForKey:@"IsWallMemberManagement"];
+    NSString *WallTypeTerm=[dicResponce objectForKey:@"WallTypeTerm"];
+    
+    [DBOperation executeSQL:[NSString stringWithFormat:@"DELETE FROM DynamicWall_Setting"]];
+    
+    [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO DynamicWall_Setting(IsAllowPostAlbum,IsAllowPostComment,IsAllowPostFile,IsAllowPostPhoto,IsAllowPostStatus,IsAllowPostVideo,IsApproveorDisApprove,IsDeletePoll,IsWallMemberManagement,WallTypeTerm)values('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@')",IsAllowPostAlbum,IsAllowPostComment,IsAllowPostFile,IsAllowPostPhoto,IsAllowPostStatus,IsAllowPostVideo,IsApproveorDisApprove,IsDeletePoll,IsWallMemberManagement,WallTypeTerm]];
 }
 
 #pragma mark - apiCall For GetUserDynamicMenuData
