@@ -587,13 +587,13 @@
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"BatchID"]] forKey:@"BeachID"];
     
-    CGRect rect = CGRectMake(0,0,30,30);
-    UIGraphicsBeginImageContext( rect.size );
-    [PhotoBtn.currentBackgroundImage drawInRect:rect];
-    UIImage *picture1 = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
+//    CGRect rect = CGRectMake(0,0,30,30);
+//    UIGraphicsBeginImageContext( rect.size );
+//    [PhotoBtn.currentBackgroundImage drawInRect:rect];
+//    UIImage *picture1 = UIGraphicsGetImageFromCurrentImageContext();
+//    UIGraphicsEndImageContext();
     
-    NSData *data =  UIImagePNGRepresentation(picture1);
+    NSData *data =  UIImagePNGRepresentation(PhotoBtn.currentBackgroundImage);
     const unsigned char *bytes = [data bytes];
     NSUInteger length = [data length];
     NSMutableArray *byteArray = [NSMutableArray array];
@@ -601,7 +601,20 @@
     {
         [byteArray addObject:[NSNumber numberWithUnsignedChar:bytes[i]]];
     }
-    [param setValue:byteArray forKey:@"File"];
+   // [param setValue:byteArray forKey:@"File"];
+    
+    UIImage* checkImage = [UIImage imageNamed:@"id_proof"];
+    NSData *checkImageData = UIImagePNGRepresentation(checkImage);
+    NSData *propertyImageData = UIImagePNGRepresentation(PhotoBtn.currentBackgroundImage);
+    if ([checkImageData isEqualToData:propertyImageData])
+    {
+        [param setValue:@"" forKey:@"File"];
+        
+    }
+    else
+    {
+        [param setValue:byteArray forKey:@"File"];
+    }
     
     NSString *getImageName = [Utility randomImageGenerator];
     [param setValue:[NSString stringWithFormat:@"%@.png",getImageName] forKey:@"FileName"];
@@ -630,7 +643,7 @@
                  }
                  else
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"no circular create." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
              }
@@ -697,7 +710,7 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"notification not available" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
@@ -755,7 +768,7 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"no subject/division available" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else

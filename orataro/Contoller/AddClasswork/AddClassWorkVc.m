@@ -728,6 +728,8 @@
     
     [param setValue:[NSString stringWithFormat:@""] forKey:@"FileMineType"];
     
+    //id_proof
+    
     NSData *data = UIImagePNGRepresentation(aSelectBtn.currentBackgroundImage);
     const unsigned char *bytes = [data bytes];
     NSUInteger length = [data length];
@@ -736,7 +738,22 @@
     {
         [byteArray addObject:[NSNumber numberWithUnsignedChar:bytes[i]]];
     }
-    [param setValue:byteArray forKey:@"File"];
+    
+    
+    
+    UIImage* checkImage = [UIImage imageNamed:@"id_proof"];
+    NSData *checkImageData = UIImagePNGRepresentation(checkImage);
+    NSData *propertyImageData = UIImagePNGRepresentation(aSelectBtn.currentBackgroundImage);
+    if ([checkImageData isEqualToData:propertyImageData])
+    {
+        [param setValue:@"" forKey:@"File"];
+
+    }
+    else
+    {
+        [param setValue:byteArray forKey:@"File"];
+    }
+   
     
     [ProgressHUB showHUDAddedTo:self.view];
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
@@ -760,7 +777,7 @@
                  }
                  else
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"no classwork create" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
              }

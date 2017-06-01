@@ -183,7 +183,7 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"classwork not available" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
@@ -463,7 +463,11 @@
     }
     
     UILabel *lblDateOfFinish = (UILabel *)[cell.contentView viewWithTag:5];
-    [lblDateOfFinish setText:[NSString stringWithFormat:@"End Date: %@",[Utility convertMiliSecondtoDate:@"dd/MM/yyyy" date:DateOfFinish]]];
+    //ClassWorkTitle
+    
+    [lblDateOfFinish setText:[d objectForKey:@"ClassWorkTitle"]];
+    
+ //   [lblDateOfFinish setText:[NSString stringWithFormat:@"End Date: %@",[Utility convertMiliSecondtoDate:@"dd/MM/yyyy" date:DateOfFinish]]];
     
     //UILabel *lblTitle = (UILabel *)[cell.contentView viewWithTag:6];
     // [lblTitle setText:[NSString stringWithFormat:@"%@",Title]];

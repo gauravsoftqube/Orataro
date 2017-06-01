@@ -220,6 +220,22 @@
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
     
+    /*
+     
+     <InstituteID>guid</InstituteID>
+     <ClientID>guid</ClientID>
+     <UserID>guid</UserID>
+     <StudentMemberID>guid</StudentMemberID>
+     <TeacherMemberID>guid</TeacherMemberID>
+     <MemberType>string</MemberType>
+     <Title>string</Title>
+     <DivisionID>guid</DivisionID>
+     <GradeID>guid</GradeID>
+     <SujbectID>guid</SujbectID>
+     <BeachID>guid</BeachID>
+     */
+    
+    
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
@@ -232,7 +248,11 @@
     [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelectedList objectForKey:@"DivisionID"]] forKey:@"DivisionID"];
     [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelectedList objectForKey:@"GradeID"]] forKey:@"GradeID"];
     [param setValue:[NSString stringWithFormat:@"%@",[self.dicSelectedList objectForKey:@"SubjectID"]] forKey:@"SujbectID"];
+    
+   //[param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"BatchID"]] forKey:@"BeachID"];
+    
     [param setValue:@"" forKey:@"BeachID"];
+    
     if([strInternet isEqualToString:@"1"])
     {
         [ProgressHUB showHUDAddedTo:self.view];
@@ -374,6 +394,14 @@
 {
     aPopupMainView.hidden = YES;
     [self.view endEditing:YES];
+    
+    if ([Utility validateBlankField:aTextField.text])
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:CIRCULAR_TITLE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        return;
+    }
+
     [self apiCallFor_CreateNewPTCommnunication:@"1"];
 }
 - (IBAction)AddBtnClicked:(id)sender

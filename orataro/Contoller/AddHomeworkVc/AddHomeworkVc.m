@@ -101,13 +101,14 @@
     [param setValue:[NSString stringWithFormat:@"IMAGE"] forKey:@"FileType"];
     [param setValue:[NSString stringWithFormat:@""] forKey:@"FileMineType"];
  
-    CGRect rect = CGRectMake(0,0,30,30);
-    UIGraphicsBeginImageContext( rect.size );
-    [_imgAttechedFile.image drawInRect:rect];
-    UIImage *picture1 = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
+//    CGRect rect = CGRectMake(0,0,30,30);
+//    UIGraphicsBeginImageContext( rect.size );
+//    [_imgAttechedFile.image drawInRect:rect];
+//    UIImage *picture1 = UIGraphicsGetImageFromCurrentImageContext();
+//    UIGraphicsEndImageContext();
 
-    NSData *data = UIImagePNGRepresentation(picture1);
+    
+    NSData *data = UIImagePNGRepresentation(_imgAttechedFile.image);
     const unsigned char *bytes = [data bytes];
     NSUInteger length = [data length];
     NSMutableArray *byteArray = [NSMutableArray array];
@@ -115,7 +116,20 @@
         [byteArray addObject:[NSNumber numberWithUnsignedChar:bytes[i]]];
     }
    
-    [param setValue:byteArray forKey:@"File"];
+    UIImage* checkImage = [UIImage imageNamed:@"id_proof"];
+    NSData *checkImageData = UIImagePNGRepresentation(checkImage);
+    NSData *propertyImageData = UIImagePNGRepresentation(_imgAttechedFile.image);
+    if ([checkImageData isEqualToData:propertyImageData])
+    {
+        [param setValue:@"" forKey:@"File"];
+        
+    }
+    else
+    {
+        [param setValue:byteArray forKey:@"File"];
+    }
+    
+   // [param setValue:byteArray forKey:@"File"];
     
     [ProgressHUB showHUDAddedTo:self.view];
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
@@ -139,7 +153,7 @@
                  }
                  else
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"no homework create." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
              }

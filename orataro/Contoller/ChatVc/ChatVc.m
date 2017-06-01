@@ -389,7 +389,7 @@
                      [aryChatMessage removeAllObjects];
                      [_tblChatMessage reloadData];
                      
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"chat history not found" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
@@ -501,7 +501,7 @@
                      NSString *strStatus=[dic objectForKey:@"message"];
                      if([strStatus isEqualToString:@"No Data Found"])
                      {
-                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"ptcommunication not available" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                          [alrt show];
                      }
                      else

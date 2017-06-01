@@ -67,24 +67,31 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-    
-    [self commonData];
-}
--(void)commonData
-{
-    
-   // strFromImagepicker =@"FromimagePicker";
-    
     if ([strFromImagepicker isEqualToString:@"FromimagePicker"])
     {
         
     }
     else
     {
-         [self apiCallFor_getCircularType];
+        [self commonData];
+
     }
-   
+}
+-(void)commonData
+{
     
+   // strFromImagepicker =@"FromimagePicker";
+    
+//    if ([strFromImagepicker isEqualToString:@"FromimagePicker"])
+//    {
+//        
+//    }
+//    else
+//    {
+//        
+//    }
+   
+    [self apiCallFor_getCircularType];
     [Utility setLeftViewInTextField:self.txtGroupTitle imageName:@"" leftSpace:0 topSpace:0 size:5];
     [Utility setLeftViewInTextField:self.txtGroupSubject imageName:@"" leftSpace:0 topSpace:0 size:5];
     [Utility setLeftViewInTextField:self.txtEducationGroup imageName:@"" leftSpace:0 topSpace:0 size:5];
@@ -267,8 +274,7 @@
         
         _viewStandard.hidden = YES;
         
-        _viewStudentNameList.hidden = NO;
-        [self.view bringSubviewToFront:_viewStudentNameList];
+       
         
         NSLog(@"get data=%@",[aryGetStudentGradeDivision objectAtIndex:indexPath.row]);
         
@@ -525,8 +531,7 @@
 }
 - (IBAction)btnSelectGroupMemberStudent:(id)sender
 {
-    _viewStandard.hidden = NO;
-    [self.view bringSubviewToFront:_viewStandard];
+    
     
     [self apiCallFor_getGradeDivision];
 }
@@ -535,8 +540,7 @@
 {
     //strCheckStudentTeacher = @"StudentName";
     strCheckStudentTeacher = @"TeacherName";
-    _viewStudentNameList.hidden = NO;
-    [self.view bringSubviewToFront:_viewStudentNameList];
+    
     
     NSMutableDictionary *dic;
     [self apiCallFor_GetStudentNameList:dic strStudentTeacher:strCheckStudentTeacher];
@@ -698,7 +702,7 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"circular type not available" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
@@ -771,13 +775,15 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"subject and division not available" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                      _viewStandard.hidden =YES;
 
                  }
                  else
                  {
+                     _viewStandard.hidden = NO;
+                     [self.view bringSubviewToFront:_viewStandard];
                      aryGetStudentGradeDivision = [[NSMutableArray alloc]initWithArray:arrResponce];
                      NSLog(@"data=%@",aryGetStudentGradeDivision);
                      
@@ -919,12 +925,14 @@
                          [aryStudentListName removeAllObjects];
                          [_tblStudentList reloadData];
                          
-                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"student list not available" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                          [alrt show];
                      }
                      else
                      {
                          
+                         _viewStudentNameList.hidden = NO;
+                         [self.view bringSubviewToFront:_viewStudentNameList];
                          
                          aryStudentListName = [[NSMutableArray alloc]initWithArray:arrResponce];
                          aryTemp = [[NSMutableArray alloc]initWithArray:aryStudentListName];
@@ -992,7 +1000,8 @@
                      else
                      {
                          
-                         
+                         _viewStudentNameList.hidden = NO;
+                         [self.view bringSubviewToFront:_viewStudentNameList];
                          aryStudentListName = [[NSMutableArray alloc]initWithArray:arrResponce];
                          aryTemp = [[NSMutableArray alloc]initWithArray:aryStudentListName];
                          [_tblStudentList reloadData];
