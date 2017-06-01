@@ -25,13 +25,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "orataro/AppDelegate.m"
-            timestampString = "517920956.282446"
+            filePath = "orataro/Contoller/StudentListVc/StudentListViewController.m"
+            timestampString = "518000039.735937"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "31"
-            endingLineNumber = "31"
-            landmarkName = "-application:didFinishLaunchingWithOptions:"
+            startingLineNumber = "287"
+            endingLineNumber = "287"
+            landmarkName = "-apiCallFor_getTeacherList:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -41,13 +41,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "orataro/Contoller/PhotAlbumVc/PhotoAlbumVc.m"
-            timestampString = "517921148.743109"
+            filePath = "orataro/Contoller/TimeTableVc/TimeTableVc.m"
+            timestampString = "518003079.697521"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "981"
-            endingLineNumber = "981"
-            landmarkName = "-apiCallFor_GetPhotoList::"
+            startingLineNumber = "147"
+            endingLineNumber = "147"
+            landmarkName = "-apiCallFor_getTimeTableList:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -57,13 +57,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "orataro/Contoller/PhotAlbumVc/PhotoAlbumVc.m"
-            timestampString = "517921153.581133"
+            filePath = "orataro/Contoller/TimeTableVc/TimeTableVc.m"
+            timestampString = "518003097.879322"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1007"
-            endingLineNumber = "1007"
-            landmarkName = "-apiCallFor_GetPhotoList::"
+            startingLineNumber = "173"
+            endingLineNumber = "173"
+            landmarkName = "-apiCallFor_getTimeTableList:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -73,45 +73,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "orataro/Contoller/PhotAlbumVc/PhotoAlbumVc.m"
-            timestampString = "517921211.241128"
+            filePath = "orataro/Contoller/HomeWorkVc/HomeWrokVc.m"
+            timestampString = "518005431.365974"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "381"
-            endingLineNumber = "381"
-            landmarkName = "-collectionView:cellForItemAtIndexPath:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "orataro/Contoller/PhotAlbumVc/PhotoAlbumVc.m"
-            timestampString = "517921213.605315"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "405"
-            endingLineNumber = "405"
-            landmarkName = "-collectionView:cellForItemAtIndexPath:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "orataro/Contoller/PhotAlbumVc/PhotoAlbumVc.m"
-            timestampString = "517921219.107318"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "526"
-            endingLineNumber = "526"
-            landmarkName = "-collectionView:cellForItemAtIndexPath:"
+            startingLineNumber = "483"
+            endingLineNumber = "483"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
