@@ -31,14 +31,15 @@
                             <rect key="frame" x="0.0" y="0.0" width="414" height="600"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="no_img" translatesAutoresizingMaskIntoConstraints="NO" id="OnB-eT-ybV">
-                                    <rect key="frame" x="115" y="20" width="184" height="193"/>
+                                    <rect key="frame" x="157" y="15" width="100" height="100"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="184" id="Nk6-S6-zFL"/>
-                                        <constraint firstAttribute="height" constant="193" id="ocj-Ei-edz"/>
+                                        <constraint firstAttribute="width" constant="100" id="Nk6-S6-zFL"/>
+                                        <constraint firstAttribute="height" constant="100" id="ocj-Ei-edz"/>
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Demo School" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wTd-R1-FfY">
-                                    <rect key="frame" x="115" y="227" width="184" height="26"/>
+                                    <rect key="frame" x="115" y="129" width="184" height="26"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="184" id="b6r-YZ-y2M"/>
                                         <constraint firstAttribute="height" constant="26" id="xAK-bT-dfK"/>
@@ -50,7 +51,7 @@
                             </subviews>
                             <constraints>
                                 <constraint firstItem="OnB-eT-ybV" firstAttribute="centerX" secondItem="UTS-zh-WqW" secondAttribute="centerX" id="51d-9Q-z0m"/>
-                                <constraint firstItem="OnB-eT-ybV" firstAttribute="top" secondItem="UTS-zh-WqW" secondAttribute="top" constant="20" id="Sud-sF-Qks"/>
+                                <constraint firstItem="OnB-eT-ybV" firstAttribute="top" secondItem="UTS-zh-WqW" secondAttribute="top" constant="15" id="Sud-sF-Qks"/>
                                 <constraint firstItem="wTd-R1-FfY" firstAttribute="top" secondItem="OnB-eT-ybV" secondAttribute="bottom" constant="14" id="Ulc-NN-SW2"/>
                                 <constraint firstAttribute="height" constant="600" id="yzj-ei-Aab"/>
                                 <constraint firstItem="wTd-R1-FfY" firstAttribute="centerX" secondItem="UTS-zh-WqW" secondAttribute="centerX" id="ztx-lh-bm4"/>

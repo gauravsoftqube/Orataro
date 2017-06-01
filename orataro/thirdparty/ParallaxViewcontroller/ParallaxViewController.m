@@ -76,17 +76,7 @@
     
     NSMutableDictionary *dic = [Utility getCurrentUserDetail];
     
-    NSLog(@"Dic=%@",[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[dic objectForKey:@"InstitutionWallImage"]]);
-    
-   // _headerImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[dic objectForKey:@"InstitutionWallImage"]]];
-
-    
-//#define apk_ImageUrl @"http://orataro.com/DataFiles"
-//#define apk_ImageUrlFor_HomeworkDetail @"http://orataro.com"
-
-    
-    //_headerImageView.image =
-
+    [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[dic objectForKey:@"InstitutionWallImage"]]] placeholderImage:[UIImage imageNamed:@"no_img.png"]];
 }
 
 -(void)adjustContentViewHeight{
@@ -116,8 +106,6 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    
-    
     CGFloat offset=scrollView.contentOffset.y;
     CGFloat percentage=offset/self.headerImageViewHeight.constant;
     CGFloat value=self.headerImageViewHeight.constant*percentage; // negative when scrolling up more than the top
