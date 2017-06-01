@@ -671,34 +671,6 @@
                                     <constraint firstAttribute="bottom" secondItem="UQw-gm-DeV" secondAttribute="bottom" constant="12" id="zVk-rm-y25"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fmV-6s-6Wy">
-                                <rect key="frame" x="310" y="607" width="40" height="40"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hbs-9G-iao">
-                                        <rect key="frame" x="15" y="15" width="10" height="10"/>
-                                        <state key="normal" image="add"/>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WMS-d6-ZNT">
-                                        <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
-                                        <connections>
-                                            <action selector="btnAddClicked:" destination="KaB-0r-UYG" eventType="touchUpInside" id="P2n-4v-ujt"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" red="0.1529411765" green="0.18823529410000001" blue="0.35686274509999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstItem="hbs-9G-iao" firstAttribute="top" secondItem="fmV-6s-6Wy" secondAttribute="top" constant="15" id="3rg-US-zHq"/>
-                                    <constraint firstAttribute="height" constant="40" id="5EX-jd-wKG"/>
-                                    <constraint firstAttribute="trailing" secondItem="hbs-9G-iao" secondAttribute="trailing" constant="15" id="LUD-q2-Urq"/>
-                                    <constraint firstAttribute="bottom" secondItem="hbs-9G-iao" secondAttribute="bottom" constant="15" id="Wrq-RU-VYu"/>
-                                    <constraint firstAttribute="trailing" secondItem="WMS-d6-ZNT" secondAttribute="trailing" id="XrP-os-Z5D"/>
-                                    <constraint firstAttribute="width" constant="40" id="a81-NX-TXf"/>
-                                    <constraint firstItem="WMS-d6-ZNT" firstAttribute="top" secondItem="fmV-6s-6Wy" secondAttribute="top" id="d1U-te-PiP"/>
-                                    <constraint firstItem="hbs-9G-iao" firstAttribute="leading" secondItem="fmV-6s-6Wy" secondAttribute="leading" constant="15" id="mDe-nB-24k"/>
-                                    <constraint firstItem="WMS-d6-ZNT" firstAttribute="leading" secondItem="fmV-6s-6Wy" secondAttribute="leading" id="njk-4r-4gh"/>
-                                    <constraint firstAttribute="bottom" secondItem="WMS-d6-ZNT" secondAttribute="bottom" id="rUT-LA-LFm"/>
-                                </constraints>
-                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="92" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8hL-4o-EEp">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -790,6 +762,34 @@
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fmV-6s-6Wy">
+                                <rect key="frame" x="310" y="607" width="40" height="40"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hbs-9G-iao">
+                                        <rect key="frame" x="15" y="15" width="10" height="10"/>
+                                        <state key="normal" image="add"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WMS-d6-ZNT">
+                                        <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                        <connections>
+                                            <action selector="btnAddClicked:" destination="KaB-0r-UYG" eventType="touchUpInside" id="P2n-4v-ujt"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.1529411765" green="0.18823529410000001" blue="0.35686274509999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="hbs-9G-iao" firstAttribute="top" secondItem="fmV-6s-6Wy" secondAttribute="top" constant="15" id="3rg-US-zHq"/>
+                                    <constraint firstAttribute="height" constant="40" id="5EX-jd-wKG"/>
+                                    <constraint firstAttribute="trailing" secondItem="hbs-9G-iao" secondAttribute="trailing" constant="15" id="LUD-q2-Urq"/>
+                                    <constraint firstAttribute="bottom" secondItem="hbs-9G-iao" secondAttribute="bottom" constant="15" id="Wrq-RU-VYu"/>
+                                    <constraint firstAttribute="trailing" secondItem="WMS-d6-ZNT" secondAttribute="trailing" id="XrP-os-Z5D"/>
+                                    <constraint firstAttribute="width" constant="40" id="a81-NX-TXf"/>
+                                    <constraint firstItem="WMS-d6-ZNT" firstAttribute="top" secondItem="fmV-6s-6Wy" secondAttribute="top" id="d1U-te-PiP"/>
+                                    <constraint firstItem="hbs-9G-iao" firstAttribute="leading" secondItem="fmV-6s-6Wy" secondAttribute="leading" constant="15" id="mDe-nB-24k"/>
+                                    <constraint firstItem="WMS-d6-ZNT" firstAttribute="leading" secondItem="fmV-6s-6Wy" secondAttribute="leading" id="njk-4r-4gh"/>
+                                    <constraint firstAttribute="bottom" secondItem="WMS-d6-ZNT" secondAttribute="bottom" id="rUT-LA-LFm"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
