@@ -1435,6 +1435,7 @@ int c2= 0;
                                  arrDynamicWall_Admin_Setting  = [dicResponce objectForKey:@"WallRoleData"];
                                  if([arrDynamicWall_Admin_Setting count] != 0)
                                  {
+                                     
                                      [self DynamicWall_Setting:[arrDynamicWall_Admin_Setting objectAtIndex:0]];
                                  }
                              }
@@ -1497,15 +1498,21 @@ int c2= 0;
                      else
                      {
                          //set DynamicWall Setting in array
-                         arrDynamicWall_Setting  = [dicResponce objectForKey:@"RoleData"];
+                         arrDynamicWall_Setting  = [[dicResponce objectForKey:@"RoleData"]mutableCopy];
                          for (NSMutableDictionary *dic in arrDynamicWall_Setting)
                          {
                              NSString *IsAdmin=[dic objectForKey:@"IsAdmin"];
                              if ([IsAdmin integerValue] == 1)
                              {
+                                 if([arrDynamicWall_Setting count] != 0)
+                                 {
+                                     [self setIsAdminEquel_One];
+                                 }
+                                 
                                  arrDynamicWall_Admin_Setting  = [dicResponce objectForKey:@"WallRoleData"];
                                  if([arrDynamicWall_Admin_Setting count] != 0)
                                  {
+                                     
                                      [self DynamicWall_Setting:[arrDynamicWall_Admin_Setting objectAtIndex:0]];
                                  }
                              }
@@ -1948,6 +1955,37 @@ int c2= 0;
             [self apiCallMethod];
         }
     }];
+}
+
+-(void)setIsAdminEquel_One
+{
+    NSMutableDictionary *dicTemp=[[NSMutableDictionary alloc]init];
+    dicTemp = [[arrDynamicWall_Setting objectAtIndex:0]mutableCopy];
+    [dicTemp setObject:@"1" forKey:@"IsAdmin"];
+    [dicTemp setObject:@"1" forKey:@"IsAllowPeoplePostComment"];
+    [dicTemp setObject:@"1" forKey:@"IsAllowPeopleToCreatePoll"];
+    [dicTemp setObject:@"1" forKey:@"IsAllowPeopleToInviteOtherPeople"];
+    [dicTemp setObject:@"1" forKey:@"IsAllowPeopleToLikeAndDislikeComment"];
+    [dicTemp setObject:@"1" forKey:@"IsAllowPeopleToLikeThisWall"];
+    [dicTemp setObject:@"1" forKey:@"IsAllowPeopleToParticipateInPoll"];
+    [dicTemp setObject:@"1" forKey:@"IsAllowPeopleToPostDocument"];
+    [dicTemp setObject:@"1" forKey:@"IsAllowPeopleToPostStatus"];
+    [dicTemp setObject:@"1" forKey:@"IsAllowPeopleToPostVideos"];
+    [dicTemp setObject:@"1" forKey:@"IsAllowPeopleToPutGeoLocationOnPost"];
+    [dicTemp setObject:@"1" forKey:@"IsAllowPeopleToShareComment"];
+    [dicTemp setObject:@"1" forKey:@"IsAllowPeopleToTagOnPost"];
+    [dicTemp setObject:@"1" forKey:@"IsAllowPeopleToUploadAlbum"];
+    [dicTemp setObject:@"1" forKey:@"IsAutoApproveAlbume"];
+    [dicTemp setObject:@"1" forKey:@"IsAutoApproveDocument"];
+    [dicTemp setObject:@"1" forKey:@"IsAutoApprovePoll"];
+    [dicTemp setObject:@"1" forKey:@"IsAutoApprovePost"];
+    [dicTemp setObject:@"1" forKey:@"IsAutoApprovePostStatus"];
+    [dicTemp setObject:@"1" forKey:@"IsAutoApproveVideos"];
+    [dicTemp setObject:@"1" forKey:@"WallID"];
+    [dicTemp setObject:@"1" forKey:@"WallImage"];
+    [dicTemp setObject:@"1" forKey:@"WallName"];
+    arrDynamicWall_Setting=[[NSMutableArray alloc]init];
+    [arrDynamicWall_Setting addObject:dicTemp];
 }
 
 
@@ -4546,6 +4584,8 @@ int c2= 0;
         }
     }
 }
+
+
 
 #pragma mark - tbl UIButton Action
 
