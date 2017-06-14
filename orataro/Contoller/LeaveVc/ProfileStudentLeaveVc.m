@@ -44,8 +44,6 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    
-    
     NSLog(@"Data=%@",_dicStudentLeaveData);
     NSLog(@"Data=%@",_strAddEdit);
     
@@ -53,14 +51,39 @@
     [Utility setLeftViewInTextField:_txtStartDate imageName:@"" leftSpace:0 topSpace:0 size:5];
     [Utility setLeftViewInTextField:_txtEndDate imageName:@"" leftSpace:0 topSpace:0 size:5];
     
+   NSTimeInterval timeInSeconds = [[NSDate date] timeIntervalSinceNow];
+   NSDate *date1 = [[NSDate alloc] initWithTimeIntervalSinceNow:timeInSeconds];
+    
+    NSString *string=[Utility convertMiliSecondtoDate:@"dd-MM-yyyy" date:[_dicStudentLeaveData objectForKey:@"StartDate"]];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init] ;
+    [dateFormatter setDateFormat:@"dd-MM-yyyy"];
+    NSDate *date2 = [dateFormatter dateFromString:string];
+    
+   // NSLog(@"Current Date=%@",date1);
+   // NSLog(@"Start Date=%@",date2);
+
+    if ([date1 compare:date2] == NSOrderedDescending)
+    {
+        [self setuserinteraction:NO];
+    }
+    else if ([date1 compare:date2] == NSOrderedAscending)
+    {
+       [self setuserinteraction:YES];
+    }
+    else
+    {
+        [self setuserinteraction:NO];
+    }
+
     _txtFullName.text = [_dicStudentLeaveData objectForKey:@"TeacherName"];
     _txtDescription.text = [_dicStudentLeaveData objectForKey:@"ReasonForLeave"];
-    _txtStartDate.text = [Utility convertMiliSecondtoDate:@"dd-MM-yyyy" date:[_dicStudentLeaveData objectForKey:@"StartDate"]];
-    _txtEndDate.text = [Utility convertMiliSecondtoDate:@"dd-MM-yyyy" date:[_dicStudentLeaveData objectForKey:@"EndDate"]];
+    
+    _txtStartDate.text = [Utility convertMiliSecondtoDate:@"dd/MM/yyyy" date:[_dicStudentLeaveData objectForKey:@"StartDate"]];
+    _txtEndDate.text = [Utility convertMiliSecondtoDate:@"dd/MM/yyyy" date:[_dicStudentLeaveData objectForKey:@"EndDate"]];
     
     NSString *strPreapp = [NSString stringWithFormat:@"%@",[_dicStudentLeaveData objectForKey:@"IsPerApplication"]];
 
-    NSLog(@"Atr=%@",strPreapp);
+   // NSLog(@"Atr=%@",strPreapp);
     
     if ([strPreapp isEqualToString:@"1"])
     {
@@ -91,6 +114,16 @@
     
 }
 
+-(void)setuserinteraction: (BOOL)flag
+{
+    [_txtFullName setUserInteractionEnabled:flag];
+    [_txtDescription setUserInteractionEnabled:flag];
+    [_btnStart setUserInteractionEnabled:flag];
+    [_btnEnddate setUserInteractionEnabled:flag];
+    [_viewPreapplication setUserInteractionEnabled:flag];
+    [_viewSave setUserInteractionEnabled:flag];
+     
+}
 #pragma mark - common method
 
 -(void)SegmentData
@@ -194,6 +227,7 @@
 {
     _viewStudentFullnameList.hidden = NO;
     [self.view bringSubviewToFront:_viewStudentFullnameList];
+
 }
 
 - (IBAction)btnPreApplicationClicked:(id)sender
@@ -356,11 +390,13 @@
                      [aryListofStudent removeAllObjects];
                      [_tblStudentList reloadData];
                      
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:PROFILESTUDENT delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
                  {
+                    
+                     
                      aryListofStudent = [[NSMutableArray alloc]initWithArray:arrResponce];
                      
                      _txtFullName.text = [[aryListofStudent objectAtIndex:0]objectForKey:@"FullName"];
@@ -527,20 +563,10 @@
                  }
                  else
                  {
-                     // UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     // [alrt show];
+                      UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:RECORDNOTSAVE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
                  }
                  
-                 /* NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
-                  NSString *strStatus=[dic objectForKey:@"message"];
-                  if([strStatus isEqualToString:@"No Data Found"])
-                  {
-                  UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                  [alrt show];
-                  }
-                  else
-                  {
-                  }*/
              }
              else
              {

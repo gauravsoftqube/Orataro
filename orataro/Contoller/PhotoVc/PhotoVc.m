@@ -33,6 +33,7 @@ int lastvalue = 0;
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     
+    
     [aCollectionView registerNib:[UINib nibWithNibName:@"PhototableCell" bundle:nil] forCellWithReuseIdentifier:@"PhotoCell"];
     
     UIRefreshControl *refreshControl = [UIRefreshControl new];
@@ -192,49 +193,6 @@ int lastvalue = 0;
                      [imageData writeToFile:imagePath atomically:NO];
                      // NSLog(@"the cachedImagedPath is %@",imagePath);
                  }
-                 
-                 // NSLog(@"image Saperator=%@",[strSaveImg componentsSeparatedByString:@"."]);
-                 
-                 // NSArray *getExtension = [strSaveImg componentsSeparatedByString:@"."];
-                 
-                 //                 if ([[getExtension objectAtIndex:1] isEqualToString:@"jpg"] || [[getExtension objectAtIndex:1] isEqualToString:@"JPG"] ||
-                 //                     [[getExtension objectAtIndex:1] isEqualToString:@"jpeg"] )
-                 //                 {
-                 //                     NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
-                 //                     [imageData writeToFile:imagePath atomically:NO];
-                 //
-                 //                     if (![imageData writeToFile:imagePath atomically:NO])
-                 //                     {
-                 //                         NSLog(@"Failed to cache image data to disk");
-                 //                     }
-                 //                     else
-                 //                     {
-                 //                         [imageData writeToFile:imagePath atomically:NO];
-                 //                         NSLog(@"the cachedImagedPath is %@",imagePath);
-                 //                     }
-                 //                 }
-                 //                 else
-                 //                 {
-                 //                     NSData *imageData = UIImagePNGRepresentation(image);
-                 //                     [imageData writeToFile:imagePath atomically:NO];
-                 //
-                 //                     if (![imageData writeToFile:imagePath atomically:NO])
-                 //                     {
-                 //                         NSLog(@"Failed to cache image data to disk");
-                 //                     }
-                 //                     else
-                 //                     {
-                 //                         [imageData writeToFile:imagePath atomically:NO];
-                 //                         NSLog(@"the cachedImagedPath is %@",imagePath);
-                 //                     }
-                 //
-                 //                 }
-                 //jpg
-                 //JPG
-                 //png
-                 //jpeg
-                 
-                 
                  
              }];
             

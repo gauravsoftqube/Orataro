@@ -24,7 +24,7 @@
     arySaveStandard = [[NSMutableArray alloc]init];
     arySaveData = [[NSMutableArray alloc]init];
     
-    _lbHeaderTitle.text = [NSString stringWithFormat:@"Standard (%@)",[Utility getCurrentUserName]];
+   // _lbHeaderTitle.text = [NSString stringWithFormat:@"Standard (%@)",[Utility getCurrentUserName]];
     
     // Do any additional setup after loading the view.
     [self commonData];
@@ -46,7 +46,9 @@
     
     NSArray *ary = [DBOperation selectData:@"select * from TeacherStandardList"];
     arySaveData = [Utility getLocalDetail:ary columnKey:@"TeacherStandardJsonStr"];
-    [_tblStatndardList reloadData];
+   // [_tblStatndardList reloadData];
+    
+      _lbHeaderTitle.text = [NSString stringWithFormat:@"Standard(%lu) - (%@)",(unsigned long)arySaveStandard.count,[Utility getCurrentUserName]];
     
     if (arySaveData.count == 0)
     {
@@ -64,12 +66,11 @@
     }
     else
     {
-        // aryGetHappyGramList = [Utility getLocalDetail:ary columnKey:@"happyGramJsonStr"];
-        // [_tblDetailList reloadData];
-        
         if ([Utility isInterNetConnectionIsActive] == false)
         {
-            
+            NSArray *ary = [DBOperation selectData:@"select * from TeacherStandardList"];
+            arySaveData = [Utility getLocalDetail:ary columnKey:@"TeacherStandardJsonStr"];
+            [_tblStatndardList reloadData];
         }
         else
         {
@@ -190,14 +191,17 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:PROFILESTANDARD delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
                  {
+                     [arySaveStandard removeAllObjects];
+                     
                      for (NSMutableDictionary *dic in arrResponce)
                      {
                        //  NSLog(@"Dic=%@",dic);
+                         
                          
                          if ([[dic objectForKey:@"AssociationType"] isEqualToString:@"Grade"])
                          {
@@ -208,6 +212,10 @@
                      //   NSLog(@"Data=%@",arySaveStandard);
                      
                      [self ManageCircularList:arySaveStandard];
+                     
+                     _lbHeaderTitle.text = [NSString stringWithFormat:@"Standard(%lu) - (%@)",(unsigned long)arySaveStandard.count,[Utility getCurrentUserName]];
+
+                     
                      
                  }
              }
@@ -228,16 +236,20 @@
 -(void)ManageCircularList:(NSMutableArray *)arrResponce
 {
     //CREATE TABLE "TeacherStandardList" ("id" INTEGER PRIMARY KEY  NOT NULL , "TeacherStandardJsonStr" VARCHAR)
-   
+    //[arySaveData removeAllObjects];
+    
     [DBOperation executeSQL:@"delete from TeacherStandardList"];
+    
     for (NSMutableDictionary *dic in arrResponce)
     {
         NSString *getjsonstr = [Utility Convertjsontostring:dic];
         [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO TeacherStandardList (TeacherStandardJsonStr) VALUES ('%@')",getjsonstr]];
     }
     
-    arySaveData= [[NSMutableArray alloc]init];
+    //arySaveData= [[NSMutableArray alloc]init];
+    
     NSArray *ary = [DBOperation selectData:@"select * from TeacherStandardList"];
+    
     arySaveData = [Utility getLocalDetail:ary columnKey:@"TeacherStandardJsonStr"];
     
     [_tblStatndardList reloadData];

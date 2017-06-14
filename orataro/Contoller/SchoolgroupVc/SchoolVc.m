@@ -19,7 +19,7 @@
 {
     [super viewDidLoad];
     
-    _lbHeaderTitle.text = [NSString stringWithFormat:@"School Prayer (%@)",[Utility getCurrentUserName]];
+    _lbHeaderTitle.text = [NSString stringWithFormat:@"Prayer (%@)",[Utility getCurrentUserName]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -86,7 +86,7 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:SCHOOLPRAYERLIST delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else

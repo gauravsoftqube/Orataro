@@ -10,6 +10,8 @@
 #import "FAQCustomeCell.h"
 #import "REFrostedViewController.h"
 #import "AppDelegate.h"
+#import "Global.h"
+#import "Utility.h"
 
 @interface FAQvc ()
 {
@@ -30,6 +32,8 @@
     [super viewDidLoad];
     
     self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    _lblHeaderTitle.text = [NSString stringWithFormat:@"FAQ (%@)",[Utility getCurrentUserName]];
     
     app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     

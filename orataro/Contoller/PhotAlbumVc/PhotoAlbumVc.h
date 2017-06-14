@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface PhotoAlbumVc : UIViewController<UICollectionViewDataSource,UICollectionViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate>
+@property (weak, nonatomic) IBOutlet UIView *viewAddAlbum;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionviewAlbum;
 @property (weak, nonatomic) IBOutlet UIView *viewadd;
 
 @property (weak, nonatomic) IBOutlet UIView *addBtn;

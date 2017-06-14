@@ -22,6 +22,8 @@
    
     _lbHeaderTitle.text = [NSString stringWithFormat:@"Add Homework (%@)",[Utility getCurrentUserName]];
     
+    _txtTitle.delegate = self;
+    
     // Do any additional setup after loading the view.
     [self commonData];
 }
@@ -56,6 +58,19 @@
     
     self.txtViewDescription.textContainerInset = UIEdgeInsetsMake(5, 1, 0, 0);
     
+}
+
+#pragma  mark - Textfield delegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if(range.length + range.location > _txtTitle.text.length)
+    {
+        return NO;
+    }
+    
+    NSUInteger newLength = [_txtTitle.text length] + [string length] - range.length;
+    return newLength <= 16;
 }
 
 #pragma mark - add HomeWork API
@@ -97,17 +112,6 @@
     
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"BatchID"]] forKey:@"BeachID"];
     
-    [param setValue:[NSString stringWithFormat:@"%@.png",[Utility randomImageGenerator]] forKey:@"FileName"];
-    [param setValue:[NSString stringWithFormat:@"IMAGE"] forKey:@"FileType"];
-    [param setValue:[NSString stringWithFormat:@""] forKey:@"FileMineType"];
- 
-//    CGRect rect = CGRectMake(0,0,30,30);
-//    UIGraphicsBeginImageContext( rect.size );
-//    [_imgAttechedFile.image drawInRect:rect];
-//    UIImage *picture1 = UIGraphicsGetImageFromCurrentImageContext();
-//    UIGraphicsEndImageContext();
-
-    
     NSData *data = UIImagePNGRepresentation(_imgAttechedFile.image);
     const unsigned char *bytes = [data bytes];
     NSUInteger length = [data length];
@@ -119,50 +123,71 @@
     UIImage* checkImage = [UIImage imageNamed:@"id_proof"];
     NSData *checkImageData = UIImagePNGRepresentation(checkImage);
     NSData *propertyImageData = UIImagePNGRepresentation(_imgAttechedFile.image);
+    
     if ([checkImageData isEqualToData:propertyImageData])
     {
-        [param setValue:@"" forKey:@"File"];
-        
+        NSMutableArray *byteArray = [NSMutableArray array];
+        [param setValue:byteArray forKey:@"File"];
+        [param setValue:@""forKey:@"FileName"];
+        [param setValue:@"" forKey:@"FileType"];
+        [param setValue:@"" forKey:@"FileMineType"];
     }
     else
     {
-        [param setValue:byteArray forKey:@"File"];
+         [param setValue:byteArray forKey:@"File"];
+        [param setValue:[NSString stringWithFormat:@"%@.png",[Utility randomImageGenerator]] forKey:@"FileName"];
+        [param setValue:[NSString stringWithFormat:@"IMAGE"] forKey:@"FileType"];
+        [param setValue:[NSString stringWithFormat:@""] forKey:@"FileMineType"];
+       
     }
     
-   // [param setValue:byteArray forKey:@"File"];
     
     [ProgressHUB showHUDAddedTo:self.view];
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
-         [ProgressHUB hideenHUDAddedTo:self.view];
+       
          if(!error)
          {
-             NSString *strArrd=[dicResponce objectForKey:@"d"];
-             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
-             NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             NSString *str = [dicResponce objectForKey:@"Message"];
              
-             if([arrResponce count] != 0)
+             NSLog(@"Str=%@",str);
+             
+             
+             if ([str isEqualToString:@"Request timed out."])
              {
-                 NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
-                 NSString *strStatus=[dic objectForKey:@"message"];
-                 if([strStatus isEqualToString:@"HomeWork Created SuccessFully...!!"])
-                 {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     [alrt show];
-                     [self apiCallFor_SendPushNotification];
-                 }
-                 else
-                 {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"no homework create." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     [alrt show];
-                 }
+                 [ProgressHUB hideenHUDAddedTo:self.view];
+                 
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNET delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
              }
              else
              {
-                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                 [alrt show];
+                 NSString *strArrd=[dicResponce objectForKey:@"d"];
+                 NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+                 NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                 
+                 if([arrResponce count] != 0)
+                 {
+                     NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                     NSString *strStatus=[dic objectForKey:@"message"];
+                     if([strStatus isEqualToString:@"HomeWork Created SuccessFully...!!"])
+                     {
+                         [self apiCallFor_SendPushNotification];
+                     }
+                     else
+                     {
+                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:HOMEWORKALERT delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                         [alrt show];
+                     }
+                 }
+                 else
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                 }
+
              }
-         }
+        }
          else
          {
              UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -180,7 +205,7 @@
     }
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_notifications,apk_SendPushNotification_action];
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
-    [ProgressHUB showHUDAddedTo:self.view];
+    //[ProgressHUB showHUDAddedTo:self.view];
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error){
         [ProgressHUB hideenHUDAddedTo:self.view];
         for (UIViewController *controller in self.navigationController.viewControllers)

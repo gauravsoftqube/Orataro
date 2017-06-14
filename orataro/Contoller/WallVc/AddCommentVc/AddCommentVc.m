@@ -145,30 +145,14 @@ static NSString *CellIdentifier = @"WallCustomeCell";
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-//                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-//                     [alrt show];
                      [self.tblCommentList setHidden:YES];
                  }
                  else
                  {
                      [self.tblCommentList setHidden:NO];
                      countResponce = [arrResponce count];
-                     long index=0;
-                     for (NSMutableDictionary *dicID in arrResponce)
-                     {
-                         if ([[arrCommentList valueForKey:@"CommentID"] containsObject:[dicID objectForKey:@"CommentID"]])
-                         {
-                             [arrCommentList removeObjectAtIndex:index];
-                             [arrCommentList addObject:dicID];
-                         }
-                         else
-                         {
-                             [arrCommentList addObject:dicID];
-                         }
-                         
-                         index++;
-                     }
-                     
+                     arrCommentList = [arrResponce mutableCopy];
+                    
                      NSString *PostCommentID=[self.dicSelectedPost_Comment objectForKey:@"PostCommentID"];
                      if ([_checkscreen isEqualToString:@"Institute"])
                      {
@@ -266,11 +250,13 @@ static NSString *CellIdentifier = @"WallCustomeCell";
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:COMMENTLIST delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
                  }
                  else if([strStatus isEqualToString:@"Comment Added successfully."])
                  {
                      [self.txtPostComment setText:@""];
-                     [self apiCallFor_SendPushNotification];
+                     [self apiCallFor_GetWallPostComments:@"1"];
                  }
              }
              else

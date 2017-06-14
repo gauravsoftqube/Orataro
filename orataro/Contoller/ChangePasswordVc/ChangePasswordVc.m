@@ -206,8 +206,6 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"Data updated successfully."])
                  {
-//                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-//                     [alrt show];
                      
                      WallVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
                     // vc.checkscreen = @"FromLogin";
@@ -219,7 +217,7 @@
                  {
                      
                      
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"password not change" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:PASSWORDCHANGE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                      
                  }

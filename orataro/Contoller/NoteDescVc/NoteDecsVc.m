@@ -15,11 +15,17 @@
 
 @implementation NoteDecsVc
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
+    
     [_viewUserBorder.layer setCornerRadius:40];
     [_viewUserBorder.layer setBorderWidth:1];
     [_viewUserBorder.layer setBorderColor:[UIColor colorWithRed:34/255.0f green:49/255.0f blue:89/255.0f alpha:1.0f].CGColor];
+    
+    _imgUser.layer.cornerRadius = 35.0;
+    _imgUser.clipsToBounds = YES;
+
     // Do any additional setup after loading the view.
     [self setSelectedValue];
 }
@@ -92,11 +98,35 @@
     if ([Utility isInterNetConnectionIsActive] == true)
     {
         NSString *strURLForTeacherProfilePicture=[NSString stringWithFormat:@"%@",[self.dicSelectNotes objectForKey:@"ProfilePicture"]];
+        
         if(![strURLForTeacherProfilePicture isKindOfClass:[NSNull class]])
         {
             strURLForTeacherProfilePicture=[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[self.dicSelectNotes objectForKey:@"ProfilePicture"]];
+            
+            NSMutableDictionary *dic = [Utility getCurrentUserDetail];
+            
+             strURLForTeacherProfilePicture=[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[dic objectForKey:@"ProfilePicture"]];
+            
             [ProgressHUB showHUDAddedTo:self.view];
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
+            
+          //  [NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[dic objectForKey:@"ProfilePicture"]];
+            
+            NSURL *imageURL = [NSURL URLWithString:strURLForTeacherProfilePicture];
+            
+            [_imgUser sd_setImageWithURL:imageURL placeholderImage:[UIImage imageNamed:@"dash_profile"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL)
+            {
+                
+                [ProgressHUB hideenHUDAddedTo:self.view];
+                _imgUser.image = image;
+                               
+            }];
+            
+//            [_imgUser sd_setImageWithURL:imageURL completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL)
+//             {
+//                
+//             }];
+            
+           /* dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
                            ^{
                                
                                NSURL *imageURL = [NSURL URLWithString:strURLForTeacherProfilePicture];
@@ -116,7 +146,7 @@
                                    }
                                    
                                });
-                           });
+                           });*/
         }
     }
     

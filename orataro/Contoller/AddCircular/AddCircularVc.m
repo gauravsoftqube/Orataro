@@ -587,12 +587,6 @@
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"BatchID"]] forKey:@"BeachID"];
     
-//    CGRect rect = CGRectMake(0,0,30,30);
-//    UIGraphicsBeginImageContext( rect.size );
-//    [PhotoBtn.currentBackgroundImage drawInRect:rect];
-//    UIImage *picture1 = UIGraphicsGetImageFromCurrentImageContext();
-//    UIGraphicsEndImageContext();
-    
     NSData *data =  UIImagePNGRepresentation(PhotoBtn.currentBackgroundImage);
     const unsigned char *bytes = [data bytes];
     NSUInteger length = [data length];
@@ -601,26 +595,29 @@
     {
         [byteArray addObject:[NSNumber numberWithUnsignedChar:bytes[i]]];
     }
-   // [param setValue:byteArray forKey:@"File"];
     
     UIImage* checkImage = [UIImage imageNamed:@"id_proof"];
     NSData *checkImageData = UIImagePNGRepresentation(checkImage);
     NSData *propertyImageData = UIImagePNGRepresentation(PhotoBtn.currentBackgroundImage);
     if ([checkImageData isEqualToData:propertyImageData])
     {
-        [param setValue:@"" forKey:@"File"];
+        NSMutableArray *byteArray = [NSMutableArray array];
+        [param setValue:byteArray forKey:@"File"];
+        [param setValue:@""forKey:@"FileName"];
+        [param setValue:@"" forKey:@"FileType"];
+        [param setValue:@"" forKey:@"FileMineType"];
         
     }
     else
     {
         [param setValue:byteArray forKey:@"File"];
+        NSString *getImageName = [Utility randomImageGenerator];
+        [param setValue:[NSString stringWithFormat:@"%@.png",getImageName] forKey:@"FileName"];
+        [param setValue:@"IMAGE" forKey:@"FileType"];
+        [param setValue:@"" forKey:@"FileMineType"];
     }
-    
-    NSString *getImageName = [Utility randomImageGenerator];
-    [param setValue:[NSString stringWithFormat:@"%@.png",getImageName] forKey:@"FileName"];
-    [param setValue:@"IMAGE" forKey:@"FileType"];
-    [param setValue:@"" forKey:@"FileMineType"];
-    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstitutionWallID"]] forKey:@"InstitutionWallID"];
+     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstitutionWallID"]] forKey:@"InstitutionWallID"];
+   
     
     [ProgressHUB showHUDAddedTo:self.view];
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
@@ -643,7 +640,7 @@
                  }
                  else
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"no circular create." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:CIRCULART delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
              }
@@ -710,7 +707,7 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"notification not available" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:CIRCULARNOTIFICATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
@@ -768,7 +765,7 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"no subject/division available" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:CIRCULARSUBJECTLIST delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else

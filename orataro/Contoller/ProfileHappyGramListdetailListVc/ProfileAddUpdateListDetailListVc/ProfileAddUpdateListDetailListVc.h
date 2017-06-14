@@ -10,6 +10,8 @@
 
 @interface ProfileAddUpdateListDetailListVc : UIViewController<UICollectionViewDelegate,UICollectionViewDataSource,UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate>
 
+- (IBAction)btnBackEmotionClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UIView *viewTableHeaderCreate;
 
 @property (weak, nonatomic) NSString *strVctoNavigate;
 @property (weak, nonatomic) IBOutlet UIView *viewEmogination;

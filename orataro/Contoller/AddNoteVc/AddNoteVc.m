@@ -30,7 +30,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     
     UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 20)];
     aTitleTextfield.leftView = paddingView;
@@ -103,11 +103,11 @@
     datePickerEnd.minimumDate=DateEnd;
     
     alertEnd = [[UIAlertView alloc]
-             initWithTitle:@"Select Date"
-             message:nil
-             delegate:self
-             cancelButtonTitle:@"OK"
-             otherButtonTitles:@"Cancel", nil];
+                initWithTitle:@"Select Date"
+                message:nil
+                delegate:self
+                cancelButtonTitle:@"OK"
+                otherButtonTitles:@"Cancel", nil];
     alertEnd.delegate = self;
     alertEnd.tag=112;
     [alertEnd setValue:datePickerEnd forKey:@"accessoryView"];
@@ -152,7 +152,7 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"no subject or division available" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:NOTESUBDIV delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
@@ -211,7 +211,7 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"no description available" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:NOTEDESC delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
@@ -278,26 +278,46 @@
     [param setValue:[NSString stringWithFormat:@"%@",SubjectID] forKey:@"SubjectID"];
     
     //IMAGE
-    CGRect rect = CGRectMake(0,0,30,30);
-    UIGraphicsBeginImageContext( rect.size );
-    [aPhoto.currentBackgroundImage drawInRect:rect];
-    UIImage *picture1 = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
+//    CGRect rect = CGRectMake(0,0,30,30);
+//    UIGraphicsBeginImageContext( rect.size );
+//    [aPhoto.currentBackgroundImage drawInRect:rect];
+//    UIImage *picture1 = UIGraphicsGetImageFromCurrentImageContext();
+//    UIGraphicsEndImageContext();
     
-    NSData *data =  UIImagePNGRepresentation(picture1);
+    
+    NSData *data =  UIImagePNGRepresentation(aPhoto.currentBackgroundImage);
     const unsigned char *bytes = [data bytes];
     NSUInteger length = [data length];
+    
     NSMutableArray *byteArray = [NSMutableArray array];
+    
     for (NSUInteger i = 0; i < length; i++)
     {
         [byteArray addObject:[NSNumber numberWithUnsignedChar:bytes[i]]];
     }
-    [param setValue:byteArray forKey:@"File"];
-    NSString *getImageName = [Utility randomImageGenerator];
-    [param setValue:[NSString stringWithFormat:@"%@.png",getImageName] forKey:@"FileName"];
-    [param setValue:@"IMAGE" forKey:@"FileType"];
-    [param setValue:@"" forKey:@"FileMineType"];
     
+    UIImage* checkImage = [UIImage imageNamed:@"id_proof"];
+    NSData *checkImageData = UIImagePNGRepresentation(checkImage);
+    NSData *propertyImageData = UIImagePNGRepresentation(aPhoto.currentBackgroundImage);
+    
+    if ([checkImageData isEqualToData:propertyImageData])
+    {
+        NSMutableArray *byteArray = [NSMutableArray array];
+        [param setValue:byteArray forKey:@"File"];
+        [param setValue:@""forKey:@"FileName"];
+        [param setValue:@"" forKey:@"FileType"];
+        [param setValue:@"" forKey:@"FileMineType"];
+        
+    }
+    else
+    {
+        [param setValue:byteArray forKey:@"File"];
+        NSString *getImageName = [Utility randomImageGenerator];
+        [param setValue:[NSString stringWithFormat:@"%@.png",getImageName] forKey:@"FileName"];
+        [param setValue:@"IMAGE" forKey:@"FileType"];
+        [param setValue:@"" forKey:@"FileMineType"];
+    }
+
     //
     [param setValue:[NSString stringWithFormat:@"%@",self.aTitleTextfield.text] forKey:@"NoteTitle"];
     [param setValue:[NSString stringWithFormat:@"0"] forKey:@"Rating"];
@@ -328,7 +348,7 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"no not create." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:NOTECREATE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else if([strStatus isEqualToString:@"Note Created SuccessFully."])
@@ -486,7 +506,7 @@
         {
             [img setImage:[UIImage imageNamed:@"checkboxunselected"]];
         }
-
+        
         return cell;
     }
     if (tableView == _tblShortDesc_popup)
@@ -691,17 +711,25 @@
 
 - (IBAction)btnDone_StdandDiv:(id)sender
 {
+    // NSLog(@"Data=%@",arrSelected_SubAndStd);
+    
     NSMutableArray *strStandard = [[NSMutableArray alloc]init];
     
-    NSMutableArray *aryGet = [[NSUserDefaults standardUserDefaults]valueForKey:@"SelectAryData"];
+    //  NSMutableArray *aryGet = [[NSUserDefaults standardUserDefaults]valueForKey:@"SelectAryData"];
+    
+    //  NSLog(@"Data=%@",arrSubandDiv);
+    
+    //   NSLog(@"Data1=%@",arrSelected_SubAndStd);
     
     for (int i=0; i<arrSubandDiv.count; i++)
     {
-        if ([aryGet containsObject:[NSString stringWithFormat:@"%d",i]])
+        if ([arrSelected_SubAndStd containsObject:[arrSubandDiv objectAtIndex:i]])
         {
             [strStandard addObject:[arrSubandDiv objectAtIndex:i]];
         }
     }
+    
+    NSLog(@"strst=%@",strStandard);
     
     NSMutableArray *arySet = [[NSMutableArray alloc]init];
     
@@ -711,10 +739,23 @@
     }
     
     NSString *strTableColumn = [arySet componentsJoinedByString:@","];
-    [[NSUserDefaults standardUserDefaults]setObject:strTableColumn forKey:@"setStandard"];
-    [[NSUserDefaults standardUserDefaults]synchronize];
-    
     self.aStandardTextfield.text = strTableColumn;
+    
+    //Select Standard And Division
+    
+    if(arySet.count == 0)
+    {
+        _lbStandardDivision.text = @"Select Standard And Division";
+    }
+    else
+    {
+        _lbStandardDivision.text = strTableColumn;
+        
+        CGSize size = [strTableColumn sizeWithFont:[UIFont fontWithName:@"HelveticaNeueLTStd-Roman" size:14] constrainedToSize:CGSizeMake([[UIScreen mainScreen]bounds].size.width-35, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
+        
+        [_txtStandardHeight setConstant:size.height+20];
+    }
+    
     [self.viewStandardANdDevision_popup setHidden:YES];
 }
 
@@ -742,7 +783,7 @@
         return;
     }
     
-    if ([Utility validateBlankField:self.aStandardTextfield.text])
+    if ([_lbStandardDivision.text isEqualToString:@"Select Standard And Division"])
     {
         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@CIRCULAR_STANDARD delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alrt show];
@@ -755,7 +796,7 @@
         [alrt show];
         return;
     }
-
+    
     if ([Utility validateBlankField:self.aEnddateTextfield.text])
     {
         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Select_End_Date delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];

@@ -13,8 +13,13 @@
 #import "StudentListViewController.h"
 #import "AppDelegate.h"
 #import "Global.h"
+#import "FSCalendar.h"
 
-@interface AttendanceVC ()
+
+#import "TestPreview.h"
+#import "AMPPreviewController.h"
+
+@interface AttendanceVC ()<FSCalendarDataSource,FSCalendarDelegate>
 {
     NSMutableArray *classTableDataAry;
     UIDatePicker *datePicker;
@@ -24,9 +29,13 @@
     NSMutableArray *subAry;
     NSString *strDivId,*strGradeId,*strMonth,*strYear;
     NSMutableArray *arySaveTag;
-    NSMutableArray *aryTable;
+    NSMutableArray *aryTable,*aryTable1;
     int presentcnt,absentcnt,leavecnt;
+    FSCalendar *calendar1;
+    NSString *strStudentRegID;
 }
+@property (weak, nonatomic) IBOutlet FSCalendar *calendar;
+@property (strong, nonatomic) NSCalendar *gregorian;
 @end
 
 @implementation AttendanceVC
@@ -38,8 +47,11 @@ int cn =0;
 {
     [super viewDidLoad];
     
+    self.gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    
     subAry = [[NSMutableArray alloc]init];
     aryTable = [[NSMutableArray alloc]init];
+    aryTable1 = [[NSMutableArray alloc]init];
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     
@@ -100,6 +112,10 @@ int cn =0;
     
     [self hideTextfield];
     
+    /*
+     #define apk_attendance  @"apk_attendance.asmx"
+     #define apk_AttendanceListForStudent @"AttendanceListForStudent"
+     */
     
     // Do any additional setup after loading the view.
 }
@@ -111,6 +127,28 @@ int cn =0;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    
+    if ([[Utility getMemberType] containsString:@"Teacher"])
+    {
+        _viewCalender.hidden = YES;
+        [self apiCallFor_getSubDiv];
+    }
+    else
+    {
+        _viewCalender.hidden = NO;
+        [self apicallfor_StudentAttendance];
+    }
+    
+//    if([[Utility getMemberType] isEqualToString:@"Student"])
+//    {
+//       
+//        
+//        
+//    }
+//    else
+//    {
+//       
+//    }
     
 }
 
@@ -140,10 +178,10 @@ int cn =0;
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        cell.btnFirst.tag = 1;
-        cell.btnSecond.tag = 2;
-        cell.btnThird.tag = 3;
-        cell.btnFourth.tag = 4;
+        cell.btnFirst.tag = 0;
+        cell.btnSecond.tag = 1;
+        cell.btnThird.tag = 2;
+        cell.btnFourth.tag = 3;
         
         
         cell.lbName.text = [[arySaveTag objectAtIndex:indexPath.row]objectForKey:@"Name"];
@@ -258,7 +296,7 @@ int cn =0;
     }
     if (tableView == aClasstableView)
     {
-          aClassMAinView.hidden = YES;
+        aClassMAinView.hidden = YES;
         
         _lbSubDivision.text = [NSString stringWithFormat:@"%@ %@",[[subAry objectAtIndex:indexPath.row] objectForKey:@"Grade"],[[subAry objectAtIndex:indexPath.row] objectForKey:@"Division"]];
         
@@ -270,9 +308,238 @@ int cn =0;
         
         [self getAttendanceList:strDivId :strGradeId :strMonth :strYear];
         
-      
+        
     }
 }
+
+#pragma mark - Calender Delegate
+
+
+- (nullable UIImage *)calendar:(FSCalendar *)calendar imageForDate:(NSDate *)date
+{
+    NSDateFormatter *formatter=[[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"MM"];
+    NSString *strDate123=[formatter stringFromDate:date];
+    
+    NSDateFormatter *formatterYear=[[NSDateFormatter alloc]init];
+    [formatterYear setDateFormat:@"yyyy"];
+    NSString *strDate123Year=[formatterYear stringFromDate:date];
+    
+    NSDate *currentPageDate=self.calendar.currentPage;
+    NSDateFormatter *formatter1=[[NSDateFormatter alloc]init];
+    [formatter1 setDateFormat:@"MM"];
+    NSString *strDate1=[formatter1 stringFromDate:currentPageDate];
+    
+    
+    
+    /*if([strDate123 isEqual:strDate1])
+     {
+     NSDateFormatter *formatter=[[NSDateFormatter alloc]init];
+     [formatter setDateFormat:@"dd/MM/yyyy"];
+     NSString *strDate21=[formatter stringFromDate:date];
+     
+     NSDateFormatter *formatter11=[[NSDateFormatter alloc]init];
+     [formatter11 setDateFormat:@"dd/MM/yyyy"];
+     NSString *strDate11=[formatter11 stringFromDate:[NSDate new]];
+     if([strDate21 isEqual:strDate11])
+     {
+     return [UIImage imageNamed:@"coloricon"];
+     }
+     }
+     
+     for (NSMutableDictionary *dic in arrCalenderDetailList)
+     {
+     NSString *type=[dic objectForKey:@"type"];
+     if ([@"Activity" isEqualToString:type]) {
+     
+     NSDateFormatter *formatter=[[NSDateFormatter alloc]init];
+     [formatter setDateFormat:@"yyyy/MM/dd"];
+     NSString *strDate=[formatter stringFromDate:date];
+     
+     NSString *start=[dic objectForKey:@"start"];
+     
+     NSArray *arrResDate = [strDate componentsSeparatedByString:@"/"];
+     NSString *strDate1Year;
+     if(arrResDate.count != 0)
+     {
+     strDate1Year = [arrResDate objectAtIndex:0];
+     }
+     
+     if([strDate123 isEqual:strDate1])
+     {
+     if([strDate123Year isEqual:strDate1Year])
+     {
+     if([strDate isEqualToString:start])
+     {
+     return [UIImage imageNamed:@"notify_20"];
+     }
+     }
+     }
+     }
+     if ([@"Event" isEqualToString:type])
+     {
+     NSDateFormatter *formatter=[[NSDateFormatter alloc]init];
+     [formatter setDateFormat:@"yyyy/MM/dd"];
+     NSString *strDate=[formatter stringFromDate:date];
+     
+     
+     NSString *start=[dic objectForKey:@"start"];
+     
+     
+     NSArray *arrResDate = [strDate componentsSeparatedByString:@"/"];
+     NSString *strDate1Year;
+     if(arrResDate.count != 0)
+     {
+     strDate1Year = [arrResDate objectAtIndex:0];
+     }
+     
+     if([strDate123 isEqual:strDate1])
+     {
+     if([strDate123Year isEqual:strDate1Year])
+     {
+     if([strDate isEqualToString:start])
+     {
+     return [UIImage imageNamed:@"notify_20"];
+     }
+     }
+     }
+     }
+     if ([@"Exam" isEqualToString:type])
+     {
+     NSDateFormatter *formatter=[[NSDateFormatter alloc]init];
+     [formatter setDateFormat:@"yyyy/MM/dd"];
+     NSString *strDate=[formatter stringFromDate:date];
+     
+     
+     NSString *start=[dic objectForKey:@"start"];
+     
+     NSArray *arrResDate = [strDate componentsSeparatedByString:@"/"];
+     NSString *strDate1Year;
+     if(arrResDate.count != 0)
+     {
+     strDate1Year = [arrResDate objectAtIndex:0];
+     }
+     
+     
+     if([strDate123 isEqual:strDate1])
+     {
+     if([strDate123Year isEqual:strDate1Year])
+     {
+     if([strDate isEqualToString:start])
+     {
+     return [UIImage imageNamed:@"exam_20"];
+     }
+     }
+     }
+     }
+     
+     if ([@"Todos" isEqualToString:type])
+     {
+     NSDateFormatter *formatter=[[NSDateFormatter alloc]init];
+     [formatter setDateFormat:@"yyyy/MM/dd"];
+     NSString *strDate=[formatter stringFromDate:date];
+     
+     
+     NSString *start=[dic objectForKey:@"start"];
+     
+     NSArray *arrResDate = [strDate componentsSeparatedByString:@"/"];
+     NSString *strDate1Year;
+     if(arrResDate.count != 0)
+     {
+     strDate1Year = [arrResDate objectAtIndex:0];
+     }
+     
+     
+     if([strDate123 isEqual:strDate1])
+     {
+     if([strDate123Year isEqual:strDate1Year])
+     {
+     if([strDate isEqualToString:start])
+     {
+     return [UIImage imageNamed:@"notify_20"];
+     }
+     }
+     }
+     }
+     
+     if ([@"Holiday" isEqualToString:type])
+     {
+     NSDateFormatter *formatter=[[NSDateFormatter alloc]init];
+     [formatter setDateFormat:@"yyyy/MM/dd"];
+     NSString *strDate=[formatter stringFromDate:date];
+     
+     
+     NSString *start=[dic objectForKey:@"start"];
+     
+     NSArray *arrResDate = [strDate componentsSeparatedByString:@"/"];
+     NSString *strDate1Year;
+     if(arrResDate.count != 0)
+     {
+     strDate1Year = [arrResDate objectAtIndex:0];
+     }
+     
+     
+     if([strDate123 isEqual:strDate1])
+     {
+     if([strDate123Year isEqual:strDate1Year])
+     {
+     if([strDate isEqualToString:start])
+     {
+     return [UIImage imageNamed:@"notify_red_20"];
+     }
+     }
+     }
+     }
+     }*/
+    
+    return nil;
+}
+
+- (nullable UIColor *)calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance titleDefaultColorForDate:(NSDate *)date
+{
+    /* NSDateFormatter *formatter=[[NSDateFormatter alloc]init];
+     [formatter setDateFormat:@"MM"];
+     NSString *strDate=[formatter stringFromDate:date];
+     
+     NSDate *currentPageDate=self.calendar.currentPage;
+     NSDateFormatter *formatter1=[[NSDateFormatter alloc]init];
+     [formatter1 setDateFormat:@"MM"];
+     NSString *strDate1=[formatter1 stringFromDate:currentPageDate];
+     
+     if([strDate isEqual:strDate1])
+     {
+     return [UIColor blackColor];
+     }
+     else
+     {
+     return [UIColor lightGrayColor];
+     }*/
+    
+    return [UIColor lightGrayColor];
+}
+
+- (nullable UIColor *)calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance fillDefaultColorForDate:(NSDate *)date
+{
+    /* NSDateFormatter *formatter=[[NSDateFormatter alloc]init];
+     [formatter setDateFormat:@"dd/MM/yyyy"];
+     NSString *strDate=[formatter stringFromDate:date];
+     
+     NSDateFormatter *formatter1=[[NSDateFormatter alloc]init];
+     [formatter1 setDateFormat:@"dd/MM/yyyy"];
+     NSString *strDate1=[formatter1 stringFromDate:[NSDate new]];
+     
+     if([strDate  isEqual:strDate1])
+     {
+     return [UIColor whiteColor];
+     }
+     else
+     {
+     return [UIColor whiteColor];
+     }*/
+    
+    return [UIColor whiteColor];
+}
+
 
 #pragma mark - button action
 
@@ -288,7 +555,7 @@ int cn =0;
     
     NSLog(@"dic=%@",d);
     
-    if (btn.tag == 1)
+    if (btn.tag == 0)
     {
         [d setObject:@"1" forKey:@"Present"];
         [d setObject:@"0" forKey:@"Absent"];
@@ -296,7 +563,7 @@ int cn =0;
         [d setObject:@"0" forKey:@"Leave"];
         [arySaveTag replaceObjectAtIndex:indexPath.row withObject:d];
     }
-    if (btn.tag == 2)
+    if (btn.tag == 1)
     {
         [d setObject:@"1" forKey:@"Absent"];
         [d setObject:@"0" forKey:@"Present"];
@@ -304,7 +571,7 @@ int cn =0;
         [d setObject:@"0" forKey:@"Leave"];
         [arySaveTag replaceObjectAtIndex:indexPath.row withObject:d];
     }
-    if (btn.tag == 3)
+    if (btn.tag == 2)
     {
         
         [d setObject:@"1" forKey:@"sick Leave"];
@@ -313,7 +580,7 @@ int cn =0;
         [d setObject:@"0" forKey:@"Leave"];
         [arySaveTag replaceObjectAtIndex:indexPath.row withObject:d];
     }
-    if (btn.tag == 4)
+    if (btn.tag == 3)
     {
         [d setObject:@"1" forKey:@"Leave"];
         [d setObject:@"0" forKey:@"sick Leave"];
@@ -321,6 +588,9 @@ int cn =0;
         [d setObject:@"0" forKey:@"Present"];
         [arySaveTag replaceObjectAtIndex:indexPath.row withObject:d];
     }
+    
+    NSLog(@"Ary data=%@",arySaveTag);
+    
     [AttendanceTableView reloadData];
     
     
@@ -399,14 +669,26 @@ int cn =0;
 
 - (IBAction)btnGenerateReportClicked:(id)sender
 {
-    
+    [self apicallfor_GenerateReport];
+}
+
+- (IBAction)btnMonthPreveiousClicked:(id)sender {
+}
+
+- (IBAction)btnYearePreviousClicked:(id)sender {
+}
+
+- (IBAction)btnMonthNextClicked:(id)sender {
+}
+
+- (IBAction)btnYearNextClicked:(id)sender {
 }
 
 - (IBAction)ClassBtnClicked:(id)sender
 {
-    [self apiCallFor_getSubDiv];
-    
-    
+    aClassMAinView.hidden = NO;
+    [self.view bringSubviewToFront:aClassMAinView];
+
 }
 - (IBAction)MenuBtnClicked:(id)sender
 {
@@ -445,6 +727,9 @@ int cn =0;
     [datePicker setDate:[NSDate date]];
     [alert show];
 }
+
+#pragma mark - alert delegate
+
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (alertView.tag == 2)
@@ -452,7 +737,7 @@ int cn =0;
         if (buttonIndex == 0)
         {
             NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-            [dateFormat setDateFormat:@"dd-MON-yyyy"];
+            [dateFormat setDateFormat:@"dd-MMM-yyyy"];
             NSString *theDate = [dateFormat stringFromDate:[datePicker date]];
             _lbDate.text = theDate;
             
@@ -558,6 +843,211 @@ int cn =0;
     [self.navigationController pushViewController:wc animated:NO];
 }
 
+#pragma mark - get StudentList
+
+-(void)apicallfor_StudentAttendance
+{
+    //#define apk_attendance  @"apk_attendance.asmx"
+    //#define apk_AttendanceListForStudent @"AttendanceListForStudent"
+    
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        [ProgressHUB hideenHUDAddedTo:self.view];
+        return;
+    }
+    
+    /*
+     <GradeID>guid</GradeID>
+     <DivisionID>guid</DivisionID>
+     
+     <BatchID>guid</BatchID>
+     <MemberID>guid</MemberID>
+     
+     <YearStartDate>string</YearStartDate>
+     <YearEndDate>string</YearEndDate>
+     
+     */
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_attendance,apk_AttendanceListForStudent];
+    
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    // NSLog(@"dic=%@",dicCurrentUser);
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"GradeID"]] forKey:@"GradeID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"DivisionID"]] forKey:@"DivisionID"];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"BatchID"]] forKey:@"BatchID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
+    
+    [param setValue:[Utility convertMiliSecondtoDate:@"MM-dd-yyyy" date:[dicCurrentUser objectForKey:@"BatchStart"]] forKey:@"YearStartDate"];
+    [param setValue:[Utility convertMiliSecondtoDate:@"MM-dd-yyyy" date:[dicCurrentUser objectForKey:@"BatchEnd"]] forKey:@"YearEndDate"];
+    
+
+    [ProgressHUB showHUDAddedTo:self.view];
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         [ProgressHUB hideenHUDAddedTo:self.view];
+         if(!error)
+         {
+             // NSLog(@"data=%@",dicResponce);
+             
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             NSData *data = [strArrd dataUsingEncoding:NSUTF8StringEncoding];
+             NSMutableArray *arrResponce = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+             
+             //NSLog(@"array=%@",arrResponce);
+             
+             if([arrResponce count] != 0)
+             {
+                 NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
+                 NSString *strStatus=[dic objectForKey:@"message"];
+                 if([strStatus isEqualToString:@"No Data Found"])
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:STUDENTLEAVE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                 }
+                 else
+                 {
+                     
+                 }
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
+    
+    
+}
+
+#pragma mark - generate Report
+
+-(void)apicallfor_GenerateReport
+{
+    //#define apk_attendance  @"apk_attendance.asmx"
+    //#define apk_AttendanceReport @"AttendanceReport"
+    
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alrt show];
+        [ProgressHUB hideenHUDAddedTo:self.view];
+        return;
+    }
+    
+    /*
+     
+     <InstituteID>guid</InstituteID>
+     <ClientID>guid</ClientID>
+     <BatchID>guid</BatchID>
+     
+     <BatchStart>string</BatchStart>
+     <BatchEnd>string</BatchEnd>
+     
+     <Month>int</Month>
+     <Year>int</Year>
+     <GradeID>guid</GradeID>
+     <DivisionID>guid</DivisionID>
+     <STDDVIName>string</STDDVIName>
+     <InstituteName>string</InstituteName>
+     <IsOnlyWorkingDay>boolean</IsOnlyWorkingDay>
+     
+     
+     <MemberID>guid</MemberID>
+     
+     */
+    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_attendance,apk_AttendanceReport];
+    
+    NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    // NSLog(@"dic=%@",dicCurrentUser);
+    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"ClientID"]] forKey:@"ClientID"];
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"BatchID"]] forKey:@"BatchID"];
+   
+    
+    [param setValue:[Utility convertMiliSecondtoDate:@"MM-dd-yyyy" date:[dicCurrentUser objectForKey:@"BatchStart"]] forKey:@"BatchStart"];
+    [param setValue:[Utility convertMiliSecondtoDate:@"MM-dd-yyyy" date:[dicCurrentUser objectForKey:@"BatchEnd"]] forKey:@"BatchEnd"];
+    
+    NSString *str = [Utility convertDateFtrToDtaeFtr:@"dd-MMM-yyyy" newDateFtr:@"dd-MM-yyyy" date:[NSString stringWithFormat:@"%@",_lbDate.text]];
+    
+    NSArray *arMon = [str componentsSeparatedByString:@"-"];
+    NSString *strarMon = [arMon objectAtIndex:1];
+    NSString *strarYear = [arMon objectAtIndex:2];
+
+   // int mon = [[NSString stringWithFormat:@"%@",strarMon]intValue];
+   // int year = [[NSString stringWithFormat:@"%@",strarYear]intValue];
+
+    [param setValue:strarMon  forKey:@"Month"];
+    [param setValue:strarYear forKey:@"Year"];
+    
+    [param setValue:strGradeId forKey:@"GradeID"];
+    [param setValue:strDivId forKey:@"DivisionID"];
+    
+    [param setValue:_lbSubDivision.text forKey:@"STDDVIName"];
+    [param setValue:[dicCurrentUser objectForKey:@"InstituteName"] forKey:@"InstituteName"];
+    
+    if (com == 1)
+    {
+        [param setValue:@"true" forKey:@"IsOnlyWorkingDay"];
+    }
+    else
+    {
+        [param setValue:@"false" forKey:@"IsOnlyWorkingDay"];
+    }
+    [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
+    
+    [ProgressHUB showHUDAddedTo:self.view];
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+     {
+         [ProgressHUB hideenHUDAddedTo:self.view];
+         if(!error)
+         {
+            
+             NSString *strArrd=[dicResponce objectForKey:@"d"];
+             
+             if([str length] != 0)
+             {
+                 AMPPreviewController *pc = [[AMPPreviewController alloc]
+                                             initWithRemoteFile:[NSURL URLWithString:[NSString stringWithFormat:@"%@\%@",apk_ImageUrlFor_HomeworkDetail,strArrd]] title:@"Growth in time"];
+                 [pc setStartDownloadBlock:^()
+                 {
+                    // NSLog(@"Start download");
+                     [WToast showWithText:@"Download......"];
+                 }];
+                 [pc setFinishDownloadBlock:^(NSError *error)
+                 {
+                     //NSLog(@"Download finished %@", error);
+                     
+                 }];
+                 [self presentViewController:pc animated:YES completion:nil];
+                 
+                // }
+             }
+             else
+             {
+                 UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                 [alrt show];
+             }
+         }
+         else
+         {
+             UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+             [alrt show];
+         }
+     }];
+    
+}
 #pragma mark - API Call
 
 -(void)apiCallFor_getSubDiv
@@ -600,13 +1090,12 @@ int cn =0;
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"subject and division not found" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:ATTENSUBDIV delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
                  {
-                     aClassMAinView.hidden = NO;
-                     [self.view bringSubviewToFront:aClassMAinView];
+                     
                      
                      [self ManageSubjectList:arrResponce];
                  }
@@ -677,6 +1166,7 @@ int cn =0;
     strYear = [aryVal objectAtIndex:2];
     [aClasstableView reloadData];
     
+    
     [self getAttendanceList:strDivId :strGradeId :strMonth :strYear];
 }
 
@@ -715,7 +1205,16 @@ int cn =0;
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"BatchID"]] forKey:@"BatchID"];
     [param setValue:[NSString stringWithFormat:@"%@",gradeId] forKey:@"GradeID"];
     [param setValue:[NSString stringWithFormat:@"%@",strYear1] forKey:@"Year"];
-    [param setValue:[NSString stringWithFormat:@"%@",strMonth1] forKey:@"Month"];
+    
+    //NSLog(@"GetDate=%@",_lbDate.text);
+    
+    NSString *str = [Utility convertDateFtrToDtaeFtr:@"dd-MMM-yyyy" newDateFtr:@"dd-MM-yyyy" date:[NSString stringWithFormat:@"%@",_lbDate.text]];
+    
+    NSArray *arMon = [str componentsSeparatedByString:@"-"];
+    
+    NSString *strarMon = [arMon objectAtIndex:1];
+    
+    [param setValue:[NSString stringWithFormat:@"%@",strarMon] forKey:@"Month"];
     [param setValue:[NSString stringWithFormat:@"%@",divid] forKey:@"DivisionID"];
     
     [ProgressHUB showHUDAddedTo:self.view];
@@ -735,10 +1234,11 @@ int cn =0;
                      arrResponce  = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
                      
                      aryTable = [arrResponce objectForKey:@"Table"];
+                     aryTable1 = [arrResponce objectForKey:@"Table1"];
                      
                      if([aryTable count] == 0)
                      {
-                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"No Data Found" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:ATTENDANCE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                          [alrt show];
                          
                          [arySaveTag removeAllObjects];
@@ -766,8 +1266,8 @@ int cn =0;
                  }
                  else
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"Please try again" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     [alrt show];
+                   //  UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"Please try again" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    // [alrt show];
                  }
                  
              } @catch (NSException *exception)
@@ -851,6 +1351,8 @@ int cn =0;
         
         NSMutableArray *arytmp = [[NSMutableArray alloc]init];
         
+        NSLog(@"Data=%@",arySaveTag);
+        
         for (int i=0 ;i<arySaveTag.count; i++)
         {
             NSMutableDictionary *tmpDic = [[NSMutableDictionary alloc]init];
@@ -882,6 +1384,9 @@ int cn =0;
                 [arytmp addObject:tmpDic];
             }
         }
+        
+        NSLog(@"Temp=%@",arytmp);
+        
         NSMutableArray *aryStore = [[NSMutableArray alloc]init];
         NSString *strStud;
         for (NSMutableDictionary *d in arytmp)
@@ -889,11 +1394,55 @@ int cn =0;
             strStud = [NSString stringWithFormat:@"%@,%@#",[d objectForKey:@"memberId"],[d objectForKey:@"present"]];
             [aryStore addObject:strStud];
         }
+        
+        NSLog(@"Ary store=%@",aryStore);
+        
         NSString *st = [aryStore componentsJoinedByString:@""];
         
         [param setValue:[NSString stringWithFormat:@"%@",st] forKey:@"StudentData"];
-        [param setValue:@"" forKey:@"OldStudAtteRegiMasterID"];
         
+        //strStudentRegID
+        
+        if (aryTable1.count > 0)
+        {
+            NSString *str = [Utility convertDateFtrToDtaeFtr:@"dd-MMM-yyyy" newDateFtr:@"dd-MM-yyyy" date:_lbDate.text];
+            
+            for (NSMutableDictionary *dic in aryTable1)
+            {
+                NSString *strDate = [Utility convertMiliSecondtoDate:@"dd-MM-yyyy" date:[dic objectForKey:@"DateOfAttendence"]];
+                
+                if ([strDate isEqualToString:str])
+                {
+                    strStudentRegID = [dic objectForKey:@"StudentAttRegMasterID"];
+                }
+               // else
+             //   {
+                    //strStudentRegID = @"";
+              //  }
+            }
+           //  [param setValue:@"" forKey:@"OldStudAtteRegiMasterID"];
+        }
+       
+        [param setValue:strStudentRegID forKey:@"OldStudAtteRegiMasterID"];
+        /*
+         
+         <StandardID>guid</StandardID>
+         <DivisionID>guid</DivisionID>
+         <ClientID>guid</ClientID>
+         <InstituteID>guid</InstituteID>
+         <AttendenceBy>guid</AttendenceBy>
+         <DateOfAttendence>string</DateOfAttendence>
+         <BatchID>guid</BatchID>
+         <DayOfAttendence_Term>string</DayOfAttendence_Term>
+         <TotalStudents>int</TotalStudents>
+         <PresentStudents>int</PresentStudents>
+         <AbsentStudents>int</AbsentStudents>
+         <OnLeaveStudents>int</OnLeaveStudents>
+         <IsWorkingDay>boolean</IsWorkingDay>
+         <StudentData>string</StudentData>
+         <OldStudAtteRegiMasterID>string</OldStudAtteRegiMasterID>
+         
+         */
         [ProgressHUB showHUDAddedTo:self.view];
         [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
          {
@@ -1105,6 +1654,8 @@ int cn =0;
         }
     }
     
+    NSLog(@"absent=%d Leave=%d Present=%d",absentcnt,leavecnt,presentcnt);
+    
     [param setValue:[NSString stringWithFormat:@"%d",presentcnt] forKey:@"PresentStudents"];
     [param setValue:[NSString stringWithFormat:@"%d",absentcnt] forKey:@"AbsentStudents"];
     [param setValue:[NSString stringWithFormat:@"%d",leavecnt] forKey:@"OnLeaveStudents"];
@@ -1156,7 +1707,24 @@ int cn =0;
     
     [param setValue:[NSString stringWithFormat:@"%@",st] forKey:@"StudentData"];
     [param setValue:@"" forKey:@"OldStudAtteRegiMasterID"];
-    
+    /*
+     <StandardID>guid</StandardID>
+     <DivisionID>guid</DivisionID>
+     <ClientID>guid</ClientID>
+     <InstituteID>guid</InstituteID>
+     <AttendenceBy>guid</AttendenceBy>
+     <DateOfAttendence>string</DateOfAttendence>
+     <BatchID>guid</BatchID>
+     <DayOfAttendence_Term>string</DayOfAttendence_Term>
+     <TotalStudents>int</TotalStudents>
+     <PresentStudents>int</PresentStudents>
+     <AbsentStudents>int</AbsentStudents>
+     <OnLeaveStudents>int</OnLeaveStudents>
+     <IsWorkingDay>boolean</IsWorkingDay>
+     <StudentData>string</StudentData>
+     <OldStudAtteRegiMasterID>string</OldStudAtteRegiMasterID>
+     
+     */
     [ProgressHUB showHUDAddedTo:self.view];
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
@@ -1180,7 +1748,7 @@ int cn =0;
                  }
                  else
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:strStatus delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:ATTENNOTSAVE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
              }

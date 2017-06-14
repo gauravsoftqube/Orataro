@@ -49,6 +49,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstItem="OnB-eT-ybV" firstAttribute="centerX" secondItem="UTS-zh-WqW" secondAttribute="centerX" id="51d-9Q-z0m"/>
                                 <constraint firstItem="OnB-eT-ybV" firstAttribute="top" secondItem="UTS-zh-WqW" secondAttribute="top" constant="15" id="Sud-sF-Qks"/>
@@ -70,7 +71,7 @@
                     <rect key="frame" x="0.0" y="64" width="414" height="672"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yZI-mc-ump">
-                            <rect key="frame" x="0.0" y="270" width="414" height="300"/>
+                            <rect key="frame" x="0.0" y="180" width="414" height="300"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="300" id="NG2-xt-2Le"/>
@@ -82,7 +83,7 @@
                         <constraint firstAttribute="trailing" secondItem="yZI-mc-ump" secondAttribute="trailing" id="Min-dr-PTY"/>
                         <constraint firstItem="yZI-mc-ump" firstAttribute="centerX" secondItem="gu4-0t-jA0" secondAttribute="centerX" id="gwb-Aw-zaD"/>
                         <constraint firstItem="yZI-mc-ump" firstAttribute="leading" secondItem="gu4-0t-jA0" secondAttribute="leading" id="n8u-Xb-kHt"/>
-                        <constraint firstItem="yZI-mc-ump" firstAttribute="top" secondItem="gu4-0t-jA0" secondAttribute="top" constant="270" id="qDD-19-ifE"/>
+                        <constraint firstItem="yZI-mc-ump" firstAttribute="top" secondItem="gu4-0t-jA0" secondAttribute="top" constant="180" id="qDD-19-ifE"/>
                     </constraints>
                 </scrollView>
             </subviews>

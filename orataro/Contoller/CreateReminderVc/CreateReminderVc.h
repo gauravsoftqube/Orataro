@@ -18,6 +18,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *lblHeaderTitle;
 
+@property (weak, nonatomic) IBOutlet UIImageView *imgComplete;
 
 //popup AddPage
 @property (strong, nonatomic) IBOutlet UIView *viewAddPage;

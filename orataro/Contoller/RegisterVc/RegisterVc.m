@@ -95,7 +95,7 @@
                 }
                 else
                 {
-                    UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:REGISTERMOBILE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                     [alrt show];
                   
                 }

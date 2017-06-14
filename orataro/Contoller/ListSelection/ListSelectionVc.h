@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface ListSelectionVc : UIViewController<UITableViewDelegate,UITableViewDataSource>
+@property (strong, nonatomic) IBOutlet UIView *viewTableHeader;
 
 @property (weak, nonatomic) IBOutlet UILabel *lblHeaderTitle;
 @property (weak, nonatomic) IBOutlet UITableView *aListTableView;

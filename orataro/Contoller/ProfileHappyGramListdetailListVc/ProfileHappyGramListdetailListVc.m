@@ -23,6 +23,9 @@
 {
     [super viewDidLoad];
     
+    
+   
+    
     _addView.layer.cornerRadius = 20.0;
     
     _lblTitleHeader.text = [NSString stringWithFormat:@"%@ %@ %@",[_dicHappyGrameList objectForKey:@"Grade"],[_dicHappyGrameList objectForKey:@"Division"],[_dicHappyGrameList objectForKey:@"Subject"]];
@@ -48,7 +51,7 @@
 {
     NSArray *ary = [DBOperation selectData:@"select * from ProfileHappyGramList"];
     aryGetHappyGramList = [Utility getLocalDetail:ary columnKey:@"happyGramJsonStr"];
-   // [_tblDetailList reloadData];
+ //  [_tblDetailList reloadData];
     
     if (aryGetHappyGramList.count == 0)
     {
@@ -60,8 +63,8 @@
         }
         else
         {
-            [aryGetHappyGramList removeAllObjects];
-            [DBOperation executeSQL:@"delete from ProfileHappyGramList"];
+            //[aryGetHappyGramList removeAllObjects];
+           // [DBOperation executeSQL:@"delete from ProfileHappyGramList"];
             
             [self apiCallFor_getHappygramList:YES];
             
@@ -71,13 +74,13 @@
     {
         if ([Utility isInterNetConnectionIsActive] == false)
         {
-            aryGetHappyGramList = [Utility getLocalDetail:ary columnKey:@"happyGramJsonStr"];
-            [_tblDetailList reloadData];
+            //aryGetHappyGramList = [Utility getLocalDetail:ary columnKey:@"happyGramJsonStr"];
+            //[_tblDetailList reloadData];
         }
         else
         {
-            [aryGetHappyGramList removeAllObjects];
-            [DBOperation executeSQL:@"delete from ProfileHappyGramList"];
+          //  [aryGetHappyGramList removeAllObjects];
+           // [DBOperation executeSQL:@"delete from ProfileHappyGramList"];
             //[_tblDetailList reloadData];
             
             [self apiCallFor_getHappygramList:NO];
@@ -142,6 +145,7 @@
     NSLog(@"ary=%@",aryGetHappyGramList);
     
     NSDictionary *d = [[[aryGetHappyGramList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
+    
     NSString *getdt = [d objectForKey:@"DateOfHappyGram"];
     
     UILabel *lbHeaderDt = (UILabel *)[cell.contentView viewWithTag:2];
@@ -365,9 +369,12 @@
                  {
                     // [aryGetHappyGramList removeAllObjects];
                     // [DBOperation executeSQL:@"delete from ProfileHappyGramList"];
-                    [_tblDetailList reloadData];
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     [alrt show];
+                 //   [_tblDetailList reloadData];
+                     _tblDetailList.hidden = YES;
+                     
+                     [WToast showWithText:HAPPYGRAM];
+                    // UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:HAPPYGRAM delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     //[alrt show];
                     
                  }
                  else

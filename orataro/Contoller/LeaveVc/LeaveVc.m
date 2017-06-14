@@ -47,6 +47,34 @@
     
     NSLog(@"Dat=%@",_dicLeaveDetails);
     
+    //[Utility convertMiliSecondtoDate:@"dd-MM-yyyy" date:[_dicAddLeave objectForKey:@"StartDate"]];
+    
+    NSTimeInterval timeInSeconds = [[NSDate date] timeIntervalSinceNow];
+    NSDate *dat1 = [[NSDate alloc] initWithTimeIntervalSinceNow:timeInSeconds];
+    
+    NSString *string=[Utility convertMiliSecondtoDate:@"dd-MM-yyyy" date:[_dicAddLeave objectForKey:@"StartDate"]];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init] ;
+    [dateFormatter setDateFormat:@"dd-MM-yyyy"];
+    NSDate *dat2 = [dateFormatter dateFromString:string];
+    
+  //  NSLog(@"Current Date=%@",dat1);
+  //  NSLog(@"Start Date=%@",dat2);
+    
+    if ([dat1 compare:dat2] == NSOrderedDescending)
+    {
+        _btnSubmit.hidden = YES;
+    }
+    else if ([dat1 compare:dat2] == NSOrderedAscending)
+    {
+        _btnSubmit.hidden =NO;
+    }
+    else
+    {
+        _btnSubmit.hidden = YES;
+    }
+    
+    
     _lblFullName.text = [_dicAddLeave objectForKey:@"ApplicationBY"];
     _lblSubTitleName.text = [_dicAddLeave objectForKey:@"ReasonForLeave"];
     
@@ -237,7 +265,7 @@
     [param setValue:[_dicAddLeave objectForKey:@"SchoolLeaveNoteID"] forKey:@"StudentLeaveNoteID"];
     [param setValue:_lblLeaveStatus.text forKey:@"status"];
     
-    if([[dicCurrentUser objectForKey:@"MemberType"] isEqualToString:@"Student"])
+    /*if([[dicCurrentUser objectForKey:@"MemberType"] isEqualToString:@"Student"])
     {
         [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"DivisionID"]] forKey:@"DivisionID"];
         [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"GradeID"]] forKey:@"GradeID"];
@@ -248,6 +276,18 @@
         [param setValue:[NSString stringWithFormat:@"%@",[_dicLeaveDetails objectForKey:@"DivisionID"]] forKey:@"DivisionID"];
         
         [param setValue:[NSString stringWithFormat:@"%@",[_dicLeaveDetails objectForKey:@"GradeID"]] forKey:@"GradeID"];
+    }*/
+    
+    if ([[Utility getMemberType] containsString:@"Teacher"])
+    {
+        [param setValue:[NSString stringWithFormat:@"%@",[_dicLeaveDetails objectForKey:@"DivisionID"]] forKey:@"DivisionID"];
+        
+        [param setValue:[NSString stringWithFormat:@"%@",[_dicLeaveDetails objectForKey:@"GradeID"]] forKey:@"GradeID"];
+    }
+    else
+    {
+        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"DivisionID"]] forKey:@"DivisionID"];
+        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"GradeID"]] forKey:@"GradeID"];
     }
     [param setValue:_txtViewNote.text forKey:@"Note"];
     
@@ -282,20 +322,9 @@
                  }
                  else
                  {
-                     // UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     // [alrt show];
+                      UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:LEAVELISTSAVE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                      [alrt show];
                  }
-                 
-                 /* NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
-                  NSString *strStatus=[dic objectForKey:@"message"];
-                  if([strStatus isEqualToString:@"No Data Found"])
-                  {
-                  UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                  [alrt show];
-                  }
-                  else
-                  {
-                  }*/
              }
              else
              {

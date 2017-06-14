@@ -41,35 +41,24 @@
         if ([Utility isInterNetConnectionIsActive] == true)
         {
             NSString *strURLForHomeWork=[NSString stringWithFormat:@"%@",[self.dicSelect_detail objectForKey:@"Photo"]];
+            
             if(![strURLForHomeWork isKindOfClass:[NSNull class]] && ![strURLForHomeWork isEqual:@"<null>"])
             {
                 strURLForHomeWork=[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[self.dicSelect_detail objectForKey:@"Photo"]];
-                [ProgressHUB showHUDAddedTo:self.view];
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
-                               ^{
-                                   NSURL *imageURL = [NSURL URLWithString:strURLForHomeWork];
-                                   NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
-                                   dispatch_sync(dispatch_get_main_queue(), ^{
-                                       [ProgressHUB hideenHUDAddedTo:self.view];
-                                       
-                                       UIImage *img = [UIImage imageWithData:imageData];
-                                       if (img != nil)
-                                       {
-                                           self.imgHomework.image = [UIImage imageWithData:imageData];
-                                       }
-                                       else
-                                       {
-                                           self.imgHomework.image = [UIImage imageNamed:@"no_img"];
-                                       }
-                                       
-                                       [self getUserImage];
-                                       
-                                   });
-                               });
+                
+                [_imgHomework sd_setImageWithURL:[NSURL URLWithString:strURLForHomeWork] placeholderImage:[UIImage imageNamed:@"no_img"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                    
+                    _imgHomework.image = image;
+                    
+                    [self getUserImage : @"Homework"];
+                    
+                }];
+                
             }
             else
             {
-                [self getUserImage];
+                _imgHomework.image = [UIImage imageNamed:@"no_img"];
+                [self getUserImage : @"Homework"];
             }
         }
     }
@@ -87,87 +76,86 @@
         
         [self.lblUserName setText:[NSString stringWithFormat:@"%@",[self.dicSelect_detail objectForKey:@"UserName"]]];
         
+        NSLog(@"Data%@",_dicSelect_detail);
+        
         if ([Utility isInterNetConnectionIsActive] == true)
         {
             NSString *strURLForHomeWork=[NSString stringWithFormat:@"%@",[self.dicSelect_detail objectForKey:@"Photo"]];
+            
             if(![strURLForHomeWork isKindOfClass:[NSNull class]] && ![strURLForHomeWork isEqual:@"<null>"])
             {
                 strURLForHomeWork=[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[self.dicSelect_detail objectForKey:@"Photo"]];
-                [ProgressHUB showHUDAddedTo:self.view];
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
-                               ^{
-                                   NSURL *imageURL = [NSURL URLWithString:strURLForHomeWork];
-                                   NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
-                                   dispatch_sync(dispatch_get_main_queue(), ^{
-                                       [ProgressHUB hideenHUDAddedTo:self.view];
-                                       
-                                       UIImage *img = [UIImage imageWithData:imageData];
-                                       if (img != nil)
-                                       {
-                                           self.imgHomework.image = [UIImage imageWithData:imageData];
-                                       }
-                                       else
-                                       {
-                                           self.imgHomework.image = [UIImage imageNamed:@"no_img"];
-                                       }
-                                       
-                                       [self getUserImage];
-                                       
-                                   });
-                               });
+                
+                [_imgHomework sd_setImageWithURL:[NSURL URLWithString:strURLForHomeWork] placeholderImage:[UIImage imageNamed:@"no_img"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                    
+                    _imgHomework.image = image;
+                    
+                    [self getUserImage : @"Classwork"];
+                    
+                }];
+                
+                
             }
             else
             {
-                [self getUserImage];
+                _imgHomework.image = [UIImage imageNamed:@"no_img"];
+                [self getUserImage : @"Classwork"];
             }
         }
     }
 }
 
--(void)getUserImage
+-(void)getUserImage : (NSString *)strCheck
 {
     if ([Utility isInterNetConnectionIsActive] == true)
     {
-        NSString *strURLForTeacherProfilePicture=[NSString stringWithFormat:@"%@",[self.dicSelect_detail objectForKey:@"ProfilePicture"]];
-        if(![strURLForTeacherProfilePicture isKindOfClass:[NSNull class]])
+        //Homework
+        //Classwork
+        
+        NSLog(@"Dic=%@",_dicSelect_detail);
+        
+        if ([strCheck isEqualToString:@"Homework"])
         {
-            strURLForTeacherProfilePicture=[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[self.dicSelect_detail objectForKey:@"ProfilePicture"]];
-            [ProgressHUB showHUDAddedTo:self.view];
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
-                           ^{
-                               
-                               NSURL *imageURL = [NSURL URLWithString:strURLForTeacherProfilePicture];
-                               NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
-                               
-                               //This is your completion handler
-                               dispatch_sync(dispatch_get_main_queue(), ^{
-                                   [ProgressHUB hideenHUDAddedTo:self.view];
-                                    UIImage *img = [UIImage imageWithData:imageData];
-                                   if (img != nil)
-                                   {
-                                       self.imgUser.image = [UIImage imageWithData:imageData];
-                                   }
-                                   else
-                                   {
-                                       self.imgUser.image = [UIImage imageNamed:@"dash_profile"];
-                                   }
-                                   
-                               });
-                           });
+            NSString *strURLForTeacherProfilePicture=[NSString stringWithFormat:@"%@",[self.dicSelect_detail objectForKey:@"TeacherProfilePicture"]];
+            
+            if(![strURLForTeacherProfilePicture isKindOfClass:[NSNull class]])
+            {
+                strURLForTeacherProfilePicture=[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[self.dicSelect_detail objectForKey:@"TeacherProfilePicture"]];
+                
+                
+                [_imgUser sd_setImageWithURL:[NSURL URLWithString:strURLForTeacherProfilePicture] placeholderImage:[UIImage imageNamed:@"no_img"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                    
+                    _imgUser.image = image;
+                }];
+                
+            }
+        }
+        else
+        {
+                NSString *strURLForTeacherProfilePicture=[NSString stringWithFormat:@"%@",[self.dicSelect_detail objectForKey:@"ProfilePicture"]];
+                if(![strURLForTeacherProfilePicture isKindOfClass:[NSNull class]])
+                {
+                    strURLForTeacherProfilePicture=[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[self.dicSelect_detail objectForKey:@"ProfilePicture"]];
+                    
+                    
+                    [_imgUser sd_setImageWithURL:[NSURL URLWithString:strURLForTeacherProfilePicture] placeholderImage:[UIImage imageNamed:@"no_img"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                        
+                        _imgUser.image = image;
+                    }];
+                    
+                }
         }
     }
+}
+- (void)didReceiveMemoryWarning
+    {
+        [super didReceiveMemoryWarning];
+        // Dispose of any resources that can be recreated.
+    }
     
-}
-
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (IBAction)BackBtn1Clicked:(id)sender
-{
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-@end
+    - (IBAction)BackBtn1Clicked:(id)sender
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    
+    @end

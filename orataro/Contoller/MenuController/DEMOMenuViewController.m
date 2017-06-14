@@ -48,6 +48,7 @@
 #import "AppDelegate.h"
 #import "RightCell.h"
 #import "Global.h"
+#import "SwitchAcoountVC.h"
 
 @interface DEMOMenuViewController ()
 {
@@ -72,10 +73,35 @@
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    menu = [[NSMutableArray alloc]initWithObjects:@"Profile",@"Circular",@"Wall",@"Homework",@"Classwork",@"Attendance",@"PT Communication",@"Exam Timing",@"Time Table",@"Notes",@"Holiday",@"Calendar",@"Poll",@"Notification",@"Reminder",@"About Orataro",@"Settings",@"FAQ",@"Switch Account",@"Profile",nil];
+  //  menu = [[NSMutableArray alloc]initWithObjects:@"Profile",@"Circular",@"Wall",@"Homework",@"Classwork",@"Attendance",@"PT Communication",@"Exam Timing",@"Time Table",@"Notes",@"Holiday",@"Calendar",@"Poll",@"Notification",@"Reminder",@"About Orataro",@"Settings",@"FAQ",@"Switch Account",@"Profile",nil];
     
-    imgary = [[NSMutableArray alloc]initWithObjects:@"dash_profile",@"dash_circular",@"dash_fb_wall",@"dash_homework",@"classimg",@"attendance",@"dash_pt_communication",@"dash_school_timing",@"dash_timetable",@"dash_notice",@"dash_holidays",@"dash_calendar",@"dash_fb_poll",@"speech",@"todo",@"user",@"settings",@"faq",
-              @"dash_switch",@"dash_profile",nil];
+   // imgary = [[NSMutableArray alloc]initWithObjects:@"dash_profile",@"dash_circular",@"dash_fb_wall",@"dash_homework",@"classimg",@"attendance",@"dash_pt_communication",@"dash_school_timing",@"dash_timetable",@"dash_notice",@"dash_holidays",@"dash_calendar",@"dash_fb_poll",@"speech",@"todo",@"user",@"settings",@"faq",
+             // @"dash_switch",@"dash_profile",nil];
+    
+    
+   // [[NSUserDefaults standardUserDefaults]setObject:@"MultipleUser" forKey:@"User"];
+  //  [[NSUserDefaults standardUserDefaults]synchronize];
+    
+    
+    
+    
+    
+  /*  if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"User"] isEqualToString:@"MultipleUser"])
+    {
+        menu = [[NSMutableArray alloc]initWithObjects:@"Profile",@"Circular",@"Wall",@"Homework",@"Classwork",@"Attendance",@"PT Communication",@"Exam Timing",@"Time Table",@"Notes",@"Holiday",@"Calendar",@"Poll",@"Notification",@"Reminder",@"About Orataro",@"Settings",@"FAQ",@"Switch Account",@"Profile",nil];
+        
+        imgary = [[NSMutableArray alloc]initWithObjects:@"dash_profile",@"dash_circular",@"dash_fb_wall",@"dash_homework",@"classimg",@"attendance",@"dash_pt_communication",@"dash_school_timing",@"dash_timetable",@"dash_notice",@"dash_holidays",@"dash_calendar",@"dash_fb_poll",@"speech",@"todo",@"user",@"settings",@"faq",
+                  @"dash_switch",@"dash_profile",nil];
+
+    }
+    else
+    {
+        menu = [[NSMutableArray alloc]initWithObjects:@"Profile",@"Circular",@"Wall",@"Homework",@"Classwork",@"Attendance",@"PT Communication",@"Exam Timing",@"Time Table",@"Notes",@"Holiday",@"Calendar",@"Poll",@"Notification",@"Reminder",@"About Orataro",@"Settings",@"FAQ",@"Profile",nil];
+        
+        imgary = [[NSMutableArray alloc]initWithObjects:@"dash_profile",@"dash_circular",@"dash_fb_wall",@"dash_homework",@"classimg",@"attendance",@"dash_pt_communication",@"dash_school_timing",@"dash_timetable",@"dash_notice",@"dash_holidays",@"dash_calendar",@"dash_fb_poll",@"speech",@"todo",@"user",@"settings",@"faq",
+                  @"dash_profile",nil];
+
+    }*/
     
     //_tblMenuTable.frame = CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64);
     [_tblMenuTable registerNib:[UINib nibWithNibName:@"RightCell" bundle:nil] forCellReuseIdentifier:@"RightCell"];
@@ -104,6 +130,24 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     //NSLog(@"Getdata=%@",getData);
+    
+    NSMutableArray *CurrentUserList =  [DBOperation selectData:[NSString stringWithFormat:@"SELECT * from Login"]];
+    
+    if (CurrentUserList.count >= 2)
+    {
+        menu = [[NSMutableArray alloc]initWithObjects:@"Profile",@"Circular",@"Wall",@"Homework",@"Classwork",@"Attendance",@"PT Communication",@"Exam Timing",@"Time Table",@"Notes",@"Holiday",@"Calendar",@"Poll",@"Notification",@"Reminder",@"About Orataro",@"Settings",@"FAQ",@"Switch Account",@"Profile",nil];
+        
+        imgary = [[NSMutableArray alloc]initWithObjects:@"dash_profile",@"dash_circular",@"dash_fb_wall",@"dash_homework",@"classimg",@"attendance",@"dash_pt_communication",@"dash_school_timing",@"dash_timetable",@"dash_notice",@"dash_holidays",@"dash_calendar",@"dash_fb_poll",@"speech",@"todo",@"user",@"settings",@"faq",
+                  @"dash_switch",@"dash_profile",nil];
+    }
+    else
+    {
+        menu = [[NSMutableArray alloc]initWithObjects:@"Profile",@"Circular",@"Wall",@"Homework",@"Classwork",@"Attendance",@"PT Communication",@"Exam Timing",@"Time Table",@"Notes",@"Holiday",@"Calendar",@"Poll",@"Notification",@"Reminder",@"About Orataro",@"Settings",@"FAQ",@"Profile",nil];
+        
+        imgary = [[NSMutableArray alloc]initWithObjects:@"dash_profile",@"dash_circular",@"dash_fb_wall",@"dash_homework",@"classimg",@"attendance",@"dash_pt_communication",@"dash_school_timing",@"dash_timetable",@"dash_notice",@"dash_holidays",@"dash_calendar",@"dash_fb_poll",@"speech",@"todo",@"user",@"settings",@"faq",
+                  @"dash_profile",nil];
+    }
+
     
     [_tblMenuTable reloadData];
     
@@ -255,6 +299,8 @@
         {
             WallVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"WallVc"];
             navigationController.viewControllers = @[homeViewController];
+           // _checkscreen = @"Wall";
+        
             self.frostedViewController.contentViewController = navigationController;
             break;
         }
@@ -432,18 +478,31 @@
                         if([[Utility getUserRoleRightList:@"PT Communicatoin" settingType:@"IsView"] integerValue] == 1)
                         {
                             ag.checkListelection = 1;
-                            if([[Utility getMemberType] isEqualToString:@"Student"])
+                            
+                            if ([[Utility getMemberType] containsString:@"Teacher"])
                             {
-                                StudentListViewController  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"StudentListViewController"];
-                                navigationController.viewControllers = @[homeViewController];
-                                self.frostedViewController.contentViewController = navigationController;
+                                ListSelectionVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
+                                                                navigationController.viewControllers = @[homeViewController];
+                                                                self.frostedViewController.contentViewController = navigationController;
                             }
                             else
                             {
-                                ListSelectionVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
-                                navigationController.viewControllers = @[homeViewController];
-                                self.frostedViewController.contentViewController = navigationController;
+                                StudentListViewController  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"StudentListViewController"];
+                                                                navigationController.viewControllers = @[homeViewController];
+                                                                self.frostedViewController.contentViewController = navigationController;
                             }
+//                            if([[Utility getMemberType] isEqualToString:@"Student"])
+//                            {
+//                                StudentListViewController  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"StudentListViewController"];
+//                                navigationController.viewControllers = @[homeViewController];
+//                                self.frostedViewController.contentViewController = navigationController;
+//                            }
+//                            else
+//                            {
+//                                ListSelectionVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
+//                                navigationController.viewControllers = @[homeViewController];
+//                                self.frostedViewController.contentViewController = navigationController;
+//                            }
 
                         }
                         else
@@ -454,7 +513,20 @@
                     else
                     {
                         ag.checkListelection = 1;
-                        if([[Utility getMemberType] isEqualToString:@"Student"])
+                        
+                        if ([[Utility getMemberType] containsString:@"Teacher"])
+                        {
+                            ListSelectionVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
+                            navigationController.viewControllers = @[homeViewController];
+                            self.frostedViewController.contentViewController = navigationController;
+                        }
+                        else
+                        {
+                            StudentListViewController  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"StudentListViewController"];
+                            navigationController.viewControllers = @[homeViewController];
+                            self.frostedViewController.contentViewController = navigationController;
+                        }
+                        /*if([[Utility getMemberType] isEqualToString:@"Student"])
                         {
                             StudentListViewController  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"StudentListViewController"];
                             navigationController.viewControllers = @[homeViewController];
@@ -465,14 +537,27 @@
                             ListSelectionVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
                             navigationController.viewControllers = @[homeViewController];
                             self.frostedViewController.contentViewController = navigationController;
-                        }
+                        }*/
 
                     }
                 }
                 else
                 {
                     ag.checkListelection = 1;
-                    if([[Utility getMemberType] isEqualToString:@"Student"])
+                    
+                    if ([[Utility getMemberType] containsString:@"Teacher"])
+                    {
+                        ListSelectionVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
+                        navigationController.viewControllers = @[homeViewController];
+                        self.frostedViewController.contentViewController = navigationController;
+                    }
+                    else
+                    {
+                        StudentListViewController  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"StudentListViewController"];
+                        navigationController.viewControllers = @[homeViewController];
+                        self.frostedViewController.contentViewController = navigationController;
+                    }
+                    /*if([[Utility getMemberType] isEqualToString:@"Student"])
                     {
                         StudentListViewController  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"StudentListViewController"];
                         navigationController.viewControllers = @[homeViewController];
@@ -483,14 +568,28 @@
                         ListSelectionVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
                         navigationController.viewControllers = @[homeViewController];
                         self.frostedViewController.contentViewController = navigationController;
-                    }
+                    }*/
 
                 }
             }
             else
             {
                 ag.checkListelection = 1;
-                if([[Utility getMemberType] isEqualToString:@"Student"])
+                
+                if ([[Utility getMemberType] containsString:@"Teacher"])
+                {
+                    ListSelectionVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
+                    navigationController.viewControllers = @[homeViewController];
+                    self.frostedViewController.contentViewController = navigationController;
+                }
+                else
+                {
+                    StudentListViewController  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"StudentListViewController"];
+                    navigationController.viewControllers = @[homeViewController];
+                    self.frostedViewController.contentViewController = navigationController;
+                }
+                
+               /* if([[Utility getMemberType] isEqualToString:@"Student"])
                 {
                     StudentListViewController  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"StudentListViewController"];
                     navigationController.viewControllers = @[homeViewController];
@@ -501,7 +600,7 @@
                     ListSelectionVc  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ListSelectionVc"];
                     navigationController.viewControllers = @[homeViewController];
                     self.frostedViewController.contentViewController = navigationController;
-                }
+                }*/
 
             }
             break;
@@ -720,6 +819,20 @@
             self.frostedViewController.contentViewController = navigationController;
             break;
         }
+        case 18:
+        {
+            /*
+             WallVc *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WallVc"];
+             UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SwitchAcoountVC"];
+             [self.navigationController pushViewController:wc animated:YES];
+             */
+            
+            SwitchAcoountVC  *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SwitchAcoountVC"];
+            navigationController.viewControllers = @[homeViewController];
+            self.frostedViewController.contentViewController = navigationController;
+            break;
+        }
+
         default:
             break;
     }

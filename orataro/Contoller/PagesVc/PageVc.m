@@ -13,6 +13,7 @@
 @interface PageVc ()
 {
     NSMutableArray *aryTitle;
+    UIRefreshControl *refreshControl;
 }
 @end
 
@@ -34,6 +35,11 @@
     
     [Utility SearchTextView:_viewSearch];
     
+    
+    refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refreshData) forControlEvents:UIControlEventValueChanged];
+    
+    aPageTableview.refreshControl = refreshControl;
     // Do any additional setup after loading the view.
 }
 
@@ -78,6 +84,37 @@
     
 }
 
+
+#pragma mark - Pull to refresh
+
+-(void)refreshData
+{
+    NSArray *ary = [DBOperation selectData:@"select * from ProfileInstitutePage"];
+    aryTitle = [Utility getLocalDetail:ary columnKey:@"JsonStr"];
+    [aPageTableview reloadData];
+    //  dispatch_group_t group = dispatch_group_create();
+    
+    
+    if (aryTitle.count == 0)
+    {
+        if ([Utility isInterNetConnectionIsActive] == false)
+        {
+            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alrt show];
+            return;
+        }
+        else
+        {
+            [self apiCallFor_getPage:YES];
+            
+        }
+    }
+    else
+    {
+        [self apiCallFor_getPage:NO];
+    }
+
+}
 
 #pragma mark - tableview delegate
 
@@ -231,11 +268,13 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:PAGELIST delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
                  {
+                     [aPageTableview.refreshControl endRefreshing];
+                     
                      [self ManageCircularList:arrResponce];
                      
                      

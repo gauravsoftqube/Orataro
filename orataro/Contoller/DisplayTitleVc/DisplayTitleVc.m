@@ -30,18 +30,20 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-
+    
     // Dispose of any resources that can be recreated.
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     NSLog(@"dic=%@",_dicPageDetail);
-   // NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    // NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
     
-   // b.strCheckBlogPage = @"Page";
-
+    // b.strCheckBlogPage = @"Page";
+    
     // b.strCheckBlogPage = @"Blog";
+    
+    
     
     
     if ([_strCheckBlogPage isEqualToString:@"Page"])
@@ -53,8 +55,8 @@
     else
     {
         _lbNavTitle.text = [NSString stringWithFormat:@"%@ (%@)",[_dicBlogDatail objectForKey:@"BlogTitle"],[Utility getCurrentUserName]];
-
-         [self apiCallFor_getBlogDetail];
+        
+        [self apiCallFor_getBlogDetail];
     }
     
 }
@@ -73,7 +75,7 @@
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView
 {
-     [loadingIndicator stopAnimating];
+    [loadingIndicator stopAnimating];
 }
 
 #pragma mark - call API
@@ -87,7 +89,7 @@
     [param setValue:[NSString stringWithFormat:@"%@",[_dicPageDetail objectForKey:@"CMSPagesID"]] forKey:@"CMSPageID"];
     
     [ProgressHUB showHUDAddedTo:self.view];
-
+    
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
          [ProgressHUB hideenHUDAddedTo:self.view];
@@ -103,14 +105,19 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:PAGEDETAIL delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
                  {
                      [loadingIndicator startAnimating];
-                    NSString* htmlPath = [NSString stringWithFormat:@"%@",[[arrResponce objectAtIndex:0]objectForKey:@"PageDetails"]];
+                     NSString* htmlPath = [NSString stringWithFormat:@"%@",[[arrResponce objectAtIndex:0]objectForKey:@"PageDetails"]];
+                     
+                     htmlPath = [[htmlPath stringByReplacingOccurrencesOfString:@"/DataFiles"
+                                                                     withString:[NSString stringWithFormat:@"%@/DataFiles",apk_ImageUrlFor_HomeworkDetail]] mutableCopy];
+                     
                      [_webview loadHTMLString:htmlPath baseURL:nil];
+                     
                  }
              }
              else
@@ -152,13 +159,18 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:BLOGDETAIL delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
                  {
                      [loadingIndicator startAnimating];
+                     
                      NSString* htmlPath = [NSString stringWithFormat:@"%@",[[arrResponce objectAtIndex:0]objectForKey:@"BlogDetails"]];
+                     
+                     htmlPath = [[htmlPath stringByReplacingOccurrencesOfString:@"/DataFiles"
+                                                                     withString:[NSString stringWithFormat:@"%@/DataFiles",apk_ImageUrlFor_HomeworkDetail]] mutableCopy];
+                     
                      [_webview loadHTMLString:htmlPath baseURL:nil];
                  }
              }
@@ -179,13 +191,13 @@
 
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

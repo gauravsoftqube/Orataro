@@ -454,13 +454,15 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"post not successfully add." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     [alrt show];
+                    // UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:POSTCREATE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                   //  [alrt show];
+                     [WToast showWithText:POSTCREATE];
                  }
                  else if([strStatus isEqualToString:@"Post Added successfully."])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     [alrt show];
+                     //UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    // [alrt show];
+                     [WToast showWithText:[dic objectForKey:@"message"]];
                      [self.navigationController popViewControllerAnimated:YES];
                  }
              }
@@ -553,8 +555,9 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"file not upload." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     [alrt show];
+                    // UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:POSTIMAGE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    // [alrt show];
+                     [WToast showWithText:POSTIMAGE];
                  }
                  else
                  {
@@ -652,13 +655,16 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"record not add." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     [alrt show];
+                   //  UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:POSTADD delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    // [alrt show];
+                      [WToast showWithText:POSTADD];
                  }
                  else  if([strStatus isEqualToString:@"Record update successfully"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:strStatus delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     [alrt show];
+                  //   UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:strStatus /delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    // [alrt show];
+                     [WToast showWithText:strStatus];
+                     
                      [self.navigationController popViewControllerAnimated:YES];
                  }
                  else

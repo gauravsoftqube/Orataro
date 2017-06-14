@@ -10,6 +10,7 @@
 #import "Global.h"
 #import "SenderMessage.h"
 #import "ReceiveMessege.h"
+#import "IQKeyboardManager.h"
 
 @interface ChatVc ()
 {
@@ -28,12 +29,42 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     _tblChatMessage.separatorStyle = UITableViewCellSeparatorStyleNone;
     
+    [[IQKeyboardManager sharedManager] setEnable:NO];
+    [[IQKeyboardManager sharedManager] setEnableAutoToolbar:NO];
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    
+   // _tblChatMessage.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
+    
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+    [self.tblChatMessage addGestureRecognizer:gestureRecognizer];
+    
     // Do any additional setup after loading the view.
 }
+- (void) hideKeyboard
+{
+    [_txtMessageText resignFirstResponder];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -43,45 +74,40 @@
     
     NSLog(@"Dic=%@",_dicChatData);
     
-   // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-   // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
+  
     
-    //[self.view endEditing:YES];
-    
-    [[IQKeyboardManager sharedManager] setEnable:NO];
-    [[IQKeyboardManager sharedManager] setEnableAutoToolbar:YES];
-    
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-    
-    [self api_getChatHistory];
+   [self api_getChatHistory];
 }
-
-//- (void)viewWillDisappear:(BOOL)animated
-//{
-//    [super viewWillDisappear:animated];
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
-//}
+-(void) viewWillDisappear
+{
+    
+}
 
 #pragma mark -textfield delegate
-
--(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [_txtMessageText resignFirstResponder];
     return YES;
 }
+//-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+//{
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+//    return YES;
+//}
+//
+//
+//- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+//{
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
+//    
+//    [self.view endEditing:YES];
+//    return YES;
+//}
 
-
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
-    
-    [self.view endEditing:YES];
-    return YES;
-}
 
 #pragma mark - keyboard hide show
 
-- (void)keyboardDidShow:(NSNotification *)notification
+/*- (void)keyboardDidShow:(NSNotification *)notification
 {
     CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
@@ -116,7 +142,6 @@
 }
 -(void)keyboardDidHide:(NSNotification *)notification
 {
-    
      _tblChatMessage.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
     
     if ([aryChatMessage count] > 0)
@@ -128,8 +153,35 @@
     
     [_viewChatMessage setTransform: CGAffineTransformIdentity];
 
+}*/
+
+
+- (void)keyboardWillShow:(NSNotification *)notification
+{
+    CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+     [_viewChatMessage setTransform: CGAffineTransformMakeTranslation(0, -1*keyboardSize.height)];
+    
+    UIEdgeInsets contentInsets;
+    if (UIInterfaceOrientationIsPortrait([[UIApplication sharedApplication] statusBarOrientation])) {
+        contentInsets = UIEdgeInsetsMake(0.0, 0.0, (keyboardSize.height), 0.0);
+    } else {
+        contentInsets = UIEdgeInsetsMake(0.0, 0.0, (keyboardSize.width), 0.0);
+    }
+    
+    _tblChatMessage.contentInset = contentInsets;
+    _tblChatMessage.scrollIndicatorInsets = contentInsets;
+     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:aryChatMessage.count-1 inSection:0];
+    
+    [_tblChatMessage scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 
+- (void)keyboardWillHide:(NSNotification *)notification
+{
+    [_viewChatMessage setTransform: CGAffineTransformIdentity];
+    _tblChatMessage.contentInset = UIEdgeInsetsZero;
+    _tblChatMessage.scrollIndicatorInsets = UIEdgeInsetsZero;
+}
 
 
 #pragma mark - button action
@@ -389,7 +441,7 @@
                      [aryChatMessage removeAllObjects];
                      [_tblChatMessage reloadData];
                      
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"chat history not found" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:CHATHISTORY delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
@@ -501,7 +553,7 @@
                      NSString *strStatus=[dic objectForKey:@"message"];
                      if([strStatus isEqualToString:@"No Data Found"])
                      {
-                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"ptcommunication not available" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:CHATCOMMU delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                          [alrt show];
                      }
                      else

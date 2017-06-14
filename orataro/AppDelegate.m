@@ -169,38 +169,51 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    
-    NSLog(@"info %@", userInfo);
-}
-
-- (void)application:(UIApplication* )application didReceiveRemoteNotification:(NSDictionary * )userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    
-    if(application.applicationState == UIApplicationStateInactive) {
-        
-        NSLog(@"Inactive");
-        
-        //Show the view with the content of the push
-        
-        completionHandler(UIBackgroundFetchResultNewData);
-        
-    } else if (application.applicationState == UIApplicationStateBackground) {
-        
-        NSLog(@"Background");
-        
-        NSString *info = [[userInfo valueForKey:@"aps"]valueForKey:@"alert"];
-        
-        completionHandler(UIBackgroundFetchResultNewData);
-        
-    } else {
-        
-        NSLog(@"Active");
-        
-        //Show an in-app banner
-        
-        completionHandler(UIBackgroundFetchResultNewData);
+    if (application.applicationState == UIApplicationStateBackground)
+    {
+        NSLog(@"User info=%@",userInfo);
+    }
+    if (application.applicationState == UIApplicationStateInactive)
+    {
         
     }
+    if (application.applicationState == UIApplicationStateActive)
+    {
+         NSLog(@"User info=%@",userInfo);
+    }
+
 }
+
+//- (void)application:(UIApplication* )application didReceiveRemoteNotification:(NSDictionary * )userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+//    
+//    if(application.applicationState == UIApplicationStateInactive) {
+//        
+//        NSLog(@"Inactive");
+//        
+//        //Show the view with the content of the push
+//        
+//        completionHandler(UIBackgroundFetchResultNewData);
+//        
+//    } else if (application.applicationState == UIApplicationStateBackground) {
+//        
+//        NSLog(@"Background");
+//        
+//      
+//        
+//        completionHandler(UIBackgroundFetchResultNewData);
+//        
+//    } else {
+//        
+//        NSLog(@"Active");
+//        
+//          NSString *info = [[userInfo valueForKey:@"aps"]valueForKey:@"alert"];
+//        NSLog(@"Info=%@",info);
+//        //Show an in-app banner
+//        
+//        completionHandler(UIBackgroundFetchResultNewData);
+//        
+//    }
+//}
 
 
 @end

@@ -723,10 +723,7 @@
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"BatchID"]] forKey:@"BeachID"];
     
     
-    [param setValue:[NSString stringWithFormat:@"%@.png",[Utility randomImageGenerator]] forKey:@"FileName"];
-    [param setValue:[NSString stringWithFormat:@"IMAGE"] forKey:@"FileType"];
     
-    [param setValue:[NSString stringWithFormat:@""] forKey:@"FileMineType"];
     
     //id_proof
     
@@ -746,15 +743,23 @@
     NSData *propertyImageData = UIImagePNGRepresentation(aSelectBtn.currentBackgroundImage);
     if ([checkImageData isEqualToData:propertyImageData])
     {
-        [param setValue:@"" forKey:@"File"];
+        NSMutableArray *byteArray = [NSMutableArray array];
+        [param setValue:byteArray forKey:@"File"];
+        [param setValue:@""forKey:@"FileName"];
+        [param setValue:@"" forKey:@"FileType"];
+        [param setValue:@"" forKey:@"FileMineType"];
 
     }
     else
     {
         [param setValue:byteArray forKey:@"File"];
+        [param setValue:[NSString stringWithFormat:@"%@.png",[Utility randomImageGenerator]] forKey:@"FileName"];
+        [param setValue:[NSString stringWithFormat:@"IMAGE"] forKey:@"FileType"];
+        
+        [param setValue:[NSString stringWithFormat:@""] forKey:@"FileMineType"];
     }
    
-    
+       
     [ProgressHUB showHUDAddedTo:self.view];
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
@@ -777,7 +782,7 @@
                  }
                  else
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"no classwork create" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:CLASSWORKCREATE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
              }

@@ -41,6 +41,8 @@
     aListTableView.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
     aListTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
+    aListTableView.tableHeaderView = _viewTableHeader;
+    
     // Do any additional setup after loading the view.
     
     
@@ -163,7 +165,7 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:LISTGET delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else

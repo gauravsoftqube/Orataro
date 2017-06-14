@@ -141,7 +141,7 @@ int multipleUser1 = 0;
                 }
                 else
                 {
-                    UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:REGISTERWRONGPASSWORD delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                     [alrt show];
                     
                 }
@@ -309,7 +309,7 @@ int multipleUser1 = 0;
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"Userid or password wrong" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:REGISTERUSERWRONG delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
@@ -373,7 +373,7 @@ int multipleUser1 = 0;
                                          
                                          //Insert CurrentActiveUser
                                          NSString *MemberType=[[dic objectForKey:@"MemberType"]mutableCopy];
-                                         if([MemberType rangeOfString:@"Teacher" options:NSCaseInsensitiveSearch].location == NSNotFound)
+                                         if(![MemberType containsString:@"Teacher"])
                                          {
                                              [dic setObject:@"Student" forKey:@"MemberType"];
                                          }
@@ -454,7 +454,7 @@ int multipleUser1 = 0;
                                          
                                          //Insert CurrentActiveUser
                                          NSString *MemberType=[[dic objectForKey:@"MemberType"]mutableCopy];
-                                         if([MemberType rangeOfString:@"Teacher" options:NSCaseInsensitiveSearch].location == NSNotFound)
+                                         if(![MemberType containsString:@"Teacher"])
                                          {
                                              [dic setObject:@"Student" forKey:@"MemberType"];
                                          }
@@ -473,6 +473,10 @@ int multipleUser1 = 0;
                                      [[NSUserDefaults standardUserDefaults]synchronize];
                                      
                                      strCheckUser =@"SwitchAccount";
+                                     
+                                     [[NSUserDefaults standardUserDefaults]setObject:@"MultipleUser" forKey:@"User"];
+                                     [[NSUserDefaults standardUserDefaults]synchronize];
+                                     
                                      [self api_getMemberCount];
                                      //
                                      //                                     UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SwitchAcoountVC"];
@@ -491,7 +495,7 @@ int multipleUser1 = 0;
                                      
                                      //Insert CurrentActiveUser
                                      NSString *MemberType=[[dic objectForKey:@"MemberType"]mutableCopy];
-                                     if([MemberType rangeOfString:@"Teacher" options:NSCaseInsensitiveSearch].location == NSNotFound)
+                                     if(![MemberType containsString:@"Teacher"])
                                      {
                                          [dic setObject:@"Student" forKey:@"MemberType"];
                                      }
@@ -511,6 +515,10 @@ int multipleUser1 = 0;
                                  [[NSUserDefaults standardUserDefaults]synchronize];
                                  
                                  strCheckUser =@"SwitchAccount";
+                                 [[NSUserDefaults standardUserDefaults]setObject:@"MultipleUser" forKey:@"User"];
+                                 [[NSUserDefaults standardUserDefaults]synchronize];
+                                 
+
                                  
                                  [self api_getMemberCount];
                                  //                                 UIViewController *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SwitchAcoountVC"];
@@ -565,7 +573,7 @@ int multipleUser1 = 0;
                 
                 //Insert CurrentActiveUser
                 NSString *MemberType=[[dic objectForKey:@"MemberType"]mutableCopy];
-                if([MemberType rangeOfString:@"Teacher" options:NSCaseInsensitiveSearch].location == NSNotFound)
+                if(![MemberType containsString:@"Teacher"])
                 {
                     [dic setObject:@"Student" forKey:@"MemberType"];
                 }
@@ -604,7 +612,7 @@ int multipleUser1 = 0;
                     
                     //Insert CurrentActiveUser
                     NSString *MemberType=[[dic objectForKey:@"MemberType"]mutableCopy];
-                    if([MemberType rangeOfString:@"Teacher" options:NSCaseInsensitiveSearch].location == NSNotFound)
+                   if(![MemberType containsString:@"Teacher"])
                     {
                         [dic setObject:@"Student" forKey:@"MemberType"];
                     }
@@ -651,7 +659,7 @@ int multipleUser1 = 0;
             
             //Insert CurrentActiveUser
             NSString *MemberType=[[dic objectForKey:@"MemberType"]mutableCopy];
-            if([MemberType rangeOfString:@"Teacher" options:NSCaseInsensitiveSearch].location == NSNotFound)
+            if(![MemberType containsString:@"Teacher"])
             {
                 [dic setObject:@"Student" forKey:@"MemberType"];
             }
@@ -739,7 +747,7 @@ int multipleUser1 = 0;
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:REGISTERGCMNOT delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
@@ -801,7 +809,7 @@ int multipleUser1 = 0;
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:REGISTERROLLIST delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else

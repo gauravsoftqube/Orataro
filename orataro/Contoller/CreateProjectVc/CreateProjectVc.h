@@ -9,8 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface CreateProjectVc : UIViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
+- (IBAction)btnBackGroupMember:(id)sender;
+- (IBAction)btnBackStandardClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UITextField *txtSearchTextfield;
 
+- (IBAction)btnBackDivisionClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *LbSelectTeacherHeight;
 
 @property (weak, nonatomic) IBOutlet UIButton *btnBack;

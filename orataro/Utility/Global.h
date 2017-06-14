@@ -48,6 +48,7 @@
 
 #pragma mark - Alert Message
 
+#define Wait @"Please Wait..."
 #define Start_Downloding @"Start Downloding"
 #define Complete_Downloding @"Complete Downloding"
 
@@ -103,6 +104,308 @@
 #define STUDENTGROUP @"Please Select Group Member of Student"
 #define TEACHERGROUP @"Please Select Group Member of Teacher"
 
+
+#pragma mark- Slow interner
+
+#define INTERNET @"Please check your internet connection slow."
+
+#pragma mark - Notification Alert 
+
+    #define NOTIFICATION @"No notification found"
+
+#pragma mark - Poll Alert
+
+    #define POLL @"No poll list found"
+    #define POLLCREATE @"No poll created."
+
+#pragma mark - Happygram alert
+
+    #define HAPPYGRAM @"No happygramm list found"
+
+#pragma mark - leave alert
+
+    #define STUDENTLEAVE @"No leave Found"
+    #define LEAVELISTSAVE @"Leave not save."
+
+#pragma mark - image,photo,album alert
+
+    #define IMAGEUPLOAD @"No image upload"
+    #define ALBUMCREATED @"Album create sucessfully."
+    #define PHOTOALBUMLIST @"Photo list not found"
+
+#pragma mark - attendance alert
+
+    #define ATTENDANCE @"No attendance list found"
+    #define ATTENSUBDIV @"No suject/division found."
+    #define ATTENNOTSAVE @"No attendance save."
+
+#pragma mark - circular alert
+
+    #define CIRCULART @"No circular create."
+    #define CIRCULARNOTIFICATION @"No notification found"
+    #define CIRCULARSUBJECTLIST @"No subject/division list found"
+    #define CIRCULARLIST @"Circular list not available"
+
+#pragma mark - classwork alert
+
+    #define CLASSWORKCREATE @"No classwork create."
+    #define CLASSWORKLIST @"Classwork not available"
+
+#pragma mark - comment alert
+
+    #define COMMENTLIST @"No comment add."
+
+#pragma mark - homework alert 
+
+    #define HOMEWORKALERT @"No homework create."
+    #define  HOMEWORKLIST @"No homework list found"
+
+#pragma mark - note alert
+
+    #define NOTESUBDIV @"No subject/division available"
+    #define NOTEDESC @"No description available"
+    #define NOTECREATE @"No note created."
+    #define NOTETIMETABLE @"No time table found"
+
+#pragma mark - post(add) alert
+
+    #define POSTCREATE @"Post not successfully add."
+    #define POSTIMAGE @"Image not upload."
+    #define POSTADD @"Record not add."
+
+#pragma mark - blog alert 
+
+    #define BLOGLIST @"No blog list found"
+
+#pragma mark - calendar 
+
+    #define CALENDERNOPROJECT @"Project list not available"
+    #define CALLIST @"Calender data not available"
+
+#pragma mark - changepassword alert
+
+    #define PASSWORDCHANGE @"Password could not change."
+
+#pragma mark - chat alert
+
+    #define CHATHISTORY @"Chat history not available."
+    #define CHATCOMMU @"PTcommunication not available."
+
+#pragma mark - project(create) alert
+
+    #define PROJECTCREATE @"Project not successfully create."
+    #define PROJECTDIVISIONLIST @"Division list not available"
+    #define PROJECTSTUNDENTGROUP @"Student group not available"
+    #define PROJECTTEACHERLIST @"Teacher list not available"
+    #define PRONOTCREATE @"Project not created."
+    #define PRODELETERECORD @"Record not delete"
+
+#pragma mark - reminder(create) alert
+
+    #define REMINDERNOTFOUND @"Reminder not available"
+    #define REMIDERECORD @"Record not update."
+
+#pragma mark - schoolgroup(create) alert
+
+    #define SCHOOLCIRCULARTYPE @"Circular type not available"
+    #define SCHOOLSUBDIV @"No subject/division list found."
+    #define SCHOOLSTUDENTLIST @"Student list not available"
+    #define SCHOOLTEACHERLIST @"Teacher list not found"
+    #define SCHOOLSAVERECORD @"Record not save."
+    #define SCHOOLUPDATERECORD @"Record not update"
+    #define SCHOOLNOTGROUPEDIT @"No group edit."
+    #define SCHOOLREMOVEMEMBER @"No member removed."
+    #define SCHOOLGROUPDELETE @"Group delete successfully."
+
+
+#pragma mark - profile-institute/blog alert
+
+    #define PAGEDETAIL @"No institute page detail found."
+    #define BLOGDETAIL @"No blog detail found."
+
+#pragma mark - forgot password 
+
+    #define PASSWORDWRONG @"Please enter right password."
+    #define NUMBERVALID @"Enter valid number"
+
+#pragma mark - friendvc list
+
+    #define FRIENDSEARCH @"Search result not found"
+
+#pragma mark - health record 
+
+    #define HEALTHRECORD @"No health record create."
+    #define HEALTHGET @"No health record found."
+
+#pragma mark - holiday alert
+
+    #define HOLIDAYLIST @"No holiday list found"
+
+#pragma mark - listselection
+
+    #define LISTGET @"No list found."
+
+#pragma mark - loginVc
+
+    #define LOGINWRONGPASSWORDUSER @"User id or password wrong"
+    #define ROLLLIST @"No roll list found"
+
+#pragma mark - message vc
+
+    #define MESSAGELIST @"No list found."
+
+#pragma mark - myprofile
+
+    #define PROFILEPICNOTUPDATE @"No profile image update."
+
+#pragma mark - otp Password
+
+    #define OTPWRONG @"Wrong user id or otp"
+
+#pragma mark - pageVc
+
+    #define PAGELIST @"No list found"
+
+#pragma mark - postdetailvc
+
+    #define POSTDETAIL "No post detail found"
+
+#pragma mark - profileaddupdatedetailvc(happygram)
+
+    #define PROFILEADDUPDATE @"Record not update."
+    #define HAPPYGRAMELIST @"Happygram list not update."
+
+#pragma mark - parentprofilevc
+
+    #define PARENTPROFILE @"No parent profile data available"
+    #define PROFILEUPDATE @"No record update"
+    #define PROFILEPARENTIMAGEUPLOAD @"Image not upload."
+    #define FATHERPROFILE @"No father profile data found."
+    #define PARENTNOTUPDATE @"Profile not update"
+    #define MOTHERPROFILE @"No mother profile data found."
+    #define MOTHERUPDATE @"No mother profile update"
+    #define GUARDIANPROFILE @"No guardian data found"
+    #define PROFILECREATEUPDATE @"No profile create or update."
+
+#pragma mark - photoalbumvc 
+
+    #define PHOTOLIST @"No list found."
+    #define IMEAGENOTADDALBUM @"No image add into album."
+    #define NOIMAGEUPLOAD @"Image not upload"
+
+#pragma mark - profiledivisionvc
+
+    #define PROFILEDIVISION @"No division list found"
+
+#pragma mark - profileFriendRequest
+
+    #define PROFILEFRIENDREQUEST @"Search record not found"
+    #define FRIENDREQUESTACCEPT @"No friend request accept."
+    #define FRINEDDECLINE @"No friend request decline."
+
+#pragma mark - profileleavedetailvc
+
+    #define LEAVELIST @"No leave detail found"
+
+#pragma mark - profileleavelistselectionvc
+
+    #define LEAVESELECTION @"No list found"
+
+#pragma mark - profilephonechain
+
+    #define PHONELIST @"Contact list not available"
+    #define PHONERECORDNOTDELETE @"Record not delete"
+
+#pragma mark - profilesearchfriend
+
+    #define FRIENDREQUEST @"Friend request not send."
+
+#pragma mark - profilestandardvc
+
+    #define PROFILESTANDARD @"No standard list found"
+
+#pragma mark - profilestudentleavevc
+
+    #define PROFILESTUDENT @"Student list not found"
+    #define RECORDNOTSAVE @"Record not update"
+
+#pragma mark - profilesubjectvc
+
+    #define PROFILESUBJECT @"No subject list found"
+
+#pragma mark - profilevideolist
+
+    #define PROFILEVIDEOLIST @"No video list found"
+
+#pragma mark - projectVc
+
+    #define PROJECTLIST @"No project list found"
+    #define PROJECTDELETERCORD @"Record not delete"
+
+#pragma mark - ptcommunicationvc
+
+    #define PTCOMMUNICATIONLIST @"No ptcommunication list found"
+
+#pragma mark - RegisterOtpvc
+
+    #define REGISTERWRONGPASSWORD @"User id or password wrong"
+    #define REGISTERUSERWRONG @"Userid or password wrong"
+    #define REGISTERGCMNOT @"GCM not update"
+    #define REGISTERROLLIST @"User roll list not found"
+
+#pragma mark - Registervc
+
+    #define REGISTERMOBILE @"Another Person is already Registerd on this Device...!!!"
+
+#pragma mark - remindervc
+
+    #define  RECORDNOTFOUND @"Record not insert or update."
+
+#pragma mark - schoolvc
+
+    #define SCHOOLPRAYERLIST @"School player not found"
+
+#pragma mark -schoolgroupvc
+
+    #define SCHOOLGROUPLIST @"No school group list found"
+    #define SCHOOlGROUPREMOVE @"No group remove"
+
+#pragma mark - singleWallvc
+
+    #define WALLIST @"No wall post list found"
+    #define POSTUNLIKE @"No post unlike"
+    #define POSTLIKE @"No post like"
+    #define POSTNOTSHARE @"Post not share"
+    #define NOFRIENDLIST @"Friend list found"
+
+#pragma mark - studentlistvc
+
+    #define STUDENTLIST @"Student list not found"
+    #define TEACHERLIST @"Teacher list not found"
+
+#pragma mark - timetablevc
+
+    #define TIMETABLELIST @"Time table not available"
+
+#pragma mark - wallvc
+
+    #define UPLOADPOSTFILE @"File not upload"
+    #define POSTNOTFOUND @"No post available"
+
+
+    #define LOGINAPI @"Userid or password wrong"
+
+    #define USERROLLIST @"User roll list not found"
+
+    #define MEMBERLIST @"No member list found"
+
+    #define MENULIST @"No list found"
+
+    #define POSTDELETE @"Post not delete"
+
+    #define POSTSHAREWALL @"Post not share"
+
+    #define POSTFRIENDLIST @"No friend list found"
 
 #pragma mark - IMPORT UIViewController
 
@@ -354,6 +657,9 @@
 #define apk_attendance  @"apk_attendance.asmx"
 #define apk_AttendanceListForTeacher_action @"AttendanceListForTeacher"
 #define apk_SaveAttendance @"SaveAttendance"
+#define apk_AttendanceListForStudent @"AttendanceListForStudent"
+#define apk_AttendanceReport @"AttendanceReport"
+
 
 #pragma mark - apk_cmspage
 
