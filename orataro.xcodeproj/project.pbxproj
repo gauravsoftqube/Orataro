@@ -62,7 +62,12 @@
 		4E5196BE04CE1B11FFB87A29 /* libPods-orataro.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A0C6ED01C0E658BC8615B3C /* libPods-orataro.a */; };
 		C30F6D5E1ED9540100F10DD1 /* AddAlbumVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C30F6D5D1ED9540100F10DD1 /* AddAlbumVCViewController.m */; };
 		C331B0891E4DB09F001C274D /* AboutUsVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C331B0881E4DB09F001C274D /* AboutUsVc.m */; };
+		C33A473E1EEA72A200F961ED /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = C33A473D1EEA72A200F961ED /* camera.png */; };
+		C33A47401EEA747300F961ED /* CameraWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = C33A473F1EEA747300F961ED /* CameraWhite.png */; };
+		C33A47421EEA7EC000F961ED /* cameraWhiteSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = C33A47411EEA7EC000F961ED /* cameraWhiteSmall.png */; };
 		C35120E81E827C5F00D7461B /* UIImage+ImageCompress.m in Sources */ = {isa = PBXBuildFile; fileRef = C35120E71E827C5F00D7461B /* UIImage+ImageCompress.m */; };
+		C35182A31EE6EA4A00C11156 /* TestPreview.m in Sources */ = {isa = PBXBuildFile; fileRef = C35182A11EE6EA4A00C11156 /* TestPreview.m */; };
+		C35182A61EE6EAF000C11156 /* AMPPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C35182A51EE6EAF000C11156 /* AMPPreviewController.m */; };
 		C359CAA51EBAE3CD00FBAD33 /* HealthRecordVc.m in Sources */ = {isa = PBXBuildFile; fileRef = C359CAA41EBAE3CD00FBAD33 /* HealthRecordVc.m */; };
 		C359CAAA1EBB0ED900FBAD33 /* HealthCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C359CAA81EBB0ED900FBAD33 /* HealthCell.m */; };
 		C359CAAB1EBB0ED900FBAD33 /* HealthCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C359CAA91EBB0ED900FBAD33 /* HealthCell.xib */; };
@@ -376,8 +381,15 @@
 		C30F6D5D1ED9540100F10DD1 /* AddAlbumVCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddAlbumVCViewController.m; sourceTree = "<group>"; };
 		C331B0871E4DB09F001C274D /* AboutUsVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AboutUsVc.h; path = AboutUsVc/AboutUsVc.h; sourceTree = "<group>"; };
 		C331B0881E4DB09F001C274D /* AboutUsVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AboutUsVc.m; path = AboutUsVc/AboutUsVc.m; sourceTree = "<group>"; };
+		C33A473D1EEA72A200F961ED /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
+		C33A473F1EEA747300F961ED /* CameraWhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CameraWhite.png; path = Contoller/RegisterVc/CameraWhite.png; sourceTree = "<group>"; };
+		C33A47411EEA7EC000F961ED /* cameraWhiteSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cameraWhiteSmall.png; sourceTree = "<group>"; };
 		C35120E61E827C5F00D7461B /* UIImage+ImageCompress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageCompress.h"; sourceTree = "<group>"; };
 		C35120E71E827C5F00D7461B /* UIImage+ImageCompress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageCompress.m"; sourceTree = "<group>"; };
+		C35182A01EE6EA4A00C11156 /* TestPreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestPreview.h; sourceTree = "<group>"; };
+		C35182A11EE6EA4A00C11156 /* TestPreview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestPreview.m; sourceTree = "<group>"; };
+		C35182A41EE6EAF000C11156 /* AMPPreviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPPreviewController.h; sourceTree = "<group>"; };
+		C35182A51EE6EAF000C11156 /* AMPPreviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPPreviewController.m; sourceTree = "<group>"; };
 		C359CAA31EBAE3CD00FBAD33 /* HealthRecordVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HealthRecordVc.h; sourceTree = "<group>"; };
 		C359CAA41EBAE3CD00FBAD33 /* HealthRecordVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HealthRecordVc.m; sourceTree = "<group>"; };
 		C359CAA71EBB0ED900FBAD33 /* HealthCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HealthCell.h; sourceTree = "<group>"; };
@@ -937,6 +949,9 @@
 				C360CD281E4B1FB800761ABE /* CollectionCell */,
 				093227911E38794F00138A2B /* CustomeCell */,
 				093227901E38794800138A2B /* Contoller */,
+				C33A473D1EEA72A200F961ED /* camera.png */,
+				C33A47411EEA7EC000F961ED /* cameraWhiteSmall.png */,
+				C33A473F1EEA747300F961ED /* CameraWhite.png */,
 				C3650D511EC5839800345414 /* profileico@2x.png */,
 				C3650D501EC5839800345414 /* profileico_show@2x.png */,
 				C3650D4F1EC5839800345414 /* mother@2x.png */,
@@ -991,7 +1006,6 @@
 				C38AF0E91E60342D00E4F40B /* ProfileVideoVc */,
 				C36B58891E5EF3ED00DE7464 /* PhotoVc */,
 				C36B588D1E5F096C00DE7464 /* PhotAlbumVc */,
-				C36B58621E5EE6CA00DE7464 /* CreateProjectVc */,
 				C36B58611E5EE6B000DE7464 /* ProjectVc */,
 				C36B58581E5ED94500DE7464 /* ScoolGroupVc */,
 				C36B58541E5EC53A00DE7464 /* ChangePasswordVc */,
@@ -1061,6 +1075,7 @@
 		0949E9401E3B783600723301 /* thirdparty */ = {
 			isa = PBXGroup;
 			children = (
+				C351829D1EE6E9EB00C11156 /* pdfDownloader */,
 				C3CEC2B51ECC78F4007D2DB6 /* MBprgress */,
 				C3CEC2B11ECC76B7007D2DB6 /* AvSaveVedio */,
 				C35DDF8B1EBC434800A85CC7 /* Hmsegment */,
@@ -1236,6 +1251,17 @@
 				C35120E71E827C5F00D7461B /* UIImage+ImageCompress.m */,
 			);
 			path = ImageCompress;
+			sourceTree = "<group>";
+		};
+		C351829D1EE6E9EB00C11156 /* pdfDownloader */ = {
+			isa = PBXGroup;
+			children = (
+				C35182A41EE6EAF000C11156 /* AMPPreviewController.h */,
+				C35182A51EE6EAF000C11156 /* AMPPreviewController.m */,
+				C35182A01EE6EA4A00C11156 /* TestPreview.h */,
+				C35182A11EE6EA4A00C11156 /* TestPreview.m */,
+			);
+			path = pdfDownloader;
 			sourceTree = "<group>";
 		};
 		C359CAA21EBAE3A100FBAD33 /* HealthRecordVc */ = {
@@ -1740,6 +1766,7 @@
 		C36B58611E5EE6B000DE7464 /* ProjectVc */ = {
 			isa = PBXGroup;
 			children = (
+				C36B58621E5EE6CA00DE7464 /* CreateProjectVc */,
 				C36B58681E5EE75400DE7464 /* ProjectVc.h */,
 				C36B58691E5EE75400DE7464 /* ProjectVc.m */,
 			);
@@ -1752,7 +1779,8 @@
 				C36B58641E5EE72D00DE7464 /* CreateProjectVc.h */,
 				C36B58651E5EE72D00DE7464 /* CreateProjectVc.m */,
 			);
-			path = CreateProjectVc;
+			name = CreateProjectVc;
+			path = ../CreateProjectVc;
 			sourceTree = "<group>";
 		};
 		C36B586B1E5EE7DB00DE7464 /* ORGDetailViewController */ = {
@@ -2484,9 +2512,11 @@
 				C3650D571EC5839800345414 /* mother@2x.png in Resources */,
 				093227861E38750D00138A2B /* Assets.xcassets in Resources */,
 				C36B589C1E5F163200DE7464 /* AlbumPhotoCell.xib in Resources */,
+				C33A473E1EEA72A200F961ED /* camera.png in Resources */,
 				C36D9AC81ED2B0100022E89D /* ReceiveMessege.xib in Resources */,
 				C3650D451EC5837200345414 /* gaurdian.png in Resources */,
 				C3650D541EC5839800345414 /* gaurdian_show@2x.png in Resources */,
+				C33A47421EEA7EC000F961ED /* cameraWhiteSmall.png in Resources */,
 				C36B58801E5EE82B00DE7464 /* ORGDetailViewController.xib in Resources */,
 				C36D9ACA1ED2B0100022E89D /* SenderMessage.xib in Resources */,
 				C3650D461EC5837200345414 /* mother_show.png in Resources */,
@@ -2515,6 +2545,7 @@
 				C36DD1B11E4086210011221E /* IQKeyboardManager.bundle in Resources */,
 				C38F8C791E3F36A300A67FBE /* RightCell.xib in Resources */,
 				C3666CBA1E726B4E0083AA34 /* FLAnimatedImage in Resources */,
+				C33A47401EEA747300F961ED /* CameraWhite.png in Resources */,
 				C36B587B1E5EE82B00DE7464 /* ORGArticleCollectionViewCell.xib in Resources */,
 				C3650D421EC5837200345414 /* father_show.png in Resources */,
 				C360CD2E1E4B203500761ABE /* OrataroCell.xib in Resources */,
@@ -2658,6 +2689,7 @@
 				C36B586A1E5EE75400DE7464 /* ProjectVc.m in Sources */,
 				C3666CBF1E726B4E0083AA34 /* SDImageCacheConfig.m in Sources */,
 				C36DD1C11E4097980011221E /* CircularDetailVc.m in Sources */,
+				C35182A61EE6EAF000C11156 /* AMPPreviewController.m in Sources */,
 				C36DD1BD1E4086210011221E /* IQUIWindow+Hierarchy.m in Sources */,
 				09F428C01E38BC0B00A80F0D /* AFURLConnectionOperation.m in Sources */,
 				09F428BB1E38BC0B00A80F0D /* AFHTTPRequestOperation.m in Sources */,
@@ -2793,6 +2825,7 @@
 				C38ABFAC1E48936100689426 /* PTCommuniVc.m in Sources */,
 				C36DD1BB1E4086210011221E /* IQUIView+IQKeyboardToolbar.m in Sources */,
 				C37A9A371E6EEB7200F1EAE0 /* SwitchAcoountVC.m in Sources */,
+				C35182A31EE6EA4A00C11156 /* TestPreview.m in Sources */,
 				0977D5FD1E3B144E00ACB7A5 /* WallVc.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
