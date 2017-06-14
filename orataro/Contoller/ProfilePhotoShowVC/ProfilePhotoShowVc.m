@@ -54,23 +54,10 @@ int d =0;
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@",_imagename]];
         _imgView.contentMode = UIViewContentModeScaleAspectFit;
         
-        //CGDataProviderRef provider = CGImageGetDataProvider(_imgView.image.CGImage);
-       // NSData* data = (id)CFBridgingRelease(CGDataProviderCopyData(provider));
-        
-       // if (data.length == 0)
-       // {
-           // UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"No image available" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-           // [alrt show];
-            
-       // }
-        //else
-        //{
-            [_imgView sd_setImageWithURL:url completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL)
+        [_imgView sd_setImageWithURL:url completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL)
              {
                  NSLog(@"Error");
              }];
-
-        //}
     }
    
     // Do any additional setup after loading the view.

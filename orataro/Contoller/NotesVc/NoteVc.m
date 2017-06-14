@@ -136,6 +136,7 @@
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_notes,apk_GetNotesList_action];
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    NSLog(@"Data=%@",dicCurrentUser);
     
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
     
@@ -155,9 +156,20 @@
     {
         [param setValue:@"" forKey:@"BeachID"];
         [param setValue:[NSString stringWithFormat:@"Student"] forKey:@"RoleName"];
-        [param setValue:[NSString stringWithFormat:@"GradeID"] forKey:@"GradeID"];
-        [param setValue:[NSString stringWithFormat:@"DivisionID"] forKey:@"DivisionID"];
+        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"GradeID"]] forKey:@"GradeID"];
+        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"DivisionID"]] forKey:@"DivisionID"];
     }
+    
+    /*
+     <ClientID>guid</ClientID>
+     <InstituteID>guid</InstituteID>
+     <UserID>string</UserID>
+     <BeachID>guid</BeachID>
+     <RoleName>string</RoleName>
+     <GradeID>string</GradeID>
+     <DivisionID>string</DivisionID>
+     <MemberID>string</MemberID>
+     */
     
     
     if(strShowHUB == YES)
@@ -179,7 +191,7 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:NOTETIMETABLE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
@@ -466,7 +478,10 @@
     vc.dicSelectNotes=[[[arrNotesList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:vc animated:YES];
 }
-
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 68.0;
+}
 #pragma mark - tbl UIButton Action
 
 - (IBAction)btnDeleteConf_Cancel:(id)sender

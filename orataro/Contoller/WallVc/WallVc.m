@@ -13,6 +13,7 @@
 #import "AppDelegate.h"
 #import "Global.h"
 
+
 @interface WallVc ()
 {
     AppDelegate *app;
@@ -39,6 +40,8 @@
     NSString *strDynaminWallMenuSelected;
     
     NSMutableArray *arrDynamicWallMenu,*arrDynamicWallMenuMain;
+    
+    NSString *btnHeaderTitle_Enable;
 }
 @end
 
@@ -340,15 +343,17 @@ int c2= 0;
             countResponce = [arrGeneralWall count];
             
             arrDynamicWall_Setting = [DBOperation selectData:@"select * from DynamicWall_Setting"];
+            
             for (NSMutableDictionary *dic in arrDynamicWall_Setting)
             {
                 NSString *IsAdmin=[dic objectForKey:@"IsAdmin"];
+                
                 if ([IsAdmin integerValue] == 1)
                 {
                     arrDynamicWall_Admin_Setting  = [DBOperation selectData:@"select * from DynamicWall_Admin_Setting"];
                 }
             }
-
+            
         }
         else if ([_checkscreen isEqualToString:@"MyWall"])
         {
@@ -382,6 +387,17 @@ int c2= 0;
         {
             arrGeneralWall = [DBOperation selectData:@"select * from InstituteWall"];
             countResponce = [arrGeneralWall count];
+            
+            arrDynamicWall_Setting = [DBOperation selectData:@"select * from DynamicWall_Setting"];
+            for (NSMutableDictionary *dic in arrDynamicWall_Setting)
+            {
+                NSString *IsAdmin=[dic objectForKey:@"IsAdmin"];
+                if ([IsAdmin integerValue] == 1)
+                {
+                    arrDynamicWall_Admin_Setting  = [DBOperation selectData:@"select * from DynamicWall_Admin_Setting"];
+                }
+            }
+
         }
         else if ([_checkscreen isEqualToString:@"Standard"] ||
                  [_checkscreen isEqualToString:@"Division"] ||
@@ -393,6 +409,17 @@ int c2= 0;
             
             arrGeneralWall = [DBOperation selectData:[NSString stringWithFormat:@"select * from DynamicWall where WallID ='%@'",strWallId]];
             countResponce = [arrGeneralWall count];
+            
+            arrDynamicWall_Setting = [DBOperation selectData:@"select * from DynamicWall_Setting"];
+            for (NSMutableDictionary *dic in arrDynamicWall_Setting)
+            {
+                NSString *IsAdmin=[dic objectForKey:@"IsAdmin"];
+                if ([IsAdmin integerValue] == 1)
+                {
+                    arrDynamicWall_Admin_Setting  = [DBOperation selectData:@"select * from DynamicWall_Admin_Setting"];
+                }
+            }
+
         }
         else if ([_checkscreen isEqualToString:@"MyWall"])
         {
@@ -412,7 +439,8 @@ int c2= 0;
         
         [self.aWallTableView reloadData];
         
-        [self.btnHeaderTitle setUserInteractionEnabled:NO];
+        btnHeaderTitle_Enable=@"NO";
+        //[self.btnHeaderTitle setUserInteractionEnabled:NO];
         if(arrGeneralWall.count == 0)
         {
             [self apiCallFor_GetGeneralWallData:@"1"];
@@ -577,6 +605,8 @@ int c2= 0;
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_post,apk_UploadFile_action];
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    
+    
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
     
     [param setValue:[NSString stringWithFormat:@"%@",FileName] forKey:@"FileName"];
@@ -637,8 +667,8 @@ int c2= 0;
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     //                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     //                     [alrt show];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:UPLOADPOSTFILE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
                  }
                  else
                  {
@@ -696,6 +726,9 @@ int c2= 0;
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_post,apk_Post_action];
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    
+
+    
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
     
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
@@ -759,8 +792,8 @@ int c2= 0;
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     //                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     //                     [alrt show];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:POSTNOTFOUND delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
                  }
                  else if([strStatus isEqualToString:@"Post Added successfully."])
                  {
@@ -811,6 +844,8 @@ int c2= 0;
     
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
     [param setValue:[NSString stringWithFormat:@"%@",[[Utility getCurrentUserDetail]objectForKey:@"MobileNumber"]] forKey:@"UserName"];
+    
+    
     [param setValue:[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"Password"]] forKey:@"Password"];
     [param setValue:[NSString stringWithFormat:@"%@",token] forKey:@"GCMID"];
     [param setValue:[NSString stringWithFormat:@"%@",currentDeviceId] forKey:@"DivRegistID"];
@@ -829,7 +864,7 @@ int c2= 0;
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"Userid or password wrong" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:LOGINAPI delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
@@ -895,7 +930,7 @@ int c2= 0;
                                          
                                          //Insert CurrentActiveUser
                                          NSString *MemberType=[[dic objectForKey:@"MemberType"]mutableCopy];
-                                         if([MemberType rangeOfString:@"Teacher" options:NSCaseInsensitiveSearch].location == NSNotFound)
+                                         if(![MemberType containsString:@"Teacher"])
                                          {
                                              [dic setObject:@"Student" forKey:@"MemberType"];
                                          }
@@ -904,12 +939,18 @@ int c2= 0;
                                              [dic setObject:@"Teacher" forKey:@"MemberType"];
                                          }
                                          
-                                         NSString *strJSon = [Utility Convertjsontostring:dic];
+                                        /* NSString *strJSon = [Utility Convertjsontostring:dic];
                                          [DBOperation executeSQL:@"delete from CurrentActiveUser"];
+                                         
                                          [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO CurrentActiveUser (JsonStr,userType_responce) VALUES ('%@','%@')",strJSon,MemberType]];
+                                         
+                                          NSLog(@"fetch data%@",[DBOperation selectData:@"Select * from CurrentActiveUser"]);*/
                                      }
-
+                                     
                                      [[NSUserDefaults standardUserDefaults]setObject:[[Utility getCurrentUserDetail]objectForKey:@"MobileNumber"] forKey:@"MobileNumber"];
+                                     
+
+                                     
                                      [[NSUserDefaults standardUserDefaults]setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"Password"] forKey:@"Password"];
                                      [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
                                      [[NSUserDefaults standardUserDefaults]synchronize];
@@ -968,7 +1009,7 @@ int c2= 0;
                                          
                                          //Insert CurrentActiveUser
                                          NSString *MemberType=[[dic objectForKey:@"MemberType"]mutableCopy];
-                                         if([MemberType rangeOfString:@"Teacher" options:NSCaseInsensitiveSearch].location == NSNotFound)
+                                         if(![MemberType containsString:@"Teacher"])
                                          {
                                              [dic setObject:@"Student" forKey:@"MemberType"];
                                          }
@@ -977,13 +1018,17 @@ int c2= 0;
                                              [dic setObject:@"Teacher" forKey:@"MemberType"];
                                          }
                                          
-                                         NSString *strJSon = [Utility Convertjsontostring:dic];
+                                         /*NSString *strJSon = [Utility Convertjsontostring:dic];
                                          [DBOperation executeSQL:@"delete from CurrentActiveUser"];
                                          [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO CurrentActiveUser (JsonStr,userType_responce) VALUES ('%@','%@')",strJSon,MemberType]];
+                                         
+                                          NSLog(@"fetch data%@",[DBOperation selectData:@"Select * from CurrentActiveUser"]);*/
                                      }
-
+                                     
                                      
                                      [[NSUserDefaults standardUserDefaults]setObject:[[Utility getCurrentUserDetail]objectForKey:@"MobileNumber"] forKey:@"MobileNumber"];
+                                  
+                                     
                                      [[NSUserDefaults standardUserDefaults]setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"Password"] forKey:@"Password"];
                                      [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
                                      [[NSUserDefaults standardUserDefaults]synchronize];
@@ -1005,7 +1050,7 @@ int c2= 0;
                                      
                                      //Insert CurrentActiveUser
                                      NSString *MemberType=[[dic objectForKey:@"MemberType"]mutableCopy];
-                                     if([MemberType rangeOfString:@"Teacher" options:NSCaseInsensitiveSearch].location == NSNotFound)
+                                     if(![MemberType containsString:@"Teacher"])
                                      {
                                          [dic setObject:@"Student" forKey:@"MemberType"];
                                      }
@@ -1014,12 +1059,20 @@ int c2= 0;
                                          [dic setObject:@"Teacher" forKey:@"MemberType"];
                                      }
                                      
-                                     NSString *strJSon = [Utility Convertjsontostring:dic];
+                                     /*NSString *strJSon = [Utility Convertjsontostring:dic];
+                                     
                                      [DBOperation executeSQL:@"delete from CurrentActiveUser"];
+                                     
                                      [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO CurrentActiveUser (JsonStr,userType_responce) VALUES ('%@','%@')",strJSon,MemberType]];
+                                     
+                                      NSLog(@"fetch data%@",[DBOperation selectData:@"Select * from CurrentActiveUser"]);
+                                     
+                                      NSLog(@"fetch data%@",[DBOperation selectData:@"Select * from CurrentActiveUser"]);*/
                                  }
                                  
                                  [[NSUserDefaults standardUserDefaults]setObject:[[Utility getCurrentUserDetail]objectForKey:@"MobileNumber"] forKey:@"MobileNumber"];
+                                
+                                 
                                  [[NSUserDefaults standardUserDefaults]setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"Password"] forKey:@"Password"];
                                  [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
                                  [[NSUserDefaults standardUserDefaults]synchronize];
@@ -1070,7 +1123,7 @@ int c2= 0;
                 
                 //Insert CurrentActiveUser
                 NSString *MemberType=[[dic objectForKey:@"MemberType"]mutableCopy];
-                if([MemberType rangeOfString:@"Teacher" options:NSCaseInsensitiveSearch].location == NSNotFound)
+                if(![MemberType containsString:@"Teacher"])
                 {
                     [dic setObject:@"Student" forKey:@"MemberType"];
                 }
@@ -1079,13 +1132,18 @@ int c2= 0;
                     [dic setObject:@"Teacher" forKey:@"MemberType"];
                 }
                 
-                NSString *strJSon = [Utility Convertjsontostring:dic];
+              /*  NSString *strJSon = [Utility Convertjsontostring:dic];
                 [DBOperation executeSQL:@"delete from CurrentActiveUser"];
                 [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO CurrentActiveUser (JsonStr,userType_responce) VALUES ('%@','%@')",strJSon,MemberType]];
+                
+                 NSLog(@"fetch data%@",[DBOperation selectData:@"Select * from CurrentActiveUser"]);*/
             }
-
+            
             
             [[NSUserDefaults standardUserDefaults]setObject:[[Utility getCurrentUserDetail]objectForKey:@"MobileNumber"] forKey:@"MobileNumber"];
+            
+            
+            
             [[NSUserDefaults standardUserDefaults]setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"Password"] forKey:@"Password"];
             [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
             [[NSUserDefaults standardUserDefaults]synchronize];
@@ -1105,7 +1163,7 @@ int c2= 0;
                     
                     //Insert CurrentActiveUser
                     NSString *MemberType=[[dic objectForKey:@"MemberType"]mutableCopy];
-                    if([MemberType rangeOfString:@"Teacher" options:NSCaseInsensitiveSearch].location == NSNotFound)
+                    if(![MemberType containsString:@"Teacher"])
                     {
                         [dic setObject:@"Student" forKey:@"MemberType"];
                     }
@@ -1114,13 +1172,18 @@ int c2= 0;
                         [dic setObject:@"Teacher" forKey:@"MemberType"];
                     }
                     
-                    NSString *strJSon = [Utility Convertjsontostring:dic];
+                   /* NSString *strJSon = [Utility Convertjsontostring:dic];
                     [DBOperation executeSQL:@"delete from CurrentActiveUser"];
-                    [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO CurrentActiveUser (JsonStr,userType_responce) VALUES ('%@','%@')",strJSon,MemberType]];
+                    [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO CurrentActiveUser (JsonStr,userType_responce) VALUES ('%@','%@')",strJSon,MemberType]];*/
+                    
+                     NSLog(@"fetch data%@",[DBOperation selectData:@"Select * from CurrentActiveUser"]);
                 }
-
+                
                 
                 [[NSUserDefaults standardUserDefaults]setObject:[[Utility getCurrentUserDetail]objectForKey:@"MobileNumber"] forKey:@"MobileNumber"];
+                
+                
+                
                 [[NSUserDefaults standardUserDefaults]setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"Password"] forKey:@"Password"];
                 [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
                 [[NSUserDefaults standardUserDefaults]synchronize];
@@ -1145,7 +1208,7 @@ int c2= 0;
             
             //Insert CurrentActiveUser
             NSString *MemberType=[[dic objectForKey:@"MemberType"]mutableCopy];
-            if([MemberType rangeOfString:@"Teacher" options:NSCaseInsensitiveSearch].location == NSNotFound)
+            if(![MemberType containsString:@"Teacher"])
             {
                 [dic setObject:@"Student" forKey:@"MemberType"];
             }
@@ -1154,12 +1217,17 @@ int c2= 0;
                 [dic setObject:@"Teacher" forKey:@"MemberType"];
             }
             
-            NSString *strJSon = [Utility Convertjsontostring:dic];
+         /*   NSString *strJSon = [Utility Convertjsontostring:dic];
             [DBOperation executeSQL:@"delete from CurrentActiveUser"];
             [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO CurrentActiveUser (JsonStr,userType_responce) VALUES ('%@','%@')",strJSon,MemberType]];
+            
+             NSLog(@"fetch data%@",[DBOperation selectData:@"Select * from CurrentActiveUser"]);*/
         }
         
         [[NSUserDefaults standardUserDefaults]setObject:[[Utility getCurrentUserDetail]objectForKey:@"MobileNumber"] forKey:@"MobileNumber"];
+        
+        
+        
         [[NSUserDefaults standardUserDefaults]setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"Password"] forKey:@"Password"];
         [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
         [[NSUserDefaults standardUserDefaults]synchronize];
@@ -1178,13 +1246,17 @@ int c2= 0;
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_login,apk_ChangeGCMID];
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    
+    
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
     NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"DeviceToken"];
+    
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"UserID"]] forKey:@"UserID"];
+    
     [param setValue:token forKey:@"GCMID"];
     
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error){
-         [self apiCallFor_GetUserRoleRightList:@"1"];
+        [self apiCallFor_GetUserRoleRightList:@"1"];
     }];
 }
 
@@ -1199,6 +1271,8 @@ int c2= 0;
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_login,apk_GetUserRoleRightList_action];
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    
+    
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
     
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
@@ -1220,6 +1294,8 @@ int c2= 0;
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:USERROLLIST delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
                  }
                  else
                  {
@@ -1253,6 +1329,8 @@ int c2= 0;
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_login,apk_SaveLoginLog_action];
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    
+    
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
     
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
@@ -1261,7 +1339,7 @@ int c2= 0;
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"MemberID"]] forKey:@"MemberID"];
     
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error){
-     }];
+    }];
 }
 
 #pragma mark - apiCall GetWallMember
@@ -1277,6 +1355,8 @@ int c2= 0;
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_generalwall,apk_GetWallMember_action];;
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    
+    
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
     
     if ([_checkscreen isEqualToString:@"Institute"])
@@ -1318,7 +1398,7 @@ int c2= 0;
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:MEMBERLIST delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
@@ -1357,6 +1437,8 @@ int c2= 0;
     NSString *strURL;
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    
+    
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
     
     [param setValue:[NSString stringWithFormat:@"%ld",totalCountView] forKey:@"rowno"];
@@ -1401,7 +1483,8 @@ int c2= 0;
     
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
-         [self.btnHeaderTitle setUserInteractionEnabled:YES];
+         btnHeaderTitle_Enable=@"YES";
+        // [self.btnHeaderTitle setUserInteractionEnabled:YES];
          [self.aWallTableView.refreshControl endRefreshing];
          [self.aWallTableView.tableFooterView setHidden:YES];
          [ProgressHUB hideenHUDAddedTo:self.view];
@@ -1427,6 +1510,15 @@ int c2= 0;
                          //set DynamicWall Setting in array
                          arrDynamicWall_Setting  = [dicResponce objectForKey:@"RoleData"];
                          
+                         if([arrDynamicWall_Setting count] != 0)
+                         {
+                             NSString *IsAdmin=[[arrDynamicWall_Setting objectAtIndex:0] objectForKey:@"IsAdmin"];
+                             
+                             if ([IsAdmin integerValue] == 1)
+                             {
+                                 [self setIsAdminEquel_One];
+                             }
+                         }
                          for (NSMutableDictionary *dic in arrDynamicWall_Setting)
                          {
                              NSString *IsAdmin=[dic objectForKey:@"IsAdmin"];
@@ -1435,7 +1527,8 @@ int c2= 0;
                                  arrDynamicWall_Admin_Setting  = [dicResponce objectForKey:@"WallRoleData"];
                                  if([arrDynamicWall_Admin_Setting count] != 0)
                                  {
-                                     [self DynamicWall_Setting:[arrDynamicWall_Admin_Setting objectAtIndex:0]];
+                                     [self DynamicWall_Setting:dic];
+                                     [self DynamicWall_Admin_Setting:[arrDynamicWall_Admin_Setting objectAtIndex:0]];
                                  }
                              }
                              else
@@ -1498,15 +1591,25 @@ int c2= 0;
                      {
                          //set DynamicWall Setting in array
                          arrDynamicWall_Setting  = [dicResponce objectForKey:@"RoleData"];
+                         if([arrDynamicWall_Setting count] != 0)
+                         {
+                             NSString *IsAdmin=[[arrDynamicWall_Setting objectAtIndex:0] objectForKey:@"IsAdmin"];
+                             if ([IsAdmin integerValue] == 1)
+                             {
+                                 [self setIsAdminEquel_One];
+                             }
+                         }
                          for (NSMutableDictionary *dic in arrDynamicWall_Setting)
                          {
                              NSString *IsAdmin=[dic objectForKey:@"IsAdmin"];
                              if ([IsAdmin integerValue] == 1)
                              {
+                                 
                                  arrDynamicWall_Admin_Setting  = [dicResponce objectForKey:@"WallRoleData"];
                                  if([arrDynamicWall_Admin_Setting count] != 0)
                                  {
-                                     [self DynamicWall_Setting:[arrDynamicWall_Admin_Setting objectAtIndex:0]];
+                                     [self DynamicWall_Setting:dic];
+                                     [self DynamicWall_Admin_Setting:[arrDynamicWall_Admin_Setting objectAtIndex:0]];
                                  }
                              }
                              else
@@ -1671,6 +1774,7 @@ int c2= 0;
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_post,apk_LikePost_action];
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
     
     [param setValue:[NSString stringWithFormat:@"%@",[dicSelectedWall objectForKey:@"PostCommentID"]] forKey:@"pdataID"];
@@ -1722,6 +1826,8 @@ int c2= 0;
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:POSTLIKE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
                  }
                  else
                  {
@@ -1809,6 +1915,7 @@ int c2= 0;
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_post,apk_DisLikePost_action];
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
     
     [param setValue:[NSString stringWithFormat:@"%@",[dicSelectedWall objectForKey:@"PostCommentID"]] forKey:@"pdataID"];
@@ -1949,7 +2056,36 @@ int c2= 0;
         }
     }];
 }
-
+-(void)setIsAdminEquel_One
+{
+    NSMutableDictionary *dicTemp=[[NSMutableDictionary alloc]init];
+    dicTemp = [[arrDynamicWall_Setting objectAtIndex:0]mutableCopy];
+    [dicTemp setObject:@"1" forKey:@"IsAdmin"];
+    [dicTemp setObject:@"1" forKey:@"IsAllowPeoplePostComment"];
+    [dicTemp setObject:@"1" forKey:@"IsAllowPeopleToCreatePoll"];
+    [dicTemp setObject:@"1" forKey:@"IsAllowPeopleToInviteOtherPeople"];
+    [dicTemp setObject:@"1" forKey:@"IsAllowPeopleToLikeAndDislikeComment"];
+    [dicTemp setObject:@"1" forKey:@"IsAllowPeopleToLikeThisWall"];
+    [dicTemp setObject:@"1" forKey:@"IsAllowPeopleToParticipateInPoll"];
+    [dicTemp setObject:@"1" forKey:@"IsAllowPeopleToPostDocument"];
+    [dicTemp setObject:@"1" forKey:@"IsAllowPeopleToPostStatus"];
+    [dicTemp setObject:@"1" forKey:@"IsAllowPeopleToPostVideos"];
+    [dicTemp setObject:@"1" forKey:@"IsAllowPeopleToPutGeoLocationOnPost"];
+    [dicTemp setObject:@"1" forKey:@"IsAllowPeopleToShareComment"];
+    [dicTemp setObject:@"1" forKey:@"IsAllowPeopleToTagOnPost"];
+    [dicTemp setObject:@"1" forKey:@"IsAllowPeopleToUploadAlbum"];
+    [dicTemp setObject:@"1" forKey:@"IsAutoApproveAlbume"];
+    [dicTemp setObject:@"1" forKey:@"IsAutoApproveDocument"];
+    [dicTemp setObject:@"1" forKey:@"IsAutoApprovePoll"];
+    [dicTemp setObject:@"1" forKey:@"IsAutoApprovePost"];
+    [dicTemp setObject:@"1" forKey:@"IsAutoApprovePostStatus"];
+    [dicTemp setObject:@"1" forKey:@"IsAutoApproveVideos"];
+    [dicTemp setObject:@"1" forKey:@"WallID"];
+    [dicTemp setObject:@"1" forKey:@"WallImage"];
+    [dicTemp setObject:@"1" forKey:@"WallName"];
+    arrDynamicWall_Setting=[[NSMutableArray alloc]init];
+    [arrDynamicWall_Setting addObject:dicTemp];
+}
 
 -(void)DynamicWall_Setting:(NSMutableDictionary*)dicResponce
 {
@@ -1995,9 +2131,9 @@ int c2= 0;
     NSString *IsWallMemberManagement=[dicResponce objectForKey:@"IsWallMemberManagement"];
     NSString *WallTypeTerm=[dicResponce objectForKey:@"WallTypeTerm"];
     
-    [DBOperation executeSQL:[NSString stringWithFormat:@"DELETE FROM DynamicWall_Setting"]];
+    [DBOperation executeSQL:[NSString stringWithFormat:@"DELETE FROM DynamicWall_Admin_Setting"]];
     
-    [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO DynamicWall_Setting(IsAllowPostAlbum,IsAllowPostComment,IsAllowPostFile,IsAllowPostPhoto,IsAllowPostStatus,IsAllowPostVideo,IsApproveorDisApprove,IsDeletePoll,IsWallMemberManagement,WallTypeTerm)values('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@')",IsAllowPostAlbum,IsAllowPostComment,IsAllowPostFile,IsAllowPostPhoto,IsAllowPostStatus,IsAllowPostVideo,IsApproveorDisApprove,IsDeletePoll,IsWallMemberManagement,WallTypeTerm]];
+    [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO DynamicWall_Admin_Setting(IsAllowPostAlbum,IsAllowPostComment,IsAllowPostFile,IsAllowPostPhoto,IsAllowPostStatus,IsAllowPostVideo,IsApproveorDisApprove,IsDeletePoll,IsWallMemberManagement,WallTypeTerm)values('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@')",IsAllowPostAlbum,IsAllowPostComment,IsAllowPostFile,IsAllowPostPhoto,IsAllowPostStatus,IsAllowPostVideo,IsApproveorDisApprove,IsDeletePoll,IsWallMemberManagement,WallTypeTerm]];
 }
 
 #pragma mark - apiCall For GetUserDynamicMenuData
@@ -2052,7 +2188,7 @@ int c2= 0;
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:MENULIST delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
@@ -2166,6 +2302,9 @@ int c2= 0;
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_generalwall,apk_DeletePost_action];
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    
+
+    
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
     
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
@@ -2195,7 +2334,7 @@ int c2= 0;
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:POSTDELETE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else if([strStatus isEqualToString:@"Record deleted successfully"])
@@ -2510,6 +2649,9 @@ int c2= 0;
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_post,apk_SharePost_action];
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+   
+
+    
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
     
     if ([_checkscreen isEqualToString:@"Institute"])
@@ -2571,7 +2713,10 @@ int c2= 0;
                  NSMutableDictionary *dic=[arrResponce objectAtIndex:0];
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
-                 {}
+                 {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:POSTSHAREWALL delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+                 }
                  else if([strStatus isEqualToString:@"Post share successfully"])
                  {
                      [WToast showWithText:@"Post share successfully"];
@@ -2595,6 +2740,9 @@ int c2= 0;
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_friends,apk_GetFriendList];
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
+    
+   
+    
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
     
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
@@ -2622,7 +2770,7 @@ int c2= 0;
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:POSTFRIENDLIST delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
@@ -2814,8 +2962,17 @@ int c2= 0;
         
         //get setting login responce
         NSString *isIsAllowUserToLikeDislikes_Login=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToLikeDislikes"];
+        
+      
+
+        
         NSString *IsAllowUserToPostComment_Login=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostComment"];
+        
+       
+
+        
         NSString *IsAllowUserToSharePost_Login=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToSharePost"];
+        
         
         if([strFileType isEqualToString:@"IMAGE"])
         {
@@ -4160,8 +4317,16 @@ int c2= 0;
         {
             //get setting login responce
             NSString *isIsAllowUserToLikeDislikes_Login=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToLikeDislikes"];
+            
+          
+            
             NSString *IsAllowUserToPostComment_Login=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostComment"];
+            
+           
+            
             NSString *IsAllowUserToSharePost_Login=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToSharePost"];
+            
+            
             
             if([self.checkscreen isEqualToString:@"MyWall"] ||
                [self.checkscreen length] == 0)
@@ -4531,7 +4696,8 @@ int c2= 0;
                 if ([Utility isInterNetConnectionIsActive] == true)
                 {
                     [self.aWallTableView.tableFooterView setHidden:NO];
-                    [self.btnHeaderTitle setUserInteractionEnabled:NO];
+                    btnHeaderTitle_Enable=@"NO";
+                  //  [self.btnHeaderTitle setUserInteractionEnabled:NO];
                     [self apiCallFor_GetGeneralWallData:@"0"];
                 }
                 else
@@ -5272,45 +5438,57 @@ int c2= 0;
         NSString *IsAllowUserToPostStatus=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostStatus"];
         NSString *IsAllowUserToPostPhoto=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostPhoto"];
         NSString *IsAllowUserToPostVideo=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostVideo"];
-        
-        if([IsAllowUserToPostStatus integerValue] == 1 ||
-           [IsAllowUserToPostPhoto integerValue] == 1 ||
-           [IsAllowUserToPostVideo integerValue] == 1)
+        if ([arrDynamicWall_Setting count] != 0)
         {
-            NSString *IsAdmin=[[arrDynamicWall_Setting objectAtIndex:0]objectForKey:@"IsAdmin"];
-            
-            if ([IsAdmin integerValue] == 1)
+            if([IsAllowUserToPostStatus integerValue] == 1 ||
+               [IsAllowUserToPostPhoto integerValue] == 1 ||
+               [IsAllowUserToPostVideo integerValue] == 1)
             {
-                NSString *IsAllowPostStatus=[[arrDynamicWall_Admin_Setting objectAtIndex:0]objectForKey:@"IsAllowPostStatus"];
-                NSString *IsAllowPostPhoto=[[arrDynamicWall_Admin_Setting objectAtIndex:0]objectForKey:@"IsAllowPostPhoto"];
-                NSString *IsAllowPostVideo=[[arrDynamicWall_Admin_Setting objectAtIndex:0]objectForKey:@"IsAllowPostVideo"];
-                if([IsAllowPostStatus integerValue] == 1 ||
-                   [IsAllowPostPhoto integerValue] == 1 ||
-                   [IsAllowPostVideo integerValue] == 1)
+                NSString *IsAdmin=[[arrDynamicWall_Setting objectAtIndex:0]objectForKey:@"IsAdmin"];
+                
+                if ([IsAdmin integerValue] == 1)
                 {
-                    AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
-                    wc.checkscreen=self.checkscreen;
-                    [self.navigationController pushViewController:wc animated:YES];
+                    NSString *IsAllowPostStatus=[[arrDynamicWall_Admin_Setting objectAtIndex:0]objectForKey:@"IsAllowPostStatus"];
+                    NSString *IsAllowPostPhoto=[[arrDynamicWall_Admin_Setting objectAtIndex:0]objectForKey:@"IsAllowPostPhoto"];
+                    NSString *IsAllowPostVideo=[[arrDynamicWall_Admin_Setting objectAtIndex:0]objectForKey:@"IsAllowPostVideo"];
+                    if([IsAllowPostStatus integerValue] == 1 ||
+                       [IsAllowPostPhoto integerValue] == 1 ||
+                       [IsAllowPostVideo integerValue] == 1)
+                    {
+                        AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
+                        wc.checkscreen=self.checkscreen;
+                        wc.arrDynamicWall_Setting=[arrDynamicWall_Setting mutableCopy];
+                        wc.arrDynamicWall_Admin_Setting=[arrDynamicWall_Admin_Setting mutableCopy];
+                        [self.navigationController pushViewController:wc animated:YES];
+                    }
+                }
+                else
+                {
+                    NSString *IsAllowPeopleToPostStatus=[[arrDynamicWall_Setting objectAtIndex:0]objectForKey:@"IsAllowPeopleToPostStatus"];
+                    NSString *IsAllowPeopleToUploadAlbum=[[arrDynamicWall_Setting objectAtIndex:0]objectForKey:@"IsAllowPeopleToUploadAlbum"];
+                    NSString *IsAllowPeopleToPostVideos=[[arrDynamicWall_Setting objectAtIndex:0]objectForKey:@"IsAllowPeopleToPostVideos"];
+                    if([IsAllowPeopleToPostStatus integerValue] == 1 ||
+                       [IsAllowPeopleToUploadAlbum integerValue] == 1 ||
+                       [IsAllowPeopleToPostVideos integerValue] == 1)
+                    {
+                        AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
+                        wc.checkscreen=self.checkscreen;
+                        wc.arrDynamicWall_Setting=[arrDynamicWall_Setting mutableCopy];
+                        wc.arrDynamicWall_Admin_Setting=[arrDynamicWall_Admin_Setting mutableCopy];
+                        
+                        [self.navigationController pushViewController:wc animated:YES];
+                    }
                 }
             }
             else
             {
-                NSString *IsAllowPeopleToPostStatus=[[arrDynamicWall_Setting objectAtIndex:0]objectForKey:@"IsAllowPeopleToPostStatus"];
-                NSString *IsAllowPeopleToUploadAlbum=[[arrDynamicWall_Setting objectAtIndex:0]objectForKey:@"IsAllowPeopleToUploadAlbum"];
-                NSString *IsAllowPeopleToPostVideos=[[arrDynamicWall_Setting objectAtIndex:0]objectForKey:@"IsAllowPeopleToPostVideos"];
-                if([IsAllowPeopleToPostStatus integerValue] == 1 ||
-                   [IsAllowPeopleToUploadAlbum integerValue] == 1 ||
-                   [IsAllowPeopleToPostVideos integerValue] == 1)
-                {
-                    AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
-                    wc.checkscreen=self.checkscreen;
-                    [self.navigationController pushViewController:wc animated:YES];
-                }
+                [WToast showWithText:You_dont_have_permission];
             }
+
         }
         else
         {
-            [WToast showWithText:You_dont_have_permission];
+            [WToast showWithText:Wait];
         }
     }
     else if([_checkscreen isEqualToString:@"Standard"]||
@@ -5323,60 +5501,75 @@ int c2= 0;
         NSString *IsAllowUserToPostPhoto=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostPhoto"];
         NSString *IsAllowUserToPostVideo=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostVideo"];
         
-        if([IsAllowUserToPostStatus integerValue] == 1 ||
-           [IsAllowUserToPostPhoto integerValue] == 1 ||
-           [IsAllowUserToPostVideo integerValue] == 1)
+        if ([arrDynamicWall_Setting count] != 0)
         {
-            NSString *IsAdmin=[[arrDynamicWall_Setting objectAtIndex:0]objectForKey:@"IsAdmin"];
-            
-            if ([IsAdmin integerValue] == 1)
+            if([IsAllowUserToPostStatus integerValue] == 1 ||
+               [IsAllowUserToPostPhoto integerValue] == 1 ||
+               [IsAllowUserToPostVideo integerValue] == 1)
             {
-                NSString *IsAllowPostStatus=[[arrDynamicWall_Admin_Setting objectAtIndex:0]objectForKey:@"IsAllowPostStatus"];
-                NSString *IsAllowPostPhoto=[[arrDynamicWall_Admin_Setting objectAtIndex:0]objectForKey:@"IsAllowPostPhoto"];
-                NSString *IsAllowPostVideo=[[arrDynamicWall_Admin_Setting objectAtIndex:0]objectForKey:@"IsAllowPostVideo"];
-                if([IsAllowPostStatus integerValue] == 1 ||
-                   [IsAllowPostPhoto integerValue] == 1 ||
-                   [IsAllowPostVideo integerValue] == 1)
+                NSString *IsAdmin=[[arrDynamicWall_Setting objectAtIndex:0]objectForKey:@"IsAdmin"];
+                
+                if ([IsAdmin integerValue] == 1)
                 {
-                    AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
-                    wc.checkscreen=self.checkscreen;
-                    wc.dicSelect_std_divi_sub=[self.dicSelect_std_divi_sub mutableCopy];
-                    [self.navigationController pushViewController:wc animated:YES];
+                    NSString *IsAllowPostStatus=[[arrDynamicWall_Admin_Setting objectAtIndex:0]objectForKey:@"IsAllowPostStatus"];
+                    NSString *IsAllowPostPhoto=[[arrDynamicWall_Admin_Setting objectAtIndex:0]objectForKey:@"IsAllowPostPhoto"];
+                    NSString *IsAllowPostVideo=[[arrDynamicWall_Admin_Setting objectAtIndex:0]objectForKey:@"IsAllowPostVideo"];
+                    if([IsAllowPostStatus integerValue] == 1 ||
+                       [IsAllowPostPhoto integerValue] == 1 ||
+                       [IsAllowPostVideo integerValue] == 1)
+                    {
+                        AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
+                        wc.checkscreen=self.checkscreen;
+                        wc.dicSelect_std_divi_sub=[self.dicSelect_std_divi_sub mutableCopy];
+                        wc.arrDynamicWall_Setting=[arrDynamicWall_Setting mutableCopy];
+                        wc.arrDynamicWall_Admin_Setting=[arrDynamicWall_Admin_Setting mutableCopy];
+                        
+                        [self.navigationController pushViewController:wc animated:YES];
+                    }
+                    else
+                    {
+                        [WToast showWithText:You_dont_have_permission];
+                    }
                 }
                 else
                 {
-                    [WToast showWithText:You_dont_have_permission];
+                    NSString *IsAllowPeopleToPostStatus=[[arrDynamicWall_Setting objectAtIndex:0]objectForKey:@"IsAllowPeopleToPostStatus"];
+                    NSString *IsAllowPeopleToUploadAlbum=[[arrDynamicWall_Setting objectAtIndex:0]objectForKey:@"IsAllowPeopleToUploadAlbum"];
+                    NSString *IsAllowPeopleToPostVideos=[[arrDynamicWall_Setting objectAtIndex:0]objectForKey:@"IsAllowPeopleToPostVideos"];
+                    if([IsAllowPeopleToPostStatus integerValue] == 1 ||
+                       [IsAllowPeopleToUploadAlbum integerValue] == 1 ||
+                       [IsAllowPeopleToPostVideos integerValue] == 1)
+                    {
+                        AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
+                        wc.checkscreen=self.checkscreen;
+                        wc.dicSelect_std_divi_sub=[self.dicSelect_std_divi_sub mutableCopy];
+                        wc.arrDynamicWall_Setting=[arrDynamicWall_Setting mutableCopy];
+                        wc.arrDynamicWall_Admin_Setting=[arrDynamicWall_Admin_Setting mutableCopy];
+                        
+                        [self.navigationController pushViewController:wc animated:YES];
+                    }
+                    else
+                    {
+                        [WToast showWithText:You_dont_have_permission];
+                    }
                 }
             }
             else
             {
-                NSString *IsAllowPeopleToPostStatus=[[arrDynamicWall_Setting objectAtIndex:0]objectForKey:@"IsAllowPeopleToPostStatus"];
-                NSString *IsAllowPeopleToUploadAlbum=[[arrDynamicWall_Setting objectAtIndex:0]objectForKey:@"IsAllowPeopleToUploadAlbum"];
-                NSString *IsAllowPeopleToPostVideos=[[arrDynamicWall_Setting objectAtIndex:0]objectForKey:@"IsAllowPeopleToPostVideos"];
-                if([IsAllowPeopleToPostStatus integerValue] == 1 ||
-                   [IsAllowPeopleToUploadAlbum integerValue] == 1 ||
-                   [IsAllowPeopleToPostVideos integerValue] == 1)
-                {
-                    AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
-                    wc.checkscreen=self.checkscreen;
-                    wc.dicSelect_std_divi_sub=[self.dicSelect_std_divi_sub mutableCopy];
-                    [self.navigationController pushViewController:wc animated:YES];
-                }
-                else
-                {
-                    [WToast showWithText:You_dont_have_permission];
-                }
+                [WToast showWithText:You_dont_have_permission];
             }
-            
+
         }
         else
         {
-            [WToast showWithText:You_dont_have_permission];
+            [WToast showWithText:Wait];
         }
     }
     else if ([_checkscreen isEqualToString:@"MyWall"])
     {
         NSString *IsAllowUserToPostStatus=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostStatus"];
+        
+        
         NSString *IsAllowUserToPostPhoto=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostPhoto"];
         NSString *IsAllowUserToPostVideo=[[Utility getCurrentUserDetail]objectForKey:@"IsAllowUserToPostVideo"];
         
@@ -5384,54 +5577,15 @@ int c2= 0;
            [IsAllowUserToPostPhoto integerValue] == 1 ||
            [IsAllowUserToPostVideo integerValue] == 1)
         {
-            NSString *IsAdmin=[[arrDynamicWall_Setting objectAtIndex:0]objectForKey:@"IsAdmin"];
-            
-            if ([IsAdmin integerValue] == 1)
-            {
-                NSString *IsAllowPostStatus=[[arrDynamicWall_Admin_Setting objectAtIndex:0]objectForKey:@"IsAllowPostStatus"];
-                NSString *IsAllowPostPhoto=[[arrDynamicWall_Admin_Setting objectAtIndex:0]objectForKey:@"IsAllowPostPhoto"];
-                NSString *IsAllowPostVideo=[[arrDynamicWall_Admin_Setting objectAtIndex:0]objectForKey:@"IsAllowPostVideo"];
-                if([IsAllowPostStatus integerValue] == 1 ||
-                   [IsAllowPostPhoto integerValue] == 1 ||
-                   [IsAllowPostVideo integerValue] == 1)
-                {
-                    AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
-                    wc.checkscreen=self.checkscreen;
-                    wc.dicSelect_std_divi_sub=[self.dicSelect_std_divi_sub mutableCopy];
-                    [self.navigationController pushViewController:wc animated:YES];
-                    
-                }
-                else
-                {
-                    [WToast showWithText:You_dont_have_permission];
-                }
-            }
-            else
-            {
-                NSString *IsAllowPeopleToPostStatus=[[arrDynamicWall_Setting objectAtIndex:0]objectForKey:@"IsAllowPeopleToPostStatus"];
-                NSString *IsAllowPeopleToUploadAlbum=[[arrDynamicWall_Setting objectAtIndex:0]objectForKey:@"IsAllowPeopleToUploadAlbum"];
-                NSString *IsAllowPeopleToPostVideos=[[arrDynamicWall_Setting objectAtIndex:0]objectForKey:@"IsAllowPeopleToPostVideos"];
-                if([IsAllowPeopleToPostStatus integerValue] == 1 ||
-                   [IsAllowPeopleToUploadAlbum integerValue] == 1 ||
-                   [IsAllowPeopleToPostVideos integerValue] == 1)
-                {
-                    AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
-                    wc.checkscreen=self.checkscreen;
-                    wc.dicSelect_std_divi_sub=[self.dicSelect_std_divi_sub mutableCopy];
-                    [self.navigationController pushViewController:wc animated:YES];
-                }
-                else
-                {
-                    [WToast showWithText:You_dont_have_permission];
-                }
-            }
+            AddpostVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddpostVc"];
+            wc.checkscreen=self.checkscreen;
+            wc.dicSelect_std_divi_sub=[self.dicSelect_std_divi_sub mutableCopy];
+            [self.navigationController pushViewController:wc animated:YES];
         }
         else
         {
             [WToast showWithText:You_dont_have_permission];
         }
-        
-        
     }
     else
     {
@@ -5460,10 +5614,10 @@ int c2= 0;
     bool flagPastVC = YES;
     NSMutableArray *VCs = [NSMutableArray arrayWithArray: self.navigationController.viewControllers];
     
-    if([VCs count] != 0)
+    if([VCs count] >= 2)
     {
         UIViewController *vc = VCs[[VCs count] - 2];
-        if ([vc isKindOfClass: [LoginVC class]])
+        if ([vc  isKindOfClass: [LoginVC class]])
         {
             flagPastVC = NO;
         }
@@ -5475,8 +5629,19 @@ int c2= 0;
         {
             flagPastVC = NO;
         }
+        else if ([vc isKindOfClass: [OrataroVc class]])
+        {
+            flagPastVC = NO;
+        }
     }
     
+    
+//    if ([_checkscreen isEqualToString:@"MyWall"])
+//    {
+//        [self.frostedViewController hideMenuViewController];
+//                OrataroVc *wc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"OrataroVc"];
+//                [self.navigationController pushViewController:wc animated:NO];
+//    }
     
     if ([_checkscreen isEqualToString:@"Institute"])
     {
@@ -5637,6 +5802,12 @@ int c2= 0;
 
 - (IBAction)btnHeaderTitle:(id)sender
 {
+    if ([btnHeaderTitle_Enable isEqualToString:@"NO"])
+    {
+        [WToast showWithText:Wait];
+        return;
+    }
+    
     if([strDynaminWallMenuSelected isEqualToString:@"1"])
     {
         self.viewDynamicWallMenu_Height.constant=0;

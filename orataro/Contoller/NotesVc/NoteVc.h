@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NoteVc : UIViewController
+@interface NoteVc : UIViewController<UITableViewDelegate,UITableViewDataSource>
+
 @property (weak, nonatomic) IBOutlet UIView *aCalenderView;
 @property (weak, nonatomic) IBOutlet UIView *aView1;
 - (IBAction)MenuBtnClicked:(id)sender;

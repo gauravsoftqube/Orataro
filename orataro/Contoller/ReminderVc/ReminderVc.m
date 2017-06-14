@@ -19,7 +19,10 @@
     
     UIDatePicker *datePickerEnd;
     UIAlertView *alertEnd;
-
+    
+    
+    NSMutableArray *aryImp,*aryCan;
+    NSString *strCheckCanImp;
 }
 @end
 
@@ -30,27 +33,43 @@
 {
     [super viewDidLoad];
     
-     UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 5)];
-     aTitleTextfield.leftView = paddingView;
-     aTitleTextfield.leftViewMode = UITextFieldViewModeAlways;
-     
-     UIView *paddingView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 5)];
-     aCancelTextField.leftView = paddingView1;
-     aCancelTextField.leftViewMode = UITextFieldViewModeAlways;
-     
-     UIView *paddingView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 5)];
-     aEnddateTextfield.leftView = paddingView2;
-     aEnddateTextfield.leftViewMode = UITextFieldViewModeAlways;
-     
-     UIView *paddingView3 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 5)];
-     aImportantTextField.leftView = paddingView3;
-     aImportantTextField.leftViewMode = UITextFieldViewModeAlways;
-     
-     UIView *paddingView4 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 5)];
-     aSatrtDateTextField.leftView = paddingView4;
-     aSatrtDateTextField.leftViewMode = UITextFieldViewModeAlways;
-     aDescriptionTextview.textContainerInset = UIEdgeInsetsMake(8, 0, 0, 0);
-     
+    //arrImportantMain = [[NSMutableArray alloc]initWithObjects:@"Important",@"Normal",@"not Important", nil];
+    //arrCancelledMain = [[NSMutableArray alloc]initWithObjects:@"Cancelled",@"Completed",@"In-Progress",@"Insufficient", nil];
+    
+   
+    
+    
+    aryImp = [NSMutableArray arrayWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Important",@"Name",@"1",@"Value", nil],
+              [NSDictionary dictionaryWithObjectsAndKeys:@"Normal",@"Name",@"0",@"Value", nil],
+              [NSDictionary dictionaryWithObjectsAndKeys:@"not Important",@"Name",@"0",@"Value", nil],nil];
+    
+ //   [_tblPopup reloadData];
+    
+    aryCan = [NSMutableArray arrayWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Cancelled",@"Name",@"1",@"Value", nil],
+              [NSDictionary dictionaryWithObjectsAndKeys:@"Completed",@"Name",@"0",@"Value", nil],
+              [NSDictionary dictionaryWithObjectsAndKeys:@"In-Progress",@"Name",@"0",@"Value", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"Insufficient",@"Name",@"0",@"Value", nil],nil];
+    
+    UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 5)];
+    aTitleTextfield.leftView = paddingView;
+    aTitleTextfield.leftViewMode = UITextFieldViewModeAlways;
+    
+    UIView *paddingView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 5)];
+    aCancelTextField.leftView = paddingView1;
+    aCancelTextField.leftViewMode = UITextFieldViewModeAlways;
+    
+    UIView *paddingView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 5)];
+    aEnddateTextfield.leftView = paddingView2;
+    aEnddateTextfield.leftViewMode = UITextFieldViewModeAlways;
+    
+    UIView *paddingView3 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 5)];
+    aImportantTextField.leftView = paddingView3;
+    aImportantTextField.leftViewMode = UITextFieldViewModeAlways;
+    
+    UIView *paddingView4 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 5)];
+    aSatrtDateTextField.leftView = paddingView4;
+    aSatrtDateTextField.leftViewMode = UITextFieldViewModeAlways;
+    aDescriptionTextview.textContainerInset = UIEdgeInsetsMake(8, 0, 0, 0);
+    
     [self commonData];
 }
 
@@ -63,7 +82,7 @@
 {
     [self.viewPopup setHidden:YES];
     _tblPopup.separatorStyle=UITableViewCellSeparatorStyleNone;
- 
+    
     //StartDate
     CGRect frame = CGRectMake(0, 0, 200, 200);
     datePicker = [[UIDatePicker alloc] initWithFrame:frame];
@@ -106,8 +125,11 @@
     arrImportantMain = [[NSMutableArray alloc]initWithObjects:@"Important",@"Normal",@"not Important", nil];
     arrImportant=[[NSMutableArray alloc]init];
     
+    
     arrCancelledMain = [[NSMutableArray alloc]initWithObjects:@"Cancelled",@"Completed",@"In-Progress",@"Insufficient", nil];
     arrCancelled =[[NSMutableArray alloc]init];
+    
+    
     
     if(self.dicSelected != nil)
     {
@@ -178,7 +200,7 @@
     
     [param setValue:[NSString stringWithFormat:@"%@",aEnddateTextfield.text] forKey:@"EndDate"];
     [param setValue:[NSString stringWithFormat:@""] forKey:@"CompletDate"];
-   
+    
     [ProgressHUB showHUDAddedTo:self.view];
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
@@ -207,7 +229,7 @@
                  }
                  else
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:RECORDNOTFOUND delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
              }
@@ -245,75 +267,237 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-   return [arrFiled count];
+    
+    if (tableView == _tblPopup)
+    {
+         return [aryImp count];
+    }
+    if (tableView == _tblCancelled)
+    {
+        return [aryCan count];
+    }
+    return 0;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    cell.selectionStyle=UITableViewCellSelectionStyleNone;
+    if (tableView == _tblPopup)
+    {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+        cell.selectionStyle=UITableViewCellSelectionStyleNone;
+        
+        
+        UILabel *lblName = (UILabel *)[cell.contentView viewWithTag:1];
+        
+        NSString *strName=[[aryImp objectAtIndex:indexPath.row]objectForKey:@"Name"];
+        
+        lblName.text=[strName capitalizedString];
+        
+        UIButton *btn=(UIButton*)[cell.contentView viewWithTag:2];
+        
+        NSLog(@"arr=%@",aryImp);
+        
+        if([[[aryImp objectAtIndex:indexPath.row]objectForKey:@"Value"] isEqualToString:@"1"])
+        {
+            [btn setImage:[UIImage imageNamed:@"unradiop"] forState:UIControlStateNormal];
+        }
+        else
+        {
+            [btn setImage:[UIImage imageNamed:@"radiop"] forState:UIControlStateNormal];
+            
+            
+        }
+        
+        return cell;
+    }
+    if (tableView == _tblCancelled)
+    {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellCencell"];
+        cell.selectionStyle=UITableViewCellSelectionStyleNone;
+        
+        
+        UILabel *lblName = (UILabel *)[cell.contentView viewWithTag:1];
+        
+        NSString *strName=[[aryCan objectAtIndex:indexPath.row]objectForKey:@"Name"];
+        
+        lblName.text=[strName capitalizedString];
+        
+        UIButton *btn=(UIButton*)[cell.contentView viewWithTag:2];
+        
+        NSLog(@"arr=%@",aryCan);
+        
+        if([[[aryCan objectAtIndex:indexPath.row]objectForKey:@"Value"] isEqualToString:@"1"])
+        {
+            [btn setImage:[UIImage imageNamed:@"unradiop"] forState:UIControlStateNormal];
+        }
+        else
+        {
+            [btn setImage:[UIImage imageNamed:@"radiop"] forState:UIControlStateNormal];
+            
+            
+        }
+        
+        return cell;
 
-    NSString *strName=[arrFiled objectAtIndex:indexPath.row];
-    UILabel *lblName = (UILabel *)[cell.contentView viewWithTag:1];
-    lblName.text=[strName capitalizedString];
-   
-    UIButton *btn=(UIButton*)[cell.contentView viewWithTag:2];
-    [btn setImage:[UIImage imageNamed:@"radiop"] forState:UIControlStateNormal];
+    }
     
-    if([arrFiledTemp containsObject:strName])
-    {
-        [btn setImage:[UIImage imageNamed:@"unradiop"] forState:UIControlStateNormal];
-    }
-    else
-    {
-        [btn setImage:[UIImage imageNamed:@"radiop"] forState:UIControlStateNormal];
-    }
-    return cell;
+    return nil;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([strSelectedPopup isEqualToString:@"Important"])
+    if (tableView == _tblPopup)
     {
-        NSString *str=[arrFiled objectAtIndex:indexPath.row];
+        NSString *str=[[aryImp objectAtIndex:indexPath.row]objectForKey:@"Name"];
         self.aImportantTextField.text=[str capitalizedString];
-        [arrFiledTemp removeAllObjects];
-        [arrFiledTemp addObject:str];
         
-        [arrImportant removeAllObjects];
-        [arrImportant addObject:str];
+        NSMutableDictionary *dic = [[aryImp objectAtIndex:indexPath.row]mutableCopy];
+        
+        NSLog(@"Dic=%@",dic);
+        
+        //NSLog(@"ary=%@",aryImp);
+        
+        for (int i=0; i<aryImp.count; i++)
+        {
+            NSMutableDictionary *dic2 = [[aryImp objectAtIndex:i]mutableCopy];
+            
+            NSLog(@"Data=%@",[aryImp objectAtIndex:i]);
+            
+            if ([dic2 isEqualToDictionary:dic])
+            {
+                [dic2 setObject:@"1" forKey:@"Value"];
+                [aryImp replaceObjectAtIndex:i withObject:dic2];
+            }
+            else
+            {
+                [dic2 setObject:@"0" forKey:@"Value"];
+                [aryImp replaceObjectAtIndex:i withObject:dic2];
+            }
+            
+        }
+        NSLog(@"ary=%@",aryImp);
+        [_tblPopup reloadData];
+         _viewPopup.hidden =YES;
+    }
+    if (tableView == _tblCancelled)
+    {
+        NSString *str=[[aryCan objectAtIndex:indexPath.row]objectForKey:@"Name"];
+        self.aCancelTextField.text=[str capitalizedString];
+        
+        NSMutableDictionary *dic = [[aryCan objectAtIndex:indexPath.row]mutableCopy];
+        
+        
+        for (int i=0; i<aryCan.count; i++)
+        {
+            NSMutableDictionary *dic2 = [[aryCan objectAtIndex:i]mutableCopy];
+            
+            if ([dic2 isEqualToDictionary:dic])
+            {
+                [dic2 setObject:@"1" forKey:@"Value"];
+                [aryCan replaceObjectAtIndex:i withObject:dic2];
+            }
+            else
+            {
+                [dic2 setObject:@"0" forKey:@"Value"];
+                [aryCan replaceObjectAtIndex:i withObject:dic2];
+            }
 
+        }
+       //  NSLog(@"ary=%@",aryCan);
+        [_tblCancelled reloadData];
+        _viewPopup.hidden =YES;
+
+       
+    }
+  /*  if ([strSelectedPopup isEqualToString:@"Important"])
+    {
+        NSString *str=[[arrFiled objectAtIndex:indexPath.row]objectForKey:@"Name"];
+        self.aImportantTextField.text=[str capitalizedString];
+        
+        NSMutableDictionary *dic = [[arrFiled objectAtIndex:indexPath.row]mutableCopy];
+        
+        NSLog(@"Dic=%@",dic);
+        
+        //
+        
+        for (int i=0; i<arrFiled.count; i++)
+        {
+            NSMutableDictionary *dic2 = [[arrFiled objectAtIndex:i]mutableCopy];
+            
+            NSLog(@"Data=%@",[arrFiled objectAtIndex:i]);
+            
+            if ([dic2 isEqualToDictionary:dic])
+            {
+                [dic2 setObject:@"1" forKey:@"Value"];
+                [arrFiled replaceObjectAtIndex:i withObject:dic2];
+            }
+            else
+            {
+                 [dic2 setObject:@"0" forKey:@"Value"];
+                [arrFiled replaceObjectAtIndex:i withObject:dic2];
+            }
+            
+        }
+        
+        NSLog(@"ary=%@",arrFiled);
+//        [arrFiledTemp removeAllObjects];
+//        [arrFiledTemp addObject:str];
+//        
+//        [arrImportant removeAllObjects];
+//        [arrImportant addObject:str];
+        
     }
     else
     {
-        NSString *str=[arrFiled objectAtIndex:indexPath.row];
+        NSString *str=[[arrFiled objectAtIndex:indexPath.row]objectForKey:@"Name"];
         self.aCancelTextField.text=[str capitalizedString];
-        [arrFiledTemp removeAllObjects];
-        [arrFiledTemp addObject:str];
         
-        [arrCancelled removeAllObjects];
-        [arrCancelled addObject:str];
+        NSMutableDictionary *dic = [[arrFiled objectAtIndex:indexPath.row]mutableCopy];
+        
+        
+        for (int i=0; i<arrFiled.count; i++)
+        {
+            NSMutableDictionary *dic2 = [[arrFiled objectAtIndex:i]mutableCopy];
+            
+            if ([[arrFiled objectAtIndex:i] containsObject:dic])
+            {
+                [dic2 setObject:@"0" forKey:@"Value"];
+            }
+            else
+            {
+                [dic2 setObject:@"1" forKey:@"Value"];
+            }
+            [arrFiled replaceObjectAtIndex:i withObject:dic2];
+        }
+        
+        NSLog(@"ary=%@",arrFiled);
+        
+//        [arrFiledTemp removeAllObjects];
+//        [arrFiledTemp addObject:str];
+//        
+//        [arrCancelled removeAllObjects];
+//        [arrCancelled addObject:str];
     }
     
     [self.tblPopup reloadData];
-    [self.viewPopup setHidden:YES];
+    [self.viewPopup setHidden:YES];*/
 }
 
 - (IBAction)btnPopup_Radio:(id)sender
 {
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tblPopup];
     NSIndexPath *indexPath = [self.tblPopup indexPathForRowAtPoint:buttonPosition];
-
+    
     if ([strSelectedPopup isEqualToString:@"Important"])
     {
-        NSString *str=[arrFiled objectAtIndex:indexPath.row];
+        NSString *str=[[arrFiled objectAtIndex:indexPath.row]objectForKey:@"Name"];
         self.aImportantTextField.text=[str capitalizedString];
         [arrFiledTemp removeAllObjects];
         [arrFiledTemp addObject:str];
     }
     else
     {
-        NSString *str=[arrFiled objectAtIndex:indexPath.row];
+        NSString *str=[[arrFiled objectAtIndex:indexPath.row]objectForKey:@"Name"];
         self.aCancelTextField.text=[str capitalizedString];
         [arrFiledTemp removeAllObjects];
         [arrFiledTemp addObject:str];
@@ -367,14 +551,14 @@
         [alrt show];
         return;
     }
-
+    
     if ([Utility validateBlankField:aDescriptionTextview.text])
     {
         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:CIRCULAR_DESC delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alrt show];
         return;
     }
-
+    
     
     if ([Utility validateBlankField:aSatrtDateTextField.text])
     {
@@ -393,19 +577,37 @@
 
 - (IBAction)btnImportant:(id)sender
 {
-    strSelectedPopup=@"Important";
-    arrFiled = [arrImportantMain mutableCopy];
-    arrFiledTemp = [arrImportant mutableCopy];
+   // strSelectedPopup=@"Important";
+    
+  //  arrFiled = [aryImp mutableCopy];
+    
+   // arrFiled = [arrImportantMain mutableCopy];
+    //arrFiledTemp = [arrImportant mutableCopy];
+    
+   
+    
+    _tblCancelled.hidden = YES;
+    _tblPopup.hidden = NO;
+    [_viewPopup bringSubviewToFront:_tblPopup];
     [self.tblPopup reloadData];
     [self.viewPopup setHidden:NO];
 }
 
 - (IBAction)btnCancelled:(id)sender
 {
-    strSelectedPopup=@"Cancelled";
-    arrFiled = [arrCancelledMain mutableCopy];
-    arrFiledTemp = [arrCancelled mutableCopy];
-    [self.tblPopup reloadData];
+  //  strSelectedPopup=@"Cancelled";
+    
+   // arrFiled = [aryCan mutableCopy];
+    
+   // arrFiled = [arrCancelledMain mutableCopy];
+    //arrFiledTemp = [arrCancelled mutableCopy];
+    
+    
+    _tblCancelled.hidden = NO;
+    _tblPopup.hidden = YES;
+    [_viewPopup bringSubviewToFront:_tblCancelled];
+    
+    [self.tblCancelled reloadData];
     [self.viewPopup setHidden:NO];
 }
 

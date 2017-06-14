@@ -718,15 +718,28 @@
 
 +(NSMutableDictionary *)getCurrentUserDetail
 {
-    NSArray *jsonStr=[DBOperation selectData:[NSString stringWithFormat:@"select JsonStr from CurrentActiveUser"]];
+    //NSArray *jsonStr=[DBOperation selectData:[NSString stringWithFormat:@"select JsonStr from CurrentActiveUser"]];
     NSData *data;
     
-    if([jsonStr count] != 0)
+    
+    NSMutableArray *ary = [DBOperation selectData:@"Select * from CurrentActiveUser"];
+    
+    //Select * from CurrentActiveUser
+    
+    //NSLog(@"ary=%@",ary);
+    
+   // NSLog(@"***********************************************************");
+    
+    if([ary count] != 0)
     {
-        data= [[[jsonStr objectAtIndex:0]objectForKey:@"JsonStr"]  dataUsingEncoding:NSUTF8StringEncoding];
+        data= [[[ary objectAtIndex:0]objectForKey:@"JsonStr"]  dataUsingEncoding:NSUTF8StringEncoding];
         
         id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-        return json;
+        NSMutableDictionary *dic = [[NSMutableDictionary alloc]initWithDictionary:json];
+        
+        return dic;
+        
+        //return json;
     }
     
     NSMutableDictionary *dic=[[NSMutableDictionary alloc]init];

@@ -96,7 +96,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 67;
+    return 95;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -146,7 +146,24 @@
     lb.text = [[aryProjectData objectAtIndex:section]objectForKey:@"ProjectTitle"];
     
     UILabel *lb1 = (UILabel *)[cell.contentView viewWithTag:3];
-    lb1.text = [[aryProjectData objectAtIndex:section]objectForKey:@"UserName"];
+    lb1.text = [NSString stringWithFormat:@"Created by : %@",[[aryProjectData objectAtIndex:section]objectForKey:@"UserName"]];
+    
+    //UpdateOn
+    
+    NSString *strDate = [[aryProjectData objectAtIndex:section]objectForKey:@"UpdateOn"];
+    
+    UILabel *lb3 = (UILabel *)[cell.contentView viewWithTag:80];
+    
+    if (strDate == (id)[NSNull null] || [strDate isEqualToString:@"(null)"] || [strDate isEqualToString:@"<null>"])
+    {
+        lb3.text = @"";
+    }
+    else
+    {
+         lb3.text = [NSString stringWithFormat:@"Lastupdate On : %@",[Utility convertMiliSecondtoDate:@"dd-MM-yyyy" date:[[aryProjectData objectAtIndex:section]objectForKey:@"UpdateOn"]]];
+    }
+   
+   
     
     UITapGestureRecognizer  *headerTapped   = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sectionHeaderTapped:)];
     headerTapped.view.tag = section;
@@ -387,7 +404,7 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:PROJECTLIST delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
@@ -507,7 +524,9 @@
                  }
                  else
                  {
-                     
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:PROJECTDELETERCORD delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
+
                  }
              }
              else

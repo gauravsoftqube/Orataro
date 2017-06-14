@@ -24,16 +24,23 @@
     
     [_imgUser.layer setCornerRadius:35];
     _imgUser.clipsToBounds=YES;
+     [self commonData];
     
-    [self commonData];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+   
+}
 -(void)commonData
 {
+    
+    NSLog(@"Dic=%@",_dicSelect_Circular);
+    
     [self.lblTitle setText:[NSString stringWithFormat:@"%@",[[self.dicSelect_Circular objectForKey:@"CircularTitle"] capitalizedString]]];
     [self.lblDetail setText:[NSString stringWithFormat:@"%@",[[self.dicSelect_Circular objectForKey:@"CircularDetails"] capitalizedString]]];
     [self.lblUserName setText:[NSString stringWithFormat:@"%@",[[self.dicSelect_Circular objectForKey:@"TeacherName"] capitalizedString]]];
@@ -44,31 +51,21 @@
         if(![strURLForHomeWork isKindOfClass:[NSNull class]] && ![strURLForHomeWork isEqual:@"<null>"])
         {
             strURLForHomeWork=[NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[self.dicSelect_Circular objectForKey:@"Photo"]];
-            [ProgressHUB showHUDAddedTo:self.view];
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
-                           ^{
-                               NSURL *imageURL = [NSURL URLWithString:strURLForHomeWork];
-                               NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
-                               dispatch_sync(dispatch_get_main_queue(), ^{
-                                   [ProgressHUB hideenHUDAddedTo:self.view];
-                                   
-                                   UIImage *img = [UIImage imageWithData:imageData];
-                                   if (img != nil)
-                                   {
-                                       self.imgCircular.image = [UIImage imageWithData:imageData];
-                                   }
-                                   else
-                                   {
-                                       self.imgCircular.image = [UIImage imageNamed:@"no_img"];
-                                   }
-                                   
-                                   [self getUserImage];
-                                   
-                               });
-                           });
+            
+            [_imgCircular sd_setImageWithURL:[NSURL URLWithString:strURLForHomeWork] placeholderImage:[UIImage imageNamed:@"no_img"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL)
+            {
+                
+                _imgCircular.image = image;
+                
+                [self getUserImage];
+
+            }];
+            
+            
         }
         else
         {
+             _imgCircular.image = [UIImage imageNamed:@"no_img"];
             [self getUserImage];
         }
     }
@@ -83,28 +80,12 @@
         if(![strURLForTeacherProfilePicture isKindOfClass:[NSNull class]])
         {
             strURLForTeacherProfilePicture=[NSString stringWithFormat:@"%@%@",apk_ImageUrlFor_HomeworkDetail,[self.dicSelect_Circular objectForKey:@"ProfilePic"]];
-            [ProgressHUB showHUDAddedTo:self.view];
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
-                           ^{
-                               
-                               NSURL *imageURL = [NSURL URLWithString:strURLForTeacherProfilePicture];
-                               NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
-                               
-                               //This is your completion handler
-                               dispatch_sync(dispatch_get_main_queue(), ^{
-                                   [ProgressHUB hideenHUDAddedTo:self.view];
-                                   UIImage *img = [UIImage imageWithData:imageData];
-                                   if (img != nil)
-                                   {
-                                       self.imgUser.image = [UIImage imageWithData:imageData];
-                                   }
-                                   else
-                                   {
-                                       self.imgUser.image = [UIImage imageNamed:@"dash_profile"];
-                                   }
-                                   
-                               });
-                           });
+            
+            [_imgUser sd_setImageWithURL:[NSURL URLWithString:strURLForTeacherProfilePicture] placeholderImage:[UIImage imageNamed:@"dash_profile"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                
+                _imgUser.image = image;
+            }];
+            
         }
     }
     
@@ -112,14 +93,6 @@
 
 #pragma mark - UIButton Action
 
-- (IBAction)BackbtnClicked:(id)sender
-{
-    
-}
-
-- (IBAction)BackBtnClicked:(id)sender
-{
-}
 
 - (IBAction)BackClicked:(id)sender
 {

@@ -25,6 +25,11 @@
 {
     [super viewDidLoad];
     
+    
+    aryFetchData = [[NSMutableArray alloc]init];
+    aryTempStoreData = [[NSMutableArray alloc]init];
+
+    
     _viewDeletePopup.hidden = YES;
     
     _imgCancel.image = [_imgCancel.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -51,7 +56,8 @@
     [self commonData];
 }
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
@@ -68,13 +74,12 @@
     //CREATE TABLE "SchoolGroupList" ("id" INTEGER PRIMARY KEY  NOT NULL , "jsonStr" VARCHAR, "ImageJsonstr" VARCHAR, "flag" VARCHAR)
     
     NSArray *ary = [DBOperation selectData:@"select * from SchoolGroupList"];
+    
     aryFetchData = [Utility getLocalDetail:ary columnKey:@"jsonStr"];
     
     aryTempStoreData = [DBOperation selectData:@"select id,flag,ImageJsonstr from SchoolGroupList"];
     
-    NSLog(@"ary=%@",aryTempStoreData);
-    
-    //[_tblScoolGroupList reloadData];
+   // NSLog(@"ary=%@",aryTempStoreData);
     
     if (aryTempStoreData.count == 0)
     {
@@ -221,7 +226,8 @@
                      
                      if (strSaveImg == (id)[NSNull null] || strSaveImg.length == 0 || [strSaveImg isEqualToString:@"<null>"])
                      {
-                         
+                        // NSLog(@"Null");
+                          img.image = [UIImage imageNamed:@"no_img"];
                      }
                      else
                      {
@@ -238,63 +244,16 @@
                              NSLog(@"the cachedImagedPath is %@",imagePath);
                          }
 
-                         
-                        /* NSArray *getExtension = [strSaveImg componentsSeparatedByString:@"."];
-                         
-                         if ([[getExtension objectAtIndex:1] isEqualToString:@"jpg"] || [[getExtension objectAtIndex:1] isEqualToString:@"JPG"] ||
-                             [[getExtension objectAtIndex:1] isEqualToString:@"jpeg"] || [[getExtension objectAtIndex:1] isEqualToString:@"png"] )
-                         {
-                             NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
-                             [imageData writeToFile:imagePath atomically:NO];
-                             
-                             if (![imageData writeToFile:imagePath atomically:NO])
-                             {
-                                 NSLog(@"Failed to cache image data to disk");
-                             }
-                             else
-                             {
-                                 [imageData writeToFile:imagePath atomically:NO];
-                                 NSLog(@"the cachedImagedPath is %@",imagePath);
-                             }
-                         }
-                         else
-                         {
-                             NSData *imageData = UIImagePNGRepresentation(image);
-                             [imageData writeToFile:imagePath atomically:NO];
-                             
-                             if (![imageData writeToFile:imagePath atomically:NO])
-                             {
-                                 NSLog(@"Failed to cache image data to disk");
-                             }
-                             else
-                             {
-                                 [imageData writeToFile:imagePath atomically:NO];
-                                 NSLog(@"the cachedImagedPath is %@",imagePath);
-                             }
-                             
-                         }*/
-                         //jpg
-                         
-                     }
-                     //JPG
-                     //png
-                     //jpeg
-                     
-                     
-                     
+                }
+                 
                  }];
                 
                 
-                //[cell2.activityIndicator startAnimating];
-                // [activityIndicator ];
-                
-            }
+        }
         }
         else
         {
-            //CREATE TABLE "SchoolGroupList" ("id" INTEGER PRIMARY KEY  NOT NULL , "jsonStr" VARCHAR, "ImageJsonstr" VARCHAR, "flag" VARCHAR)
-            
-            NSLog(@"count=%lu",(unsigned long)aryTempStoreData.count);
+         NSLog(@"count=%lu",(unsigned long)aryTempStoreData.count);
             
             //  [cell2.activityIndicator stopAnimating];
             // cell2.activityIndicator.hidden = YES;
@@ -440,7 +399,7 @@
         
         [self apiCallFor_DeleteGroupList:[DicDeleteData objectForKey:@"GropuID"] row:[[NSString stringWithFormat:@"%ld",btn.tag] intValue]];
 
-        [self apiCallFor_DeleteGroupList:[[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"GropuID"] row:[[NSString stringWithFormat:@"%ld",(long)btn.tag] intValue]];
+       // [self apiCallFor_DeleteGroupList:[[aryFetchData objectAtIndex:indexPath.row]objectForKey:@"GropuID"] row:[[NSString stringWithFormat:@"%ld",(long)btn.tag] intValue]];
     }
 
 }
@@ -619,17 +578,24 @@
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
                      
-                    [aryFetchData removeAllObjects];
-                      [aryTempStoreData removeAllObjects];
-                      [_tblScoolGroupList reloadData];
+                    //[aryFetchData removeAllObjects];
+                     // [aryTempStoreData removeAllObjects];
+                     // [_tblScoolGroupList reloadData];
                      
-                     //[self ManageCircularList:arrResponce];
+                    // [self ManageCircularList:arrResponce];
                      
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     [alrt show];
+                    // [aryFetchData removeAllObjects];
+                    // [DBOperation executeSQL:@"delete from SchoolGroupList"];
+                     _tblScoolGroupList.hidden = YES;
+                     
+                     [WToast showWithText:SCHOOLGROUPLIST];
+                     
+                   //  UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:SCHOOLGROUPLIST delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     //[alrt show];
                  }
                  else
                  {
+                      _tblScoolGroupList.hidden = NO;
                      [self ManageCircularList:arrResponce];
                  }
              }
@@ -650,8 +616,6 @@
 
 -(void)ManageCircularList:(NSMutableArray *)arrResponce
 {
-    aryFetchData = [[NSMutableArray alloc]init];
-    aryTempStoreData = [[NSMutableArray alloc]init];
     
     NSLog(@"response=%@",arrResponce);
     
@@ -668,9 +632,9 @@
     //#define apk_group @"apk_group.asmx"
     //#define apk_Group_List_action @"Group_List"
     
-    NSMutableArray *ary1 = [[NSMutableArray alloc]initWithArray:arrResponce];
+   // NSMutableArray *ary1 = [[NSMutableArray alloc]initWithArray:arrResponce];
     
-    NSLog(@"array=%@",ary1);
+  //  NSLog(@"array=%@",ary1);
     
     [DBOperation executeSQL:@"delete from SchoolGroupList"];
     
@@ -739,12 +703,19 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"Group Removed"])
                  {
-                        [self apiCallFor_GetGroupList:YES];
+                     
+                    [self apiCallFor_GetGroupList:YES];
+                     [WToast showWithText:SCHOOLGROUPDELETE];
+                     
+                     //UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:SCHOOLGROUPDELETE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    // [alrt show];
+
                      
                  }
                  else
                  {
-                     
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:SCHOOlGROUPREMOVE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
                      
                  }
              }

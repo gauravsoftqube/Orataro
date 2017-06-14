@@ -91,7 +91,7 @@
                      }
                      else
                      {
-                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"Wrong Password" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:PASSWORDWRONG delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                          [alrt show];
                          
                      }

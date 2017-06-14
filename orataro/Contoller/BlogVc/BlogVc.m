@@ -36,6 +36,11 @@
     _txtSearchTextfield.delegate = self;
     [Utility SearchTextView:_viewSearch];
     
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refreshData) forControlEvents:UIControlEventValueChanged];
+    
+    aBlogTable.refreshControl = refreshControl;
+    
     // Do any additional setup after loading the view.
 }
 
@@ -72,6 +77,36 @@
     }
 
 }
+
+#pragma mark - Pull to refresh
+
+-(void)refreshData
+{
+    NSArray *ary = [DBOperation selectData:@"select * from BlogDetail"];
+    getdata = [Utility getLocalDetail:ary columnKey:@"BlogJsonStr"];
+    [aBlogTable reloadData];
+    //  dispatch_group_t group = dispatch_group_create();
+    
+    if (getdata.count == 0)
+    {
+        if ([Utility isInterNetConnectionIsActive] == false)
+        {
+            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alrt show];
+            return;
+        }
+        else
+        {
+            [self apiCallFor_BlogetDetail:YES];
+            
+        }
+    }
+    else
+    {
+        [self apiCallFor_BlogetDetail:NO];
+    }
+}
+
 
 #pragma mark - tableview delegate
 
@@ -229,11 +264,12 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"no blog list found" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:BLOGLIST delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
                  {
+                     [aBlogTable.refreshControl endRefreshing];
                      [self ManageCircularList:arrResponce];
                      
                      
@@ -260,6 +296,10 @@
     //#define apk_GetBlogDetail_action @"GetBlogDetail"
     
     //CREATE TABLE "BlogDetail" ("id" INTEGER PRIMARY KEY  NOT NULL , "BlogJsonStr" VARCHAR)
+    
+   // sb.append(pageDetail.toString().replaceAll("/DataFiles", ServiceResource.BASE_IMG_URL+"DataFiles"));
+
+    NSLog(@"Ary Resplonse=%@",arrResponce);
     
     [DBOperation executeSQL:@"delete from BlogDetail"];
     

@@ -31,11 +31,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     ah = (AppDelegate *)[UIApplication sharedApplication].delegate;
     aView1.layer.cornerRadius = 20;
     aCalenderView.layer.cornerRadius = 50.0;
     aCalenderView.layer.borderWidth = 2.0;
     aCalenderView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    
     
     strFlagShowTab=@"AddPage";
     
@@ -82,14 +84,25 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    if([[Utility getMemberType] isEqualToString:@"Student"])
+    
+    if ([[Utility getMemberType] containsString:@"Teacher"])
     {
-        [self.aView1 setHidden:YES];
+        [self.aView1 setHidden:NO];
+
     }
     else
     {
-        [self.aView1 setHidden:NO];
+        [self.aView1 setHidden:YES];
     }
+    
+//    if([[Utility getMemberType] isEqualToString:@"Student"])
+//    {
+//        [self.aView1 setHidden:YES];
+//    }
+//    else
+//    {
+//        [self.aView1 setHidden:NO];
+//    }
     
     [self apiCallMethod];
 }
@@ -98,6 +111,7 @@
 {
     [self apiCallMethod];
 }
+
 
 -(void)apiCallMethod
 {
@@ -155,7 +169,18 @@
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
     [param setValue:[NSString stringWithFormat:@""] forKey:@"BeachID"];
     
-    if([[dicCurrentUser objectForKey:@"MemberType"] isEqualToString:@"Student"])
+    
+    if ([[Utility getMemberType] containsString:@"Teacher"])
+    {
+        [param setValue:[NSString stringWithFormat:@""] forKey:@"DivisionID"];
+        [param setValue:[NSString stringWithFormat:@""] forKey:@"GradeID"];
+    }
+    else
+    {
+        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"DivisionID"]] forKey:@"DivisionID"];
+        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"GradeID"]] forKey:@"GradeID"];
+    }
+   /* if([[dicCurrentUser objectForKey:@"MemberType"] isEqualToString:@"Student"])
     {
         [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"DivisionID"]] forKey:@"DivisionID"];
         [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"GradeID"]] forKey:@"GradeID"];
@@ -164,7 +189,7 @@
     {
         [param setValue:[NSString stringWithFormat:@""] forKey:@"DivisionID"];
         [param setValue:[NSString stringWithFormat:@""] forKey:@"GradeID"];
-    }
+    }*/
     
     if (checkProgress == YES)
     {
@@ -186,7 +211,7 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:HOMEWORKLIST delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
@@ -225,6 +250,7 @@
     {
         NSMutableDictionary *d = [[mutableArray objectAtIndex:i] mutableCopy];
         NSString *DateOfCircular=[Utility convertDateFtrToDtaeFtr:@"MM/dd/yyyy" newDateFtr:@"MM/yyyy" date:[NSString stringWithFormat:@"%@",[[mutableArray objectAtIndex:i]objectForKey:@"DateOfHomeWork"]]];
+        
         [d setObject:DateOfCircular forKey:@"Group"];
         [mutableArray replaceObjectAtIndex:i withObject:d];
         
@@ -232,18 +258,17 @@
     }
     
     NSArray *temp = [arrResponce sortedArrayUsingDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"Group" ascending:YES]]];
-    
-    
     [arrResponce removeAllObjects];
     [arrResponce addObjectsFromArray:temp];
     
     NSArray *areas = [arrResponce valueForKeyPath:@"@distinctUnionOfObjects.Group"];
     
-    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:nil ascending:YES];
+    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:nil ascending:NO];
     
     NSArray *sorters = [[NSArray alloc] initWithObjects:sorter, nil];
     NSArray *sortedArray = [areas sortedArrayUsingDescriptors:sorters];
     NSDateFormatter *dateFormatter1 = [NSDateFormatter new];
+    
     dateFormatter1.dateFormat = @"MM-yyyy";
     NSArray *sortedArray1 = [sortedArray sortedArrayUsingComparator:^(NSString *string1, NSString *string2)
                              {
@@ -255,6 +280,8 @@
     
     
     sortedArray = [[NSArray alloc]initWithArray:sortedArray1];
+    
+    sortedArray = [[sortedArray reverseObjectEnumerator] allObjects];
     
     for (NSString *area in sortedArray)
     {
@@ -278,7 +305,9 @@
         [entry setObject:sortedArray3 forKey:@"items"];
         [arrHomeworkList addObject:entry];
     }
-    arrHomeworkList = [[[arrHomeworkList reverseObjectEnumerator]allObjects]mutableCopy];
+    //arrHomeworkList = [arrHomeworkList mutableCopy];
+    
+    [[[arrHomeworkList reverseObjectEnumerator]allObjects]mutableCopy];
     
     // NSArray *ary = [DBOperation selectData:@"select * from HomeWorkList"];
     // arrHomeworkList = [Utility getLocalDetail:ary columnKey:@"dicHomeWorkList"];
@@ -467,10 +496,10 @@
 //    {
     
     
-  //  NSLog(@"Date=%@",DateOfFinish);
+    NSLog(@"Date=%@",DateOfFinish);
     UILabel *lblDateOfFinish = (UILabel *)[cell.contentView viewWithTag:5];
-    
-    if ([DateOfFinish isEqualToString:@"<null>"])
+    //[DateOfFinish isEqualToString:@"<null>"]
+    if ([DateOfFinish isEqual:(id)[NSNull null]])
     {
         [lblDateOfFinish setText:@"End Date:"];
         lblDateOfFinish.textAlignment  = NSTextAlignmentRight;
@@ -478,7 +507,7 @@
     else
     {
         
-        [lblDateOfFinish setText:[NSString stringWithFormat:@"End Date: %@",DateOfFinish]];
+        [lblDateOfFinish setText:[NSString stringWithFormat:@"End Date: %@",[Utility convertDateFtrToDtaeFtr:@"MM/dd/yyyy" newDateFtr:@"dd/MM/yyyy" date:DateOfFinish]]];
     }
     
     

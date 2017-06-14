@@ -10,11 +10,14 @@
 
 @interface CreateScoolGroupVc : UIViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UIAlertViewDelegate>
 
+- (IBAction)btnBackStandardClicked:(id)sender;
 
+- (IBAction)btnGroupTypeClicked:(id)sender;
 @property (weak, nonatomic) NSString *strEditOrCreate;
 //Header
 @property (weak, nonatomic) IBOutlet UIButton *btnBackHeader;
 - (IBAction)btnBackHeader:(id)sender;
+- (IBAction)btnBackGroupTypeClicked:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIButton *btnSubmitHeader;
 - (IBAction)btnSubmitHeader:(id)sender;

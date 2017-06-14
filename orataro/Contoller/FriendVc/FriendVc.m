@@ -14,6 +14,7 @@
 @interface FriendVc ()
 {
     NSMutableArray *nameary,*aryImage,*arygetIdflag;
+    UIRefreshControl *refreshControl;
 }
 @end
 
@@ -36,6 +37,11 @@ int s =0 ;
     _txtSearchFriend.delegate = self;
     
     [Utility SearchTextView:_viewSearch];
+    
+    refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refreshData) forControlEvents:UIControlEventValueChanged];
+    
+    friendTableView.refreshControl = refreshControl;
     
     //_viewSearch.
     // Do any additional setup after loading the view.
@@ -89,6 +95,43 @@ int s =0 ;
     
     
 }
+
+#pragma mark - Pull to refresh
+
+-(void)refreshData
+{
+    NSArray *ary = [DBOperation selectData:@"select * from FriendList"];
+    nameary = [Utility getLocalDetail:ary columnKey:@"FriendJsonStr"];
+    arygetIdflag = [DBOperation selectData:@"select id,flag,ImageStr from FriendList"];
+    [friendTableView reloadData];
+    
+    if (nameary.count == 0)
+    {
+        if ([Utility isInterNetConnectionIsActive] == false)
+        {
+            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alrt show];
+            return;
+        }
+        else
+        {
+            [self apiCallFor_GetFriendList:YES];
+        }
+    }
+    else
+    {
+        if ([Utility isInterNetConnectionIsActive] == true)
+        {
+            [self apiCallFor_GetFriendList:NO];
+        }
+        else
+        {
+            
+        }
+    }
+}
+
+
 #pragma mark - tableview delegate
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -418,6 +461,7 @@ int s =0 ;
                  }
                  else
                  {
+                     [refreshControl endRefreshing];
                      _viewSearch.hidden = NO;
                      _lbNoFriendList.hidden = YES;
                      [self ManageCircularList:arrResponce];
@@ -520,7 +564,7 @@ int s =0 ;
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"search result not found" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:FRIENDSEARCH delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else

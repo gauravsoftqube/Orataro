@@ -95,16 +95,30 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    if([[Utility getMemberType] isEqualToString:@"Student"])
+    NSLog(@"Type=%@",[Utility getMemberType]);
+    
+    if ([[Utility getMemberType] containsString:@"Teacher"])
+    {
+        MemberType=NO;
+        [self.AddBtn setHidden:NO];
+
+    
+    }
+    else
     {
         MemberType=YES;
         [self.AddBtn setHidden:YES];
     }
-    else
-    {
-        MemberType=NO;
-        [self.AddBtn setHidden:NO];
-    }
+//    if([[Utility getMemberType] isEqualToString:@"Student"])
+//    {
+//        MemberType=YES;
+//        [self.AddBtn setHidden:YES];
+//    }
+//    else
+//    {
+//        MemberType=NO;
+//        [self.AddBtn setHidden:NO];
+//    }
     
     [self apiCallMethod];
 }
@@ -167,16 +181,28 @@
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
     [param setValue:[NSString stringWithFormat:@""] forKey:@"BeachID"];
     
-    if([[dicCurrentUser objectForKey:@"MemberType"] isEqualToString:@"Student"])
-    {
-        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"DivisionID"]] forKey:@"DivisionID"];
-        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"GradeID"]] forKey:@"GradeID"];
-    }
-    else
+    
+    if ([[Utility getMemberType] containsString:@"Teacher"])
     {
         [param setValue:[NSString stringWithFormat:@""] forKey:@"DivisionID"];
         [param setValue:[NSString stringWithFormat:@""] forKey:@"GradeID"];
     }
+    else
+    {
+        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"DivisionID"]] forKey:@"DivisionID"];
+        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"GradeID"]] forKey:@"GradeID"];
+    }
+    
+    
+//    if([[dicCurrentUser objectForKey:@"MemberType"] isEqualToString:@"Student"])
+//    {
+//       
+//    }
+//    else
+//    {
+//        [param setValue:[NSString stringWithFormat:@""] forKey:@"DivisionID"];
+//        [param setValue:[NSString stringWithFormat:@""] forKey:@"GradeID"];
+//    }
     
     if (checkProgress == YES)
     {
@@ -199,7 +225,7 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"circular list not available" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:CIRCULARLIST delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
@@ -237,7 +263,11 @@
     {
         NSMutableDictionary *d = [[mutableArray objectAtIndex:i] mutableCopy];
         
-        NSString *DateOfCircular=[Utility convertMiliSecondtoDate:@"MM/yyyy" date:[NSString stringWithFormat:@"%@",[[mutableArray objectAtIndex:i]objectForKey:@"DateOfCircular"]]];
+      //  NSLog(@"Data=%@",[Utility convertMiliSecondtoDate:@"MM/yyyy" date:[NSString stringWithFormat:@"%@",[[mutableArray objectAtIndex:i]objectForKey:@"DateOfCircular"]]]);
+        
+    NSString *DateOfCircular=[Utility convertMiliSecondtoDate:@"MM/yyyy" date:[NSString stringWithFormat:@"%@",[[mutableArray objectAtIndex:i]objectForKey:@"DateOfCircular"]]];
+        
+      //  NSLog(@"Data=%@",DateOfCircular);
         
         [d setObject:DateOfCircular forKey:@"Group"];
         [mutableArray replaceObjectAtIndex:i withObject:d];
@@ -251,7 +281,7 @@
     
     NSArray *areas = [arrResponce valueForKeyPath:@"@distinctUnionOfObjects.Group"];
     
-    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:nil ascending:YES];
+    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:nil ascending:NO];
     
     NSArray *sorters = [[NSArray alloc] initWithObjects:sorter, nil];
     
@@ -270,6 +300,12 @@
     
     
     sortedArray = [[NSArray alloc]initWithArray:sortedArray1];
+    
+    sortedArray = [[sortedArray reverseObjectEnumerator] allObjects];
+    
+    //[sortedArray reverseObjectEnumerator];
+    
+   // NSLog(@"Data=%@",sortedArray);
     
     for (NSString *area in sortedArray)
     {
@@ -292,7 +328,9 @@
         [entry setObject:sortedArray3 forKey:@"items"];
         [arrCircularList addObject:entry];
     }
-    arrCircularList =[[[arrCircularList reverseObjectEnumerator]allObjects]mutableCopy];
+    //arrCircularList = [arrCircularList mutableCopy];
+    
+    [[[arrCircularList reverseObjectEnumerator]allObjects]mutableCopy];
     
     [_CircularTableView reloadData];
 }
@@ -431,11 +469,20 @@
     lbDesc.text = [[d objectForKey:@"CircularDetails"]capitalizedString];
     
     UIButton *btnDelete = (UIButton *)[cell.contentView viewWithTag:5];
-    if([[Utility getMemberType] isEqualToString:@"Student"])
+    
+    if ([[Utility getMemberType] containsString:@"Teacher"])
+    {
+    }
+    else
     {
         [btnDelete setHidden:YES];
         [btnDelete setFrame:CGRectMake(btnDelete.frame.origin.x, btnDelete.frame.origin.y, 0, btnDelete.frame.size.height)];
     }
+//    if([[Utility getMemberType] isEqualToString:@"Student"])
+//    {
+//        [btnDelete setHidden:YES];
+//        [btnDelete setFrame:CGRectMake(btnDelete.frame.origin.x, btnDelete.frame.origin.y, 0, btnDelete.frame.size.height)];
+//    }
     
     return cell;
 }
@@ -473,9 +520,15 @@
     vc.dicSelect_Circular=[[[arrCircularList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:vc animated:YES];
 }
+
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 141.0;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 62.0;
 }
 
 #pragma mark - tbl UIButton Action

@@ -79,14 +79,22 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    if([[Utility getMemberType] isEqualToString:@"Student"])
-    {
-        [self.aView1 setHidden:YES];
-    }
-    else
+    if ([[Utility getMemberType] containsString:@"Teacher"])
     {
         [self.aView1 setHidden:NO];
     }
+    else
+    {
+        [self.aView1 setHidden:YES];
+    }
+//    if([[Utility getMemberType] isEqualToString:@"Student"])
+//    {
+//        [self.aView1 setHidden:YES];
+//    }
+//    else
+//    {
+//        [self.aView1 setHidden:NO];
+//    }
     
     [self apiCallMethod];
 }
@@ -152,16 +160,28 @@
     [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"InstituteID"]] forKey:@"InstituteID"];
     [param setValue:[NSString stringWithFormat:@""] forKey:@"BeachID"];
     
-    if([[dicCurrentUser objectForKey:@"MemberType"] isEqualToString:@"Student"])
-    {
-        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"DivisionID"]] forKey:@"DivisionID"];
-        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"GradeID"]] forKey:@"GradeID"];
-    }
-    else
+    
+    if ([[Utility getMemberType] containsString:@"Teacher"])
     {
         [param setValue:[NSString stringWithFormat:@""] forKey:@"DivisionID"];
         [param setValue:[NSString stringWithFormat:@""] forKey:@"GradeID"];
     }
+    else
+    {
+        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"DivisionID"]] forKey:@"DivisionID"];
+        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"GradeID"]] forKey:@"GradeID"];
+    }
+    
+//    if([[dicCurrentUser objectForKey:@"MemberType"] isEqualToString:@"Student"])
+//    {
+//        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"DivisionID"]] forKey:@"DivisionID"];
+//        [param setValue:[NSString stringWithFormat:@"%@",[dicCurrentUser objectForKey:@"GradeID"]] forKey:@"GradeID"];
+//    }
+//    else
+//    {
+//        [param setValue:[NSString stringWithFormat:@""] forKey:@"DivisionID"];
+//        [param setValue:[NSString stringWithFormat:@""] forKey:@"GradeID"];
+//    }
     
     if (checkProgress == YES)
     {
@@ -183,7 +203,7 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"classwork not available" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:CLASSWORKLIST delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
@@ -220,12 +240,21 @@
     {
         NSMutableDictionary *d = [[mutableArray objectAtIndex:i] mutableCopy];
         
-        NSString *DateOfCircular=[Utility convertMiliSecondtoDate:@"MM/yyyy" date:[NSString stringWithFormat:@"%@",[[mutableArray objectAtIndex:i]objectForKey:@"DateOfClassWork"]]];
+        //NSString *DateOfCircular=[Utility convertMiliSecondtoDate:@"MM/dd/yyyy" date:[NSString stringWithFormat:@"%@",[[mutableArray objectAtIndex:i]objectForKey:@"DateOfClassWork"]]];
+        
+         // NSString *DateOfCircular=[Utility convertDateFtrToDtaeFtr:@"MM/dd/yyyy" newDateFtr:@"MM/yyyy" date:[NSString stringWithFormat:@"%@",[[mutableArray objectAtIndex:i]objectForKey:@"DateOfClassWork"]]];
+        
+         NSString *DateOfCircular=[Utility convertMiliSecondtoDate:@"MM/yyyy" date:[NSString stringWithFormat:@"%@",[[mutableArray objectAtIndex:i]objectForKey:@"DateOfClassWork"]]];
         
         [d setObject:DateOfCircular forKey:@"Group"];
         
         [mutableArray replaceObjectAtIndex:i withObject:d];
-        arrResponce = mutableArray;
+        
+        NSArray *mpary = [[mutableArray reverseObjectEnumerator] allObjects];
+        
+        arrResponce = [[NSMutableArray alloc]initWithArray:mpary];
+        
+     //   arrResponce = mutableArray;
     }
     
     NSArray *temp = [arrResponce sortedArrayUsingDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"Group" ascending:YES]]];
@@ -241,7 +270,9 @@
     NSArray *sorters = [[NSArray alloc] initWithObjects:sorter, nil];
     NSArray *sortedArray = [areas sortedArrayUsingDescriptors:sorters];
     NSDateFormatter *dateFormatter1 = [NSDateFormatter new];
+    
     dateFormatter1.dateFormat = @"MM-yyyy";
+    
     NSArray *sortedArray1 = [sortedArray sortedArrayUsingComparator:^(NSString *string1, NSString *string2)
                              {
                                  NSDate *date1 = [dateFormatter1 dateFromString:string1];
@@ -252,6 +283,8 @@
     
     
     sortedArray = [[NSArray alloc]initWithArray:sortedArray1];
+    
+    sortedArray = [[sortedArray reverseObjectEnumerator] allObjects];
     
     for (NSString *area in sortedArray)
     {
@@ -268,13 +301,14 @@
         items = [[NSMutableArray alloc] initWithArray:[temp sortedArrayUsingDescriptors:sortDescriptors]];
         
         NSSortDescriptor * brandDescriptor = [[NSSortDescriptor alloc] initWithKey:@"DateOfClassWork" ascending:NO];
+        
         NSArray * sortedArray3 = [items sortedArrayUsingDescriptors:@[brandDescriptor]];
         
         [entry setObject:sortedArray3 forKey:@"items"];
         [arrClassWorkList addObject:entry];
     }
     
-    arrClassWorkList = [[[arrClassWorkList reverseObjectEnumerator]allObjects]mutableCopy];
+    [[[arrClassWorkList reverseObjectEnumerator]allObjects]mutableCopy];
     [_tblClassworkList reloadData];
     
 }
@@ -479,11 +513,20 @@
     [lblHomeWorksDetails setText:[NSString stringWithFormat:@"%@",ClassWorkDetails]];
     
     UIButton *btnDelete = (UIButton *)[cell.contentView viewWithTag:5];
-    if([[Utility getMemberType] isEqualToString:@"Student"])
+    
+    if ([[Utility getMemberType] containsString:@"Teacher"])
+    {
+    }
+    else
     {
         [btnDelete setHidden:YES];
         [btnDelete setFrame:CGRectMake(btnDelete.frame.origin.x, btnDelete.frame.origin.y, 0, btnDelete.frame.size.height)];
     }
+//    if([[Utility getMemberType] isEqualToString:@"Student"])
+//    {
+//        [btnDelete setHidden:YES];
+//        [btnDelete setFrame:CGRectMake(btnDelete.frame.origin.x, btnDelete.frame.origin.y, 0, btnDelete.frame.size.height)];
+//    }
     return cell;
 }
 

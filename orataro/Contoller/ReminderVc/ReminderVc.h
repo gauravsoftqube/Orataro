@@ -12,6 +12,7 @@
 @property (strong, nonatomic) NSMutableDictionary *dicSelected;
 
 
+@property (weak, nonatomic) IBOutlet UITableView *tblCancelled;
 @property (weak, nonatomic) IBOutlet UILabel *lblTitleHeader;
 @property (weak, nonatomic) IBOutlet UITextField *aTitleTextfield;
 @property (weak, nonatomic) IBOutlet UITextView *aDescriptionTextview;

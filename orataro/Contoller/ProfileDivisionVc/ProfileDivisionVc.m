@@ -44,11 +44,13 @@
     
     //Division(Gaurav)
     
-    _lbHeaderTitle.text = [NSString stringWithFormat:@"Division (%@)",[Utility getCurrentUserName]];
+  //  _lbHeaderTitle.text = [NSString stringWithFormat:@"Division (%@)",[Utility getCurrentUserName]];
     
     NSArray *ary = [DBOperation selectData:@"select * from TeacherDivisionList"];
     arySaveData = [Utility getLocalDetail:ary columnKey:@"divJsonStr"];
     [_tblDivisionList reloadData];
+    
+      _lbHeaderTitle.text = [NSString stringWithFormat:@"Division(%lu) - (%@)",(unsigned long)arySaveStandard.count,[Utility getCurrentUserName]];
     
     if (arySaveData.count == 0)
     {
@@ -196,7 +198,7 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:PROFILEDIVISION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
@@ -214,6 +216,8 @@
                      //   NSLog(@"Data=%@",arySaveStandard);
                      
                      [self ManageCircularList:arySaveStandard];
+                     
+                     _lbHeaderTitle.text = [NSString stringWithFormat:@"Division(%lu) - (%@)",(unsigned long)arySaveStandard.count,[Utility getCurrentUserName]];
                      
                  }
              }

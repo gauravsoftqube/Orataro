@@ -30,6 +30,8 @@ int ct1 =0;
     
     app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     
+     _lblHeaderTitle.text = [NSString stringWithFormat:@"Settings (%@)",[Utility getCurrentUserName]];
+    
     //uncheck
     //tick_mark
     

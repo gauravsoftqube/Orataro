@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UIView *viewSelect;
 @property (weak, nonatomic) IBOutlet UITableView *tblPhoneList;
 @property (weak, nonatomic) IBOutlet UIView *viewCreatePhoneContact;
+@property (weak, nonatomic) IBOutlet UILabel *lbTitleHeader;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tblSelectTypeHeight;
 @property (weak, nonatomic) IBOutlet UIView *viewAdd;
 @property (weak, nonatomic) IBOutlet UIView *viewSelectOuterLayer;

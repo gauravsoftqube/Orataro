@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface ProfileStudentLeaveVc : UIViewController<UITableViewDelegate,UITableViewDataSource>
+@property (weak, nonatomic) IBOutlet UIButton *btnStart;
+@property (weak, nonatomic) IBOutlet UIButton *btnEnddate;
+@property (weak, nonatomic) IBOutlet UIView *viewPreapplication;
+@property (weak, nonatomic) IBOutlet UIView *viewSave;
 
 @property (weak, nonatomic) IBOutlet UILabel *lbHeaderTitle;
 @property (weak, nonatomic) IBOutlet UITableView *tblStudentList;

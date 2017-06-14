@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AddHomeworkVc : UIViewController
+@interface AddHomeworkVc : UIViewController<UITextFieldDelegate>
+
 
 @property (strong, nonatomic) NSMutableDictionary *dicSelectListSelection;
 

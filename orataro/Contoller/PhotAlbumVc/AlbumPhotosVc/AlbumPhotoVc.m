@@ -282,6 +282,44 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    //NSLog(@"Data===%@",[aryImg objectAtIndex:indexPath.row]);
+    
+    NSString *documentDirectory=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
+        if (aryImg.count > 0)
+        {
+            // from local
+            
+            NSString *setImage = [NSString stringWithFormat:@"%@",[[aryTemp objectAtIndex:indexPath.row]objectForKey:@"AlbumImageStr"]];
+            //  NSLog(@"image=%@",setImage);
+            NSArray *ary = [setImage componentsSeparatedByString:@"/"];
+            NSString *strSaveImg = [ary lastObject];
+            NSString *imagePath=[documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",strSaveImg]];
+            ProfilePhotoShowVc *p7 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfilePhotoShowVc"];
+            p7.imagename = imagePath;
+            p7.strOfflineOnline = @"Offline";
+            [self.navigationController pushViewController:p7 animated:YES];
+            
+        }
+        else
+        {
+            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"sorry no image available" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alrt show];
+            
+        }
+    }
+    else
+    {
+        NSString *str = [NSString stringWithFormat:@"%@/%@",apk_ImageUrl,[[aryImg objectAtIndex:indexPath.row]objectForKey:@"Photo"]];
+        ProfilePhotoShowVc *p7 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ProfilePhotoShowVc"];
+        p7.imagename = str;
+        p7.strOfflineOnline = @"Online";
+        [self.navigationController pushViewController:p7 animated:YES];
+        
+    }
+
     
 }
 
@@ -338,7 +376,7 @@
                      
                      [_collectionView reloadData];
 
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"photo list not found" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:PHOTOALBUMLIST delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else

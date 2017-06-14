@@ -8,6 +8,7 @@
 
 #import "ProfilePhoneChainVc.h"
 #import "Global.h"
+#import "Utility.h"
 
 @interface ProfilePhoneChainVc ()
 {
@@ -86,10 +87,23 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     NSLog(@"Select Type=%@",arySelectType);
-    
+
+    _lbTitleHeader.text = [NSString stringWithFormat:@"My Phone Chain (%@)",[Utility getCurrentUserName]];
     [self getPhoneBookList:YES];
 }
 #pragma mark - button action
+
+- (IBAction)btnPhoneNubmerClicked:(id)sender
+{
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:_tblPhoneList];
+    NSIndexPath *indexPath = [_tblPhoneList indexPathForRowAtPoint:buttonPosition];
+    
+   // NSLog(@"data=  %@",[aryPhoneList objectAtIndex:indexPath.row]);
+    
+    NSString *phoneNumber = [@"tel://" stringByAppendingString:[NSString stringWithFormat:@"%@",[[aryPhoneList objectAtIndex:indexPath.row]objectForKey:@"ContactNo"]]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
+    
+}
 
 - (IBAction)btnDeletePopupCancelClicked:(id)sender
 {
@@ -548,7 +562,7 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:PHONELIST delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                      [aryPhoneList removeAllObjects];
                      [_tblPhoneList reloadData];
@@ -702,7 +716,7 @@
                  else
                  {
                   //   _viewDelete.hidden = NO;
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:PHONERECORDNOTDELETE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
              }

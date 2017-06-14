@@ -132,6 +132,8 @@ int multipleUser = 0;
         if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"RememberMe"] isEqualToString:@"0"])
         {
             NSArray *ary = [DBOperation selectData:@"select * from Login"];
+            
+             NSLog(@"fetch data%@",[DBOperation selectData:@"Select * from Login"]);
             NSMutableArray *arrResponce = [[NSMutableArray alloc]init];
             
             arrResponce = [Utility getLocalDetail:ary columnKey:@"dic_json_string"];
@@ -157,6 +159,7 @@ int multipleUser = 0;
                 }
                 if (multipleUser == 0)
                 {
+                     [ProgressHUB hideenHUDAddedTo:self.view];
                     [WToast showWithText:@"User not found"];
                 }
                 else if (multipleUser == 1)
@@ -191,6 +194,7 @@ int multipleUser = 0;
                         }
                         if (arrSelectInstiUser.count == 0)
                         {
+                             [ProgressHUB hideenHUDAddedTo:self.view];
                             [WToast showWithText:@"User not found"];
                         }
                         else
@@ -220,6 +224,9 @@ int multipleUser = 0;
                             
                             [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Login (dic_json_string,ActiveUser) VALUES ('%@','%@')",getjsonstr,@"0"]];
                         }
+                        
+                         NSLog(@"fetch data%@",[DBOperation selectData:@"Select * from Login"]);
+                        
                         [[NSUserDefaults standardUserDefaults]setObject:_aPhonenumberTextField.text forKey:@"MobileNumber"];
                         [[NSUserDefaults standardUserDefaults]setObject:_aPasswordTextField.text forKey:@"Password"];
                         [[NSUserDefaults standardUserDefaults]setObject:@"Login" forKey:@"CheckUser"];
@@ -329,7 +336,7 @@ int multipleUser = 0;
                  {
                      [ProgressHUB hideenHUDAddedTo:self.view];
                      
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"User id or password wrong" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:LOGINWRONGPASSWORDUSER delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
@@ -380,6 +387,7 @@ int multipleUser = 0;
                                  }
                                  if (arrSelectInstiUser.count == 0)
                                  {
+                                      [ProgressHUB hideenHUDAddedTo:self.view];
                                      [WToast showWithText:@"User not found"];
                                  }
                                  else
@@ -392,9 +400,14 @@ int multipleUser = 0;
                                          //Insert Login
                                          [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Login (dic_json_string,ActiveUser) VALUES ('%@','%@')",getjsonstr,@"0"]];
                                          
+                                          NSLog(@"fetch data%@",[DBOperation selectData:@"Select * from Login"]);
+                                         
                                          //Insert CurrentActiveUser
+                                         
                                          NSString *MemberType=[[dic objectForKey:@"MemberType"]mutableCopy];
-                                         if([MemberType rangeOfString:@"Teacher" options:NSCaseInsensitiveSearch].location == NSNotFound)
+                                         
+                                         
+                                         if(![MemberType containsString:@"Teacher"])
                                          {
                                              [dic setObject:@"Student" forKey:@"MemberType"];
                                          }
@@ -402,6 +415,8 @@ int multipleUser = 0;
                                          {
                                              [dic setObject:@"Teacher" forKey:@"MemberType"];
                                          }
+                                         
+                                         
                                          
                                          NSString *strJSon = [Utility Convertjsontostring:dic];
                                          [DBOperation executeSQL:@"delete from CurrentActiveUser"];
@@ -420,6 +435,7 @@ int multipleUser = 0;
                              }
                              else
                              {
+                                  [ProgressHUB hideenHUDAddedTo:self.view];
                                  [WToast showWithText:@"User not found"];
                              }
                          }
@@ -454,6 +470,7 @@ int multipleUser = 0;
                                  }
                                  if (arrSelectInstiUser.count == 0)
                                  {
+                                      [ProgressHUB hideenHUDAddedTo:self.view];
                                      [WToast showWithText:@"User not found"];
                                  }
                                  else
@@ -466,9 +483,10 @@ int multipleUser = 0;
                                          //Insert Login
                                          [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Login (dic_json_string,ActiveUser) VALUES ('%@','%@')",getjsonstr,@"0"]];
                                          
+                                          NSLog(@"fetch data%@",[DBOperation selectData:@"Select * from Login"]);
                                          //Insert CurrentActiveUser
                                          NSString *MemberType=[[dic objectForKey:@"MemberType"]mutableCopy];
-                                         if([MemberType rangeOfString:@"Teacher" options:NSCaseInsensitiveSearch].location == NSNotFound)
+                                         if(![MemberType containsString:@"Teacher"])
                                          {
                                              [dic setObject:@"Student" forKey:@"MemberType"];
                                          }
@@ -488,6 +506,10 @@ int multipleUser = 0;
                                      [[NSUserDefaults standardUserDefaults]synchronize];
                                      
                                      strCheckUserSwitch = @"SwitchAccount";
+                                     [[NSUserDefaults standardUserDefaults]setObject:@"MultipleUser" forKey:@"User"];
+                                     [[NSUserDefaults standardUserDefaults]synchronize];
+                                     
+
                                      [self apiCallFor_GetUserRoleRightList:@"0"];
                                  }
                              }
@@ -501,9 +523,11 @@ int multipleUser = 0;
                                      //Insert Login
                                      [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Login (dic_json_string,ActiveUser) VALUES ('%@','%@')",getjsonstr,@"0"]];
                                      
+                                      NSLog(@"fetch data%@",[DBOperation selectData:@"Select * from Login"]);
+                                     
                                      //Insert CurrentActiveUser
                                      NSString *MemberType=[[dic objectForKey:@"MemberType"]mutableCopy];
-                                     if([MemberType rangeOfString:@"Teacher" options:NSCaseInsensitiveSearch].location == NSNotFound)
+                                     if(![MemberType containsString:@"Teacher"])
                                      {
                                          [dic setObject:@"Student" forKey:@"MemberType"];
                                      }
@@ -524,6 +548,10 @@ int multipleUser = 0;
                                  [[NSUserDefaults standardUserDefaults]synchronize];
                                  
                                  strCheckUserSwitch = @"SwitchAccount";
+                                 [[NSUserDefaults standardUserDefaults]setObject:@"MultipleUser" forKey:@"User"];
+                                 [[NSUserDefaults standardUserDefaults]synchronize];
+                                 
+
                                  [self apiCallFor_GetUserRoleRightList:@"0"];
                              }
                              
@@ -581,7 +609,7 @@ int multipleUser = 0;
                  {
                      [ProgressHUB hideenHUDAddedTo:self.view];
                      
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"No roll list found" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:ROLLLIST delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
@@ -687,9 +715,11 @@ int multipleUser = 0;
                 //Insert Login
                 [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Login (dic_json_string,ActiveUser) VALUES ('%@','%@')",getjsonstr,@"0"]];
                 
+               
+                
                 //Insert CurrentActiveUser
                 NSString *MemberType=[[dic objectForKey:@"MemberType"]mutableCopy];
-                if([MemberType rangeOfString:@"Teacher" options:NSCaseInsensitiveSearch].location == NSNotFound)
+                if(![MemberType containsString:@"Teacher"])
                 {
                     [dic setObject:@"Student" forKey:@"MemberType"];
                 }
@@ -702,6 +732,8 @@ int multipleUser = 0;
                 [DBOperation executeSQL:@"delete from CurrentActiveUser"];
                 [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO CurrentActiveUser (JsonStr,userType_responce) VALUES ('%@','%@')",strJSon,MemberType]];
             }
+            
+             NSLog(@"fetch data%@",[DBOperation selectData:@"Select * from Login"]);
             
             [[NSUserDefaults standardUserDefaults]setObject:_aPhonenumberTextField.text forKey:@"MobileNumber"];
             [[NSUserDefaults standardUserDefaults]setObject:_aPasswordTextField.text forKey:@"Password"];
@@ -724,9 +756,10 @@ int multipleUser = 0;
                     //Insert Login
                     [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Login (dic_json_string,ActiveUser) VALUES ('%@','%@')",getjsonstr,@"0"]];
                     
+                     NSLog(@"fetch data%@",[DBOperation selectData:@"Select * from Login"]);
                     //Insert CurrentActiveUser
                     NSString *MemberType=[[dic objectForKey:@"MemberType"]mutableCopy];
-                    if([MemberType rangeOfString:@"Teacher" options:NSCaseInsensitiveSearch].location == NSNotFound)
+                    if(![MemberType containsString:@"Teacher"])
                     {
                         [dic setObject:@"Student" forKey:@"MemberType"];
                     }
@@ -751,6 +784,7 @@ int multipleUser = 0;
             else
             {
                 // show toast
+                [ProgressHUB hideenHUDAddedTo:self.view];
                 [WToast showWithText:@"User not found"];
             }
         }
@@ -765,9 +799,10 @@ int multipleUser = 0;
             //Insert Login
             [DBOperation executeSQL:[NSString stringWithFormat:@"INSERT INTO Login (dic_json_string,ActiveUser) VALUES ('%@','%@')",getjsonstr,@"0"]];
             
+             NSLog(@"fetch data%@",[DBOperation selectData:@"Select * from Login"]);
             //Insert CurrentActiveUser
             NSString *MemberType=[[dic objectForKey:@"MemberType"]mutableCopy];
-            if([MemberType rangeOfString:@"Teacher" options:NSCaseInsensitiveSearch].location == NSNotFound)
+            if(![MemberType containsString:@"Teacher"])
             {
                 [dic setObject:@"Student" forKey:@"MemberType"];
             }

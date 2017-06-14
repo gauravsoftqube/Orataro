@@ -256,9 +256,10 @@
              {
                  NSMutableDictionary *dic=[[arrResponce objectAtIndex:0]mutableCopy];
                  NSString *strStatus=[[dic objectForKey:@"message"]mutableCopy];
+                 
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:POLL delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else

@@ -9,8 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @interface AttendanceVC : UIViewController<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
+@property (weak, nonatomic) IBOutlet UIView *viewCalender;
 - (IBAction)btnSaveClicked:(id)sender;
 - (IBAction)btnGenerateReportClicked:(id)sender;
+- (IBAction)btnMonthPreveiousClicked:(id)sender;
+- (IBAction)btnYearePreviousClicked:(id)sender;
+- (IBAction)btnMonthNextClicked:(id)sender;
+- (IBAction)btnYearNextClicked:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UILabel *lblHeaderTitle;
 - (IBAction)ClassBtnClicked:(id)sender;

@@ -27,6 +27,8 @@
     NSString *strGroupTypeID;
     
     NSString *strGroupStduentID,*strGroupTeacherID;
+    
+    
 }
 @end
 
@@ -35,6 +37,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //Select Group Type
     
     aryStudentEdit = [[NSMutableArray alloc]init];
     aryStudentNameTemp = [[NSMutableArray alloc]init];
@@ -51,10 +55,13 @@
     
     _viewStandard.hidden = YES;
     
+    _tblGroupType.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:_txtSearchStudenrMember];
     
+    [Utility setLeftViewInTextField:_txtSearchStudenrMember imageName:@"" leftSpace:0 topSpace:0 size:10];
     
+    _txtGroupTitle.delegate = self;
     
     // Do any additional setup after loading the view.
     
@@ -98,6 +105,8 @@
     [Utility setLeftViewInTextField:self.txtGroupMemberTecher imageName:@"" leftSpace:0 topSpace:0 size:5];
     [Utility setLeftViewInTextField:self.txtGroupMemberStudent imageName:@"" leftSpace:0 topSpace:0 size:5];
     [Utility setLeftViewInTextField:_txtSearchStudenrMember imageName:@"" leftSpace:0 topSpace:0 size:5];
+    
+    NSLog(@"Data=%@",_dicCreateSchoolGroup);
     
     if (get.scoolgroup == 1)
     {
@@ -347,13 +356,25 @@
     
     
 }
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if(range.length + range.location > _txtGroupTitle.text.length)
+    {
+        return NO;
+    }
+    
+    NSUInteger newLength = [_txtGroupTitle.text length] + [string length] - range.length;
+    return newLength <= 16;
+}
+
 #pragma mark - UIImagePicker Delegate
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
 
     UIImage *selectImage = info[UIImagePickerControllerOriginalImage];
-    [_btnTackeImage setBackgroundImage:selectImage forState:UIControlStateNormal];
+    [_btnTackeImage setImage:selectImage forState:UIControlStateNormal];
     strFromImagepicker =@"FromimagePicker";
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
@@ -366,43 +387,71 @@
 
 #pragma mark - UIButton Action
 
+- (IBAction)btnBackStandardClicked:(id)sender
+{
+    _viewStandard.hidden = YES;
+}
+
+- (IBAction)btnGroupTypeClicked:(id)sender
+{
+}
 - (IBAction)btnBackHeader:(id)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (IBAction)btnBackGroupTypeClicked:(id)sender
+{
+     _viewGroupType.hidden = YES;
+}
+
 
 - (IBAction)btnSubmitHeader:(id)sender
 {
-    // NSLog(@"value=%@ and id =%@",_txtGroupSubject.text,strGroupTypeID);
+   // NSLog(@"value=%@ and id =%@",_txtGroupSubject.text,strGroupTypeID);
     
-    if ([Utility validateBlankField:_txtGroupTitle.text])
+    
+    if (get.scoolgroup == 1)
     {
-        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:CIRCULAR_TITLE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alrt show];
-        return;
-        
+        if ([Utility validateBlankField:_txtGroupTitle.text])
+        {
+            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:CIRCULAR_TITLE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alrt show];
+            return;
+            
+        }
+        if ([Utility validateBlankField:_txtGroupSubject.text])
+        {
+            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:SUBJECT delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alrt show];
+            return;
+            
+        }
+        if ([_txtEducationGroup.text isEqualToString:@"Select Group Type"])
+        {
+            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"Please select at least one group type" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alrt show];
+            return;
+            
+        }
+        if ([_lbStudentMember.text isEqualToString:@"Group Member Student"])
+        {
+            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"Please select at least one group member of student!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alrt show];
+            return;
+        }
+        if ([_lbTeacherMemebr.text isEqualToString:@"Group Member Teacher"])
+        {
+            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"Please select at least one group member of teacher!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alrt show];
+            return;
+        }
+        [self apiCallFor_createSchoolGroup];
     }
-    if ([Utility validateBlankField:_txtGroupSubject.text])
+    else
     {
-        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:SUBJECT delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alrt show];
-        return;
-        
+        [self apiCallFor_createSchoolGroup];
     }
-    if ([_lbStudentMember.text isEqualToString:@"Group Member Student"])
-    {
-        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"Please select at least one group member of student!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alrt show];
-        return;
-    }
-    if ([_lbTeacherMemebr.text isEqualToString:@"Group Member Teacher"])
-    {
-        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"Please select at least one group member of teacher!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alrt show];
-        return;
-    }
-    [self apiCallFor_createSchoolGroup];
     
 }
 - (IBAction)btnTackeImage:(id)sender
@@ -702,20 +751,18 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"circular type not available" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:SCHOOLCIRCULARTYPE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
                  {
                      aryGetStudentGroup = [[NSMutableArray alloc]initWithArray:arrResponce];
                      
+                     //Select Group Type
+                     
                      strGroupTypeID = [[aryGetStudentGroup objectAtIndex:0]objectForKey:@"TermID"];
                      
                      [_tblGroupType reloadData];
-                     
-                     
-                     
-                     
                      
                  }
              }
@@ -775,7 +822,7 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"subject and division not available" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:SCHOOLSUBDIV delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                      _viewStandard.hidden =YES;
 
@@ -925,7 +972,7 @@
                          [aryStudentListName removeAllObjects];
                          [_tblStudentList reloadData];
                          
-                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"student list not available" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:SCHOOLSTUDENTLIST delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                          [alrt show];
                      }
                      else
@@ -994,7 +1041,7 @@
                          [aryStudentListName removeAllObjects];
                          [_tblStudentList reloadData];
                          
-                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:SCHOOLTEACHERLIST delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                          [alrt show];
                      }
                      else
@@ -1134,7 +1181,7 @@
     
     [param setValue:strJoinStudentTeacherGroupId forKey:@"AllGroupMembers"];
     
-    NSData *data =  UIImagePNGRepresentation(_btnTackeImage.currentBackgroundImage);
+    NSData *data =  UIImagePNGRepresentation(_btnTackeImage.currentImage);
     const unsigned char *bytes = [data bytes];
     NSUInteger length = [data length];
     NSMutableArray *byteArray = [NSMutableArray array];
@@ -1165,14 +1212,17 @@
                  {
                      if([strStatus isEqualToString:@"Record save successfully"])
                      {
-                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                         alrt.tag = 100;
-                         [alrt show];
-                         [self apiCallFor_SendPushNotification];
+                        // UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                        // alrt.tag = 100;
+                        // [alrt show];
+                         
+                         [WToast showWithText:[dic objectForKey:@"message"]];
+                         
+                         [self apiCallFor_SendPushNotification : @"EditMember"];
                      }
                      else
                      {
-                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:SCHOOLSAVERECORD delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                          [alrt show];
                      }
                  }
@@ -1180,15 +1230,17 @@
                  {
                      if([strStatus isEqualToString:@"Record update successfully"])
                      {
-                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                         alrt.tag = 100;
+                        // UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                       //  alrt.tag = 100;
                          
-                         [alrt show];
+                        // [alrt show];
                          
+                          [WToast showWithText:[dic objectForKey:@"message"]];
+                         [self.navigationController popViewControllerAnimated:YES];
                      }
                      else
                      {
-                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:SCHOOLUPDATERECORD delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                          [alrt show];
                      }
                  }
@@ -1261,16 +1313,20 @@
                  
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:SCHOOLNOTGROUPEDIT delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
-                 } else
+                 }
+                 else
                  {
+                     
+                      [self apiCallFor_SendPushNotification : @"RemoveMember"];
                      
                      aryStudentEdit = [[NSMutableArray alloc]initWithArray:arrResponce];
                      self.tblMembrList_Height.constant=105*aryStudentEdit.count;
                      
                      [_tblMemberList reloadData];
                      
+
                      
                  }
              }
@@ -1341,20 +1397,25 @@
                  
                  if([strStatus isEqualToString:@"Members Removed"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     alrt.tag = 91;
+                    // UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    // alrt.tag = 91;
                      
-                     [alrt show];
+                     //[alrt show];
+                     
+                       [self apiCallFor_EditMemberTableGroup];
+                     [WToast showWithText:[dic objectForKey:@"message"]];
+                     
+                    // [self apiCallFor_SendPushNotification : @"EditMember"];
+                     
                      
                  }
                  else
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:SCHOOLREMOVEMEMBER delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                      // NSLog(@"arra=%@",subAry);
                  }
-                 [self apiCallFor_SendPushNotification];
-             }
+            }
              else
              {
                  UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:Api_Not_Response delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -1371,19 +1432,36 @@
 }
 
 
--(void)apiCallFor_SendPushNotification
+-(void)apiCallFor_SendPushNotification  : (NSString *)str
 {
-    if ([Utility isInterNetConnectionIsActive] == false){
-        UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alrt show];
-        return;
+   
+    
+    
+  //  [self apiCallFor_SendPushNotification : @"EditMember"];
+   // [self apiCallFor_SendPushNotification : @"RemoveMember"];
+    
+    
+    if ([str isEqualToString:@"EditMember"])
+    {
+          [self.navigationController popViewControllerAnimated:YES];
+        
+        if ([Utility isInterNetConnectionIsActive] == false){
+            UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alrt show];
+            return;
+        }
+        NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_notifications,apk_SendPushNotification_action];
+        NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
+        [ProgressHUB showHUDAddedTo:self.view];
+        [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error){
+            [ProgressHUB hideenHUDAddedTo:self.view];
+        }];
     }
-    NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_notifications,apk_SendPushNotification_action];
-    NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
-    [ProgressHUB showHUDAddedTo:self.view];
-    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error){
-        [ProgressHUB hideenHUDAddedTo:self.view];
-    }];
+    else
+    {
+        
+    }
 }
+
 
 @end

@@ -65,7 +65,7 @@
         [self.viewUpdate setHidden:YES];
         [self.tblAddUpdateList setHidden:NO];
         [self.view bringSubviewToFront:_tblAddUpdateList];
-         [self apiCallFor_createHappygramList: YES];
+        [self apiCallFor_createHappygramList: YES];
         //add
     }
     else
@@ -76,13 +76,22 @@
         
         NSLog(@"Dic=%@",_dicUpdateList);
         
-        NSLog(@"Dic=%@",_dicHappygramDetails);
+       // NSLog(@"Dic=%@",_dicHappygramDetails);
         
         _txtUpdateAppreciation.text = [_dicUpdateList objectForKey:@"Appreciation"];
         _txtViewNote.text= [_dicUpdateList objectForKey:@"Note"];
         strEmogies= [NSString stringWithFormat:@"%@",[_dicUpdateList objectForKey:@"Emotion"]];
+        
+        if ([strEmogies isEqualToString:@""])
+        {
+             _imgUpdateCancel.hidden = YES;
+        }
+        else
+        {
+             _imgUpdateCancel.hidden = NO;
+        }
         [_btnUpdateSmileRemove setImage:[UIImage imageNamed:[_dicUpdateList objectForKey:@"Emotion"]] forState:UIControlStateNormal];
-        _imgUpdateCancel.hidden = NO;
+       
         //update
     }
     
@@ -136,7 +145,7 @@
     
     if ([[[aryStoreHappyGrameData objectAtIndex:indexPath.row]objectForKey:@"SmileVal"] isEqualToString:@"1"])
     {
-        NSLog(@"Emogie=%@",strEmogiesName);
+      //  NSLog(@"Emogie=%@",strEmogiesName);
         
         [btn1 setImage:[UIImage imageNamed:[[aryStoreHappyGrameData objectAtIndex:indexPath.row]objectForKey:@"EmogiesName"]] forState:UIControlStateNormal];
         btn1.hidden = NO;
@@ -145,7 +154,7 @@
     else
     {
         [btn1 setImage:[UIImage new] forState:UIControlStateNormal];
-        NSLog(@"Emogie=%@",strEmogiesName);
+      //  NSLog(@"Emogie=%@",strEmogiesName);
         btn1.hidden = YES;
         img.hidden = YES;
         // [btn setBackgroundImage:[UIImage imageNamed:@"checkboxunselected"] forState:UIControlStateNormal];
@@ -205,6 +214,11 @@
 
 #pragma mark - tbl Add UIButton Action
 
+- (IBAction)btnBackEmotionClicked:(id)sender
+{
+    _viewEmogination.hidden = YES;
+}
+
 - (IBAction)btnAddCheckBox:(id)sender
 {
     //  UIButton *btn = (UIButton *)sender;
@@ -225,7 +239,7 @@
     [aryStoreHappyGrameData replaceObjectAtIndex:indexPath.row withObject:dic];
     
     
-    NSLog(@"ary store =%@",aryStoreHappyGrameData);
+   // NSLog(@"ary store =%@",aryStoreHappyGrameData);
     [_tblAddUpdateList reloadData];
     
 }
@@ -235,16 +249,16 @@
     NSIndexPath *indexPath = [_tblAddUpdateList indexPathForRowAtPoint:buttonPosition];
     
     getRow = [[NSString stringWithFormat:@"%ld",(long)indexPath.row]intValue];
-    NSLog(@"Row=%d",getRow);
+  //  NSLog(@"Row=%d",getRow);
     
     _viewEmogination.hidden = NO;
     [self.view bringSubviewToFront:_viewEmogination];
-   
+    
 }
 
 - (IBAction)btnAddRemoveSmileImg:(id)sender
 {
-    NSLog(@"aryHappyGrame=%@",aryStoreHappyGrameData);
+ //   NSLog(@"aryHappyGrame=%@",aryStoreHappyGrameData);
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:_tblAddUpdateList];
     NSIndexPath *indexPath = [_tblAddUpdateList indexPathForRowAtPoint:buttonPosition];
     NSMutableDictionary *dic = [aryStoreHappyGrameData objectAtIndex:indexPath.row];
@@ -276,7 +290,7 @@
 }
 - (IBAction)btnUpdateSmileAdd:(id)sender
 {
-    NSLog(@"Dic=%@",_dicUpdateList);
+  //  NSLog(@"Dic=%@",_dicUpdateList);
     
     if([self.strVctoNavigate isEqualToString:@"Add"])
     {
@@ -303,12 +317,12 @@
         CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:_collEmogination];
         NSIndexPath *indexPath = [_collEmogination indexPathForItemAtPoint:buttonPosition];
         
-        NSLog(@"Emogies=%@",aryEmogination);
+       // NSLog(@"Emogies=%@",aryEmogination);
         
         NSString *strEmogies1 = [aryEmogination objectAtIndex:indexPath.row];
         
-        NSLog(@"Str=%@",strEmogies1);
-        NSLog(@"Row=%d",getRow);
+       // NSLog(@"Str=%@",strEmogies1);
+      //  NSLog(@"Row=%d",getRow);
         
         strEmogiesName = strEmogies1;
         
@@ -317,7 +331,7 @@
         [dic setObject:strEmogiesName forKey:@"EmogiesName"];
         
         [aryStoreHappyGrameData replaceObjectAtIndex:getRow withObject:dic];
-         NSLog(@"aryHappyGrame=%@",aryStoreHappyGrameData);
+       // NSLog(@"aryHappyGrame=%@",aryStoreHappyGrameData);
         
         [_tblAddUpdateList reloadData];
         _viewEmogination.hidden = YES;
@@ -331,7 +345,7 @@
         CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:_collEmogination];
         NSIndexPath *indexPath = [_collEmogination indexPathForItemAtPoint:buttonPosition];
         strEmogies  = [aryEmogination objectAtIndex:indexPath.row];
-        NSLog(@"Dic=%@",_dicUpdateList);
+        //NSLog(@"Dic=%@",_dicUpdateList);
         
         _btnUpdateSmileRemove.hidden =NO;
         _imgUpdateCancel.hidden = NO;
@@ -357,22 +371,62 @@
         {
             NSMutableDictionary *dic = [[aryStoreHappyGrameData objectAtIndex:i]mutableCopy];
             
+            NSLog(@"Data=%@",dic);
+            
             UITableViewCell *cell = [_tblAddUpdateList cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
             
             UITextField *txtField = (UITextField *)[cell.contentView viewWithTag:14];
-            
-            NSString *newString1 = [txtField.text stringByReplacingOccurrencesOfString:@"_" withString:@" "];
-            
             UITextView *txt = (UITextView *)[cell.contentView viewWithTag:15];
             
-            NSString *newString2 = [txt.text stringByReplacingOccurrencesOfString:@"_" withString:@" "];
+            if ([txt.text isEqualToString:@""])
+            {
+                [dic setValue:@"" forKey:@"SetDetails"];
+            }
+            else
+            {
+                NSString *newString2 = [txt.text stringByReplacingOccurrencesOfString:@"_" withString:@" "];
+                
+                //  NSLog(@"Newstr=%@",newString2);
+                
+                if (newString2.length == 0 || newString2 == (id)[NSNull null] || [newString2 isEqualToString:@"(null)"])
+                {
+                    [dic setObject:@"" forKey:@"SetDetails"];
+                }
+                else
+                {
+                    [dic setObject:newString2 forKey:@"SetDetails"];
+                }
+            }
             
-            [dic setObject:newString1 forKey:@"SetAppreciation"];
-            [dic setObject:newString2 forKey:@"SetDetails"];
+            if([txtField.text isEqualToString:@""])
+            {
+                [dic setValue:@"" forKey:@"SetAppreciation"];
+            }
+            else
+            {
+                NSString *newString1 = [txtField.text stringByReplacingOccurrencesOfString:@"_" withString:@" "];
+                NSLog(@"Newstr=%@",newString1);
+                
+                
+                
+                if (newString1.length == 0 || newString1 == (id)[NSNull null] || [newString1 isEqualToString:@"(null)"])
+                {
+                    [dic setObject:@"" forKey:@"SetAppreciation"];
+                }
+                else
+                {
+                    [dic setObject:newString1 forKey:@"SetAppreciation"];
+                }
+                
+            }
+            NSLog(@"Dic%@",dic);
             
             [aryStoreHappyGrameData replaceObjectAtIndex:i withObject:dic];
             
         }
+        
+        NSLog(@"Data=%@",aryStoreHappyGrameData);
+        
         [self apiCallFor_addHappygramList:YES :aryStoreHappyGrameData];
     }
     else
@@ -452,7 +506,7 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:HAPPYGRAM delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                      
                  }
@@ -471,6 +525,8 @@
                          [dic setObject:@"" forKey:@"EmogiesName"];
                          [aryStoreHappyGrameData replaceObjectAtIndex:i withObject:dic];
                      }
+                     _tblAddUpdateList.tableHeaderView = _viewTableHeaderCreate;
+
                      [_tblAddUpdateList reloadData];
                  }
              }
@@ -494,7 +550,7 @@
 -(void)apiCallFor_addHappygramList: (BOOL)strCheckVal :(NSMutableArray *)dic
 {
     
-    NSLog(@"Dic Happygramlist=%@",_dicHappygramDetails);
+    //NSLog(@"Dic Happygramlist=%@",_dicHappygramDetails);
     
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
@@ -531,7 +587,7 @@
         
         [arySetStr addObject:str];
     }
-    NSLog(@"Data=%@",arySetStr);
+   // NSLog(@"Data=%@",arySetStr);
     
     NSString *strGet = [arySetStr componentsJoinedByString:@"#"];
     
@@ -557,14 +613,18 @@
                  
                  if([strStatus isEqualToString:@"Record save successfully"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     alrt.tag =500;
-                     [alrt show];
+                     //UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     //alrt.tag =500;
+                     //[alrt show];
+                     
+                     [WToast showWithText:[dic objectForKey:@"message"]];
+                     
                      [self apiCallFor_SendPushNotification];
                  }
                  else
                  {
-                     
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:PROFILEADDUPDATE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
                  }
              }
              else
@@ -596,7 +656,7 @@
     
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_happygram,apk_UpdateSingleStudentHappyGram];
     
-    NSLog(@"Dic=%@",_dicUpdateList);
+  //  NSLog(@"Dic=%@",_dicUpdateList);
     
     /*
      
@@ -626,9 +686,9 @@
     NSMutableDictionary *dicCurrentUser=[Utility getCurrentUserDetail];
     
     
-    NSLog(@"Dic=%@",_dicUpdateList);
+   // NSLog(@"Dic=%@",_dicUpdateList);
     
-    NSLog(@"Dic=%@",_dicHappygramDetails);
+   // NSLog(@"Dic=%@",_dicHappygramDetails);
     
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
     
@@ -662,14 +722,17 @@
                  
                  if([strStatus isEqualToString:@"Record update successfully"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     alrt.tag =600;
-                     [alrt show];
+                    // UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    // alrt.tag =600;
+                    // [alrt show];
+                     [WToast showWithText:[dic objectForKey:@"message"]];
+                     
                      [self apiCallFor_SendPushNotification];
                  }
                  else
                  {
-                     
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:HAPPYGRAMELIST delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
                  }
              }
              else
@@ -688,7 +751,10 @@
 
 -(void)apiCallFor_SendPushNotification
 {
-    if ([Utility isInterNetConnectionIsActive] == false){
+    [self.navigationController popViewControllerAnimated:YES];
+    
+    if ([Utility isInterNetConnectionIsActive] == false)
+    {
         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:INTERNETVALIDATION delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alrt show];
         return;
@@ -696,9 +762,12 @@
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_notifications,apk_SendPushNotification_action];
     NSMutableDictionary *param=[[NSMutableDictionary alloc]init];
     [ProgressHUB showHUDAddedTo:self.view];
-    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error){
+    
+    [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
+    {
         [ProgressHUB hideenHUDAddedTo:self.view];
     }];
 }
+
 
 @end

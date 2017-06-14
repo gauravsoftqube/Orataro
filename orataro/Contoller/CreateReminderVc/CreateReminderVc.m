@@ -61,7 +61,9 @@
     tableViewController.tableView = self.tblTodoList;
     tableViewController.refreshControl = refreshControl;
     
-    //
+   
+    
+    
     [self.viewDelete_Conf setHidden:YES];
     _viewSave.layer.cornerRadius = 30.0;
     _viewInnerSave.layer.cornerRadius = 25.0;
@@ -156,7 +158,7 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:@"reminder not available" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:REMINDERNOTFOUND delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
@@ -394,7 +396,7 @@
                  }
                  else
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:REMIDERECORD delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
 
                  }
@@ -497,6 +499,7 @@
         [lblDetail setText:[[NSString stringWithFormat:@"%@",activitydetails] capitalizedString]];
     }
     
+    
     UIImageView *img = (UIImageView *)[cell.contentView viewWithTag:22];
     [img setImage:[UIImage imageNamed:@"tick_sky_blue"]];
     if(![Status isKindOfClass:[NSNull class]])
@@ -530,6 +533,19 @@
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tblTodoList];
     NSIndexPath *indexPath = [self.tblTodoList indexPathForRowAtPoint:buttonPosition];
     dicSelected_Reminder = [[[arrTodoList objectAtIndex:indexPath.section] objectForKey:@"items"] objectAtIndex:indexPath.row];
+    
+    //complet_un_clecked
+    //complet_clecked
+
+    
+    if ([[dicSelected_Reminder objectForKey:@"Status"] isEqualToString:@"Completed"])
+    {
+        [_imgComplete setImage:[UIImage imageNamed:@"complet_clecked"]];
+    }
+    else
+    {
+        [_imgComplete setImage:[UIImage imageNamed:@"complet_un_clecked"]];
+    }
     strdelete_selecteid=[dicSelected_Reminder objectForKey:@"TodosID"];
     [self.lblDeleteConf_Detail setText:[NSString stringWithFormat:@"%@",[dicSelected_Reminder objectForKey:@"Title"]]];
 }
@@ -675,6 +691,18 @@
 - (IBAction)btnCompleteCell_popup:(id)sender
 {
     [Utility dismissAllPopTipViews:arrPopup];
+    
+    NSLog(@"arr=%@",arrPopup);
+    NSLog(@"Dic=%@",dicSelected_Reminder);
+    
+//    if ([[dicSelected_Reminder objectForKey:@"Status"] isEqualToString:@"Completed"])
+//    {
+//        [_imgComplete setImage:[UIImage imageNamed:@"complet_clecked"]];
+//    }
+//    else
+//    {
+//        [_imgComplete setImage:[UIImage imageNamed:@"complet_un_clecked"]];
+//    }
     [self apiCallFor_Complete];
 }
 

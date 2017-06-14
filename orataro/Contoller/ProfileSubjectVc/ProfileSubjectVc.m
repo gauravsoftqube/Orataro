@@ -25,7 +25,7 @@
     arySaveStandard = [[NSMutableArray alloc]init];
     arySaveData = [[NSMutableArray alloc]init];
     
-    _lbHeaderTitle.text = [NSString stringWithFormat:@"Subjects (%@)",[Utility getCurrentUserName]];
+   // _lbHeaderTitle.text = [NSString stringWithFormat:@"Subjects (%@)",[Utility getCurrentUserName]];
     
     // Do any additional setup after loading the view.
     [self commonData];
@@ -47,6 +47,8 @@
     NSArray *ary = [DBOperation selectData:@"select * from TeacherSubjectList"];
     arySaveData = [Utility getLocalDetail:ary columnKey:@"subjectJsonStr"];
     [_tblSubjectList reloadData];
+    
+     _lbHeaderTitle.text = [NSString stringWithFormat:@"Subjects(%lu) - (%@)",(unsigned long)arySaveStandard.count,[Utility getCurrentUserName]];
     
     if (arySaveData.count == 0)
     {
@@ -195,7 +197,7 @@
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:PROFILESUBJECT delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
@@ -214,6 +216,7 @@
                      
                      [self ManageCircularList:arySaveStandard];
                      
+                      _lbHeaderTitle.text = [NSString stringWithFormat:@"Subjects(%lu) - (%@)",(unsigned long)arySaveStandard.count,[Utility getCurrentUserName]];
                  }
              }
              else

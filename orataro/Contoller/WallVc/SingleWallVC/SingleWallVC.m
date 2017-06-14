@@ -244,8 +244,8 @@ static NSString *CellIdentifier = @"WallCustomeCell";
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     //                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                     //                     [alrt show];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:WALLIST delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
                  }
                  else
                  {
@@ -340,6 +340,8 @@ static NSString *CellIdentifier = @"WallCustomeCell";
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:POSTLIKE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
                  }
                  else
                  {
@@ -443,6 +445,8 @@ static NSString *CellIdentifier = @"WallCustomeCell";
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:POSTUNLIKE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
                  }
                  else
                  {
@@ -563,6 +567,8 @@ static NSString *CellIdentifier = @"WallCustomeCell";
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:POSTNOTSHARE delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [alrt show];
                  }
                  else if([strStatus isEqualToString:@"Post share successfully"])
                  {
@@ -616,7 +622,7 @@ static NSString *CellIdentifier = @"WallCustomeCell";
                  NSString *strStatus=[dic objectForKey:@"message"];
                  if([strStatus isEqualToString:@"No Data Found"])
                  {
-                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:NOFRIENDLIST delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [alrt show];
                  }
                  else
@@ -1228,7 +1234,7 @@ static NSString *CellIdentifier = @"WallCustomeCell";
                         }
                     }
                 }
-
+                
             }
         }
         

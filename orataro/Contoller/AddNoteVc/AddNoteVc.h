@@ -10,6 +10,8 @@
 
 @interface AddNoteVc : UIViewController<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate>
 - (IBAction)BackBtnClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *lbStandardDivision;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *txtStandardHeight;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *aViewWidth;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *aViewHeight;
