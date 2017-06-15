@@ -1518,25 +1518,25 @@ int c2= 0;
                              {
                                  [self setIsAdminEquel_One];
                              }
-                         }
-                         for (NSMutableDictionary *dic in arrDynamicWall_Setting)
-                         {
-                             NSString *IsAdmin=[dic objectForKey:@"IsAdmin"];
-                             if ([IsAdmin integerValue] == 1)
+                             
+                             for (NSMutableDictionary *dic in arrDynamicWall_Setting)
                              {
-                                 arrDynamicWall_Admin_Setting  = [dicResponce objectForKey:@"WallRoleData"];
-                                 if([arrDynamicWall_Admin_Setting count] != 0)
+                                 NSString *IsAdmin=[dic objectForKey:@"IsAdmin"];
+                                 if ([IsAdmin integerValue] == 1)
                                  {
-                                     
-                                     [self DynamicWall_Setting:[arrDynamicWall_Admin_Setting objectAtIndex:0]];
+                                     arrDynamicWall_Admin_Setting  = [dicResponce objectForKey:@"WallRoleData"];
+                                     if([arrDynamicWall_Admin_Setting count] != 0)
+                                     {
+                                         [self DynamicWall_Setting:dic];
+                                         [self DynamicWall_Setting:[arrDynamicWall_Admin_Setting objectAtIndex:0]];
+                                     }
+                                 }
+                                 else
+                                 {
+                                     [self DynamicWall_Setting:dic];
                                  }
                              }
-                             else
-                             {
-                                 [self DynamicWall_Setting:dic];
-                             }
                          }
-                         
                          //
                          countResponce = [arrResponce count];
                          NSArray *arrPostCommentID=[arrGeneralWall valueForKey:@"PostCommentID"];
@@ -1591,26 +1591,31 @@ int c2= 0;
                      {
                          //set DynamicWall Setting in array
                          arrDynamicWall_Setting  = [[dicResponce objectForKey:@"RoleData"]mutableCopy];
-                         for (NSMutableDictionary *dic in arrDynamicWall_Setting)
+                         if([arrDynamicWall_Setting count] != 0)
                          {
-                             NSString *IsAdmin=[dic objectForKey:@"IsAdmin"];
+                             NSString *IsAdmin=[[arrDynamicWall_Setting objectAtIndex:0] objectForKey:@"IsAdmin"];
+                             
                              if ([IsAdmin integerValue] == 1)
                              {
-                                 if([arrDynamicWall_Setting count] != 0)
-                                 {
-                                     [self setIsAdminEquel_One];
-                                 }
-                                 
-                                 arrDynamicWall_Admin_Setting  = [dicResponce objectForKey:@"WallRoleData"];
-                                 if([arrDynamicWall_Admin_Setting count] != 0)
-                                 {
-                                     
-                                     [self DynamicWall_Setting:[arrDynamicWall_Admin_Setting objectAtIndex:0]];
-                                 }
+                                 [self setIsAdminEquel_One];
                              }
-                             else
+                            
+                             for (NSMutableDictionary *dic in arrDynamicWall_Setting)
                              {
-                                 [self DynamicWall_Setting:dic];
+                                 NSString *IsAdmin=[dic objectForKey:@"IsAdmin"];
+                                 if ([IsAdmin integerValue] == 1)
+                                 {
+                                     arrDynamicWall_Admin_Setting  = [dicResponce objectForKey:@"WallRoleData"];
+                                     if([arrDynamicWall_Admin_Setting count] != 0)
+                                     {
+                                         [self DynamicWall_Setting:dic];
+                                         [self DynamicWall_Setting:[arrDynamicWall_Admin_Setting objectAtIndex:0]];
+                                     }
+                                 }
+                                 else
+                                 {
+                                     [self DynamicWall_Setting:dic];
+                                 }
                              }
                          }
                          
