@@ -434,10 +434,10 @@
     [param setValue:[NSString stringWithFormat:@"true"] forKey:@"approved"];
     
     
-    if([strInternet isEqualToString:@"1"])
-    {
-        [ProgressHUB showHUDAddedTo:self.view];
-    }
+//    if([strInternet isEqualToString:@"1"])
+//    {
+//        [ProgressHUB showHUDAddedTo:self.view];
+//    }
     
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
@@ -462,8 +462,9 @@
                  {
                      //UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:nil message:[dic objectForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                     // [alrt show];
+                      [self.navigationController popViewControllerAnimated:YES];
                      [WToast showWithText:[dic objectForKey:@"message"]];
-                     [self.navigationController popViewControllerAnimated:YES];
+                    
                  }
              }
              else
@@ -490,6 +491,8 @@
         [alrt show];
         return;
     }
+    
+    [ProgressHUB showHUDAddedTo:self.view];
     
     NSString *strURL=[NSString stringWithFormat:@"%@%@/%@",URL_Api,apk_post,apk_UploadFile_action];
     
@@ -542,7 +545,7 @@
     
     [Utility PostApiCall:strURL params:param block:^(NSMutableDictionary *dicResponce, NSError *error)
      {
-         [ProgressHUB hideenHUDAddedTo:self.view];
+        
          if(!error)
          {
              NSString *strArrd=[dicResponce objectForKey:@"d"];
