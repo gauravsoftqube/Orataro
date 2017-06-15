@@ -1537,6 +1537,19 @@ int c2= 0;
                                  }
                              }
                          }
+                         else
+                         {
+                             arrDynamicWall_Setting = [DBOperation selectData:@"select * from DynamicWall_Setting"];
+                             for (NSMutableDictionary *dic in arrDynamicWall_Setting)
+                             {
+                                 NSString *IsAdmin=[dic objectForKey:@"IsAdmin"];
+                                 if ([IsAdmin integerValue] == 1)
+                                 {
+                                     arrDynamicWall_Admin_Setting  = [DBOperation selectData:@"select * from DynamicWall_Admin_Setting"];
+                                 }
+                             }
+                         }
+
                          //
                          countResponce = [arrResponce count];
                          NSArray *arrPostCommentID=[arrGeneralWall valueForKey:@"PostCommentID"];
@@ -1615,6 +1628,18 @@ int c2= 0;
                                  else
                                  {
                                      [self DynamicWall_Setting:dic];
+                                 }
+                             }
+                         }
+                         else
+                         {
+                             arrDynamicWall_Setting = [DBOperation selectData:@"select * from DynamicWall_Setting"];
+                             for (NSMutableDictionary *dic in arrDynamicWall_Setting)
+                             {
+                                 NSString *IsAdmin=[dic objectForKey:@"IsAdmin"];
+                                 if ([IsAdmin integerValue] == 1)
+                                 {
+                                     arrDynamicWall_Admin_Setting  = [DBOperation selectData:@"select * from DynamicWall_Admin_Setting"];
                                  }
                              }
                          }
