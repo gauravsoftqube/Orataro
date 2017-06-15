@@ -1525,6 +1525,7 @@ int c2= 0;
                              if ([IsAdmin integerValue] == 1)
                              {
                                  arrDynamicWall_Admin_Setting  = [dicResponce objectForKey:@"WallRoleData"];
+                                 
                                  if([arrDynamicWall_Admin_Setting count] != 0)
                                  {
                                      [self DynamicWall_Setting:dic];
