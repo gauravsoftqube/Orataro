@@ -1527,6 +1527,7 @@ int c2= 0;
                                  if([arrDynamicWall_Admin_Setting count] != 0)
                                  {
                                      NSString *IsAdmin=[dic objectForKey:@"IsAdmin"];
+                                     
                                      if ([IsAdmin integerValue] == 1)
                                      {
                                          arrDynamicWall_Admin_Setting  = [dicResponce objectForKey:@"WallRoleData"];
